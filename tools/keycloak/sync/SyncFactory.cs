@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
@@ -95,26 +96,39 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task SyncClaimsAsync(StringBuilder log, StringBuilder errorLog)
         {
-            Api.Models.PageModel<PModel.ClaimModel> claims = null;
+            IEnumerable<PModel.ClaimModel> claims = new List<PModel.ClaimModel>();
+            Api.Models.PageModel<PModel.ClaimModel> claimsPage = null;
             int page = 1;
             do
             {
-                claims = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.ClaimModel>>(HttpMethod.Get, $"admin/claims?page={page}&quantity=50");
-                foreach (var claim in claims?.Items)
-                {
-                    try
-                    {
-                        await AddKeycloakRoleAsync(claim);
-                        LogInfo(log, $"Keycloak role synchronized: '{claim.Name}'.");
-                    }
-                    catch (HttpClientRequestException ex)
-                    {
-                        LogError(errorLog, $"Failed to Synchronize PIMS claim '{claim.Name}' with keycloak. Original error: {ex.Message}");
-                    }
-                }
-                page++;
+                claimsPage = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.ClaimModel>>(HttpMethod.Get, $"admin/claims?page={page++}&quantity=50");
+                claims = claims.Concat(claimsPage.Items);
             }
-            while (claims != null && claims.Items.Any());
+            while (claimsPage != null && claimsPage.Items.Any());
+
+            var allKeycloakRoles = await _keycloakManagementClient.HandleRequestAsync<ResponseWrapperModel<RoleModel[]>>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles");
+            var keycloakRoles = allKeycloakRoles.Data.Where(x => x.Composite.HasValue && x.Composite.Value == false);
+            var keycloakRolesToDelete = keycloakRoles.Where(r => claims.All(crr => crr.Name != r.Name));
+
+            var addTask = AddClaimsFromPims(claims, log, errorLog);
+            var removeTask = RemoveRolesFromPims(keycloakRolesToDelete, log, errorLog);
+            await Task.WhenAll(addTask, removeTask);
+        }
+
+        private async Task AddClaimsFromPims(IEnumerable<PModel.ClaimModel> claims, StringBuilder log, StringBuilder errorLog)
+        {
+            foreach (var claim in claims)
+            {
+                try
+                {
+                    await AddKeycloakRoleAsync(claim);
+                    LogInfo(log, $"Keycloak role synchronized: '{claim.Name}'.");
+                }
+                catch (HttpClientRequestException ex)
+                {
+                    LogError(errorLog, $"Failed to Synchronize PIMS claim '{claim.Name}' with keycloak. Original error: {ex.Message}");
+                }
+            }
         }
 
         /// <summary>
@@ -168,28 +182,62 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task SyncRolesAsync(StringBuilder log, StringBuilder errorLog)
         {
-            Api.Models.PageModel<PModel.RoleModel> roles = null;
+            IEnumerable<PModel.RoleModel> roles = new List<PModel.RoleModel>();
+            Api.Models.PageModel<PModel.RoleModel> rolesPage = null;
             int page = 1;
             do
             {
-                roles = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.RoleModel>>(HttpMethod.Get, $"admin/roles?page={page}&quantity=50");
-                foreach (var role in roles?.Items)
-                {
-                    try
-                    {
-                        var prole = await _pimsClient.HandleRequestAsync<PModel.RoleModel>(HttpMethod.Get, $"admin/roles/{role.RoleUid}");
-                        _logger.LogInformation($"Adding/updating keycloak composite role '{prole.Name}'");
-                        await UpdateCompositeRoleInKeycloak(prole);
-                        LogInfo(log, $"Added/updated keycloak composite role '{prole.Name}'");
-                    }
-                    catch (HttpClientRequestException ex)
-                    {
-                        LogError(errorLog, $"Failed to Synchronize PIMS role '${role.Name}' with keycloak. Original error: {ex.Message}");
-                    }
-                }
-                page++;
+                rolesPage = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.RoleModel>>(HttpMethod.Get, $"admin/roles?page={page++}&quantity=50");
+                roles = roles.Concat(rolesPage.Items);
             }
-            while (roles != null && roles.Items.Any());
+            while (rolesPage != null && rolesPage.Items.Any());
+
+            var keycloakRoles = await _keycloakManagementClient.HandleRequestAsync<ResponseWrapperModel<RoleModel[]>>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles");
+            var keycloakCompositeRoles = keycloakRoles.Data.Where(x => x.Composite.HasValue && x.Composite.Value);
+            var keycloakRolesToDelete = keycloakCompositeRoles.Where(r => roles.All(crr => crr.Name != r.Name));
+
+            var addTask = AddRolesFromPims(roles, log, errorLog);
+            var removeTask = RemoveRolesFromPims(keycloakRolesToDelete, log, errorLog);
+            await Task.WhenAll(addTask, removeTask);
+        }
+
+        private async Task AddRolesFromPims(IEnumerable<PModel.RoleModel> roles, StringBuilder log, StringBuilder errorLog)
+        {
+            foreach (var role in roles)
+            {
+                try
+                {
+                    var prole = await _pimsClient.HandleRequestAsync<PModel.RoleModel>(HttpMethod.Get, $"admin/roles/{role.RoleUid}");
+                    if (prole.RoleClaims.Count() == 0)
+                    {
+                        continue;
+                    }
+                    _logger.LogInformation($"Adding/updating keycloak composite role '{prole.Name}'");
+                    await UpdateCompositeRoleInKeycloak(prole);
+                    LogInfo(log, $"Added/updated keycloak composite role '{prole.Name}'");
+                }
+                catch (HttpClientRequestException ex)
+                {
+                    LogError(errorLog, $"Failed to Synchronize PIMS role '{role.Name}' with keycloak. Original error: {ex.Message}");
+                }
+            }
+        }
+
+        private async Task RemoveRolesFromPims(IEnumerable<KModel.RoleModel> roles, StringBuilder log, StringBuilder errorLog)
+        {
+            foreach (var role in roles)
+            {
+                try
+                {
+                    _logger.LogInformation($"Deleting keycloak role '{role.Name}'");
+                    await _keycloakManagementClient.DeleteAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{role.Name}");
+                    LogInfo(log, $"Deleted keycloak role '{role.Name}'");
+                }
+                catch (HttpClientRequestException ex)
+                {
+                    LogError(errorLog, $"Failed to Delete PIMS role '{role.Name}' from keycloak. Original error: {ex.Message}");
+                }
+            }
         }
 
         #endregion
@@ -321,7 +369,7 @@ namespace Pims.Tools.Keycloak.Sync
             var page = 1;
             var quantity = 50;
             var users = new List<PModel.UserModel>();
-            var pageOfUsers = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.UserModel>>(HttpMethod.Get, $"admin/users?page={page}&quantity={quantity}"); // TODO: Replace paging with specific requests for a user.
+            var pageOfUsers = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.UserModel>>(HttpMethod.Get, $"admin/users?page={page}&quantity={quantity}");
             users.AddRange(pageOfUsers.Items);
 
             // Keep asking for pages of users until we have them all.
@@ -368,7 +416,7 @@ namespace Pims.Tools.Keycloak.Sync
                 (response) => response.StatusCode == HttpStatusCode.NotFound);
 
             IEnumerable<UserRoleOperation> userRolesToAdd = user.UserRoles.Where(ur => kUserRoles.Roles.All(kr => kr.Name != ur.Role.Name)).Select(ur => new UserRoleOperation() { RoleName = ur.Role.Name, Username = username, Operation = "add" });
-            IEnumerable<UserRoleOperation> userRolesToRemove = kUserRoles.Roles.Where(kur => user.UserRoles.All(ur => ur.Role.Name != kur.Name)).Select(kur => new UserRoleOperation() { RoleName = kur.Name, Username = username, Operation = "delete" });
+            IEnumerable<UserRoleOperation> userRolesToRemove = kUserRoles.Roles.Where(kur => user.UserRoles.All(ur => ur.Role.Name != kur.Name)).Select(kur => new UserRoleOperation() { RoleName = kur.Name, Username = username, Operation = "del" });
             var allUserRoleMappings = userRolesToAdd.Concat(userRolesToRemove);
 
             foreach (UserRoleOperation operation in allUserRoleMappings)
