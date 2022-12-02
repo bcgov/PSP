@@ -1,7 +1,7 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 12.4.2                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S41.01.dez                                 */
+/* Project file:          PIMS S41.00.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
@@ -13733,4 +13733,3 @@ GO
 
 DROP SEQUENCE [dbo].[PIMS_PROPERTY_SERVICE_FILE_ID_SEQ]
 GO
-
