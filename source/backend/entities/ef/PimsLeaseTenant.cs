@@ -15,6 +15,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(OrganizationId), Name = "TENANT_ORGANIZATION_ID_IDX")]
     [Index(nameof(PersonId), Name = "TENANT_PERSON_ID_IDX")]
     [Index(nameof(PrimaryContactId), Name = "TENANT_PRIMARY_CONTACT_ID_IDX")]
+    [Index(nameof(TenantTypeCode), Name = "TENANT_TENANT_TYPE_CODE_IDX")]
     public partial class PimsLeaseTenant
     {
         [Key]
@@ -26,12 +27,16 @@ namespace Pims.Dal.Entities
         public long? PersonId { get; set; }
         [Column("ORGANIZATION_ID")]
         public long? OrganizationId { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
         [Required]
         [Column("LESSOR_TYPE_CODE")]
         [StringLength(20)]
         public string LessorTypeCode { get; set; }
-        [Column("PRIMARY_CONTACT_ID")]
-        public long? PrimaryContactId { get; set; }
+        [Required]
+        [Column("TENANT_TYPE_CODE")]
+        [StringLength(20)]
+        public string TenantTypeCode { get; set; }
         [Column("NOTE")]
         [StringLength(2000)]
         public string Note { get; set; }
@@ -89,5 +94,8 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(PrimaryContactId))]
         [InverseProperty(nameof(PimsPerson.PimsLeaseTenantPrimaryContacts))]
         public virtual PimsPerson PrimaryContact { get; set; }
+        [ForeignKey(nameof(TenantTypeCode))]
+        [InverseProperty(nameof(PimsTenantType.PimsLeaseTenants))]
+        public virtual PimsTenantType TenantTypeCodeNavigation { get; set; }
     }
 }

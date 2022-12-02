@@ -27,12 +27,16 @@ namespace Pims.Dal.Entities
         public long? PersonId { get; set; }
         [Column("ORGANIZATION_ID")]
         public long? OrganizationId { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
         [Required]
         [Column("LESSOR_TYPE_CODE")]
         [StringLength(20)]
         public string LessorTypeCode { get; set; }
-        [Column("PRIMARY_CONTACT_ID")]
-        public long? PrimaryContactId { get; set; }
+        [Required]
+        [Column("TENANT_TYPE_CODE")]
+        [StringLength(20)]
+        public string TenantTypeCode { get; set; }
         [Column("NOTE")]
         [StringLength(2000)]
         public string Note { get; set; }
