@@ -9,6 +9,8 @@ export interface IViewSelectorProps {
   lease?: ILease;
   isEditing: boolean;
   setContainerState: (value: Partial<LeaseContainerState>) => void;
+  refreshLease: () => void;
+  setLease: (lease: ILease) => void;
 }
 
 export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>(
@@ -19,7 +21,13 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
       return null;
     } else {
       // render read-only views
-      return <LeaseTabsContainer lease={props.lease} />;
+      return (
+        <LeaseTabsContainer
+          lease={props.lease}
+          refreshLease={props.refreshLease}
+          setLease={props.setLease}
+        />
+      );
     }
   },
 );

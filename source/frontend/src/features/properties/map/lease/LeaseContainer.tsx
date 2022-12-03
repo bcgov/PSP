@@ -35,7 +35,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const formikRef = useRef<FormikProps<any>>(null);
   const close = useCallback(() => onClose && onClose(), [onClose]);
-  const { lease } = useLeaseDetail(leaseId);
+  const { lease, setLease, refresh } = useLeaseDetail(leaseId);
 
   if (lease === undefined) {
     return <LoadingBackdrop show={true} parentScreen={true} />;
@@ -61,6 +61,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         <ViewSelector
           ref={formikRef}
           lease={lease}
+          refreshLease={refresh}
+          setLease={setLease}
           isEditing={containerState.isEditing}
           setContainerState={setContainerState}
         />
