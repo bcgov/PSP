@@ -283,7 +283,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             title=""
           >
             <a
-              href="/lease/1"
+              href="/mapview/sidebar/lease/1"
             >
               L-123-456
             </a>
@@ -386,7 +386,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             title=""
           >
             <a
-              href="/lease/2"
+              href="/mapview/sidebar/lease/2"
             >
               L-999-888
             </a>
