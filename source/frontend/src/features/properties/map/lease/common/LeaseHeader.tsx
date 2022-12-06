@@ -20,7 +20,7 @@ export interface ILeaseHeaderProps {
   lease?: ILease;
 }
 
-const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
+export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
   const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
 
   return (
