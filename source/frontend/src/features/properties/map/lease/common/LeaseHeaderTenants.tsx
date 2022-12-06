@@ -1,8 +1,7 @@
 import ExpandableTextList from 'components/common/ExpandableTextList';
+import { getAllNames } from 'features/leases/leaseUtils';
 import { ILease } from 'interfaces';
-import { Api_Person } from 'models/api/Person';
-import * as React from 'react';
-import { formatNames } from 'utils/personUtils';
+import React from 'react';
 
 export interface ILeaseHeaderTenantsProps {
   lease?: ILease;
@@ -16,12 +15,10 @@ export const LeaseHeaderTenants: React.FC<ILeaseHeaderTenantsProps> = ({
   maxCollapsedLength = 2,
 }) => {
   return (
-    <ExpandableTextList<Api_Person>
-      items={lease?.persons ?? []}
-      keyFunction={(p: Api_Person, index: number) => `lease-tenant-${p?.id ?? index}`}
-      renderFunction={(p: Api_Person) => (
-        <>{formatNames([p?.firstName, p?.middleNames, p?.surname])}</>
-      )}
+    <ExpandableTextList<string>
+      items={getAllNames(lease) ?? []}
+      keyFunction={(p: string, index: number) => `lease-tenant-${index}`}
+      renderFunction={(p: string) => <>{p}</>}
       delimiter={delimiter}
       maxCollapsedLength={maxCollapsedLength}
     />
