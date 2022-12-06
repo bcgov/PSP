@@ -18,7 +18,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static Guid GetUserKey(this ClaimsPrincipal user)
         {
-            var value = user?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var value = user?.FindFirstValue("idir_user_guid");
             return Guid.TryParse(value, out var newGuid) ? newGuid : Guid.Empty;
         }
 
@@ -72,7 +72,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string GetUsername(this ClaimsPrincipal user)
         {
-            var value = user?.FindFirstValue("username");
+            var value = user?.FindFirstValue("idir_username");
             return value?.Split("@").First();
         }
 
@@ -84,8 +84,8 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string GetUserDirectory(this ClaimsPrincipal user)
         {
-            var value = user?.FindFirstValue("username");
-            return value?.Contains('@') == true ? value.Split("@").Last() : null;
+            var value = user?.FindFirstValue("identity_provider");
+            return value;
         }
 
         /// <summary>

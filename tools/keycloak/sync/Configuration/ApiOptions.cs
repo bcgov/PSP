@@ -8,10 +8,10 @@ namespace Pims.Tools.Keycloak.Sync.Configuration
     public class ApiOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The URI to the API.
         /// </summary>
-        /// <value></value>
         [Required(ErrorMessage = "Api:Uri configuration option required.")]
         public string Uri { get; set; }
         #endregion

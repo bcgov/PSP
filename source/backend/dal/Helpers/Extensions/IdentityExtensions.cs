@@ -56,7 +56,7 @@ namespace Pims.Dal.Helpers.Extensions
             }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
-            var claims = user.Claims.Where(c => c.Type == ClaimTypes.Role);
+            var claims = user.Claims.Where(c => c.Type == "client_roles");
             return roles.All(r => claims.Any(c => c.Value == r));
         }
 

@@ -66,7 +66,7 @@ SET
         FROM
             PIMS_PERSON
         WHERE
-            SURNAME = 'Smith'
+            SURNAME = 'Smith' AND FIRST_NAME = 'Devin'
     );
 
 SET
@@ -76,7 +76,7 @@ SET
         FROM
             PIMS_PERSON
         WHERE
-            SURNAME = 'Sanchez'
+            SURNAME = 'Sanchez' AND FIRST_NAME = 'Alejandro'
     );
 
 SET
@@ -86,7 +86,7 @@ SET
         FROM
             PIMS_PERSON
         WHERE
-            SURNAME = 'Rodriguez'
+            SURNAME = 'Rodriguez' AND FIRST_NAME = 'Manuel'
     );
 
 SET
@@ -96,7 +96,7 @@ SET
         FROM
             PIMS_PERSON
         WHERE
-            SURNAME = 'Babu'
+            SURNAME = 'Babu' AND FIRST_NAME = 'Mahesh'
     );
 
 INSERT INTO
@@ -143,7 +143,7 @@ VALUES
     (
         @manuelPersonId,
         'mrodriguez',
-        '4109E6B4-585C-4678-8A24-1A99B45E3A5D',
+        '5D661D1E-14F0-477C-A7FB-31F21E8B4FDA',
         0,
         CURRENT_TIMESTAMP,
         'seed_data',
@@ -156,7 +156,7 @@ VALUES
     (
         @maheshPersonId,
         'mbabu',
-        '5D661D1E-14F0-477C-A7FB-31F21E8B4FDA',
+        '672D88FC-61B9-4D6B-824A-83B5186E39C6',
         0,
         CURRENT_TIMESTAMP,
         'seed_data',
@@ -168,3 +168,109 @@ VALUES
     );
 
 GO
+
+DECLARE @systemAdmin bigint;
+DECLARE @devinUserId bigint;
+DECLARE @alejandroUserId bigint;
+DECLARE @manuelUserId bigint;
+DECLARE @maheshUserId bigint;
+
+SET
+    @systemAdmin = (
+        SELECT
+            TOP(1) ROLE_ID
+        FROM
+            PIMS_ROLE
+        WHERE
+            NAME = 'System Administrator'
+    );
+
+SET
+    @devinUserId = (
+        SELECT
+            TOP(1) USER_ID
+        FROM
+            PIMS_USER
+        WHERE
+            BUSINESS_IDENTIFIER_VALUE = 'desmith'
+    );
+SET
+    @alejandroUserId = (
+        SELECT
+            TOP(1) USER_ID
+        FROM
+            PIMS_USER
+        WHERE
+            BUSINESS_IDENTIFIER_VALUE = 'asanchez'
+    );
+SET
+    @manuelUserId = (
+        SELECT
+            TOP(1) USER_ID
+        FROM
+            PIMS_USER
+        WHERE
+            BUSINESS_IDENTIFIER_VALUE = 'mrodriguez'
+    );
+SET
+    @maheshUserId = (
+        SELECT
+            TOP(1) USER_ID
+        FROM
+            PIMS_USER
+        WHERE
+            BUSINESS_IDENTIFIER_VALUE = 'mbabu'
+    );
+
+INSERT INTO
+    [dbo].[PIMS_USER_ROLE] (
+        [USER_ID],
+        [ROLE_ID],
+        [APP_CREATE_USERID],
+        [APP_CREATE_USER_DIRECTORY],
+        [APP_LAST_UPDATE_USERID],
+        [APP_LAST_UPDATE_USER_DIRECTORY],
+        [DB_CREATE_USERID],
+        [DB_LAST_UPDATE_USERID]
+    )
+VALUES
+    (
+        @devinUserId,
+        @systemAdmin,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @alejandroUserId,
+        @systemAdmin,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @manuelUserId,
+        @systemAdmin,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @maheshUserId,
+        @systemAdmin,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    );

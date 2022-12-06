@@ -88,7 +88,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
-            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue(ClaimTypes.NameIdentifier)), "test user");
+            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("idir_user_guid")), "test user");
             var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(accessRequest);
 
@@ -176,7 +176,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue(ClaimTypes.NameIdentifier)), "test user");
+            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("idir_user_guid")), "test user");
             var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2 });
             helper.CreatePimsContext(user, true).AddAndSaveChanges(eUser);
 
@@ -235,7 +235,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue(ClaimTypes.NameIdentifier)), "test user");
+            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("idir_user_guid")), "test user");
             var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2 });
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(accessRequest);
 
@@ -307,7 +307,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue(ClaimTypes.NameIdentifier)), "test user");
+            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("idir_user_guid")), "test user");
             var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2 });
             var region = new PimsRegion() { Id = 3 };
             var status = new PimsAccessRequestStatusType() { Id = "updated" };
