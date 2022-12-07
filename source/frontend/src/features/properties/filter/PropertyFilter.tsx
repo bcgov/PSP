@@ -1,14 +1,15 @@
 import { ResetButton, SearchButton } from 'components/common/buttons';
-import { Form } from 'components/common/form';
-import { SelectInput } from 'components/common/List/SelectInput';
+import { Form, Input, Select } from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
 import { Formik } from 'formik';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import React, { useMemo, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 import { FilterBarSchema } from 'utils/YupSchema';
 
+import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
 import { IPropertyFilter } from './IPropertyFilter';
 import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
 
@@ -52,6 +53,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     key: 'propertyFilter',
     sort: sort,
     setSorting: onSorting,
+    exactPath: '/mapview',
   });
 
   const history = useHistory();
@@ -95,23 +97,38 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
             <Col xs="auto">
               <span>Search:</span>
             </Col>
-            <Col xs="6" md="5" lg="4" xl="3">
-              <SelectInput<
-                {
-                  pinOrPid: string;
-                  address: string;
-                },
-                IPropertyFilter
-              >
+            <NoRightPaddingColumn xs="1" md="1" lg="1" xl="1">
+              <StyledSelect
                 field="searchBy"
-                defaultKey="pinOrPid"
-                selectOptions={[
-                  { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
-                  { label: 'Address', key: 'address', placeholder: 'Enter an address' },
+                options={[
+                  { label: 'PID/PIN', value: 'pinOrPid' },
+                  { label: 'Address', value: 'address' },
                 ]}
                 className="idir-input-group"
+                onChange={() => {
+                  setFieldValue('pinOrPid', '');
+                  setFieldValue('latitude', null);
+                  setFieldValue('latitude', null);
+                }}
               />
-            </Col>
+            </NoRightPaddingColumn>
+            <StyledCol xs="3" md="2" lg="4" xl="3">
+              {values.searchBy === 'pinOrPid' && (
+                <Input field="pinOrPid" placeholder="Enter a PID or PIN"></Input>
+              )}
+              {values.searchBy === 'address' && (
+                <GeocoderAutoComplete
+                  data-testid="geocoder-mapview"
+                  field="address"
+                  placeholder="Enter an address"
+                  onSelectionChanged={val => {
+                    setFieldValue('latitude', val.latitude);
+                    setFieldValue('longitude', val.longitude);
+                  }}
+                  value={values.address}
+                ></GeocoderAutoComplete>
+              )}
+            </StyledCol>
             <Col xs="auto">
               <SearchButton
                 disabled={isSubmitting}
@@ -142,3 +159,22 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     </Formik>
   );
 };
+const StyledSelect = styled(Select)`
+  padding-right: 0 !important;
+  .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+`;
+const NoRightPaddingColumn = styled(Col)`
+  padding-right: 0 !important;
+  border-right: 0 !important;
+`;
+
+const StyledCol = styled(Col)`
+  padding-left: 0 !important;
+  .form-control {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+`;

@@ -54,6 +54,7 @@ export const GeocoderAutoComplete: React.FC<
   const { handleBlur } = useFormikContext<any>();
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
   const { searchAddress } = useGeocoderRepository();
+  const [textValue, setTextValue] = React.useState<string | undefined>(value);
   const debouncedSearch = React.useRef(
     debounce(
       async (val: string, abort: boolean) => {
@@ -69,6 +70,7 @@ export const GeocoderAutoComplete: React.FC<
 
   const onTextChanged = async (val?: string) => {
     onTextChange && onTextChange(val);
+    setTextValue(val);
     if (val && val.length >= 5 && val !== value) {
       debouncedSearch(val, false);
     } else {
@@ -85,6 +87,7 @@ export const GeocoderAutoComplete: React.FC<
     setOptions([]);
     if (onSelectionChanged) {
       val.fullAddress = (val.fullAddress || '').split(',')[0];
+      setTextValue(val.fullAddress);
       onSelectionChanged(val);
     }
   };
@@ -116,9 +119,10 @@ export const GeocoderAutoComplete: React.FC<
         >
           <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
             <InputControl
+              data-testid="geocoder-input"
               autoComplete={autoSetting}
               field={field}
-              value={value}
+              value={textValue}
               isInvalid={!!touch && !!error}
               onTextChange={onTextChanged}
               placeholder={placeholder}

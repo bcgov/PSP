@@ -29,7 +29,7 @@ describe('mapUtils tests', () => {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: {},
+        properties: { PROPERTY_ID: 1 },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -89,12 +89,13 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: {},
+            properties: { PROPERTY_ID: 1 },
           },
           true,
         ),
       ).toEqual(parcelIconSelect);
     });
+
     describe('convert feature to property', () => {
       const property: IProperty = {
         id: 1,
