@@ -41,14 +41,14 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
           </Row>
           <Row className="no-gutters">
             <Col>
-              <HeaderField label="Property:" labelWidth="2" contentWidth="9">
+              <HeaderField label="Property:" labelWidth="3" contentWidth="9">
                 <LeaseHeaderAddresses lease={lease} maxCollapsedLength={1} delimiter={<br />} />
               </HeaderField>
             </Col>
           </Row>
           <Row className="no-gutters">
             <Col>
-              <HeaderField label="Tenant:" labelWidth="2" contentWidth="9">
+              <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
                 <LeaseHeaderTenants lease={lease} maxCollapsedLength={1} delimiter={<br />} />
               </HeaderField>
             </Col>
@@ -86,17 +86,21 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
           </Row>
         </Col>
       </Row>
-      <Row>
+      <Row className="no-gutters">
         <Col xs="7">
           <Row className="no-gutters">
-            <HeaderLabelCol label="Start date:" labelWidth="2" />
-            <HeaderContentCol contentWidth="4">
-              {prettyFormatDate(lease?.startDate)}
-            </HeaderContentCol>
-            <HeaderLabelCol label="Expiry date:" />
-            <HeaderContentCol>
-              <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
-            </HeaderContentCol>
+            <Col>
+              <Row>
+                <HeaderLabelCol label="Start date:" labelWidth="3" />
+                <HeaderContentCol contentWidth="3">
+                  {prettyFormatDate(lease?.startDate)}
+                </HeaderContentCol>
+                <HeaderLabelCol label="Expiry date:" />
+                <HeaderContentCol>
+                  <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
+                </HeaderContentCol>
+              </Row>
+            </Col>
           </Row>
         </Col>
         <Col xs="5">

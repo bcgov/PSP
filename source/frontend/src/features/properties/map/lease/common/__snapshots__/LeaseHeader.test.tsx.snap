@@ -233,7 +233,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
               class="row"
             >
               <div
-                class="pr-0 text-left col-2"
+                class="pr-0 text-left col-3"
               >
                 <label>
                   Property:
@@ -275,7 +275,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
               class="row"
             >
               <div
-                class="pr-0 text-left col-2"
+                class="pr-0 text-left col-3"
               >
                 <label>
                   Tenant:
@@ -380,7 +380,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
       </div>
     </div>
     <div
-      class="row"
+      class="no-gutters row"
     >
       <div
         class="col-7"
@@ -389,34 +389,42 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
           class="no-gutters row"
         >
           <div
-            class="pr-0 text-left col-2"
+            class="col"
           >
-            <label>
-              Start date:
-            </label>
-          </div>
-          <div
-            class="pl-1 text-left col-4"
-          >
-            <strong>
-              Sep 30, 2006
-            </strong>
-          </div>
-          <div
-            class="pr-0 text-left col-auto"
-          >
-            <label>
-              Expiry date:
-            </label>
-          </div>
-          <div
-            class="pl-1 text-left col-auto"
-          >
-            <strong>
-              <span
-                class="pl-2"
-              />
-            </strong>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label>
+                  Start date:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-3"
+              >
+                <strong>
+                  Sep 30, 2006
+                </strong>
+              </div>
+              <div
+                class="pr-0 text-left col-auto"
+              >
+                <label>
+                  Expiry date:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+              >
+                <strong>
+                  <span
+                    class="pl-2"
+                  />
+                </strong>
+              </div>
+            </div>
           </div>
         </div>
       </div>
