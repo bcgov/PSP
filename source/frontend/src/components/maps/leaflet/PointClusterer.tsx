@@ -262,7 +262,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             point_count_abbreviated,
           } = cluster.properties as any;
           const size = pointCount < 100 ? 'small' : pointCount < 1000 ? 'medium' : 'large';
-
           // we have a cluster to render
           if (isCluster) {
             return (

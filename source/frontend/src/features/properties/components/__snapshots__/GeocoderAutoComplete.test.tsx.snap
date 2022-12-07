@@ -16,6 +16,7 @@ exports[`renders correctly... 1`] = `
     >
       <input
         class="form-control"
+        data-testid="geocoder-input"
         field="test"
         id="input-test"
         name="test"

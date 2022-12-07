@@ -32,6 +32,8 @@ const emptyFilter = {
   pid: '',
   pin: '',
   address: '',
+  latitude: '',
+  longitude: '',
 };
 
 const defaultFilter = {
@@ -51,6 +53,8 @@ const defaultFilter = {
   maxMarketValue: '',
   maxNetBookValue: '',
   name: '',
+  latitude: '',
+  longitude: '',
 };
 
 let filter: any = defaultFilter;

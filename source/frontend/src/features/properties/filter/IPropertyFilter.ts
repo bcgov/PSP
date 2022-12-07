@@ -12,4 +12,6 @@ export interface IPropertyFilter {
   pinOrPid: string;
   /** The address of the property. */
   address: string;
+  latitude?: number | string;
+  longitude?: number | string;
 }
