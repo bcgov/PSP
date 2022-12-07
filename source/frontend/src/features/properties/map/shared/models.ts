@@ -1,4 +1,4 @@
-import { IMapProperty } from 'features/properties/selector/models';
+import { IMapProperty } from 'components/propertySelector/models';
 import { Api_File } from 'models/api/File';
 import { Api_Property } from 'models/api/Property';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
@@ -114,7 +114,6 @@ export class PropertyForm {
       pid: pidParser(this.pid),
       pin: this.pin !== undefined ? Number(this.pin) : undefined,
       planNumber: this.planNumber,
-      landArea: 0,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
       region: toTypeCode(this.region),
       district: toTypeCode(this.district),

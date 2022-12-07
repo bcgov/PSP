@@ -3,13 +3,15 @@ import GenericModal from 'components/common/GenericModal';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import { PropertyForm } from 'features/properties/map/shared/models';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
-import { FormikProps } from 'formik';
+import { FormikHelpers, FormikProps } from 'formik';
 import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
 import { useMemo, useState } from 'react';
 import { useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { LeaseFormModel } from '../models';
@@ -24,7 +26,7 @@ export const AddLeaseContainer: React.FunctionComponent<
 > = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
-  const { setState } = React.useContext(MapStateContext);
+  const { selectedFileFeature, setState } = React.useContext(MapStateContext);
   const initialForm = useMemo<LeaseFormModel>(() => {
     return new LeaseFormModel();
   }, []);
@@ -36,21 +38,28 @@ export const AddLeaseContainer: React.FunctionComponent<
   const { search } = useMapSearch();
 
   useEffect(() => {
+    if (!!selectedFileFeature && !!formikRef.current) {
+      formikRef.current.resetForm();
+      formikRef.current?.setFieldValue('properties', [
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
+      ]);
+    }
     return () => {
-      setState({
-        type: MapStateActionTypes.SELECTED_LEASE_PROPERTY,
-        selectedLeaseProperty: null,
-      });
+      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
     };
-  }, [initialForm, setState]);
+  }, [initialForm, selectedFileFeature, setState]);
 
-  const saveLeaseFile = async (leaseFile: Api_Lease) => {
-    const response = await addLease(leaseFile, (userOverrideMessage?: string) =>
-      setAddLeaseParams({ lease: leaseFile, userOverride: userOverrideMessage }),
+  const saveLeaseFile = async (
+    leaseFormModel: LeaseFormModel,
+    formikHelpers: FormikHelpers<LeaseFormModel>,
+  ) => {
+    const leaseApi = leaseFormModel.toApi();
+    const response = await addLease(leaseFormModel.toApi(), (userOverrideMessage?: string) =>
+      setAddLeaseParams({ lease: leaseApi, userOverride: userOverrideMessage }),
     );
-    formikRef.current?.setSubmitting(false);
+    formikHelpers.setSubmitting(false);
     if (!!response?.id) {
-      formikRef.current?.resetForm();
+      formikHelpers.resetForm();
       await search();
       history.replace(`/mapview/sidebar/lease/${response.id}`);
     }

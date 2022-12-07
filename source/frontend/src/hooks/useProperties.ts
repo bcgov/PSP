@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { catchAxiosError } from 'customAxios';
+import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { useApiProperties } from 'hooks/pims-api';
 import { useGeoServer } from 'hooks/pims-api/useGeoServer';
 import { IPagedItems, IProperty } from 'interfaces';
@@ -27,13 +28,10 @@ export const useProperties = () => {
   const { getPropertyWfs } = useGeoServer();
 
   const fetchProperties = useApiRequestWrapper<
-    (
-      propertyBounds: API.IPaginateProperties | null,
-    ) => Promise<AxiosResponse<IPagedItems<IProperty>>>
+    (propertyBounds: IPropertyFilter | null) => Promise<AxiosResponse<IPagedItems<IProperty>>>
   >({
     requestFunction: useCallback(
-      async (propertyBounds: API.IPaginateProperties | null) =>
-        await getPropertiesPaged(propertyBounds),
+      async (propertyBounds: IPropertyFilter | null) => await getPropertiesPaged(propertyBounds),
       [getPropertiesPaged],
     ),
     requestName: actionTypes.GET_PARCELS,

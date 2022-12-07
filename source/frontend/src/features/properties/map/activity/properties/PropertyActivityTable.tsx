@@ -1,12 +1,12 @@
 import OverflowTip from 'components/common/OverflowTip';
 import { ColumnWithProps, Table } from 'components/Table';
 import { Section } from 'features/mapSideBar/tabs/Section';
-import { getFilePropertyName } from 'features/properties/selector/utils';
 import { Api_Property } from 'models/api/Property';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
 import { CellProps } from 'react-table';
 import { stringToFragment } from 'utils';
+import { getFilePropertyName } from 'utils/mapPropertyUtils';
 
 interface IPropertyActivityFormProps {
   fileProperties: Api_PropertyFile[];

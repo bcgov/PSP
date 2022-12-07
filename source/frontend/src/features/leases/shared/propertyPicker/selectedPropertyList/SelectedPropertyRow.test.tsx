@@ -1,4 +1,5 @@
-import { IMapProperty } from 'features/properties/selector/models';
+import { IMapProperty } from 'components/propertySelector/models';
+import { PropertyForm } from 'features/properties/map/shared/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -18,14 +19,18 @@ const onRemove = jest.fn();
 describe('SelectedPropertyRow component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<ISelectedPropertyRowProps> & { values?: { properties: IMapProperty[] } } = {},
+      Partial<ISelectedPropertyRowProps> & { values?: { properties: PropertyForm[] } } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
       <Formik onSubmit={noop} initialValues={renderOptions.values ?? {}}>
         {() => (
           <SelectedPropertyRow
-            property={renderOptions.values?.properties ? renderOptions.values?.properties[0] : {}}
+            property={
+              renderOptions.values?.properties
+                ? renderOptions.values?.properties[0]
+                : PropertyForm.fromMapProperty({})
+            }
             index={renderOptions.index ?? 0}
             onRemove={onRemove}
           />
@@ -78,7 +83,7 @@ describe('SelectedPropertyRow component', () => {
     const {
       component: { getByText },
     } = await setup({
-      values: { properties: mapProperties },
+      values: { properties: mapProperties.map(x => PropertyForm.fromMapProperty(x)) },
     });
     expect(getByText('PIN: 1234')).toBeVisible();
   });

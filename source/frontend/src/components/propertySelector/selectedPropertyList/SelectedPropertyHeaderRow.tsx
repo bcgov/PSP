@@ -1,7 +1,6 @@
-import { NoPaddingRow } from 'components/common/styles';
 import TooltipIcon from 'components/common/TooltipIcon';
 import * as React from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 interface ISelectedPropertyHeaderRowProps {}
@@ -10,7 +9,7 @@ export const SelectedPropertyHeaderRow: React.FunctionComponent<
   React.PropsWithChildren<ISelectedPropertyHeaderRowProps>
 > = props => {
   return (
-    <HeaderRow>
+    <HeaderRow className="no-gutters">
       <Col md={3}>Identifier</Col>
       <Col md={9}>
         Provide a descriptive name for this land
@@ -23,7 +22,7 @@ export const SelectedPropertyHeaderRow: React.FunctionComponent<
   );
 };
 
-const HeaderRow = styled(NoPaddingRow)`
+const HeaderRow = styled(Row)`
   font-size: 1.6rem;
   color: ${props => props.theme.css.lightVariantColor};
   border-bottom: 0.2rem solid ${props => props.theme.css.lightVariantColor};

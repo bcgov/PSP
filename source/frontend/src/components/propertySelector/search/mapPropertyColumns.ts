@@ -1,9 +1,9 @@
 import { ColumnWithProps } from 'components/Table';
 import { PidCell } from 'components/Table/PidCell';
 
-import { SelectableProperty } from '../models';
+import { SearchResultProperty } from '../models';
 
-const columns: ColumnWithProps<SelectableProperty>[] = [
+const columns: ColumnWithProps<SearchResultProperty>[] = [
   {
     Header: 'PID',
     accessor: 'pid',

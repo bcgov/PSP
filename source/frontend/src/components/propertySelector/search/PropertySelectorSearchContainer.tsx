@@ -4,21 +4,19 @@ import {
   useLayerQuery,
 } from 'components/maps/leaflet/LayerPopup';
 import { DistrictCodes, RegionCodes } from 'constants/index';
-import { FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
+import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 import { useFullyAttributedParcelMapLayer } from 'hooks/pims-api/useFullyAttributedParcelMapLayer';
 import { useGeocoderRepository } from 'hooks/useGeocoderRepository';
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
-import noop from 'lodash/noop';
-import polylabel from 'polylabel';
 import * as React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useTenant } from 'tenants';
+import { featuresToIdentifiedMapProperty } from 'utils/mapPropertyUtils';
 
-import { MapClickMonitor } from '../components/MapClickMonitor';
 import { ILayerSearchCriteria, IMapProperty } from '../models';
 import PropertySearchSelectorFormView from './PropertySearchSelectorFormView';
 
@@ -198,30 +196,9 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
         onAddressChange={handleOnAddressChange}
         onAddressSelect={handleOnAddressSelect}
       />
-      <MapClickMonitor addProperty={noop} />
     </>
   );
 };
-
-export const featuresToIdentifiedMapProperty = (
-  values: FeatureCollection<Geometry, GeoJsonProperties> | undefined,
-  address?: string,
-) =>
-  values?.features
-    ?.filter(feature => feature?.geometry?.type === 'Polygon')
-    .map((feature): IMapProperty => {
-      const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
-      const property: IMapProperty = {
-        pid: feature?.properties?.PID?.toString() ?? '',
-        pin: feature?.properties?.PIN?.toString() ?? '',
-        planNumber: feature?.properties?.PLAN_NUMBER?.toString() ?? '',
-        latitude: boundedCenter[1],
-        longitude: boundedCenter[0],
-        legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
-        address: address,
-      };
-      return property;
-    });
 
 // Not thread safe. Modifies the passed property.
 async function matchRegionAndDistrict(

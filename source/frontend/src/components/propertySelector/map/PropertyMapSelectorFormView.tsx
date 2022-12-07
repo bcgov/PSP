@@ -8,18 +8,19 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import * as React from 'react';
 import { useEffect } from 'react';
 
-import MapClickMonitor from '../components/MapClickMonitor';
+import MapClickMonitor from '../MapClickMonitor';
 import { IMapProperty } from '../models';
 import PropertyMapSelectorSubForm from './PropertyMapSelectorSubForm';
 
 export interface IPropertyMapSelectorFormViewProps {
   onSelectedProperty: (property: IMapProperty) => void;
   initialSelectedProperty?: IMapProperty;
+  selectedProperties: IMapProperty[];
 }
 
 const PropertyMapSelectorFormView: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorFormViewProps>
-> = ({ onSelectedProperty, initialSelectedProperty }) => {
+> = ({ onSelectedProperty, initialSelectedProperty, selectedProperties }) => {
   const { setState, cursor } = React.useContext(MapStateContext);
 
   const [selectedProperty, setSelectedProperty] = React.useState<IMapProperty | undefined>(
@@ -59,7 +60,11 @@ const PropertyMapSelectorFormView: React.FunctionComponent<
           onClickAway={onClickAway}
           selectedProperty={selectedProperty}
         />
-        <MapClickMonitor addProperty={addProperty} />
+        <MapClickMonitor
+          addProperty={addProperty}
+          modifiedProperties={selectedProperties}
+          source="PropertyMapSelectorFormView"
+        />
       </Section>
     </>
   );

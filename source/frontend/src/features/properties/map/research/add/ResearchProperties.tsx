@@ -1,5 +1,8 @@
-import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
-import { IMapProperty } from 'features/properties/selector/models';
+import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
+import { IMapProperty } from 'components/propertySelector/models';
+import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
+import SelectedPropertyRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -28,11 +31,23 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
                     const formProperty = PropertyForm.fromMapProperty(newProperty);
                     push(formProperty);
                   }}
-                  existingProperties={values.properties}
-                  onRemoveProperty={remove}
+                  modifiedProperties={values.properties}
                 />
               </Col>
             </Row>
+            <Section header="Selected properties">
+              <SelectedPropertyHeaderRow />
+              {values.properties.map((property, index) => (
+                <SelectedPropertyRow
+                  key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                  onRemove={() => remove(index)}
+                  nameSpace={`properties.${index}`}
+                  index={index}
+                  property={property}
+                />
+              ))}
+              {values.properties.length === 0 && <span>No Properties selected</span>}
+            </Section>
           </>
         )}
       </FieldArray>

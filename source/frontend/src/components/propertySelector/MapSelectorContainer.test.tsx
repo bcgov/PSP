@@ -6,12 +6,12 @@ import { noop } from 'lodash';
 import { mockFAParcelLayerResponse, mockGeocoderOptions } from 'mocks';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { featuresToIdentifiedMapProperty } from 'utils/mapPropertyUtils';
 import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 
-import { PropertyForm } from '../map/shared/models';
+import { PropertyForm } from '../../features/properties/map/shared/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
-import { featuresToIdentifiedMapProperty } from './search/PropertySelectorSearchContainer';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -39,9 +39,8 @@ describe('MapSelectorContainer component', () => {
     const utils = render(
       <Formik initialValues={{ properties: [] }} onSubmit={noop}>
         <MapSelectorContainer
-          onRemoveProperty={onRemoveProperty}
           onSelectedProperty={onSelectedProperty}
-          existingProperties={renderOptions.existingProperties ?? []}
+          modifiedProperties={renderOptions.modifiedProperties ?? []}
         />
       </Formik>,
       {
@@ -102,7 +101,7 @@ describe('MapSelectorContainer component', () => {
 
   it('lists selected properties', async () => {
     const { getByText } = setup({
-      existingProperties: [PropertyForm.fromMapProperty(testProperty)],
+      modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
     });
     await act(async () => {
       expect(getByText('PID: 123-456-789')).toBeVisible();
@@ -111,7 +110,7 @@ describe('MapSelectorContainer component', () => {
 
   it('displays all selected property attributes', async () => {
     const { getByText } = setup({
-      existingProperties: [PropertyForm.fromMapProperty(testProperty)],
+      modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
     });
     await act(async () => {
       expect(getByText(/SPS22411/g)).toBeVisible();
@@ -124,7 +123,7 @@ describe('MapSelectorContainer component', () => {
 
   it('selected properties can be removed', async () => {
     const { getByText } = setup({
-      existingProperties: [PropertyForm.fromMapProperty(testProperty)],
+      modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
     });
     const removeButton = getByText('Remove');
 
@@ -134,7 +133,7 @@ describe('MapSelectorContainer component', () => {
 
   it('selected properties display a warning if added', async () => {
     const { getByText, getByTitle, findByTestId, container } = setup({
-      existingProperties: [],
+      modifiedProperties: [],
     });
 
     const searchTab = getByText('Search');
@@ -169,7 +168,7 @@ describe('MapSelectorContainer component', () => {
 
   it('selected properties display a warning if added multiple times', async () => {
     const { getByText, getByTitle, findByTestId, container } = setup({
-      existingProperties: featuresToIdentifiedMapProperty(mockFAParcelLayerResponse as any)?.map(
+      modifiedProperties: featuresToIdentifiedMapProperty(mockFAParcelLayerResponse as any)?.map(
         p => PropertyForm.fromMapProperty(p),
       ),
     });

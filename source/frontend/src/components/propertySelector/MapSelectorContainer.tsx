@@ -1,34 +1,30 @@
 import { Button } from 'components/common/buttons';
-import * as Styled from 'components/common/styles';
 import {
   MapCursors,
   MapStateActionTypes,
   MapStateContext,
 } from 'components/maps/providers/MapStateContext';
-import { Section } from 'features/mapSideBar/tabs/Section';
+import { IMapProperty } from 'components/propertySelector/models';
+import { PropertyForm } from 'features/properties/map/shared/models';
 import * as React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { getPropertyName, NameSourceType } from 'utils/mapPropertyUtils';
 
-import { PropertyForm } from '../map/shared/models';
-import SelectedPropertyHeaderRow from './components/SelectedPropertyHeaderRow';
-import SelectedPropertyRow from './components/SelectedPropertyRow';
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
-import { IMapProperty } from './models';
 import { PropertySelectorTabsView, SelectorTabNames } from './PropertySelectorTabsView';
 import PropertySelectorSearchContainer from './search/PropertySelectorSearchContainer';
-import { getPropertyName, NameSourceType } from './utils';
+
 export interface IMapSelectorContainerProps {
   onSelectedProperty: (property: IMapProperty) => void;
-  onRemoveProperty: (index: number) => void;
-  existingProperties: PropertyForm[];
+  modifiedProperties: PropertyForm[];
 }
 
 export const MapSelectorContainer: React.FunctionComponent<
   React.PropsWithChildren<IMapSelectorContainerProps>
-> = ({ onSelectedProperty, onRemoveProperty, existingProperties }) => {
+> = ({ onSelectedProperty, modifiedProperties }) => {
   const { setState } = React.useContext(MapStateContext);
-  const [selectedProperties, setSelectedProperties] = useState<IMapProperty[]>([]);
+  const [searchSelectedProperties, setSearchSelectedProperties] = useState<IMapProperty[]>([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
     SelectorTabNames.map,
   );
@@ -44,44 +40,33 @@ export const MapSelectorContainer: React.FunctionComponent<
         MapSelectorView={
           <PropertyMapSelectorFormView
             initialSelectedProperty={
-              existingProperties?.length === 1 && existingProperties[0].apiId === undefined
-                ? existingProperties[0]
+              modifiedProperties?.length === 1 && modifiedProperties[0].apiId === undefined // why? Because create from map needs to show the info differently
+                ? modifiedProperties[0]
                 : undefined
             }
             onSelectedProperty={(property: IMapProperty) =>
-              addProperties([property], existingProperties, onSelectedProperty)
+              addProperties([property], modifiedProperties, onSelectedProperty)
             }
+            selectedProperties={modifiedProperties}
           />
         }
         ListSelectorView={
           <PropertySelectorSearchContainer
-            selectedProperties={selectedProperties}
-            setSelectedProperties={setSelectedProperties}
+            selectedProperties={searchSelectedProperties}
+            setSelectedProperties={setSearchSelectedProperties}
           />
         }
       ></PropertySelectorTabsView>
       {activeSelectorTab === SelectorTabNames.list ? (
         <Button
           variant="secondary"
-          onClick={() => addProperties(selectedProperties, existingProperties, onSelectedProperty)}
+          onClick={() =>
+            addProperties(searchSelectedProperties, modifiedProperties, onSelectedProperty)
+          }
         >
           Add to selection
         </Button>
       ) : null}
-      <Section header={undefined}>
-        <Styled.H3>Selected properties</Styled.H3>
-        <SelectedPropertyHeaderRow />
-        {existingProperties.map((property, index) => (
-          <SelectedPropertyRow
-            key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-            onRemove={() => onRemoveProperty(index)}
-            nameSpace={`properties.${index}`}
-            index={index}
-            property={property}
-          />
-        ))}
-        {existingProperties.length === 0 && <span>No Properties selected</span>}
-      </Section>
     </>
   );
 };

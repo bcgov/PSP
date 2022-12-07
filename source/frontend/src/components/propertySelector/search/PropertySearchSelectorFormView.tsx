@@ -3,10 +3,10 @@ import { Table } from 'components/Table';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 import * as React from 'react';
+import { getPropertyName } from 'utils/mapPropertyUtils';
 
-import { ILayerSearchCriteria, IMapProperty, SelectableProperty } from '../models';
-import { getPropertyName } from '../utils';
-import { LayerFilter } from './LayerFilter';
+import { ILayerSearchCriteria, IMapProperty, SearchResultProperty } from '../models';
+import LayerFilter from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
 export interface IPropertySearchSelectorFormViewProps {
@@ -36,12 +36,12 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
 }) => {
   const tableData =
     searchResults?.length <= 15
-      ? searchResults.map<SelectableProperty>(x => {
+      ? searchResults.map<SearchResultProperty>(x => {
           return { ...x, id: generatePropertyId(x) };
         })
       : [];
 
-  const selectedData = selectedProperties.map<SelectableProperty>(x => {
+  const selectedData = selectedProperties.map<SearchResultProperty>(x => {
     return { ...x, id: generatePropertyId(x) };
   });
 
@@ -63,7 +63,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
         />
       </Section>
       <Section header={undefined}>
-        <Table<SelectableProperty>
+        <Table<SearchResultProperty>
           manualPagination={false}
           name="map-properties"
           columns={mapPropertyColumns}

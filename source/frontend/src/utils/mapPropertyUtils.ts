@@ -1,9 +1,12 @@
-import { IMapProperty } from 'features/properties/selector/models';
+import { IMapProperty } from 'components/propertySelector/models';
+import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
+import { geoJSON } from 'leaflet';
 import { compact } from 'lodash';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
+import polylabel from 'polylabel';
 import { formatApiAddress, pidFormatter } from 'utils';
 
-import { Api_Geometry, Api_Property } from './../../../models/api/Property';
+import { Api_Geometry, Api_Property } from '../models/api/Property';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -87,3 +90,48 @@ export const getApiPropertyName = (property?: Api_Property): PropertyName => {
   };
   return getPropertyName(mapProperty);
 };
+
+export const mapFeatureToProperty = (
+  selectedFeature: Feature<Geometry, GeoJsonProperties>,
+): IMapProperty => {
+  const latLng = geoJSON(selectedFeature.geometry).getBounds().getCenter();
+  //todo: PSP-4407 need alternate source for the address,
+  const address = 'placeholder';
+  const latitude = selectedFeature?.properties?.CLICK_LAT_LNG?.lat ?? latLng.lat ?? undefined;
+  const longitude = selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng.lng ?? undefined;
+  return toMapProperty(selectedFeature, address, latitude, longitude);
+};
+
+export const featuresToIdentifiedMapProperty = (
+  values: FeatureCollection<Geometry, GeoJsonProperties> | undefined,
+  address?: string,
+) =>
+  values?.features
+    ?.filter(feature => feature?.geometry?.type === 'Polygon')
+    .map((feature): IMapProperty => {
+      const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
+      return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
+    });
+
+function toMapProperty(
+  feature: Feature<Geometry, GeoJsonProperties>,
+  address?: string,
+  latitude?: number,
+  longitude?: number,
+): IMapProperty {
+  return {
+    propertyId: feature?.properties?.PROPERTY_ID,
+    pid: feature?.properties?.PID?.toString() ?? undefined,
+    pin: feature?.properties?.PIN?.toString() ?? undefined,
+    latitude: latitude,
+    longitude: longitude,
+    planNumber: feature?.properties?.PLAN_NUMBER?.toString() ?? undefined,
+    address: address,
+    legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
+    region: feature?.properties?.REGION_NUMBER,
+    regionName: feature?.properties?.REGION_NAME,
+    district: feature?.properties?.DISTRICT_NUMBER,
+    districtName: feature?.properties?.DISTRICT_NAME,
+    name: feature?.properties?.NAME,
+  };
+}

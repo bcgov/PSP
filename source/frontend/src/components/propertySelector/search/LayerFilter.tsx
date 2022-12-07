@@ -41,9 +41,8 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
 }) => {
   const formikRef = useRef<FormikProps<ILayerSearchCriteria>>(null);
 
-  const onSearchSubmit = (values: ILayerSearchCriteria, { setSubmitting }: any) => {
+  const onSearchSubmit = (values: ILayerSearchCriteria) => {
     setFilter(values);
-    setSubmitting(false);
   };
 
   const resetFilter = () => {
@@ -140,7 +139,11 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
             <Col xl={2} className="pr-0">
               <Row>
                 <Col className="pr-0">
-                  <SearchButton disabled={formikProps.isSubmitting} />
+                  <SearchButton
+                    disabled={formikProps.isSubmitting}
+                    onClick={formikProps.submitForm}
+                    type="button"
+                  />
                 </Col>
                 <Col className="pl-0">
                   <ResetButton

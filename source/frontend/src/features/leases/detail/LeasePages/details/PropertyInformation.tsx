@@ -1,10 +1,10 @@
 import { Form, InputGroup } from 'components/common/form';
 import * as Styled from 'features/leases/detail/styles';
-import { getApiPropertyName } from 'features/properties/selector/utils';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
+import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
 import AddressSubForm from '../AddressSubForm';
 

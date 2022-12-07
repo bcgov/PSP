@@ -1,19 +1,19 @@
 import { RemoveButton } from 'components/common/buttons';
+import { Input } from 'components/common/form';
 import { InlineInput } from 'components/common/form/styles';
 import OverflowTip from 'components/common/OverflowTip';
-import { NoPaddingRow } from 'components/common/styles';
-import DraftCircleNumber from 'features/properties/selector/components/DraftCircleNumber';
-import { IMapProperty } from 'features/properties/selector/models';
-import { getPropertyName, NameSourceType } from 'features/properties/selector/utils';
+import DraftCircleNumber from 'components/propertySelector/selectedPropertyList/DraftCircleNumber';
+import { PropertyForm } from 'features/properties/map/shared/models';
 import * as React from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { withNameSpace } from 'utils/formUtils';
+import { getPropertyName, NameSourceType } from 'utils/mapPropertyUtils';
 
 export interface ISelectedPropertyRowProps {
   index: number;
   nameSpace?: string;
   onRemove: () => void;
-  property: IMapProperty;
+  property: PropertyForm;
 }
 
 export const SelectedPropertyRow: React.FunctionComponent<
@@ -36,25 +36,39 @@ export const SelectedPropertyRow: React.FunctionComponent<
       break;
   }
   return (
-    <NoPaddingRow className="align-items-center mb-3">
-      <Col md={3}>
-        <div className="mb-0 d-flex align-items-center">
-          <DraftCircleNumber text={(index + 1).toString()} />
-          <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
-        </div>
+    <Row className="align-items-center mb-3 no-gutters">
+      <Col md={3} className="mb-0 d-flex align-items-center">
+        <DraftCircleNumber text={(index + 1).toString()} />
+        <OverflowTip fullText={propertyIdentifier} className="pl-3" />
       </Col>
-      <Col md={7}>
+      <Col md={6}>
         <InlineInput
-          className="mb-0 w-100"
+          className="mb-0 w-100 pr-3"
           label=""
           field={withNameSpace(nameSpace, 'name')}
           displayErrorTooltips={true}
+          disabled
         />
       </Col>
       <Col md={2}>
+        <Row className="no-gutters align-items-center">
+          <Col>
+            <Input
+              className="mb-0 w-100"
+              label=""
+              field={withNameSpace(nameSpace, 'landArea')}
+              displayErrorTooltips={true}
+            />
+          </Col>
+          <Col xs="auto">
+            m<sup>2</sup>
+          </Col>
+        </Row>
+      </Col>
+      <Col md={1}>
         <RemoveButton onRemove={onRemove} />
       </Col>
-    </NoPaddingRow>
+    </Row>
   );
 };
 

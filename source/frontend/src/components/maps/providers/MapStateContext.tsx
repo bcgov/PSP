@@ -139,8 +139,14 @@ export const MapStateContextProvider: React.FC<
             draft.cursor = action.cursor;
           });
         case MapStateActionTypes.IS_SELECTING:
-          if (![MapState.ACQUISITION_FILE, MapState.RESEARCH_FILE].includes(prevState.mapState)) {
-            throw Error('Cannot enter selection mode unless in the context of a file');
+          if (
+            ![MapState.ACQUISITION_FILE, MapState.RESEARCH_FILE, MapState.LEASE_FILE].includes(
+              prevState.mapState,
+            )
+          ) {
+            throw Error(
+              `Cannot enter selection mode unless in the context of a file. Current ${prevState.mapState}`,
+            );
           }
           return produce(prevState, draft => {
             draft.isSelecting = action.isSelecting;

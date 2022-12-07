@@ -1,5 +1,8 @@
-import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
-import { IMapProperty } from 'features/properties/selector/models';
+import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
+import { IMapProperty } from 'components/propertySelector/models';
+import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
+import SelectedPropertyRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, FormikProps } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 
@@ -24,21 +27,35 @@ export const AcquisitionProperties: React.FunctionComponent<
 
       <FieldArray name="properties">
         {({ push, remove }) => (
-          <Row className="py-3 no-gutters">
-            <Col>
-              <MapSelectorContainer
-                onSelectedProperty={(newProperty: IMapProperty) => {
-                  const formProperty = PropertyForm.fromMapProperty(newProperty);
-                  if (values.properties?.length === 0) {
-                    formikProps.setFieldValue(`region`, formProperty.region);
-                  }
-                  push(formProperty);
-                }}
-                existingProperties={values.properties}
-                onRemoveProperty={remove}
-              />
-            </Col>
-          </Row>
+          <>
+            <Row className="py-3 no-gutters">
+              <Col>
+                <MapSelectorContainer
+                  onSelectedProperty={(newProperty: IMapProperty) => {
+                    const formProperty = PropertyForm.fromMapProperty(newProperty);
+                    if (values.properties?.length === 0) {
+                      formikProps.setFieldValue(`region`, formProperty.region);
+                    }
+                    push(formProperty);
+                  }}
+                  modifiedProperties={values.properties}
+                />
+              </Col>
+            </Row>
+            <Section header="Selected properties">
+              <SelectedPropertyHeaderRow />
+              {formikProps.values.properties.map((property, index) => (
+                <SelectedPropertyRow
+                  key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                  onRemove={() => remove(index)}
+                  nameSpace={`properties.${index}`}
+                  index={index}
+                  property={property}
+                />
+              ))}
+              {formikProps.values.properties.length === 0 && <span>No Properties selected</span>}
+            </Section>
+          </>
         )}
       </FieldArray>
     </>
