@@ -126,6 +126,14 @@ exports[`LeaseContainer component renders as expected 1`] = `
   min-width: 23rem;
 }
 
+.c3.c3 .btn.btn-link {
+  color: white;
+}
+
+.c3.c3 .btn.btn-link:hover {
+  color: white;
+}
+
 .c16 {
   width: 100%;
   height: 100%;

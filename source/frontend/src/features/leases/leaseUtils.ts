@@ -15,12 +15,12 @@ import {
  * return all of the person tenant names and organization tenant names of this lease
  * @param lease
  */
-export const getAllNames = (lease?: ILease): string => {
+export const getAllNames = (lease?: ILease): string[] => {
   const allNames =
     lease?.persons
       ?.map<string>(p => formatNames([p.firstName, p.middleNames, p.surname]))
       .concat(lease?.organizations?.map(p => p.name)) ?? [];
-  return allNames.join(', ');
+  return allNames;
 };
 
 export const formLeaseToApiLease = (formLease: IFormLease): ILease => {
