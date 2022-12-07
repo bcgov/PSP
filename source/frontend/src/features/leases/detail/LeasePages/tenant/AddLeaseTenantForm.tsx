@@ -1,3 +1,4 @@
+import { Button } from 'components/common/buttons';
 import { TableSelect } from 'components/common/form';
 import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import { TENANT_TYPES } from 'constants/API';
@@ -6,7 +7,7 @@ import { Formik, FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { defaultFormLease, IContactSearchResult, IFormLease } from 'interfaces';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { Link, Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
@@ -62,14 +63,20 @@ export const AddLeaseTenantForm: React.FunctionComponent<
                 addLabel="Selected tenant(s)"
                 selectedTableHeader={SelectedTableHeader}
               >
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    setShowContactManager(true);
-                  }}
-                >
-                  Select Tenant(s)
-                </Button>
+                <Row>
+                  <Col>
+                    <StyledButton
+                      className="ml-auto"
+                      variant="secondary"
+                      onClick={() => {
+                        setShowContactManager(true);
+                      }}
+                    >
+                      Select Tenant(s)
+                    </StyledButton>
+                  </Col>
+                </Row>
+
                 <ContactManagerModal
                   selectedRows={selectedTenants.map<IContactSearchResult>(selectedTenant => {
                     return selectedTenant.original ?? { id: selectedTenant?.id?.toString() ?? '' };
@@ -100,6 +107,9 @@ export const AddLeaseTenantForm: React.FunctionComponent<
 const StyledFormBody = styled.div`
   margin-top: 3rem;
   text-align: left;
+`;
+const StyledButton = styled(Button)`
+  float: left;
 `;
 
 export default AddLeaseTenantForm;

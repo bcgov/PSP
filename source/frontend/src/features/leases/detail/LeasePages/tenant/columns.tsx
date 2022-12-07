@@ -3,7 +3,6 @@ import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
 import { Select, SelectOption } from 'components/common/form';
 import { ColumnWithProps } from 'components/Table';
 import { getPrimaryContact } from 'features/contacts/contactUtils';
-import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
@@ -43,7 +42,9 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       width: 120,
       maxWidth: 150,
       Cell: (props: CellProps<FormTenant>) => (
-        <Link to={`/contact/${props.row.original.id}`}>{props.row.original.summary}</Link>
+        <Link to={`/contact/${props.row.original.id}`} target="_blank" rel="noopener noreferrer">
+          {props.row.original.summary}
+        </Link>
       ),
     },
     {

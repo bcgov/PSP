@@ -25,7 +25,6 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
 > = ({ nameSpace, disabled }) => {
   const { values } = useFormikContext<IFormLease>();
   const tenant: FormTenant = getIn(values, nameSpace);
-  console.log('values', values);
   let primaryContact = tenant?.initialPrimaryContact;
   if (primaryContact?.id !== tenant?.primaryContactId) {
     primaryContact = tenant?.primaryContactId
@@ -33,7 +32,6 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
       : undefined;
   }
   const primaryContactName = formatApiPersonNames(primaryContact);
-  //TODO: Change link to
   return (
     <StyledSectionWrapper>
       <SectionField labelWidth="2" contentWidth="4" label="Organization">

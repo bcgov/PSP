@@ -4,7 +4,7 @@ import * as Styled from 'components/common/form/styles';
 import { ColumnWithProps, Table } from 'components/Table';
 import { getIn, useFormikContext } from 'formik';
 import _ from 'lodash';
-import React, { ReactNode, useMemo } from 'react';
+import React, { ReactNode } from 'react';
 import { Container, FormControlProps } from 'react-bootstrap';
 import { getColumnsWithRemove } from 'utils/columnUtils';
 
@@ -60,19 +60,12 @@ export const TableSelect = <T extends { id?: string | number }>({
   disableButton,
 }: TableSelectProps<T>) => {
   const { values, setFieldValue } = useFormikContext<any>();
-  const existingItems: T[] = useMemo(() => {
-    return getIn(values, field) ?? [];
-  }, [values, field]);
-  const columnsWithRemove = useMemo(
-    () => getColumnsWithRemove<T>((rows: T[]) => setFieldValue(field, rows), [...columns]),
-    [columns, field, setFieldValue],
+  const existingItems: T[] = getIn(values, field) ?? [];
+  const columnsWithRemove = getColumnsWithRemove<T>(
+    (rows: T[]) => setFieldValue(field, rows),
+    [...columns],
   );
-  React.useEffect(() => {
-    setFieldValue(
-      field,
-      _.uniqWith(_.concat(existingItems, selectedItems), (p1, p2) => p1.id === p2.id),
-    );
-  }, [existingItems, selectedItems, field, setFieldValue]);
+
   return (
     <Container className="col-md-12">
       {!disabled && (
