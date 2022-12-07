@@ -132,16 +132,6 @@ describe('MapFilterBar', () => {
     });
   });
 
-  it('loads filter values if provided', () => {
-    const providedFilter: IPropertyFilter = {
-      pinOrPid: 'mockPid',
-      searchBy: 'address',
-      address: 'mockaddress',
-    };
-    const { getByText } = render(getUiElement(providedFilter));
-    expect(getByText('Address')).toBeVisible();
-  });
-
   it('resets values when reset button is clicked', async () => {
     const { container, getByTestId } = render(getUiElement(defaultFilter));
 

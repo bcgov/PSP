@@ -248,23 +248,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c2 {
-  height: 100%;
-}
-
-.c3 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c9 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c12 {
+  .c12 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
@@ -286,6 +270,22 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
 .c12 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
+}
+
+.c2 {
+  height: 100%;
+}
+
+.c3 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c9 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
 }
 
 .c0 {

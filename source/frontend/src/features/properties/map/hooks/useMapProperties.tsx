@@ -15,10 +15,12 @@ export const useMapProperties = () => {
     (params?: IGeoSearchParams) => {
       const geoserver_params = {
         STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
-        PID_PADDED: params?.PID,
+        PID: params?.PID,
         PIN: params?.PIN,
       };
-      const url = `${propertiesUrl}${geoserver_params ? toCqlFilter(geoserver_params) : ''}`;
+      const url = `${propertiesUrl}${
+        geoserver_params ? toCqlFilter(geoserver_params, false, params?.forceExactMatch) : ''
+      }`;
       return CustomAxios().get<FeatureCollection>(url);
     },
     [propertiesUrl],

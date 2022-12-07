@@ -59,9 +59,18 @@ const defaultFilterValues: IPropertyFilter = {
   searchBy: 'pinOrPid',
   pinOrPid: '',
   address: '',
+  latitude: '',
+  longitude: '',
 };
 
-const whitelistedFilterKeys = ['PID', 'PIN', 'STREET_ADDRESS_1', 'LOCATION'];
+const whitelistedFilterKeys = [
+  'PID',
+  'PIN',
+  'STREET_ADDRESS_1',
+  'LOCATION',
+  'latitude',
+  'longitude',
+];
 
 /**
  * Converts the map filter to a geo search filter.
@@ -72,8 +81,11 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
   return {
     PID: pinOrPidValue,
-    PIN: undefined,
+    PIN: pinOrPidValue,
     STREET_ADDRESS_1: filter.address,
+    latitude: filter.latitude,
+    longitude: filter.longitude,
+    forceExactMatch: true,
   };
 };
 

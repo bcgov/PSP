@@ -133,6 +133,10 @@ export const MapStateContextProvider: React.FC<
         case MapStateActionTypes.LOADING:
           return produce(prevState, draft => {
             draft.loading = action.loading;
+            draft.selectedInventoryProperty = null;
+            draft.selectedFileFeature = null;
+            draft.selectedLeaseProperty = null;
+            draft.selectedFeature = null;
           });
         case MapStateActionTypes.CURSOR:
           return produce(prevState, draft => {
