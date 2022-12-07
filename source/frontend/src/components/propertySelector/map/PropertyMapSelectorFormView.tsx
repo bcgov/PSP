@@ -60,11 +60,7 @@ const PropertyMapSelectorFormView: React.FunctionComponent<
           onClickAway={onClickAway}
           selectedProperty={selectedProperty}
         />
-        <MapClickMonitor
-          addProperty={addProperty}
-          modifiedProperties={selectedProperties}
-          source="PropertyMapSelectorFormView"
-        />
+        <MapClickMonitor addProperty={addProperty} modifiedProperties={selectedProperties} />
       </Section>
     </>
   );

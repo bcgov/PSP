@@ -11,15 +11,14 @@ import { IMapProperty } from './models';
 interface IMapClickMonitorProps {
   addProperty: (property: IMapProperty) => void;
   modifiedProperties: IMapProperty[];
-  source: string;
 }
 
 export const MapClickMonitor: React.FunctionComponent<
   React.PropsWithChildren<IMapClickMonitorProps>
-> = ({ addProperty, modifiedProperties, source }) => {
+> = ({ addProperty, modifiedProperties }) => {
   const { selectedFeature } = useContext(MapStateContext);
   const previous = usePrevious(selectedFeature);
-  useDraftMarkerSynchronizer(modifiedProperties, source);
+  useDraftMarkerSynchronizer(modifiedProperties);
 
   useDeepCompareEffect(() => {
     if (

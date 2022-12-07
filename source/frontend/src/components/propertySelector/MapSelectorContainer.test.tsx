@@ -20,7 +20,6 @@ const mockAxios = new MockAdapter(axios);
 const store = mockStore({});
 
 const onSelectedProperty = jest.fn();
-const onRemoveProperty = jest.fn();
 
 const testProperty: IMapProperty = {
   pid: '123-456-789',

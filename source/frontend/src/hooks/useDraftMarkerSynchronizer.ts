@@ -11,7 +11,6 @@ import { useContext, useEffect } from 'react';
  * Get a list of draft markers from the current form values.
  * As long as a parcel/building has both a lat and a lng it will be returned by this method.
  * @param modifiedProperties the current form values to extract lat/lngs from.
- * @param initialProperties the original form values, used to exclude unchanged lat/lngs
  */
 const getDraftMarkers = (modifiedProperties: IMapProperty[]): PointFeature[] => {
   return modifiedProperties
@@ -38,9 +37,9 @@ const getDraftMarkers = (modifiedProperties: IMapProperty[]): PointFeature[] => 
 
 /**
  * A hook that automatically syncs any updates to the lat/lngs of the parcel form with the map.
- * @param param0 the namespace of the array within the active formik instance that contains the properties.
+ * @param modifiedProperties array that contains the properties to be drawn.
  */
-const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[], source: string) => {
+const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
   const { setState } = useContext(MapStateContext);
   const isMounted = useIsMounted();
   useEffect(() => {
@@ -49,8 +48,7 @@ const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[], source: 
 
   /**
    * Synchronize the markers that have been updated in the parcel form with the map, adding all new markers as drafts.
-   * @param modifiedProperties the current form values
-   * @param initialProperties the initial form values
+   * @param modifiedProperties the current properties
    */
   const synchronizeMarkers = React.useCallback(
     (modifiedProperties: IMapProperty[]) => {
