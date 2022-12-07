@@ -99,15 +99,6 @@ describe('MapSelectorContainer component', () => {
     expect(searchTab).toHaveClass('active');
   });
 
-  it('lists selected properties', async () => {
-    const { getByText } = setup({
-      modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
-    });
-    await act(async () => {
-      expect(getByText('PID: 123-456-789')).toBeVisible();
-    });
-  });
-
   it('displays all selected property attributes', async () => {
     const { getByText } = setup({
       modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
@@ -119,16 +110,6 @@ describe('MapSelectorContainer component', () => {
       expect(getByText(/5 - Okanagan-Shuswap/g)).toBeVisible();
       expect(getByText(/Test Legal Description/g)).toBeVisible();
     });
-  });
-
-  it('selected properties can be removed', async () => {
-    const { getByText } = setup({
-      modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
-    });
-    const removeButton = getByText('Remove');
-
-    await act(async () => userEvent.click(removeButton));
-    expect(onRemoveProperty).toHaveBeenCalled();
   });
 
   it('selected properties display a warning if added', async () => {
@@ -158,9 +139,11 @@ describe('MapSelectorContainer component', () => {
       legalDescription:
         'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
       longitude: -123.4617,
+      name: undefined,
       pid: '9727493',
-      pin: '',
+      pin: undefined,
       planNumber: 'NO_PLAN',
+      propertyId: undefined,
       region: 4,
       regionName: 'Cannot determine',
     });
