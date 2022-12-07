@@ -52,6 +52,7 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
 
 const SidebarFooterBar = styled(Row)`
   position: sticky;
+  padding-top: 2rem;
   bottom: 0;
   background: white;
   z-index: 10;

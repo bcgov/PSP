@@ -1,53 +1,50 @@
-import Api_TypeCode from 'models/api/TypeCode';
 import * as Yup from 'yup';
 
 import { isLeaseCategoryVisible } from './AdministrationSubForm';
 
-export const LeaseSchema = Yup.object().shape({
-  statusType: Yup.object().shape({ id: Yup.string().required('Required') }),
+export const AddLeaseYupSchema = Yup.object().shape({
+  statusTypeCode: Yup.string().required('Required'),
   startDate: Yup.date().required('Required'),
   expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
-  paymentReceivableType: Yup.object().shape({
-    id: Yup.string().required('Payment Receivable Type is required'),
-  }),
-  region: Yup.object().shape({ id: Yup.string().required('MOTI Region Type is required') }),
-  programType: Yup.object().shape({ id: Yup.string().required('Program Type is required') }),
+  paymentReceivableTypeCode: Yup.string().required('Payment Receivable Type is required'),
+  regionId: Yup.number().required('MOTI Region Type is required'),
+  programTypeCode: Yup.string().required('Program Type is required'),
   motiName: Yup.string().max(200, 'MOTI Contact must be at most 200 characters'),
-  otherProgramType: Yup.string().when('programType', {
-    is: (programType: string) => programType && programType === 'OTHER',
+  otherProgramTypeDescription: Yup.string().when('programTypeCode', {
+    is: (programTypeCode: string) => programTypeCode && programTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most 200 characters'),
     otherwise: Yup.string().nullable(),
   }),
-  type: Yup.object().shape({ id: Yup.string().required('Lease Type is required') }),
+  leaseTypeCode: Yup.string().required('Lease Type is required'),
   hasPhysicalLicense: Yup.string().nullable(),
   hasDigitalLicense: Yup.string().nullable(),
-  otherType: Yup.string().when('type', {
-    is: (type: Api_TypeCode<string>) => type?.id && type.id === 'OTHER',
+  otherLeaseTypeDescription: Yup.string().when('leaseTypeCode', {
+    is: (leaseTypeCode: string) => leaseTypeCode && leaseTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most 200 characters'),
     otherwise: Yup.string().nullable(),
   }),
-  categoryType: Yup.object()
-    .when('type', {
-      is: (type: Api_TypeCode<string>) => type?.id && isLeaseCategoryVisible(type.id),
-      then: Yup.object().shape({ id: Yup.string().required('Category type required') }),
-      otherwise: Yup.object().nullable(),
+  categoryTypeCode: Yup.string()
+    .when('leaseTypeCode', {
+      is: (leaseTypeCode: string) => leaseTypeCode && isLeaseCategoryVisible(leaseTypeCode),
+      then: Yup.string().required('Category type required'),
+      otherwise: Yup.string().nullable(),
     })
     .nullable()
-    .default({}),
-  otherCategoryType: Yup.string().when('categoryType', {
-    is: (categoryType: string) => categoryType && categoryType === 'OTHER',
+    .default(''),
+  otherCategoryTypeDescription: Yup.string().when('categoryTypeCode', {
+    is: (categoryTypeCode: string) => categoryTypeCode && categoryTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most 200 characters'),
     otherwise: Yup.string().nullable(),
   }),
-  purposeType: Yup.object().shape({ id: Yup.string().required('Purpose Type is required') }),
-  otherPurposeType: Yup.string().when('purposeType', {
-    is: (purposeType: string) => purposeType && purposeType === 'OTHER',
+  purposeTypeCode: Yup.string().required('Purpose Type is required'),
+  otherPurposeTypeDescription: Yup.string().when('purposeTypeCode', {
+    is: (purposeTypeCode: string) => purposeTypeCode && purposeTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most 200 characters'),

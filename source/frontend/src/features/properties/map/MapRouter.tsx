@@ -4,6 +4,7 @@ import {
   MapStateContext,
 } from 'components/maps/providers/MapStateContext';
 import Claims from 'constants/claims';
+import { AddLeaseContainer } from 'features/leases';
 import MotiInventoryContainer from 'features/mapSideBar/MotiInventoryContainer';
 import { Api_Property } from 'models/api/Property';
 import queryString from 'query-string';
@@ -56,6 +57,17 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
       }),
     [location],
   );
+
+  const isLease = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/lease/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
   const setShowSideBar = props.setShowSideBar;
 
   useEffect(() => {
@@ -64,13 +76,15 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.ACQUISITION_FILE });
       } else if (isResearch) {
         setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.RESEARCH_FILE });
+      } else if (isLease) {
+        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.LEASE_FILE });
       }
       setShowSideBar(true);
     } else {
       setShowSideBar(false);
       setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
     }
-  }, [isAcquisition, isResearch, matched, setShowSideBar, setState]);
+  }, [isAcquisition, isResearch, isLease, matched, setShowSideBar, setState]);
 
   const onClose = () => {
     history.push('/mapview');
@@ -136,6 +150,14 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         exact
         key={'PropertyNonInventory'}
         title={'Property Information - Non Inventory'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/lease/new`}
+        customRender={() => <AddLeaseContainer onClose={onClose} />}
+        claim={Claims.LEASE_ADD}
+        exact
+        key={'NewLease'}
+        title={'Create Lease'}
       />
     </Switch>
   );

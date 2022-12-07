@@ -1,31 +1,26 @@
-import {
-  InlineCol,
-  InlineFastDatePicker,
-  InlineInput,
-  InlineSelect,
-} from 'components/common/form/styles';
+import { FastDatePicker, Input, Select } from 'components/common/form';
+import { InlineInput } from 'components/common/form/styles';
 import * as API from 'constants/API';
+import { Section } from 'features/mapSideBar/tabs/Section';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { LeaseH3 } from '../detail/styles';
-import { FormLease } from '../models';
-import * as Styled from './styles';
+import { LeaseFormModel } from '../models';
 
 export interface IAdministrationSubFormProps {
-  formikProps: FormikProps<FormLease>;
+  formikProps: FormikProps<LeaseFormModel>;
 }
 
 const AdministrationSubForm: React.FunctionComponent<
   React.PropsWithChildren<IAdministrationSubFormProps>
 > = ({ formikProps }) => {
   const { values, setFieldValue } = formikProps;
-  const { categoryType, type, purposeType, programType } = values;
+  const { categoryTypeCode, leaseTypeCode, purposeTypeCode, programTypeCode } = values;
   const { getOptionsByType } = useLookupCodeHelpers();
-  const paymentReceivableTypes = getOptionsByType(API.LEASE_PAYMENT_RECEIVABLE_TYPES);
   const programTypes = getOptionsByType(API.LEASE_PROGRAM_TYPES);
   const types = getOptionsByType(API.LEASE_TYPES);
   const categoryTypes = getOptionsByType(API.LEASE_CATEGORY_TYPES);
@@ -36,155 +31,139 @@ const AdministrationSubForm: React.FunctionComponent<
 
   //clear the associated other fields if the corresponding type has its value changed from other to something else.
   useEffect(() => {
-    if (!!categoryType?.id && categoryType?.id !== 'OTHER') {
-      setFieldValue('otherCategoryType', '');
+    if (!!categoryTypeCode && categoryTypeCode !== 'OTHER') {
+      setFieldValue('otherCategoryTypeDescription', '');
     }
-    if (!!type?.id && type?.id !== 'OTHER') {
-      setFieldValue('otherType', '');
+    if (!!leaseTypeCode && leaseTypeCode !== 'OTHER') {
+      setFieldValue('otherLeaseTypeDescription', '');
     }
-    if (!!type?.id && !isLeaseCategoryVisible(type?.id)) {
-      setFieldValue('otherCategoryType', '');
-      setFieldValue('categoryType.id', '');
+    if (!!leaseTypeCode && !isLeaseCategoryVisible(leaseTypeCode)) {
+      setFieldValue('otherCategoryTypeDescription', '');
+      setFieldValue('categoryTypeCode', '');
     }
-    if (!!purposeType?.id && purposeType?.id !== 'OTHER') {
-      setFieldValue('otherPurposeType', '');
+    if (!!purposeTypeCode && purposeTypeCode !== 'OTHER') {
+      setFieldValue('otherPurposeTypeDescription', '');
     }
-    if (!!programType?.id && programType?.id !== 'OTHER') {
-      setFieldValue('otherProgramType', '');
+    if (!!programTypeCode && programTypeCode !== 'OTHER') {
+      setFieldValue('otherProgramTypeDescription', '');
     }
-  }, [categoryType, type, purposeType, programType, setFieldValue]);
+  }, [categoryTypeCode, leaseTypeCode, purposeTypeCode, programTypeCode, setFieldValue]);
 
   useEffect(() => {
-    if (!!type?.id && !isLeaseCategoryVisible(type?.id)) {
-      setFieldValue('categoryType.id', '');
+    if (!!leaseTypeCode && !isLeaseCategoryVisible(leaseTypeCode)) {
+      setFieldValue('categoryTypeCode', '');
     }
-  }, [type, setFieldValue]);
+  }, [leaseTypeCode, setFieldValue]);
 
   return (
-    <>
+    <Section header="Administration">
+      <SectionField label="MOTI Contact" labelWidth="2" contentWidth="8">
+        <InlineInput field="motiName" />
+      </SectionField>
+
+      <SectionField label="MOTI Region" labelWidth="2" contentWidth="4" required>
+        <Select field="regionId" options={regionTypes} placeholder="Select region" required />
+      </SectionField>
       <Row>
         <Col>
-          <LeaseH3>Administration</LeaseH3>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <InlineSelect
-            label="Receivable or Payable:"
-            required
-            field="paymentReceivableType.id"
-            options={paymentReceivableTypes}
-            placeholder="Select"
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Styled.LargeInlineInput label="MOTI Contact:" field="motiName" />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <InlineSelect
-            label="MOTI Region:"
-            field="region.id"
-            options={regionTypes}
-            placeholder="Select region"
-            required
-          />
-        </Col>
-      </Row>
-      <Row>
-        <InlineCol>
-          <InlineSelect
-            label="Program:"
-            field="programType.id"
-            options={programTypes}
-            placeholder="Select program"
-            required
-          />
-          {values?.programType?.id === 'OTHER' && (
-            <InlineInput label="Other Program:" field="otherProgramType" required />
-          )}
-        </InlineCol>
-      </Row>
-      <Row>
-        <InlineCol>
-          <InlineSelect
-            label="Type:"
-            field="type.id"
-            options={types}
-            placeholder="Select type"
-            required
-          />
-          {values?.type?.id === 'OTHER' && (
-            <InlineInput label="Describe other:" field="otherType" required />
-          )}
-        </InlineCol>
-      </Row>
-      {isLeaseCategoryVisible(values?.type?.id) && (
-        <Row>
-          <InlineCol>
-            <InlineSelect
-              label="Category:"
-              field="categoryType.id"
-              options={categoryTypes}
-              placeholder="Select category"
+          <SectionField label="Program" required>
+            <Select
+              field="programTypeCode"
+              options={programTypes}
+              placeholder="Select program"
               required
             />
-            {values?.categoryType?.id === 'OTHER' && (
-              <InlineInput label="Describe other:" field="otherCategoryType" required />
+          </SectionField>
+        </Col>
+        <Col>
+          {values?.programTypeCode === 'OTHER' && (
+            <SectionField label="Other Program" required>
+              <Input field="otherProgramTypeDescription" required />
+            </SectionField>
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <SectionField label="Type" required>
+            <Select field="leaseTypeCode" options={types} placeholder="Select type" required />
+          </SectionField>
+        </Col>
+        <Col>
+          {values?.leaseTypeCode === 'OTHER' && (
+            <SectionField label="Describe other" required>
+              <Input field="otherLeaseTypeDescription" required />
+            </SectionField>
+          )}
+        </Col>
+      </Row>
+
+      {isLeaseCategoryVisible(values?.leaseTypeCode) && (
+        <Row>
+          <Col>
+            <SectionField label="Category" required>
+              <Select
+                field="categoryTypeCode"
+                options={categoryTypes}
+                placeholder="Select category"
+                required
+              />
+            </SectionField>
+          </Col>
+          <Col>
+            {values?.categoryTypeCode === 'OTHER' && (
+              <SectionField label="Describe other" required>
+                <Input field="otherCategoryTypeDescription" required />
+              </SectionField>
             )}
-          </InlineCol>
+          </Col>
         </Row>
       )}
       <Row>
-        <InlineCol>
-          <InlineSelect
-            label="Purpose:"
-            required
-            field="purposeType.id"
-            options={purposeTypes}
-            placeholder="Select purpose"
-          />
-          {values?.purposeType?.id === 'OTHER' && (
-            <InlineInput label="Describe other:" field="otherPurposeType" required />
+        <Col>
+          <SectionField label="Purpose" required>
+            <Select
+              required
+              field="purposeTypeCode"
+              options={purposeTypes}
+              placeholder="Select purpose"
+            />
+          </SectionField>
+        </Col>
+        <Col>
+          {values?.purposeTypeCode === 'OTHER' && (
+            <SectionField label="Describe other" required>
+              <Input field="otherPurposeTypeDescription" required />
+            </SectionField>
           )}
-        </InlineCol>
-      </Row>
-      <Row>
-        <Col>
-          <InlineSelect
-            label="Initiator:"
-            field="initiatorType.id"
-            placeholder="Select initiator"
-            options={initiatorTypes}
-            tooltip="Where did this lease/license initiate?"
-          />
         </Col>
       </Row>
-      <Row>
-        <InlineCol>
-          <InlineSelect
-            label="Responsibility:"
-            field="responsibilityType.id"
-            placeholder="Select group responsible"
-            options={responsibilityTypes}
-            tooltip="Who is currently responsible?"
-          />
-          <InlineFastDatePicker
-            formikProps={formikProps}
-            label="Effective date of responsibility:"
-            field="responsibilityEffectiveDate"
-          />
-        </InlineCol>
-      </Row>
+      <SectionField
+        label="Initiator"
+        tooltip="Where did this lease/license initiate?"
+        labelWidth="2"
+        contentWidth="4"
+      >
+        <Select field="initiatorTypeCode" placeholder="Select initiator" options={initiatorTypes} />
+      </SectionField>
       <Row>
         <Col>
-          <Styled.LargeTextArea label="Description" field="description" />
+          <SectionField label="Responsibility" tooltip="Who is currently responsible?">
+            <Select
+              field="responsibilityTypeCode"
+              placeholder="Select group responsible"
+              options={responsibilityTypes}
+            />
+          </SectionField>
+        </Col>
+
+        <Col>
+          <SectionField label="Effective date">
+            <FastDatePicker formikProps={formikProps} field="responsibilityEffectiveDate" />
+          </SectionField>
         </Col>
       </Row>
-    </>
+    </Section>
   );
 };
 

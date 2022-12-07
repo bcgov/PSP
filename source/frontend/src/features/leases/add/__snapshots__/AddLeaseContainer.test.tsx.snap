@@ -2,45 +2,1464 @@
 
 exports[`AddLeaseContainer component renders as expected 1`] = `
 <DocumentFragment>
-  @media only screen and (max-width:1250px) {
-
-}
-
-@media only screen and (max-width:1250px) {
-
-}
-
-@media (max-width:560px) {
-
-}
-
-@media only screen and (max-width:1250px) {
-
-}
-
-<div
+  <div
     class="Toastify"
   />
-  @media only screen and (max-width:1250px) {
-
+  <div
+    class="container"
+  />
+  .c0 {
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
 }
 
-@media only screen and (max-width:1250px) {
-
+.c2 {
+  width: 100%;
+  border-bottom: solid 0.5rem;
 }
 
-@media (max-width:560px) {
-
-}
-
-@media only screen and (max-width:1250px) {
-
+.c1 {
+  font-size: 30px;
+  cursor: pointer;
 }
 
 <div
-    class="container"
-  />
-  .c29.btn {
+    class=""
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h1
+          class="c0 mr-auto"
+        >
+          <svg>
+            fence.svg
+          </svg>
+          Create Lease/License
+        </h1>
+      </div>
+      <div
+        class="col-auto"
+      >
+        <svg
+          class="c1"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>
+            close
+          </title>
+          <path
+            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="c2"
+    />
+  </div>
+  .c6.c6.form-control.is-valid {
+  background-image: none;
+}
+
+.c6.c6.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c9 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c10 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c0 {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c1 {
+  height: 100%;
+  width: 100%;
+}
+
+.c8 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+.c11 input.form-control {
+  min-width: 50rem;
+  max-width: 50rem;
+}
+
+.c7 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
+}
+
+.c2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        <form
+          class=""
+          novalidate=""
+        >
+          <div
+            class="c3 form-section"
+          >
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Status:
+                  </label>
+                </div>
+                <div
+                  class="c5 required text-left col-4"
+                >
+                  <div
+                    class="required form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-statusTypeCode"
+                      name="statusTypeCode"
+                      required=""
+                    >
+                      <option
+                        value=""
+                      >
+                        Select Status
+                      </option>
+                      <option
+                        class="option"
+                        value="ACTIVE"
+                      >
+                        Active
+                      </option>
+                      <option
+                        class="option"
+                        value="DISCARD"
+                      >
+                        Discarded
+                      </option>
+                      <option
+                        class="option"
+                        value="DRAFT"
+                      >
+                        Draft
+                      </option>
+                      <option
+                        class="option"
+                        value="INACTIVE"
+                      >
+                        Inactive
+                      </option>
+                      <option
+                        class="option"
+                        value="TERMINATED"
+                      >
+                        Terminated
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Account type:
+                  </label>
+                </div>
+                <div
+                  class="c5 required text-left col-5"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-paymentReceivableTypeCode"
+                      name="paymentReceivableTypeCode"
+                    >
+                      <option
+                        class="option"
+                        value="PYBLBCTFA"
+                      >
+                        Payable (BCTFA as tenant)
+                      </option>
+                      <option
+                        class="option"
+                        value="PYBLMOTI"
+                      >
+                        Payable (MOTI as tenant)
+                      </option>
+                      <option
+                        class="option"
+                        value="RCVBL"
+                      >
+                        Receivable
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c4"
+                      >
+                        Start Date:
+                      </label>
+                    </div>
+                    <div
+                      class="c5 required text-left col"
+                    >
+                      <div
+                        class="required form-group"
+                      >
+                        <div
+                          class="react-datepicker-wrapper d-block"
+                        >
+                          <div
+                            class="react-datepicker__input-container"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="c6 form-control date-picker"
+                              id="datepicker-startDate"
+                              name="startDate"
+                              placeholder="--/--/----"
+                              required=""
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c4"
+                      >
+                        Expiry Date:
+                      </label>
+                    </div>
+                    <div
+                      class="c5 text-left col"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <div
+                          class="react-datepicker-wrapper d-block"
+                        >
+                          <div
+                            class="react-datepicker__input-container"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="c6 form-control date-picker"
+                              id="datepicker-expiryDate"
+                              name="expiryDate"
+                              placeholder="--/--/----"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Description:
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col"
+                >
+                  <div
+                    class="c7 textarea input form-group"
+                  >
+                    <textarea
+                      class="form-control"
+                      id="input-description"
+                      name="description"
+                      title=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c3 form-section"
+          >
+            <h2
+              class="c8"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  Administration
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c4"
+                  >
+                    MOTI Contact:
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col-8"
+                >
+                  <div
+                    class="c9 input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-motiName"
+                      name="motiName"
+                      title=""
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c4"
+                  >
+                    MOTI Region:
+                  </label>
+                </div>
+                <div
+                  class="c5 required text-left col-4"
+                >
+                  <div
+                    class="required form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-regionId"
+                      name="regionId"
+                      required=""
+                    >
+                      <option
+                        value=""
+                      >
+                        Select region
+                      </option>
+                      <option
+                        class="option"
+                        value="1"
+                      >
+                        South Coast Region
+                      </option>
+                      <option
+                        class="option"
+                        value="2"
+                      >
+                        Southern Interior Region
+                      </option>
+                      <option
+                        class="option"
+                        value="3"
+                      >
+                        Northern Region
+                      </option>
+                      <option
+                        class="option"
+                        value="4"
+                      >
+                        Cannot determine
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c4"
+                      >
+                        Program:
+                      </label>
+                    </div>
+                    <div
+                      class="c5 required text-left col"
+                    >
+                      <div
+                        class="required form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-programTypeCode"
+                          name="programTypeCode"
+                          required=""
+                        >
+                          <option
+                            value=""
+                          >
+                            Select program
+                          </option>
+                          <option
+                            class="option"
+                            value="BCFERRIES"
+                          >
+                            BC Ferries
+                          </option>
+                          <option
+                            class="option"
+                            value="BCTRANSIT"
+                          >
+                            BC Transit
+                          </option>
+                          <option
+                            class="option"
+                            value="BELLETERM"
+                          >
+                            Belleville Terminal
+                          </option>
+                          <option
+                            class="option"
+                            value="COMMBLDG"
+                          >
+                            Commercial Buildings
+                          </option>
+                          <option
+                            class="option"
+                            value="LCLGOVT"
+                          >
+                            Local Government/RCMP
+                          </option>
+                          <option
+                            class="option"
+                            value="OTHER"
+                          >
+                            Other Licencing
+                          </option>
+                          <option
+                            class="option"
+                            value="RAILTRAIL"
+                          >
+                            Rail Trails
+                          </option>
+                          <option
+                            class="option"
+                            value="RESRENTAL"
+                          >
+                            Residential Rentals
+                          </option>
+                          <option
+                            class="option"
+                            value="TMEP"
+                          >
+                            TMEP
+                          </option>
+                          <option
+                            class="option"
+                            value="TRANSLINK"
+                          >
+                            TransLink
+                          </option>
+                          <option
+                            class="option"
+                            value="UTILITY"
+                          >
+                            Utilities
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                />
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c4"
+                      >
+                        Type:
+                      </label>
+                    </div>
+                    <div
+                      class="c5 required text-left col"
+                    >
+                      <div
+                        class="required form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-leaseTypeCode"
+                          name="leaseTypeCode"
+                          required=""
+                        >
+                          <option
+                            value=""
+                          >
+                            Select type
+                          </option>
+                          <option
+                            class="option"
+                            value="LICONSTRC"
+                          >
+                            License to Construct
+                          </option>
+                          <option
+                            class="option"
+                            value="LIMOTIPRJ"
+                          >
+                            MOTI Project Use License
+                          </option>
+                          <option
+                            class="option"
+                            value="LIOCCACCS"
+                          >
+                            License of Occupation (access)
+                          </option>
+                          <option
+                            class="option"
+                            value="LIOCCTTLD"
+                          >
+                            License of Occupation (titled)
+                          </option>
+                          <option
+                            class="option"
+                            value="LIOCCUSE"
+                          >
+                            License of Occupation (use)
+                          </option>
+                          <option
+                            class="option"
+                            value="LIOCCUTIL"
+                          >
+                            License of Occupation (utilities)
+                          </option>
+                          <option
+                            class="option"
+                            value="LIPPUBHWY"
+                          >
+                            License of Prov Public Highway
+                          </option>
+                          <option
+                            class="option"
+                            value="LSGRND"
+                          >
+                            Ground Lease
+                          </option>
+                          <option
+                            class="option"
+                            value="LSREG"
+                          >
+                            Lease - Registered
+                          </option>
+                          <option
+                            class="option"
+                            value="LSUNREG"
+                          >
+                            Lease - Unregistered
+                          </option>
+                          <option
+                            class="option"
+                            value="MANUFHOME"
+                          >
+                            Manufactured Home Act
+                          </option>
+                          <option
+                            class="option"
+                            value="OTHER"
+                          >
+                            Other
+                          </option>
+                          <option
+                            class="option"
+                            value="RESLNDTEN"
+                          >
+                            Residential Tenancy Act
+                          </option>
+                          <option
+                            class="option"
+                            value="ROADXING"
+                          >
+                            Road Crossing
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                />
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c4"
+                      >
+                        Purpose:
+                      </label>
+                    </div>
+                    <div
+                      class="c5 required text-left col"
+                    >
+                      <div
+                        class="required form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-purposeTypeCode"
+                          name="purposeTypeCode"
+                          required=""
+                        >
+                          <option
+                            value=""
+                          >
+                            Select purpose
+                          </option>
+                          <option
+                            class="option"
+                            value="ACCCCOM"
+                          >
+                            Access (Industrial/Commercial)
+                          </option>
+                          <option
+                            class="option"
+                            value="ACCRES"
+                          >
+                            Access (Residential)
+                          </option>
+                          <option
+                            class="option"
+                            value="AGRIC"
+                          >
+                            Agricultural
+                          </option>
+                          <option
+                            class="option"
+                            value="BCFERRIES"
+                          >
+                            BC Ferries
+                          </option>
+                          <option
+                            class="option"
+                            value="CAMPING"
+                          >
+                            Camping
+                          </option>
+                          <option
+                            class="option"
+                            value="COMMBLDG"
+                          >
+                            Commercial Building
+                          </option>
+                          <option
+                            class="option"
+                            value="EMERGSVCS"
+                          >
+                            Emergency Services
+                          </option>
+                          <option
+                            class="option"
+                            value="ENCROACH"
+                          >
+                            Encroachment
+                          </option>
+                          <option
+                            class="option"
+                            value="FENCEGATE"
+                          >
+                            Fencing/Gate
+                          </option>
+                          <option
+                            class="option"
+                            value="GARDENING"
+                          >
+                            Gardening
+                          </option>
+                          <option
+                            class="option"
+                            value="GRAVEL"
+                          >
+                            Gravel
+                          </option>
+                          <option
+                            class="option"
+                            value="GRAZING"
+                          >
+                            Grazing
+                          </option>
+                          <option
+                            class="option"
+                            value="LOGGING"
+                          >
+                            Logging/Timber Harvest
+                          </option>
+                          <option
+                            class="option"
+                            value="MARINEFAC"
+                          >
+                            Marine Facility
+                          </option>
+                          <option
+                            class="option"
+                            value="MOBILEHM"
+                          >
+                            Mobile Home Pad
+                          </option>
+                          <option
+                            class="option"
+                            value="MTCYARD"
+                          >
+                            Maintenance Yard
+                          </option>
+                          <option
+                            class="option"
+                            value="OTHER"
+                          >
+                            Other*
+                          </option>
+                          <option
+                            class="option"
+                            value="PARK"
+                          >
+                            Park
+                          </option>
+                          <option
+                            class="option"
+                            value="PARKING"
+                          >
+                            Parking
+                          </option>
+                          <option
+                            class="option"
+                            value="PARKNRID"
+                          >
+                            Park and Ride
+                          </option>
+                          <option
+                            class="option"
+                            value="PIPELINE"
+                          >
+                            Pipeline
+                          </option>
+                          <option
+                            class="option"
+                            value="PRELOAD"
+                          >
+                            Preload
+                          </option>
+                          <option
+                            class="option"
+                            value="PRVTRANS"
+                          >
+                            Private transportation
+                          </option>
+                          <option
+                            class="option"
+                            value="RAILWAY"
+                          >
+                            Railway
+                          </option>
+                          <option
+                            class="option"
+                            value="RESTAREA"
+                          >
+                            Rest Area/Pullout
+                          </option>
+                          <option
+                            class="option"
+                            value="SIDEWALK"
+                          >
+                            Sidewalks/Landscaping
+                          </option>
+                          <option
+                            class="option"
+                            value="SIGNAGE"
+                          >
+                            Signage
+                          </option>
+                          <option
+                            class="option"
+                            value="SPCLEVNT"
+                          >
+                            Special Event
+                          </option>
+                          <option
+                            class="option"
+                            value="STGNGAREA"
+                          >
+                            Staging Area
+                          </option>
+                          <option
+                            class="option"
+                            value="STKPILING"
+                          >
+                            Stockpiling
+                          </option>
+                          <option
+                            class="option"
+                            value="STORAGE"
+                          >
+                            Storage
+                          </option>
+                          <option
+                            class="option"
+                            value="TOURINFO"
+                          >
+                            Tourist Info
+                          </option>
+                          <option
+                            class="option"
+                            value="TRAIL"
+                          >
+                            Trail
+                          </option>
+                          <option
+                            class="option"
+                            value="UTILINFRA"
+                          >
+                            Utilities-infrastructure
+                          </option>
+                          <option
+                            class="option"
+                            value="UTILOHDXG"
+                          >
+                            Utilities-overhead xing
+                          </option>
+                          <option
+                            class="option"
+                            value="UTILUGDXG"
+                          >
+                            Utilities-underground xing
+                          </option>
+                          <option
+                            class="option"
+                            value="WATERRES"
+                          >
+                            Water Reservoir
+                          </option>
+                          <option
+                            class="option"
+                            value="WEIGHSCL"
+                          >
+                            Weigh Scale
+                          </option>
+                          <option
+                            class="option"
+                            value="XING"
+                          >
+                            Crossing
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                />
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Initiator:
+                    <span
+                      class="ml-2"
+                    >
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon"
+                        id="section-field-tooltip"
+                      >
+                        <svg
+                          class="tooltip-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-initiatorTypeCode"
+                      name="initiatorTypeCode"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select initiator
+                      </option>
+                      <option
+                        class="option"
+                        value="HQ"
+                      >
+                        Headquarters
+                      </option>
+                      <option
+                        class="option"
+                        value="PROJECT"
+                      >
+                        Project
+                      </option>
+                      <option
+                        class="option"
+                        value="REGION"
+                      >
+                        Region
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c4"
+                      >
+                        Responsibility:
+                        <span
+                          class="ml-2"
+                        >
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon"
+                            id="section-field-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="c5 text-left col"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-responsibilityTypeCode"
+                          name="responsibilityTypeCode"
+                        >
+                          <option
+                            value=""
+                          >
+                            Select group responsible
+                          </option>
+                          <option
+                            class="option"
+                            value="HQ"
+                          >
+                            Headquarters
+                          </option>
+                          <option
+                            class="option"
+                            value="PROJECT"
+                          >
+                            Project
+                          </option>
+                          <option
+                            class="option"
+                            value="REGION"
+                          >
+                            Region
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c4"
+                      >
+                        Effective date:
+                      </label>
+                    </div>
+                    <div
+                      class="c5 text-left col"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <div
+                          class="react-datepicker-wrapper d-block"
+                        >
+                          <div
+                            class="react-datepicker__input-container"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="c6 form-control date-picker"
+                              id="datepicker-responsibilityEffectiveDate"
+                              name="responsibilityEffectiveDate"
+                              placeholder="--/--/----"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c3 form-section"
+          >
+            <h2
+              class="c8"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  Documentation
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Physical lease/license exists:
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col-5"
+                >
+                  <div
+                    class="c10 form-group"
+                  >
+                    <select
+                      class="form-control"
+                      id="input-hasPhysicalLicense"
+                      name="hasPhysicalLicense"
+                    >
+                      <option
+                        value="null"
+                      >
+                        Unknown
+                      </option>
+                      <option
+                        value="true"
+                      >
+                        Yes
+                      </option>
+                      <option
+                        value="false"
+                      >
+                        No
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Digital lease/license exists:
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col-5"
+                >
+                  <div
+                    class="c10 form-group"
+                  >
+                    <select
+                      class="form-control"
+                      id="input-hasDigitalLicense"
+                      name="hasDigitalLicense"
+                    >
+                      <option
+                        value="null"
+                      >
+                        Unknown
+                      </option>
+                      <option
+                        value="true"
+                      >
+                        Yes
+                      </option>
+                      <option
+                        value="false"
+                      >
+                        No
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Document location:
+                    <span
+                      class="ml-2"
+                    >
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon"
+                        id="section-field-tooltip"
+                      >
+                        <svg
+                          class="tooltip-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col"
+                >
+                  <div
+                    class="c7 textarea input form-group"
+                  >
+                    <textarea
+                      class="form-control"
+                      id="input-documentationReference"
+                      name="documentationReference"
+                      title=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c4"
+                  >
+                    LIS #:
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col"
+                >
+                  <div
+                    class="c9 c11 input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-tfaFileNumber"
+                      name="tfaFileNumber"
+                      title=""
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c4"
+                  >
+                    PS #:
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col"
+                >
+                  <div
+                    class="c9 c11 input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-psFileNo"
+                      name="psFileNo"
+                      title=""
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        class="container"
+      />
+    </div>
+  </div>
+  .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -70,49 +1489,49 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c29.btn:hover {
+.c1.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c29.btn:focus {
+.c1.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c29.btn.btn-primary {
+.c1.btn.btn-primary {
   border: none;
 }
 
-.c29.btn.btn-secondary {
+.c1.btn.btn-secondary {
   background: none;
 }
 
-.c29.btn.btn-info {
+.c1.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c29.btn.btn-info:hover,
-.c29.btn.btn-info:active,
-.c29.btn.btn-info:focus {
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
   background: none;
 }
 
-.c29.btn.btn-light {
+.c1.btn.btn-light {
   border: none;
 }
 
-.c29.btn.btn-dark {
+.c1.btn.btn-dark {
   border: none;
 }
 
-.c29.btn.btn-link {
+.c1.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -133,9 +1552,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c29.btn.btn-link:hover,
-.c29.btn.btn-link:active,
-.c29.btn.btn-link:focus {
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -144,14 +1563,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c29.btn.btn-link:disabled,
-.c29.btn.btn-link.disabled {
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c29.btn:disabled,
-.c29.btn:disabled:hover {
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -162,1920 +1581,38 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c29.Button .Button__icon {
+.c1.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c29.Button--icon-only:focus {
+.c1.Button--icon-only:focus {
   outline: none;
 }
 
-.c29.Button--icon-only .Button__icon {
+.c1.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c15.c15.form-control.is-valid {
-  background-image: none;
-}
-
-.c15.c15.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c19 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c19 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.c18 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c18 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.c23 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c23 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.c13 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline !important;
-  -webkit-box-align: baseline !important;
-  -ms-flex-align: baseline !important;
-  align-items: baseline !important;
-  gap: 2rem;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c21 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-}
-
-.c21 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c1 {
-  grid-area: breadcrumb;
-}
-
-.c1 .breadcrumb-item:not(:first-child)::before {
-  content: '>';
-  width: 0px;
-  margin-right: 1rem;
-}
-
-.c1 .breadcrumb li a {
-  max-height: 24px;
-}
-
-.c1 ol {
-  background-color: white;
-}
-
-.c4 {
-  padding: 2rem;
-  font-family: 'BCSans-Bold';
-}
-
-.c17 {
-  font-family: 'BcSans-Bold';
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-align: left;
-  padding: 1rem 0 0.5rem 0;
-  border-bottom: solid 0.3rem;
-}
-
-.c7 {
-  max-width: 60%;
-  margin: 0 auto;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  text-align: left;
-}
-
-.c6 {
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 0 2rem;
-  white-space: nowrap;
-}
-
-.c3 {
-  border-radius: 1rem 1rem 0 0;
-  grid-area: leaseheader;
-  color: white;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c3 label {
-  padding-right: 1rem;
-  margin: 0;
-}
-
-.c3 h1 {
-  min-width: 23rem;
-}
-
 .c0 {
-  width: 100%;
-  grid: 4rem 7.5rem 1fr / 22rem 1fr;
-  grid-template-areas: 'breadcrumb breadcrumb' 'leaseheader  leaseheader' 'leaseindex leasecontent';
-  display: grid;
-  height: 100%;
-  overflow: auto;
-  padding: 1rem;
-}
-
-.c25 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 3rem;
-}
-
-.c25 div {
-  -webkit-align-items: baseline !important;
-  -webkit-box-align: baseline !important;
-  -ms-flex-align: baseline !important;
-  align-items: baseline !important;
-}
-
-.c25 .form-label {
-  min-width: 0 !important;
-}
-
-.c30.c30.btn {
-  padding: 0;
-}
-
-.c30.c30.btn:hover {
-  color: red;
-}
-
-.c31 {
-  z-index: 100;
-  width: 100%;
-  padding: 0.5rem 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  gap: 1rem;
   position: -webkit-sticky;
   position: sticky;
-  bottom: 0rem;
-  background-color: white;
-}
-
-.c31 .btn {
-  min-height: 3rem;
-}
-
-.c20 input.form-control {
-  min-width: 50rem;
-  max-width: 50rem;
-}
-
-.c26 input.form-control {
-  min-width: 12rem;
-  max-width: 12rem;
-}
-
-.c28 select.form-control {
-  min-width: 12rem;
-  max-width: 12rem;
-}
-
-.c24 textarea.form-control {
-  min-width: 80rem;
-  height: 7rem;
-  resize: none;
-}
-
-.c22 textarea.form-control {
-  min-width: 80rem;
-  height: 18rem;
-  width: 80rem;
-  resize: none;
-}
-
-.c14 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c12 {
-  padding: 0 2.5rem;
-  height: 100%;
-  overflow-y: auto;
-  text-align: left;
-}
-
-.c12 .required .form-label:after {
-  content: ' *';
-}
-
-.c12 .row {
-  padding: 0.5rem 0;
-}
-
-.c12 .form-label {
-  font-weight: 700;
-}
-
-.c12 .row .col:first-of-type .form-label {
-  min-width: 21.5rem;
-}
-
-.c12 .form-control {
-  min-width: 25rem;
-  max-width: 25rem;
-}
-
-.c12 .col {
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  width: 100%;
-}
-
-.c27 {
-  gap: 1rem;
-}
-
-.c16 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-}
-
-.c5 {
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-  max-height: 8rem;
-  min-width: 11rem;
-  white-space: nowrap;
-  border-radius: 1rem;
-  background-color: white;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border: 1px solid;
-  padding: 0.2rem 1rem;
-  height: 90%;
-}
-
-.c5 b {
-  padding: 0.25rem 0;
-  color: black;
-}
-
-.c5.active {
-  border: 1px solid;
-}
-
-.c5.terminated {
-  border: 1px solid;
-}
-
-.c5.discard {
-  border: 1px solid;
-}
-
-.c5.draft {
-  border: 1px solid;
-}
-
-.c9 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-}
-
-.c8 {
-  width: 100%;
-  text-align: left;
-}
-
-.c8 div {
-  font-family: 'BCSans-Bold';
-}
-
-.c11:hover {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c11.disabled {
-  pointer-events: none;
-}
-
-.c11.active {
-  font-weight: 700;
-}
-
-.c11.active:before {
-  content: '';
-  -webkit-transform: translateX(-100%);
-  -ms-transform: translateX(-100%);
-  transform: translateX(-100%);
-  width: 0;
-  height: 0;
-  margin-left: -1rem;
-  display: inline-block;
-  border-top: 0.5rem solid transparent;
-  border-bottom: 0.5rem solid transparent;
-  border-left: 0.5rem solid;
-  border-right: 0.5rem solid transparent;
-}
-
-.c10 {
-  grid-area: leaseindex;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  text-align: left;
-  white-space: nowrap;
-  margin: 2rem 0 0 3rem;
-  border-right: 1px solid grey;
-  row-gap: 0.5rem;
-}
-
-@media only screen and (max-width:1250px) {
-  .c7 {
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: center;
-  }
-}
-
-@media only screen and (max-width:1250px) {
-  .c3 {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-@media (max-width:560px) {
-  .c0 {
-    grid-template-rows: minmax(4rem,1fr) minmax(7.5rem,2fr) minmax(5rem,1fr) 10fr;
-    grid-template-columns: 22rem 1fr;
-  }
-
-  .c0 .lease-header {
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    max-height: unset;
-  }
-}
-
-@media only screen and (max-width:1250px) {
-  .c8 {
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-  }
+  padding-top: 2rem;
+  bottom: 0;
+  background: white;
+  z-index: 10;
 }
 
 <div
-    class="c0"
+    class=""
   >
-    <nav
-      aria-label="breadcrumb"
-      class="c1"
-    >
-      <ol
-        class="breadcrumb"
-      >
-        <li
-          class="breadcrumb-item"
-        >
-          <a
-            href="#"
-            role="button"
-          >
-            Management
-          </a>
-        </li>
-        <li
-          aria-current="page"
-          class="breadcrumb-item active"
-        >
-          Details
-        </li>
-      </ol>
-    </nav>
     <div
-      class="c2 c3 lease-header"
-    >
-      <h1
-        class="c4"
-      >
-        Lease / License
-      </h1>
-      <div
-        class="c5 draft"
-      >
-        <b>
-          DRAFT
-        </b>
-        <b />
-      </div>
-      <div
-        class="c2 c6"
-      >
-        <label>
-          Expiry:
-        </label>
-        <b />
-      </div>
-      <div
-        class="c2 c6"
-      >
-        <b />
-      </div>
-      <div
-        class="c7"
-      >
-        <div />
-        <div
-          class="c2 c8"
-        >
-          <label>
-            Tenant:
-          </label>
-          <div
-            class="c9"
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      class="c10"
-    >
-      <a
-        class="c11 active disabled"
-        href="/"
-      >
-        Details
-      </a>
-      <a
-        class="c11 disabled"
-        href="/"
-      >
-        Tenant
-      </a>
-      <a
-        class="c11 disabled"
-        href="/"
-      >
-        Payments
-      </a>
-      <a
-        class="c11 disabled"
-        href="/"
-      >
-        Improvements
-      </a>
-      <a
-        class="c11 disabled"
-        href="/"
-      >
-        Insurance
-      </a>
-      <a
-        class="c11 disabled"
-        href="/"
-      >
-        Deposit
-      </a>
-      <a
-        class="c11 disabled"
-        href="/"
-      >
-        Surplus Declaration
-      </a>
-    </div>
-    <form
-      class="c12"
-      novalidate=""
+      class="c0 justify-content-end mt-auto no-gutters row"
     >
       <div
-        class="row"
-      >
-        <div
-          class="c13 col"
-        >
-          <div
-            class="required c14 form-group"
-          >
-            <label
-              class="form-label"
-              for="datepicker-startDate"
-            >
-              Start Date
-            </label>
-            <div
-              class="react-datepicker-wrapper d-block"
-            >
-              <div
-                class="react-datepicker__input-container"
-              >
-                <input
-                  autocomplete="off"
-                  class="c15 form-control date-picker"
-                  id="datepicker-startDate"
-                  name="startDate"
-                  placeholder="--/--/----"
-                  required=""
-                  type="text"
-                  value=""
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            class="c14 form-group"
-          >
-            <label
-              class="form-label"
-              for="datepicker-expiryDate"
-            >
-              Expiry Date (if known)
-            </label>
-            <div
-              class="react-datepicker-wrapper d-block"
-            >
-              <div
-                class="react-datepicker__input-container"
-              >
-                <input
-                  autocomplete="off"
-                  class="c15 form-control date-picker"
-                  id="datepicker-expiryDate"
-                  name="expiryDate"
-                  placeholder="--/--/----"
-                  type="text"
-                  value=""
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            class="c16"
-          />
-          <div
-            class="form-group"
-          >
-            <label
-              class="form-label"
-              for="input-statusType.id"
-            >
-              Status: 
-            </label>
-            <select
-              class="form-select form-control"
-              id="input-statusType.id"
-              name="statusType.id"
-            >
-              <option
-                value=""
-              >
-                Select Status
-              </option>
-              <option
-                class="option"
-                value="ACTIVE"
-              >
-                Active
-              </option>
-              <option
-                class="option"
-                value="DISCARD"
-              >
-                Discarded
-              </option>
-              <option
-                class="option"
-                value="DRAFT"
-              >
-                Draft
-              </option>
-              <option
-                class="option"
-                value="INACTIVE"
-              >
-                Inactive
-              </option>
-              <option
-                class="option"
-                value="TERMINATED"
-              >
-                Terminated
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <h3
-            class="c17"
-          >
-            Administration
-          </h3>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="required c18 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-paymentReceivableType.id"
-            >
-              Receivable or Payable: 
-            </label>
-            <select
-              class="form-select form-control"
-              id="input-paymentReceivableType.id"
-              name="paymentReceivableType.id"
-              required=""
-            >
-              <option
-                value=""
-              >
-                Select
-              </option>
-              <option
-                class="option"
-                value="PYBLBCTFA"
-              >
-                Payable (BCTFA as tenant)
-              </option>
-              <option
-                class="option"
-                value="PYBLMOTI"
-              >
-                Payable (MOTI as tenant)
-              </option>
-              <option
-                class="option"
-                value="RCVBL"
-              >
-                Receivable
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c19 c20 input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-motiName"
-            >
-              MOTI Contact: 
-            </label>
-            <input
-              class="form-control"
-              id="input-motiName"
-              name="motiName"
-              title=""
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="required c18 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-region.id"
-            >
-              MOTI Region: 
-            </label>
-            <select
-              class="form-select form-control"
-              id="input-region.id"
-              name="region.id"
-              required=""
-            >
-              <option
-                value=""
-              >
-                Select region
-              </option>
-              <option
-                class="option"
-                value="1"
-              >
-                South Coast Region
-              </option>
-              <option
-                class="option"
-                value="2"
-              >
-                Southern Interior Region
-              </option>
-              <option
-                class="option"
-                value="3"
-              >
-                Northern Region
-              </option>
-              <option
-                class="option"
-                value="4"
-              >
-                Cannot determine
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="c13 col"
-        >
-          <div
-            class="required c18 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-programType.id"
-            >
-              Program: 
-            </label>
-            <select
-              class="form-select form-control"
-              id="input-programType.id"
-              name="programType.id"
-              required=""
-            >
-              <option
-                value=""
-              >
-                Select program
-              </option>
-              <option
-                class="option"
-                value="BCFERRIES"
-              >
-                BC Ferries
-              </option>
-              <option
-                class="option"
-                value="BCTRANSIT"
-              >
-                BC Transit
-              </option>
-              <option
-                class="option"
-                value="BELLETERM"
-              >
-                Belleville Terminal
-              </option>
-              <option
-                class="option"
-                value="COMMBLDG"
-              >
-                Commercial Buildings
-              </option>
-              <option
-                class="option"
-                value="LCLGOVT"
-              >
-                Local Government/RCMP
-              </option>
-              <option
-                class="option"
-                value="OTHER"
-              >
-                Other Licencing
-              </option>
-              <option
-                class="option"
-                value="RAILTRAIL"
-              >
-                Rail Trails
-              </option>
-              <option
-                class="option"
-                value="RESRENTAL"
-              >
-                Residential Rentals
-              </option>
-              <option
-                class="option"
-                value="TMEP"
-              >
-                TMEP
-              </option>
-              <option
-                class="option"
-                value="TRANSLINK"
-              >
-                TransLink
-              </option>
-              <option
-                class="option"
-                value="UTILITY"
-              >
-                Utilities
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="c13 col"
-        >
-          <div
-            class="required c18 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-type.id"
-            >
-              Type: 
-            </label>
-            <select
-              class="form-select form-control"
-              id="input-type.id"
-              name="type.id"
-              required=""
-            >
-              <option
-                value=""
-              >
-                Select type
-              </option>
-              <option
-                class="option"
-                value="LICONSTRC"
-              >
-                License to Construct
-              </option>
-              <option
-                class="option"
-                value="LIMOTIPRJ"
-              >
-                MOTI Project Use License
-              </option>
-              <option
-                class="option"
-                value="LIOCCACCS"
-              >
-                License of Occupation (access)
-              </option>
-              <option
-                class="option"
-                value="LIOCCTTLD"
-              >
-                License of Occupation (titled)
-              </option>
-              <option
-                class="option"
-                value="LIOCCUSE"
-              >
-                License of Occupation (use)
-              </option>
-              <option
-                class="option"
-                value="LIOCCUTIL"
-              >
-                License of Occupation (utilities)
-              </option>
-              <option
-                class="option"
-                value="LIPPUBHWY"
-              >
-                License of Prov Public Highway
-              </option>
-              <option
-                class="option"
-                value="LSGRND"
-              >
-                Ground Lease
-              </option>
-              <option
-                class="option"
-                value="LSREG"
-              >
-                Lease - Registered
-              </option>
-              <option
-                class="option"
-                value="LSUNREG"
-              >
-                Lease - Unregistered
-              </option>
-              <option
-                class="option"
-                value="MANUFHOME"
-              >
-                Manufactured Home Act
-              </option>
-              <option
-                class="option"
-                value="OTHER"
-              >
-                Other
-              </option>
-              <option
-                class="option"
-                value="RESLNDTEN"
-              >
-                Residential Tenancy Act
-              </option>
-              <option
-                class="option"
-                value="ROADXING"
-              >
-                Road Crossing
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="c13 col"
-        >
-          <div
-            class="required c18 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-purposeType.id"
-            >
-              Purpose: 
-            </label>
-            <select
-              class="form-select form-control"
-              id="input-purposeType.id"
-              name="purposeType.id"
-              required=""
-            >
-              <option
-                value=""
-              >
-                Select purpose
-              </option>
-              <option
-                class="option"
-                value="ACCCCOM"
-              >
-                Access (Industrial/Commercial)
-              </option>
-              <option
-                class="option"
-                value="ACCRES"
-              >
-                Access (Residential)
-              </option>
-              <option
-                class="option"
-                value="AGRIC"
-              >
-                Agricultural
-              </option>
-              <option
-                class="option"
-                value="BCFERRIES"
-              >
-                BC Ferries
-              </option>
-              <option
-                class="option"
-                value="CAMPING"
-              >
-                Camping
-              </option>
-              <option
-                class="option"
-                value="COMMBLDG"
-              >
-                Commercial Building
-              </option>
-              <option
-                class="option"
-                value="EMERGSVCS"
-              >
-                Emergency Services
-              </option>
-              <option
-                class="option"
-                value="ENCROACH"
-              >
-                Encroachment
-              </option>
-              <option
-                class="option"
-                value="FENCEGATE"
-              >
-                Fencing/Gate
-              </option>
-              <option
-                class="option"
-                value="GARDENING"
-              >
-                Gardening
-              </option>
-              <option
-                class="option"
-                value="GRAVEL"
-              >
-                Gravel
-              </option>
-              <option
-                class="option"
-                value="GRAZING"
-              >
-                Grazing
-              </option>
-              <option
-                class="option"
-                value="LOGGING"
-              >
-                Logging/Timber Harvest
-              </option>
-              <option
-                class="option"
-                value="MARINEFAC"
-              >
-                Marine Facility
-              </option>
-              <option
-                class="option"
-                value="MOBILEHM"
-              >
-                Mobile Home Pad
-              </option>
-              <option
-                class="option"
-                value="MTCYARD"
-              >
-                Maintenance Yard
-              </option>
-              <option
-                class="option"
-                value="OTHER"
-              >
-                Other*
-              </option>
-              <option
-                class="option"
-                value="PARK"
-              >
-                Park
-              </option>
-              <option
-                class="option"
-                value="PARKING"
-              >
-                Parking
-              </option>
-              <option
-                class="option"
-                value="PARKNRID"
-              >
-                Park and Ride
-              </option>
-              <option
-                class="option"
-                value="PIPELINE"
-              >
-                Pipeline
-              </option>
-              <option
-                class="option"
-                value="PRELOAD"
-              >
-                Preload
-              </option>
-              <option
-                class="option"
-                value="PRVTRANS"
-              >
-                Private transportation
-              </option>
-              <option
-                class="option"
-                value="RAILWAY"
-              >
-                Railway
-              </option>
-              <option
-                class="option"
-                value="RESTAREA"
-              >
-                Rest Area/Pullout
-              </option>
-              <option
-                class="option"
-                value="SIDEWALK"
-              >
-                Sidewalks/Landscaping
-              </option>
-              <option
-                class="option"
-                value="SIGNAGE"
-              >
-                Signage
-              </option>
-              <option
-                class="option"
-                value="SPCLEVNT"
-              >
-                Special Event
-              </option>
-              <option
-                class="option"
-                value="STGNGAREA"
-              >
-                Staging Area
-              </option>
-              <option
-                class="option"
-                value="STKPILING"
-              >
-                Stockpiling
-              </option>
-              <option
-                class="option"
-                value="STORAGE"
-              >
-                Storage
-              </option>
-              <option
-                class="option"
-                value="TOURINFO"
-              >
-                Tourist Info
-              </option>
-              <option
-                class="option"
-                value="TRAIL"
-              >
-                Trail
-              </option>
-              <option
-                class="option"
-                value="UTILINFRA"
-              >
-                Utilities-infrastructure
-              </option>
-              <option
-                class="option"
-                value="UTILOHDXG"
-              >
-                Utilities-overhead xing
-              </option>
-              <option
-                class="option"
-                value="UTILUGDXG"
-              >
-                Utilities-underground xing
-              </option>
-              <option
-                class="option"
-                value="WATERRES"
-              >
-                Water Reservoir
-              </option>
-              <option
-                class="option"
-                value="WEIGHSCL"
-              >
-                Weigh Scale
-              </option>
-              <option
-                class="option"
-                value="XING"
-              >
-                Crossing
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c18 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-initiatorType.id"
-            >
-              Initiator: 
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon"
-                id="initiatorType.id-tooltip"
-              >
-                <svg
-                  class="tooltip-icon"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </span>
-            </label>
-            <select
-              class="form-select form-control"
-              id="input-initiatorType.id"
-              name="initiatorType.id"
-            >
-              <option
-                value=""
-              >
-                Select initiator
-              </option>
-              <option
-                class="option"
-                value="HQ"
-              >
-                Headquarters
-              </option>
-              <option
-                class="option"
-                value="PROJECT"
-              >
-                Project
-              </option>
-              <option
-                class="option"
-                value="REGION"
-              >
-                Region
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="c13 col"
-        >
-          <div
-            class="c18 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-responsibilityType.id"
-            >
-              Responsibility: 
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon"
-                id="responsibilityType.id-tooltip"
-              >
-                <svg
-                  class="tooltip-icon"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </span>
-            </label>
-            <select
-              class="form-select form-control"
-              id="input-responsibilityType.id"
-              name="responsibilityType.id"
-            >
-              <option
-                value=""
-              >
-                Select group responsible
-              </option>
-              <option
-                class="option"
-                value="HQ"
-              >
-                Headquarters
-              </option>
-              <option
-                class="option"
-                value="PROJECT"
-              >
-                Project
-              </option>
-              <option
-                class="option"
-                value="REGION"
-              >
-                Region
-              </option>
-            </select>
-          </div>
-          <div
-            class="c21 form-group"
-          >
-            <label
-              class="form-label"
-              for="datepicker-responsibilityEffectiveDate"
-            >
-              Effective date of responsibility:
-            </label>
-            <div
-              class="react-datepicker-wrapper d-block"
-            >
-              <div
-                class="react-datepicker__input-container"
-              >
-                <input
-                  autocomplete="off"
-                  class="c15 form-control date-picker"
-                  id="datepicker-responsibilityEffectiveDate"
-                  name="responsibilityEffectiveDate"
-                  placeholder="--/--/----"
-                  type="text"
-                  value=""
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c22 textarea input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-description"
-            >
-              Description 
-            </label>
-            <textarea
-              class="form-control"
-              id="input-description"
-              name="description"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <h3
-            class="c17"
-          >
-            Reference Information
-          </h3>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c19 c20 input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-tfaFileNumber"
-            >
-              LIS #: 
-            </label>
-            <input
-              class="form-control"
-              id="input-tfaFileNumber"
-              name="tfaFileNumber"
-              title=""
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c19 c20 input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-psFileNo"
-            >
-              PS #: 
-            </label>
-            <input
-              class="form-control"
-              id="input-psFileNo"
-              name="psFileNo"
-              title=""
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c23 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-hasPhysicalLicense"
-            >
-              Physical lease/license exists:
-            </label>
-            <select
-              class="form-control"
-              id="input-hasPhysicalLicense"
-              name="hasPhysicalLicense"
-            >
-              <option
-                value="null"
-              >
-                Unknown
-              </option>
-              <option
-                value="true"
-              >
-                Yes
-              </option>
-              <option
-                value="false"
-              >
-                No
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c23 form-group"
-          >
-            <label
-              class="form-label"
-              for="input-hasDigitalLicense"
-            >
-              Digital lease/license exists:
-            </label>
-            <select
-              class="form-control"
-              id="input-hasDigitalLicense"
-              name="hasDigitalLicense"
-            >
-              <option
-                value="null"
-              >
-                Unknown
-              </option>
-              <option
-                value="true"
-              >
-                Yes
-              </option>
-              <option
-                value="false"
-              >
-                No
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c24 textarea input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-documentationReference"
-            >
-              Location of documents: 
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon"
-                id="documentationReference-tooltip"
-              >
-                <svg
-                  class="tooltip-icon"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </span>
-            </label>
-            <textarea
-              class="form-control"
-              id="input-documentationReference"
-              name="documentationReference"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <h3
-            class="c17"
-          >
-            Property Information
-          </h3>
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="c25 col"
-        >
-          <div
-            class="c19 c26 input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-properties.0.property.pid"
-            >
-              PID: 
-            </label>
-            <input
-              class="form-control"
-              id="input-properties.0.property.pid"
-              name="properties.0.property.pid"
-              type="number"
-              value=""
-            />
-          </div>
-          <div
-            class="c19 c26 input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-properties.0.property.pin"
-            >
-              PIN: 
-            </label>
-            <input
-              class="form-control"
-              id="input-properties.0.property.pin"
-              name="properties.0.property.pin"
-              type="number"
-              value=""
-            />
-          </div>
-          <div
-            class="c19 c26 input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-properties.0.property.coordinates"
-            >
-              Coordinates: 
-            </label>
-            <input
-              class="form-control"
-              id="input-properties.0.property.coordinates"
-              name="properties.0.property.coordinates"
-              title=""
-              value=""
-            />
-          </div>
-          <div
-            class="c2 c27"
-          >
-            <div
-              class="c19 c26 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-properties.0.landArea"
-              >
-                Lease Area: 
-              </label>
-              <input
-                class="form-control"
-                disabled=""
-                id="input-properties.0.landArea"
-                name="properties.0.landArea"
-                value=""
-              />
-            </div>
-            <div
-              class="c18 c28 form-group"
-            >
-              <select
-                class="form-select form-control"
-                disabled=""
-                id="input-properties.0.areaUnitType.id"
-                name="properties.0.areaUnitType.id"
-              >
-                <option
-                  value=""
-                >
-                   
-                </option>
-                <option
-                  class="option"
-                  value="ACRE"
-                >
-                  Acres
-                </option>
-                <option
-                  class="option"
-                  value="FEET2"
-                >
-                  Feet sq
-                </option>
-                <option
-                  class="option"
-                  value="HA"
-                >
-                  Hectares
-                </option>
-                <option
-                  class="option"
-                  value="M2"
-                >
-                  Meters sq
-                </option>
-              </select>
-            </div>
-            <button
-              class="c29 Button c30 btn btn-link"
-              type="button"
-            >
-              <div
-                class="Button__value"
-              >
-                <svg
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-                Remove
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-      <button
-        class="c29 Button btn btn-link"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          + Add another property
-        </div>
-      </button>
-      <h3
-        class="c17"
-      >
-        Notes
-      </h3>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="c22 textarea input form-group"
-          >
-            <textarea
-              class="form-control"
-              id="input-note"
-              name="note"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="c31"
+        class="pr-4 col-auto"
       >
         <button
-          class="c29 Button btn btn-secondary"
+          class="c1 Button btn btn-secondary"
           type="button"
         >
           <div
@@ -2084,9 +1621,12 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
             Cancel
           </div>
         </button>
+      </div>
+      <div
+        class="col-auto"
+      >
         <button
-          class="c29 Button Button--disabled btn btn-primary"
-          disabled=""
+          class="c1 Button btn btn-primary"
           type="button"
         >
           <div
@@ -2096,10 +1636,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           </div>
         </button>
       </div>
-    </form>
-    <div
-      class="container"
-    />
+    </div>
   </div>
 </DocumentFragment>
 `;

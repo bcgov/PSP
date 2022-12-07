@@ -239,6 +239,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsSurplusDeclarationType> PimsSurplusDeclarationTypes { get; set; }
         public virtual DbSet<PimsSurveyPlanType> PimsSurveyPlanTypes { get; set; }
         public virtual DbSet<PimsTenant> PimsTenants { get; set; }
+        public virtual DbSet<PimsTenantType> PimsTenantTypes { get; set; }
         public virtual DbSet<PimsUser> PimsUsers { get; set; }
         public virtual DbSet<PimsUserHist> PimsUserHists { get; set; }
         public virtual DbSet<PimsUserOrganization> PimsUserOrganizations { get; set; }
@@ -2420,6 +2421,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ActivityInstanceStatusTypeCode).HasDefaultValueSql("('NOSTART')");
 
+                entity.Property(e => e.ActivityTemplateId).HasDefaultValueSql("((-1))");
+
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
@@ -2616,6 +2619,8 @@ namespace Pims.Dal
                 entity.Property(e => e.ActivityTemplateJson)
                     .HasDefaultValueSql("('<Empty>')")
                     .HasComment("JSON structure desribing how to construct the activity UI.");
+
+                entity.Property(e => e.ActivityTemplateTypeCode).HasDefaultValueSql("('GENERAL')");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -3136,7 +3141,7 @@ namespace Pims.Dal
 
                 entity.HasComment("Describes the source system of the data (PAIMS, LIS, etc.)");
 
-                entity.Property(e => e.DataSourceTypeCode).HasComment("Code val;ue of the source system of the data (PAIMS, LIS, etc.)");
+                entity.Property(e => e.DataSourceTypeCode).HasComment("Code value of the source system of the data (PAIMS, LIS, etc.)");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -4079,7 +4084,11 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.LessorTypeCode).HasDefaultValueSql("('UNK')");
+
                 entity.Property(e => e.Note).HasComment("Notes associated with the lease/tenant relationship.");
+
+                entity.Property(e => e.TenantTypeCode).HasDefaultValueSql("('UNK')");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsLeaseTenants)
@@ -4107,6 +4116,12 @@ namespace Pims.Dal
                     .WithMany(p => p.PimsLeaseTenantPrimaryContacts)
                     .HasForeignKey(d => d.PrimaryContactId)
                     .HasConstraintName("PIM_PERSON_PIM_PRIMARY_CONTACT_FK");
+
+                entity.HasOne(d => d.TenantTypeCodeNavigation)
+                    .WithMany(p => p.PimsLeaseTenants)
+                    .HasForeignKey(d => d.TenantTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_TENTYP_PIM_TENANT_FK");
             });
 
             modelBuilder.Entity<PimsLeaseTenantHist>(entity =>
@@ -4226,6 +4241,12 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LessorTypeCode)
                     .HasName("LSSRTY_PK");
 
+                entity.HasComment("Code table describing the type of lessor on a lease.");
+
+                entity.Property(e => e.LessorTypeCode)
+                    .HasDefaultValueSql("('UNK')")
+                    .HasComment("Code representing the types of lessors on a lease.");
+
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -4236,7 +4257,15 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.Description)
+                    .HasDefaultValueSql("('Unknown')")
+                    .HasComment("Description of the types of lessors on a lease.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Specifies a specific order to visually present the code.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is currently active.");
             });
 
             modelBuilder.Entity<PimsLetterType>(entity =>
@@ -4888,6 +4917,8 @@ namespace Pims.Dal
             {
                 entity.HasKey(e => e.PropertyId)
                     .HasName("PRPRTY_PK");
+
+                entity.HasComment("Describes the attributes of a property.");
 
                 entity.Property(e => e.PropertyId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ID_SEQ])");
 
@@ -6684,6 +6715,38 @@ namespace Pims.Dal
                 entity.Property(e => e.Name).HasComment("Name of the entry for display purposes");
 
                 entity.Property(e => e.Settings).HasComment("Serialized JSON value for the configuration");
+            });
+
+            modelBuilder.Entity<PimsTenantType>(entity =>
+            {
+                entity.HasKey(e => e.TenantTypeCode)
+                    .HasName("TENTYP_PK");
+
+                entity.HasComment("Code table describing the type of tenant on a lease.");
+
+                entity.Property(e => e.TenantTypeCode)
+                    .HasDefaultValueSql("('UNK')")
+                    .HasComment("Code representing the types of tenants on a lease.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description)
+                    .HasDefaultValueSql("('Unknown')")
+                    .HasComment("Description of the types of tenants on a lease.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Specifies a specific order to visually present the code.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is currently active.");
             });
 
             modelBuilder.Entity<PimsUser>(entity =>
