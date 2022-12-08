@@ -12,7 +12,6 @@ import { Link, Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 
-import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';
 import getColumns from './columns';
 import SelectedTableHeader from './SelectedTableHeader';
 import * as Styled from './styles';
@@ -32,7 +31,6 @@ export const AddLeaseTenantForm: React.FunctionComponent<
   const lookupCodes = useLookupCodeHelpers();
   const tenantTypes = lookupCodes.getByType(TENANT_TYPES).map(c => mapLookupCode(c));
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
-
   return (
     <>
       <Styled.TenantH2>Add tenants & contacts to this Lease/License</Styled.TenantH2>
@@ -42,8 +40,10 @@ export const AddLeaseTenantForm: React.FunctionComponent<
       </p>
 
       <Formik
-        validationSchema={AddLeaseTenantYupSchema}
-        onSubmit={values => onSubmit(values)}
+        // validationSchema={AddLeaseTenantYupSchema}
+        onSubmit={values => {
+          onSubmit(values);
+        }}
         innerRef={formikRef}
         enableReinitialize
         initialValues={{ ...defaultFormLease, ...initialValues }}
@@ -51,7 +51,7 @@ export const AddLeaseTenantForm: React.FunctionComponent<
         {formikProps => (
           <>
             <Prompt
-              when={formikProps.dirty}
+              when={formikProps.dirty && !formikProps.isSubmitting}
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
             <StyledFormBody>
@@ -85,12 +85,10 @@ export const AddLeaseTenantForm: React.FunctionComponent<
                   display={showContactManager}
                   setDisplay={setShowContactManager}
                   handleModalOk={() => {
-                    formikProps.setSubmitting(true);
                     setShowContactManager(false);
                   }}
                   handleModalCancel={() => {
                     setShowContactManager(false);
-                    setSelectedTenants([]);
                   }}
                   showActiveSelector={true}
                 ></ContactManagerModal>
