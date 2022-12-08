@@ -68,6 +68,16 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
 
           setPropertyViewForm(newState);
         }
+      } else {
+        // in this case we don't know the lat/lng of this property, so do not query the layers.
+
+        if (isMounted()) {
+          const newState: IPropertyDetailsForm = {
+            ...toFormValues(property),
+          };
+
+          setPropertyViewForm(newState);
+        }
       }
     }
 
