@@ -60,6 +60,15 @@ exports[`LeaseContainer component renders as expected 1`] = `
   background-color: white;
 }
 
+.c9 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
 .c4 {
   padding: 2rem;
   font-family: 'BCSans-Bold';
@@ -124,6 +133,14 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c3 h1 {
   min-width: 23rem;
+}
+
+.c3.c3 .btn.btn-link {
+  color: white;
+}
+
+.c3.c3 .btn.btn-link:hover {
+  color: white;
 }
 
 .c16 {
@@ -192,15 +209,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c5.draft {
   border: 1px solid;
-}
-
-.c9 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .c8 {

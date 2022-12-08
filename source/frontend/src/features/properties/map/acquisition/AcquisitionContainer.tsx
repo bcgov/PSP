@@ -5,11 +5,11 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { FileTypes } from 'constants/index';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { getFilePropertyName } from 'features/properties/selector/utils';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { getFilePropertyName } from 'utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';

@@ -146,4 +146,4 @@ describe('AddLeaseContainer component', () => {
 });
 
 const expectedFormData =
-  '{"expiryDate":"2020-01-02","startDate":"2020-01-01","amount":0,"paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"initiatorType":{"id":"HQ"},"statusType":{"id":"DRAFT"},"type":{"id":"LICONSTRC"},"region":{"id":"1"},"programType":{"id":"BCFERRIES"},"returnNotes":"","motiName":"","properties":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false}';
+  '{"expiryDate":"2020-01-02","startDate":"2020-01-01","amount":0,"paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"initiatorType":{"id":"HQ"},"statusType":{"id":"DRAFT"},"type":{"id":"LICONSTRC"},"region":{"id":1},"programType":{"id":"BCFERRIES"},"returnNotes":"","motiName":"","properties":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false}';

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using MoreLinq;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
@@ -11,13 +13,20 @@ namespace Pims.Api.Services
 {
     public class LeaseService : ILeaseService
     {
+        private readonly ILogger _logger;
         private readonly ILeaseRepository _leaseRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
 
-        public LeaseService(ILeaseRepository leaseRepository, ICoordinateTransformService coordinateTransformService, IPropertyRepository propertyRepository, IPropertyLeaseRepository propertyLeaseRepository)
+        public LeaseService(
+            ILogger<LeaseService> logger,
+            ILeaseRepository leaseRepository,
+            ICoordinateTransformService coordinateTransformService,
+            IPropertyRepository propertyRepository,
+            IPropertyLeaseRepository propertyLeaseRepository)
         {
+            _logger = logger;
             _leaseRepository = leaseRepository;
             _coordinateService = coordinateTransformService;
             _propertyRepository = propertyRepository;
@@ -71,38 +80,11 @@ namespace Pims.Api.Services
         /// <returns></returns>
         private PimsLease AssociatePropertyLeases(PimsLease lease, bool userOverride = false)
         {
+            MatchProperties(lease);
+
             lease.PimsPropertyLeases.ForEach(propertyLease =>
             {
-                PimsProperty property = null;
-                if (propertyLease.Property.Pid.HasValue && propertyLease.Property.Pid > 0)
-                {
-                    property = _propertyRepository.GetByPid(propertyLease.Property.Pid.Value);
-                }
-                else if (propertyLease.Property.Pin.HasValue && propertyLease.Property.Pin > 0)
-                {
-                    property = _propertyRepository.GetByPin(propertyLease.Property.Pin.Value);
-                }
-                else if (propertyLease?.Property?.Location != null && propertyLease?.Property?.Location.SRID != SpatialReference.BC_ALBERS)
-                {
-                    var coords = _coordinateService.TransformCoordinates(propertyLease.Property.Location.SRID, SpatialReference.BC_ALBERS, propertyLease.Property.Location.Coordinate);
-                    var geom = GeometryHelper.CreatePoint(coords.X, coords.Y, SpatialReference.BC_ALBERS);
-                    property = _propertyRepository.GetByLocation(geom);
-                    if (property == null)
-                    {
-                        throw new InvalidOperationException($"Unable to find property for given lat/lng");
-                    }
-                }
-                if (property?.PropertyId == null)
-                {
-                    if (propertyLease?.Property?.Pid != -1)
-                    {
-                        throw new InvalidOperationException($"Property with PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} does not exist");
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException($"Property with PIN {propertyLease?.Property?.Pin.ToString() ?? string.Empty} does not exist");
-                    }
-                }
+                PimsProperty property = propertyLease.Property;
                 var existingPropertyLeases = _propertyLeaseRepository.GetAllByPropertyId(property.PropertyId);
                 var isPropertyOnOtherLease = existingPropertyLeases.Any(p => p.LeaseId != lease.Id);
                 var isPropertyOnThisLease = existingPropertyLeases.Any(p => p.LeaseId == lease.Id);
@@ -120,10 +102,80 @@ namespace Pims.Api.Services
                     throw new UserOverrideException($"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString() ?? string.Empty}, " +
                         $"{propertyLease?.Property?.Location.Coordinate.Y.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                 }
-                propertyLease.PropertyId = property.PropertyId;
-                propertyLease.Property = null; // Do not attempt to update the associated property, just refer to it by id.
+
+                // If the property exist dont update it, just refer to it by id.
+                if (property.Id != 0)
+                {
+                    propertyLease.PropertyId = property.PropertyId;
+                    propertyLease.Property = null;
+                }
             });
+
             return lease;
+        }
+
+        private void MatchProperties(PimsLease lease)
+        {
+            foreach (var leaseProperty in lease.PimsPropertyLeases)
+            {
+                if (leaseProperty.Property.Pid.HasValue)
+                {
+                    var pid = leaseProperty.Property.Pid.Value;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        leaseProperty.PropertyId = foundProperty.Id;
+                        leaseProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        _logger.LogDebug("Adding new property with pid:{pid}", pid);
+                        PopulateNewProperty(leaseProperty.Property);
+                    }
+                }
+                else if (leaseProperty.Property.Pin.HasValue)
+                {
+                    var pin = leaseProperty.Property.Pin.Value;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        leaseProperty.PropertyId = foundProperty.Id;
+                        leaseProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        _logger.LogDebug("Adding new property with pin:{pin}", pin);
+                        PopulateNewProperty(leaseProperty.Property);
+                    }
+                }
+                else
+                {
+                    _logger.LogDebug("Adding new property without a pid or pin");
+                    PopulateNewProperty(leaseProperty.Property);
+                }
+            }
+        }
+
+        private void PopulateNewProperty(PimsProperty property)
+        {
+            property.PropertyClassificationTypeCode = "UNKNOWN";
+            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
+            property.PropertyDataSourceTypeCode = "PMBC";
+
+            property.PropertyTypeCode = "UNKNOWN";
+
+            property.PropertyStatusTypeCode = "UNKNOWN";
+            property.SurplusDeclarationTypeCode = "UNKNOWN";
+
+            property.IsPropertyOfInterest = false;
+
+            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+            var geom = property.Location;
+            if (geom.SRID != SpatialReference.BC_ALBERS)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
+            }
         }
     }
 }

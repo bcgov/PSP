@@ -6,7 +6,6 @@ import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { getFilePropertyName } from 'features/properties/selector/utils';
 import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
@@ -15,6 +14,7 @@ import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { MdLocationPin, MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
+import { getFilePropertyName } from 'utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';

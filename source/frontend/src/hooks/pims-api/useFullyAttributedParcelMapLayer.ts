@@ -29,7 +29,6 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
         { PID: formattedPid },
         { forceSimplePid: true, forceExactMatch: forceExactMatch, timeout: 30000 },
       );
-
       return data;
     },
     [getAllFeatures],

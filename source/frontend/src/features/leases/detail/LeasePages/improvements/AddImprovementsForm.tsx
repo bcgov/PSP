@@ -29,7 +29,7 @@ export const AddImprovementsForm: React.FunctionComponent<
         {formikProps => (
           <>
             <Prompt
-              when={formikProps.dirty}
+              when={formikProps.dirty && !formikProps.isSubmitting}
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
             <StyledFormBody>
