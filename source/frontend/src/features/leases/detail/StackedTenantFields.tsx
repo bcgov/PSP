@@ -16,11 +16,12 @@ export interface IStackedTenantFieldsProps {
 export const StackedTenantFields: React.FunctionComponent<
   React.PropsWithChildren<IStackedTenantFieldsProps>
 > = ({ lease }) => {
+  const commaSeparatedNames = getAllNames(lease).join(', ');
   return (
     <>
       <StyledStackedDivs>
         <label>Tenant:</label>
-        <OverflowTip fullText={getAllNames(lease)} />
+        <OverflowTip fullText={commaSeparatedNames} />
       </StyledStackedDivs>
     </>
   );
