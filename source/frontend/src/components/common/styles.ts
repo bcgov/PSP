@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { Breadcrumb as BsBreadcrumb, Row } from 'react-bootstrap';
+import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
@@ -100,13 +100,6 @@ export const Tabs = styled(BsTabs)`
       border-color: transparent;
     }
   }
-`;
-
-export const NoPaddingRow = styled(Row)`
-  [class^='col-'] {
-    padding: 0;
-  }
-  margin: 0;
 `;
 
 export const H1 = styled.h1`

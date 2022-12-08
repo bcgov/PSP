@@ -1,11 +1,11 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { IProperty } from 'interfaces';
-import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '../models';
+import LeasePropertySelector from '../shared/propertyPicker/LeasePropertySelector';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
@@ -13,7 +13,10 @@ import DocumentationSubForm from './ReferenceSubForm';
 import * as Styled from './styles';
 
 interface IAddLeaseFormProps {
-  onSubmit: (lease: Api_Lease) => void;
+  onSubmit: (
+    values: LeaseFormModel,
+    formikHelpers: FormikHelpers<LeaseFormModel>,
+  ) => void | Promise<any>;
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
   propertyInfo: IProperty | null;
 }
@@ -40,13 +43,15 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
         areaUnitType: { id: propertyInfo.areaUnit },
       }),
     );
-    defaultFormLease.regionId = propertyInfo.regionId ? propertyInfo.regionId : 0;
+    defaultFormLease.regionId = propertyInfo.regionId ? propertyInfo.regionId.toString() : '';
   }
 
-  const handleSubmit = (values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) => {
-    const apiLease = values.toApi();
+  const handleSubmit = async (
+    values: LeaseFormModel,
+    formikHelpers: FormikHelpers<LeaseFormModel>,
+  ) => {
     formikHelpers.setSubmitting(false);
-    onSubmit(apiLease);
+    await onSubmit(values, formikHelpers);
   };
 
   return (
@@ -66,6 +71,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
             />
             <Styled.LeaseForm>
               <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
+              <LeasePropertySelector formikProps={formikProps} />
               <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
               <DocumentationSubForm />
             </Styled.LeaseForm>

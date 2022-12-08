@@ -1,7 +1,6 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
 import { Formik, FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
@@ -10,6 +9,7 @@ import { useEffect, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';

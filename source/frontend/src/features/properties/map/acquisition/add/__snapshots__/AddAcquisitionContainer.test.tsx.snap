@@ -265,14 +265,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   border-color: transparent;
 }
 
-.c21 {
-  margin: 0;
-}
-
-.c21 [class^='col-'] {
-  padding: 0;
-}
-
 .c12 {
   font-family: 'BCSans-Bold';
   font-size: 2rem;
@@ -318,14 +310,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
 
 .c6 {
   font-weight: bold;
-}
-
-.c22 {
-  font-size: 1.6rem;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
 }
 
 .c14:hover {
@@ -392,7 +376,15 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   max-width: 100%;
 }
 
-.c23 input.form-control {
+.c21 {
+  font-size: 1.6rem;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c22 input.form-control {
   min-width: 50rem;
   max-width: 100%;
 }
@@ -873,7 +865,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                         data-testid="search"
                                         id="search-button"
                                         title="search"
-                                        type="submit"
+                                        type="button"
                                       >
                                         <div
                                           class="Button__icon"
@@ -1060,56 +1052,67 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div
+                class="c4 form-section"
+              >
+                <h2
+                  class="c5"
+                >
                   <div
-                    class="c4 form-section"
+                    class="row"
                   >
                     <div
-                      class="collapse show"
+                      class="col"
                     >
-                      <h3
-                        class="c12"
+                      Selected properties
+                    </div>
+                    <div
+                      class="col-1"
+                    />
+                  </div>
+                </h2>
+                <div
+                  class="collapse show"
+                >
+                  <div
+                    class="c21 no-gutters row"
+                  >
+                    <div
+                      class="col-md-3"
+                    >
+                      Identifier
+                    </div>
+                    <div
+                      class="col-md-9"
+                    >
+                      Provide a descriptive name for this land
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon"
+                        id="property-selector-tooltip"
                       >
-                        Selected properties
-                      </h3>
-                      <div
-                        class="c21 c22 row"
-                      >
-                        <div
-                          class="col-md-3"
+                        <svg
+                          class="tooltip-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Identifier
-                        </div>
-                        <div
-                          class="col-md-9"
-                        >
-                          Provide a descriptive name for this land
-                          <span
-                            class="tooltip-icon"
-                            data-testid="tooltip-icon"
-                            id="property-selector-tooltip"
-                          >
-                            <svg
-                              class="tooltip-icon"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 512 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                              />
-                            </svg>
-                          </span>
-                        </div>
-                      </div>
-                      <span>
-                        No Properties selected
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
                       </span>
                     </div>
                   </div>
+                  <span>
+                    No Properties selected
+                  </span>
                 </div>
               </div>
             </div>
@@ -1152,7 +1155,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="c23 input form-group"
+                    class="c22 input form-group"
                   >
                     <input
                       class="form-control"

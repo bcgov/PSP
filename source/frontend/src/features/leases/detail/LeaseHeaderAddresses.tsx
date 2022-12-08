@@ -1,7 +1,7 @@
 import ExpandableTextList from 'components/common/ExpandableTextList';
-import { getPropertyName } from 'features/properties/selector/utils';
 import { ILease, IProperty } from 'interfaces';
 import * as React from 'react';
+import { getPropertyName } from 'utils/mapPropertyUtils';
 
 export interface ILeaseHeaderAddressesProps {
   lease?: ILease;

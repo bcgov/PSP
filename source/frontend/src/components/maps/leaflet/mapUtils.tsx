@@ -1,4 +1,4 @@
-import { DraftCircleNumber } from 'features/properties/selector/components/DraftCircleNumber';
+import { DraftCircleNumber } from 'components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { IProperty } from 'interfaces';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
 import React from 'react';

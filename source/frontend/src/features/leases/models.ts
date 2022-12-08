@@ -1,18 +1,16 @@
+import { IMapProperty } from 'components/propertySelector/models';
+import { PropertyAreaUnitTypes } from 'constants/index';
 import { LeaseInitiatorTypes } from 'constants/leaseInitiatorTypes';
 import {
   DetailAcquisitionFile,
   DetailAcquisitionFilePerson,
 } from 'features/properties/map/acquisition/detail/models';
+import { PropertyForm } from 'features/properties/map/shared/models';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Lease } from 'models/api/Lease';
-import { Api_Property } from 'models/api/Property';
 import { Api_PropertyLease } from 'models/api/PropertyLease';
-import Api_TypeCode from 'models/api/TypeCode';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
-import { pidParser } from 'utils/propertyUtils';
-
-import { getPrettyLatLng } from './../properties/selector/utils';
 
 export class LeaseFormModel {
   id?: number;
@@ -30,7 +28,7 @@ export class LeaseFormModel {
   initiatorTypeCode: string = '';
   leaseTypeCode: string = '';
   statusTypeCode: string = '';
-  regionId: number = 0;
+  regionId: string = '';
   programTypeCode: string = '';
   otherLeaseTypeDescription: string = '';
   otherProgramTypeDescription: string = '';
@@ -71,7 +69,7 @@ export class LeaseFormModel {
     leaseDetail.initiatorTypeCode = fromTypeCode(apiModel?.initiatorType) || LeaseInitiatorTypes.Hq;
     leaseDetail.statusTypeCode = fromTypeCode(apiModel?.statusType) || '';
     leaseDetail.leaseTypeCode = fromTypeCode(apiModel?.type) || '';
-    leaseDetail.regionId = fromTypeCode(apiModel?.region) || 0;
+    leaseDetail.regionId = fromTypeCode(apiModel?.region)?.toString() || '';
     leaseDetail.programTypeCode = fromTypeCode(apiModel?.programType) || '';
     leaseDetail.note = apiModel?.note || '';
     leaseDetail.returnNotes = apiModel?.returnNotes || '';
@@ -110,7 +108,7 @@ export class LeaseFormModel {
       initiatorType: toTypeCode(this.initiatorTypeCode),
       statusType: toTypeCode(this.statusTypeCode),
       type: toTypeCode(this.leaseTypeCode),
-      region: toTypeCode(this.regionId),
+      region: toTypeCode(Number(this.regionId)),
       programType: toTypeCode(this.programTypeCode),
       note: stringToNull(this.note),
       returnNotes: this.returnNotes,
@@ -129,6 +127,14 @@ export class LeaseFormModel {
       otherPurposeType: stringToNull(this.otherPurposeTypeDescription),
       otherType: stringToNull(this.otherLeaseTypeDescription),
     };
+  }
+
+  public getPropertiesAsForm(): PropertyForm[] {
+    return this.properties
+      .map(property => {
+        return property.property;
+      })
+      .filter((item): item is PropertyForm => !!item);
   }
 }
 
@@ -160,74 +166,43 @@ export class LeaseDetails {
 
 export class FormLeaseProperty {
   id?: number;
-  property?: FormProperty;
+  property?: PropertyForm;
   leaseId?: number;
   rowVersion?: number;
-  landArea?: number;
-  areaUnitType?: Api_TypeCode<string>;
+  landArea: string;
+  areaUnitTypeCode: string;
 
-  public constructor(leaseId?: number) {
-    this.property = new FormProperty();
+  private constructor(leaseId?: number) {
     this.leaseId = leaseId;
+    this.landArea = '0';
+    this.areaUnitTypeCode = PropertyAreaUnitTypes.Meter;
   }
 
   static fromApi(apiPropertyLease: Api_PropertyLease): FormLeaseProperty {
     const model = new FormLeaseProperty(apiPropertyLease.lease?.id);
-    model.property = FormProperty.fromApi(apiPropertyLease.property ?? {});
+    model.property = PropertyForm.fromApi(apiPropertyLease.property ?? {});
     model.id = apiPropertyLease.id;
     model.rowVersion = apiPropertyLease.rowVersion;
-    model.landArea = apiPropertyLease.leaseArea;
-    model.areaUnitType = apiPropertyLease.areaUnitType;
+    model.landArea = apiPropertyLease.leaseArea?.toString() || '0';
+    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || PropertyAreaUnitTypes.Meter;
+    return model;
+  }
+
+  static fromMapProperty(mapProperty: IMapProperty): FormLeaseProperty {
+    const model = new FormLeaseProperty();
+    model.property = PropertyForm.fromMapProperty(mapProperty);
     return model;
   }
 
   public toApi(): Api_PropertyLease {
+    const numberLeaseArea: number | undefined = stringToNull(this.landArea);
     return {
       id: this.id,
       rowVersion: this.rowVersion,
       property: this.property?.toApi(),
       lease: { id: this.leaseId },
-      leaseArea: stringToNull(this.landArea),
-      areaUnitType: this.areaUnitType,
-    };
-  }
-}
-
-export class FormProperty {
-  id?: number;
-  pid?: NumberFieldValue;
-  pin?: NumberFieldValue;
-  coordinates?: string;
-  rowVersion?: number;
-
-  public constructor() {
-    this.pid = '';
-    this.pin = '';
-    this.coordinates = '';
-  }
-
-  static fromApi(apiProperty: Api_Property): FormProperty {
-    const model = new FormProperty();
-    model.pid = apiProperty.pid;
-    model.pin = apiProperty.pin;
-    model.coordinates = getPrettyLatLng({
-      coordinate: { x: apiProperty.longitude, y: apiProperty.latitude },
-    });
-    model.id = apiProperty.id;
-    model.rowVersion = apiProperty.rowVersion;
-    return model;
-  }
-
-  public toApi(): Api_Property {
-    const splitCoordinates = this.coordinates?.split(',');
-    return {
-      id: this.id,
-      pid: pidParser(this.pid),
-      pin: parseInt(this.pin?.toString() ?? ''),
-      location:
-        splitCoordinates !== undefined && splitCoordinates.length === 2
-          ? { coordinate: { x: +splitCoordinates[0].trim(), y: +splitCoordinates[1].trim() } }
-          : undefined,
+      leaseArea: numberLeaseArea,
+      areaUnitType: numberLeaseArea !== undefined ? toTypeCode(this.areaUnitTypeCode) : undefined,
     };
   }
 }

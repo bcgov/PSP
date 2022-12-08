@@ -7,7 +7,7 @@ export const AddLeaseYupSchema = Yup.object().shape({
   startDate: Yup.date().required('Required'),
   expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
   paymentReceivableTypeCode: Yup.string().required('Payment Receivable Type is required'),
-  regionId: Yup.number().required('MOTI Region Type is required'),
+  regionId: Yup.string().required('MOTI Region Type is required'),
   programTypeCode: Yup.string().required('Program Type is required'),
   motiName: Yup.string().max(200, 'MOTI Contact must be at most 200 characters'),
   otherProgramTypeDescription: Yup.string().when('programTypeCode', {
@@ -58,43 +58,4 @@ export const AddLeaseYupSchema = Yup.object().shape({
   note: Yup.string().max(4000, 'Notes must be at most 4000 characters'),
   tfaFileNumber: Yup.string().max(50, `LIS # must be at most 50 characters`),
   psFileNo: Yup.string().max(50, 'PS # must be at most 50 characters'),
-  properties: Yup.array().of(
-    Yup.object().shape({
-      property: Yup.object().shape(
-        {
-          pid: Yup.string().when(['pin', 'coordinates'], {
-            is: (pin: string, coordinates: string) => !!pin || !!coordinates,
-            then: Yup.string().nullable(),
-            otherwise: Yup.string()
-              .required('valid PID, PIN or Coordinates required')
-              .max(10, 'PID must be at most 10 characters'),
-          }),
-          pin: Yup.string().when(['pid', 'coordinates'], {
-            is: (pid: string, coordinates: string) => !!pid || !!coordinates,
-            then: Yup.string().nullable(),
-            otherwise: Yup.string()
-              .required('valid PID, PIN or Coordinates required')
-              .max(10, 'PIN must be at most 10 characters'),
-          }),
-          coordinates: Yup.string().when(['pid', 'pin'], {
-            is: (pid: string, pin: string) => !!pid || !!pin,
-            then: Yup.string().nullable(),
-            otherwise: Yup.string()
-              .required('valid PID, PIN or Coordinates required')
-              .max(50, 'Coordinates must be at most 50 characters'),
-          }),
-          landArea: Yup.number().max(
-            Number.MAX_VALUE,
-            `Land Area must be less than ${Number.MAX_VALUE}`,
-          ),
-        },
-        [
-          ['pid', 'pin'],
-          ['pin', 'pid'],
-          ['pid', 'coordinates'],
-          ['pin', 'coordinates'],
-        ],
-      ),
-    }),
-  ),
 });
