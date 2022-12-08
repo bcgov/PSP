@@ -112,6 +112,10 @@
     "sass": "1.43.2",
     "typescript": "4.8.4"
   },
+  "overrides": {
+    "loader-utils": "2.0.4",
+    "decode-uri-component": "0.2.2"
+  },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "cross-env CI=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false react-app-rewired build",
