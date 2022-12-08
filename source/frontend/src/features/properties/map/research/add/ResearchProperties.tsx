@@ -27,9 +27,11 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
             <Row className="py-3 no-gutters">
               <Col>
                 <MapSelectorContainer
-                  onSelectedProperty={(newProperty: IMapProperty) => {
-                    const formProperty = PropertyForm.fromMapProperty(newProperty);
-                    push(formProperty);
+                  addSelectedProperties={(newProperties: IMapProperty[]) => {
+                    newProperties.forEach(property => {
+                      const formProperty = PropertyForm.fromMapProperty(property);
+                      push(formProperty);
+                    });
                   }}
                   modifiedProperties={values.properties}
                 />

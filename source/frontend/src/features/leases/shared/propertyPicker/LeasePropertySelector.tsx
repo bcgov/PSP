@@ -27,17 +27,20 @@ export const LeasePropertySelector: React.FunctionComponent<
   const { getProperties } = useProperties();
 
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
-  const [propertyToAdd, setPropertyToAdd] = useState<FormLeaseProperty | undefined>(undefined);
+  const [propertiesToConfirm, setPropertiesToConfirm] = useState<FormLeaseProperty[]>([]);
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
-  const addProperty = useCallback(() => {
-    if (arrayHelpersRef.current !== null && propertyToAdd !== undefined) {
-      arrayHelpersRef.current.push(propertyToAdd);
-
-      setPropertyToAdd(undefined);
-    }
-  }, [setPropertyToAdd, arrayHelpersRef, propertyToAdd]);
+  const addProperties = useCallback(
+    (properties: FormLeaseProperty[]) => {
+      if (arrayHelpersRef.current !== null && properties.length > 0) {
+        properties.forEach(property => {
+          arrayHelpersRef.current!.push(property);
+        });
+      }
+    },
+    [arrayHelpersRef],
+  );
 
   const searchProperty = async (newProperty: IMapProperty): Promise<IProperty[] | undefined> => {
     const params: IPropertyFilter = {
@@ -52,12 +55,13 @@ export const LeasePropertySelector: React.FunctionComponent<
 
   const confirmAdd = useCallback(() => {
     setDisplayModal(false);
-    addProperty();
-  }, [setDisplayModal, addProperty]);
+    addProperties(propertiesToConfirm);
+    setPropertiesToConfirm([]);
+  }, [setDisplayModal, addProperties, propertiesToConfirm]);
 
   const cancelAdd = useCallback(() => {
     setDisplayModal(false);
-    setPropertyToAdd(undefined);
+    setPropertiesToConfirm([]);
   }, [setDisplayModal]);
 
   const customModalProps: ModalProps = useMemo(() => {
@@ -94,26 +98,39 @@ export const LeasePropertySelector: React.FunctionComponent<
               <Row className="py-3 no-gutters">
                 <Col>
                   <MapSelectorContainer
-                    onSelectedProperty={async (newProperty: IMapProperty) => {
-                      const formProperty = FormLeaseProperty.fromMapProperty(newProperty);
+                    addSelectedProperties={async (newProperties: IMapProperty[]) => {
+                      let needsWarning = false;
+                      const newFormProperties = [];
 
-                      // Retrieve the pims id of the property if it exists
-                      if (
-                        formProperty.property !== undefined &&
-                        formProperty.property.apiId === undefined
-                      ) {
-                        const result = await searchProperty(newProperty);
-                        if (result?.length === 1) {
-                          formProperty.property.apiId = result[0].id;
+                      for (let i = 0; i < newProperties.length; i++) {
+                        const property = newProperties[i];
+                        const formProperty = FormLeaseProperty.fromMapProperty(property);
+
+                        // Retrieve the pims id of the property if it exists
+                        if (
+                          formProperty.property !== undefined &&
+                          formProperty.property.apiId === undefined
+                        ) {
+                          const result = await searchProperty(property);
+                          if (result?.length === 1) {
+                            formProperty.property.apiId = result[0].id;
+                          }
+                        }
+
+                        newFormProperties.push(formProperty);
+
+                        if (formProperty.property?.apiId === undefined) {
+                          needsWarning = needsWarning || true;
+                        } else {
+                          needsWarning = needsWarning || false;
                         }
                       }
 
-                      setPropertyToAdd(formProperty);
-
-                      if (formProperty.property?.apiId === undefined) {
+                      if (needsWarning) {
+                        setPropertiesToConfirm(newFormProperties);
                         setDisplayModal(true);
                       } else {
-                        addProperty();
+                        addProperties(newFormProperties);
                       }
                     }}
                     modifiedProperties={values.getPropertiesAsForm()}

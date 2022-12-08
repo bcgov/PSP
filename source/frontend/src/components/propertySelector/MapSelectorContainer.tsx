@@ -16,13 +16,13 @@ import { PropertySelectorTabsView, SelectorTabNames } from './PropertySelectorTa
 import PropertySelectorSearchContainer from './search/PropertySelectorSearchContainer';
 
 export interface IMapSelectorContainerProps {
-  onSelectedProperty: (property: IMapProperty) => void;
+  addSelectedProperties: (properties: IMapProperty[]) => void;
   modifiedProperties: PropertyForm[];
 }
 
 export const MapSelectorContainer: React.FunctionComponent<
   React.PropsWithChildren<IMapSelectorContainerProps>
-> = ({ onSelectedProperty, modifiedProperties }) => {
+> = ({ addSelectedProperties, modifiedProperties }) => {
   const { setState } = React.useContext(MapStateContext);
   const [searchSelectedProperties, setSearchSelectedProperties] = useState<IMapProperty[]>([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
@@ -45,7 +45,7 @@ export const MapSelectorContainer: React.FunctionComponent<
                 : undefined
             }
             onSelectedProperty={(property: IMapProperty) =>
-              addProperties([property], modifiedProperties, onSelectedProperty)
+              addProperties([property], modifiedProperties, addSelectedProperties)
             }
             selectedProperties={modifiedProperties}
           />
@@ -61,7 +61,7 @@ export const MapSelectorContainer: React.FunctionComponent<
         <Button
           variant="secondary"
           onClick={() =>
-            addProperties(searchSelectedProperties, modifiedProperties, onSelectedProperty)
+            addProperties(searchSelectedProperties, modifiedProperties, addSelectedProperties)
           }
         >
           Add to selection
@@ -74,11 +74,12 @@ export const MapSelectorContainer: React.FunctionComponent<
 const addProperties = (
   newProperties: IMapProperty[],
   selectedProperties: IMapProperty[],
-  addCallback: (property: IMapProperty) => void,
+  addCallback: (properties: IMapProperty[]) => void,
 ) => {
+  const propertiesToAdd: IMapProperty[] = [];
   newProperties.forEach((property: IMapProperty) => {
     if (!selectedProperties.some(selectedProperty => isSameProperty(selectedProperty, property))) {
-      addCallback(property);
+      propertiesToAdd.push(property);
     } else {
       toast.warn(
         'A property that the user is trying to select has already been added to the selected properties list',
@@ -86,6 +87,10 @@ const addProperties = (
       );
     }
   });
+
+  if (propertiesToAdd.length > 0) {
+    addCallback(propertiesToAdd);
+  }
 };
 
 const isSameProperty = (lhs: IMapProperty, rhs: IMapProperty) => {

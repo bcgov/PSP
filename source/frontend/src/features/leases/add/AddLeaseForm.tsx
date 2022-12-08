@@ -43,7 +43,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
         areaUnitType: { id: propertyInfo.areaUnit },
       }),
     );
-    defaultFormLease.regionId = propertyInfo.regionId ? propertyInfo.regionId : 0;
+    defaultFormLease.regionId = propertyInfo.regionId ? propertyInfo.regionId.toString() : '';
   }
 
   const handleSubmit = async (

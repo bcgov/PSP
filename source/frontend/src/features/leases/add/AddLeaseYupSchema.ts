@@ -7,7 +7,7 @@ export const AddLeaseYupSchema = Yup.object().shape({
   startDate: Yup.date().required('Required'),
   expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
   paymentReceivableTypeCode: Yup.string().required('Payment Receivable Type is required'),
-  regionId: Yup.number().required('MOTI Region Type is required'),
+  regionId: Yup.string().required('MOTI Region Type is required'),
   programTypeCode: Yup.string().required('Program Type is required'),
   motiName: Yup.string().max(200, 'MOTI Contact must be at most 200 characters'),
   otherProgramTypeDescription: Yup.string().when('programTypeCode', {

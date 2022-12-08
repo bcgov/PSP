@@ -19,7 +19,7 @@ const mockAxios = new MockAdapter(axios);
 
 const store = mockStore({});
 
-const onSelectedProperty = jest.fn();
+const onSelectedProperties = jest.fn();
 
 const testProperty: IMapProperty = {
   pid: '123-456-789',
@@ -38,7 +38,7 @@ describe('MapSelectorContainer component', () => {
     const utils = render(
       <Formik initialValues={{ properties: [] }} onSubmit={noop}>
         <MapSelectorContainer
-          onSelectedProperty={onSelectedProperty}
+          addSelectedProperties={onSelectedProperties}
           modifiedProperties={renderOptions.modifiedProperties ?? []}
         />
       </Formik>,
@@ -129,23 +129,25 @@ describe('MapSelectorContainer component', () => {
     const addButton = getByText('Add to selection');
     await act(async () => userEvent.click(addButton));
 
-    expect(onSelectedProperty).toHaveBeenCalledWith({
-      address: '1234 Fake St',
-      district: 12,
-      districtName: 'Cannot determine',
-      id: 'PID-009-727-493',
-      latitude: 48.7662,
-      legalDescription:
-        'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
-      longitude: -123.4617,
-      name: undefined,
-      pid: '9727493',
-      pin: undefined,
-      planNumber: 'NO_PLAN',
-      propertyId: undefined,
-      region: 4,
-      regionName: 'Cannot determine',
-    });
+    expect(onSelectedProperties).toHaveBeenCalledWith([
+      {
+        address: '1234 Fake St',
+        district: 12,
+        districtName: 'Cannot determine',
+        id: 'PID-009-727-493',
+        latitude: 48.7662,
+        legalDescription:
+          'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
+        longitude: -123.4617,
+        name: undefined,
+        pid: '9727493',
+        pin: undefined,
+        planNumber: 'NO_PLAN',
+        propertyId: undefined,
+        region: 4,
+        regionName: 'Cannot determine',
+      },
+    ]);
   });
 
   it('selected properties display a warning if added multiple times', async () => {

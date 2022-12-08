@@ -167,7 +167,7 @@ namespace Pims.Api.Services
             property.PropertyStatusTypeCode = "UNKNOWN";
             property.SurplusDeclarationTypeCode = "UNKNOWN";
 
-            property.IsPropertyOfInterest = true;
+            property.IsPropertyOfInterest = false;
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;

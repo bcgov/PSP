@@ -31,12 +31,14 @@ export const AcquisitionProperties: React.FunctionComponent<
             <Row className="py-3 no-gutters">
               <Col>
                 <MapSelectorContainer
-                  onSelectedProperty={(newProperty: IMapProperty) => {
-                    const formProperty = PropertyForm.fromMapProperty(newProperty);
-                    if (values.properties?.length === 0) {
-                      formikProps.setFieldValue(`region`, formProperty.region);
-                    }
-                    push(formProperty);
+                  addSelectedProperties={(newProperties: IMapProperty[]) => {
+                    newProperties.forEach((property, index) => {
+                      const formProperty = PropertyForm.fromMapProperty(property);
+                      if (values.properties?.length === 0 && index === 0) {
+                        formikProps.setFieldValue(`region`, formProperty.region);
+                      }
+                      push(formProperty);
+                    });
                   }}
                   modifiedProperties={values.properties}
                 />

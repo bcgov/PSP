@@ -28,7 +28,7 @@ export class LeaseFormModel {
   initiatorTypeCode: string = '';
   leaseTypeCode: string = '';
   statusTypeCode: string = '';
-  regionId: number = 0;
+  regionId: string = '';
   programTypeCode: string = '';
   otherLeaseTypeDescription: string = '';
   otherProgramTypeDescription: string = '';
@@ -69,7 +69,7 @@ export class LeaseFormModel {
     leaseDetail.initiatorTypeCode = fromTypeCode(apiModel?.initiatorType) || LeaseInitiatorTypes.Hq;
     leaseDetail.statusTypeCode = fromTypeCode(apiModel?.statusType) || '';
     leaseDetail.leaseTypeCode = fromTypeCode(apiModel?.type) || '';
-    leaseDetail.regionId = fromTypeCode(apiModel?.region) || 0;
+    leaseDetail.regionId = fromTypeCode(apiModel?.region)?.toString() || '';
     leaseDetail.programTypeCode = fromTypeCode(apiModel?.programType) || '';
     leaseDetail.note = apiModel?.note || '';
     leaseDetail.returnNotes = apiModel?.returnNotes || '';
@@ -108,7 +108,7 @@ export class LeaseFormModel {
       initiatorType: toTypeCode(this.initiatorTypeCode),
       statusType: toTypeCode(this.statusTypeCode),
       type: toTypeCode(this.leaseTypeCode),
-      region: toTypeCode(this.regionId),
+      region: toTypeCode(Number(this.regionId)),
       programType: toTypeCode(this.programTypeCode),
       note: stringToNull(this.note),
       returnNotes: this.returnNotes,

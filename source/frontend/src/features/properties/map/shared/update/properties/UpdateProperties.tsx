@@ -99,9 +99,11 @@ export const UpdateProperties: React.FunctionComponent<
                   <Row className="py-3 no-gutters">
                     <Col>
                       <MapSelectorContainer
-                        onSelectedProperty={(newProperty: IMapProperty) => {
-                          const formProperty = PropertyForm.fromMapProperty(newProperty);
-                          push(formProperty);
+                        addSelectedProperties={(newProperties: IMapProperty[]) => {
+                          newProperties.forEach(property => {
+                            const formProperty = PropertyForm.fromMapProperty(property);
+                            push(formProperty);
+                          });
                         }}
                         modifiedProperties={formikProps.values.properties}
                       />
