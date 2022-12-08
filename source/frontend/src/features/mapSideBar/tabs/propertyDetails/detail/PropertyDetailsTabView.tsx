@@ -4,7 +4,6 @@ import AreaContainer from 'components/measurements/AreaContainer';
 import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';
 import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
-import { getPrettyLatLng } from 'features/properties/selector/utils';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
@@ -12,6 +11,7 @@ import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { booleanToYesNoUnknownString, stringToBoolean } from 'utils/formUtils';
+import { getPrettyLatLng } from 'utils/mapPropertyUtils';
 
 import { Section } from '../../Section';
 import { SectionField } from '../../SectionField';
@@ -28,11 +28,9 @@ export interface IPropertyDetailsTabView {
  * Provides basic property information, as displayed under "Property Details" tab on the Property Information slide-out
  * @returns the rendered property details panel
  */
-export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTabView> = ({
-  property,
-  loading,
-  setEditMode,
-}) => {
+export const PropertyDetailsTabView: React.FunctionComponent<
+  React.PropsWithChildren<IPropertyDetailsTabView>
+> = ({ property, loading, setEditMode }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const { hasClaim } = useKeycloakWrapper();
 

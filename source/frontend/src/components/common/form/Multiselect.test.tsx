@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { IMultiselectProps, Multiselect } from './Multiselect';
 
@@ -86,10 +86,10 @@ describe('Multiselect component', () => {
 
     // select an option from the drop-down
     focusOption(container, optionSelected, fakeOptions);
-    userEvent.click(findDropdownOption(optionSelected));
+    await waitFor(() => userEvent.click(findDropdownOption(optionSelected)));
 
     // assert
-    await waitFor(() => expect(onSelectSpy).toHaveBeenCalledWith([optionSelected]));
+    expect(onSelectSpy).toHaveBeenCalledWith([optionSelected]);
   });
 
   it('calls onRemove callback when clicking on X next to option', async () => {
@@ -118,7 +118,9 @@ describe('Multiselect component', () => {
 function focusOption(container: HTMLElement, option: Option, options: readonly Option[]) {
   let indexOfSelectedOption = options.findIndex(o => o.id === option.id);
   for (let i = 0; i < indexOfSelectedOption; i++) {
-    userEvent.keyboard('{ArrowDown}');
+    act(() => {
+      userEvent.keyboard('{ArrowDown}');
+    });
   }
   expect(
     container.querySelector('.multiselect-container .optionContainer li.option.highlight')!

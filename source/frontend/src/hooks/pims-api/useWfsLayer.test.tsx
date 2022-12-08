@@ -19,7 +19,9 @@ describe('useWfsLayer hook', () => {
   const setup = (url: string = wfsUrl, props: Partial<IUseWfsLayerOptions> = {}) => {
     const _options: IUseWfsLayerOptions = merge({ name: wfsLayer }, props);
     const { result } = renderHook(() => useWfsLayer(url, _options), {
-      wrapper: props => <TestCommonWrapper store={mockStore}>{props.children}</TestCommonWrapper>,
+      wrapper: (props: React.PropsWithChildren) => (
+        <TestCommonWrapper store={mockStore}>{props.children}</TestCommonWrapper>
+      ),
     });
 
     return result.current;

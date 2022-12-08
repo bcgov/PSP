@@ -27,7 +27,7 @@ export type ZoomOutProps = {
  * @param map The leaflet map
  * @param bounds The latlng bounds to zoom out to
  */
-export const ZoomOutButton: React.FC<ZoomOutProps> = ({ bounds }) => {
+export const ZoomOutButton: React.FC<React.PropsWithChildren<ZoomOutProps>> = ({ bounds }) => {
   const mapInstance = useMap();
   const zoomOut = () => {
     mapInstance.fitBounds(bounds);

@@ -8,9 +8,6 @@ exports[`ActivityHeader component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c1 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;

@@ -2,13 +2,13 @@ import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-age
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useEffect, useMemo } from 'react';
 import { useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -20,7 +20,9 @@ export interface IAddAcquisitionContainerProps {
   onClose?: () => void;
 }
 
-export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = props => {
+export const AddAcquisitionContainer: React.FC<
+  React.PropsWithChildren<IAddAcquisitionContainerProps>
+> = props => {
   const { onClose } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);

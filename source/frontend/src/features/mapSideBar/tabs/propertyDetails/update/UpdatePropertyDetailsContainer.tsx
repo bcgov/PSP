@@ -20,7 +20,7 @@ export interface IUpdatePropertyDetailsContainerProps {
 
 export const UpdatePropertyDetailsContainer = React.forwardRef<
   FormikProps<any>,
-  IUpdatePropertyDetailsContainerProps
+  React.PropsWithChildren<IUpdatePropertyDetailsContainerProps>
 >((props, ref) => {
   const isMounted = useIsMounted();
   const getPropertyWrapper = useGetProperty();

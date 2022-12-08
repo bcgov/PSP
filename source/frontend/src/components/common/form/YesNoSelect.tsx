@@ -27,7 +27,7 @@ export interface IYesNoSelectProps {
   disabled?: boolean;
 }
 
-export const YesNoSelect: React.FC<IYesNoSelectProps> = props => {
+export const YesNoSelect: React.FC<React.PropsWithChildren<IYesNoSelectProps>> = props => {
   const { field, label, className, required, tooltip, displayErrorTooltips, onChange, disabled } =
     props;
 

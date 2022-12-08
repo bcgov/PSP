@@ -25,7 +25,7 @@ export interface ILtsaTabViewProps {
   pid?: string;
 }
 
-export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
+export const LtsaTabView: React.FunctionComponent<React.PropsWithChildren<ILtsaTabViewProps>> = ({
   ltsaData,
   ltsaRequestedOn,
   loading,

@@ -81,11 +81,9 @@ const LayerColor = styled.div<{ color: string }>`
 /**
  * Component to display Group Node as a formik field
  */
-const ParentCheckbox: React.FC<{ name: string; label: string; index: number }> = ({
-  name,
-  label,
-  index,
-}) => {
+const ParentCheckbox: React.FC<
+  React.PropsWithChildren<{ name: string; label: string; index: number }>
+> = ({ name, label, index }) => {
   const { values, setFieldValue } = useFormikContext();
 
   const onChange = () => {
@@ -108,11 +106,9 @@ const ParentCheckbox: React.FC<{ name: string; label: string; index: number }> =
 /**
  * Component to display Layer Node as a formik field
  */
-const LayerNodeCheckbox: React.FC<{ name: string; label: string; color: string }> = ({
-  name,
-  label,
-  color,
-}) => {
+const LayerNodeCheckbox: React.FC<
+  React.PropsWithChildren<{ name: string; label: string; color: string }>
+> = ({ name, label, color }) => {
   const { values, setFieldValue } = useFormikContext();
 
   const onChange = () => {
@@ -184,7 +180,7 @@ const LeafletListenerComp = () => {
 /**
  * This component displays the nested groups of layers
  */
-const LayersTree: React.FC<{ items: TreeMenuItem[] }> = ({ items }) => {
+const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> = ({ items }) => {
   const { values } = useFormikContext<any>();
 
   const getParentIndex = (key: string, mapLayers: TreeNode[]) => {
@@ -244,7 +240,7 @@ const LayersTree: React.FC<{ items: TreeMenuItem[] }> = ({ items }) => {
 /**
  * This component displays the layers group menu
  */
-const LayersMenu: React.FC = () => {
+const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     tenant: { layers: confLayers },
   } = useContext(TenantContext);

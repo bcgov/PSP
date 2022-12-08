@@ -15,6 +15,7 @@ export enum MapState {
   MAP = 'MAP',
   RESEARCH_FILE = 'RESEARCH_FILE',
   ACQUISITION_FILE = 'ACQUISITION_FILE',
+  LEASE_FILE = 'LEASE_FILE',
 }
 
 export enum MapStateActionTypes {
@@ -100,10 +101,9 @@ interface IMapStateContextComponent {
   values?: Partial<IMapStateContext>;
 }
 
-export const MapStateContextProvider: React.FC<IMapStateContextComponent> = ({
-  children,
-  values,
-}) => {
+export const MapStateContextProvider: React.FC<
+  React.PropsWithChildren<IMapStateContextComponent>
+> = ({ children, values }) => {
   const mapStateReducer = useCallback(
     (prevState: IMapStateContext, action: MapStateActions): IMapStateContext => {
       console.debug('MapStateContext', prevState, action);
@@ -133,14 +133,24 @@ export const MapStateContextProvider: React.FC<IMapStateContextComponent> = ({
         case MapStateActionTypes.LOADING:
           return produce(prevState, draft => {
             draft.loading = action.loading;
+            draft.selectedInventoryProperty = null;
+            draft.selectedFileFeature = null;
+            draft.selectedLeaseProperty = null;
+            draft.selectedFeature = null;
           });
         case MapStateActionTypes.CURSOR:
           return produce(prevState, draft => {
             draft.cursor = action.cursor;
           });
         case MapStateActionTypes.IS_SELECTING:
-          if (![MapState.ACQUISITION_FILE, MapState.RESEARCH_FILE].includes(prevState.mapState)) {
-            throw Error('Cannot enter selection mode unless in the context of a file');
+          if (
+            ![MapState.ACQUISITION_FILE, MapState.RESEARCH_FILE, MapState.LEASE_FILE].includes(
+              prevState.mapState,
+            )
+          ) {
+            throw Error(
+              `Cannot enter selection mode unless in the context of a file. Current ${prevState.mapState}`,
+            );
           }
           return produce(prevState, draft => {
             draft.isSelecting = action.isSelecting;

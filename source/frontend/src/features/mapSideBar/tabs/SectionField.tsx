@@ -13,7 +13,9 @@ interface ISectionFieldProps {
   contentWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
 }
 
-export const SectionField: React.FunctionComponent<ISectionFieldProps> = props => {
+export const SectionField: React.FunctionComponent<
+  React.PropsWithChildren<ISectionFieldProps>
+> = props => {
   return (
     <Row className={props.className ?? 'pb-2'}>
       <Col xs={props.labelWidth ?? '4'} className="pr-0 text-left">

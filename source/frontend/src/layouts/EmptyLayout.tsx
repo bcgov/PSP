@@ -5,7 +5,10 @@ import FooterStyled from './Footer';
 import HeaderStyled from './Header';
 import * as Styled from './styles';
 
-const EmptyLayout: React.FC<React.HTMLAttributes<HTMLElement>> = ({ children, ...rest }) => {
+const EmptyLayout: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({
+  children,
+  ...rest
+}) => {
   return (
     <>
       <Styled.EmptyAppGridContainer className="App" {...rest}>

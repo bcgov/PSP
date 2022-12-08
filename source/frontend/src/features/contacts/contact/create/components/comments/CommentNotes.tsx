@@ -9,7 +9,9 @@ export interface ICommentNotesProps {}
  * Displays comments directly associated with this Contact.
  * @param {ICommentNotesProps} param0
  */
-export const CommentNotes: React.FunctionComponent<ICommentNotesProps> = () => {
+export const CommentNotes: React.FunctionComponent<
+  React.PropsWithChildren<ICommentNotesProps>
+> = () => {
   return (
     <>
       <FlexBox gap="1.6rem">

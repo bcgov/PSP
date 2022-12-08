@@ -1,5 +1,6 @@
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useApiProperties } from 'hooks/pims-api';
+import { IApiError } from 'interfaces/IApiError';
 import { Api_PropertyAssociations } from 'models/api/Property';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -17,7 +18,7 @@ export const usePropertyAssociations = () => {
       [getPropertyAssociations],
     ),
     requestName: 'getPropertyAssociations',
-    onError: useCallback(axiosError => {
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
       toast.error(
         `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data?.error}`,
       );

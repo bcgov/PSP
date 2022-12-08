@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import PublicLayout from './PublicLayout';
 
-const AuthLayout: React.FC = ({ children }) => {
+const AuthLayout: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   usePimsIdleTimer();
   return (
     <AuthStateContext.Consumer>

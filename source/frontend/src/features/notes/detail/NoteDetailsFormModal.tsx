@@ -24,7 +24,9 @@ export interface INoteDetailsFormModalProps {
   onEdit?: (note?: Api_Note) => void;
 }
 
-export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props => {
+export const NoteDetailsFormModal: React.FC<
+  React.PropsWithChildren<INoteDetailsFormModalProps>
+> = props => {
   const keycloak = useKeycloakWrapper();
   const { loading, isOpened, onEdit, onCloseClick, note } = props;
 

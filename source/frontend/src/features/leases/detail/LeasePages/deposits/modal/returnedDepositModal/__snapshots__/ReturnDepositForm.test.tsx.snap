@@ -9,9 +9,6 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
     class="container"
   />
   <div
-    class="Toastify"
-  />
-  <div
     class="py-3 mb-4 pl-3"
   >
     <div
@@ -594,9 +591,6 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   />
   <div
     class="container"
-  />
-  <div
-    class="Toastify"
   />
   <div
     class="py-3 mb-4 pl-3"

@@ -9,9 +9,6 @@ exports[`Basemap Toggle renders correctly - defaults to street layer 1`] = `
     class="container"
   />
   <div
-    class="Toastify"
-  />
-  <div
     class="basemap-container"
   >
     <button

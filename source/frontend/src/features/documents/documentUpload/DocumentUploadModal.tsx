@@ -13,7 +13,9 @@ export interface IDocumentUploadModalProps {
   onClose: () => void;
 }
 
-export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalProps> = props => {
+export const DocumentUploadModal: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentUploadModalProps>
+> = props => {
   return (
     <GenericModal
       display={props.display}

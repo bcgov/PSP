@@ -41,7 +41,7 @@ export type FastDatePickerProps = FormControlProps &
  * Formik connected react-datepicker. Uses memo and cleanup inspired by
  * https://jaredpalmer.com/formik/docs/api/fastfield
  */
-const FormikDatePicker: FunctionComponent<FastDatePickerProps> = ({
+const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePickerProps>> = ({
   field,
   disabled,
   className,

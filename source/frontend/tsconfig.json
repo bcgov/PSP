@@ -17,7 +17,10 @@
     "jsx": "react-jsx",
     "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["src/typings", "node_modules/@types"]
+    "typeRoots": ["src/typings", "node_modules/@types"],
+    "paths": {
+      "react-draggable": ["typings/react-draggable"]
+    }
   },
   "include": ["src"]
 }

@@ -8,9 +8,6 @@ exports[`ContactBreadCrumb component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   grid-area: breadcrumb;
 }

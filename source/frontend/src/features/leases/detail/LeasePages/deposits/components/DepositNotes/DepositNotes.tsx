@@ -22,7 +22,7 @@ export interface IDepositNotesProps {
  * Displays all deposit notes directly associated with this lease.
  * @param {IDepositNotesProps} param0
  */
-export const DepositNotes: React.FunctionComponent<IDepositNotesProps> = ({
+export const DepositNotes: React.FunctionComponent<React.PropsWithChildren<IDepositNotesProps>> = ({
   disabled,
   onEdit,
   onSave,

@@ -21,7 +21,7 @@ export const sectionTitles = new Map<string, string>([
  * Sub-form containing lease improvements details
  * @param {IImprovementProps} param0
  */
-export const Improvement: React.FunctionComponent<IImprovementProps> = ({
+export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImprovementProps>> = ({
   disabled,
   nameSpace,
   improvementTypeCodeId,

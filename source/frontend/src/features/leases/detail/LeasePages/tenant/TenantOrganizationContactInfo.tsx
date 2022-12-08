@@ -22,7 +22,7 @@ export interface ITenantOrganizationContactInfoProps {
  * @param {ITenantOrganizationContactInfoProps} param0
  */
 export const TenantOrganizationContactInfo: React.FunctionComponent<
-  ITenantOrganizationContactInfoProps & Partial<FieldArrayRenderProps>
+  React.PropsWithChildren<ITenantOrganizationContactInfoProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
   const { values } = useFormikContext<IFormLease>();
   const tenant: FormTenant = getIn(values, nameSpace);

@@ -8,9 +8,6 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   border-radius: 1rem;
   width: 100%;

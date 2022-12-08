@@ -24,7 +24,9 @@ import { onValidateOrganization } from '../../utils/contactUtils';
 /**
  * Formik-connected form to Create Organizational Contacts
  */
-export const CreateOrganizationForm: React.FunctionComponent = () => {
+export const CreateOrganizationForm: React.FunctionComponent<
+  React.PropsWithChildren<unknown>
+> = () => {
   const history = useHistory();
   const { addOrganization } = useAddContact();
 
@@ -94,15 +96,9 @@ export default CreateOrganizationForm;
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationForm>> = ({
-  values,
-  errors,
-  touched,
-  dirty,
-  resetForm,
-  submitForm,
-  initialValues,
-}) => {
+const CreateOrganizationComponent: React.FC<
+  React.PropsWithChildren<FormikProps<IEditableOrganizationForm>>
+> = ({ values, errors, touched, dirty, resetForm, submitForm, initialValues }) => {
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
 

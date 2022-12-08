@@ -8,7 +8,7 @@ import { HalfWidthLayout } from '../create/styles';
 import UpdateOrganizationForm from './Organization/UpdateOrganizationForm';
 import UpdatePersonForm from './Person/UpdatePersonForm';
 
-export const UpdateContactContainer: React.FC = () => {
+export const UpdateContactContainer: React.FC<React.PropsWithChildren<unknown>> = () => {
   // get id from route params -> /contact/{id}/edit
   const { id } = useParams<{ id: string }>();
   const showPerson = id && id.startsWith(ContactTypes.INDIVIDUAL);

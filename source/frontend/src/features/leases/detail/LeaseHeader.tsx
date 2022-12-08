@@ -17,7 +17,9 @@ interface ILeaseHeaderProps {
  * Common header for lease and licenses. Requires an active lease to display.
  * @param {ILeaseHeaderProps} param0
  */
-export const LeaseHeader: React.FunctionComponent<ILeaseHeaderProps> = ({ lease }) => {
+export const LeaseHeader: React.FunctionComponent<React.PropsWithChildren<ILeaseHeaderProps>> = ({
+  lease,
+}) => {
   const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
   return (
     <Styled.LeaseHeader className="lease-header">

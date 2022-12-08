@@ -20,7 +20,9 @@ export interface ITermPaymentsContainerProps {}
 /**
  * Orchestrates the display and modification of lease terms and payments.
  */
-export const TermPaymentsContainer: React.FunctionComponent<ITermPaymentsContainerProps> = () => {
+export const TermPaymentsContainer: React.FunctionComponent<
+  React.PropsWithChildren<ITermPaymentsContainerProps>
+> = () => {
   const { setLease, lease } = useContext(LeaseStateContext);
   const [editModalValues, setEditModalValues] = useState<IFormLeaseTerm | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<

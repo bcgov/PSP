@@ -8,9 +8,6 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -321,9 +318,6 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
   />
   <div
     class="container"
-  />
-  <div
-    class="Toastify"
   />
   .c1.btn {
   display: -webkit-box;

@@ -20,7 +20,7 @@ import * as Styled from './styles';
 /**
  * Page that displays leases information.
  */
-export const ResearchListView: React.FunctionComponent = () => {
+export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const history = useHistory();
   const { getResearchFiles } = useApiResearchFile();
   const { hasClaim } = useKeycloakWrapper();

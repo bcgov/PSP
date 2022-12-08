@@ -11,10 +11,9 @@ export interface IUserNameTooltipProps {
 }
 
 /** Generic user info tooltip component that displays user name on hover */
-export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = ({
-  userGuid,
-  userName,
-}) => {
+export const UserNameTooltip: React.FunctionComponent<
+  React.PropsWithChildren<IUserNameTooltipProps>
+> = ({ userGuid, userName }) => {
   const isMounted = useIsMounted();
   const { getUserInfo } = useApiUsers();
   const [userNameInfo, setUserNameInfo] = React.useState<string>('');

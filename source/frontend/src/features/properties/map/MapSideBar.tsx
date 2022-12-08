@@ -9,7 +9,7 @@ interface IMapSideBarProps {
   onZoom?: (apiProperty?: Api_Property) => void;
 }
 
-const MapSideBar: React.FunctionComponent<IMapSideBarProps> = ({
+const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarProps>> = ({
   showSideBar,
   setShowSideBar,
   onZoom,

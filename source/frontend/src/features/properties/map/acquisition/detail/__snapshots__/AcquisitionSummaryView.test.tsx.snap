@@ -8,9 +8,6 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;

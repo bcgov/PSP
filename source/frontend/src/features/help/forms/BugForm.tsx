@@ -30,7 +30,10 @@ const defaultHelpFormValues: IBugForm = {
 /**
  * Form allowing user to report a bug. The state of this form is synchronized with the parent's mailto.
  */
-const BugForm: React.FunctionComponent<BugFormProps> = ({ formValues, setMailto }) => {
+const BugForm: React.FunctionComponent<React.PropsWithChildren<BugFormProps>> = ({
+  formValues,
+  setMailto,
+}) => {
   const initialValues = { ...defaultHelpFormValues, ...formValues };
   return (
     <Formik

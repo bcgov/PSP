@@ -16,7 +16,7 @@ export interface IDocumentTemplateManagementViewProp {
 }
 
 export const DocumentTemplateManagementView: React.FunctionComponent<
-  IDocumentTemplateManagementViewProp
+  React.PropsWithChildren<IDocumentTemplateManagementViewProp>
 > = props => {
   const onSelectChange = (selectedType: React.ChangeEvent<HTMLInputElement>) => {
     var typeId = Number.parseInt(selectedType.target.value);

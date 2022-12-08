@@ -1,8 +1,11 @@
 import GenericModal from 'components/common/GenericModal';
+import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
+import { IMapProperty } from 'components/propertySelector/models';
+import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
+import SelectedPropertyRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
-import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
-import { IMapProperty } from 'features/properties/selector/models';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { Api_File } from 'models/api/File';
 import { useRef, useState } from 'react';
@@ -18,7 +21,9 @@ export interface IUpdatePropertiesProps {
   updateFileProperties: (file: Api_File) => Promise<Api_File | undefined>;
 }
 
-export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
+export const UpdateProperties: React.FunctionComponent<
+  React.PropsWithChildren<IUpdatePropertiesProps>
+> = props => {
   const formikRef = useRef<FormikProps<FileForm>>(null);
   const formFile = FileForm.fromApi(props.file);
 
@@ -90,18 +95,36 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
           {formikProps => (
             <FieldArray name="properties">
               {({ push, remove }) => (
-                <Row className="py-3 no-gutters">
-                  <Col>
-                    <MapSelectorContainer
-                      onSelectedProperty={(newProperty: IMapProperty) => {
-                        const formProperty = PropertyForm.fromMapProperty(newProperty);
-                        push(formProperty);
-                      }}
-                      existingProperties={formikProps.values.properties}
-                      onRemoveProperty={remove}
-                    />
-                  </Col>
-                </Row>
+                <>
+                  <Row className="py-3 no-gutters">
+                    <Col>
+                      <MapSelectorContainer
+                        addSelectedProperties={(newProperties: IMapProperty[]) => {
+                          newProperties.forEach(property => {
+                            const formProperty = PropertyForm.fromMapProperty(property);
+                            push(formProperty);
+                          });
+                        }}
+                        modifiedProperties={formikProps.values.properties}
+                      />
+                    </Col>
+                  </Row>
+                  <Section header="Selected properties">
+                    <SelectedPropertyHeaderRow />
+                    {formikProps.values.properties.map((property, index) => (
+                      <SelectedPropertyRow
+                        key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                        onRemove={() => remove(index)}
+                        nameSpace={`properties.${index}`}
+                        index={index}
+                        property={property}
+                      />
+                    ))}
+                    {formikProps.values.properties.length === 0 && (
+                      <span>No Properties selected</span>
+                    )}
+                  </Section>
+                </>
               )}
             </FieldArray>
           )}
