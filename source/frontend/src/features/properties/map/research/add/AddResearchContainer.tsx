@@ -55,12 +55,13 @@ export const AddResearchContainer: React.FunctionComponent<
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
-    formikRef.current?.setSubmitting(false);
+
     if (!!response?.fileName) {
-      formikRef.current?.resetForm();
       await search();
       history.replace(`/mapview/sidebar/research/${response.id}`);
+      formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
     }
+    formikRef.current?.setSubmitting(false);
   };
 
   const handleSave = () => {
@@ -101,10 +102,11 @@ export const AddResearchContainer: React.FunctionComponent<
 
             <Prompt
               when={
-                formikProps.dirty ||
-                (formikProps.values.properties !== initialForm.properties &&
-                  formikProps.submitCount === 0) ||
-                (!formikProps.values.id && formikProps.values.properties.length > 0)
+                (formikProps.dirty ||
+                  (formikProps.values.properties !== initialForm.properties &&
+                    formikProps.submitCount === 0) ||
+                  (!formikProps.values.id && formikProps.values.properties.length > 0)) &&
+                !formikProps.isSubmitting
               }
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
