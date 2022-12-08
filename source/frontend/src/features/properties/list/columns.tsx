@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
-import { formatNumber, formatStreetAddress, mapLookupCode } from 'utils';
+import { formatNumber, formatStreetAddress, mapLookupCode, stringToFragment } from 'utils';
 
 export const ColumnDiv = styled.div`
   display: flex;
@@ -19,7 +19,8 @@ export const ColumnDiv = styled.div`
   padding-right: 0.5rem;
 `;
 
-const NumberCell = ({ cell: { value } }: CellProps<IProperty, number>) => formatNumber(value);
+const NumberCell = ({ cell: { value } }: CellProps<IProperty, number | undefined>) =>
+  stringToFragment(formatNumber(value ?? 0));
 
 type Props = {
   municipalities: ILookupCode[];

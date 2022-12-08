@@ -42,7 +42,7 @@ export class ReturnListEntry {
   }
 }
 
-function renderHolder({ row: { original } }: CellProps<ReturnListEntry, string>) {
+function renderHolder({ row: { original } }: CellProps<ReturnListEntry, Api_Contact | undefined>) {
   if (original.contactHolder !== undefined) {
     const holder = original.contactHolder;
     if (holder.person !== undefined) {
@@ -56,7 +56,7 @@ function renderHolder({ row: { original } }: CellProps<ReturnListEntry, string>)
     }
   }
 
-  return '';
+  return <></>;
 }
 
 function depositActions(onEdit: (id: number) => void, onDelete: (id: number) => void) {

@@ -88,30 +88,4 @@ export const EndAlignCol = styled(Col)`
   align-items: flex-end;
 `;
 
-export const LeaseForm = styled(Form)`
-  padding: 0 2.5rem;
-  height: 100%;
-  overflow-y: auto;
-  text-align: left;
-  .required .form-label:after {
-    content: ' *';
-  }
-  .row {
-    padding: 0.5rem 0;
-  }
-  .form-label {
-    font-weight: 700;
-    color: ${props => props.theme.css.textColor};
-  }
-  .row .col:first-of-type .form-label {
-    min-width: 21.5rem;
-  }
-  .form-control {
-    min-width: 25rem;
-    max-width: 25rem;
-  }
-  .col {
-    align-items: end;
-    width: 100%;
-  }
-`;
+export const LeaseForm = styled(Form)``;

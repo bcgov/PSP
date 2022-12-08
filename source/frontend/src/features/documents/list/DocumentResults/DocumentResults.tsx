@@ -14,14 +14,9 @@ export interface IDocumentResultProps {
   onDelete: (values: Api_Document) => void;
 }
 
-export const DocumentResults: React.FunctionComponent<IDocumentResultProps> = ({
-  results,
-  setSort,
-  sort,
-  onViewDetails,
-  onDelete,
-  ...rest
-}) => {
+export const DocumentResults: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentResultProps>
+> = ({ results, setSort, sort, onViewDetails, onDelete, ...rest }) => {
   const columns = useMemo(
     () => getDocumentColumns({ onViewDetails, onDelete }),
     [onViewDetails, onDelete],

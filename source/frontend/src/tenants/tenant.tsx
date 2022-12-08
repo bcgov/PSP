@@ -27,7 +27,7 @@ export const { Consumer: TenantConsumer } = TenantContext;
  * @param props TenantProvider properties.
  * @returns TenantProvider component.
  */
-export const TenantProvider: React.FC = props => {
+export const TenantProvider: React.FC<React.PropsWithChildren<unknown>> = props => {
   const [tenant, setTenant] = React.useState(defaultTenant);
   React.useMemo(async () => {
     // If the env var exists use it.

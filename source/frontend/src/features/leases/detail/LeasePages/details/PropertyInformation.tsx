@@ -1,10 +1,10 @@
 import { Form, InputGroup } from 'components/common/form';
 import * as Styled from 'features/leases/detail/styles';
-import { getApiPropertyName } from 'features/properties/selector/utils';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
+import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
 import AddressSubForm from '../AddressSubForm';
 
@@ -18,7 +18,7 @@ export interface IPropertyInformationProps {
  * @param {IPropertyInformationProps} param0
  */
 export const PropertyInformation: React.FunctionComponent<
-  IPropertyInformationProps & Partial<FieldArrayRenderProps>
+  React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
   const formikProps = useFormikContext<IFormLease>();
 

@@ -13,7 +13,9 @@ interface IInsuranceRowProps {
   nameSpace: string;
 }
 
-const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace }) => {
+const InsuranceForm: React.FunctionComponent<React.PropsWithChildren<IInsuranceRowProps>> = ({
+  nameSpace,
+}) => {
   const formikProps = useFormikContext<FormInsurance>();
   const insuranceType: ITypeCode<string> = getIn(
     formikProps.values,

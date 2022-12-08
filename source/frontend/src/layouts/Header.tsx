@@ -7,7 +7,9 @@ import { useTenant } from 'tenants';
  * @param param0 Header properties.
  * @returns Header component.
  */
-export const Header: React.FC<React.HTMLAttributes<HTMLElement>> = ({ ...rest }) => {
+export const Header: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({
+  ...rest
+}) => {
   const tenant = useTenant();
   return <HeaderStyled {...rest} backgroundColor={tenant.colour}></HeaderStyled>;
 };

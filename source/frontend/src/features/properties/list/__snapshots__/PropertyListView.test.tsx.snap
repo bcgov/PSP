@@ -8,10 +8,7 @@ exports[`Property list view matches snapshot 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
-  .c3.btn {
+  .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,49 +38,49 @@ exports[`Property list view matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c3.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c4.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c4.btn.btn-primary {
   border: none;
 }
 
-.c3.btn.btn-secondary {
+.c4.btn.btn-secondary {
   background: none;
 }
 
-.c3.btn.btn-info {
+.c4.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   background: none;
 }
 
-.c3.btn.btn-light {
+.c4.btn.btn-light {
   border: none;
 }
 
-.c3.btn.btn-dark {
+.c4.btn.btn-dark {
   border: none;
 }
 
-.c3.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -104,9 +101,9 @@ exports[`Property list view matches snapshot 1`] = `
   padding: 0;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -115,14 +112,14 @@ exports[`Property list view matches snapshot 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,90 +130,72 @@ exports[`Property list view matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c3.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c7.c7.btn {
+.c8.c8.btn {
   background-color: unset;
   border: none;
 }
 
-.c7.c7.btn:hover,
-.c7.c7.btn:focus,
-.c7.c7.btn:active {
+.c8.c8.btn:hover,
+.c8.c8.btn:focus,
+.c8.c8.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c7.c7.btn svg {
+.c8.c8.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c7.c7.btn svg:hover {
+.c8.c8.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c1 {
-  padding-right: 0;
-}
-
-.c1 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c2:not(:first-child) {
-  padding-left: 0;
-}
-
-.c2:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c4 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c4 div:nth-child(2) div:nth-child(1) {
+.c5 div:nth-child(2) div:nth-child(1) {
   cursor: auto;
 }
 
-.c4 div:nth-child(2) div:nth-child(1) svg {
+.c5 div:nth-child(2) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c4 div:nth-child(1) div:nth-child(1) {
+.c5 div:nth-child(1) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c4 div:nth-child(1) div:nth-child(1) svg {
+.c5 div:nth-child(1) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c5 {
+.c6 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c6 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -233,10 +212,33 @@ exports[`Property list view matches snapshot 1`] = `
   align-items: center;
 }
 
-.c6 svg {
+.c7 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
+}
+
+.c2 {
+  padding-right: 0 !important;
+}
+
+.c2 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c1 {
+  padding-right: 0 !important;
+  border-right: 0 !important;
+}
+
+.c3 {
+  padding-left: 0 !important;
+}
+
+.c3 .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .c0 {
@@ -309,64 +311,52 @@ exports[`Property list view matches snapshot 1`] = `
               </span>
             </div>
             <div
-              class="col-xl-3 col-lg-4 col-md-5 col-6"
+              class="c1 col-xl-1 col-lg-1 col-md-1 col-1"
             >
               <div
-                class="idir-input-group flex-nowrap row"
+                class="c2 idir-input-group form-group"
               >
-                <div
-                  class="c1 col-auto"
+                <select
+                  class="form-select form-control"
+                  id="input-searchBy"
+                  name="searchBy"
                 >
-                  <div
-                    class="input-group-prepend"
+                  <option
+                    class="option"
+                    value="pinOrPid"
                   >
-                    <div
-                      class="form-group"
-                    >
-                      <select
-                        class="form-select form-control"
-                        id="input-searchBy"
-                        name="searchBy"
-                      >
-                        <option
-                          class="option"
-                          value="pinOrPid"
-                        >
-                          PID/PIN
-                        </option>
-                        <option
-                          class="option"
-                          value="address"
-                        >
-                          Address
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c2 col"
-                >
-                  <div
-                    class="input form-group"
+                    PID/PIN
+                  </option>
+                  <option
+                    class="option"
+                    value="address"
                   >
-                    <input
-                      class="form-control"
-                      id="input-pinOrPid"
-                      name="pinOrPid"
-                      placeholder="Enter a PID or PIN"
-                      title=""
-                      value=""
-                    />
-                  </div>
-                </div>
+                    Address
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="c3 col-xl-3 col-lg-4 col-md-2 col-3"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-pinOrPid"
+                  name="pinOrPid"
+                  placeholder="Enter a PID or PIN"
+                  title=""
+                  value=""
+                />
               </div>
             </div>
             <div
               class="col-auto"
             >
               <button
-                class="c3 Button Button--icon-only primary btn btn-primary"
+                class="c4 Button Button--icon-only primary btn btn-primary"
                 data-testid="search"
                 id="search-button"
                 title="search"
@@ -395,7 +385,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="col-auto"
             >
               <button
-                class="c3 Button Button--icon-only btn btn-info"
+                class="c4 Button Button--icon-only btn btn-info"
                 data-testid="reset-button"
                 id="reset-button"
                 title="reset-button"
@@ -424,13 +414,13 @@ exports[`Property list view matches snapshot 1`] = `
               class="bar-item col-auto"
             >
               <div
-                class="c4"
+                class="c5"
               >
                 <div
-                  class="c5"
+                  class="c6"
                 >
                   <div
-                    class="c6"
+                    class="c7"
                   >
                     <svg>
                       icon-map.svg
@@ -438,10 +428,10 @@ exports[`Property list view matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c5"
+                  class="c6"
                 >
                   <div
-                    class="c6"
+                    class="c7"
                   >
                     <svg>
                       icon-table.svg
@@ -467,7 +457,7 @@ exports[`Property list view matches snapshot 1`] = `
           class="menu"
         />
         <button
-          class="c3 Button c7 btn btn-primary"
+          class="c4 Button c8 btn btn-primary"
           type="button"
         >
           <div
@@ -490,7 +480,7 @@ exports[`Property list view matches snapshot 1`] = `
           </div>
         </button>
         <button
-          class="c3 Button c7 btn btn-primary"
+          class="c4 Button c8 btn btn-primary"
           type="button"
         >
           <div

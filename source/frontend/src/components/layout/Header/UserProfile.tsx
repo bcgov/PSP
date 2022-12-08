@@ -51,7 +51,7 @@ const LogoutButton = styled(FaSignOutAlt)`
 `;
 
 /** Component that allows the user to logout, and gives information on current user's organization/roles */
-export const UserProfile: React.FC = () => {
+export const UserProfile: React.FC<React.PropsWithChildren<unknown>> = () => {
   const keycloak = useKeycloakWrapper();
   const displayName =
     keycloak.displayName ??

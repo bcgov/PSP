@@ -163,9 +163,6 @@ exports[`Help box tests... renders correctly.. 1`] = `
     class="container"
   />
   <div
-    class="Toastify"
-  />
-  <div
     class="c0 help-box"
   >
     <div

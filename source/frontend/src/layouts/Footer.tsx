@@ -7,7 +7,9 @@ import { useTenant } from 'tenants';
  * @param param0 Footer properties.
  * @returns Footer component.
  */
-export const Footer: React.FC<React.HTMLAttributes<HTMLElement>> = ({ ...rest }) => {
+export const Footer: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({
+  ...rest
+}) => {
   const tenant = useTenant();
   return <FooterStyled {...rest} backgroundColor={tenant.colour}></FooterStyled>;
 };

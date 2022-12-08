@@ -20,11 +20,9 @@ export interface IReceivedDepositFormProps {
   initialValues: FormLeaseDeposit;
 }
 
-export const ReceivedDepositForm: React.FunctionComponent<IReceivedDepositFormProps> = ({
-  initialValues,
-  formikRef,
-  onSave,
-}) => {
+export const ReceivedDepositForm: React.FunctionComponent<
+  React.PropsWithChildren<IReceivedDepositFormProps>
+> = ({ initialValues, formikRef, onSave }) => {
   const initialContacts =
     initialValues.contactHolder !== undefined ? [initialValues.contactHolder] : [];
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(initialContacts);

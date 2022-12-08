@@ -10,7 +10,9 @@ export interface IDownloadDocumentButtonProps {
   mayanFileId?: number;
 }
 
-const DownloadDocumentButton: React.FunctionComponent<IDownloadDocumentButtonProps> = props => {
+const DownloadDocumentButton: React.FunctionComponent<
+  React.PropsWithChildren<IDownloadDocumentButtonProps>
+> = props => {
   let provider = useDocumentProvider();
 
   async function downloadFile(mayanDocumentId: number, mayanFileId?: number) {

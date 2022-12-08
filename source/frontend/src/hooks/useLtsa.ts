@@ -1,4 +1,5 @@
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import { IApiError } from 'interfaces/IApiError';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -21,7 +22,7 @@ export const useLtsa = () => {
       [getLtsaOrders],
     ),
     requestName: 'getLtsaData',
-    onError: useCallback(axiosError => {
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
       toast.error(`Failed to get LTSA data. error from LTSA: ${axiosError?.response?.data.error}`);
     }, []),
   });

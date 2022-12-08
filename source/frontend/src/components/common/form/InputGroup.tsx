@@ -50,7 +50,7 @@ export type InputGroupProps = FormControlProps & OptionalAttributes & RequiredAt
 /**
  * Formik-connected <InputGroup> form control - allows for an input with pre or posttext.
  */
-export const InputGroup: React.FC<InputGroupProps> = ({
+export const InputGroup: React.FC<React.PropsWithChildren<InputGroupProps>> = ({
   field,
   label,
   style,

@@ -22,13 +22,9 @@ export interface InsuranceEditContainerProps {
   onSuccess: () => void;
 }
 
-const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProps> = ({
-  leaseId,
-  insuranceList,
-  insuranceTypes,
-  onSuccess,
-  onCancel,
-}) => {
+const InsuranceEditContainer: React.FunctionComponent<
+  React.PropsWithChildren<InsuranceEditContainerProps>
+> = ({ leaseId, insuranceList, insuranceTypes, onSuccess, onCancel }) => {
   const formikRef = useRef<FormikProps<IUpdateFormInsurance>>(null);
 
   const handleOnChange = (e: any, codeType: any, arrayHelpers: any) => {

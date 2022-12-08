@@ -24,7 +24,7 @@ export interface INoteListViewProps {
 /**
  * Page that displays notes information.
  */
-export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
+export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>> = (
   props: INoteListViewProps,
 ) => {
   const { type, entityId } = props;

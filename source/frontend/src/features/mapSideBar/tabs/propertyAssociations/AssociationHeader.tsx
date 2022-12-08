@@ -7,7 +7,9 @@ export interface IAssociationHeaderProps {
   count?: number;
 }
 
-const AssociationHeader: React.FunctionComponent<IAssociationHeaderProps> = props => {
+const AssociationHeader: React.FunctionComponent<
+  React.PropsWithChildren<IAssociationHeaderProps>
+> = props => {
   return (
     <Row className="no-gutters">
       <Col xs="auto">{props.icon}</Col>

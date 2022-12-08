@@ -8,9 +8,6 @@ exports[`ContactTypeSelector component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   display: -webkit-box;
   display: -webkit-flex;

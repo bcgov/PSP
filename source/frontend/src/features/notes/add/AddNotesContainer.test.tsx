@@ -6,7 +6,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { mockEntityNote } from 'mocks/mockNoteResponses';
 import { Api_EntityNote } from 'models/api/Note';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { AddNotesContainer, IAddNotesContainerProps } from './AddNotesContainer';
 import { EntityNoteForm } from './models';
@@ -76,7 +76,7 @@ describe('AddNotesContainer component', () => {
     const { getCancelButton, getByText } = setup();
 
     expect(getByText(/Notes/i)).toBeVisible();
-    await waitFor(() => {
+    await act(() => {
       userEvent.click(getCancelButton());
     });
 
@@ -94,7 +94,7 @@ describe('AddNotesContainer component', () => {
     userEvent.type(textarea, formValues.note.note);
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
-    await waitFor(() => {
+    await act(() => {
       userEvent.click(getSaveButton());
     });
 
@@ -122,7 +122,7 @@ describe('AddNotesContainer component', () => {
     userEvent.type(textarea, formValues.note.note);
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
-    await waitFor(() => {
+    await act(() => {
       userEvent.click(getSaveButton());
     });
 

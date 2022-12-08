@@ -9,7 +9,11 @@ export type TextProps = {
   className?: string;
 };
 
-export const Text: React.FC<TextProps> = ({ field, className, children }) => {
+export const Text: React.FC<React.PropsWithChildren<TextProps>> = ({
+  field,
+  className,
+  children,
+}) => {
   // if "field" prop is supplied, we render text content from formik field
   // if no field is supplied, then we render the children as-is
   const { values } = useFormikContext();

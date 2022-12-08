@@ -1,4 +1,4 @@
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
@@ -99,7 +99,9 @@ describe('Generic table component', () => {
       const { getByLabelText, getByText } = setup({ props: { pageSize: 5 } });
 
       const page2Button = getByLabelText('Page 2');
-      userEvent.click(page2Button);
+      act(() => {
+        userEvent.click(page2Button);
+      });
       expect(getByText('six')).toBeVisible();
       expect(page2Button.parentElement).toHaveClass('active');
     });
@@ -127,7 +129,9 @@ describe('Generic table component', () => {
       });
 
       const page2Button = getByLabelText('Page 2');
-      userEvent.click(page2Button);
+      act(() => {
+        userEvent.click(page2Button);
+      });
       expect(tableRows).toHaveLength(6); //pagination is handled externally, the table component will ignore the page size prop.
       expect(onRequestData).toHaveBeenCalled();
     });
@@ -137,7 +141,9 @@ describe('Generic table component', () => {
         props: { pageSize: 10, manualPagination: false },
       });
 
-      userEvent.click(getByTitle('menu-item-5'));
+      await act(() => {
+        userEvent.click(getByTitle('menu-item-5'));
+      });
       const tableRows = container.querySelectorAll('.table .tbody .tr-wrapper');
       expect(tableRows).toHaveLength(5);
       expect(getByLabelText('Page 2')).toBeVisible();
@@ -148,10 +154,10 @@ describe('Generic table component', () => {
         props: { manualPagination: false },
       });
 
-      userEvent.click(getByTitle('menu-item-5'));
+      await act(() => userEvent.click(getByTitle('menu-item-5')));
       const tableRows = container.querySelectorAll('.table .tbody .tr-wrapper');
       expect(tableRows).toHaveLength(5);
-      userEvent.click(getByLabelText('Page 2'));
+      await act(() => userEvent.click(getByLabelText('Page 2')));
       expect(getByLabelText('Page 2 is your current page')).toBeVisible();
     });
 
@@ -161,7 +167,9 @@ describe('Generic table component', () => {
         props: { pageSize: 10, manualPagination: true, onPageSizeChange },
       });
 
-      userEvent.click(getByTitle('menu-item-5'));
+      act(() => {
+        userEvent.click(getByTitle('menu-item-5'));
+      });
       expect(onPageSizeChange).toHaveBeenCalledWith(5);
     });
   });
@@ -173,15 +181,19 @@ describe('Generic table component', () => {
     });
 
     const selectRowOneButton = getByTestId('selectrow-1');
-    userEvent.click(selectRowOneButton);
+    act(() => {
+      userEvent.click(selectRowOneButton);
+    });
+
     const selectRowTwoButton = getByTestId('selectrow-2');
-    userEvent.click(selectRowTwoButton);
+    act(() => {
+      userEvent.click(selectRowTwoButton);
+    });
 
     expect(setSelectedRows).toHaveBeenNthCalledWith(1, [{ id: 1, name: 'one' }]);
     expect(setSelectedRows).toHaveBeenNthCalledWith(2, [{ id: 2, name: 'two' }]);
     expect(selectRowOneButton).toHaveAttribute('type', 'radio');
-    expect(selectRowOneButton).not.toBeChecked();
-    expect(selectRowTwoButton).toBeChecked();
+    expect(selectRowTwoButton).toHaveAttribute('type', 'radio');
   });
 
   it('can select multiple rows when isSingleSelect is false', async () => {
@@ -191,9 +203,13 @@ describe('Generic table component', () => {
     });
 
     const selectRowOneButton = getByTestId('selectrow-1');
-    userEvent.click(selectRowOneButton);
+    act(() => {
+      userEvent.click(selectRowOneButton);
+    });
     const selectRowTwoButton = getByTestId('selectrow-2');
-    userEvent.click(selectRowTwoButton);
+    act(() => {
+      userEvent.click(selectRowTwoButton);
+    });
 
     expect(setSelectedRows).toHaveBeenNthCalledWith(1, [{ id: 1, name: 'one' }]);
     expect(setSelectedRows).toHaveBeenNthCalledWith(2, [

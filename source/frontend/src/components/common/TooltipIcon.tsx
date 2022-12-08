@@ -13,10 +13,10 @@ interface TooltipIconProps extends Partial<React.ComponentPropsWithRef<typeof Ov
   className?: string;
   innerClassName?: string;
   customOverlay?: OverlayChildren;
-  customToolTipIcon?: React.ComponentType<any> | JSX.Element;
+  customToolTipIcon?: React.ReactNode;
 }
 
-const TooltipIcon: React.FunctionComponent<TooltipIconProps> = props => {
+const TooltipIcon: React.FunctionComponent<React.PropsWithChildren<TooltipIconProps>> = props => {
   const overlay =
     props.customOverlay === undefined
       ? ((

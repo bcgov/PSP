@@ -3,11 +3,7 @@ import { Claims } from 'constants/claims';
 import { getIn, useFormikContext } from 'formik';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { IFormLease } from 'interfaces';
-import {
-  defaultFormLeasePayment,
-  IFormLeasePayment,
-  ILeasePayment,
-} from 'interfaces/ILeasePayment';
+import { defaultFormLeasePayment, IFormLeasePayment } from 'interfaces/ILeasePayment';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -28,7 +24,7 @@ export interface IPaymentsFormProps {
   termId?: number;
 }
 
-export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
+export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaymentsFormProps>> = ({
   onEdit,
   onDelete,
   onSave,
@@ -41,7 +37,7 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
   const formikProps = useFormikContext<IFormLease>();
   const { hasClaim } = useKeycloakWrapper();
   const field = useMemo(() => withNameSpace(nameSpace, 'payments'), [nameSpace]);
-  const payments = getIn(formikProps.values, field);
+  const payments: IFormLeasePayment[] = getIn(formikProps.values, field);
   const columns = useMemo(
     () =>
       getActualsColumns({
@@ -73,7 +69,7 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
       <Col md={10}>
         {!!payments?.length && isExercised ? (
           <>
-            <PaymentStyles.StyledPaymentTable<React.FC<TableProps<ILeasePayment>>>
+            <PaymentStyles.StyledPaymentTable<React.FC<TableProps<IFormLeasePayment>>>
               name="securityDepositsTable"
               columns={columns}
               data={payments ?? []}

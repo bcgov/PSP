@@ -8,7 +8,9 @@ import styled from 'styled-components';
 
 import ContactRouter from './ContactRouter';
 
-export const CreateContactContainer: React.FunctionComponent = () => {
+export const CreateContactContainer: React.FunctionComponent<
+  React.PropsWithChildren<unknown>
+> = () => {
   const history = useHistory();
   const { path } = useRouteMatch();
   const { pathname } = useLocation();

@@ -38,9 +38,9 @@ const getHelpPageByLocation = (location: any): IHelpPage | undefined => {
 /**
  * Provides logic for modal content. User information is provided by keycloak. The current page is determined using the react router location.
  */
-const HelpModalContentContainer: React.FunctionComponent<IHelpModalContentContainerProps> = ({
-  setMailto,
-}) => {
+const HelpModalContentContainer: React.FunctionComponent<
+  React.PropsWithChildren<IHelpModalContentContainerProps>
+> = ({ setMailto }) => {
   const [activeTopic, setActiveTopic] = React.useState<Topics | undefined>();
   const [activeTicketType, setActiveTicketType] = React.useState<TicketTypes>(TicketTypes.QUESTION);
   const keycloak = useKeycloakWrapper();

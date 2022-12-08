@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { ENVIRONMENT } from 'constants/environment';
 
@@ -50,9 +50,10 @@ describe('useApi testing suite', () => {
 
     try {
       await api.get('failure');
-    } catch (error) {
-      expect(error.response.status).toBe(400);
-      expect(error.response.data).toBe('failure');
+    } catch (e) {
+      const error = e as AxiosError;
+      expect(error.response?.status).toBe(400);
+      expect(error.response?.data).toBe('failure');
       expect(mockAxios.history.get).toHaveLength(1);
     }
   });

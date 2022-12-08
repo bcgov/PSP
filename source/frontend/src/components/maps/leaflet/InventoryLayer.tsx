@@ -123,7 +123,7 @@ export const defaultBounds = new LatLngBounds(
  * Displays the search results onto a layer with clustering.
  * This component makes a request to the PIMS API properties search WFS endpoint.
  */
-export const InventoryLayer: React.FC<InventoryLayerProps> = ({
+export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProps>> = ({
   bounds,
   zoom,
   filter,
@@ -151,12 +151,14 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
 
   const params = useMemo((): any => {
     const tiles = getTiles(defaultBounds, 5);
-
     return tiles.map(tile => ({
       STREET_ADDRESS_1: filter?.STREET_ADDRESS_1,
       PID: filter?.PID,
       PIN: filter?.PIN,
       BBOX: tile.bbox,
+      forceExactMatch: filter?.forceExactMatch,
+      latitude: filter?.latitude,
+      longitude: filter?.longitude,
     }));
   }, [filter]);
   useMapRefreshEvent(() => search(params));

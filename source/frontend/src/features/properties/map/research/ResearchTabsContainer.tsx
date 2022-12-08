@@ -25,11 +25,9 @@ export interface IResearchTabsContainerProps {
 /**
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
  */
-export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContainerProps> = ({
-  researchFile,
-  setEditMode,
-  setEditKey,
-}) => {
+export const ResearchTabsContainer: React.FunctionComponent<
+  React.PropsWithChildren<IResearchTabsContainerProps>
+> = ({ researchFile, setEditMode, setEditKey }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
 

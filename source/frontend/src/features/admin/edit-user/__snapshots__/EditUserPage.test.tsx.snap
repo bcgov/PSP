@@ -8,10 +8,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
-  .c6.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,49 +38,49 @@ exports[`Edit user page EditUserPage renders 1`] = `
   cursor: pointer;
 }
 
-.c6.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c5.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c5.btn.btn-primary {
   border: none;
 }
 
-.c6.btn.btn-secondary {
+.c5.btn.btn-secondary {
   background: none;
 }
 
-.c6.btn.btn-info {
+.c5.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   background: none;
 }
 
-.c6.btn.btn-light {
+.c5.btn.btn-light {
   border: none;
 }
 
-.c6.btn.btn-dark {
+.c5.btn.btn-dark {
   border: none;
 }
 
-.c6.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -104,9 +101,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
   padding: 0;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -115,14 +112,14 @@ exports[`Edit user page EditUserPage renders 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,21 +130,16 @@ exports[`Edit user page EditUserPage renders 1`] = `
   opacity: 0.65;
 }
 
-.c6.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
-}
-
-.c4 {
-  margin-left: 0.5rem;
-  cursor: pointer;
 }
 
 .c1 {
@@ -170,7 +162,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
   font-weight: bold;
 }
 
-.c5 {
+.c4 {
   position: absolute;
   top: 1rem;
   right: -0.5rem;
@@ -243,9 +235,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
                   id="input-businessIdentifier"
                   name="businessIdentifier"
                   readonly=""
-                  title="desmith@idir"
+                  title=""
                   type="text"
-                  value="desmith@idir"
+                  value=""
                 />
               </div>
             </div>
@@ -273,10 +265,10 @@ exports[`Edit user page EditUserPage renders 1`] = `
                   data-testid="firstName"
                   id="input-firstName"
                   name="firstName"
-                  placeholder="Devin"
-                  title="Devin"
+                  placeholder=""
+                  title=""
                   type="text"
-                  value="Devin"
+                  value=""
                 />
               </div>
             </div>
@@ -304,10 +296,10 @@ exports[`Edit user page EditUserPage renders 1`] = `
                   data-testid="surname"
                   id="input-surname"
                   name="surname"
-                  placeholder="Smith"
-                  title="Smith"
+                  placeholder=""
+                  title=""
                   type="text"
-                  value="Smith"
+                  value=""
                 />
               </div>
             </div>
@@ -335,10 +327,10 @@ exports[`Edit user page EditUserPage renders 1`] = `
                   data-testid="email"
                   id="input-email"
                   name="email"
-                  placeholder="devin.smith@gov.bc.ca"
-                  title="devin.smith@gov.bc.ca"
+                  placeholder=""
+                  title=""
                   type="email"
-                  value="devin.smith@gov.bc.ca"
+                  value=""
                 />
               </div>
             </div>
@@ -367,9 +359,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
                   id="input-position"
                   name="position"
                   placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
-                  title="pos"
+                  title=""
                   type="text"
-                  value="pos"
+                  value=""
                 />
               </div>
             </div>
@@ -402,54 +394,6 @@ exports[`Edit user page EditUserPage renders 1`] = `
                       class="search-wrapper searchWrapper "
                       style="background: white; border: 1px solid #606060;"
                     >
-                      <span
-                        class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
-                      >
-                        Functional
-                        <i
-                          class="custom-close"
-                        >
-                          <svg
-                            class="c4"
-                            fill="currentColor"
-                            height="16"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 512 512"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-                            />
-                          </svg>
-                        </i>
-                      </span>
-                      <span
-                        class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
-                      >
-                        System Administrator
-                        <i
-                          class="custom-close"
-                        >
-                          <svg
-                            class="c4"
-                            fill="currentColor"
-                            height="16"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 512 512"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-                            />
-                          </svg>
-                        </i>
-                      </span>
                       <input
                         autocomplete="off"
                         class="searchBox "
@@ -477,7 +421,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
                 </div>
               </div>
               <svg
-                class="c5 tooltip-icon"
+                class="c4 tooltip-icon"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -623,7 +567,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
               role="toolbar"
             >
               <button
-                class="c6 Button mr-5 btn btn-secondary"
+                class="c5 Button mr-5 btn btn-secondary"
                 type="button"
               >
                 <div
@@ -633,7 +577,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
                 </div>
               </button>
               <button
-                class="c6 Button mr-5 btn btn-primary"
+                class="c5 Button mr-5 btn btn-primary"
                 type="submit"
               >
                 <div

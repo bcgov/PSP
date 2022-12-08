@@ -15,10 +15,9 @@ export interface IAccessRequestContainerProps {
   onSave?: () => void;
 }
 
-export const AccessRequestContainer: React.FunctionComponent<IAccessRequestContainerProps> = ({
-  accessRequestId,
-  onSave,
-}) => {
+export const AccessRequestContainer: React.FunctionComponent<
+  React.PropsWithChildren<IAccessRequestContainerProps>
+> = ({ accessRequestId, onSave }) => {
   const {
     fetchCurrentAccessRequest: {
       loading,

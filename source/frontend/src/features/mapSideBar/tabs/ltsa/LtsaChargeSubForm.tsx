@@ -11,9 +11,9 @@ export interface ILtsaChargeSubFormProps {
   nameSpace?: string;
 }
 
-export const LtsaChargeSubForm: React.FunctionComponent<ILtsaChargeSubFormProps> = ({
-  nameSpace,
-}) => {
+export const LtsaChargeSubForm: React.FunctionComponent<
+  React.PropsWithChildren<ILtsaChargeSubFormProps>
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LtsaOrders>();
   const charges = getIn(values, withNameSpace(nameSpace, 'chargesOnTitle')) ?? [];
   return (

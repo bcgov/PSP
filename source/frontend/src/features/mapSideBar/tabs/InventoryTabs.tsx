@@ -27,12 +27,9 @@ export enum InventoryTabNames {
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
  * @param param0 object containing all react components for the corresponding tabs.
  */
-export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({
-  defaultTabKey,
-  tabViews,
-  activeTab,
-  setActiveTab,
-}) => {
+export const InventoryTabs: React.FunctionComponent<
+  React.PropsWithChildren<IInventoryTabsProps>
+> = ({ defaultTabKey, tabViews, activeTab, setActiveTab }) => {
   return (
     <TabView
       defaultActiveKey={defaultTabKey}

@@ -5,8 +5,8 @@ import { AssertsShape, ObjectShape, TypeOfShape } from 'yup/lib/object';
 import { ActivityModel } from './../models';
 
 export interface IActivityFormContent {
-  EditForm: React.FunctionComponent<IActivityFormContentProps>;
-  ViewForm: React.FunctionComponent<IActivityFormContentProps>;
+  EditForm: React.FunctionComponent<React.PropsWithChildren<IActivityFormContentProps>>;
+  ViewForm: React.FunctionComponent<React.PropsWithChildren<IActivityFormContentProps>>;
   validationSchema: Yup.ObjectSchema<
     ObjectShape,
     Record<string, any>,

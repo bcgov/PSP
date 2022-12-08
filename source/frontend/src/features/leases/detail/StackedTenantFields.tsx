@@ -13,14 +13,15 @@ export interface IStackedTenantFieldsProps {
  * Layout component that displays vertically stacked tenant names
  * @param {IStackedTenantFieldsProps} param0
  */
-export const StackedTenantFields: React.FunctionComponent<IStackedTenantFieldsProps> = ({
-  lease,
-}) => {
+export const StackedTenantFields: React.FunctionComponent<
+  React.PropsWithChildren<IStackedTenantFieldsProps>
+> = ({ lease }) => {
+  const commaSeparatedNames = getAllNames(lease).join(', ');
   return (
     <>
       <StyledStackedDivs>
         <label>Tenant:</label>
-        <OverflowTip fullText={getAllNames(lease)} />
+        <OverflowTip fullText={commaSeparatedNames} />
       </StyledStackedDivs>
     </>
   );

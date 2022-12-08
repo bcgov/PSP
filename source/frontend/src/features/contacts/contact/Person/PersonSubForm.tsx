@@ -14,7 +14,7 @@ interface IPersonSubFormProps {
   isContactMethodInvalid?: boolean;
 }
 
-const PersonSubForm: React.FunctionComponent<IPersonSubFormProps> = ({
+const PersonSubForm: React.FunctionComponent<React.PropsWithChildren<IPersonSubFormProps>> = ({
   isContactMethodInvalid,
 }) => {
   const { handleTypeaheadSearch, isTypeaheadLoading, matchedOrgs } =

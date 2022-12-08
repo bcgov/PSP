@@ -9,9 +9,6 @@ exports[`ReturnedDepositModal component renders as expected 1`] = `
     class="container"
   />
   <div
-    class="Toastify"
-  />
-  <div
     class="container"
   />
 </DocumentFragment>
@@ -24,9 +21,6 @@ exports[`ReturnedDepositModal component renders with data as expected 1`] = `
   />
   <div
     class="container"
-  />
-  <div
-    class="Toastify"
   />
   <div
     class="container"
