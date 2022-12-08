@@ -93,7 +93,7 @@ export const LeasePropertySelector: React.FunctionComponent<
       // Retrieve the pims id of the property if it exists
       if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
         const result = await searchProperty(property);
-        if (result?.length === 1) {
+        if (result !== undefined && result.length > 0) {
           formProperty.property.apiId = result[0].id;
         }
       }
