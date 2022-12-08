@@ -82,6 +82,39 @@ export const LeasePropertySelector: React.FunctionComponent<
     setModalContent(customModalProps);
   }, [customModalProps]);
 
+  const processAddedProperties = async (newProperties: IMapProperty[]) => {
+    let needsWarning = false;
+    const newFormProperties = [];
+
+    for (let i = 0; i < newProperties.length; i++) {
+      const property = newProperties[i];
+      const formProperty = FormLeaseProperty.fromMapProperty(property);
+
+      // Retrieve the pims id of the property if it exists
+      if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
+        const result = await searchProperty(property);
+        if (result?.length === 1) {
+          formProperty.property.apiId = result[0].id;
+        }
+      }
+
+      newFormProperties.push(formProperty);
+
+      if (formProperty.property?.apiId === undefined) {
+        needsWarning = needsWarning || true;
+      } else {
+        needsWarning = needsWarning || false;
+      }
+    }
+
+    if (needsWarning) {
+      setPropertiesToConfirm(newFormProperties);
+      setDisplayModal(true);
+    } else {
+      addProperties(newFormProperties);
+    }
+  };
+
   return (
     <Section header="Properties to include in this file:">
       <div className="py-2">
@@ -98,41 +131,7 @@ export const LeasePropertySelector: React.FunctionComponent<
               <Row className="py-3 no-gutters">
                 <Col>
                   <MapSelectorContainer
-                    addSelectedProperties={async (newProperties: IMapProperty[]) => {
-                      let needsWarning = false;
-                      const newFormProperties = [];
-
-                      for (let i = 0; i < newProperties.length; i++) {
-                        const property = newProperties[i];
-                        const formProperty = FormLeaseProperty.fromMapProperty(property);
-
-                        // Retrieve the pims id of the property if it exists
-                        if (
-                          formProperty.property !== undefined &&
-                          formProperty.property.apiId === undefined
-                        ) {
-                          const result = await searchProperty(property);
-                          if (result?.length === 1) {
-                            formProperty.property.apiId = result[0].id;
-                          }
-                        }
-
-                        newFormProperties.push(formProperty);
-
-                        if (formProperty.property?.apiId === undefined) {
-                          needsWarning = needsWarning || true;
-                        } else {
-                          needsWarning = needsWarning || false;
-                        }
-                      }
-
-                      if (needsWarning) {
-                        setPropertiesToConfirm(newFormProperties);
-                        setDisplayModal(true);
-                      } else {
-                        addProperties(newFormProperties);
-                      }
-                    }}
+                    addSelectedProperties={processAddedProperties}
                     modifiedProperties={values.getPropertiesAsForm()}
                   />
                 </Col>
