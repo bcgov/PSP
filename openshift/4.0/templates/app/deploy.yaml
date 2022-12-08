@@ -92,7 +92,6 @@ parameters:
     required: true
     value: "172.51.0.0/16"
 
-    
   - name: API_URL
     description:
       "The default URL to use when proxying requests to the application's
@@ -112,15 +111,13 @@ parameters:
     value: "pims-api"
 
   - name: GEOSERVER_URL
-    description:
-      "The URL to use when proxying requests to the application's
+    description: "The URL to use when proxying requests to the application's
       Geoserver instance."
     displayName: "GEOSERVER URL"
     required: false
     value: ""
   - name: CSP
-    description:
-      "The string content of the desired CSP that should be applied to the frontend application."
+    description: "The string content of the desired CSP that should be applied to the frontend application."
     displayName: "CSP"
     required: false
     value: ""
@@ -234,24 +231,152 @@ objects:
         env: ${ENV_NAME}
     type: Opaque
     data:
-      tenant.json: '{
-        "id": "MOTI",
-        "title": "Property Information Management System",
-        "colour": "#003366",
-        "logo": {
-          "favicon": "/tenants/MOTI/favicon.ico",
-          "image": "/tenants/MOTI/PIMS-logo.png",
-          "imageWithText": "/tenants/MOTI/PIMS-logo-with-text.png"
-        },
-        "login": {
-          "title": "TRAN Property Information Management System (PIMS)",
-          "heading":
-            "PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure",
-          "body":
-            "WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.",
-          "backgroundImage": "/tenants/MOTI/background-image.jpg"
+      tenant.json: |-
+        {
+            "id": "MOTI",
+            "title": "Property Information Management System",
+            "colour": "#003366",
+            "logo": {
+                "favicon": "/tenants/MOTI/favicon.ico",
+                "image": "/tenants/MOTI/PIMS-logo.png",
+                "imageWithText": "/tenants/MOTI/PIMS-logo-with-text.png"
+            },
+            "login": {
+                "title": "TRAN Property Information Management System (PIMS)",
+                "heading": "PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure",
+                "body": "WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.",
+                "backgroundImage": "/tenants/MOTI/background-image.webp"
+            },
+            "layers": [
+                {
+                    "key": "Administrative Boundaries",
+                    "label": "Administrative Boundaries",
+                    "on": false,
+                    "nodes": [
+                        {
+                            "id": "gazettedHighway",
+                            "key": "gazettedHighway",
+                            "label": "Gazetted Highway",
+                            "on": false,
+                            "color": "#FF0000",
+                            "url": "ogs-internal/ows?",
+                            "layers": "psp_dev:ISS_PSP_GAZETTED_HIGHWAY",
+                            "transparent": true,
+                            "opacity": 0.9,
+                            "format": "image/png",
+                            "authenticated": true,
+                            "maxNativeZoom": 17,
+                            "maxZoom": 20
+                        },
+                        {
+                            "id": "closedHighway",
+                            "key": "closedHighway",
+                            "label": "Closed Highway",
+                            "color": "#00FF04",
+                            "on": false,
+                            "url": "ogs-internal/ows?",
+                            "layers": "psp_dev:ISS_PSP_CLOSED_HIGHWAY",
+                            "transparent": true,
+                            "opacity": 0.9,
+                            "format": "image/png",
+                            "authenticated": true,
+                            "maxNativeZoom": 17,
+                            "maxZoom": 20
+                        },
+                        {
+                            "id": "parentParcelAcquisition",
+                            "key": "parentParcelAcquisition",
+                            "label": "Parent Parcel Acquisition",
+                            "color": "#FFB237",
+                            "on": false,
+                            "url": "ogs-internal/ows?",
+                            "layers": "psp_dev:ISS_PSP_PARENT_PARCEL",
+                            "transparent": true,
+                            "opacity": 0.8,
+                            "format": "image/png",
+                            "authenticated": true,
+                            "maxNativeZoom": 17,
+                            "maxZoom": 20
+                        },
+                        {
+                            "id": "section107Plan",
+                            "key": "section107Plan",
+                            "label": "S. 107 Plan",
+                            "color": "#1818FF",
+                            "on": false,
+                            "url": "ogs-internal/ows?",
+                            "layers": "psp_dev:ISS_PSP_SECTION_107_PLAN",
+                            "transparent": true,
+                            "opacity": 0.8,
+                            "format": "image/png",
+                            "authenticated": true,
+                            "maxNativeZoom": 17,
+                            "maxZoom": 20
+                        },
+                        {
+                            "id": "motiPlan",
+                            "key": "motiPlan",
+                            "label": "MoTI Plan",
+                            "color": "#101010",
+                            "on": false,
+                            "url": "ogs-internal/ows?",
+                            "layers": "psp_dev:ISS_PSP_MOTI_PLAN",
+                            "transparent": true,
+                            "opacity": 0.8,
+                            "format": "image/png",
+                            "authenticated": true,
+                            "maxNativeZoom": 17,
+                            "maxZoom": 20
+                        },
+                        {
+                            "id": "motiPlanFootprint",
+                            "key": "motiPlanFootprint",
+                            "label": "MoTI Plan Footprint",
+                            "color": "#FF88DF",
+                            "on": false,
+                            "url": "ogs-internal/ows?",
+                            "layers": "psp_dev:plan_footprint",
+                            "transparent": true,
+                            "opacity": 0.8,
+                            "format": "image/png",
+                            "authenticated": true,
+                            "maxNativeZoom": 17,
+                            "maxZoom": 20
+                        },
+                        {
+                            "id": "plans",
+                            "key": "plans",
+                            "label": "Plans",
+                            "on": false,
+                            "url": "ogs-internal/ows?",
+                            "layers": "psp_dev:plans",
+                            "transparent": true,
+                            "opacity": 0.8,
+                            "format": "image/png",
+                            "authenticated": true,
+                            "maxNativeZoom": 17,
+                            "maxZoom": 20
+                        }
+                    ]
+                }
+            ],
+            "propertiesUrl": "ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&",
+            "parcelMapFullyAttributed": {
+                "url": "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows",
+                "name": "pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW"
+            },
+            "bcAssessment": {
+                "url": "https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca",
+                "names": {
+                    "LEGAL_DESCRIPTION": "geo.bca:WHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_LEGAL_DESCRIPTS_SV",
+                    "ADDRESS": "geo.bca:WHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_ADDRESSES_SV",
+                    "FOLIO_DESCRIPTION": "geo.bca:WHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_DESCRIPTIONS_SV",
+                    "CHARGE": "geo.bca:WHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_LAND_CHARS_SV",
+                    "VALUE": "geo.bca:WHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_GNRL_PROP_VALUES_SV",
+                    "SALE": "geo.bca:WHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_SALES_SV"
+                }
+            }
         }
-      }'
 
   # How the app will be deployed to the pod.
   - kind: DeploymentConfig

@@ -6,6 +6,7 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SharedSearchProperties : PageObjectBase
     {
+        //Search Bar Elements
         private By searchByTab = By.XPath("//a[contains(text(),'Search')]");
         private By searchBySelect = By.Id("input-searchBy");
         private By searchByPIDInput = By.Id("input-pid");
@@ -17,12 +18,25 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchByLegalDescriptionInput = By.Id("input-legalDescription");
         private By searchByButton = By.Id("search-button");
 
+        //Search Results Elements
         private By searchPropertiesNoRowsResult = By.CssSelector("div[data-testid='map-properties'] div[class='no-rows-message']");
         private By searchProperties1stResultPropDiv = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
 
+        //Selected Properties Elements
+        private By searchPropertiesSelectedPropertiesTotal = By.XPath("//h3[contains(text(),'Selected properties')]/following-sibling::div");
+        private By searchPropertiesDelete1stPropBttn = By.XPath("(//span[contains(text(),'Remove')]/parent::div/parent::button)[1]");
+
+        //Toast Element
+        private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
+
+        private SharedModals sharedModals;
+
+
         public SharedSearchProperties(IWebDriver webDriver) : base(webDriver)
-        {}
+        {
+            sharedModals = new SharedModals(webDriver);
+        }
 
         public void NavigateToSearchTab()
         {
@@ -107,6 +121,17 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchByButton).Click();
         }
 
+        public void DeleteProperty()
+        {
+            var PropertiesTotal = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count() -1;
+
+            webDriver.FindElement(searchPropertiesDelete1stPropBttn).Click();
+
+            var PropertiesLeft = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count() -1;
+
+            Assert.True(PropertiesTotal - PropertiesLeft == 1);
+        }
+
         public void SelectFirstOption()
         {
             WaitUntil(searchProperties1stResultPropDiv);
@@ -114,6 +139,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ButtonElement("Add to selection");
 
+            if (webDriver.FindElements(generalToastBody).Count() > 0)
+            {
+                Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already beed added to the selected properties list"));
+            }
         }
 
         public string noRowsResultsMessage()
@@ -122,8 +151,7 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(searchPropertiesNoRowsResult).Text;
         }
 
-        //No results found for your search criteria.
-        //Too many results (more than 15) match this criteria. Please refine your search. lot 97
+        
         
     }
 }

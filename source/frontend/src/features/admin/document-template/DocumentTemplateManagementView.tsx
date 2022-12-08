@@ -55,6 +55,7 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
         {props.activityTypeId !== undefined && (
           <DocumentListContainer
             parentId={props.activityTypeId}
+            addButtonText="Add a Template"
             relationshipType={DocumentRelationshipType.TEMPLATES}
           />
         )}

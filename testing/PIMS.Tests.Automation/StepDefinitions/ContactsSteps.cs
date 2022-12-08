@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -12,11 +8,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LoginSteps loginSteps;
         private readonly Contacts contacts;
         private readonly SearchContacts searchContacts;
+        private readonly IEnumerable<IndividualContact> individualContacts;
+        private readonly IEnumerable<OrganizationContact> organizationContacts;
 
         private readonly string userName = "TRANPSP1";
 
         private readonly string nonExistingContact = "A non existing contact";
-        private readonly string legacyOrganizationName = "Bishop of Victoria";
+        private readonly string legacyOrganizationName = "BC Hydro and Telus";
         private readonly string organization1Name = "Automation Test Corp";
 
         private readonly string organization2Name = "Automation Test Corp II";
@@ -27,38 +25,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string organization2Email2 = "contact@testcorp.ca";
         private readonly string organization2Phone2 = "(778) 323-0989";
 
-
-        private readonly string contact1FirstName = "John";
-        private readonly string contact1LastName = "Doe";
-        private readonly string contact1Email = "john.doe@test.ca";
-        private readonly string contact1Country = "Canada";
-        private readonly string contact1AddressLine1 = "1234 Douglas St.";
-        private readonly string contact1City = "Victoria";
-        private readonly string contact1Province = "British Columbia";
-        private readonly string contact1PostalCode = "V7B 1F6";
-
-        private readonly string contact2FirstName = "Anne";
-        private readonly string contact2MiddleName = "Elizabeth";
-        private readonly string contact2LastName = "Lee";
-        private readonly string contact2PrefName = "Anne Lee";
-        private readonly string contact2Email = "anne.lee@test.ca";
-        private readonly string contact2Phone = "(236) 323-0988";
-        private readonly string contact2MailAddressLine1 = "123-5667 Main St.";
-        private readonly string contact2MailCountry = "United States of America";
-        private readonly string contact2MailState = "Washington";
-        private readonly string contact2MailCity = "Bellevue";
-        private readonly string contact2MailPostalCode = "98004";
-        private readonly string contact2PropertyAddressLine1 = "Av. Fray Antonio Alcalde 10, Zona Centro";
-        private readonly string contact2PropertyCountry = "Mexico";
-        private readonly string contact2PropertyProvince = "Mexico";
-        private readonly string contact2PropertyCity = "Guadalajara";
-        private readonly string contact2PropertyPostalCode = "44100";
-        private readonly string contact2BillingAddressLine1 = "136 Exford St.";
-        private readonly string contact2BillingCountry = "Other";
-        private readonly string contact2BillingOtherCountry = "Australia";
-        private readonly string contact2BillingCity = "Brisbane";
-        private readonly string contact2BillingPostalCode = "4000";
-
         private readonly string comments = "Automated Test for Contacts";
 
         public ContactsSteps(BrowserDriver driver)
@@ -66,75 +32,97 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             contacts = new Contacts(driver.Current);
             searchContacts = new SearchContacts(driver.Current);
+            individualContacts = driver.Configuration.GetSection("IndividualContacts").Get<IEnumerable<IndividualContact>>();
+            organizationContacts = driver.Configuration.GetSection("OrganizationContacts").Get<IEnumerable<OrganizationContact>>();
         }
 
-        [StepDefinition(@"I create a new Individual Contact with minimum fields")]
-        public void MinimumIndividualContact()
+        [StepDefinition(@"I create a new Individual Contact with minimum fields (.*)")]
+        public void MinimumIndividualContact(string lastName)
         {
+            /* TEST COVERAGE: PSP-2705, PSP-2797, PSP-4559 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
+
+            var contact = individualContacts.SingleOrDefault(u => u.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase));
+            if (contact == null) throw new InvalidOperationException($"Contact {lastName} not found in the test configuration");
 
             //Navigate to Create new contact form
             contacts.NavigateToCreateNewContact();
 
             //Create new Individual Contact with minimum fields
-            contacts.CreateIndividualContactMinFields(contact1FirstName, contact1LastName, legacyOrganizationName, contact1Email, contact1Country, contact1AddressLine1, contact1Province, contact1City, contact1PostalCode);
+            contacts.CreateIndividualContactMinFields(contact.FirstName, contact.LastName, contact.Organization, contact.Email, contact.MailCountry, contact.MailAddressLine1, contact.MailProvince, contact.MailProvince, contact.MailPostalCode);
 
             //Save Contact
             contacts.SaveContact();
 
         }
 
-        [StepDefinition(@"I create a new Individual Contact with maximum fields")]
-        public void MaximumIndividualContact()
+        [StepDefinition(@"I create a new Individual Contact with maximum fields (.*)")]
+        public void MaximumIndividualContact(string lastName)
         {
+            /* TEST COVERAGE: PSP-2705, PSP-2797, PSP-4559 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
             //Navigate to Create new contact form
             contacts.NavigateToCreateNewContact();
+
+            var contact = individualContacts.SingleOrDefault(u => u.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase));
+            if (contact == null) throw new InvalidOperationException($"Contact {lastName} not found in the test configuration");
 
             //Create new Individual Contact with maximum fields
-            contacts.CreateIndividualContactMaxFields(contact2FirstName, contact2MiddleName, contact2LastName, contact2PrefName, legacyOrganizationName, contact2Email, contact2Phone,
-                 contact2MailAddressLine1, contact2MailCountry, contact2MailState, contact2MailCity, contact2MailPostalCode,
-                 contact2PropertyAddressLine1, contact2PropertyCountry, contact2PropertyProvince, contact2PropertyCity, contact2PropertyPostalCode,
-                 contact2BillingAddressLine1, contact2BillingCountry, contact2BillingOtherCountry, contact2BillingCity, contact2BillingPostalCode, comments);
+            contacts.CreateIndividualContactMaxFields(contact.FirstName, contact.MiddleName, contact.LastName, contact.PreferableName, contact.Organization, contact.Email, contact.Phone,
+                 contact.MailAddressLine1, contact.MailCountry, contact.MailProvince, contact.MailCity, contact.MailPostalCode,
+                 contact.PropertyAddressLine1, contact.PropertyCountry, contact.PropertyProvince, contact.PropertyCity, contact.PropertyPostalCode,
+                 contact.BillingAddressLine1, contact.BillingCountry, contact.BillingOtherCountry, contact.BillingCity, contact.BillingPostalCode, comments);
 
             //Save Contact
             contacts.SaveContact();
 
         }
 
-        [StepDefinition(@"I create a new Organization Contact with minimum fields")]
-        public void MinimumOrganizationContact()
+        [StepDefinition(@"I create a new Organization Contact with minimum fields (.*)")]
+        public void MinimumOrganizationContact(string organization)
         {
+            /* TEST COVERAGE: PSP-4208, PSP-2797, PSP-4559 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
             //Navigate to Create new contact form
             contacts.NavigateToCreateNewContact();
+
+            var contact = organizationContacts.SingleOrDefault(u => u.OrganizationName.Equals(organization, StringComparison.OrdinalIgnoreCase));
+            if (contact == null) throw new InvalidOperationException($"Contact {organization} not found in the test configuration");
 
             //Create new Organization Contact with minimum fields
-            contacts.CreateOrganizationContactMinFields(organization1Name, contact2Phone, contact1AddressLine1, contact1Country, contact1Province, contact1City, contact1PostalCode);
+            contacts.CreateOrganizationContactMinFields(contact.OrganizationName, contact.Phone, contact.MailAddressLine1, contact.MailCountry, contact.MailProvince, contact.MailCity, contact.MailPostalCode);
 
             //Save Contact
             contacts.SaveContact();
         }
 
-        [StepDefinition(@"I create a new Organization Contact with maximum fields")]
-        public void MaximumOrganizationContact()
+        [StepDefinition(@"I create a new Organization Contact with maximum fields (.*)")]
+        public void MaximumOrganizationContact(string organization)
         {
+            /* TEST COVERAGE: PSP-4208, PSP-2797, PSP-4559 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
             //Navigate to Create new contact form
             contacts.NavigateToCreateNewContact();
 
+            var contact = organizationContacts.SingleOrDefault(u => u.OrganizationName.Equals(organization, StringComparison.OrdinalIgnoreCase));
+            if (contact == null) throw new InvalidOperationException($"Contact {organization} not found in the test configuration");
+
             //Create new Organization Contact with maximum fields
-            contacts.CreateOrganizationContactMaxFields(organization2Name, organization2Alias, organization2CorpNbr, organization2Email1, organization2Phone1,
-                contact2MailAddressLine1, contact2MailCountry, contact2MailState, contact2MailCity, contact2MailPostalCode,
-                contact2PropertyAddressLine1, contact2PropertyCountry, contact2PropertyProvince, contact2PropertyCity, contact2PropertyPostalCode,
-                contact2BillingAddressLine1, contact2BillingCountry, contact2BillingOtherCountry, contact2BillingCity, contact2BillingPostalCode, comments);
+            contacts.CreateOrganizationContactMaxFields(contact.OrganizationName, contact.Alias, contact.IncorporationNumber, contact.Email, contact.Phone,
+                contact.MailAddressLine1, contact.MailCountry, contact.MailProvince, contact.MailCity, contact.MailPostalCode,
+                contact.PropertyAddressLine1, contact.PropertyCountry, contact.PropertyProvince, contact.PropertyCity, contact.PropertyPostalCode,
+                contact.BillingAddressLine1, contact.BillingCountry, contact.BillingOtherCountry, contact.BillingCity, contact.BillingPostalCode, comments);
 
             //Save Contact
             contacts.SaveContact();
@@ -144,6 +132,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing Organization Contact")]
         public void UpdateOrganizationContact()
         {
+            /* TEST COVERAGE: PSP-3021, PSP-4200, PSP-4559 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -153,6 +143,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Search for a contact
             searchContacts.SearchOrganizationContact(organization2Name);
 
+            //Select the first option from search
+            searchContacts.SelectFirstResultLink();
+
             //Update an Organization Contact
             contacts.UpdateContact(organization2Email2, organization2Phone2);
 
@@ -161,9 +154,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
-        [StepDefinition(@"I search for an existing contact")]
-        public void SearchExistingContact()
+        [StepDefinition(@"I search for an existing contact (.*)")]
+        public void SearchExistingContact(string searchCriteria)
         {
+            /* TEST COVERAGE: PSP-4200, PSP-4559, PSP-4559 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -177,6 +172,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I search for an non-existing contact")]
         public void SearchNonExistantContact()
         {
+            /* TEST COVERAGE: PSP-4200, PSP-4559 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -190,6 +187,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I cancel creating a new contact")]
         public void CancelContactCreation()
         {
+            /* TEST COVERAGE: PSP-2706, PSP-4559 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -199,17 +198,37 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Click on Create new Contact button
             searchContacts.CreateNewContactFromSearch();
 
+            var contact = individualContacts.SingleOrDefault(u => u.LastName.Equals("Doe", StringComparison.OrdinalIgnoreCase));
+            if (contact == null) throw new InvalidOperationException($"Contact Doe not found in the test configuration");
+
             //Create new Individual Contact with minimum fields
-            contacts.CreateIndividualContactMinFields(contact1FirstName, contact1LastName, legacyOrganizationName, contact1Email, contact1Country, contact1AddressLine1, contact1Province, contact1City, contact1PostalCode);
+            contacts.CreateIndividualContactMinFields(contact.FirstName, contact.LastName, contact.Organization, contact.Email, contact.MailCountry, contact.MailAddressLine1, contact.MailProvince, contact.MailProvince, contact.MailPostalCode);
 
             //Cancel Contact
             contacts.CancelContact();
+        }
+
+        [StepDefinition(@"I verify the Contacts List View")]
+        public void VerifyContactsListView()
+        {
+            /* TEST COVERAGE: PSP-2355, PSP-4559 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Search a Contact
+            searchContacts.NavigateToSearchContact();
+
+            //Verify List View
+            searchContacts.VerifyContactsListView();
         }
 
         //ASSERT FUNCTIONS
         [StepDefinition(@"A new Organization contact is successfully created")]
         public void NewOrganizationContactCreated()
         {
+            /* TEST COVERAGE: PSP-4208 */
+
             contacts.Wait();
             Assert.True(contacts.GetContactOrgStatus().Equals("ACTIVE"));
         }
@@ -217,6 +236,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"A new Individual contact is successfully created")]
         public void NewIndividualContactCreated()
         {
+            /* TEST COVERAGE: PSP-2705 */
+
             contacts.Wait();
             Assert.True(contacts.GetContactIndStatus().Equals("ACTIVE"));
         }
@@ -224,6 +245,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Search Contacts screen is correctly rendered")]
         public void CorrectSearchContact()
         {
+            /* TEST COVERAGE: PSP-2704, PSP-2541 */
+
             contacts.Wait();
             Assert.True(searchContacts.SearchContactRender());
         }
@@ -231,8 +254,85 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"No contacts results are found")]
         public void NoContactResults()
         {
+            /* TEST COVERAGE: PSP-4200 */
+
             contacts.Wait();
             Assert.True(searchContacts.GetNoSearchMessage().Equals("No Contacts match the search criteria"));
+        }
+
+        [StepDefinition(@"Expected Content is displayed on Contacts Table (.*) (.*)")]
+        public void VerifyContactsTableContent(string contactType, string searchCriteria)
+        {
+            /* TEST COVERAGE: PSP-2355 */
+
+            if (contactType == "Individual")
+            {
+                var contact = individualContacts.SingleOrDefault(u => u.LastName.Equals(searchCriteria, StringComparison.OrdinalIgnoreCase));
+                if (contact == null) throw new InvalidOperationException($"Contact {searchCriteria} not found in the test configuration");
+                searchContacts.SearchIndividualContact(contact.Summary);
+                searchContacts.VerifyContactTableContent(contact.Summary, contact.FirstName, contact.LastName, contact.Organization, contact.Email, contact.MailAddressLine1, contact.MailCity, contact.MailProvDisplay);
+            }
+            else
+            {
+                var contact = organizationContacts.SingleOrDefault(u => u.OrganizationName.Equals(searchCriteria, StringComparison.OrdinalIgnoreCase));
+                if (contact == null) throw new InvalidOperationException($"Contact {searchCriteria} not found in the test configuration");
+                searchContacts.SearchOrganizationContact(searchCriteria);
+                searchContacts.VerifyContactTableContent(contact.OrganizationName, "", "", contact.OrganizationName, contact.Email, contact.MailAddressLine1, contact.MailCity, contact.MailProvDisplay);
+            }
+            
+        }
+
+        public class IndividualContact
+        {
+            public string Summary { get; set; } = null!;
+            public string FirstName { get; set; } = null!;
+            public string MiddleName { get; set; } = null!;
+            public string LastName { get; set; } = null!;
+            public string PreferableName { get; set; } = null!;
+            public string Organization { get; set; } = null!;
+            public string Email { get; set; } = null!;
+            public string Phone { get; set; } = null!;
+            public string MailAddressLine1 { get; set; } = null!;
+            public string MailCountry { get; set; } = null!;
+            public string MailProvince { get; set; } = null!;
+            public string MailProvDisplay { get; set; } = null!; 
+            public string MailCity { get; set; } = null!;
+            public string MailPostalCode { get; set; } = null!;
+            public string PropertyAddressLine1 { get; set; } = null!;
+            public string PropertyCountry { get; set; } = null!;
+            public string PropertyProvince { get; set; } = null!;
+            public string PropertyCity { get; set; } = null!;
+            public string PropertyPostalCode { get; set; } = null!;
+            public string BillingAddressLine1 { get; set; } = null!;
+            public string BillingCountry { get; set; } = null!;
+            public string BillingOtherCountry { get; set; } = null!;
+            public string BillingCity { get; set; } = null!;
+            public string BillingPostalCode { get; set; } = null!;
+        }
+
+        public class OrganizationContact
+        {
+            public string OrganizationName { get; set; } = null!;
+            public string Alias { get; set; } = null!;
+            public string IncorporationNumber { get; set; } = null!;
+            public string Email { get; set; } = null!;
+            public string Phone { get; set; } = null!;
+            public string MailAddressLine1 { get; set; } = null!;
+            public string MailCountry { get; set; } = null!;
+            public string MailProvince { get; set; } = null!;
+            public string MailProvDisplay { get; set; } = null!;
+            public string MailCity { get; set; } = null!;
+            public string MailPostalCode { get; set; } = null!;
+            public string PropertyAddressLine1 { get; set; } = null!;
+            public string PropertyCountry { get; set; } = null!;
+            public string PropertyProvince { get; set; } = null!;
+            public string PropertyCity { get; set; } = null!;
+            public string PropertyPostalCode { get; set; } = null!;
+            public string BillingAddressLine1 { get; set; } = null!;
+            public string BillingCountry { get; set; } = null!;
+            public string BillingOtherCountry { get; set; } = null!;
+            public string BillingCity { get; set; } = null!;
+            public string BillingPostalCode { get; set; } = null!;
         }
 
     }
