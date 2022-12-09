@@ -26,7 +26,7 @@ export interface ITermsFormProps {
   isReceivable?: boolean;
 }
 
-export const TermsForm: React.FunctionComponent<ITermsFormProps> = ({
+export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFormProps>> = ({
   onEdit,
   onEditPayment,
   onDelete,

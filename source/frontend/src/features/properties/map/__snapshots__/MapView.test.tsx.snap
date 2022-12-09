@@ -8,7 +8,7 @@ exports[`MapView Renders the map 1`] = `
   <div
     class="container"
   />
-  .c7.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,49 +38,49 @@ exports[`MapView Renders the map 1`] = `
   cursor: pointer;
 }
 
-.c7.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c8.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c8.btn.btn-primary {
   border: none;
 }
 
-.c7.btn.btn-secondary {
+.c8.btn.btn-secondary {
   background: none;
 }
 
-.c7.btn.btn-info {
+.c8.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   background: none;
 }
 
-.c7.btn.btn-light {
+.c8.btn.btn-light {
   border: none;
 }
 
-.c7.btn.btn-dark {
+.c8.btn.btn-dark {
   border: none;
 }
 
-.c7.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -101,9 +101,9 @@ exports[`MapView Renders the map 1`] = `
   padding: 0;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -112,14 +112,14 @@ exports[`MapView Renders the map 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -130,67 +130,49 @@ exports[`MapView Renders the map 1`] = `
   opacity: 0.65;
 }
 
-.c7.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 {
-  padding-right: 0;
-}
-
-.c5 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c6:not(:first-child) {
-  padding-left: 0;
-}
-
-.c6:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c8 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c8 div:nth-child(1) div:nth-child(1) {
+.c9 div:nth-child(1) div:nth-child(1) {
   cursor: auto;
 }
 
-.c8 div:nth-child(1) div:nth-child(1) svg {
+.c9 div:nth-child(1) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c8 div:nth-child(2) div:nth-child(1) {
+.c9 div:nth-child(2) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c8 div:nth-child(2) div:nth-child(1) svg {
+.c9 div:nth-child(2) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c9 {
+.c10 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -207,50 +189,73 @@ exports[`MapView Renders the map 1`] = `
   align-items: center;
 }
 
-.c10 svg {
+.c11 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
 }
 
-.c11 {
+.c6 {
+  padding-right: 0 !important;
+}
+
+.c6 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c5 {
+  padding-right: 0 !important;
+  border-right: 0 !important;
+}
+
+.c7 {
+  padding-left: 0 !important;
+}
+
+.c7 .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c12 {
   grid-area: map;
 }
 
-.c11 .leaflet-div-icon {
+.c12 .leaflet-div-icon {
   background: none;
   border: none;
 }
 
-.c11 .leaflet-div-icon img {
+.c12 .leaflet-div-icon img {
   width: inherit;
   height: inherit;
   -webkit-filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
   filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
 }
 
-.c11 .leaflet-container {
+.c12 .leaflet-container {
   height: 100%;
   margin: auto;
 }
 
-.c11 .leaflet-container .leaflet-popup-content-wrapper {
+.c12 .leaflet-container .leaflet-popup-content-wrapper {
   border-radius: 0;
 }
 
-.c11 .leaflet-container .leaflet-popup-content {
+.c12 .leaflet-container .leaflet-popup-content {
   margin: 0rem;
 }
 
-.c11 .leaflet-container .leaflet-control-container .leaflet-top {
+.c12 .leaflet-container .leaflet-control-container .leaflet-top {
   z-index: 500;
 }
 
-.c11 .leaflet-control-layers.leaflet-control-layers-expanded {
+.c12 .leaflet-control-layers.leaflet-control-layers-expanded {
   border-radius: 0rem;
 }
 
-.c11 .leaflet-control-layers .leaflet-control-layers-overlays {
+.c12 .leaflet-control-layers .leaflet-control-layers-overlays {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -262,7 +267,7 @@ exports[`MapView Renders the map 1`] = `
   width: 15rem;
 }
 
-.c11 .leaflet-control-layers .leaflet-control-layers-overlays label {
+.c12 .leaflet-control-layers .leaflet-control-layers-overlays label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -417,64 +422,52 @@ exports[`MapView Renders the map 1`] = `
               </span>
             </div>
             <div
-              class="col-xl-3 col-lg-4 col-md-5 col-6"
+              class="c5 col-xl-1 col-lg-1 col-md-1 col-1"
             >
               <div
-                class="idir-input-group flex-nowrap row"
+                class="c6 idir-input-group form-group"
               >
-                <div
-                  class="c5 col-auto"
+                <select
+                  class="form-select form-control"
+                  id="input-searchBy"
+                  name="searchBy"
                 >
-                  <div
-                    class="input-group-prepend"
+                  <option
+                    class="option"
+                    value="pinOrPid"
                   >
-                    <div
-                      class="form-group"
-                    >
-                      <select
-                        class="form-select form-control"
-                        id="input-searchBy"
-                        name="searchBy"
-                      >
-                        <option
-                          class="option"
-                          value="pinOrPid"
-                        >
-                          PID/PIN
-                        </option>
-                        <option
-                          class="option"
-                          value="address"
-                        >
-                          Address
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c6 col"
-                >
-                  <div
-                    class="input form-group"
+                    PID/PIN
+                  </option>
+                  <option
+                    class="option"
+                    value="address"
                   >
-                    <input
-                      class="form-control"
-                      id="input-pinOrPid"
-                      name="pinOrPid"
-                      placeholder="Enter a PID or PIN"
-                      title=""
-                      value=""
-                    />
-                  </div>
-                </div>
+                    Address
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="c7 col-xl-3 col-lg-4 col-md-2 col-3"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-pinOrPid"
+                  name="pinOrPid"
+                  placeholder="Enter a PID or PIN"
+                  title=""
+                  value=""
+                />
               </div>
             </div>
             <div
               class="col-auto"
             >
               <button
-                class="c7 Button Button--icon-only primary btn btn-primary"
+                class="c8 Button Button--icon-only primary btn btn-primary"
                 data-testid="search"
                 id="search-button"
                 title="search"
@@ -503,7 +496,7 @@ exports[`MapView Renders the map 1`] = `
               class="col-auto"
             >
               <button
-                class="c7 Button Button--icon-only btn btn-info"
+                class="c8 Button Button--icon-only btn btn-info"
                 data-testid="reset-button"
                 id="reset-button"
                 title="reset-button"
@@ -532,13 +525,13 @@ exports[`MapView Renders the map 1`] = `
               class="bar-item col-auto"
             >
               <div
-                class="c8"
+                class="c9"
               >
                 <div
-                  class="c9"
+                  class="c10"
                 >
                   <div
-                    class="c10"
+                    class="c11"
                   >
                     <svg>
                       icon-map.svg
@@ -546,10 +539,10 @@ exports[`MapView Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c9"
+                  class="c10"
                 >
                   <div
-                    class="c10"
+                    class="c11"
                   >
                     <svg>
                       icon-table.svg
@@ -562,7 +555,7 @@ exports[`MapView Renders the map 1`] = `
         </form>
       </div>
       <div
-        class="c11"
+        class="c12"
       >
         <div />
       </div>

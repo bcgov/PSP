@@ -9,7 +9,9 @@ interface ILeaseEditButtonProps {
   linkTo: string;
 }
 
-export const LeaseEditButton: React.FunctionComponent<ILeaseEditButtonProps> = ({ linkTo }) => {
+export const LeaseEditButton: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseEditButtonProps>
+> = ({ linkTo }) => {
   const location = useLocation();
   const { edit } = queryString.parse(location.search);
   return (

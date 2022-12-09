@@ -28,7 +28,9 @@ export interface IDocumentDetailsViewProps {
 /**
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
-export const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = props => {
+export const DocumentDetailView: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentDetailsViewProps>
+> = props => {
   const { hasClaim } = useKeycloakWrapper();
 
   return (

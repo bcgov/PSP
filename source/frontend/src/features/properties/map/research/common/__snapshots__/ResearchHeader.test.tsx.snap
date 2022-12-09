@@ -8,9 +8,6 @@ exports[`ResearchHeader component renders as expected when provided no research 
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c2 {
   font-weight: bold;
 }

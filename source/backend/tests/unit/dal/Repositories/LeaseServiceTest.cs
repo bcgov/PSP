@@ -331,7 +331,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
 
-            
+
 
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             var propertyOne = EntityHelper.CreateProperty(1);
@@ -392,54 +392,6 @@ namespace Pims.Dal.Test.Services
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
             leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.Id, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases, true), Times.Once);
-        }
-
-        [Fact]
-        public void Update_Lease_Properties_AddNonExistantProperty()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1, addProperty: false);
-            helper.CreatePimsContext(user, true).AddRange(lease);
-            var service = helper.Create<LeaseService>(user);
-            helper.SaveChanges();
-
-            // Act
-            var propertyOne = EntityHelper.CreateProperty(1);
-            var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
-            lease.PimsPropertyLeases.Add(addProperty);
-
-            // Act
-            // Assert
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() =>
-                service.Update(lease, false));
-            ex.Message.Should().Be("Property with PID 1 does not exist");
-        }
-
-        [Fact]
-        public void Update_Lease_Properties_AddNonExistantPropertyPin()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1, addProperty: false);
-            helper.CreatePimsContext(user, true).AddRange(lease);
-            var service = helper.Create<LeaseService>(user);
-            helper.SaveChanges();
-
-            // Act
-            var propertyOne = EntityHelper.CreateProperty(-1, 1);
-            var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
-            lease.PimsPropertyLeases.Add(addProperty);
-
-            // Act
-            // Assert
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() =>
-                service.Update(lease, false));
-            ex.Message.Should().Be("Property with PIN 1 does not exist");
         }
 
         [Fact]

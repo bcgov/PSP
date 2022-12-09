@@ -9,9 +9,9 @@ export interface ILtsaDuplicateTitleSubForm {
   nameSpace?: string;
 }
 
-export const LtsaDuplicateTitleSubForm: React.FunctionComponent<ILtsaDuplicateTitleSubForm> = ({
-  nameSpace,
-}) => {
+export const LtsaDuplicateTitleSubForm: React.FunctionComponent<
+  React.PropsWithChildren<ILtsaDuplicateTitleSubForm>
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LtsaOrders>();
   const certificates =
     getIn(values, withNameSpace(nameSpace, 'duplicateCertificatesOfTitle')) ?? [];

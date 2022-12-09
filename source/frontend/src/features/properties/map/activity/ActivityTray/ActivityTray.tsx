@@ -26,7 +26,7 @@ export interface IActivityTrayProps {
   currentFormContent?: IActivityFormContent;
 }
 
-export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
+export const ActivityTray: React.FunctionComponent<React.PropsWithChildren<IActivityTrayProps>> = ({
   activity,
   onClose,
   onSave,
@@ -68,7 +68,7 @@ export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
 
   return (
     <ReactVisibilitySensor
-      onChange={isVisible => {
+      onChange={(isVisible: boolean) => {
         !isVisible && setShow(true);
       }}
     >

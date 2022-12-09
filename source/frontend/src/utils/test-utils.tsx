@@ -11,7 +11,6 @@ import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
 import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 
 import TestCommonWrapper from './TestCommonWrapper';
 
@@ -170,12 +169,7 @@ export function createMapContainer(
   return function Container({ children }: PropsWithChildren) {
     return (
       <div id="mapid" style={{ width: 500, height: 500 }}>
-        <MapContainer
-          center={[48.43, -123.37]}
-          zoom={14}
-          whenReady={done}
-          whenCreated={whenCreated}
-        >
+        <MapContainer center={[48.43, -123.37]} zoom={14} whenReady={done} ref={whenCreated}>
           {children}
         </MapContainer>
       </div>
@@ -222,14 +216,6 @@ function render(
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
       <TestCommonWrapper store={store} history={history}>
-        <ToastContainer
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-        />
         <FilterProvider>{children}</FilterProvider>
       </TestCommonWrapper>
     );
@@ -266,14 +252,6 @@ async function renderAsync(
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
       <TestCommonWrapper store={store} history={history}>
-        <ToastContainer
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-        />
         <FilterProvider>{children}</FilterProvider>
       </TestCommonWrapper>
     );

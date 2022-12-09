@@ -1,4 +1,5 @@
 export * from './axiosUtils';
+export * from './columnUtils';
 export * from './convertUtils';
 export * from './mapLookupCode';
 export * from './mockKeycloak';

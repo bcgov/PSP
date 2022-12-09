@@ -12,7 +12,9 @@ export interface IEditUserContainerProps {
   userId?: string;
 }
 
-const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ userId }) => {
+const EditUserContainer: React.FunctionComponent<
+  React.PropsWithChildren<IEditUserContainerProps>
+> = ({ userId }) => {
   const history = useHistory();
   const [user, setUser] = React.useState<Api_User>();
   const isMounted = useIsMounted();

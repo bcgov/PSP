@@ -10,13 +10,11 @@ import { LayerPopupTitle } from './styles';
 
 export interface ILayerPopupContainerProps {
   layerPopup: LayerPopupInformation;
-  onClose?: () => void;
   onViewPropertyInfo: (pid?: string | null, id?: number) => void;
 }
 
-export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
+export const LayerPopupContainer: React.FC<React.PropsWithChildren<ILayerPopupContainerProps>> = ({
   layerPopup,
-  onClose,
   onViewPropertyInfo,
 }) => {
   const history = useHistory();
@@ -60,7 +58,7 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
         type: MapStateActionTypes.SELECTED_LEASE_PROPERTY,
         selectedLeaseProperty: selectedInventoryProperty,
       });
-    history.push('/lease/new');
+    history.push('/mapview/sidebar/lease/new');
   };
 
   return (

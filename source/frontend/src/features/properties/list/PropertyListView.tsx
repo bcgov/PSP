@@ -32,7 +32,7 @@ const defaultFilterValues: IPropertyFilter = {
   address: '',
 };
 
-const PropertyListView: React.FC = () => {
+const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
   const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
 

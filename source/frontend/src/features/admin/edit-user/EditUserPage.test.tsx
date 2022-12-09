@@ -6,7 +6,6 @@ import { createMemoryHistory } from 'history';
 import { getUserMock } from 'mocks/userMock';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -45,14 +44,6 @@ const renderEditUserPage = () =>
   render(
     <Provider store={store}>
       <Router history={history}>
-        <ToastContainer
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-        />
         <EditUserPage userKey="TEST-ID" />,
       </Router>
     </Provider>,
@@ -81,22 +72,23 @@ describe('Edit user page', () => {
   });
 
   it('contains role options from lookup code + please select disabled option', async () => {
-    const { getAllByText, getByTestId } = renderEditUserPage();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(getAllByText(/roleVal/i));
+    const { getAllByText, getByTestId, findByDisplayValue } = renderEditUserPage();
+    await findByDisplayValue('pos');
+    expect(getAllByText(/roleVal/i)).toHaveLength(1);
     expect(getByTestId('isDisabled').getAttribute('value')).toEqual('false');
   });
 
   it('Does not display disabled roles', async () => {
-    const { queryByText, getByTestId } = renderEditUserPage();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    const { queryByText, findByDisplayValue } = renderEditUserPage();
+    await findByDisplayValue('pos');
     expect(queryByText('disabledRole')).toBeNull();
   });
 
   describe('appropriate fields are autofilled', () => {
     it('autofills  email, businessIdentifier, first and last name', async () => {
-      const { getByTestId } = renderEditUserPage();
-      await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+      const { getByTestId, findByDisplayValue } = renderEditUserPage();
+      await findByDisplayValue('pos');
+
       expect(getByTestId('email').getAttribute('value')).toEqual('devin.smith@gov.bc.ca');
       expect(getByTestId('businessIdentifier').getAttribute('value')).toEqual('desmith@idir');
       expect(getByTestId('firstName').getAttribute('value')).toEqual('Devin');

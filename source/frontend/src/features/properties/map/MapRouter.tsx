@@ -4,6 +4,8 @@ import {
   MapStateContext,
 } from 'components/maps/providers/MapStateContext';
 import Claims from 'constants/claims';
+import { AddLeaseContainer } from 'features/leases';
+import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
 import MotiInventoryContainer from 'features/mapSideBar/MotiInventoryContainer';
 import { Api_Property } from 'models/api/Property';
 import queryString from 'query-string';
@@ -13,6 +15,7 @@ import AppRoute from 'utils/AppRoute';
 
 import AcquisitionContainer from './acquisition/AcquisitionContainer';
 import AddAcquisitionContainer from './acquisition/add/AddAcquisitionContainer';
+import LeaseContainer from './lease/LeaseContainer';
 import AddResearchContainer from './research/add/AddResearchContainer';
 import ResearchContainer from './research/ResearchContainer';
 
@@ -56,6 +59,17 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
       }),
     [location],
   );
+
+  const isLease = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/lease/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
   const setShowSideBar = props.setShowSideBar;
 
   useEffect(() => {
@@ -64,13 +78,15 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.ACQUISITION_FILE });
       } else if (isResearch) {
         setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.RESEARCH_FILE });
+      } else if (isLease) {
+        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.LEASE_FILE });
       }
       setShowSideBar(true);
     } else {
       setShowSideBar(false);
       setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
     }
-  }, [isAcquisition, isResearch, matched, setShowSideBar, setState]);
+  }, [isAcquisition, isResearch, isLease, matched, setShowSideBar, setState]);
 
   const onClose = () => {
     history.push('/mapview');
@@ -136,6 +152,25 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         exact
         key={'PropertyNonInventory'}
         title={'Property Information - Non Inventory'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/lease/new`}
+        customRender={() => <AddLeaseContainer onClose={onClose} />}
+        claim={Claims.LEASE_ADD}
+        exact
+        key={'NewLease'}
+        title={'Create Lease'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/lease/:id`}
+        customRender={({ match }) => (
+          <LeaseContextProvider>
+            <LeaseContainer leaseId={Number(match.params.id)} onClose={onClose} />
+          </LeaseContextProvider>
+        )}
+        claim={Claims.LEASE_VIEW}
+        key={'LeaseLicense'}
+        title={'Lease / License File'}
       />
     </Switch>
   );

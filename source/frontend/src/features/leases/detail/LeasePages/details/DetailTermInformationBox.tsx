@@ -17,12 +17,9 @@ export interface IDetailTermInformationBoxProps {
  * Display the start and expiry date of the term reprented by the passed title.
  * @param {IDetailTermInformationBoxProps} param0
  */
-export const DetailTermInformationBox: React.FunctionComponent<IDetailTermInformationBoxProps> = ({
-  title,
-  inverted,
-  startDate,
-  expiryDate,
-}) => {
+export const DetailTermInformationBox: React.FunctionComponent<
+  React.PropsWithChildren<IDetailTermInformationBoxProps>
+> = ({ title, inverted, startDate, expiryDate }) => {
   const formattedStartDate = prettyFormatDate(startDate);
   const formattedExpiryDate = prettyFormatDate(expiryDate);
   return (

@@ -1,4 +1,6 @@
+import axios, { AxiosError } from 'axios';
 import { useApiLeaseTerms } from 'hooks/pims-api/useApiLeaseTerms';
+import { IApiError } from 'interfaces/IApiError';
 import { ILeaseTerm } from 'interfaces/ILeaseTerm';
 import { useDispatch } from 'react-redux';
 import { hideLoading } from 'react-redux-loading-bar';
@@ -19,11 +21,14 @@ export const useLeaseTerms = () => {
       const response = await handleAxiosResponse(dispatch, 'UpdateLeaseTerm', axiosPromise);
       toast.success('Lease term saved');
       return response;
-    } catch (axiosError) {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response?.data.error);
-      } else {
-        toast.error('Error saving lease term, refresh your page and try again');
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response?.data.error);
+        } else {
+          toast.error('Error saving lease term, refresh your page and try again');
+        }
       }
     } finally {
       dispatch(hideLoading());
@@ -36,11 +41,14 @@ export const useLeaseTerms = () => {
       const response = await handleAxiosResponse(dispatch, 'DeleteLeaseTerm', axiosPromise);
       toast.success('Lease term deleted');
       return response;
-    } catch (axiosError) {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response?.data.error);
-      } else {
-        toast.error('Error deleting lease term, refresh your page and try again');
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response?.data.error);
+        } else {
+          toast.error('Error deleting lease term, refresh your page and try again');
+        }
       }
     } finally {
       dispatch(hideLoading());

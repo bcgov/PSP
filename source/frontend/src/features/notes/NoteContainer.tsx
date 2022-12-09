@@ -22,7 +22,9 @@ export interface INotesDetailContainerProps {
   onSuccess?: () => void;
 }
 
-export const NoteContainer: React.FC<INotesDetailContainerProps> = props => {
+export const NoteContainer: React.FC<
+  React.PropsWithChildren<INotesDetailContainerProps>
+> = props => {
   const { type, noteId, editMode, isOpened, onSuccess, closeModal } = props;
   const [isEditMode, setEditMode] = useState<boolean>(!!editMode);
   const {

@@ -11,7 +11,9 @@ interface IExtraColumnProps {
   expandable?: boolean;
   filterable?: boolean;
   filter?: {
-    component?: React.ComponentType | React.FC<any>;
+    component?:
+      | React.ComponentType<React.PropsWithChildren<unknown>>
+      | React.FC<React.PropsWithChildren<any>>;
     props?: { [key: string]: any } | (() => { [key: string]: any });
   };
   Footer?: Function;

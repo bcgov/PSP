@@ -12,14 +12,9 @@ interface SectionProps {
   initiallyExpanded?: boolean;
 }
 
-export const Section: React.FC<SectionProps & React.HTMLAttributes<HTMLDivElement>> = ({
-  header,
-  children,
-  title,
-  isCollapsable,
-  initiallyExpanded,
-  className,
-}) => {
+export const Section: React.FC<
+  React.PropsWithChildren<SectionProps & React.HTMLAttributes<HTMLDivElement>>
+> = ({ header, children, title, isCollapsable, initiallyExpanded, className }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
   return (
     <StyledFormSection className={clsx('form-section', className)}>

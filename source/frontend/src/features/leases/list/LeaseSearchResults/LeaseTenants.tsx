@@ -7,7 +7,9 @@ export interface ILeaseTenantsProps {
   maxDisplayCount: number;
 }
 
-const LeaseTenants: React.FunctionComponent<ILeaseTenantsProps> = props => {
+const LeaseTenants: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseTenantsProps>
+> = props => {
   const [isExpanded, setExpanded] = useState(false);
 
   const names = props.tenantNames;

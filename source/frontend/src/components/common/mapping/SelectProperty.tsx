@@ -8,10 +8,9 @@ interface ISelectPropertyProps {
   onClickAway: () => void;
 }
 
-export const SelectProperty: React.FunctionComponent<ISelectPropertyProps> = ({
-  onClick,
-  onClickAway,
-}) => {
+export const SelectProperty: React.FunctionComponent<
+  React.PropsWithChildren<ISelectPropertyProps>
+> = ({ onClick, onClickAway }) => {
   return (
     <div className="d-flex flex-column align-items-center">
       <ClickAwayListener onClickAway={onClickAway}>

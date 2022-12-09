@@ -21,7 +21,7 @@ export interface IDocumentUploadContainerProps {
 }
 
 export const DocumentUploadContainer: React.FunctionComponent<
-  IDocumentUploadContainerProps
+  React.PropsWithChildren<IDocumentUploadContainerProps>
 > = props => {
   const deleteModalProps = getCancelModalProps();
 

@@ -17,12 +17,9 @@ export interface IReceivedDepositModalProps {
  * Modal displaying form allowing add/update lease deposits. Save button triggers internal formik validation and submit.
  * @param {IReceivedDepositModalProps} props
  */
-export const ReceivedDepositModal: React.FunctionComponent<IReceivedDepositModalProps> = ({
-  initialValues,
-  display,
-  onCancel,
-  onSave,
-}) => {
+export const ReceivedDepositModal: React.FunctionComponent<
+  React.PropsWithChildren<IReceivedDepositModalProps>
+> = ({ initialValues, display, onCancel, onSave }) => {
   const formikRef = useRef<FormikProps<FormLeaseDeposit>>(null);
   const modalTitle = initialValues.id === undefined ? 'Add a Deposit' : 'Edit Deposit';
   return (

@@ -16,13 +16,9 @@ export interface IDepositsReceivedContainerProps {
   onReturn: (id: number) => void;
 }
 
-const DepositsReceivedContainer: React.FC<IDepositsReceivedContainerProps> = ({
-  securityDeposits,
-  onAdd,
-  onEdit,
-  onDelete,
-  onReturn,
-}) => {
+const DepositsReceivedContainer: React.FC<
+  React.PropsWithChildren<IDepositsReceivedContainerProps>
+> = ({ securityDeposits, onAdd, onEdit, onDelete, onReturn }) => {
   const { hasClaim } = useKeycloakWrapper();
   const columns = getColumns({ onEdit, onDelete, onReturn });
   const dataSource = securityDeposits.map<DepositListEntry>(d => {

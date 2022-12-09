@@ -21,4 +21,3 @@ export * from './ITypeCode';
 export * from './IUser';
 export * from './IUserInfo';
 export * from './IUsersFilter';
-export * from './organization';

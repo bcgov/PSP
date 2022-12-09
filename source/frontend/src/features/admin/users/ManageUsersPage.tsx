@@ -13,6 +13,9 @@ import React, { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from 'store/store';
 import styled from 'styled-components';
 import { generateMultiSortCriteria } from 'utils';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
@@ -36,7 +39,7 @@ const downloadUsers = (filter: IPaginateParams) =>
  * @returns A ManagerUser component.
  */
 export const ManageUsersPage = () => {
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
 
   const { getUsersPaged } = useApiUsers();
   const {

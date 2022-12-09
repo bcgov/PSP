@@ -20,7 +20,10 @@ export interface IContactEmail {
  * Form fields to capture email contact information for this Person.
  * @param {IContactEmail} param0
  */
-export const ContactEmail: React.FunctionComponent<IContactEmail> = ({ namespace, onRemove }) => {
+export const ContactEmail: React.FunctionComponent<React.PropsWithChildren<IContactEmail>> = ({
+  namespace,
+  onRemove,
+}) => {
   const { emailTypes } = useContactInfoHelpers();
 
   return (

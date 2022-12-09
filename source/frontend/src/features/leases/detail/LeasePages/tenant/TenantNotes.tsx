@@ -13,7 +13,7 @@ export interface ITenantNotesProps {
  * Displays all notes directly associated with this lease tenant.
  * @param {ITenantNotesProps} param0
  */
-export const TenantNotes: React.FunctionComponent<ITenantNotesProps> = ({
+export const TenantNotes: React.FunctionComponent<React.PropsWithChildren<ITenantNotesProps>> = ({
   nameSpace,
   disabled,
 }) => {

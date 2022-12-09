@@ -26,10 +26,9 @@ const defaultHelpFormValues: IFeatureRequestForm = {
 /**
  * Form allowing user to request a feature. The state of this form is synchronized with the parent's mailto.
  */
-const FeatureRequestForm: React.FunctionComponent<FeatureRequestFormProps> = ({
-  formValues,
-  setMailto,
-}) => {
+const FeatureRequestForm: React.FunctionComponent<
+  React.PropsWithChildren<FeatureRequestFormProps>
+> = ({ formValues, setMailto }) => {
   const initialValues = { ...defaultHelpFormValues, ...formValues };
   return (
     <Formik

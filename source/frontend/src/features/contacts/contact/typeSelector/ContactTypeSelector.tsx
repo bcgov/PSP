@@ -10,11 +10,9 @@ interface IContactTypeSelectorProps {
   setContactType: (contactType: ContactTypes) => void;
 }
 
-export const ContactTypeSelector: React.FunctionComponent<IContactTypeSelectorProps> = ({
-  contactType,
-  setContactType,
-  disabled,
-}) => {
+export const ContactTypeSelector: React.FunctionComponent<
+  React.PropsWithChildren<IContactTypeSelectorProps>
+> = ({ contactType, setContactType, disabled }) => {
   return (
     <StyledInlineFlex>
       <Form.Check

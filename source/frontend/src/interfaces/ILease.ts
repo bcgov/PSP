@@ -1,4 +1,6 @@
 import { FormTenant } from 'features/leases/detail/LeasePages/tenant/Tenant';
+import { Api_AuditFields } from 'models/api/AuditFields';
+import { Api_ConcurrentVersion } from 'models/api/ConcurrentVersion';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import { Api_Person } from 'models/api/Person';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
@@ -9,7 +11,7 @@ import { IFormLeaseTerm, ILeaseTerm } from './ILeaseTerm';
 import { IRegion } from './IRegion';
 import ITypeCode from './ITypeCode';
 
-export interface ILease {
+export interface ILease extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   lFileNo?: string;
   psFileNo?: string;
@@ -54,7 +56,6 @@ export interface ILease {
   improvements: ILeaseImprovement[];
   securityDeposits: Api_SecurityDeposit[];
   securityDepositReturns: Api_SecurityDepositReturn[];
-  rowVersion?: number;
 }
 
 export interface IFormLease

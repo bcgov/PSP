@@ -98,6 +98,14 @@ export const LeaseHeader = styled(InlineFlexDiv)`
   h1 {
     min-width: 23rem;
   }
+
+  && .btn.btn-link {
+    color: white;
+    &:hover {
+      color: white;
+    }
+  }
+
   @media only screen and (max-width: 1250px) {
     flex-direction: column;
     gap: 0.5rem;

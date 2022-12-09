@@ -23,7 +23,7 @@ export interface ITermFormProps {
  * if not initialValues provided. Otherwise will display the passed lease term. Save/Cancel triggered externally via passed formikRef.
  * @param {ITermFormProps} props
  */
-export const TermForm: React.FunctionComponent<ITermFormProps> = ({
+export const TermForm: React.FunctionComponent<React.PropsWithChildren<ITermFormProps>> = ({
   initialValues,
   formikRef,
   onSave,

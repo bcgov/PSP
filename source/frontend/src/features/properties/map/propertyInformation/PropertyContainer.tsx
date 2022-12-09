@@ -20,10 +20,9 @@ export interface IPropertyContainerProps {
 /**
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
  */
-export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps> = ({
-  composedProperty,
-  setEditMode,
-}) => {
+export const PropertyContainer: React.FunctionComponent<
+  React.PropsWithChildren<IPropertyContainerProps>
+> = ({ composedProperty, setEditMode }) => {
   const showPropertyInfoTab = composedProperty?.id !== undefined;
 
   const tabViews: TabInventoryView[] = [];

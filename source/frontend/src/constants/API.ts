@@ -43,6 +43,9 @@ export interface IGeoSearchParams {
   PID?: string;
   PIN?: string;
   BBOX?: string;
+  latitude?: number | string;
+  longitude?: number | string;
+  forceExactMatch?: boolean;
 }
 
 // Lookup Codes

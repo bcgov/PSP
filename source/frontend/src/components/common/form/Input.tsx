@@ -53,7 +53,7 @@ export type InputProps = FormControlProps & OptionalAttributes & RequiredAttribu
 /**
  * Formik-connected <Input> form control
  */
-export const Input: React.FC<InputProps> = ({
+export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
   field,
   label,
   as: is, // `as` is reserved in typescript

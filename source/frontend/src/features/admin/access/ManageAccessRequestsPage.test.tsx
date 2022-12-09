@@ -9,7 +9,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { render, userEvent, waitFor, waitForElementToBeRemoved } from 'utils/test-utils';
+import { act, render, userEvent, waitFor, waitForElementToBeRemoved } from 'utils/test-utils';
 
 import ManageAccessRequestsPage from './ManageAccessRequestsPage';
 
@@ -196,9 +196,13 @@ describe('Manage access requests', () => {
       await waitForElementToBeRemoved(getByTitle('table-loading'));
 
       const searchInput = getByTitle('Search by IDIR/Last Name');
-      userEvent.type(searchInput, 'Smith');
+      act(() => {
+        userEvent.type(searchInput, 'Smith');
+      });
       const resetButton = getByTitle('reset');
-      userEvent.click(resetButton);
+      act(() => {
+        userEvent.click(resetButton);
+      });
 
       expect(searchInput).toHaveValue('');
     });
