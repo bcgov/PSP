@@ -102,10 +102,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchPropertyNotesLabel = By.XPath("//label[contains(text(),'Summary notes')]");
         private By researchPropertyNotesViewInput = By.XPath("//label[contains(text(),'Summary notes')]/parent::div/following-sibling::div");
 
-        // Research File - Activities Elements
-        private By researchFileActivitiesTab = By.CssSelector("a[data-rb-event-key='activities']");
-
-
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
 
@@ -118,7 +114,7 @@ namespace PIMS.Tests.Automation.PageObjects
         }
         public void NavigateToCreateNewResearchFile()
         {
-            Wait();
+            Wait(2000);
             webDriver.FindElement(menuResearchButton).Click();
 
             Wait();
@@ -137,7 +133,7 @@ namespace PIMS.Tests.Automation.PageObjects
             totalAssociatedProps = webDriver.FindElements(researchFilePropertyCountProps).Count() -1;
 
             Wait(2000);
-            if (webDriver.FindElements(researchFileEditButton).Count() == 0)
+            if (webDriver.FindElements(researchRFileSummaryLink).Count() > 0)
             {
                 webDriver.FindElement(researchRFileSummaryLink).Click();
             }
@@ -276,12 +272,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(researchPropertyDocReferenceInput).SendKeys(docReference);
             webDriver.FindElement(researchPropertyNotesTextArea).SendKeys(notes);
 
-        }
-
-        public void AccessActivitiesTab()
-        {
-            Wait();
-            webDriver.FindElement(researchFileActivitiesTab).Click();
         }
 
         //Get the research file number
