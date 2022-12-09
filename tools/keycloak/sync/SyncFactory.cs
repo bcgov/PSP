@@ -25,6 +25,7 @@ namespace Pims.Tools.Keycloak.Sync
         private readonly IKeycloakRequestClient _keycloakManagementClient;
         private readonly IPimsRequestClient _pimsClient;
         private readonly ILogger _logger;
+        private static readonly int MAX_PAGES = 20;
         #endregion
 
         #region Constructors
@@ -103,7 +104,7 @@ namespace Pims.Tools.Keycloak.Sync
                 claimsPage = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.ClaimModel>>(HttpMethod.Get, $"admin/claims?page={page++}&quantity=50");
                 claims = claims.Concat(claimsPage.Items);
             }
-            while (claimsPage != null && claimsPage.Items.Any());
+            while (claimsPage != null && claimsPage.Items.Any() && page < MAX_PAGES);
 
             var allKeycloakRoles = await _keycloakManagementClient.HandleRequestAsync<ResponseWrapperModel<RoleModel[]>>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles");
             var keycloakRoles = allKeycloakRoles.Data.Where(x => x.Composite.HasValue && x.Composite.Value == false);
@@ -189,7 +190,7 @@ namespace Pims.Tools.Keycloak.Sync
                 rolesPage = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.RoleModel>>(HttpMethod.Get, $"admin/roles?page={page++}&quantity=50");
                 roles = roles.Concat(rolesPage.Items);
             }
-            while (rolesPage != null && rolesPage.Items.Any());
+            while (rolesPage != null && rolesPage.Items.Any() && page < MAX_PAGES);
 
             var keycloakRoles = await _keycloakManagementClient.HandleRequestAsync<ResponseWrapperModel<RoleModel[]>>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles");
             var keycloakCompositeRoles = keycloakRoles.Data.Where(x => x.Composite.HasValue && x.Composite.Value);
@@ -372,7 +373,7 @@ namespace Pims.Tools.Keycloak.Sync
             users.AddRange(pageOfUsers.Items);
 
             // Keep asking for pages of users until we have them all.
-            while (pageOfUsers.Items.Count() == quantity)
+            while (pageOfUsers.Items.Count() == quantity && page < MAX_PAGES)
             {
                 pageOfUsers = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.UserModel>>(HttpMethod.Get, $"admin/users?page={++page}&quantity={quantity}");
                 users.AddRange(pageOfUsers.Items);
