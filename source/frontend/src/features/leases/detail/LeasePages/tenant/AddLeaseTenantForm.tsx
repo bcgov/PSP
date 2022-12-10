@@ -31,6 +31,19 @@ export const AddLeaseTenantForm: React.FunctionComponent<
   const lookupCodes = useLookupCodeHelpers();
   const tenantTypes = lookupCodes.getByType(TENANT_TYPES).map(c => mapLookupCode(c));
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
+  const [selectedContacts, setSelectedContact] = React.useState<IContactSearchResult[]>(
+    selectedTenants.map<IContactSearchResult>(selectedTenant => {
+      return selectedTenant.original
+        ? { ...selectedTenant.original, tenantType: selectedTenant.tenantType }
+        : {
+            id: selectedTenant?.id?.toString() ?? '',
+            summary: selectedTenant.summary,
+            tenantType: selectedTenant.tenantType,
+            email: selectedTenant.email,
+          };
+    }),
+  );
+
   return (
     <>
       <Styled.TenantH2>Add tenants & contacts to this Lease/License</Styled.TenantH2>
@@ -78,19 +91,27 @@ export const AddLeaseTenantForm: React.FunctionComponent<
                 </Row>
 
                 <ContactManagerModal
-                  selectedRows={selectedTenants.map<IContactSearchResult>(selectedTenant => {
-                    return selectedTenant.original ?? { id: selectedTenant?.id?.toString() ?? '' };
-                  })}
-                  setSelectedRows={setSelectedTenants}
+                  selectedRows={selectedContacts}
+                  setSelectedRows={setSelectedContact}
                   display={showContactManager}
                   setDisplay={setShowContactManager}
                   handleModalOk={() => {
                     setShowContactManager(false);
+
+                    setSelectedTenants(
+                      selectedContacts.map<IContactSearchResult>(contact => {
+                        contact.tenantType =
+                          selectedTenants.find(x => x.id === contact.id)?.tenantType ?? '';
+                        return contact;
+                      }) || [],
+                    );
                   }}
                   handleModalCancel={() => {
                     setShowContactManager(false);
+                    // setSelectedContact([]);
                   }}
                   showActiveSelector={true}
+                  isSummary={false}
                 ></ContactManagerModal>
               </TableSelect>
               <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />

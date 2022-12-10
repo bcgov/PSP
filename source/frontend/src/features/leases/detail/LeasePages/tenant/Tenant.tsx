@@ -107,7 +107,7 @@ export class FormTenant {
       this.landline = selectedContactModel.landline;
       this.mobile = selectedContactModel.mobile;
       this.lessorTypeCode = !!this.personId ? { id: 'PER' } : { id: 'ORG' };
-      this.tenantType = fromTypeCode(selectedContactModel.tenantTypeCode);
+      this.tenantType = selectedContactModel.tenantType;
       this.organizationPersons = selectedContactModel?.organization?.organizationPersons;
       this.primaryContactId = primaryContact?.id;
       this.initialPrimaryContact = primaryContact;
