@@ -4,8 +4,7 @@ import useIsMounted from 'hooks/useIsMounted';
 import { useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
 import isNumber from 'lodash/isNumber';
 import { Api_Property } from 'models/api/Property';
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
@@ -70,6 +69,10 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     }
   };
 
+  if (getPropertyWrapper?.loading || !initialForm) {
+    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
+
   return (
     <Formik<UpdatePropertyDetailsFormModel>
       enableReinitialize
@@ -80,10 +83,6 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     >
       {formikProps => (
         <StyledFormWrapper>
-          <LoadingBackdrop
-            show={getPropertyWrapper?.loading || !initialForm}
-            parentScreen={true}
-          ></LoadingBackdrop>
           <UpdatePropertyDetailsForm formikProps={formikProps} />
         </StyledFormWrapper>
       )}
