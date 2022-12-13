@@ -28,9 +28,11 @@ export interface IPropertyDetailsTabView {
  * Provides basic property information, as displayed under "Property Details" tab on the Property Information slide-out
  * @returns the rendered property details panel
  */
-export const PropertyDetailsTabView: React.FunctionComponent<
-  React.PropsWithChildren<IPropertyDetailsTabView>
-> = ({ property, loading, setEditMode }) => {
+export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTabView> = ({
+  property,
+  loading,
+  setEditMode,
+}) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const { hasClaim } = useKeycloakWrapper();
 
@@ -44,6 +46,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<
   const tenureStatus = property?.tenures;
   const roadType = property?.roadTypes;
   const adjacentLand = property?.adjacentLands;
+  const address = property?.address;
 
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.HighwayRoad);
@@ -53,6 +56,9 @@ export const PropertyDetailsTabView: React.FunctionComponent<
     adjacentLand?.some(obj => obj?.id === PropertyAdjacentLandTypes.IndianReserve);
 
   const isVolumetricParcel = stringToBoolean(property?.isVolumetricParcel || '');
+
+  console.log(`LOADING = ${loading}`);
+  console.debug(property);
   return (
     <>
       <StyledSummarySection>
@@ -67,6 +73,27 @@ export const PropertyDetailsTabView: React.FunctionComponent<
             />
           )}
         </StyledEditWrapper>
+        <Section header="Property Address">
+          {address !== undefined ? (
+            <>
+              <StyledSubtleText>
+                This is the address stored in PIMS application for this property and will be used
+                wherever this property's address is needed.
+              </StyledSubtleText>
+              <SectionField label="Address">
+                {address?.streetAddress1 && <div>{address?.streetAddress1}</div>}
+                {address?.streetAddress2 && <div>{address?.streetAddress2}</div>}
+                {address?.streetAddress3 && <div>{address?.streetAddress3}</div>}
+              </SectionField>
+              <SectionField label="City">{address?.municipality}</SectionField>
+              <SectionField label="Province">{address?.province?.description}</SectionField>
+              <SectionField label="Postal code">{address?.postal}</SectionField>
+            </>
+          ) : (
+            <b>Property address not available</b>
+          )}
+        </Section>
+
         <Section header="Property Attributes">
           <SectionField label="MOTI region">{property?.region?.description}</SectionField>
           <SectionField label="Highways district">
@@ -218,4 +245,9 @@ const StyledEditWrapper = styled.div`
   color: ${props => props.theme.css.primary};
 
   text-align: right;
+`;
+
+const StyledSubtleText = styled.p`
+  color: ${props => props.theme.css.subtleColor};
+  text-align: left;
 `;
