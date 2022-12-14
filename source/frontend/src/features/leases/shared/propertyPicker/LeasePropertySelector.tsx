@@ -6,9 +6,10 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import { useProperties } from 'hooks/useProperties';
 import { IProperty } from 'interfaces';
-import { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
@@ -28,6 +29,8 @@ export const LeasePropertySelector: React.FunctionComponent<
 
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const [propertiesToConfirm, setPropertiesToConfirm] = useState<FormLeaseProperty[]>([]);
+
+  const [propertyIndexToRemove, setPropertyIndexToRemove] = useState<number | undefined>(undefined);
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
@@ -64,7 +67,7 @@ export const LeasePropertySelector: React.FunctionComponent<
     setPropertiesToConfirm([]);
   }, [setDisplayModal]);
 
-  const customModalProps: ModalProps = useMemo(() => {
+  const addModalProps: ModalProps = useDeepCompareMemo(() => {
     return {
       title: 'Not inventory property',
       message:
@@ -79,8 +82,8 @@ export const LeasePropertySelector: React.FunctionComponent<
   }, [confirmAdd, cancelAdd]);
 
   useDeepCompareEffect(() => {
-    setModalContent(customModalProps);
-  }, [customModalProps]);
+    setModalContent(addModalProps);
+  }, [addModalProps]);
 
   const processAddedProperties = async (newProperties: IMapProperty[]) => {
     let needsWarning = false;
@@ -115,6 +118,43 @@ export const LeasePropertySelector: React.FunctionComponent<
     }
   };
 
+  const cancelRemove = useCallback(() => {
+    if (propertyIndexToRemove !== undefined) {
+      setPropertyIndexToRemove(undefined);
+    }
+    setDisplayModal(false);
+  }, [propertyIndexToRemove, setDisplayModal]);
+
+  const confirmRemove = useCallback(() => {
+    if (propertyIndexToRemove !== undefined) {
+      arrayHelpersRef.current?.remove(propertyIndexToRemove);
+      setPropertyIndexToRemove(undefined);
+    }
+    setDisplayModal(false);
+  }, [propertyIndexToRemove, setDisplayModal]);
+
+  const removeModalProps: ModalProps = useDeepCompareMemo(() => {
+    return {
+      title: 'Removing Property from form',
+      message: 'Are you sure you want to remove this property from this lease/license?',
+      display: false,
+      closeButton: false,
+      okButtonText: 'Remove',
+      cancelButtonText: 'Cancel',
+      handleOk: confirmRemove,
+      handleCancel: cancelRemove,
+    };
+  }, [confirmRemove, cancelRemove]);
+
+  useDeepCompareEffect(() => {
+    setModalContent(removeModalProps);
+  }, [removeModalProps]);
+
+  const onRemoveClick = (index: number) => {
+    setPropertyIndexToRemove(index);
+    setDisplayModal(true);
+  };
+
   return (
     <Section header="Properties to include in this file:">
       <div className="py-2">
@@ -137,6 +177,7 @@ export const LeasePropertySelector: React.FunctionComponent<
                 </Col>
               </Row>
               <Section header="Selected properties">
+                {propertyIndexToRemove}
                 <SelectedPropertyHeaderRow />
                 {formikProps.values.properties.map((leaseProperty, index) => {
                   const property = leaseProperty?.property;
@@ -144,7 +185,7 @@ export const LeasePropertySelector: React.FunctionComponent<
                     return (
                       <SelectedPropertyRow
                         key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                        onRemove={() => arrayHelpers.remove(index)}
+                        onRemove={() => onRemoveClick(index)}
                         nameSpace={`properties.${index}`}
                         index={index}
                         property={property}
