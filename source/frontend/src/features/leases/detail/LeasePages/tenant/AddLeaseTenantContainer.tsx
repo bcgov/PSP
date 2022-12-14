@@ -62,6 +62,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
           op.person = matchingPerson;
         }
       });
+      tenant.tenantType = tenant.tenantType ? tenant.tenantType : 'TEN';
       return tenant;
     });
     setSelectedTenants(tenantsWithPersons?.map(t => new FormTenant(undefined, t)) ?? []);
