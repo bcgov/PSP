@@ -1,8 +1,11 @@
 using System.Linq;
+using k8s.KubeConfigModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Options;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
+using Pims.Keycloak.Configuration;
 
 namespace Pims.Api.Policies
 {
@@ -13,6 +16,7 @@ namespace Pims.Api.Policies
     {
         #region Variables
         private readonly Permissions[] _permissions;
+        private readonly IOptionsMonitor<KeycloakOptions> _keycloakOptions;
         #endregion
 
         #region Constructors
@@ -22,9 +26,11 @@ namespace Pims.Api.Policies
         /// This will ensure the user has the specified permission.
         /// </summary>
         /// <param name="permission"></param>
-        public PermissionFilter(Permissions permission)
+        /// <param name="options"></param>
+        public PermissionFilter(IOptionsMonitor<KeycloakOptions> options, Permissions permission)
         {
             _permissions = new[] { permission };
+            _keycloakOptions = options;
         }
 
         /// <summary>
@@ -32,9 +38,11 @@ namespace Pims.Api.Policies
         /// This will ensure the user has at least one of the specified permissions.
         /// </summary>
         /// <param name="permissions"></param>
-        public PermissionFilter(params Permissions[] permissions)
+        /// <param name="options"></param>
+        public PermissionFilter(IOptionsMonitor<KeycloakOptions> options, params Permissions[] permissions)
         {
             _permissions = permissions;
+            _keycloakOptions = options;
         }
         #endregion
 
@@ -48,7 +56,8 @@ namespace Pims.Api.Policies
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var hasRole = context.HttpContext.User.HasPermission(_permissions.ToArray());
-            if (!hasRole)
+            var isServiceAccount = context.HttpContext.User.IsServiceAccount(_keycloakOptions);
+            if (!hasRole && !isServiceAccount)
             {
                 context.Result = new ForbidResult();
             }
