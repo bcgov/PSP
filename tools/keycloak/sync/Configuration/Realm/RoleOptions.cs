@@ -6,6 +6,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
     public class RoleOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The name of the role.
         /// </summary>

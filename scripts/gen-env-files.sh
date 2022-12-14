@@ -124,7 +124,8 @@ echo \
 "# Local
 TZ=America/Los_Angeles
 ASPNETCORE_ENVIRONMENT=Local
-Auth__Keycloak__Secret=" >> ./tools/keycloak/sync/.env
+Auth__Keycloak__Secret=
+Auth__Keycloak__ServiceAccount__Secret=" >> ./tools/keycloak/sync/.env
 fi
 
 if test -f "./geoserver/.env"; then

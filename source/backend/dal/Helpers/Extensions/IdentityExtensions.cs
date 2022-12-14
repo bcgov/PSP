@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
+using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
@@ -32,7 +34,7 @@ namespace Pims.Dal.Helpers.Extensions
             }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
-            return user.Claims.Any(c => c.Type == ClaimTypes.Role && roles.Contains(c.Value));
+            return user.Claims.Any(c => c.Type == "client_roles" && roles.Contains(c.Value));
         }
 
         /// <summary>
@@ -54,8 +56,19 @@ namespace Pims.Dal.Helpers.Extensions
             }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
-            var claims = user.Claims.Where(c => c.Type == ClaimTypes.Role);
+            var claims = user.Claims.Where(c => c.Type == "client_roles");
             return roles.All(r => claims.Any(c => c.Value == r));
+        }
+
+        /// <summary>
+        /// Determine if the user is the keycloak service account for the API.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="keycloakOptions"></param>
+        /// <returns>True if the user has any of the permission.</returns>
+        public static bool IsServiceAccount(this ClaimsPrincipal user, IOptionsMonitor<AuthClientOptions> keycloakOptions)
+        {
+            return user.Claims.Any(c => c.Type == "clientId" && c.Value == keycloakOptions.CurrentValue.Client);
         }
 
         /// <summary>
@@ -68,6 +81,25 @@ namespace Pims.Dal.Helpers.Extensions
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, string message = null)
         {
             if (user == null || !user.Identity.IsAuthenticated)
+            {
+                throw new NotAuthorizedException(message);
+            }
+
+            return user;
+        }
+
+        /// <summary>
+        /// If the user does not have the specified 'role' and is not the pims API service account, throw a NotAuthorizedException.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="permission"></param>
+        /// <param name="keycloakOptions"></param>
+        /// <param name="message"></param>
+        /// <exception type="NotAuthorizedException">User does not have the specified 'role'.</exception>
+        /// <returns></returns>
+        public static ClaimsPrincipal ThrowIfNotAuthorizedOrServiceAccount(this ClaimsPrincipal user, Permissions permission, IOptionsMonitor<AuthClientOptions> keycloakOptions, string message = null)
+        {
+            if (user == null || (!user.HasPermission(permission) && !user.IsServiceAccount(keycloakOptions)))
             {
                 throw new NotAuthorizedException(message);
             }

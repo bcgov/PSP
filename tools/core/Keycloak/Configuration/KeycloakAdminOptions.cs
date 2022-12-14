@@ -1,16 +1,28 @@
+using Pims.Core.Http.Configuration;
+
 namespace Pims.Tools.Core.Keycloak.Configuration
 {
     /// <summary>
-    /// KeycloakAdminOptions class, provides a way to configure the connection to Keycloak.
+    /// KeycloakManagementOptions class, provides a way to configure the connection to Keycloak.
     /// </summary>
-    public class KeycloakAdminOptions
+    public class KeycloakManagementOptions : AuthClientOptions
     {
         #region Properties
+
         /// <summary>
-        /// get/set - The keycloak authority URI.
+        /// get/set - The keycloak api route.
         /// </summary>
-        /// <value></value>
-        public string Authority { get; set; }
+        public string Api { get; set; }
+
+        /// <summary>
+        /// get/set - The api environment.
+        /// </summary>
+        public string Environment { get; set; }
+
+        /// <summary>
+        /// get/set - The integration id.
+        /// </summary>
+        public int Integration { get; set; }
         #endregion
     }
 }
