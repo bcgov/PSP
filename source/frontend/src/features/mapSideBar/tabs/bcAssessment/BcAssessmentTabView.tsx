@@ -78,6 +78,10 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
             <SectionField label="Document number">Not available</SectionField>
           </Section>
           <Section header="Property Address">
+            <StyledSubtleText>
+              This is the property address as per BC Assessment (for reference).
+            </StyledSubtleText>
+
             {address !== undefined ? (
               <SectionField label="Address">
                 {[
@@ -148,6 +152,11 @@ export const StyledForm = styled.div`
       font-weight: bold;
     }
   }
+`;
+
+const StyledSubtleText = styled.p`
+  color: ${props => props.theme.css.subtleColor};
+  text-align: left;
 `;
 
 export default BcAssessmentTabView;
