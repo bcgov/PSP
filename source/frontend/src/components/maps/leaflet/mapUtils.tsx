@@ -137,7 +137,7 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
  * Get an icon type for the specified cluster property details.
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
-  if (feature.properties.IS_PAYABLE_LEASE === 1 || feature.properties.isPayableLease) {
+  if (feature.properties.IS_PAYABLE_LEASE || feature.properties.isPayableLease) {
     if (selected) {
       return propertyWithLeaseIconSelect;
     } else {
