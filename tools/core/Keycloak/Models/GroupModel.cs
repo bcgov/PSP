@@ -9,6 +9,7 @@ namespace Pims.Tools.Core.Keycloak.Models
     public class GroupModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - A unique primary key.
         /// </summary>
@@ -46,10 +47,13 @@ namespace Pims.Tools.Core.Keycloak.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a GroupModel class.
         /// </summary>
-        public GroupModel() { }
+        public GroupModel()
+        {
+        }
         #endregion
     }
 }

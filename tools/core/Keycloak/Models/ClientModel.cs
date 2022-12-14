@@ -9,6 +9,7 @@ namespace Pims.Tools.Core.Keycloak.Models
     public class ClientModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - A unique primary key id.
         /// </summary>
@@ -193,10 +194,13 @@ namespace Pims.Tools.Core.Keycloak.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ClientModel class.
         /// </summary>
-        public ClientModel() { }
+        public ClientModel()
+        {
+        }
         #endregion
     }
 }

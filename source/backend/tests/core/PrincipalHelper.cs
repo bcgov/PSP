@@ -61,13 +61,13 @@ namespace Pims.Core.Test
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
+                new Claim("idir_user_guid", Guid.NewGuid().ToString().Replace("-",string.Empty)),
                 new Claim(ClaimTypes.Email, "test@test.com"),
             };
 
             foreach (var claim in permission)
             {
-                claims.Add(new Claim(ClaimTypes.Role, claim.GetName()));
+                claims.Add(new Claim("client_roles", claim.GetName()));
             }
             var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "mock"));
 

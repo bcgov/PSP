@@ -151,16 +151,16 @@ namespace Pims.Core.Http
         public async Task<HttpResponseMessage> RequestToken()
         {
             var authority = this.AuthClientOptions.Authority ??
-                throw new ConfigurationException($"Configuration 'OpenIdConnect:Authority' is missing or invalid.");
+                throw new ConfigurationException($"Configuration 'Keycloak:Authority' is missing or invalid.");
             var client = this.AuthClientOptions.Client ??
-                throw new ConfigurationException($"Configuration 'OpenIdConnect:Client' is missing or invalid.");
+                throw new ConfigurationException($"Configuration 'Keycloak:Client' is missing or invalid.");
             var clientSecret = this.AuthClientOptions.Secret ??
-                throw new ConfigurationException($"Configuration 'OpenIdConnect:Secret' is missing or invalid.");
+                throw new ConfigurationException($"Configuration 'Keycloak:Secret' is missing or invalid.");
             var audience = this.AuthClientOptions.Audience ??
-                throw new ConfigurationException($"Configuration 'OpenIdConnect:Audience' is missing or invalid.");
+                throw new ConfigurationException($"Configuration 'Keycloak:Audience' is missing or invalid.");
 
             // Use the configuration settings if available, or make a request to Keycloak for the appropriate endpoint URL.
-            var keycloakTokenUrl = this.OpenIdConnectOptions.Token;
+            var keycloakTokenUrl = this.AuthClientOptions.Token;
             if (string.IsNullOrWhiteSpace(keycloakTokenUrl))
             {
                 var endpoints = await GetOpenIdConnectEndpoints();

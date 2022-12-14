@@ -5,11 +5,10 @@ namespace Pims.Tools.Core.Keycloak
     /// </summary>
     public interface IKeycloakRequestClient : IRequestClient
     {
-        /// <summary>
-        /// Returns the full URI for the Keycloak admin API.
-        /// </summary>
-        /// <param name="route"></param>
-        /// <returns></returns>
-        string AdminRoute(string route = null);
+        public string GetIntegrationEnvUri();
+
+        public string GetIntegrationUri();
+
+        public string GetEnvUri();
     }
 }

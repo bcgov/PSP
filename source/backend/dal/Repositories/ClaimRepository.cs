@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
+using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -17,6 +19,7 @@ namespace Pims.Dal.Repositories
     public class ClaimRepository : BaseRepository<PimsClaim>, IClaimRepository
     {
         #region Variables
+        private readonly IOptionsMonitor<AuthClientOptions> _keycloakOptions;
         #endregion
 
         #region Constructors
@@ -27,9 +30,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ClaimRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ILogger<ClaimRepository> logger)
+        public ClaimRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, IOptionsMonitor<AuthClientOptions> options, ILogger<ClaimRepository> logger)
             : base(dbContext, user, logger)
         {
+            _keycloakOptions = options;
         }
         #endregion
 
@@ -44,7 +48,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public Paged<PimsClaim> Get(int page, int quantity, string name = null)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminRoles, _keycloakOptions);
 
             var query = this.Context.PimsClaims.AsNoTracking();
 
@@ -106,7 +110,7 @@ namespace Pims.Dal.Repositories
         public PimsClaim Update(PimsClaim update)
         {
             update.ThrowIfNull(nameof(update));
-            this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminRoles, _keycloakOptions);
 
             var claim = this.Context.PimsClaims.Find(update.ClaimId) ?? throw new KeyNotFoundException();
 
