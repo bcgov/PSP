@@ -108,6 +108,6 @@ namespace Pims.Dal.Entities
         [StringLength(50)]
         public string ZoningPotential { get; set; }
         [Column("IS_PAYABLE_LEASE")]
-        public int IsPayableLease { get; set; }
+        public bool? IsPayableLease { get; set; }
     }
 }
