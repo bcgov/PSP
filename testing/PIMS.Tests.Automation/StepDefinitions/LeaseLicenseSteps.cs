@@ -17,6 +17,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchLease searchLease;
 
         private readonly string userName = "TRANPSP1";
+        //private readonly string userName = "sutairak";
 
         private readonly string leaseStartDate = "02/22/2022";
         private readonly string leaseExpiryDate = "03/22/2024";
