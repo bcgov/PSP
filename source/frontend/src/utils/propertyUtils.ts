@@ -81,7 +81,7 @@ export const formatApiAddress = (address?: Api_Address) => {
     address?.streetAddress2 ?? '',
     address?.streetAddress3 ?? '',
     address?.municipality ?? '',
-    address?.province ?? '',
+    address?.province?.code ?? '',
   ];
   return (
     values.filter(text => text !== '').join(' ') +
