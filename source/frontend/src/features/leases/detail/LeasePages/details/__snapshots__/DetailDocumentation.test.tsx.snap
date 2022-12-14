@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DetailAdministration component renders a complete lease as expected 1`] = `
+exports[`DetailDocumentation component renders a complete lease as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -37,8 +37,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   font-weight: bold;
 }
 
-.c5 input.form-control {
-  font-size: 1.8rem;
+.c5 {
+  padding: 0.6rem 1.2rem;
 }
 
 <div
@@ -53,7 +53,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
         <div
           class="col"
         >
-          Administration
+          Documentation
         </div>
         <div
           class="col-1"
@@ -94,21 +94,103 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           <label
             class="c3"
           >
-            Program:
+            Physical copy exists:
           </label>
         </div>
         <div
           class="c4 text-left col"
         >
           <div
-            class="c5 input form-group"
+            class="form-group"
           >
-            <input
+            <select
               class="form-control"
-              id="input-programName"
-              name="programName"
-              title="A program"
-              value="A program"
+              id="input-hasPhysicalLicense"
+              name="hasPhysicalLicense"
+            >
+              <option
+                value="null"
+              >
+                Unknown
+              </option>
+              <option
+                value="true"
+              >
+                Yes
+              </option>
+              <option
+                value="false"
+              >
+                No
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
+          >
+            Digital copy exists:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="form-group"
+          >
+            <select
+              class="form-control"
+              id="input-hasDigitalLicense"
+              name="hasDigitalLicense"
+            >
+              <option
+                value="null"
+              >
+                Unknown
+              </option>
+              <option
+                value="true"
+              >
+                Yes
+              </option>
+              <option
+                value="false"
+              >
+                No
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
+          >
+            Document location:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="c5 textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-documentationReference"
+              name="documentationReference"
             />
           </div>
         </div>
@@ -122,7 +204,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           <label
             class="c3"
           >
-            Account Type:
+            LIS #:
           </label>
         </div>
         <div
@@ -133,9 +215,10 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           >
             <input
               class="form-control"
-              id="input-type.description"
-              name="type.description"
-              value=""
+              id="input-tfaFileNumber"
+              name="tfaFileNumber"
+              title="333"
+              value="333"
             />
           </div>
         </div>
@@ -149,7 +232,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           <label
             class="c3"
           >
-            Receivable To:
+            PS #:
           </label>
         </div>
         <div
@@ -160,9 +243,10 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           >
             <input
               class="form-control"
-              id="input-paymentReceivableType.description"
-              name="paymentReceivableType.description"
-              value=""
+              id="input-psFileNo"
+              name="psFileNo"
+              title="444"
+              value="444"
             />
           </div>
         </div>
@@ -176,174 +260,23 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           <label
             class="c3"
           >
-            Category:
+            Lease Notes:
           </label>
         </div>
         <div
           class="c4 text-left col"
         >
           <div
-            class="input form-group"
+            class="textarea input form-group"
           >
-            <input
+            <textarea
               class="form-control"
-              id="input-categoryType.description"
-              name="categoryType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Purpose:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-purposeType.description"
-              name="purposeType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Initiator:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-initiatorType.description"
-              name="initiatorType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Responsibility:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-responsibilityType.description"
-              name="responsibilityType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Effective Date:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        />
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            MoTI contact:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-motiName"
-              name="motiName"
-              title="test moti name"
-              value="test moti name"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Intended Use:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-description"
-              name="description"
-              title="a test description"
-              value="a test description"
-            />
+              id="input-note"
+              name="note"
+              title="a test note"
+            >
+              a test note
+            </textarea>
           </div>
         </div>
       </div>
@@ -352,7 +285,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
 </DocumentFragment>
 `;
 
-exports[`DetailAdministration component renders minimally as expected 1`] = `
+exports[`DetailDocumentation component renders minimally as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -389,8 +322,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
   font-weight: bold;
 }
 
-.c5 input.form-control {
-  font-size: 1.8rem;
+.c5 {
+  padding: 0.6rem 1.2rem;
 }
 
 <div
@@ -405,7 +338,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
         <div
           class="col"
         >
-          Administration
+          Documentation
         </div>
         <div
           class="col-1"
@@ -446,19 +379,129 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Program:
+            Physical copy exists:
           </label>
         </div>
         <div
           class="c4 text-left col"
         >
           <div
-            class="c5 input form-group"
+            class="form-group"
+          >
+            <select
+              class="form-control"
+              id="input-hasPhysicalLicense"
+              name="hasPhysicalLicense"
+            >
+              <option
+                value="null"
+              >
+                Unknown
+              </option>
+              <option
+                value="true"
+              >
+                Yes
+              </option>
+              <option
+                value="false"
+              >
+                No
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
+          >
+            Digital copy exists:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="form-group"
+          >
+            <select
+              class="form-control"
+              id="input-hasDigitalLicense"
+              name="hasDigitalLicense"
+            >
+              <option
+                value="null"
+              >
+                Unknown
+              </option>
+              <option
+                value="true"
+              >
+                Yes
+              </option>
+              <option
+                value="false"
+              >
+                No
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
+          >
+            Document location:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="c5 textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-documentationReference"
+              name="documentationReference"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
+          >
+            LIS #:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
           >
             <input
               class="form-control"
-              id="input-programName"
-              name="programName"
+              id="input-tfaFileNumber"
+              name="tfaFileNumber"
               title=""
               value=""
             />
@@ -474,7 +517,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Account Type:
+            PS #:
           </label>
         </div>
         <div
@@ -485,186 +528,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           >
             <input
               class="form-control"
-              id="input-type.description"
-              name="type.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Receivable To:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-paymentReceivableType.description"
-              name="paymentReceivableType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Category:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-categoryType.description"
-              name="categoryType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Purpose:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-purposeType.description"
-              name="purposeType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Initiator:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-initiatorType.description"
-              name="initiatorType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Responsibility:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-responsibilityType.description"
-              name="responsibilityType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Effective Date:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        />
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            MoTI contact:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-motiName"
-              name="motiName"
+              id="input-psFileNo"
+              name="psFileNo"
               title=""
               value=""
             />
@@ -680,20 +545,19 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Intended Use:
+            Lease Notes:
           </label>
         </div>
         <div
           class="c4 text-left col"
         >
           <div
-            class="input form-group"
+            class="textarea input form-group"
           >
-            <input
+            <textarea
               class="form-control"
-              id="input-description"
-              name="description"
-              value=""
+              id="input-note"
+              name="note"
             />
           </div>
         </div>

@@ -1,9 +1,8 @@
+import { Section } from 'features/mapSideBar/tabs/Section';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { IInsurance } from 'interfaces';
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { formatMoney, prettyFormatDate } from 'utils';
-
-import { BoldHeader, BoldValueText, LabelCol, SubTitle } from './styles';
 
 interface PolicyProps {
   insurance: IInsurance;
@@ -19,7 +18,6 @@ interface PolicyView {
 }
 
 const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({ insurance }) => {
-  const columnWidth = 5;
   const policy: PolicyView = {
     insuranceInPlace: insurance.isInsuranceInPlace ? 'Yes' : 'No',
     limit: insurance.coverageLimit ? formatMoney(insurance.coverageLimit) : '',
@@ -29,35 +27,12 @@ const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({
     insuranceType: insurance.insuranceType.description,
   };
   return (
-    <Row>
-      <Col>
-        <SubTitle data-testid="insurance-title">
-          {policy.insuranceType}
-          {policy.otherInsuranceType && <span>: {policy.otherInsuranceType}</span>}
-        </SubTitle>
-
-        <Row>
-          <Col>
-            <Row>
-              <LabelCol xs={columnWidth}>Insurance in place:</LabelCol>
-              <BoldValueText>{policy.insuranceInPlace}</BoldValueText>
-            </Row>
-            <Row>
-              <LabelCol xs={columnWidth}>Limit:</LabelCol>
-              <BoldValueText>{policy.limit}</BoldValueText>
-            </Row>
-            <Row>
-              <LabelCol xs={columnWidth}>Policy expiry date:</LabelCol>
-              <BoldValueText>{policy.expiryDate}</BoldValueText>
-            </Row>
-          </Col>
-          <Col>
-            <BoldHeader>Description of Coverage</BoldHeader>
-            <div>{policy.coverageDescription}</div>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+    <Section header={policy.insuranceType}>
+      <SectionField label="Insurance in place">{policy.insuranceInPlace}</SectionField>
+      <SectionField label="Limit">{policy.limit}</SectionField>
+      <SectionField label="Policy expiry date">{policy.expiryDate}</SectionField>
+      <SectionField label="Description of Coverage">{policy.coverageDescription}</SectionField>
+    </Section>
   );
 };
 

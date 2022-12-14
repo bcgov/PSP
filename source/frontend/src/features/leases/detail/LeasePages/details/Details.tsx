@@ -1,32 +1,23 @@
 import { FormSection } from 'components/common/form/styles';
 import {
   DetailAdministration,
-  DetailDescription,
-  DetailNotes,
   DetailTermInformation,
-  DetailTerms,
   PropertiesInformation,
 } from 'features/leases';
 import * as React from 'react';
 import styled from 'styled-components';
+
+import DetailDocumentation from './DetailDocumentation';
 
 export interface IDetailsProps {}
 
 export const Details: React.FunctionComponent<React.PropsWithChildren<IDetailsProps>> = () => {
   return (
     <StyledDetails>
-      <FormSectionOne>
-        <DetailTermInformation />
-        <DetailAdministration disabled={true} />
-        <DetailDescription disabled={true} />
-        <PropertiesInformation disabled={true} />
-      </FormSectionOne>
-      <FormSection>
-        <DetailTerms disabled={true} />
-      </FormSection>
-      <FormSection>
-        <DetailNotes disabled={true}></DetailNotes>
-      </FormSection>
+      <DetailTermInformation />
+      <PropertiesInformation disabled={true} />
+      <DetailAdministration disabled={true} />
+      <DetailDocumentation disabled={true} />
     </StyledDetails>
   );
 };
@@ -48,10 +39,7 @@ export const FormSectionOne = styled(FormSection)`
 `;
 
 const StyledDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 2.5rem;
+  margin-top: 4rem;
 `;
 
 export default Details;

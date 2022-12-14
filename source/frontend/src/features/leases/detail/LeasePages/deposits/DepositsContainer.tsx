@@ -1,4 +1,3 @@
-import { FormSection } from 'components/common/form/styles';
 import GenericModal from 'components/common/GenericModal';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { getIn, useFormikContext } from 'formik';
@@ -198,28 +197,26 @@ export const DepositsContainer: React.FunctionComponent<
         onDelete={onDeleteDepositReturn}
       />
 
-      <FormSection>
-        <DepositNotes
-          disabled={!editNotes}
-          onEdit={() => setEditNotes(true)}
-          onSave={async (notes: string) => {
-            const updatedLease = await updateLeaseDepositNote({
-              payload: { note: notes },
-              parentId: lease?.id,
-              parentRowVersion: lease?.rowVersion,
-            } as IParentConcurrencyGuard<{ note: string }>);
-            if (updatedLease?.id) {
-              setLease(updatedLease);
-              setEditNotes(false);
-            }
-            return updatedLease;
-          }}
-          onCancel={() => {
+      <DepositNotes
+        disabled={!editNotes}
+        onEdit={() => setEditNotes(true)}
+        onSave={async (notes: string) => {
+          const updatedLease = await updateLeaseDepositNote({
+            payload: { note: notes },
+            parentId: lease?.id,
+            parentRowVersion: lease?.rowVersion,
+          } as IParentConcurrencyGuard<{ note: string }>);
+          if (updatedLease?.id) {
+            setLease(updatedLease);
             setEditNotes(false);
-            setFieldValue('returnNotes', lease?.returnNotes ?? '');
-          }}
-        />
-      </FormSection>
+          }
+          return updatedLease;
+        }}
+        onCancel={() => {
+          setEditNotes(false);
+          setFieldValue('returnNotes', lease?.returnNotes ?? '');
+        }}
+      />
 
       <GenericModal
         display={deleteModalWarning}

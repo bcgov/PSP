@@ -60,7 +60,7 @@ describe('Tenant component', () => {
     expect(tenantSection).toHaveLength(1);
   });
 
-  //notes section removed for now
+  // notes are disabled
   it.skip('renders one notes section per tenant note', () => {
     const { component } = setup({
       lease: {

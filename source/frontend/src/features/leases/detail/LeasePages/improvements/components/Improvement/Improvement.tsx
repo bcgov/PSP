@@ -1,6 +1,7 @@
-import { Form, Input } from 'components/common/form';
+import { Input } from 'components/common/form';
 import { PropertyImprovementTypes } from 'constants/propertyImprovementTypes';
 import * as Styled from 'features/leases/detail/LeasePages/improvements/styles';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import { withNameSpace } from 'utils/formUtils';
@@ -12,8 +13,8 @@ export interface IImprovementProps {
 }
 
 export const sectionTitles = new Map<string, string>([
-  [PropertyImprovementTypes.Residential, 'Residential'],
-  [PropertyImprovementTypes.Commercial, 'Commercial'],
+  [PropertyImprovementTypes.Residential, 'Residential Improvements'],
+  [PropertyImprovementTypes.Commercial, 'Commercial Improvements'],
   [PropertyImprovementTypes.Other, 'Other Improvements'],
 ]);
 
@@ -30,25 +31,26 @@ export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImpro
   const typeId =
     improvementTypeCodeId ?? getIn(values, withNameSpace(nameSpace, 'propertyImprovementTypeId'));
   const title = sectionTitles.get(typeId) ?? 'N/A';
-
   return (
     <>
       <Styled.LeaseH3>{title}</Styled.LeaseH3>
       <Styled.FormGrid className="formgrid">
-        <Form.Label>Address:</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'address')} />
-        <Form.Label>Structure size:</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'structureSize')} />
-        <Styled.LeaseH5>Description:</Styled.LeaseH5>
-        <Styled.FormDescriptionBody
-          innerClassName="description"
-          rows={5}
-          disabled={disabled}
-          field={withNameSpace(nameSpace, 'description')}
-        />
+        <SectionField label="Unit #">
+          <Input disabled={disabled} field={withNameSpace(nameSpace, 'address')} />{' '}
+        </SectionField>
+        <SectionField label="Building size">
+          <Input disabled={disabled} field={withNameSpace(nameSpace, 'structureSize')} />
+        </SectionField>
+        <SectionField label="Description">
+          <Styled.FormDescriptionBody
+            innerClassName="description"
+            rows={5}
+            disabled={disabled}
+            field={withNameSpace(nameSpace, 'description')}
+          />
+        </SectionField>
       </Styled.FormGrid>
     </>
   );
 };
-
 export default Improvement;

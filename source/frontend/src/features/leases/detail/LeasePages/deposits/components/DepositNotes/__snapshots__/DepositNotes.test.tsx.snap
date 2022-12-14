@@ -8,29 +8,69 @@ exports[`DepositNotes component renders as expected 1`] = `
   <div
     class="container"
   />
-  .c0 {
-  font-size: 1.6rem;
-  font-family: 'BCSans-Bold';
+  .c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 <div
-    class="row"
+    class="c0 form-section"
   >
-    <div
-      class="col"
+    <h2
+      class="c1"
     >
-      <label
-        class="c0 form-label"
+      <div
+        class="row"
       >
-        Deposit Notes
-      </label>
-    </div>
-  </div>
-  <div
-    class="row"
-  >
+        <div
+          class="col"
+        >
+          <span>
+            Deposit Notes
+          </span>
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c2"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              expand-section
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M7 10l5 5 5-5z"
+            />
+          </svg>
+        </div>
+      </div>
+    </h2>
     <div
-      class="col"
+      class="collapse"
     >
       <div
         class="textarea input form-group"
@@ -46,13 +86,6 @@ exports[`DepositNotes component renders as expected 1`] = `
         </textarea>
       </div>
     </div>
-  </div>
-  <div
-    class="row"
-  >
-    <div
-      class="col"
-    />
   </div>
 </DocumentFragment>
 `;

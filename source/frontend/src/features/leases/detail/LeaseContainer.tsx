@@ -64,7 +64,6 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       title: 'Details',
       header: (
         <>
-          Details&nbsp;
           <LeaseEditButton linkTo="?edit=true" />
         </>
       ),
@@ -78,11 +77,9 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       title: 'Tenant',
       header: (
         <>
-          Tenant
           <LeaseEditButton linkTo="?edit=true" />
         </>
       ),
-      description: '',
     },
   ],
   [
@@ -100,7 +97,6 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       title: 'Improvements',
       header: (
         <>
-          Improvements
           <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
             <LeaseEditButton linkTo="?edit=true" />
           </ProtectedComponent>
@@ -115,7 +111,6 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       title: 'Insurance',
       header: (
         <>
-          Insurance
           <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
             <LeaseEditButton linkTo="?edit=true" />
           </ProtectedComponent>

@@ -1,4 +1,5 @@
 import { PropertyInformation } from 'features/leases';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { ILease, IProperty } from 'interfaces';
 import * as React from 'react';
@@ -18,19 +19,23 @@ export const PropertiesInformation: React.FunctionComponent<
 > = ({ nameSpace, disabled }) => {
   const { values } = useFormikContext<ILease>();
   const properties: IProperty[] = getIn(values, withNameSpace(nameSpace, 'properties')) ?? [];
-  return (
-    <FieldArray
-      name={withNameSpace(nameSpace, 'properties')}
-      render={renderProps =>
-        properties.map((property: IProperty, index) => (
-          <PropertyInformation
-            {...renderProps}
-            nameSpace={withNameSpace(nameSpace, `properties.${index}`)}
-            disabled={disabled}
-          />
-        ))
-      }
-    ></FieldArray>
+  return properties?.length ? (
+    <Section initiallyExpanded={true} isCollapsable={true} header="Property Information">
+      <FieldArray
+        name={withNameSpace(nameSpace, 'properties')}
+        render={renderProps =>
+          properties.map((property: IProperty, index) => (
+            <PropertyInformation
+              {...renderProps}
+              nameSpace={withNameSpace(nameSpace, `properties.${index}`)}
+              disabled={disabled}
+            />
+          ))
+        }
+      ></FieldArray>
+    </Section>
+  ) : (
+    <></>
   );
 };
 

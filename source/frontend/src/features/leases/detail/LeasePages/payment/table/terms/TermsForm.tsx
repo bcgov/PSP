@@ -1,6 +1,7 @@
 import { Button } from 'components/common/buttons/Button';
-import { TableProps } from 'components/Table/Table';
+import Table from 'components/Table/Table';
 import { Claims, LeaseTermStatusTypes } from 'constants/index';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { useFormikContext } from 'formik';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -12,8 +13,6 @@ import { useMemo } from 'react';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 import { prettyFormatDate } from 'utils';
 
-import * as Styled from '../../../../styles';
-import * as PaymentStyles from '../../styles';
 import { PaymentsForm } from '../payments/PaymentsForm';
 import { getLeaseTermColumns } from './columns';
 
@@ -69,37 +68,31 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
   );
 
   return (
-    <>
-      <PaymentStyles.StyledFormBody>
-        <Styled.LeaseH6>Payments by Term</Styled.LeaseH6>
-
-        <PaymentStyles.FullWidthInlineFlexDiv>
-          {hasClaim(Claims.LEASE_ADD) && (
-            <Button variant="secondary" onClick={() => onEdit(defaultFormLeaseTerm)}>
-              Add a Term
-            </Button>
-          )}
-          {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
-        </PaymentStyles.FullWidthInlineFlexDiv>
-        <PaymentStyles.StyledTable<React.FC<TableProps<IFormLeaseTerm>>>
-          name="leasePaymentsTable"
-          columns={columns}
-          data={formikProps.values.terms ?? []}
-          manualPagination
-          hideToolbar
-          noRowsMessage="There is no corresponding data"
-          canRowExpand={() => true}
-          detailsPanel={{
-            render: renderPayments,
-            onExpand: noop,
-            checkExpanded: (row: IFormLeaseTerm, state: IFormLeaseTerm[]) =>
-              !!find(state, term => term.id === row.id),
-            getRowId: (row: IFormLeaseTerm) => row.id,
-            icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
-          }}
-        />
-      </PaymentStyles.StyledFormBody>
-    </>
+    <Section header="Payments by Term">
+      {hasClaim(Claims.LEASE_ADD) && (
+        <Button variant="secondary" onClick={() => onEdit(defaultFormLeaseTerm)}>
+          Add a Term
+        </Button>
+      )}
+      {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
+      <Table<IFormLeaseTerm>
+        name="leasePaymentsTable"
+        columns={columns}
+        data={formikProps.values.terms ?? []}
+        manualPagination
+        hideToolbar
+        noRowsMessage="There is no corresponding data"
+        canRowExpand={() => true}
+        detailsPanel={{
+          render: renderPayments,
+          onExpand: noop,
+          checkExpanded: (row: IFormLeaseTerm, state: IFormLeaseTerm[]) =>
+            !!find(state, term => term.id === row.id),
+          getRowId: (row: IFormLeaseTerm) => row.id,
+          icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
+        }}
+      />
+    </Section>
   );
 };
 
