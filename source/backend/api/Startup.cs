@@ -162,7 +162,7 @@ namespace Pims.Api
                 {
                     var key = Encoding.ASCII.GetBytes(Configuration["Keycloak:Secret"]);
                     options.RequireHttpsMetadata = false;
-                    options.Authority = Configuration["Keycloak:Authority"];
+                    options.Authority = Configuration["OpenIdConnect:Authority"];
                     options.Audience = Configuration["Keycloak:Audience"];
                     options.SaveToken = true;
                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
