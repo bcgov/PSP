@@ -9,6 +9,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration
     public class AuthOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - Open ID connect configuration.
         /// </summary>
@@ -17,7 +18,6 @@ namespace Pims.Tools.Keycloak.Sync.Configuration
         /// <summary>
         /// get/set - Keycloak configuration.
         /// </summary>
-        /// <value></value>
         public KeycloakOptions Keycloak { get; set; }
         #endregion
     }

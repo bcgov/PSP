@@ -1,6 +1,6 @@
-using Pims.Tools.Keycloak.Sync.Configuration.Realm;
 using System.Collections.Generic;
 using System.Linq;
+using Pims.Tools.Keycloak.Sync.Configuration.Realm;
 
 namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
 {
@@ -13,10 +13,13 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a GroupModel class.
         /// </summary>
-        public GroupModel() { }
+        public GroupModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a GroupModel class, initializes with specified arguments.
@@ -24,14 +27,14 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         /// <param name="group"></param>
         public GroupModel(GroupOptions group)
         {
-            this.Name = group.Name;
-            this.RealmRoles = group.RealmRoles.ToArray();
+            Name = group.Name;
+            RealmRoles = group.RealmRoles.ToArray();
             if (group.ClientRoles != null)
             {
-                this.ClientRoles = new Dictionary<string, string[]>();
+                ClientRoles = new Dictionary<string, string[]>();
                 foreach (var role in group.ClientRoles)
                 {
-                    this.ClientRoles.Add(role.ClientId, role.ClientRoles.ToArray());
+                    ClientRoles.Add(role.ClientId, role.ClientRoles.ToArray());
                 }
             }
         }

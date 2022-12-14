@@ -11,10 +11,13 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a RoleModel class.
         /// </summary>
-        public RoleModel() { }
+        public RoleModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a RoleModel class, initializes with specified arguments.
@@ -22,10 +25,7 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         /// <param name="role"></param>
         public RoleModel(RoleOptions role)
         {
-            this.Name = role.Name;
-            this.Description = role.Description;
-            this.Composite = role.Composite;
-            this.ClientRole = role.ClientRole;
+            Name = role.Name;
         }
         #endregion
     }

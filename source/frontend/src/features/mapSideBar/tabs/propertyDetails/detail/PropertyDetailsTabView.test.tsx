@@ -116,6 +116,25 @@ describe('PropertyDetailsTabView component', () => {
     const { queryByText } = setup({ property });
     expect(queryByText(/Volume/)).toBeNull();
   });
+
+  it('shows property address if available', () => {
+    const property: Api_Property = {
+      ...mockPropertyInfo,
+    };
+
+    const { getByText } = setup({ property });
+    expect(getByText(/456 Souris Street/i)).toBeVisible();
+  });
+
+  it('shows a warning message if no address found', () => {
+    const property: Api_Property = {
+      ...mockPropertyInfo,
+    };
+    property.address = undefined;
+
+    const { getByText } = setup({ property });
+    expect(getByText(/Property address not available/i)).toBeVisible();
+  });
 });
 
 export const mockPropertyInfo: Api_Property = {

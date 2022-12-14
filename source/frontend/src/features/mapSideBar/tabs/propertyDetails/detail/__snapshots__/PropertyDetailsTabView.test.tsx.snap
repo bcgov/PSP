@@ -8,21 +8,21 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   <div
     class="container"
   />
-  .c6 {
+  .c7 {
   max-width: 25rem;
   padding: 1rem;
   border: 1px solid;
   border-radius: 0.5rem;
 }
 
-.c7 {
+.c8 {
   max-width: 25rem;
   padding: 1rem;
   border: 1px solid;
   border-radius: 0.5rem;
 }
 
-.c5 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -53,19 +53,23 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   text-align: left;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
 .c0 {
   text-align: right;
+}
+
+.c3 {
+  text-align: left;
 }
 
 <div
@@ -74,6 +78,115 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
     <div
       class="c0 mr-3 my-1"
     />
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Property Address
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <p
+          class="c3"
+        >
+          This is the address stored in PIMS application for this property and will be used wherever this property's address is needed.
+        </p>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Address:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div>
+              456 Souris Street
+            </div>
+            <div>
+              PO Box 250
+            </div>
+            <div>
+              A Hoot and a holler from the A&W
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              City:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            North Podunk
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Province:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            British Columbia
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Postal code:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            IH8 B0B
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       class="c1 form-section"
     >
@@ -103,13 +216,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               MOTI region:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
         <div
@@ -119,16 +232,16 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Highways district:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
-              class="c5"
+              class="c6"
             >
               -
             </div>
@@ -141,13 +254,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Electoral district:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
         <div
@@ -157,13 +270,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Agricultural Land Reserve:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             No
           </div>
@@ -175,13 +288,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Railway belt / Dominion patent:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Unknown
           </div>
@@ -193,13 +306,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Land parcel type:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Titled
           </div>
@@ -211,13 +324,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Municipal zoning:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Some municipal zoning comments
           </div>
@@ -229,13 +342,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Anomalies:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div>
               <div
@@ -288,13 +401,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-2"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Coordinates:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
       </div>
@@ -328,13 +441,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Tenure status:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div>
               <div
@@ -387,13 +500,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Provincial Public Hwy:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Unknown
           </div>
@@ -429,13 +542,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-2"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Area:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="row"
@@ -444,7 +557,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
                 class="col"
               >
                 <div
-                  class="c6"
+                  class="c7"
                 >
                   <div
                     class="row"
@@ -480,7 +593,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
                 class="col"
               >
                 <div
-                  class="c7"
+                  class="c8"
                 >
                   <div
                     class="row"
@@ -522,13 +635,13 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             class="pr-0 text-left col-auto"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Is this a volumetric parcel?:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-check form-check-inline"

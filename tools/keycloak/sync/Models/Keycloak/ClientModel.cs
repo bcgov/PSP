@@ -1,5 +1,5 @@
-using Pims.Tools.Keycloak.Sync.Configuration.Realm;
 using System.Linq;
+using Pims.Tools.Keycloak.Sync.Configuration.Realm;
 
 namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
 {
@@ -12,10 +12,13 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ClientModel class.
         /// </summary>
-        public ClientModel() { }
+        public ClientModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ClientModel class, initializes with specified arguments.
@@ -23,38 +26,38 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         /// <param name="client"></param>
         public ClientModel(ClientOptions client)
         {
-            this.ClientId = client.ClientId;
-            this.Name = client.Name;
-            this.Description = client.Description;
-            this.Enabled = client.Enabled;
+            ClientId = client.ClientId;
+            Name = client.Name;
+            Description = client.Description;
+            Enabled = client.Enabled;
 
-            this.Protocol = client.Protocol;
-            this.Secret = client.Secret;
+            Protocol = client.Protocol;
+            Secret = client.Secret;
 
-            this.ConsentRequired = client.ConsentRequired;
-            this.ClientAuthenticatorType = client.ClientAuthenticatorType;
-            this.DefaultRoles = client.DefaultRoles;
-            this.FullScopeAllowed = client.FullScopeAllowed;
-            this.SurrogateAuthRequired = client.SurrogateAuthRequired;
+            ConsentRequired = client.ConsentRequired;
+            ClientAuthenticatorType = client.ClientAuthenticatorType;
+            DefaultRoles = client.DefaultRoles;
+            FullScopeAllowed = client.FullScopeAllowed;
+            SurrogateAuthRequired = client.SurrogateAuthRequired;
 
-            this.PublicClient = client.PublicClient;
-            this.AuthorizationServicesEnabled = client.AuthorizationServicesEnabled;
-            this.BearerOnly = client.BearerOnly;
-            this.DirectAccessGrantsEnabled = client.DirectAccessGrantsEnabled;
-            this.ImplicitFlowEnabled = client.ImplicitFlowEnabled;
-            this.ServiceAccountsEnabled = client.ServiceAccountsEnabled;
-            this.StandardFlowEnabled = client.StandardFlowEnabled;
+            PublicClient = client.PublicClient;
+            AuthorizationServicesEnabled = client.AuthorizationServicesEnabled;
+            BearerOnly = client.BearerOnly;
+            DirectAccessGrantsEnabled = client.DirectAccessGrantsEnabled;
+            ImplicitFlowEnabled = client.ImplicitFlowEnabled;
+            ServiceAccountsEnabled = client.ServiceAccountsEnabled;
+            StandardFlowEnabled = client.StandardFlowEnabled;
 
-            this.BaseUrl = client.BaseUrl;
-            this.RootUrl = client.RootUrl;
-            this.RedirectUris = client.RedirectUris;
-            this.Origin = client.Origin;
-            this.WebOrigins = client.WebOrigins;
-            this.AdminUrl = client.AdminUrl;
+            BaseUrl = client.BaseUrl;
+            RootUrl = client.RootUrl;
+            RedirectUris = client.RedirectUris;
+            Origin = client.Origin;
+            WebOrigins = client.WebOrigins;
+            AdminUrl = client.AdminUrl;
 
             if (client.ProtocolMappers != null)
             {
-                this.ProtocolMappers = client.ProtocolMappers.Select(m => new ProtocolMapperModel(m)).ToArray();
+                ProtocolMappers = client.ProtocolMappers.Select(m => new ProtocolMapperModel(m)).ToArray();
             }
         }
         #endregion
