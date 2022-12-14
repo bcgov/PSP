@@ -63,6 +63,29 @@ export const propertyOfInterestIconSelect = L.icon({
   shadowSize: [41, 41],
 });
 
+// property with payable lease icon (purple) highlighted
+export const propertyWithLeaseIcon = L.icon({
+  iconUrl:
+    require('assets/images/pins/land-lease.svg').default ?? 'assets/images/pins/land-lease.svg',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// property with payable lease icon (purple) highlighted
+export const propertyWithLeaseIconSelect = L.icon({
+  iconUrl:
+    require('assets/images/pins/land-lease-selected.svg').default ??
+    'assets/images/pins/land-lease-selected.svg',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 // parcel icon (green) highlighted
 export const parcelIconSelect = L.icon({
   iconUrl:
@@ -114,6 +137,14 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
  * Get an icon type for the specified cluster property details.
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
+  if (feature.properties.IS_PAYABLE_LEASE === 1 || feature.properties.isPayableLease) {
+    if (selected) {
+      return propertyWithLeaseIconSelect;
+    } else {
+      return propertyWithLeaseIcon;
+    }
+  }
+
   if (feature.properties.IS_PROPERTY_OF_INTEREST || feature.properties.isPropertyOfInterest) {
     if (selected) {
       return propertyOfInterestIconSelect;
@@ -121,6 +152,7 @@ export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
       return propertyOfInterestIcon;
     }
   }
+
   if (feature.properties.PROPERTY_ID || feature.properties.id) {
     if (selected) {
       return parcelIconSelect;

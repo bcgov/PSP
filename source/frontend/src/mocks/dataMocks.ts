@@ -52,6 +52,7 @@ export const mockWfsGetPropertyById = {
         IS_VISIBLE_TO_OTHER_AGENCIES: false,
         ZONING: null,
         ZONING_POTENTIAL: null,
+        IS_PAYABLE_LEASE: 0,
       },
       bbox: [-124.0658, 48.8281, -124.0658, 48.8281],
     },

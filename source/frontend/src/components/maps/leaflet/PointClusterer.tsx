@@ -66,6 +66,7 @@ export const convertToProperty = (
     isOwned: property.IS_OWNED,
     encumbranceReason: property.ENCUMBRANCE_REASON,
     isPropertyOfInterest: property.IS_PROPERTY_OF_INTEREST,
+    isPayableLease: property.IS_PAYABLE_LEASE === 1,
     isVisibleToOtherAgencies: property.IS_VISIBLE_TO_OTHER_AGENCIES,
     areaUnit: property.PROPERTY_AREA_UNIT_TYPE_CODE,
     classificationId: property.PROPERTY_CLASSIFICATION_TYPE_CODE,
