@@ -9,9 +9,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly ResearchFile researchFile;
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SearchResearchFiles searchResearchFile;
-        private readonly Activities activities;
+        private readonly PropertyInformation propertyInformation;
 
         private readonly string userName = "TRANPSP1";
+        //private readonly string userName = "sutairak";
 
         private readonly string researchFileName = "Automated Research File";
         private readonly string researchFileRoadName = "The Automated Road";
@@ -31,7 +32,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string PID2Search = "028-753-054";
         private readonly string PID3Search = "099-123-677";
         private readonly string PIN1Search = "8157500";
-        private readonly string Plan1Search = "VIP16002";
+        private readonly string Plan1Search = "18TR2_RUPERT";
         private readonly string address1Search = "1818 Cornwall";
         private readonly string legalDescription1Search = "DISTRICT LOT 2405";
         private readonly string legalDescription2Search = "LOT 97";
@@ -49,7 +50,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFile = new ResearchFile(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             searchResearchFile = new SearchResearchFiles(driver.Current);
-            activities = new Activities(driver.Current);
+            propertyInformation = new PropertyInformation(driver.Current);
         }
 
         [StepDefinition(@"I start creating and cancel a new Research File")]
@@ -166,8 +167,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Edit Research File
             researchFile.NavigateToAddPropertiesReseachFile();
 
-            //Search for a property by PID
+            //Verify UI/UX from Search By Component
             sharedSearchProperties.NavigateToSearchTab();
+            sharedSearchProperties.VerifySearchPropertiesFeature();
+
+            //Search for a property by PID
             sharedSearchProperties.SelectPropertyByPID(PID2Search);
             sharedSearchProperties.SelectFirstOption();
 
@@ -180,8 +184,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Address
-            //sharedSearchProperties.SelectPropertyByAddress(address1Search);
-            //sharedSearchProperties.SelectFirstOption();
+            sharedSearchProperties.SelectPropertyByAddress(address1Search);
+            sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Legal Description
             sharedSearchProperties.SelectPropertyByLegalDescription(legalDescription1Search);
@@ -192,6 +196,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Confirm saving changes
             researchFile.ConfirmChangesResearchFile();
+
+            //Verify PIMS Files Tab
+
         }
 
         [StepDefinition(@"I search for an existing Research File")]
@@ -233,7 +240,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing research file properties")]
         public void UpdateExistingResearchFileProperties()
         {
-            /* TEST COVERAGE: PSP-3460, PSP-3599, PSP-3600, PSP-3601 */
+            /* TEST COVERAGE: PSP-3460, PSP-3599, PSP-3600 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -251,12 +258,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Add existing property again
             sharedSearchProperties.NavigateToSearchTab();
 
-            //TO-DO: Verify Search UI/UX
+            sharedSearchProperties.VerifySearchPropertiesFeature();
             sharedSearchProperties.SelectPropertyByPID(PID1Search);
             sharedSearchProperties.SelectFirstOption();
-
-            //Verify PIMS File Tab
-
 
             //Delete first property
             sharedSearchProperties.DeleteProperty();
@@ -281,7 +285,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update and cancel changes on existing research file properties")]
         public void UpdateCancelExistingResearchFileProperties()
         {
-            /* TEST COVERAGE: PSP-3720, PSP-3463 */
+            /* TEST COVERAGE: PSP-3720, PSP-3463, PSP-3601 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -299,6 +303,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Cancel changes
             researchFile.CancelResearchFile();
 
+            //Verify PIMS Files Tab
+            propertyInformation.VerifyPimsFiles();
+
             //Navigate to Edit Research File
             researchFile.NavigateToAddPropertiesReseachFile();
 
@@ -308,19 +315,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Cancel changes
             researchFile.CancelResearchFileProps();
             
-        }
-
-        [StepDefinition(@"I create a new activity")]
-        public void CreateResearchFileActivity()
-        {
-            /*TODO -  TEST COVERAGE:  PSP-4364, PSP-4363, PSP-4361 */
-
-            //Acess the activity tab
-            researchFile.AccessActivitiesTab();
-
-            //Create new activity
-            activities.CreateNewActivity();
-
         }
 
         [StepDefinition(@"A new research file is created successfully")]
