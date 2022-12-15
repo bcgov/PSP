@@ -9,7 +9,7 @@ import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { FormikProps, getIn, useFormikContext } from 'formik';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
@@ -30,7 +30,7 @@ export interface IUpdatePropertyDetailsFormProps {
 }
 
 export const UpdatePropertyDetailsForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdatePropertyDetailsFormProps>
+  IUpdatePropertyDetailsFormProps
 > = ({ formikProps }) => {
   const { values } = useFormikContext<UpdatePropertyDetailsFormModel>();
 
@@ -54,6 +54,15 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const regionOptions = getOptionsByType(API.REGION_TYPES);
   const districtOptions = getOptionsByType(API.DISTRICT_TYPES);
 
+  const countryCA = useMemo(
+    () => getByType(API.COUNTRY_TYPES).find(c => c.code === 'CA'),
+    [getByType],
+  );
+  const provinceBC = useMemo(
+    () => getByType(API.PROVINCE_TYPES).find(p => p.code === 'BC'),
+    [getByType],
+  );
+
   // multi-selects
   const tenureStatus = getIn(values, 'tenures') as PropertyTenureFormModel[];
   const adjacentLands = getIn(values, 'adjacentLands') as PropertyAdjacentLandFormModel[];
@@ -74,6 +83,13 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
 
   const setFieldValue = formikProps.setFieldValue;
+
+  // property addresses are limited to BC, Canada
+  useEffect(() => {
+    setFieldValue('address.province', provinceBC, false);
+    setFieldValue('address.country', countryCA, false);
+  }, [countryCA, provinceBC, setFieldValue]);
+
   // clear related fields when volumetric parcel radio changes
   useEffect(() => {
     if (!isVolumetricParcel) {
@@ -99,6 +115,27 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   return (
     <StyledSummarySection>
       <UnsavedChangesPrompt />
+      <Section header="Property Address">
+        <StyledSubtleText>
+          This is the address stored in PIMS application for this property and will be used wherever
+          this property's address is needed.
+        </StyledSubtleText>
+        <SectionField label="Address (line 1)">
+          <Input field="address.streetAddress1" />
+        </SectionField>
+        <SectionField label="Address (line 2)">
+          <Input field="address.streetAddress2" />
+        </SectionField>
+        <SectionField label="Address (line 3)">
+          <Input field="address.streetAddress3" />
+        </SectionField>
+        <SectionField label="City">
+          <Input field="address.municipality" />
+        </SectionField>
+        <SectionField label="Postal code">
+          <Input field="address.postal" />
+        </SectionField>
+      </Section>
       <Section header="Property Attributes">
         <SectionField label="MOTI region">
           <Select
@@ -282,4 +319,9 @@ const StyledInfoSection = styled.div`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   padding: 0.5rem;
   margin-bottom: 1.5rem;
+`;
+
+const StyledSubtleText = styled.p`
+  color: ${props => props.theme.css.subtleColor};
+  text-align: left;
 `;

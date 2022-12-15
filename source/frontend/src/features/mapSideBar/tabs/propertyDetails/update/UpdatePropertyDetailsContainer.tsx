@@ -4,8 +4,7 @@ import useIsMounted from 'hooks/useIsMounted';
 import { useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
 import isNumber from 'lodash/isNumber';
 import { Api_Property } from 'models/api/Property';
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
@@ -20,7 +19,7 @@ export interface IUpdatePropertyDetailsContainerProps {
 
 export const UpdatePropertyDetailsContainer = React.forwardRef<
   FormikProps<any>,
-  React.PropsWithChildren<IUpdatePropertyDetailsContainerProps>
+  IUpdatePropertyDetailsContainerProps
 >((props, ref) => {
   const isMounted = useIsMounted();
   const getPropertyWrapper = useGetProperty();
