@@ -93,7 +93,7 @@ const useActiveFeatureLayer = ({
       displayConfig = parcelLayerPopupConfig;
       properties = parcel.features[0].properties!;
       feature = parcel.features[0];
-      title = selectedProperty?.isPayableLease ? 'Payable lease/license' : 'LTSA ParcelMap data';
+      title = 'LTSA ParcelMap data';
       mapBounds = parcel.features[0]?.geometry
         ? geoJSON(parcel.features[0].geometry).getBounds()
         : undefined;

@@ -17,6 +17,10 @@ export const Legend = () => {
         pin: require('assets/images/pins/land-poi.svg').default,
         label: 'Property of Interest',
       },
+      {
+        pin: require('assets/images/pins/land-lease.svg').default,
+        label: 'Payable lease/license',
+      },
     ];
   }, []);
 
