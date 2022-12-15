@@ -13,6 +13,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly PropertyInformation propertyInformation;
 
         private readonly string userName = "TRANPSP1";
+        //private readonly string userName = "sutairak";
 
         private readonly string acquisitionFileName = "Automated Acquisition File";
 
