@@ -177,7 +177,6 @@ export const LeasePropertySelector: React.FunctionComponent<
                 </Col>
               </Row>
               <Section header="Selected properties">
-                {propertyIndexToRemove}
                 <SelectedPropertyHeaderRow />
                 {formikProps.values.properties.map((leaseProperty, index) => {
                   const property = leaseProperty?.property;
