@@ -5,7 +5,8 @@ import { Formik } from 'formik';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import React, { useMemo, useState } from 'react';
 import Col from 'react-bootstrap/Col';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
+import { matchPath } from 'react-router-dom';
 import styled from 'styled-components';
 import { FilterBarSchema } from 'utils/YupSchema';
 
@@ -44,6 +45,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   toggle = SearchToggleOption.Map,
 }) => {
   const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
+  const [listView, setListView] = useState<boolean>(false);
+
   useRouterFilter({
     filter: propertyFilter,
     setFilter: filter => {
@@ -57,6 +60,19 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   });
 
   const history = useHistory();
+  const location = useLocation();
+  let matched = matchPath(location.pathname, {
+    path: '/properties/list',
+    exact: true,
+    strict: true,
+  });
+  React.useEffect(() => {
+    if (matched !== null) {
+      setListView(true);
+    } else {
+      setListView(false);
+    }
+  }, [matched, setListView]);
 
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
@@ -116,7 +132,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               {values.searchBy === 'pinOrPid' && (
                 <Input field="pinOrPid" placeholder="Enter a PID or PIN"></Input>
               )}
-              {values.searchBy === 'address' && (
+              {values.searchBy === 'address' && !listView && (
                 <GeocoderAutoComplete
                   data-testid="geocoder-mapview"
                   field="address"
@@ -127,6 +143,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   }}
                   value={values.address}
                 ></GeocoderAutoComplete>
+              )}
+              {values.searchBy === 'address' && listView && (
+                <Input field="address" placeholder="Enter address"></Input>
               )}
             </StyledCol>
             <Col xs="auto">
