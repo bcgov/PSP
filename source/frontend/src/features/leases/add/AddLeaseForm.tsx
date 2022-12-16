@@ -1,5 +1,5 @@
+import { IMapProperty } from 'components/propertySelector/models';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { IProperty } from 'interfaces';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
@@ -18,7 +18,7 @@ interface IAddLeaseFormProps {
     formikHelpers: FormikHelpers<LeaseFormModel>,
   ) => void | Promise<any>;
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
-  propertyInfo: IProperty | null;
+  propertyInfo: IMapProperty | null;
 }
 
 const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFormProps>> = ({
@@ -30,20 +30,8 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
 
   if (propertyInfo) {
     defaultFormLease.properties = [];
-    defaultFormLease.properties.push(
-      FormLeaseProperty.fromApi({
-        property: {
-          pid: propertyInfo.pid ? +propertyInfo.pid : undefined,
-          pin: propertyInfo?.pin ? +propertyInfo.pin : undefined,
-          latitude: propertyInfo.latitude,
-          longitude: propertyInfo.longitude,
-          location: { coordinate: { x: propertyInfo.longitude, y: propertyInfo.latitude } },
-        },
-        leaseArea: propertyInfo.landArea,
-        areaUnitType: { id: propertyInfo.areaUnit },
-      }),
-    );
-    defaultFormLease.regionId = propertyInfo.regionId ? propertyInfo.regionId.toString() : '';
+    defaultFormLease.properties.push(FormLeaseProperty.fromMapProperty(propertyInfo));
+    defaultFormLease.regionId = propertyInfo.region ? propertyInfo.region.toString() : '';
   }
 
   const handleSubmit = async (

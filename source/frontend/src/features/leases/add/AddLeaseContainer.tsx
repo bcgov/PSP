@@ -1,15 +1,15 @@
 import { ReactComponent as Fence } from 'assets/images/fence.svg';
 import GenericModal from 'components/common/GenericModal';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
+import { IMapProperty } from 'components/propertySelector/models';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { PropertyForm } from 'features/properties/map/shared/models';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FormikHelpers, FormikProps } from 'formik';
 import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
 import { useMemo, useState } from 'react';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
@@ -26,10 +26,8 @@ export const AddLeaseContainer: React.FunctionComponent<
 > = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
-  const { selectedFileFeature, setState } = React.useContext(MapStateContext);
-  const initialForm = useMemo<LeaseFormModel>(() => {
-    return new LeaseFormModel();
-  }, []);
+  const { selectedFileFeature } = React.useContext(MapStateContext);
+
   const { addLease } = useAddLease();
   const [addLeaseParams, setAddLeaseParams] = useState<
     { lease: Api_Lease; userOverride?: string } | undefined
@@ -37,17 +35,12 @@ export const AddLeaseContainer: React.FunctionComponent<
 
   const { search } = useMapSearch();
 
-  useEffect(() => {
-    if (!!selectedFileFeature && !!formikRef.current) {
-      formikRef.current.resetForm();
-      formikRef.current?.setFieldValue('properties', [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
-      ]);
+  const initialProperty = useMemo<IMapProperty | null>(() => {
+    if (selectedFileFeature) {
+      return mapFeatureToProperty(selectedFileFeature);
     }
-    return () => {
-      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
-    };
-  }, [initialForm, selectedFileFeature, setState]);
+    return null;
+  }, [selectedFileFeature]);
 
   const saveLeaseFile = async (
     leaseFormModel: LeaseFormModel,
@@ -90,7 +83,7 @@ export const AddLeaseContainer: React.FunctionComponent<
       showCloseButton
       onClose={handleCancel}
     >
-      <AddLeaseForm onSubmit={saveLeaseFile} formikRef={formikRef} propertyInfo={null} />
+      <AddLeaseForm onSubmit={saveLeaseFile} formikRef={formikRef} propertyInfo={initialProperty} />
       <GenericModal
         title="Warning"
         display={!!addLeaseParams}
