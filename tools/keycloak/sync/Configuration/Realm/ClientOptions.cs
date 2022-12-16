@@ -8,6 +8,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
     public class ClientOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - Unique key to identify client.
         /// </summary>
@@ -74,7 +75,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
         public bool StandardFlowEnabled { get; set; }
 
         /// <summary>
-        /// get/set - Whether client allows implicit flow. 
+        /// get/set - Whether client allows implicit flow.
         /// </summary>
         public bool ImplicitFlowEnabled { get; set; }
 

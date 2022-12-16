@@ -8,6 +8,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
     public class ProtocolMapperOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The protocal for the mapper.
         /// </summary>

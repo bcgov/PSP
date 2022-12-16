@@ -6,6 +6,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
     public class RealmOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The unique name of the realm.
         /// </summary>

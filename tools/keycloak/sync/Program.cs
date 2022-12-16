@@ -21,14 +21,15 @@ namespace Pims.Tools.Keycloak.Sync
     /// Program class, provides a console application that will sync keycloak and PIMS roles, groups and users.
     /// </summary>
     /// <reference url="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-3.1"/>
-    static class Program
+    internal static class Program
     {
         #region Methods
+
         /// <summary>
         /// Entry point to program.
         /// </summary>
         /// <param name="args"></param>
-        static async Task<int> Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
             var config = Configure(args)
                 .Build();
@@ -39,17 +40,30 @@ namespace Pims.Tools.Keycloak.Sync
                 .Configure<ApiOptions>(config.GetSection("Api"))
                 .Configure<RealmOptions>(config.GetSection("Realm"))
                 .Configure<KeycloakOptions>(config.GetSection("Auth:Keycloak"))
+                .Configure<KeycloakManagementOptions>(config.GetSection("Auth:Keycloak:ServiceAccount"))
                 .Configure<OpenIdConnectOptions>(config.GetSection("Auth:OpenIdConnect"))
                 .Configure<JsonSerializerOptions>(options =>
                 {
-                    if (Boolean.TryParse(config["Serialization:Json:IgnoreNullValues"], out bool ignoreNullValues))
-                        options.IgnoreNullValues = ignoreNullValues;
-                    if (Boolean.TryParse(config["Serialization:Json:PropertyNameCaseInsensitive"], out bool nameCaseInsensitive))
+                    if (bool.TryParse(config["Serialization:Json:IgnoreNullValues"], out bool ignoreNullValues))
+                    {
+                        options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                    }
+
+                    if (bool.TryParse(config["Serialization:Json:PropertyNameCaseInsensitive"], out bool nameCaseInsensitive))
+                    {
                         options.PropertyNameCaseInsensitive = nameCaseInsensitive;
+                    }
+
                     if (config["Serialization:Json:PropertyNamingPolicy"] == "CamelCase")
+                    {
                         options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    if (Boolean.TryParse(config["Serialization:Json:WriteIndented"], out bool writeIndented))
+                    }
+
+                    if (bool.TryParse(config["Serialization:Json:WriteIndented"], out bool writeIndented))
+                    {
                         options.WriteIndented = writeIndented;
+                    }
+
                     options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 })
                 .AddSingleton<IConfiguration>(config)
@@ -65,7 +79,7 @@ namespace Pims.Tools.Keycloak.Sync
                 .AddTransient<Startup>()
                 .AddTransient<JwtSecurityTokenHandler>()
                 .AddScoped<IKeycloakRequestClient, KeycloakRequestClient>()
-                .AddTransient<IRealmFactory, RealmFactory>()
+                .AddScoped<IPimsRequestClient, PimsRequestClient>()
                 .AddTransient<ISyncFactory, SyncFactory>();
 
             services.AddHttpClient("Pims.Tools.Keycloak.Sync", client => { });
@@ -107,8 +121,6 @@ namespace Pims.Tools.Keycloak.Sync
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{environment}.json", optional: true)
-                .AddJsonFile("realm.json")
-                .AddJsonFile($"realm.{environment}.json", optional: true)
                 .AddEnvironmentVariables()
                 .AddCommandLine(args ?? new string[0]);
         }
