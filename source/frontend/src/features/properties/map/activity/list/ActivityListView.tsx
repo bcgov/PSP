@@ -88,14 +88,25 @@ export const ActivityListView: React.FunctionComponent<
       if (sort) {
         const sortFields = Object.keys(sort);
         if (sortFields?.length > 0) {
-          const keyName = sort[sortFields[0] as keyof Api_Activity];
-          return orderBy(
-            activityItems,
-            sortFields[0] === 'activityTemplate'
-              ? 'activityTemplate.activityTemplateTypeCode.description'
-              : sortFields[0],
-            keyName,
-          );
+          const keyName = sortFields[0] as keyof Api_Activity;
+          const sortDirection = sort[keyName];
+
+          let sortBy: string;
+          switch (keyName) {
+            case 'activityTemplate':
+              sortBy = 'activityTemplate.activityTemplateTypeCode.description';
+              break;
+
+            case 'activityStatusTypeCode':
+              sortBy = 'activityStatusTypeCode.description';
+              break;
+
+            default:
+              sortBy = keyName;
+              break;
+          }
+
+          return orderBy(activityItems, sortBy, sortDirection);
         }
       }
       return activityItems;
