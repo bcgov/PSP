@@ -18,9 +18,6 @@ namespace Pims.Keycloak
         /// <summary>
         /// get - The configuration options for keycloak.
         /// </summary>
-        /// <value>
-        /// <placeholder>get - The configuration options for keycloak.</placeholder>
-        /// </value>
         public Configuration.KeycloakOptions Options { get; }
         #endregion
 
@@ -35,7 +32,6 @@ namespace Pims.Keycloak
         {
             this.Options = options.Value;
             this.Options.Validate(); // TODO: PSP-4428 Figure out how to automatically validate.
-            this.Options.Admin.Validate();
             this.Options.OpenIdConnect.Validate();
             this.Options.ServiceAccount.Validate();
             _client = client;

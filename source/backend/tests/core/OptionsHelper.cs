@@ -19,11 +19,6 @@ namespace Pims.Core.Test
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions()
-                {
-                    Authority = "https://keycloak/admin",
-                    Users = "/users",
-                },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Login = "/protocol/openid-connect/auth",

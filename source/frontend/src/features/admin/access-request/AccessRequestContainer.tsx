@@ -56,12 +56,14 @@ export const AccessRequestContainer: React.FunctionComponent<
     roleId: response?.roleId,
     regionCode: { id: response?.regionCode?.id },
   });
+  initialValues.email = keycloak.email ?? '';
 
   if (!accessRequestId && !response) {
     initialValues.email = keycloak.email ?? '';
     initialValues.firstName = keycloak.firstName ?? '';
     initialValues.surname = keycloak.surname ?? '';
-    initialValues.businessIdentifierValue = keycloak.businessIdentifierValue ?? '';
+    initialValues.businessIdentifierValue =
+      keycloak.businessIdentifierValue ?? userInfo.idir_username ?? '';
     initialValues.keycloakUserGuid = userInfo.subject;
   }
   return (

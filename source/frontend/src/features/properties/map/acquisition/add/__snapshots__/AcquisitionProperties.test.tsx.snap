@@ -907,6 +907,15 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c3 {
+  min-width: 3rem;
+  min-height: 4.5rem;
+}
+
+.c4 {
+  font-size: 1.2rem;
+}
+
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -970,15 +979,6 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c3 {
-  min-width: 3rem;
-  min-height: 4.5rem;
-}
-
-.c4 {
-  font-size: 1.2rem;
 }
 
 .c2 {

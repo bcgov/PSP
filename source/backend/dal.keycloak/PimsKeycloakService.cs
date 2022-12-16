@@ -10,6 +10,7 @@ using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Keycloak;
+using Pims.Keycloak.Models;
 using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
 
@@ -135,7 +136,12 @@ namespace Pims.Dal.Keycloak
             }
 
             // Update PIMS
-            euser.BusinessIdentifierValue = kuser.Username; // PIMS must use whatever username is set in keycloak.
+            var idirUsername = kuser.Attributes?.FirstOrDefault(a => a.Key == "idir_username").Value.FirstOrDefault();
+            if(idirUsername == null)
+            {
+                throw new KeyNotFoundException("keycloak user missing required idir_username attribute");
+            }
+            euser.BusinessIdentifierValue = idirUsername; // PIMS must use whatever username is set in keycloak.
             euser.Person.FirstName = update.Person.FirstName;
             euser.Person.MiddleNames = update.Person.MiddleNames;
             euser.Person.Surname = update.Person.Surname;
@@ -146,56 +152,33 @@ namespace Pims.Dal.Keycloak
             euser.PimsUserRoles = update.PimsUserRoles;
             euser.PimsRegionUsers = update.PimsRegionUsers;
 
-            euser.Person.PimsContactMethods.RemoveAll(c => c.ContactMethodTypeCode == ContactMethodTypes.WorkEmail);
-            update.Person.PimsContactMethods.ForEach(c =>
+            var newWorkEmail = update.Person.PimsContactMethods?.OrderByDescending(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.WorkEmail);
+            if (newWorkEmail != null)
             {
-                euser.Person.PimsContactMethods.Add(new PimsContactMethod(update.Person, c.Organization, c.ContactMethodTypeCode, c.ContactMethodValue));
-            });
+                var existingWorkEmail = euser.Person.PimsContactMethods?.OrderByDescending(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.WorkEmail || cm.ContactMethodTypeCode == ContactMethodTypes.PerseEmail);
+                if (existingWorkEmail != null)
+                {
+                    existingWorkEmail.ContactMethodValue = update.Person.GetEmail();
+                }
+                else
+                {
+                    euser.Person.PimsContactMethods.Add(newWorkEmail);
+                }
+            }
 
             euser = _userRepository.UpdateOnly(euser);
 
+            var roles = update.IsDisabled.HasValue && update.IsDisabled.Value ? System.Array.Empty<PimsRole>() : euser.PimsUserRoles.Select(ur => _roleRepository.Find(ur.RoleId));
+
             // Now update keycloak
-            var kmodel = _mapper.Map<KModel.UserModel>(update);
+            var keycloakUserGroups = await _keycloakService.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
+            var newRolesToAdd = roles.Where(r => keycloakUserGroups.All(crr => crr.Name != r.Name));
+            var rolesToRemove = keycloakUserGroups.Where(r => roles.All(crr => crr.Name != r.Name));
+            var addOperations = newRolesToAdd.Select(nr => new UserRoleOperation() { Operation = "add", RoleName = nr.Name, Username = update.GetIdirUsername() });
+            var removeOperations = rolesToRemove.Select(rr => new UserRoleOperation() { Operation = "del", RoleName = rr.Name, Username = update.GetIdirUsername() });
 
-            if (resetRoles)
-            {
-                var userGroups = await _keycloakService.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
-                foreach (var group in userGroups)
-                {
-                    try
-                    {
-                        var matchingPimsRole = _roleRepository.GetByKeycloakId(group.Id);
-                        if (matchingPimsRole != null)
-                        {
-                            await _keycloakService.RemoveGroupFromUserAsync(update.GuidIdentifierValue.Value, group.Id);
-                        }
-                    }
-                    catch (KeyNotFoundException)
-                    {
-                        // ignore any roles that are in keycloak but not in PIMS
-                    }
-                }
-            }
-
-            var roleIds = update.PimsUserRoles.Select(r => r.RoleId);
-            foreach (var roleId in roleIds)
-            {
-                var role = _roleRepository.Find(roleId) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null)
-                {
-                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                }
-
-                _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifierValue}'.");
-                await _keycloakService.AddGroupToUserAsync(update.GuidIdentifierValue.Value, role.KeycloakGroupId.Value);
-            }
-
-            kmodel.Attributes = new Dictionary<string, string[]>
-            {
-                ["displayName"] = new[] { update.BusinessIdentifierValue },
-            };
-            _logger.LogInformation($"Updating keycloak user '{euser.BusinessIdentifierValue}'.");
-            await _keycloakService.UpdateUserAsync(kmodel);
+            await _keycloakService.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
+            _userRepository.CommitTransaction();
 
             return _userRepository.Get(euser.Id);
         }
