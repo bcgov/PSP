@@ -9,7 +9,7 @@ import { mapLookupCode } from 'utils';
  * Hook to return an array ILookupCode for specific types.
  */
 export function useLookupCodeHelpers() {
-  const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
+  const lookupCodes = useAppSelector(state => state.lookupCode?.lookupCodes ?? []);
 
   const getCodeById = (type: string, id: number | string): string | undefined => {
     const match = (lookupCodes || [])

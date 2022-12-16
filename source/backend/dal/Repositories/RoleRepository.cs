@@ -70,8 +70,6 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsRole Get(Guid key)
         {
-            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminRoles, _keycloakOptions);
-
             return this.Context.PimsRoles
                 .Include(r => r.PimsRoleClaims).ThenInclude(c => c.Claim)
                 .AsNoTracking()

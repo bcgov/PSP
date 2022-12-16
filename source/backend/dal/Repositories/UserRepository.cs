@@ -252,9 +252,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
                 .ThenInclude(r => r.Role)
-                .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
-                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
                 .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
@@ -277,9 +274,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
                 .ThenInclude(r => r.Role)
-                .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
-                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
                 .Include(u => u.PimsRegionUsers)
@@ -300,9 +294,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
                 .ThenInclude(r => r.Role)
-                .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
-                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
                 .AsNoTracking()
@@ -380,7 +371,6 @@ namespace Pims.Dal.Repositories
         public PimsUser UpdateOnly(PimsUser update)
         {
             this.Context.PimsUsers.Update(update);
-            this.Context.CommitTransaction();
 
             return update;
         }

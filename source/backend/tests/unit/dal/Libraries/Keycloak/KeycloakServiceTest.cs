@@ -89,7 +89,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
         }
 
         [Fact]
-        public void CreateKeycloakService_NoAdminAuthority()
+        public void CreateKeycloakService_NoOpenId()
         {
             // Arrange
             var helper = new TestHelper();
@@ -100,35 +100,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions(),
-            });
-
-            var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
-            openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
-            openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
-            helper.AddSingleton(openIdConnect.Object);
-
-            // Act
-            // Assert
-            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
-            result.Message.Should().Be("The configuration for Keycloak:Admin:Authority is invalid or missing.");
-        }
-
-        [Fact]
-        public void CreateKeycloakService_NoAdminUsers()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            var options = Options.Create(new KeycloakOptions()
-            {
-                Authority = "https://keycloak",
-                Audience = "pims",
-                Client = "pims",
-                Admin = new KeycloakAdminOptions()
+                ServiceAccount = new KeycloakServiceAccountOptions()
                 {
-                    Authority = "https://keycloak/admin",
+                    Client = "pims-service-account",
+                    Secret = "[USE SECRETS]",
+                    Api = "https://api.loginproxy.gov.bc.ca/api/v1",
+                    Integration = "4379",
+                    Environment = "test"
                 },
             });
 
@@ -140,7 +118,37 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             // Act
             // Assert
             var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
-            result.Message.Should().Be("The configuration for Keycloak:Admin:Users is invalid or missing.");
+            result.Message.Should().Be("The configuration for Keycloak:OpenIdConnect is invalid or missing.");
+        }
+
+        [Fact]
+        public void CreateKeycloakService_NoServiceAccount()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var options = Options.Create(new KeycloakOptions()
+            {
+                Authority = "https://keycloak",
+                Audience = "pims",
+                Client = "pims",
+                OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
+                {
+                    Token = "/protocol/openid-connect/token",
+                    UserInfo = "/protocol/openid-connect/userinfo",
+                },
+            });
+
+            var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
+            openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
+            openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+            helper.AddSingleton(openIdConnect.Object);
+
+            // Act
+            // Assert
+            var result = Assert.Throws<ConfigurationException>(() => helper.Create<KeycloakService>(options, user));
+            result.Message.Should().Be("The configuration for Keycloak:ServiceAccount is invalid or missing.");
         }
 
         [Fact]
@@ -155,12 +163,15 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions()
-                {
-                    Authority = "https://keycloak/admin",
-                    Users = "/users",
-                },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions(),
+                ServiceAccount = new KeycloakServiceAccountOptions()
+                {
+                    Client = "pims-service-account",
+                    Secret = "[USE SECRETS]",
+                    Api = "https://api.loginproxy.gov.bc.ca/api/v1",
+                    Integration = "4379",
+                    Environment = "test"
+                },
             });
 
             var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
@@ -186,14 +197,17 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions()
-                {
-                    Authority = "https://keycloak/admin",
-                    Users = "/users",
-                },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
+                },
+                ServiceAccount = new KeycloakServiceAccountOptions()
+                {
+                    Client = "pims-service-account",
+                    Secret = "[USE SECRETS]",
+                    Api = "https://api.loginproxy.gov.bc.ca/api/v1",
+                    Integration = "4379",
+                    Environment = "test"
                 },
             });
 
@@ -220,11 +234,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions()
-                {
-                    Authority = "https://keycloak/admin",
-                    Users = "/users",
-                },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
@@ -256,11 +265,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions()
-                {
-                    Authority = "https://keycloak/admin",
-                    Users = "/users",
-                },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
@@ -295,11 +299,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions()
-                {
-                    Authority = "https://keycloak/admin",
-                    Users = "/users",
-                },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
@@ -309,6 +308,9 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 {
                     Client = "pims-service-account",
                     Secret = "[USE SECRETS]",
+                    Api = "https://api.loginproxy.gov.bc.ca/api/v1",
+                    Integration = "4379",
+                    Environment = "test"
                 },
             });
 
@@ -339,11 +341,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions()
-                {
-                    Authority = "https://keycloak/admin",
-                    Users = "/users",
-                },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
@@ -351,10 +348,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions()
                 {
-                    Authority = "https://serviceaccount",
-                    Audience = "serviceaccount",
                     Client = "pims-service-account",
                     Secret = "[USE SECRETS]",
+                    Api = "https://api.loginproxy.gov.bc.ca/api/v1",
+                    Integration = "4379",
+                    Environment = "test",
+                    Audience = "pims-service-account",
+                    Authority = "https://loginproxy.gov.bc.ca/auth/realms/standard"
                 },
             });
 
@@ -374,58 +374,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
         }
         #endregion
 
-        #region DeleteAttackDetectionAsync
-        [Fact]
-        public async void DeleteAttackDetectionAsync_Success()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            var options = helper.CreateDefaultKeycloakOptions();
-
-            var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
-            openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
-            openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
-            helper.AddSingleton(openIdConnect.Object);
-
-            var service = helper.Create<KeycloakService>();
-
-            // Act
-            await service.DeleteAttackDetectionAsync();
-
-            // Assert
-            openIdConnect.Verify(m => m.DeleteAsync($"{options.Value.Admin.Authority}/attack-detection/brute-force/users", null), Times.Once());
-        }
-
-        [Fact]
-        public async void DeleteAttackDetectionAsync_Failed()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            var options = helper.CreateDefaultKeycloakOptions();
-
-            var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
-            openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
-            openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
-            {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Delete, "http://keycloak"),
-            });
-            helper.AddSingleton(openIdConnect.Object);
-
-            var service = helper.Create<KeycloakService>();
-
-            // Act
-            var result = await Assert.ThrowsAsync<HttpClientRequestException>(async () => await service.DeleteAttackDetectionAsync());
-
-            // Assert
-            openIdConnect.Verify(m => m.DeleteAsync($"{options.Value.Admin.Authority}/attack-detection/brute-force/users", null), Times.Once());
-            result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
-
-        #endregion
         #endregion
     }
 }
