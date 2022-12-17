@@ -1,10 +1,12 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import * as API from 'constants/API';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
+import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import { useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
 import isNumber from 'lodash/isNumber';
 import { Api_Property } from 'models/api/Property';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
@@ -28,6 +30,17 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
 
   const [initialForm, setForm] = useState<UpdatePropertyDetailsFormModel | undefined>(undefined);
   const executeGetProperty = getPropertyWrapper.execute;
+
+  // Lookup codes
+  const { getByType } = useLookupCodeHelpers();
+  const countryCA = useMemo(
+    () => getByType(API.COUNTRY_TYPES).find(c => c.code === 'CA'),
+    [getByType],
+  );
+  const provinceBC = useMemo(
+    () => getByType(API.PROVINCE_TYPES).find(p => p.code === 'BC'),
+    [getByType],
+  );
 
   useEffect(() => {
     async function fetchProperty() {
@@ -58,6 +71,12 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     values: UpdatePropertyDetailsFormModel,
     formikHelpers: FormikHelpers<UpdatePropertyDetailsFormModel>,
   ) => {
+    // default province and country to BC, Canada
+    if (values.address !== undefined) {
+      values.address.province = { id: Number(provinceBC?.id) };
+      values.address.country = { id: Number(countryCA?.id) };
+    }
+
     const apiProperty: Api_Property = values.toApi();
     const response = await updateProperty(apiProperty);
 
