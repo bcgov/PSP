@@ -309,6 +309,19 @@ namespace Pims.Dal.Repositories
             // update main entity - PimsProperty
             this.Context.Entry(existingProperty).CurrentValues.SetValues(property);
 
+            // add/update property address
+            var newAddress = property.Address;
+            if (newAddress != null)
+            {
+                existingProperty.Address = newAddress;
+                Context.Entry(existingProperty.Address).State = newAddress.Id == 0 ? EntityState.Added : EntityState.Modified;
+            }
+            else
+            {
+                existingProperty.Address = null;
+                this.Context.Entry(existingProperty).State = EntityState.Modified;
+            }
+
             // update direct relationships - anomalies, tenures, etc
             this.Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
             this.Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
