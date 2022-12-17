@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -173,6 +175,8 @@ namespace Pims.Api.Repositories.Mayan
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
                 byte[] payload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
                 _logger.LogTrace("Response: {response}", response);
+                response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
+                int contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault()) : payload.Length;
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
@@ -183,7 +187,7 @@ namespace Pims.Api.Repositories.Mayan
                         retVal.Payload = new FileDownload()
                         {
                             FilePayload = payload,
-                            Size = int.Parse(response.Content.Headers.GetValues("Content-Length").FirstOrDefault()),
+                            Size = contentLength,
                             Mimetype = response.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
                             FileName = fileName,
                         };

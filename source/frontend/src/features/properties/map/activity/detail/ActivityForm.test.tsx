@@ -49,7 +49,12 @@ describe('ActivityForm test', () => {
       {
         ...renderOptions,
         store: storeState,
-        claims: renderOptions?.claims ?? [Claims.ACTIVITY_EDIT, Claims.PROPERTY_EDIT],
+        claims: renderOptions?.claims ?? [
+          Claims.ACTIVITY_EDIT,
+          Claims.PROPERTY_EDIT,
+          Claims.DOCUMENT_VIEW,
+          Claims.NOTE_VIEW,
+        ],
       },
     );
 
