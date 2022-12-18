@@ -21,7 +21,7 @@ const onEditRelatedProperties = jest.fn();
 jest.mock('@react-keycloak/web');
 
 describe('ActivityView test', () => {
-  const setup = (renderOptions?: RenderOptions & IActivityViewProps) => {
+  const setup = (renderOptions?: RenderOptions & Partial<IActivityViewProps>) => {
     // render component under test
     const component = render(
       <Formik onSubmit={noop} initialValues={renderOptions?.activity ?? getMockActivityResponse()}>
@@ -65,19 +65,19 @@ describe('ActivityView test', () => {
   });
 
   it('sections are expanded by default', async () => {
-    const { getByTitle } = setup();
+    const { getByTitle } = setup({ claims: [Claims.DOCUMENT_VIEW, Claims.NOTE_VIEW] });
     expect(getByTitle('collapse-documents')).toBeInTheDocument();
     expect(getByTitle('collapse-notes')).toBeInTheDocument();
     expect(getByTitle('collapse-description')).toBeInTheDocument();
   });
 
   it('documents are displayed', async () => {
-    const { getByText } = setup();
+    const { getByText } = setup({ claims: [Claims.DOCUMENT_VIEW] });
     expect(getByText('Document type')).toBeVisible();
   });
 
   it('notes are displayed', async () => {
-    const { getByText } = setup();
+    const { getByText } = setup({ claims: [Claims.NOTE_VIEW] });
     expect(getByText('Note')).toBeVisible();
   });
 });
