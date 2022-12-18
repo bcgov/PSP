@@ -61,8 +61,9 @@ export const ActivityPropertyModal: React.FunctionComponent<
   };
 
   const handleOk = async () => {
-    if (disableSave) setDisplay(false);
-    else {
+    if (disableSave) {
+      setDisplay(false);
+    } else {
       if (activityModel && allProperties?.length > 0) {
         activityModel.actInstPropFiles =
           selectedFileProperties.map(p => ({
@@ -94,6 +95,7 @@ export const ActivityPropertyModal: React.FunctionComponent<
           allProperties={allProperties}
           selectedFileProperties={selectedFileProperties}
           setSelectedFileProperties={setSelectedFileProperties}
+          disableSelection={disableSave}
         />
       }
     />
@@ -106,16 +108,19 @@ interface IModalContentProps {
   allProperties: Api_PropertyFile[];
   selectedFileProperties: Api_PropertyFile[];
   setSelectedFileProperties: (properties: Api_PropertyFile[]) => void;
+  disableSelection: boolean;
 }
 
 const ModalContent: React.FC<React.PropsWithChildren<IModalContentProps>> = ({
   allProperties,
   selectedFileProperties,
   setSelectedFileProperties,
+  disableSelection,
 }) => {
   if (allProperties?.length > 0) {
     return (
       <PropertyActivityTable
+        disabledSelection={disableSelection}
         fileProperties={allProperties ?? []}
         selectedFileProperties={selectedFileProperties}
         setSelectedFileProperties={setSelectedFileProperties}
