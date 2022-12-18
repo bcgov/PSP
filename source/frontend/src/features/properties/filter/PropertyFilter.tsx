@@ -5,8 +5,7 @@ import { Formik } from 'formik';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import React, { useMemo, useState } from 'react';
 import Col from 'react-bootstrap/Col';
-import { useHistory, useLocation } from 'react-router';
-import { matchPath } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { FilterBarSchema } from 'utils/YupSchema';
 
@@ -30,6 +29,8 @@ export interface IPropertyFilterProps {
   setTriggerFilterChanged?: (used: boolean) => void;
   /** Which toggle view is currently active */
   toggle?: SearchToggleOption;
+  /** Which toggle view is currently active */
+  useGeocoder?: boolean;
 }
 
 /**
@@ -43,9 +44,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   onSorting,
   setTriggerFilterChanged,
   toggle = SearchToggleOption.Map,
+  useGeocoder,
 }) => {
   const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
-  const [listView, setListView] = useState<boolean>(false);
 
   useRouterFilter({
     filter: propertyFilter,
@@ -60,20 +61,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   });
 
   const history = useHistory();
-  const location = useLocation();
-  let matched = matchPath(location.pathname, {
-    path: '/properties/list',
-    exact: true,
-    strict: true,
-  });
-  React.useEffect(() => {
-    if (matched !== null) {
-      setListView(true);
-    } else {
-      setListView(false);
-    }
-  }, [matched, setListView]);
-
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
     return values;
@@ -132,7 +119,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               {values.searchBy === 'pinOrPid' && (
                 <Input field="pinOrPid" placeholder="Enter a PID or PIN"></Input>
               )}
-              {values.searchBy === 'address' && !listView && (
+              {values.searchBy === 'address' && useGeocoder && (
                 <GeocoderAutoComplete
                   data-testid="geocoder-mapview"
                   field="address"
@@ -144,7 +131,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   value={values.address}
                 ></GeocoderAutoComplete>
               )}
-              {values.searchBy === 'address' && listView && (
+              {values.searchBy === 'address' && !useGeocoder && (
                 <Input field="address" placeholder="Enter address"></Input>
               )}
             </StyledCol>
