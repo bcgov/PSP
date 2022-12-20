@@ -129,7 +129,7 @@ VALUES
     ),
     (
         @alejandroPersonId,
-        'asanchez',
+        'alesanch',
         '4109E6B4-585C-4678-8A24-1A99B45E3A5D',
         0,
         CURRENT_TIMESTAMP,
@@ -142,7 +142,7 @@ VALUES
     ),
     (
         @manuelPersonId,
-        'mrodriguez',
+        'marodrig',
         '5D661D1E-14F0-477C-A7FB-31F21E8B4FDA',
         0,
         CURRENT_TIMESTAMP,
@@ -201,7 +201,7 @@ SET
         FROM
             PIMS_USER
         WHERE
-            BUSINESS_IDENTIFIER_VALUE = 'asanchez'
+            BUSINESS_IDENTIFIER_VALUE = 'alesanch'
     );
 SET
     @manuelUserId = (
@@ -210,7 +210,7 @@ SET
         FROM
             PIMS_USER
         WHERE
-            BUSINESS_IDENTIFIER_VALUE = 'mrodriguez'
+            BUSINESS_IDENTIFIER_VALUE = 'marodrig'
     );
 SET
     @maheshUserId = (

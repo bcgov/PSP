@@ -20,9 +20,6 @@ namespace Pims.Keycloak.Configuration
         /// get/set - The keycloak open id connect endpoint configuration.
         public OpenIdConnectOptions OpenIdConnect { get; set; }
 
-        /// <summary>
-        /// get/set - The keycloak admin API endpoint configuration.
-        public KeycloakAdminOptions Admin { get; set; }
         #endregion
 
         #region Methods
@@ -46,6 +43,16 @@ namespace Pims.Keycloak.Configuration
             if (string.IsNullOrWhiteSpace(this.Client))
             {
                 throw new ConfigurationException("The configuration for Keycloak:Client is invalid or missing.");
+            }
+
+            if (this.OpenIdConnect == null)
+            {
+                throw new ConfigurationException("The configuration for Keycloak:OpenIdConnect is invalid or missing.");
+            }
+
+            if (this.ServiceAccount == null)
+            {
+                throw new ConfigurationException("The configuration for Keycloak:ServiceAccount is invalid or missing.");
             }
         }
         #endregion

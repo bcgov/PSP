@@ -2,12 +2,14 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
 import { createMemoryHistory, MemoryHistory } from 'history';
+import { mockLookups } from 'mocks';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import renderer from 'react-test-renderer';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { ThemeProvider } from 'styled-components';
@@ -22,6 +24,9 @@ const mockStore = configureMockStore([thunk]);
 const defaultStore = mockStore({
   [networkSlice.name]: {
     [ADD_ACTIVATE_USER]: {},
+  },
+  [lookupCodesSlice.name]: {
+    lookupCodes: mockLookups,
   },
 });
 
@@ -71,7 +76,7 @@ describe('login', () => {
   it('authenticated users are redirected to the mapview', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, userInfo: { groups: ['System Administrator'] } },
+      keycloak: { authenticated: true, userInfo: { client_roles: ['System Administrator'] } },
     });
     const history = createMemoryHistory();
     render(<TestLogin history={history} />);
@@ -81,7 +86,7 @@ describe('login', () => {
   it('authenticated finance users are redirected to the lease list', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, userInfo: { groups: ['Finance'] } },
+      keycloak: { authenticated: true, userInfo: { client_roles: ['Finance'] } },
     });
     const history = createMemoryHistory();
     render(<TestLogin history={history} />);
@@ -91,7 +96,7 @@ describe('login', () => {
   it('new users are sent to the guest page', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, realmAccess: { roles: [{}] } },
+      keycloak: { authenticated: true, realmAccess: { client_roles: [{}] } },
     });
     const history = createMemoryHistory();
     const activatedAction: IGenericNetworkAction = {

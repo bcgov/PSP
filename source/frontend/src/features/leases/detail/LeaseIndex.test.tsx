@@ -14,7 +14,7 @@ const mockKeycloak = (claims: string[]) => {
     keycloak: {
       subject: 'test',
       userInfo: {
-        roles: claims,
+        client_roles: claims,
         organizations: ['1'],
       },
     },

@@ -37,12 +37,10 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Inherits<Api.Models.BaseAppModel, Entity.IDisableBaseAppEntity>();
 
             config.NewConfig<Entity.PimsUser, KModel.UserModel>()
-                .Map(dest => dest.Id, src => src.GuidIdentifierValue)
                 .Map(dest => dest.Username, src => src.BusinessIdentifierValue)
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)
                 .Map(dest => dest.LastName, src => src.Person.Surname)
-                .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
-                .Map(dest => dest.Enabled, src => !src.IsDisabled);
+                .Map(dest => dest.Email, src => src.Person.GetWorkEmail());
         }
     }
 }
