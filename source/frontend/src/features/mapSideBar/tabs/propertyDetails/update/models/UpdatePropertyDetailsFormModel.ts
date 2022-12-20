@@ -38,7 +38,8 @@ export class AddressFormModel {
   }
 
   toApi(): Api_Address | undefined {
-    if (isEmpty(this.streetAddress1) && isEmpty(this.municipality) && isEmpty(this.postal)) {
+    // Only submit valid addresses to the backend
+    if (!this.isValid()) {
       return undefined;
     }
 
@@ -53,6 +54,13 @@ export class AddressFormModel {
       province: this.province,
       country: this.country,
     };
+  }
+
+  private isValid(): boolean {
+    if (isEmpty(this.streetAddress1) && isEmpty(this.municipality) && isEmpty(this.postal)) {
+      return false;
+    }
+    return true;
   }
 }
 

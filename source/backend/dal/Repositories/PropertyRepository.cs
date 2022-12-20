@@ -275,8 +275,9 @@ namespace Pims.Dal.Repositories
             property.ThrowIfNull(nameof(property));
 
             var propertyId = property.Id;
-            var existingProperty = this.Context.PimsProperties.FirstOrDefault(p => p.PropertyId == propertyId)
-                 ?? throw new KeyNotFoundException();
+            var existingProperty = this.Context.PimsProperties
+                .Include(p => p.Address)
+                .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
 
             // ignore a number of properties that we don't the frontend to override - for now
             property.Boundary = existingProperty.Boundary;
@@ -307,26 +308,26 @@ namespace Pims.Dal.Repositories
             }
 
             // update main entity - PimsProperty
-            this.Context.Entry(existingProperty).CurrentValues.SetValues(property);
+            Context.Entry(existingProperty).CurrentValues.SetValues(property);
 
             // add/update property address
             var newAddress = property.Address;
             if (newAddress != null)
             {
-                existingProperty.Address = newAddress;
-                Context.Entry(existingProperty.Address).State = newAddress.Id == 0 ? EntityState.Added : EntityState.Modified;
+                existingProperty.Address ??= new PimsAddress();
+                Context.Entry(existingProperty.Address).CurrentValues.SetValues(newAddress);
             }
             else
             {
+                // remove the linkage to existing address
                 existingProperty.Address = null;
-                this.Context.Entry(existingProperty).State = EntityState.Modified;
             }
 
             // update direct relationships - anomalies, tenures, etc
-            this.Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
-            this.Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
-            this.Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
-            this.Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
 
             return existingProperty;
         }
