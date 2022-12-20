@@ -106,13 +106,10 @@ export const MapStateContextProvider: React.FC<
 > = ({ children, values }) => {
   const mapStateReducer = useCallback(
     (prevState: IMapStateContext, action: MapStateActions): IMapStateContext => {
-      console.debug('MapStateContext', prevState, action);
       switch (action.type) {
         case MapStateActionTypes.MAP_STATE:
           return produce(prevState, draft => {
             draft.mapState = action.mapState;
-            draft.selectedInventoryProperty = null;
-            draft.selectedFeature = null;
           });
         case MapStateActionTypes.SELECTED_FEATURE:
           return produce(prevState, draft => {
