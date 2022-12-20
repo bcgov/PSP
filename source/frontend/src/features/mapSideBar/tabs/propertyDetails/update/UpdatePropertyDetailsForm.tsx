@@ -121,7 +121,11 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           this property's address is needed.
         </StyledSubtleText>
         <SectionField label="Address (line 1)">
-          <Input field="address.streetAddress1" />
+          <Row>
+            <Col xs="9">
+              <Input field="address.streetAddress1" />
+            </Col>
+          </Row>
           {!showAddressLine2 && (
             <LinkButton onClick={() => setShowAddressLine2(true)}>+ Add an address line</LinkButton>
           )}
@@ -132,7 +136,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
               <Col>
                 <Input field="address.streetAddress2" />
               </Col>
-              <Col className="pl-0">
+              <Col xs="3" className="pl-0">
                 {!showAddressLine3 && (
                   <RemoveButton
                     onRemove={() => {
@@ -158,7 +162,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
               <Col>
                 <Input field="address.streetAddress3" />
               </Col>
-              <Col className="pl-0">
+              <Col xs="3" className="pl-0">
                 <RemoveButton
                   onRemove={() => {
                     setShowAddressLine3(false);
