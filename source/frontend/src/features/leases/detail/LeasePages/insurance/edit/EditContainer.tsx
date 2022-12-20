@@ -1,6 +1,7 @@
 import { Button } from 'components/common/buttons/Button';
 import { Form } from 'components/common/form/Form';
 import { FormSectionClear } from 'components/common/form/styles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { IInsurance } from 'interfaces';
 import { IBatchUpdateRequest, IEntryModification, UpdateOperation } from 'interfaces/batchUpdate';
@@ -114,59 +115,52 @@ const InsuranceEditContainer: React.FunctionComponent<
     >
       {formikProps => (
         <>
-          <h2>Required coverage</h2>
-          <div>Select the coverage types that are required for this lease or license.</div>
+          <Section header="Required coverage">
+            <div>Select the coverage types that are required for this lease or license.</div>
 
-          <FormSectionClear>
-            <FieldArray
-              name={withNameSpace('visibleTypes')}
-              render={arrayHelpers => (
-                <Form.Group>
-                  {insuranceTypes.map((code: ILookupCode, index: number) => (
-                    <Form.Check
-                      id={`insurance-checbox-${index}`}
-                      type="checkbox"
-                      name="checkedTypes"
-                      key={index + '-' + code.id}
-                    >
-                      <Form.Check.Input
-                        id={'insurance-' + index}
-                        data-testid="insurance-checkbox"
+            <FormSectionClear>
+              <FieldArray
+                name={withNameSpace('visibleTypes')}
+                render={arrayHelpers => (
+                  <Form.Group>
+                    {insuranceTypes.map((code: ILookupCode, index: number) => (
+                      <Form.Check
+                        id={`insurance-checbox-${index}`}
                         type="checkbox"
                         name="checkedTypes"
-                        value={code.id + ''}
-                        checked={formikProps.values.visibleTypes.includes(code.id + '')}
-                        onChange={(e: any) => {
-                          handleOnChange(e, code, arrayHelpers);
-                        }}
-                      />
-                      <Form.Check.Label htmlFor={'insurance-' + index}>
-                        {code.name}
-                      </Form.Check.Label>
-                    </Form.Check>
-                  ))}
-                </Form.Group>
-              )}
-            />
-          </FormSectionClear>
-
-          <h2>Coverage details</h2>
-          <FieldArray
-            name={withNameSpace('insurances')}
-            render={() => (
-              <div>
-                {formikProps.values.insurances.map(
-                  (insurance: FormInsurance, index: number) =>
-                    insurance.isShown && (
-                      <InsuranceForm
-                        nameSpace={withNameSpace(`insurances.${index}`)}
-                        key={`insurances.${index}`}
-                      />
-                    ),
+                        key={index + '-' + code.id}
+                      >
+                        <Form.Check.Input
+                          id={'insurance-' + index}
+                          data-testid="insurance-checkbox"
+                          type="checkbox"
+                          name="checkedTypes"
+                          value={code.id + ''}
+                          checked={formikProps.values.visibleTypes.includes(code.id + '')}
+                          onChange={(e: any) => {
+                            handleOnChange(e, code, arrayHelpers);
+                          }}
+                        />
+                        <Form.Check.Label htmlFor={'insurance-' + index}>
+                          {code.name}
+                        </Form.Check.Label>
+                      </Form.Check>
+                    ))}
+                  </Form.Group>
                 )}
-              </div>
-            )}
-          />
+              />
+            </FormSectionClear>
+          </Section>
+          {formikProps.values.insurances.map(
+            (insurance: FormInsurance, index: number) =>
+              true && (
+                <InsuranceForm
+                  nameSpace={withNameSpace(`insurances.${index}`)}
+                  key={`insurances.${index}`}
+                />
+              ),
+          )}
+
           <Row className="justify-content-md-end">
             <ButtonToolbar className="cancelSave">
               <Col>

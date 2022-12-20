@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik';
 import { defaultFormLease, IFormLease, ILease } from 'interfaces';
 import queryString from 'query-string';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Prompt, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as Styled from '../styles';
@@ -32,6 +32,7 @@ export const LeasePageForm: React.FunctionComponent<
         <Styled.LeaseH2>{leasePage.header ?? leasePage.title}</Styled.LeaseH2>
         {leasePage.description && <p>{leasePage.description}</p>}
       </StyledLeasePageHeader>
+
       {!edit ? (
         <Formik<IFormLease>
           initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease) }}
@@ -47,6 +48,10 @@ export const LeasePageForm: React.FunctionComponent<
         >
           {formikProps => (
             <>
+              <Prompt
+                when={formikProps.dirty}
+                message="You have made changes on this form. Do you wish to leave without saving?"
+              />
               <ViewEditToggleForm id="leaseForm">{children}</ViewEditToggleForm>
             </>
           )}

@@ -1,13 +1,12 @@
 import { FastCurrencyInput, FastDatePicker, Input, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
-import { FormSection } from 'components/common/form/styles';
+import { Section } from 'features/mapSideBar/tabs/Section';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { getIn, useFormikContext } from 'formik';
 import ITypeCode from 'interfaces/ITypeCode';
-import { Col, Row } from 'react-bootstrap';
 import { withNameSpace } from 'utils/formUtils';
 
 import { FormInsurance } from './models';
-import { SubTitle } from './styles';
 
 interface IInsuranceRowProps {
   nameSpace: string;
@@ -23,23 +22,14 @@ const InsuranceForm: React.FunctionComponent<React.PropsWithChildren<IInsuranceR
   );
 
   return (
-    <FormSection className="mb-3" data-testid="insurance-form">
-      <SubTitle data-testid="insurance-form-title">{insuranceType.description}</SubTitle>
-      {insuranceType.id === 'OTHER' && (
-        <Row>
-          <Col md="4">
-            <div>
-              <strong>Insurance Type:</strong>
-            </div>
+    <div data-testid="insurance-form">
+      <Section header={insuranceType.description}>
+        {insuranceType.id === 'OTHER' && (
+          <SectionField label="Insurance Type">
             <Input field={withNameSpace(nameSpace, 'otherInsuranceType')} />
-          </Col>
-        </Row>
-      )}
-      <Row className="py-4">
-        <Col md="auto">
-          <strong>Insurance In Place:</strong>
-        </Col>
-        <Col>
+          </SectionField>
+        )}
+        <SectionField label="Insurance In Place">
           <RadioGroup
             field={withNameSpace(nameSpace, 'isInsuranceInPlaceRadio')}
             flexDirection="row"
@@ -54,37 +44,28 @@ const InsuranceForm: React.FunctionComponent<React.PropsWithChildren<IInsuranceR
               },
             ]}
           />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <div>
-            <strong>Limit ($)</strong>
-          </div>
+        </SectionField>
+        <SectionField label="Limit ($)">
           <FastCurrencyInput
             formikProps={formikProps}
             field={withNameSpace(nameSpace, 'coverageLimit')}
           />
-          <div>
-            <strong>Policy Expiry date:</strong>
-          </div>
+        </SectionField>
+        <SectionField label="Policy Expiry date">
           <FastDatePicker
             field={withNameSpace(nameSpace, 'expiryDate')}
             formikProps={formikProps}
           />
-        </Col>
-        <Col md={8}>
-          <div>
-            <strong>Description of Coverage</strong>
-          </div>
+        </SectionField>
+        <SectionField label="Description of Coverage">
           <TextArea
             rows={4}
             field={withNameSpace(nameSpace, 'coverageDescription')}
             data-testid="insurance-form-description"
           />
-        </Col>
-      </Row>
-    </FormSection>
+        </SectionField>
+      </Section>
+    </div>
   );
 };
 

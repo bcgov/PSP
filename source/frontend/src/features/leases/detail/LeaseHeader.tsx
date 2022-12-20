@@ -1,7 +1,9 @@
 import { ILease } from 'interfaces';
 import moment from 'moment';
+import queryString from 'query-string';
 import * as React from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
+import { useLocation } from 'react-router-dom';
 import { prettyFormatDate } from 'utils';
 
 import LeaseHeaderAddresses from './LeaseHeaderAddresses';
@@ -20,10 +22,12 @@ interface ILeaseHeaderProps {
 export const LeaseHeader: React.FunctionComponent<React.PropsWithChildren<ILeaseHeaderProps>> = ({
   lease,
 }) => {
+  const location = useLocation();
+  const { edit } = queryString.parse(location.search);
   const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
   return (
     <Styled.LeaseHeader className="lease-header">
-      <Styled.LeaseH1>Lease / License</Styled.LeaseH1>
+      <Styled.LeaseH1>{edit ? 'Update' : ''} Lease / License</Styled.LeaseH1>
       <LeaseStatusSummary lease={lease} />
       <Styled.LeaseHeaderText>
         {isExpired && (

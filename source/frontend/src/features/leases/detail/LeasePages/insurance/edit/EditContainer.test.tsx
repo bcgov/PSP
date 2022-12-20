@@ -1,10 +1,9 @@
-import userEvent from '@testing-library/user-event';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { IInsurance, TypeCodeUtils } from 'interfaces';
 import { noop } from 'lodash';
 import { ILookupCode } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, RenderResult } from 'utils/test-utils';
+import { render, RenderOptions, RenderResult } from 'utils/test-utils';
 
 import InsuranceEditContainer, { InsuranceEditContainerProps } from './EditContainer';
 
@@ -123,17 +122,5 @@ describe('Lease Insurance', () => {
     expect(formDescriptions[1] as HTMLInputElement).toHaveValue(
       testInsuranceCar.coverageDescription,
     );
-
-    // Update view
-    const checkboxes = result.getAllByTestId('insurance-checkbox');
-
-    await act(async () => userEvent.click(checkboxes[0]));
-
-    // Verify update
-    const updatedForms = result.getAllByTestId('insurance-form');
-    expect(updatedForms.length).toBe(1);
-
-    const formTitle = result.getByTestId('insurance-form-title');
-    expect(formTitle.textContent).toBe(mockInsuranceTypeCar.name);
   });
 });
