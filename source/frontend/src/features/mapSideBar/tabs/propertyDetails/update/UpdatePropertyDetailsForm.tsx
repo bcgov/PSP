@@ -1,3 +1,4 @@
+import { LinkButton, RemoveButton } from 'components/common/buttons';
 import { Input, Multiselect, Select, Text, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
@@ -8,9 +9,12 @@ import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { FormikProps, getIn, useFormikContext } from 'formik';
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import React, { useEffect } from 'react';
+import isEmpty from 'lodash/isEmpty';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 import { stringToBoolean } from 'utils/formUtils';
@@ -33,6 +37,17 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   IUpdatePropertyDetailsFormProps
 > = ({ formikProps }) => {
   const { values } = useFormikContext<UpdatePropertyDetailsFormModel>();
+
+  const [showAddressLine2, setShowAddressLine2] = useState(false);
+  const [showAddressLine3, setShowAddressLine3] = useState(false);
+  const address = values.address;
+
+  useDeepCompareEffect(() => {
+    if (address !== undefined) {
+      setShowAddressLine2(!isEmpty(address.streetAddress2));
+      setShowAddressLine3(!isEmpty(address.streetAddress3));
+    }
+  }, [address]);
 
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
@@ -107,13 +122,55 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </StyledSubtleText>
         <SectionField label="Address (line 1)">
           <Input field="address.streetAddress1" />
+          {!showAddressLine2 && (
+            <LinkButton onClick={() => setShowAddressLine2(true)}>+ Add an address line</LinkButton>
+          )}
         </SectionField>
-        <SectionField label="Address (line 2)">
-          <Input field="address.streetAddress2" />
-        </SectionField>
-        <SectionField label="Address (line 3)">
-          <Input field="address.streetAddress3" />
-        </SectionField>
+        {showAddressLine2 && (
+          <SectionField label="Address (line 2)">
+            <Row>
+              <Col>
+                <Input field="address.streetAddress2" />
+              </Col>
+              <Col className="pl-0">
+                {!showAddressLine3 && (
+                  <RemoveButton
+                    onRemove={() => {
+                      setShowAddressLine2(false);
+                      setFieldValue('address.streetAddress2', '');
+                    }}
+                  >
+                    <MdClose size="2rem" /> <span className="text">Remove</span>
+                  </RemoveButton>
+                )}
+              </Col>
+            </Row>
+            {!showAddressLine3 && (
+              <LinkButton onClick={() => setShowAddressLine3(true)}>
+                + Add an address line
+              </LinkButton>
+            )}
+          </SectionField>
+        )}
+        {showAddressLine3 && (
+          <SectionField label="Address (line 3)">
+            <Row>
+              <Col>
+                <Input field="address.streetAddress3" />
+              </Col>
+              <Col className="pl-0">
+                <RemoveButton
+                  onRemove={() => {
+                    setShowAddressLine3(false);
+                    setFieldValue('address.streetAddress3', '');
+                  }}
+                >
+                  <MdClose size="2rem" /> <span className="text">Remove</span>
+                </RemoveButton>
+              </Col>
+            </Row>
+          </SectionField>
+        )}
         <SectionField label="City">
           <Input field="address.municipality" />
         </SectionField>
