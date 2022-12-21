@@ -326,8 +326,9 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropertyAcquisitionFiles)
                 .FirstOrDefault();
 
-            existingProperty.PimsPropertyResearchFiles.ForEach(pr => this.Context.Remove(pr));
-            existingProperty.PimsPropertyAcquisitionFiles.ForEach(pa => this.Context.Remove(pa));
+            existingProperty.PimsPropertyResearchFiles.ForEach(pr => this.Context.Remove(new PimsPropertyResearchFile() { Id = pr.Id }));
+            existingProperty.PimsPropertyAcquisitionFiles.ForEach(pa => this.Context.Remove(new PimsPropertyAcquisitionFile() { Id = pa.Id }));
+            existingProperty.PimsPropertyLeases.ForEach(l => this.Context.Remove(new PimsPropertyLease() { Id = l.Id }));
 
             this.Context.Entry(existingProperty).State = EntityState.Deleted;
         }
