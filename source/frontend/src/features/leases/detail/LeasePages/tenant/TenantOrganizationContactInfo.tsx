@@ -1,15 +1,14 @@
-import { Form, Input } from 'components/common/form';
 import { getPrimaryContact } from 'features/contacts/contactUtils';
-import * as Styled from 'features/leases/detail/styles';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { phoneFormatter, withNameSpace } from 'utils/formUtils';
+import { withNameSpace } from 'utils/formUtils';
 import { formatApiPersonNames } from 'utils/personUtils';
 
-import AddressSubForm from '../AddressSubForm';
 import { FormTenant } from './Tenant';
 
 export interface ITenantOrganizationContactInfoProps {
@@ -34,49 +33,36 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
   }
   const primaryContactName = formatApiPersonNames(primaryContact);
   return (
-    <>
-      <Styled.FormGrid>
-        <Styled.LeaseH3>Tenant Information</Styled.LeaseH3>
-        <Form.Label>Tenant organization:</Form.Label>
-        <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'summary')} />
-        <Form.Label>Primary contact:</Form.Label>
-        {primaryContact?.id ? (
-          <Form.Group className="input">
+    <StyledSectionWrapper>
+      <SectionField labelWidth="2" contentWidth="4" label="Organization">
+        {getIn(values, withNameSpace(nameSpace, 'summary')) && (
+          <>
+            <StyledLink to={`/contact/${tenant?.id}`}>
+              {getIn(values, withNameSpace(nameSpace, 'summary'))}
+            </StyledLink>
+            <Link to={`/contact/${tenant?.id}`} target="_blank" rel="noopener noreferrer">
+              <FaExternalLinkAlt />
+            </Link>
+          </>
+        )}
+      </SectionField>
+      <SectionField labelWidth="2" contentWidth="4" label="Primary Contact">
+        {primaryContact && (
+          <>
             <StyledLink to={`/contact/P${primaryContact?.id}`}>{primaryContactName}</StyledLink>
-          </Form.Group>
-        ) : null}
-        <br />
-        <AddressSubForm
-          nameSpace={withNameSpace(nameSpace, 'mailingAddress')}
-          disabled={disabled}
-        />
-        <br />
-        <Form.Label>E-mail address:</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'email')} />
-        <Form.Label>Phone:</Form.Label>
-        <Styled.NestedInlineField
-          label="Landline:"
-          disabled={disabled}
-          field={withNameSpace(nameSpace, 'landline')}
-          onBlurFormatter={phoneFormatter}
-          pattern={/(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d\d)/}
-        />
-        <Styled.NestedInlineField
-          label="Mobile:"
-          disabled={disabled}
-          field={withNameSpace(nameSpace, 'mobile')}
-          onBlurFormatter={phoneFormatter}
-          pattern={/(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d\d)/}
-        />
-      </Styled.FormGrid>
-    </>
+            <Link to={`/contact/P${primaryContact?.id}`} target="_blank" rel="noopener noreferrer">
+              <FaExternalLinkAlt />
+            </Link>
+          </>
+        )}
+      </SectionField>
+    </StyledSectionWrapper>
   );
 };
 
-const StyledLargeTextInput = styled(Input)`
-  input {
-    font-size: 1.8rem;
-  }
+const StyledSectionWrapper = styled.div`
+  border-bottom: 0.1rem gray solid;
+  padding: 0.5rem;
 `;
 
 const StyledLink = styled(Link)`

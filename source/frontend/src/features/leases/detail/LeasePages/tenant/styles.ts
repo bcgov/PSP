@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const TenantH2 = styled.h2`
   font-size: 2rem;
+  font-family: BcSans-Bold;
   line-height: 2.8rem;
   text-align: left;
   color: ${props => props.theme.css.textColor};
