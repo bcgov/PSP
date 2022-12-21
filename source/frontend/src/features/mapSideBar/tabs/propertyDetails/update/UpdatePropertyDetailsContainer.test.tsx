@@ -1,21 +1,32 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Formik } from 'formik';
+import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
+import { IMapLayerResults, useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_Property } from 'models/api/Property';
+import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
+import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
-import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
+import {
+  IUpdatePropertyDetailsContainerProps,
+  UpdatePropertyDetailsContainer,
+} from './UpdatePropertyDetailsContainer';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onSubmit = jest.fn();
+const onSuccess = jest.fn();
+
+const DEFAULT_PROPS: IUpdatePropertyDetailsContainerProps = {
+  id: 205,
+  onSuccess,
+};
 
 const mockAxios = new MockAdapter(axios);
 const fakeProperty: Api_Property = {
@@ -185,46 +196,111 @@ const fakeProperty: Api_Property = {
   rowVersion: 5,
 };
 
-describe('UpdatePropertyDetailsForm component', () => {
+// Mock API service calls
+jest.mock('../hooks/useGetProperty');
+jest.mock('../hooks/useUpdateProperty');
+jest.mock('hooks/useQueryMapLayersByLocation');
+
+const getProperty = jest.fn(() => ({ ...fakeProperty }));
+(useGetProperty as jest.Mock).mockReturnValue({
+  execute: getProperty,
+  loading: false,
+});
+
+const updateProperty = jest.fn(() => ({ ...fakeProperty }));
+(useUpdateProperty as jest.Mock).mockReturnValue({
+  updateProperty,
+  updatePropertyLoading: false,
+});
+
+(useQueryMapLayersByLocation as jest.Mock).mockReturnValue({
+  queryAll: jest.fn<IMapLayerResults, any[]>(() => ({
+    isALR: null,
+    motiRegion: null,
+    highwaysDistrict: null,
+    electoralDistrict: null,
+    firstNations: null,
+  })),
+});
+
+describe('UpdatePropertyDetailsContainer component', () => {
   // render component under test
   const setup = (
-    renderOptions: RenderOptions & { initialValues: UpdatePropertyDetailsFormModel },
+    props: IUpdatePropertyDetailsContainerProps = { ...DEFAULT_PROPS },
+    renderOptions: RenderOptions = {},
   ) => {
-    const utils = render(
-      <Formik onSubmit={onSubmit} initialValues={renderOptions.initialValues}>
-        {formikProps => <UpdatePropertyDetailsForm formikProps={formikProps} />}
-      </Formik>,
-      {
-        ...renderOptions,
-        store: storeState,
-        history,
-      },
-    );
+    const formikRef = createRef<FormikProps<UpdatePropertyDetailsFormModel>>();
+    const utils = render(<UpdatePropertyDetailsContainer ref={formikRef} {...props} />, {
+      ...renderOptions,
+      store: storeState,
+      history,
+    });
 
     return {
       ...utils,
+      formikRef,
     };
   };
 
-  let initialValues: UpdatePropertyDetailsFormModel;
-
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
-    initialValues = UpdatePropertyDetailsFormModel.fromApi(fakeProperty);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', () => {
-    const { asFragment } = setup({ initialValues });
+  it('renders as expected', async () => {
+    const { asFragment, findByTitle } = setup();
+    expect(await findByTitle('Down by the River')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('shows property address if available', () => {
-    const { container } = setup({ initialValues });
-    const addressLine1 = container.querySelector(`input[name='address.streetAddress1']`);
-    expect(addressLine1).toHaveValue('45 - 904 Hollywood Crescent');
+  it('saves the form with minimal data', async () => {
+    const { findByTitle, formikRef } = setup();
+    expect(await findByTitle('Down by the River')).toBeInTheDocument();
+    await act(() => formikRef.current?.submitForm() as Promise<void>);
+
+    const expectedValues = expect.objectContaining<Api_Property>({
+      address: expect.objectContaining({
+        streetAddress1: fakeProperty.address?.streetAddress1,
+        streetAddress2: fakeProperty.address?.streetAddress2,
+        streetAddress3: fakeProperty.address?.streetAddress3,
+        municipality: fakeProperty.address?.municipality,
+        postal: fakeProperty.address?.postal,
+        country: { id: fakeProperty.address?.country?.id },
+        province: { id: fakeProperty.address?.province?.id },
+      }),
+    });
+
+    expect(updateProperty).toBeCalledWith(expectedValues);
+    expect(onSuccess).toBeCalled();
+  });
+
+  it('saves the form with updated values', async () => {
+    const { findByTitle, formikRef } = setup();
+    expect(await findByTitle('Down by the River')).toBeInTheDocument();
+
+    const addressLine1 = document.querySelector(
+      `input[name='address.streetAddress1']`,
+    ) as HTMLElement;
+    await act(() => userEvent.clear(addressLine1));
+    await act(() => userEvent.paste(addressLine1, '123 Mock St'));
+    await act(() => formikRef.current?.submitForm() as Promise<void>);
+
+    const expectedValues = expect.objectContaining<Api_Property>({
+      address: expect.objectContaining({
+        streetAddress1: '123 Mock St',
+        streetAddress2: fakeProperty.address?.streetAddress2,
+        streetAddress3: fakeProperty.address?.streetAddress3,
+        municipality: fakeProperty.address?.municipality,
+        postal: fakeProperty.address?.postal,
+        country: { id: fakeProperty.address?.country?.id },
+        province: { id: fakeProperty.address?.province?.id },
+      }),
+    });
+
+    expect(updateProperty).toBeCalledWith(expectedValues);
+    expect(onSuccess).toBeCalled();
   });
 });
