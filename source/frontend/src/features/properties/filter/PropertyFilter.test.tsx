@@ -84,7 +84,7 @@ const defaultFilter: IPropertyFilter = {
 
 const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true) => (
   <TestCommonWrapper store={getStore(filter)} history={history}>
-    <PropertyFilter defaultFilter={filter} onChange={onFilterChange} />
+    <PropertyFilter useGeocoder={true} defaultFilter={filter} onChange={onFilterChange} />
   </TestCommonWrapper>
 );
 

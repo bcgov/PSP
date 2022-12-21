@@ -29,6 +29,8 @@ export interface IPropertyFilterProps {
   setTriggerFilterChanged?: (used: boolean) => void;
   /** Which toggle view is currently active */
   toggle?: SearchToggleOption;
+  /** Which toggle view is currently active */
+  useGeocoder?: boolean;
 }
 
 /**
@@ -42,8 +44,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   onSorting,
   setTriggerFilterChanged,
   toggle = SearchToggleOption.Map,
+  useGeocoder,
 }) => {
   const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
+
   useRouterFilter({
     filter: propertyFilter,
     setFilter: filter => {
@@ -57,7 +61,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   });
 
   const history = useHistory();
-
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
     return values;
@@ -116,7 +119,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               {values.searchBy === 'pinOrPid' && (
                 <Input field="pinOrPid" placeholder="Enter a PID or PIN"></Input>
               )}
-              {values.searchBy === 'address' && (
+              {values.searchBy === 'address' && useGeocoder && (
                 <GeocoderAutoComplete
                   data-testid="geocoder-mapview"
                   field="address"
@@ -127,6 +130,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   }}
                   value={values.address}
                 ></GeocoderAutoComplete>
+              )}
+              {values.searchBy === 'address' && !useGeocoder && (
+                <Input field="address" placeholder="Enter address"></Input>
               )}
             </StyledCol>
             <Col xs="auto">
