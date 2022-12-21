@@ -11,6 +11,7 @@ export const getMockLease: () => ILease = () => ({
     {
       leaseTenantId: 82,
       leaseId: 1,
+      tenantTypeCode: { id: 'TEN' },
       organizationId: 2,
       organization: {
         id: 2,
@@ -150,6 +151,7 @@ export const getMockLease: () => ILease = () => ({
     {
       leaseTenantId: 83,
       leaseId: 1,
+      tenantTypeCode: { id: 'REP' },
       organizationId: 3,
       organization: {
         id: 3,
@@ -200,6 +202,7 @@ export const getMockLease: () => ILease = () => ({
       leaseTenantId: 84,
       leaseId: 1,
       organizationId: 4,
+      tenantTypeCode: { id: 'PMGR' },
       organization: {
         id: 4,
         isDisabled: false,

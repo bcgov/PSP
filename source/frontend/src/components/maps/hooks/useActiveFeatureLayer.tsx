@@ -1,5 +1,6 @@
 import { DistrictCodes, RegionCodes } from 'constants/index';
-import { Feature, GeoJsonObject, GeoJsonProperties } from 'geojson';
+import { useMapProperties } from 'features/properties/map/hooks/useMapProperties';
+import { Feature, FeatureCollection, GeoJsonObject, GeoJsonProperties, Geometry } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
@@ -15,7 +16,6 @@ import {
   municipalityLayerPopupConfig,
   parcelLayerPopupConfig,
   PARCELS_LAYER_URL,
-  PIMS_BOUNDARY_LAYER_URL,
   useLayerQuery,
 } from '../leaflet/LayerPopup';
 import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
@@ -48,7 +48,9 @@ const useActiveFeatureLayer = ({
   const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
   const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
-  const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
+  const {
+    loadProperties: { execute: loadProperties },
+  } = useMapProperties();
 
   const { isSelecting, setState } = useContext(MapStateContext);
   // add geojson layer to the map
@@ -69,12 +71,21 @@ const useActiveFeatureLayer = ({
     const task1 = parcelsService.findOneWhereContains(latLng);
     const task2 = regionService.findMetadataByLocation(latLng, 'GEOMETRY');
     const task3 = districtService.findMetadataByLocation(latLng, 'GEOMETRY');
-    const task4 = pimsService.findOneWhereContains(latLng, 'GEOMETRY');
 
     const parcel = await task1;
     const region = await task2;
     const district = await task3;
-    const pimsProperties = await task4;
+    let pimsLocationProperties: FeatureCollection<Geometry, GeoJsonProperties> | undefined =
+      undefined;
+
+    if (parcel?.features?.length > 0) {
+      const pid = parcel?.features[0].properties?.PID;
+      const pin = parcel?.features[0].properties?.PIN;
+      pimsLocationProperties = await loadProperties({
+        PID: pid || '',
+        PIN: pin || '',
+      });
+    }
 
     if (!isSelecting) {
       const municipality = await municipalitiesService.findOneWhereContains(latLng);
@@ -107,12 +118,12 @@ const useActiveFeatureLayer = ({
 
     if ((!isEmpty(properties) || isSelecting) && feature) {
       if (!isSelecting) {
-        if (pimsProperties?.features?.length > 1) {
+        if (pimsLocationProperties !== undefined && pimsLocationProperties?.features?.length > 1) {
           toast.error(
             'Unable to determine desired PIMS Property due to overlapping map boundaries. Click directly on a map marker to view that markers details.',
           );
         }
-        const pimsProperty = pimsProperties.features[0];
+        const pimsProperty = pimsLocationProperties?.features[0];
         setLayerPopup({
           title,
           data: properties as any,

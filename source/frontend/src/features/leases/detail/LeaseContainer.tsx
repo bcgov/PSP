@@ -82,7 +82,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
           <LeaseEditButton linkTo="?edit=true" />
         </>
       ),
-      description: 'The following is information related to the leasee or licensee',
+      description: '',
     },
   ],
   [

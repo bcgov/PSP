@@ -22,12 +22,25 @@ exports[`Tenant component renders as expected 1`] = `
   padding: 2.5rem;
 }
 
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
 .c1 {
   -webkit-column-count: 1;
   column-count: 1;
   -webkit-column-gap: 10rem;
   column-gap: 10rem;
-  background-color: white;
+  background-color: light-gray;
   min-width: 75rem;
 }
 
@@ -52,6 +65,98 @@ exports[`Tenant component renders as expected 1`] = `
 <div
     class="c0 c1"
   >
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Tenant
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Representative
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Property Manager
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Unknown
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
     <p>
       There are no tenants associated to this lease.
     </p>
