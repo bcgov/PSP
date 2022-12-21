@@ -1,6 +1,7 @@
 import { Input } from 'components/common/form';
 import { PropertyImprovementTypes } from 'constants/propertyImprovementTypes';
 import * as Styled from 'features/leases/detail/LeasePages/improvements/styles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
@@ -33,8 +34,7 @@ export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImpro
   const title = sectionTitles.get(typeId) ?? 'N/A';
   return (
     <>
-      <Styled.LeaseH3>{title}</Styled.LeaseH3>
-      <Styled.FormGrid className="formgrid">
+      <Section header={title}>
         <SectionField label="Unit #">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'address')} />{' '}
         </SectionField>
@@ -49,7 +49,7 @@ export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImpro
             field={withNameSpace(nameSpace, 'description')}
           />
         </SectionField>
-      </Styled.FormGrid>
+      </Section>
     </>
   );
 };

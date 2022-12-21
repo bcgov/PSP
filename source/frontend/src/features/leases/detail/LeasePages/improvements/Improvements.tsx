@@ -1,5 +1,3 @@
-import { FormSection } from 'components/common/form/styles';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import { ILeaseImprovement } from 'interfaces/ILeaseImprovement';
@@ -19,22 +17,18 @@ export const Improvements: React.FunctionComponent<
 
   return (
     <Styled.ImprovementsContainer className="improvements">
-      <FormSection>
-        <FieldArray
-          name="improvements"
-          render={renderProps =>
-            improvements.map((entry: ILeaseImprovement, index) => (
-              <Section>
-                <Improvement
-                  {...renderProps}
-                  nameSpace={`improvements.${index}`}
-                  disabled={props.disabled}
-                />
-              </Section>
-            ))
-          }
-        ></FieldArray>
-      </FormSection>
+      <FieldArray
+        name="improvements"
+        render={renderProps =>
+          improvements.map((entry: ILeaseImprovement, index) => (
+            <Improvement
+              {...renderProps}
+              nameSpace={`improvements.${index}`}
+              disabled={props.disabled}
+            />
+          ))
+        }
+      ></FieldArray>
     </Styled.ImprovementsContainer>
   );
 };
