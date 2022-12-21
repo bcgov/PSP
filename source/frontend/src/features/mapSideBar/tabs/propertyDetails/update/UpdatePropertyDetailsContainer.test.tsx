@@ -303,4 +303,37 @@ describe('UpdatePropertyDetailsContainer component', () => {
     expect(updateProperty).toBeCalledWith(expectedValues);
     expect(onSuccess).toBeCalled();
   });
+
+  it('sends no address when all fields are cleared', async () => {
+    const { findByTitle, formikRef } = setup();
+    expect(await findByTitle('Down by the River')).toBeInTheDocument();
+
+    const addressLine1 = document.querySelector(
+      `input[name='address.streetAddress1']`,
+    ) as HTMLElement;
+    const addressLine2 = document.querySelector(
+      `input[name='address.streetAddress2']`,
+    ) as HTMLElement;
+    const addressLine3 = document.querySelector(
+      `input[name='address.streetAddress3']`,
+    ) as HTMLElement;
+    const municipality = document.querySelector(
+      `input[name='address.municipality']`,
+    ) as HTMLElement;
+    const postal = document.querySelector(`input[name='address.postal']`) as HTMLElement;
+
+    await act(() => userEvent.clear(addressLine1));
+    await act(() => userEvent.clear(addressLine2));
+    await act(() => userEvent.clear(addressLine3));
+    await act(() => userEvent.clear(municipality));
+    await act(() => userEvent.clear(postal));
+    await act(() => formikRef.current?.submitForm() as Promise<void>);
+
+    const expectedValues = expect.objectContaining<Api_Property>({
+      address: undefined,
+    });
+
+    expect(updateProperty).toBeCalledWith(expectedValues);
+    expect(onSuccess).toBeCalled();
+  });
 });
