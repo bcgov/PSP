@@ -155,8 +155,15 @@ exports[`Add lease container component renders as expected 1`] = `
   text-align: left;
 }
 
-.c6 {
-  font-family: 'BCSans';
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
 }
 
 .c7 {
@@ -182,6 +189,10 @@ exports[`Add lease container component renders as expected 1`] = `
   min-height: 3rem;
 }
 
+.c6 {
+  font-family: 'BCSans';
+}
+
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -198,17 +209,6 @@ exports[`Add lease container component renders as expected 1`] = `
 .c1 .formgrid .textarea:not(.notes) {
   grid-column: span 2;
   border-left: 0;
-}
-
-.c5.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c4 {
-  font-weight: bold;
 }
 
 .c0 {
