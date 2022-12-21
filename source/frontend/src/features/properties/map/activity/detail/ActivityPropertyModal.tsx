@@ -33,6 +33,9 @@ export const ActivityPropertyModal: React.FunctionComponent<
   setSelectedFileProperties,
   onSave,
 }) => {
+  const disableSave =
+    activityModel?.activityStatusTypeCode?.id === 'CANCELLED' ||
+    activityModel?.activityStatusTypeCode?.id === 'COMPLETE';
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
 
   const handleCancel = () => {
@@ -58,16 +61,20 @@ export const ActivityPropertyModal: React.FunctionComponent<
   };
 
   const handleOk = async () => {
-    if (activityModel && allProperties?.length > 0) {
-      activityModel.actInstPropFiles =
-        selectedFileProperties.map(p => ({
-          activityId: activityModel?.id,
-          propertyFileId: p?.id,
-        })) ?? [];
-      const updatedActivity = await onSave(activityModel);
-      // if the activity was updated successfully, hide the modal.
-      if (!!updatedActivity) {
-        setDisplay(false);
+    if (disableSave) {
+      setDisplay(false);
+    } else {
+      if (activityModel && allProperties?.length > 0) {
+        activityModel.actInstPropFiles =
+          selectedFileProperties.map(p => ({
+            activityId: activityModel?.id,
+            propertyFileId: p?.id,
+          })) ?? [];
+        const updatedActivity = await onSave(activityModel);
+        // if the activity was updated successfully, hide the modal.
+        if (!!updatedActivity) {
+          setDisplay(false);
+        }
       }
     }
   };
@@ -79,7 +86,7 @@ export const ActivityPropertyModal: React.FunctionComponent<
       display={display}
       setDisplay={setDisplay}
       closeButton={true}
-      okButtonText={allProperties?.length > 0 ? 'Save' : 'Ok'}
+      okButtonText={allProperties?.length > 0 && !disableSave ? 'Save' : 'Ok'}
       cancelButtonText={allProperties?.length > 0 ? 'Cancel' : undefined}
       handleCancel={allProperties?.length > 0 ? handleCancel : undefined}
       handleOk={allProperties?.length > 0 ? handleOk : undefined}
@@ -88,6 +95,7 @@ export const ActivityPropertyModal: React.FunctionComponent<
           allProperties={allProperties}
           selectedFileProperties={selectedFileProperties}
           setSelectedFileProperties={setSelectedFileProperties}
+          disableSelection={disableSave}
         />
       }
     />
@@ -100,16 +108,19 @@ interface IModalContentProps {
   allProperties: Api_PropertyFile[];
   selectedFileProperties: Api_PropertyFile[];
   setSelectedFileProperties: (properties: Api_PropertyFile[]) => void;
+  disableSelection: boolean;
 }
 
 const ModalContent: React.FC<React.PropsWithChildren<IModalContentProps>> = ({
   allProperties,
   selectedFileProperties,
   setSelectedFileProperties,
+  disableSelection,
 }) => {
   if (allProperties?.length > 0) {
     return (
       <PropertyActivityTable
+        disabledSelection={disableSelection}
         fileProperties={allProperties ?? []}
         selectedFileProperties={selectedFileProperties}
         setSelectedFileProperties={setSelectedFileProperties}
