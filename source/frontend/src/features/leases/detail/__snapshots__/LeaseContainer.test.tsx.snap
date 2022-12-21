@@ -390,7 +390,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
       <h1
         class="c4"
       >
-        Lease / License
+         Lease / License
       </h1>
       <div
         class="c5 draft"

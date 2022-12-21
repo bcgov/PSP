@@ -153,7 +153,7 @@ const InsuranceEditContainer: React.FunctionComponent<
           </Section>
           {formikProps.values.insurances.map(
             (insurance: FormInsurance, index: number) =>
-              true && (
+              insurance.isShown && (
                 <InsuranceForm
                   nameSpace={withNameSpace(`insurances.${index}`)}
                   key={`insurances.${index}`}
