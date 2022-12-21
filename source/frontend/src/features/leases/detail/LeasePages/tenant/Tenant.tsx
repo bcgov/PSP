@@ -1,7 +1,7 @@
 import { FormSection } from 'components/common/form/styles';
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import { getApiPersonOrOrgMailingAddress, getDefaultContact } from 'features/contacts/contactUtils';
-import * as Styled from 'features/leases/detail/styles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, Formik, getIn, useFormikContext } from 'formik';
 import { IAddress, IContactSearchResult, ILease } from 'interfaces';
 import ITypeCode from 'interfaces/ITypeCode';
@@ -10,15 +10,12 @@ import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import { Api_OrganizationPerson } from 'models/api/Organization';
 import { Api_Person } from 'models/api/Person';
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
-import { withNameSpace } from 'utils/formUtils';
+import { fromTypeCode, withNameSpace } from 'utils/formUtils';
 import { formatApiPersonNames } from 'utils/personUtils';
 
-import TenantNotes from './TenantNotes';
 import TenantOrganizationContactInfo from './TenantOrganizationContactInfo';
-import TenantPersonContactInfo from './TenantPersonContactInfo';
 
 class FormAddress {
   public readonly country?: string;
@@ -59,6 +56,7 @@ export class FormTenant {
   public readonly primaryContactId?: number;
   public readonly initialPrimaryContact?: Api_Person;
   public readonly lessorTypeCode?: ITypeCode<string>;
+  public readonly tenantType?: string;
   public readonly original?: IContactSearchResult;
   public readonly provinceState?: string;
 
@@ -92,6 +90,7 @@ export class FormTenant {
         ContactMethodTypes.WorkMobile,
       );
       this.lessorTypeCode = apiModel.lessorType;
+      this.tenantType = fromTypeCode(apiModel.tenantTypeCode);
       this.primaryContactId = apiModel.primaryContactId;
       this.initialPrimaryContact = apiModel.primaryContact;
     } else if (!!selectedContactModel) {
@@ -108,6 +107,7 @@ export class FormTenant {
       this.landline = selectedContactModel.landline;
       this.mobile = selectedContactModel.mobile;
       this.lessorTypeCode = !!this.personId ? { id: 'PER' } : { id: 'ORG' };
+      this.tenantType = selectedContactModel.tenantType;
       this.organizationPersons = selectedContactModel?.organization?.organizationPersons;
       this.primaryContactId = primaryContact?.id;
       this.initialPrimaryContact = primaryContact;
@@ -137,30 +137,68 @@ export const Tenant: React.FunctionComponent<React.PropsWithChildren<ITenantProp
           name={withNameSpace(nameSpace, 'properties')}
           render={renderProps => (
             <>
-              {tenants.map((tenant: FormTenant, index) => (
-                <Styled.SpacedInlineListItem key={`tenants-${index}`}>
-                  <FormSection>
-                    <Row>
-                      <Col>
-                        {tenant.lessorTypeCode?.id === 'PER' ? (
-                          <TenantPersonContactInfo
-                            disabled={true}
-                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                          />
-                        ) : (
+              <Section header="Tenant">
+                {tenants.map(
+                  (tenant: FormTenant, index) =>
+                    tenant.tenantType === 'TEN' && (
+                      <div key={`tenants-${index}`}>
+                        <>
                           <TenantOrganizationContactInfo
                             disabled={true}
                             nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
                           />
-                        )}
-                      </Col>
-                      <Col>
-                        <TenantNotes disabled={true} nameSpace={`tenants.${index}`} />
-                      </Col>
-                    </Row>
-                  </FormSection>
-                </Styled.SpacedInlineListItem>
-              ))}
+                        </>
+                      </div>
+                    ),
+                )}
+              </Section>
+
+              <Section header="Representative">
+                {tenants.map(
+                  (tenant: FormTenant, index) =>
+                    tenant.tenantType === 'REP' && (
+                      <div key={`tenants-${index}`}>
+                        <>
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        </>
+                      </div>
+                    ),
+                )}
+              </Section>
+
+              <Section header="Property Manager">
+                {tenants.map(
+                  (tenant: FormTenant, index) =>
+                    tenant.tenantType === 'PMGR' && (
+                      <div key={`tenants-${index}`}>
+                        <>
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        </>
+                      </div>
+                    ),
+                )}
+              </Section>
+              <Section header="Unknown">
+                {tenants.map(
+                  (tenant: FormTenant, index) =>
+                    tenant.tenantType === 'UNK' && (
+                      <div key={`tenants-${index}`}>
+                        <>
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        </>
+                      </div>
+                    ),
+                )}
+              </Section>
               {tenants.length === 0 && (
                 <>
                   <p>There are no tenants associated to this lease.</p>
@@ -181,7 +219,7 @@ export const FormSectionOne = styled(FormSection)`
     break-inside: avoid-column;
   }
   column-gap: 10rem;
-  background-color: white;
+  background-color: light-gray;
   li {
     list-style-type: none;
     padding: 2rem 0;

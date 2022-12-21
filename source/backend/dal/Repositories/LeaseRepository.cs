@@ -103,6 +103,8 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
 
                 .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(l => l.TenantTypeCodeNavigation)
+                .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
                     .ThenInclude(o => o.PimsPersonOrganizations)
                     .ThenInclude(o => o.Organization)

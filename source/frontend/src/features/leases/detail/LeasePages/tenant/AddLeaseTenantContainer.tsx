@@ -25,7 +25,9 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
 > = () => {
   const formikRef = React.useRef<FormikProps<IFormLease>>(null);
   const { lease, setLease } = useContext(LeaseStateContext);
-  const [selectedTenants, setSelectedTenants] = useState<FormTenant[]>([]);
+  const [selectedTenants, setSelectedTenants] = useState<FormTenant[]>(
+    apiLeaseToFormLease(lease as ILease)?.tenants || [],
+  );
   const [handleSubmit, setHandleSubmit] = useState<Function | undefined>(undefined);
   const { updateLease } = useUpdateLease();
   const history = useHistory();
@@ -60,9 +62,14 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
           op.person = matchingPerson;
         }
       });
+      tenant.tenantType = tenant.tenantType ? tenant.tenantType : 'TEN';
       return tenant;
     });
     setSelectedTenants(tenantsWithPersons?.map(t => new FormTenant(undefined, t)) ?? []);
+    formikRef.current?.setFieldValue(
+      'tenants',
+      tenantsWithPersons?.map(t => new FormTenant(undefined, t)) ?? [],
+    );
   };
 
   const submit = async (leaseToUpdate: ILease) => {
@@ -91,7 +98,11 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     <>
       <AddLeaseTenantForm
         initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease as ILease) }}
-        selectedTenants={selectedTenants}
+        selectedTenants={
+          selectedTenants.length
+            ? selectedTenants
+            : apiLeaseToFormLease(lease as ILease)?.tenants ?? []
+        }
         setSelectedTenants={setSelectedTenantsWithPersonData}
         onCancel={onCancel}
         onSubmit={onSubmit}

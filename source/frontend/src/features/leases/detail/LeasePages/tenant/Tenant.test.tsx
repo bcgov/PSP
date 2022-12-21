@@ -5,7 +5,6 @@ import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockApiPerson, mockOrganization } from 'mocks/filterDataMock';
 import { getMockLease } from 'mocks/mockLease';
-import { getMockOrganization } from 'mocks/mockOrganization';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import Tenant, { FormTenant, ITenantProps } from './Tenant';
@@ -43,10 +42,12 @@ describe('Tenant component', () => {
           new FormTenant({
             lessorType: { id: 'PER' },
             person: { ...mockApiPerson },
+            tenantTypeCode: { id: 'TEN' },
             leaseId: 1,
           }),
           new FormTenant({
             lessorType: { id: 'PER' },
+            tenantTypeCode: { id: 'REP' },
             person: { ...mockApiPerson },
             leaseId: 1,
           }),
@@ -54,12 +55,13 @@ describe('Tenant component', () => {
       },
     });
     const { getAllByText } = component;
-    const personTenant = getAllByText('Tenant Name:');
+    const tenantSection = getAllByText('Tenant');
 
-    expect(personTenant).toHaveLength(2);
+    expect(tenantSection).toHaveLength(1);
   });
 
-  it('renders one notes section per tenant note', () => {
+  //notes section removed for now
+  it.skip('renders one notes section per tenant note', () => {
     const { component } = setup({
       lease: {
         ...defaultFormLease,
@@ -76,81 +78,43 @@ describe('Tenant component', () => {
     expect(notes).toHaveLength(2);
   });
 
-  it('renders no person information section if there are no persons', () => {
+  it('renders representative section', () => {
     const { component } = setup({
       lease: { ...defaultFormLease, persons: [] },
     });
-    const { queryByText } = component;
-    const personTenant = queryByText('Tenant Name:');
+    const { getAllByText } = component;
+    const repSection = getAllByText('Representative');
 
-    expect(personTenant).toBeNull();
+    expect(repSection).toHaveLength(1);
   });
 
-  it('renders one organization tenant section per organization', () => {
+  it('renders property manager section', () => {
     const { component } = setup({
-      lease: {
-        ...defaultFormLease,
-        tenants: [
-          new FormTenant({
-            organization: { ...getMockOrganization() },
-            leaseId: 1,
-          }),
-          new FormTenant({
-            organization: { ...getMockOrganization() },
-            leaseId: 1,
-          }),
-        ],
-      },
+      lease: { ...defaultFormLease, persons: [] },
     });
     const { getAllByText } = component;
-    const organizationTenant = getAllByText('Tenant organization:');
+    const propSection = getAllByText('Property Manager');
 
-    expect(organizationTenant).toHaveLength(2);
+    expect(propSection).toHaveLength(1);
+  });
+  it('renders unknown section', () => {
+    const { component } = setup({
+      lease: { ...defaultFormLease, persons: [] },
+    });
+    const { getAllByText } = component;
+    const unknownSection = getAllByText('Unknown');
+
+    expect(unknownSection).toHaveLength(1);
   });
 
-  it('renders no organization information section if there are no organizations', () => {
+  it('renders summary successfully', () => {
+    const mockLeaseWithTenants = getMockLease();
     const { component } = setup({
-      lease: { ...defaultFormLease, organizations: [] },
+      lease: apiLeaseToFormLease(mockLeaseWithTenants),
     });
-    const { queryByText } = component;
-    const organizationTenant = queryByText('Tenant organization:');
-
-    expect(organizationTenant).toBeNull();
-  });
-
-  it('renders organization phone numbers as expected', () => {
-    const { component } = setup({
-      lease: {
-        ...defaultFormLease,
-        tenants: [
-          new FormTenant({
-            organization: { ...getMockOrganization() },
-            leaseId: 1,
-          }),
-        ],
-      },
-    });
-    const { getByLabelText } = component;
-    const landline = getByLabelText('Landline:');
-    const mobile = getByLabelText('Mobile:');
-
-    expect(landline).toHaveDisplayValue('222-333-4444');
-    expect(mobile).toHaveDisplayValue('555-666-7777');
-  });
-
-  it('renders person phone numbers as expected', () => {
-    const { component } = setup({
-      lease: {
-        ...defaultFormLease,
-        tenants: [new FormTenant({ person: mockApiPerson, leaseId: 1 })],
-      },
-    });
-    const { getByLabelText } = component;
-    const landline = getByLabelText('Landline:');
-    const mobile = getByLabelText('Mobile:');
-
-    expect(landline).toHaveDisplayValue('222-333-4444');
-    expect(mobile).toHaveDisplayValue('555-666-7777');
+    const { getByText } = component;
+    const summary = getByText('French Mouse Property Management');
+    expect(summary).toBeVisible();
   });
 
   it('renders primary contact successfully', () => {
@@ -160,31 +124,6 @@ describe('Tenant component', () => {
     });
     const { getByText } = component;
     const primaryContact = getByText('Bob Billy Smith');
-    expect(primaryContact).toBeVisible();
-  });
-
-  it('renders primary contact even if not part of organization persons', () => {
-    const mockLeaseWithTenants = getMockLease();
-    if (mockLeaseWithTenants.tenants[0].primaryContact?.id) {
-      mockLeaseWithTenants.tenants[0].primaryContact.id = 5;
-    }
-    mockLeaseWithTenants.tenants[0].primaryContactId = 5;
-    const { component } = setup({
-      lease: apiLeaseToFormLease(mockLeaseWithTenants),
-    });
-    const { getByText } = component;
-    const primaryContact = getByText('Bob Billy Smith');
-    expect(primaryContact).toBeVisible();
-  });
-
-  it('renders updated primary contact if primaryContact id does not match', () => {
-    const mockLeaseWithTenants = getMockLease();
-    mockLeaseWithTenants.tenants[0].primaryContactId = 4; // this is the id of the other person associated to this organization tenant.
-    const { component } = setup({
-      lease: apiLeaseToFormLease(mockLeaseWithTenants),
-    });
-    const { getByText } = component;
-    const primaryContact = getByText('Minnie Nacho Cheese Mouse');
     expect(primaryContact).toBeVisible();
   });
 });
