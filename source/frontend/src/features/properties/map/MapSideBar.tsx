@@ -36,5 +36,5 @@ const StyledMapSideBar = styled.div<{ show: boolean }>`
   padding-bottom: 2rem;
   overflow: hidden;
   transition: 1s;
-  width: 100%;
+  width: ${props => (props.show ? `100%` : `0`)};
 `;
