@@ -88,6 +88,10 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     }
   };
 
+  if (getPropertyWrapper?.loading || !initialForm) {
+    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
+
   return (
     <Formik<UpdatePropertyDetailsFormModel>
       enableReinitialize
@@ -98,10 +102,6 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     >
       {formikProps => (
         <StyledFormWrapper>
-          <LoadingBackdrop
-            show={getPropertyWrapper?.loading || !initialForm}
-            parentScreen={true}
-          ></LoadingBackdrop>
           <UpdatePropertyDetailsForm formikProps={formikProps} />
         </StyledFormWrapper>
       )}

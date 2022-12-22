@@ -152,7 +152,7 @@ export class UpdatePropertyDetailsFormModel {
     model.areaUnitTypeCode = fromTypeCode(base.areaUnit);
 
     model.isVolumetricParcel = booleanToString(base.isVolumetricParcel);
-    model.volumetricMeasurement = base.volumetricMeasurement;
+    model.volumetricMeasurement = base.volumetricMeasurement ?? 0;
     model.volumetricUnitTypeCode = fromTypeCode(base.volumetricUnit);
     model.volumetricParcelTypeCode = fromTypeCode(base.volumetricType);
 
