@@ -1,22 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.32510.428
+VisualStudioVersion = 16.0.31410.223
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "PAIMS_PIMS", "PAIMS_PIMS\PAIMS_PIMS.dtproj", "{99334A10-A0B4-4093-9EAA-20F41B4C0327}"
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "MOTI_LEGACY_PAIMS_PIMS_DATA_MIGRATION", "PAIMS_PIMS\MOTI_LEGACY_PAIMS_PIMS_DATA_MIGRATION.dtproj", "{B397C83F-BE2D-40DC-BB7A-BBF9B4084114}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1124DF52-C1B1-405F-95EB-7535E78B2601}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Default = Development|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{99334A10-A0B4-4093-9EAA-20F41B4C0327}.Development|Default.ActiveCfg = Development
-		{99334A10-A0B4-4093-9EAA-20F41B4C0327}.Development|Default.Build.0 = Development
+		{B397C83F-BE2D-40DC-BB7A-BBF9B4084114}.Development|Default.ActiveCfg = Development
+		{B397C83F-BE2D-40DC-BB7A-BBF9B4084114}.Development|Default.Build.0 = Development
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {889A03C0-7E2B-4231-96F2-C55CF585A338}
+		SolutionGuid = {B5064253-6D7A-4FF1-8D42-0D55669B412D}
 	EndGlobalSection
 EndGlobal

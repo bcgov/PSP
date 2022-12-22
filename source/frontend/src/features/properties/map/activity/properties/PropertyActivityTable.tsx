@@ -12,6 +12,7 @@ interface IPropertyActivityFormProps {
   fileProperties: Api_PropertyFile[];
   setSelectedFileProperties: (properties: Api_PropertyFile[]) => void;
   selectedFileProperties: Api_PropertyFile[];
+  disabledSelection: boolean;
 }
 
 const columns: ColumnWithProps<Api_PropertyFile>[] = [
@@ -46,7 +47,7 @@ const columns: ColumnWithProps<Api_PropertyFile>[] = [
 
 const PropertyActivityTable: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityFormProps>
-> = ({ fileProperties, selectedFileProperties, setSelectedFileProperties }) => {
+> = ({ fileProperties, selectedFileProperties, setSelectedFileProperties, disabledSelection }) => {
   return (
     <>
       <p>Select the properties from the parent file that this activity relates to:</p>
@@ -64,6 +65,7 @@ const PropertyActivityTable: React.FunctionComponent<
           data={fileProperties}
           setSelectedRows={setSelectedFileProperties}
           selectedRows={selectedFileProperties}
+          disableSelection={disabledSelection}
         />
       </Section>
     </>

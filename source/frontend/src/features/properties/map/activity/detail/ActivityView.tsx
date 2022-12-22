@@ -1,8 +1,10 @@
+import { Claims } from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { NoteTypes } from 'constants/noteTypes';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { NoteListView } from 'features/notes/list/NoteListView';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -27,6 +29,7 @@ export const ActivityView: React.FunctionComponent<React.PropsWithChildren<IActi
   onEditRelatedProperties,
   children,
 }) => {
+  const { hasClaim } = useKeycloakWrapper();
   return (
     <>
       <ActivityHeader file={file} activity={activity} />
@@ -39,11 +42,15 @@ export const ActivityView: React.FunctionComponent<React.PropsWithChildren<IActi
           <ActivityDescription isEditable={isEditable} editMode={editMode} />
         </Section>
         {children}
-        <DocumentListContainer
-          relationshipType={DocumentRelationshipType.ACTIVITIES}
-          parentId={activity.id}
-        />
-        <NoteListView type={NoteTypes.Activity} entityId={activity.id} />
+        {hasClaim(Claims.DOCUMENT_VIEW) && (
+          <DocumentListContainer
+            relationshipType={DocumentRelationshipType.ACTIVITIES}
+            parentId={activity.id}
+          />
+        )}
+        {hasClaim(Claims.NOTE_VIEW) && (
+          <NoteListView type={NoteTypes.Activity} entityId={activity.id} />
+        )}
       </StyledContent>
     </>
   );

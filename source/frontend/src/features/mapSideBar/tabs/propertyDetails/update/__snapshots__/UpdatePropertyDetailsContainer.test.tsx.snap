@@ -1829,6 +1829,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                       class="form-check"
                     >
                       <input
+                        checked=""
                         class="form-check-input position-static"
                         id="input-true"
                         name="isVolumetricParcel"

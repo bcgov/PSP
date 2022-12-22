@@ -237,6 +237,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
       {!showSideBar ? (
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
+            useGeocoder={true}
             defaultFilter={{
               ...defaultFilterValues,
             }}
