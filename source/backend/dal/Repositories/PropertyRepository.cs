@@ -324,6 +324,7 @@ namespace Pims.Dal.Repositories
                 .Where(p => p.PropertyId == property.Id)
                 .Include(p => p.PimsPropertyResearchFiles)
                 .Include(p => p.PimsPropertyAcquisitionFiles)
+                .Include(p => p.PimsPropertyLeases)
                 .FirstOrDefault();
 
             existingProperty.PimsPropertyResearchFiles.ForEach(pr => this.Context.Remove(new PimsPropertyResearchFile() { Id = pr.Id }));
