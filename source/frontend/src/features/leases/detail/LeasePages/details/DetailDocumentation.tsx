@@ -21,25 +21,25 @@ export const DetailDocumentation: React.FunctionComponent<
   return (
     <>
       <Section initiallyExpanded={true} isCollapsable={true} header="Documentation">
-        <SectionField label="Physical copy exists">
+        <SectionField label="Physical copy exists" labelWidth="3">
           <YesNoSelect disabled={disabled} field={withNameSpace(nameSpace, 'hasPhysicalLicense')} />
         </SectionField>
-        <SectionField label="Digital copy exists">
+        <SectionField label="Digital copy exists" labelWidth="3">
           <YesNoSelect disabled={disabled} field={withNameSpace(nameSpace, 'hasDigitalLicense')} />
         </SectionField>
-        <SectionField label="Document location">
+        <SectionField label="Document location" labelWidth="3">
           <TextAreaInput
             disabled={disabled}
             field={withNameSpace(nameSpace, 'documentationReference')}
           />
         </SectionField>
-        <SectionField label="LIS #">
+        <SectionField label="LIS #" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'tfaFileNumber')} />
         </SectionField>
-        <SectionField label="PS #">
+        <SectionField label="PS #" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'psFileNo')} />
         </SectionField>
-        <SectionField label="Lease Notes">
+        <SectionField label="Lease Notes" labelWidth="3">
           <TextArea disabled={disabled} field={withNameSpace(nameSpace, 'note')} />
         </SectionField>
       </Section>

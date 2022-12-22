@@ -28,10 +28,18 @@ const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({
   };
   return (
     <Section header={policy.insuranceType}>
-      <SectionField label="Insurance in place">{policy.insuranceInPlace}</SectionField>
-      <SectionField label="Limit">{policy.limit}</SectionField>
-      <SectionField label="Policy expiry date">{policy.expiryDate}</SectionField>
-      <SectionField label="Description of Coverage">{policy.coverageDescription}</SectionField>
+      <SectionField label="Insurance in place" labelWidth="3">
+        {policy.insuranceInPlace}
+      </SectionField>
+      <SectionField label="Limit" labelWidth="3">
+        {policy.limit}
+      </SectionField>
+      <SectionField label="Policy expiry date" labelWidth="3">
+        {policy.expiryDate}
+      </SectionField>
+      <SectionField label="Description of Coverage" labelWidth="3">
+        {policy.coverageDescription}
+      </SectionField>
     </Section>
   );
 };

@@ -35,13 +35,13 @@ export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImpro
   return (
     <>
       <Section header={title}>
-        <SectionField label="Unit #">
+        <SectionField label="Unit #" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'address')} />{' '}
         </SectionField>
-        <SectionField label="Building size">
+        <SectionField label="Building size" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'structureSize')} />
         </SectionField>
-        <SectionField label="Description">
+        <SectionField label="Description" labelWidth="3">
           <Styled.FormDescriptionBody
             innerClassName="description"
             rows={5}

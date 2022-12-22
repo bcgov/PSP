@@ -24,13 +24,13 @@ export const PropertyInformation: React.FunctionComponent<
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
   return (
     <StyledPropertyInfo>
-      <SectionField label="PID">
+      <SectionField label="PID" labelWidth="3">
         <InputGroup disabled={disabled} field={withNameSpace(nameSpace, 'pid')} />
       </SectionField>
-      <SectionField label="Address">
+      <SectionField label="Address" labelWidth="3">
         <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
       </SectionField>
-      <SectionField label="Area included">
+      <SectionField label="Area included" labelWidth="3">
         <InputGroup
           disabled={disabled}
           field={withNameSpace(nameSpace, 'landArea')}
