@@ -1,3 +1,4 @@
+import { LinkButton, RemoveButton } from 'components/common/buttons';
 import { Input, Multiselect, Select, Text, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
@@ -8,9 +9,12 @@ import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { FormikProps, getIn, useFormikContext } from 'formik';
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import React, { useEffect } from 'react';
+import isEmpty from 'lodash/isEmpty';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 import { stringToBoolean } from 'utils/formUtils';
@@ -30,9 +34,20 @@ export interface IUpdatePropertyDetailsFormProps {
 }
 
 export const UpdatePropertyDetailsForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdatePropertyDetailsFormProps>
+  IUpdatePropertyDetailsFormProps
 > = ({ formikProps }) => {
   const { values } = useFormikContext<UpdatePropertyDetailsFormModel>();
+
+  const [showAddressLine2, setShowAddressLine2] = useState(false);
+  const [showAddressLine3, setShowAddressLine3] = useState(false);
+  const address = values.address;
+
+  useDeepCompareEffect(() => {
+    if (address !== undefined) {
+      setShowAddressLine2(!isEmpty(address.streetAddress2));
+      setShowAddressLine3(!isEmpty(address.streetAddress3));
+    }
+  }, [address]);
 
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
@@ -74,6 +89,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
 
   const setFieldValue = formikProps.setFieldValue;
+
   // clear related fields when volumetric parcel radio changes
   useEffect(() => {
     if (!isVolumetricParcel) {
@@ -99,6 +115,73 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   return (
     <StyledSummarySection>
       <UnsavedChangesPrompt />
+      <Section header="Property Address">
+        <StyledSubtleText>
+          This is the address stored in PIMS application for this property and will be used wherever
+          this property's address is needed.
+        </StyledSubtleText>
+        <SectionField label="Address (line 1)">
+          <Row>
+            <Col xs="9">
+              <Input field="address.streetAddress1" />
+            </Col>
+          </Row>
+          {!showAddressLine2 && (
+            <LinkButton onClick={() => setShowAddressLine2(true)}>+ Add an address line</LinkButton>
+          )}
+        </SectionField>
+        {showAddressLine2 && (
+          <SectionField label="Address (line 2)">
+            <Row>
+              <Col>
+                <Input field="address.streetAddress2" />
+              </Col>
+              <Col xs="3" className="pl-0">
+                {!showAddressLine3 && (
+                  <RemoveButton
+                    onRemove={() => {
+                      setShowAddressLine2(false);
+                      setFieldValue('address.streetAddress2', '');
+                    }}
+                  >
+                    <MdClose size="2rem" /> <span className="text">Remove</span>
+                  </RemoveButton>
+                )}
+              </Col>
+            </Row>
+            {!showAddressLine3 && (
+              <LinkButton onClick={() => setShowAddressLine3(true)}>
+                + Add an address line
+              </LinkButton>
+            )}
+          </SectionField>
+        )}
+        {showAddressLine3 && (
+          <SectionField label="Address (line 3)">
+            <Row>
+              <Col>
+                <Input field="address.streetAddress3" />
+              </Col>
+              <Col xs="3" className="pl-0">
+                <RemoveButton
+                  onRemove={() => {
+                    setShowAddressLine3(false);
+                    setFieldValue('address.streetAddress3', '');
+                  }}
+                >
+                  <MdClose size="2rem" /> <span className="text">Remove</span>
+                </RemoveButton>
+              </Col>
+            </Row>
+          </SectionField>
+        )}
+        <SectionField label="City">
+          <Input field="address.municipality" />
+        </SectionField>
+        <SectionField label="Postal code">
+          <Input field="address.postal" />
+        </SectionField>
+      </Section>
       <Section header="Property Attributes">
         <SectionField label="MOTI region">
           <Select
@@ -282,4 +365,9 @@ const StyledInfoSection = styled.div`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   padding: 0.5rem;
   margin-bottom: 1.5rem;
+`;
+
+const StyledSubtleText = styled.p`
+  color: ${props => props.theme.css.subtleColor};
+  text-align: left;
 `;

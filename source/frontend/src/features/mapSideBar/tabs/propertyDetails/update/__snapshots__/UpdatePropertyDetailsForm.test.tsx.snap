@@ -8,12 +8,146 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   <div
     class="container"
   />
-  .c4 {
+  .c5.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c5.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c5.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c5.btn.btn-primary {
+  border: none;
+}
+
+.c5.btn.btn-secondary {
+  background: none;
+}
+
+.c5.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
+  background: none;
+}
+
+.c5.btn.btn-light {
+  border: none;
+}
+
+.c5.btn.btn-dark {
+  border: none;
+}
+
+.c5.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c5.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c5.Button--icon-only:focus {
+  outline: none;
+}
+
+.c5.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c7 {
   margin-left: 0.5rem;
   cursor: pointer;
 }
 
-.c10 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -23,7 +157,41 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c9.form-group {
+.c6.c6.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c6.c6.btn .text {
+  display: none;
+}
+
+.c6.c6.btn:hover,
+.c6.c6.btn:active,
+.c6.c6.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c6.c6.btn:hover .text,
+.c6.c6.btn:active .text,
+.c6.c6.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c12.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -31,7 +199,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c9.form-group .radio-group {
+.c12.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -44,7 +212,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c9.form-group .radio-group .form-check {
+.c12.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -59,30 +227,23 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c9.form-group .radio-group .form-check .form-check-input {
+.c12.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c9.form-group .radio-group .form-check-label {
+.c12.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c9 .form-label {
+.c12 .form-label {
   margin-bottom: unset;
 }
 
-.c5 {
+.c8 {
   font-weight: bold;
 }
 
-.c6 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c8 {
+.c9 {
   max-width: 25rem;
   padding: 1rem;
   border: 1px solid;
@@ -96,7 +257,14 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c7 {
+.c14 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c10 {
   max-width: 9rem;
 }
 
@@ -113,20 +281,260 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   text-align: left;
 }
 
-.c3.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
+}
+
+.c2 {
+  text-align: left;
 }
 
 <div
     class=""
   >
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Property Address
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <p
+          class="c2"
+        >
+          This is the address stored in PIMS application for this property and will be used wherever this property's address is needed.
+        </p>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Address (line 1):
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-9"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-address.streetAddress1"
+                    name="address.streetAddress1"
+                    title="45 - 904 Hollywood Crescent"
+                    value="45 - 904 Hollywood Crescent"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Address (line 2):
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-address.streetAddress2"
+                    name="address.streetAddress2"
+                    title="Living in a van"
+                    value="Living in a van"
+                  />
+                </div>
+              </div>
+              <div
+                class="pl-0 col-3"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Address (line 3):
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-address.streetAddress3"
+                    name="address.streetAddress3"
+                    title="Down by the River"
+                    value="Down by the River"
+                  />
+                </div>
+              </div>
+              <div
+                class="pl-0 col-3"
+              >
+                <button
+                  class="c5 Button c6 btn btn-link"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      data-testid="remove-button"
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              City:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-address.municipality"
+                name="address.municipality"
+                title="Hollywood North"
+                value="Hollywood North"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Postal code:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-address.postal"
+                name="address.postal"
+                title="V6Z 5G7"
+                value="V6Z 5G7"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       class="c0 form-section"
     >
@@ -156,13 +564,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               MOTI region:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -207,13 +615,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Highways district:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -311,13 +719,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Electoral district:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <span
               class=""
@@ -331,13 +739,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Agricultural Land Reserve:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <span
               class=""
@@ -353,13 +761,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Railway belt / Dominion patent:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -395,13 +803,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Land parcel type:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -482,13 +890,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Municipal zoning:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="input form-group"
@@ -510,13 +918,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Anomalies:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -540,7 +948,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c4"
+                          class="c7"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -564,7 +972,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c4"
+                          class="c7"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -688,13 +1096,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Tenure status:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -718,7 +1126,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c4"
+                          class="c7"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -742,7 +1150,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c4"
+                          class="c7"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -797,13 +1205,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Provincial Public Hwy:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -849,7 +1257,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 id="userNameTooltip"
               >
                 <span
-                  class="c5"
+                  class="c8"
                 >
                   USER
                 </span>
@@ -865,13 +1273,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Highway / Road established by:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -895,7 +1303,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c4"
+                          class="c7"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -919,7 +1327,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c4"
+                          class="c7"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -1049,13 +1457,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Adjacent Land type:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -1079,7 +1487,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c4"
+                          class="c7"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -1193,13 +1601,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Band name:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <span
               class=""
@@ -1213,13 +1621,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Reserve name:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <span
               class=""
@@ -1257,13 +1665,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-2"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Area:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="row"
@@ -1272,7 +1680,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="c6"
+                  class="c9"
                 >
                   <div
                     class="pb-2 row"
@@ -1282,7 +1690,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     >
                       <input
                         aria-label="square metres"
-                        class="c7"
+                        class="c10"
                         name="area-sq-meters"
                         step=".01"
                         type="number"
@@ -1303,7 +1711,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     >
                       <input
                         aria-label="hectares"
-                        class="c7"
+                        class="c10"
                         name="area-hectares"
                         step=".01"
                         type="number"
@@ -1322,7 +1730,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="c8"
+                  class="c11"
                 >
                   <div
                     class="pb-2 row"
@@ -1332,7 +1740,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     >
                       <input
                         aria-label="square feet"
-                        class="c7"
+                        class="c10"
                         name="area-sq-feet"
                         step=".01"
                         type="number"
@@ -1353,7 +1761,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     >
                       <input
                         aria-label="acres"
-                        class="c7"
+                        class="c10"
                         name="area-acres"
                         step=".01"
                         type="number"
@@ -1378,22 +1786,22 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-auto"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Is this a volumetric parcel?:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
-              class="c9 form-group"
+              class="c12 form-group"
             >
               <div
                 class="radio-group"
               >
                 <div
-                  class="c10 pb-3"
+                  class="c13 pb-3"
                 >
                   <div
                     class="form-check"
@@ -1415,7 +1823,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c10 pb-3"
+                  class="c13 pb-3"
                 >
                   <div
                     class="form-check"
@@ -1446,13 +1854,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="pr-0 text-left col-2"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Volume:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="row"
@@ -1467,7 +1875,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     class="col"
                   >
                     <div
-                      class="c11"
+                      class="c14"
                     >
                       <div
                         class="pb-2 row"
@@ -1477,7 +1885,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         >
                           <input
                             aria-label="cubic metres"
-                            class="c7"
+                            class="c10"
                             name="volume-cubic-meters"
                             step=".01"
                             type="number"
@@ -1503,7 +1911,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         >
                           <input
                             aria-label="cubic feet"
-                            class="c7"
+                            class="c10"
                             name="volume-cubic-feet"
                             step=".01"
                             type="number"
@@ -1535,13 +1943,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     class="pr-0 text-left col-3"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Type:
                     </label>
                   </div>
                   <div
-                    class="c3 text-left col-auto"
+                    class="c4 text-left col-auto"
                   >
                     <div
                       class="form-group"
