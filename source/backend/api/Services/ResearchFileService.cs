@@ -115,7 +115,7 @@ namespace Pims.Api.Services
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
                     var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
                     var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
-                    if (leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount == 1)
+                    if (leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount == 0 && deletedProperty?.Property?.IsPropertyOfInterest == true)
                     {
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
