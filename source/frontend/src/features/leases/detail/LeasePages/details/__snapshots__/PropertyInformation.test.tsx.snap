@@ -39,7 +39,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
       class="pb-2 row"
     >
       <div
-        class="pr-0 text-left col-4"
+        class="pr-0 text-left col-3"
       >
         <label
           class="c1"
@@ -75,7 +75,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
       class="pb-2 row"
     >
       <div
-        class="pr-0 text-left col-4"
+        class="pr-0 text-left col-3"
       >
         <label
           class="c1"
@@ -147,7 +147,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
       class="pb-2 row"
     >
       <div
-        class="pr-0 text-left col-4"
+        class="pr-0 text-left col-3"
       >
         <label
           class="c1"
@@ -223,7 +223,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
       class="pb-2 row"
     >
       <div
-        class="pr-0 text-left col-4"
+        class="pr-0 text-left col-3"
       >
         <label
           class="c1"
@@ -259,7 +259,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
       class="pb-2 row"
     >
       <div
-        class="pr-0 text-left col-4"
+        class="pr-0 text-left col-3"
       >
         <label
           class="c1"
@@ -331,7 +331,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
       class="pb-2 row"
     >
       <div
-        class="pr-0 text-left col-4"
+        class="pr-0 text-left col-3"
       >
         <label
           class="c1"
