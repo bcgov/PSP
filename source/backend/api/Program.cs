@@ -87,7 +87,7 @@ namespace Pims.Api
                 .UseStartup<Startup>()
                 .UseKestrel(options =>
                 {
-                    options.Limits.MaxRequestBodySize = 524288000; //100MB
+                    options.Limits.MaxRequestBodySize = 524288000; // 500MB
                 });
         }
     }
