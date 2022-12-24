@@ -6,6 +6,7 @@ import AppRouter from 'AppRouter';
 import { ModalContainer } from 'components/common/ModalContainer';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
+import { useUsers } from 'features/admin/users/hooks/useUsers';
 import { useFavicon } from 'hooks/useFavicon';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
@@ -22,14 +23,18 @@ const App = () => {
   const { fetchLookupCodes } = useLookupCodes();
   const { lookupCodes } = useLookupCodeHelpers();
   const { fetchSystemConstants } = useSystemConstants();
+  const {
+    activateUser: { execute: activate },
+  } = useUsers();
   useFavicon();
 
   useEffect(() => {
     if (keycloak?.authenticated) {
+      activate();
       fetchLookupCodes();
       fetchSystemConstants();
     }
-  }, [keycloak, fetchLookupCodes, fetchSystemConstants]);
+  }, [keycloak, fetchLookupCodes, fetchSystemConstants, activate]);
 
   return (
     <AuthStateContext.Consumer>
