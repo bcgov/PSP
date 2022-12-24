@@ -3,6 +3,7 @@ import { LinkButton } from 'components/common/buttons';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import fileDownload from 'js-file-download';
 import { FaDownload } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 import { useDocumentProvider } from './hooks/useDocumentProvider';
 
@@ -21,11 +22,19 @@ const DownloadDocumentButton: React.FunctionComponent<
       const data = await provider.downloadDocumentFile(mayanDocumentId, mayanFileId);
       if (data) {
         showFile(data);
+      } else {
+        toast.error(
+          'Failed to download document. If this error persists, contact a system administrator.',
+        );
       }
     } else {
       const data = await provider.downloadDocumentFileLatest(mayanDocumentId);
       if (data) {
         showFile(data);
+      } else {
+        toast.error(
+          'Failed to download document. If this error persists, contact a system administrator.',
+        );
       }
     }
   }

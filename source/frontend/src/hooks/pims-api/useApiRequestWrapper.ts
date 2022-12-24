@@ -79,7 +79,7 @@ export const useApiRequestWrapper = <
               requestFunction(...args),
               skipErrorLogCodes,
             )
-          : requestFunction(...args);
+          : await requestFunction(...args);
         if (!isMounted()) {
           return;
         }

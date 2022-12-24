@@ -152,7 +152,11 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> DownloadFile(long mayanDocumentId)
         {
             var result = await _documentService.DownloadFileLatestAsync(mayanDocumentId);
-            return new FileStreamResult(result.Payload.FilePayload, result.Payload.Mimetype) { FileDownloadName = result.Payload.FileName };
+            if(result?.Payload == null)
+            {
+                return new NotFoundResult();
+            }
+            return new FileStreamResult(result.Payload?.FilePayload, result.Payload?.Mimetype) { FileDownloadName = result.Payload?.FileName };
         }
 
         /// <summary>

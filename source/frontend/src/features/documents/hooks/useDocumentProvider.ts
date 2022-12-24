@@ -136,12 +136,9 @@ export const useDocumentProvider = () => {
         [downloadDocumentFileApiCall],
       ),
       requestName: 'DownloadDocumentFile',
-      onSuccess: useCallback(() => toast.success('Download Downloaded'), []),
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
-        } else {
-          toast.error('Download document error. Check responses and try again.');
         }
       }, []),
     });
@@ -164,12 +161,9 @@ export const useDocumentProvider = () => {
       [downloadDocumentFileLatestApiCall],
     ),
     requestName: 'DownloadDocumentFileLatest',
-    onSuccess: useCallback(() => toast.success('Download Downloaded Latest'), []),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
-      } else {
-        toast.error('Download document latest error. Check responses and try again.');
       }
     }, []),
   });
