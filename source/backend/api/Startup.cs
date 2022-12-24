@@ -329,7 +329,8 @@ namespace Pims.Api
             app.UseMiddleware<ResponseTimeMiddleware>();
             app.UseMiddleware<LogRequestMiddleware>();
             app.UseMiddleware<LogResponseMiddleware>();
-            app.UseMiddleware<ErrorHandlingMiddleware>();
+            //app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseExceptionHandler("problem/error");
 
             app.UseRouting();
             app.UseCors();
