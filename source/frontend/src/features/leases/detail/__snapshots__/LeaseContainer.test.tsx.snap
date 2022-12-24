@@ -74,14 +74,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
   font-family: 'BCSans-Bold';
 }
 
-.c14 {
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  line-height: 4.2rem;
-  text-align: left;
-  border-bottom: solid 0.4rem;
-}
-
 .c7 {
   max-width: 60%;
   margin: 0 auto;
@@ -143,7 +135,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   color: white;
 }
 
-.c16 {
+.c15 {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -274,13 +266,13 @@ exports[`LeaseContainer component renders as expected 1`] = `
   padding: 1rem;
 }
 
-.c15#leaseForm {
+.c14#leaseForm {
   text-align: left;
 }
 
-.c15#leaseForm input:disabled,
-.c15#leaseForm select:disabled,
-.c15#leaseForm textarea:disabled {
+.c14#leaseForm input:disabled,
+.c14#leaseForm select:disabled,
+.c14#leaseForm textarea:disabled {
   background: none;
   border: none;
   resize: none;
@@ -289,32 +281,31 @@ exports[`LeaseContainer component renders as expected 1`] = `
   height: fit-content;
 }
 
-.c15#leaseForm textarea:disabled {
+.c14#leaseForm textarea:disabled {
   padding-left: 0;
 }
 
-.c15#leaseForm .input-group.disabled .input-group-text {
+.c14#leaseForm .input-group.disabled .input-group-text {
   background: none;
   border: none;
 }
 
 .c13 {
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  line-height: 4.2rem;
+  text-align: left;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   left: 0;
+  height: 1rem;
   padding-bottom: 1rem;
-  background-color: white;
+  background-color: #f2f2f2;
   z-index: 10;
 }
 
-.c13 p {
-  height: 1rem;
-  text-align: left;
-}
-
 .c12 {
-  padding: 0 2.5rem;
   height: 100%;
   overflow-y: auto;
   grid-area: leasecontent;
@@ -326,6 +317,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   display: -ms-flexbox;
   display: flex;
   text-align: left;
+  background-color: #f2f2f2;
 }
 
 @media only screen and (max-width:1250px) {
@@ -480,21 +472,15 @@ exports[`LeaseContainer component renders as expected 1`] = `
     >
       <div
         class="c13"
-      >
-        <h2
-          class="c14"
-        >
-          Details 
-        </h2>
-      </div>
+      />
       <form
         action="#"
-        class="c15"
+        class="c14"
         id="leaseForm"
       />
     </div>
     <div
-      class="c16"
+      class="c15"
     >
       <div
         class="spinner-border text-warning"

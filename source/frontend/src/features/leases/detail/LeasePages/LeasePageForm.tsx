@@ -7,8 +7,6 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import * as Styled from '../styles';
-
 export interface ILeasePageFormProps {
   leasePage: ILeasePage;
   lease?: ILease;
@@ -28,10 +26,7 @@ export const LeasePageForm: React.FunctionComponent<
 
   return (
     <StyledLeasePage>
-      <StyledLeasePageHeader>
-        <Styled.LeaseH2>{leasePage.header ?? leasePage.title}</Styled.LeaseH2>
-        {leasePage.description && <p>{leasePage.description}</p>}
-      </StyledLeasePageHeader>
+      <StyledLeasePageHeader>{leasePage.header}</StyledLeasePageHeader>
       {!edit ? (
         <Formik<IFormLease>
           initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease) }}
@@ -82,26 +77,29 @@ export const ViewEditToggleForm = styled(Form)`
 `;
 
 const StyledLeasePageHeader = styled.div`
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  line-height: 4.2rem;
+  text-align: left;
+  color: ${props => props.theme.css.textColor};
   position: sticky;
   top: 0;
   left: 0;
+  height: 1rem;
   padding-bottom: 1rem;
-  background-color: white;
-  p {
-    height: 1rem;
-    text-align: left;
-  }
+  background-color: #f2f2f2;
+
   z-index: 10;
 `;
 
 const StyledLeasePage = styled.div`
-  padding: 0 2.5rem;
   height: 100%;
   overflow-y: auto;
   grid-area: leasecontent;
   flex-direction: column;
   display: flex;
   text-align: left;
+  background-color: #f2f2f2;
 `;
 
 export default LeasePageForm;

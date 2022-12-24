@@ -5,18 +5,18 @@ import { noop } from 'lodash';
 import { mockParcel } from 'mocks/filterDataMock';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import DetailAdministration, { IDetailAdministrationProps } from './DetailAdministration';
+import DetailDocumentation, { IDetailDocumentationProps } from './DetailDocumentation';
 
 const history = createMemoryHistory();
 
-describe('DetailAdministration component', () => {
+describe('DetailDocumentation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IDetailAdministrationProps & { lease?: IFormLease } = {},
+    renderOptions: RenderOptions & IDetailDocumentationProps & { lease?: IFormLease } = {},
   ) => {
     // render component under test
     const component = render(
       <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
-        <DetailAdministration
+        <DetailDocumentation
           disabled={renderOptions.disabled}
           nameSpace={renderOptions.nameSpace}
         />
@@ -60,53 +60,53 @@ describe('DetailAdministration component', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('renders all other fields', () => {
+  it('renders the Physical lease/license exists field', () => {
     const {
-      component: { getByDisplayValue },
+      component: { getAllByDisplayValue },
     } = setup({
       lease: {
-        categoryType: { id: 'OTHER' },
-        otherCategoryType: 'other category text',
-        purposeType: { id: 'OTHER' },
-        otherPurposeType: 'other purpose type',
-        programType: { id: 'OTHER' },
-        otherProgramType: 'other program type',
-        type: { id: 'OTHER' },
-        otherType: 'other type',
-      } as any,
+        ...defaultFormLease,
+        hasPhysicalLicense: 'Unknown',
+        hasDigitalLicense: 'Yes',
+      },
     });
-    expect(getByDisplayValue('other category text')).toBeVisible();
-    expect(getByDisplayValue('other purpose type')).toBeVisible();
-    expect(getByDisplayValue('other program type')).toBeVisible();
-    expect(getByDisplayValue('other type')).toBeVisible();
+    expect(getAllByDisplayValue('Unknown')[1]).toBeVisible();
   });
 
-  it('does not render other fields if values not set to other', () => {
+  it('renders the Digital lease/license exists field', () => {
     const {
-      component: { queryByDisplayValue },
+      component: { getAllByDisplayValue },
     } = setup({
       lease: {
-        otherCategoryType: 'other category text',
-        otherPurposeType: 'other purpose type',
-        otherProgramType: 'other program type',
-        otherType: 'other type',
-      } as any,
+        ...defaultFormLease,
+        hasPhysicalLicense: 'Yes',
+        hasDigitalLicense: 'Unknown',
+      },
     });
-    expect(queryByDisplayValue('other category text')).toBeNull();
-    expect(queryByDisplayValue('other purpose type')).toBeNull();
-    expect(queryByDisplayValue('other program type')).toBeNull();
-    expect(queryByDisplayValue('other type')).toBeNull();
+    expect(getAllByDisplayValue('Unknown')[0]).toBeVisible();
   });
 
-  it('renders the program name', () => {
+  it('renders the Location of documents field', () => {
     const {
       component: { getByDisplayValue },
     } = setup({
       lease: {
         ...defaultFormLease,
-        programName: 'A program',
+        documentationReference: 'documentation Reference',
       },
     });
-    expect(getByDisplayValue('A program')).toBeVisible();
+    expect(getByDisplayValue('documentation Reference')).toBeVisible();
+  });
+
+  it('renders the PS # name', () => {
+    const {
+      component: { getByDisplayValue },
+    } = setup({
+      lease: {
+        ...defaultFormLease,
+        psFileNo: 'A PS File No',
+      },
+    });
+    expect(getByDisplayValue('A PS File No')).toBeVisible();
   });
 });

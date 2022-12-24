@@ -142,10 +142,28 @@ exports[`Add lease container component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
 .c2 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
 }
 
 .c7 {
@@ -171,71 +189,8 @@ exports[`Add lease container component renders as expected 1`] = `
   min-height: 3rem;
 }
 
-.c3 {
-  font-family: 'BcSans-Bold';
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-align: left;
-  padding: 1rem 0 0.5rem 0;
-  border-bottom: solid 0.3rem;
-}
-
-.c5 {
-  font-size: 1.6rem;
-  color: black;
-  text-align: left;
-  padding-top: 1.5rem;
-  font-family: BcSans-Bold;
-}
-
 .c6 {
   font-family: 'BCSans';
-}
-
-.c4 {
-  display: grid;
-  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
-  grid-auto-flow: row;
-}
-
-.c4 .form-label,
-.c4 .form-group {
-  margin: 0 0.5rem 0 0;
-}
-
-.c4 > .form-group,
-.c4 > .notes {
-  grid-column: controls;
-  grid-row: auto;
-  border-left: 1px solid #666666;
-}
-
-.c4 .form-control:not(.description,.notes) {
-  font-family: 'BCSans-Bold';
-}
-
-.c4 > label,
-.c4 > fieldset {
-  grid-column: labels;
-  grid-row: auto;
-}
-
-.c4 > .textarea :not(.notes),
-.c4 > h3,
-.c4 > h5 {
-  grid-column: span 2;
-  border-left: none;
-}
-
-.c4 .form-label {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 .c1 {
@@ -248,6 +203,7 @@ exports[`Add lease container component renders as expected 1`] = `
   flex-direction: column;
   width: 100%;
   gap: 2.5rem;
+  margin-top: 2rem;
 }
 
 .c1 .formgrid .textarea:not(.notes) {
@@ -304,177 +260,329 @@ exports[`Add lease container component renders as expected 1`] = `
       class="c1 improvements"
     >
       <div
-        class="c2"
+        class="c2 form-section"
       >
-        <h3
+        <h2
           class="c3"
         >
-          Commercial
-        </h3>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              Commercial Improvements
+            </div>
+            <div
+              class="col-1"
+            />
+          </div>
+        </h2>
         <div
-          class="c4 formgrid"
+          class="collapse show"
         >
-          <label
-            class="form-label"
-          >
-            Address:
-          </label>
           <div
-            class="input form-group"
+            class="pb-2 row"
           >
-            <input
-              class="form-control"
-              id="input-improvements.0.address"
-              name="improvements.0.address"
-              title=""
-              value=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Unit #:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.0.address"
+                  name="improvements.0.address"
+                  title=""
+                  value=""
+                />
+              </div>
+               
+            </div>
           </div>
-          <label
-            class="form-label"
-          >
-            Structure size:
-          </label>
           <div
-            class="input form-group"
+            class="pb-2 row"
           >
-            <input
-              class="form-control"
-              id="input-improvements.0.structureSize"
-              name="improvements.0.structureSize"
-              title=""
-              value=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Building size:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.0.structureSize"
+                  name="improvements.0.structureSize"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
           </div>
-          <h5
-            class="c5"
-          >
-            Description:
-          </h5>
           <div
-            class="c6 textarea input form-group"
+            class="pb-2 row"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.0.description"
-              name="improvements.0.description"
-              rows="5"
-              title=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Description:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="c6 textarea input form-group"
+              >
+                <textarea
+                  class="description form-control"
+                  id="input-improvements.0.description"
+                  name="improvements.0.description"
+                  rows="5"
+                  title=""
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <h3
+      </div>
+      <div
+        class="c2 form-section"
+      >
+        <h2
           class="c3"
         >
-          Residential
-        </h3>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              Residential Improvements
+            </div>
+            <div
+              class="col-1"
+            />
+          </div>
+        </h2>
         <div
-          class="c4 formgrid"
+          class="collapse show"
         >
-          <label
-            class="form-label"
-          >
-            Address:
-          </label>
           <div
-            class="input form-group"
+            class="pb-2 row"
           >
-            <input
-              class="form-control"
-              id="input-improvements.1.address"
-              name="improvements.1.address"
-              title=""
-              value=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Unit #:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.1.address"
+                  name="improvements.1.address"
+                  title=""
+                  value=""
+                />
+              </div>
+               
+            </div>
           </div>
-          <label
-            class="form-label"
-          >
-            Structure size:
-          </label>
           <div
-            class="input form-group"
+            class="pb-2 row"
           >
-            <input
-              class="form-control"
-              id="input-improvements.1.structureSize"
-              name="improvements.1.structureSize"
-              title=""
-              value=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Building size:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.1.structureSize"
+                  name="improvements.1.structureSize"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
           </div>
-          <h5
-            class="c5"
-          >
-            Description:
-          </h5>
           <div
-            class="c6 textarea input form-group"
+            class="pb-2 row"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.1.description"
-              name="improvements.1.description"
-              rows="5"
-              title=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Description:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="c6 textarea input form-group"
+              >
+                <textarea
+                  class="description form-control"
+                  id="input-improvements.1.description"
+                  name="improvements.1.description"
+                  rows="5"
+                  title=""
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <h3
+      </div>
+      <div
+        class="c2 form-section"
+      >
+        <h2
           class="c3"
         >
-          Other Improvements
-        </h3>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              Other Improvements
+            </div>
+            <div
+              class="col-1"
+            />
+          </div>
+        </h2>
         <div
-          class="c4 formgrid"
+          class="collapse show"
         >
-          <label
-            class="form-label"
-          >
-            Address:
-          </label>
           <div
-            class="input form-group"
+            class="pb-2 row"
           >
-            <input
-              class="form-control"
-              id="input-improvements.2.address"
-              name="improvements.2.address"
-              title=""
-              value=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Unit #:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.2.address"
+                  name="improvements.2.address"
+                  title=""
+                  value=""
+                />
+              </div>
+               
+            </div>
           </div>
-          <label
-            class="form-label"
-          >
-            Structure size:
-          </label>
           <div
-            class="input form-group"
+            class="pb-2 row"
           >
-            <input
-              class="form-control"
-              id="input-improvements.2.structureSize"
-              name="improvements.2.structureSize"
-              title=""
-              value=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Building size:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.2.structureSize"
+                  name="improvements.2.structureSize"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
           </div>
-          <h5
-            class="c5"
-          >
-            Description:
-          </h5>
           <div
-            class="c6 textarea input form-group"
+            class="pb-2 row"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.2.description"
-              name="improvements.2.description"
-              rows="5"
-              title=""
-            />
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Description:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="c6 textarea input form-group"
+              >
+                <textarea
+                  class="description form-control"
+                  id="input-improvements.2.description"
+                  name="improvements.2.description"
+                  rows="5"
+                  title=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

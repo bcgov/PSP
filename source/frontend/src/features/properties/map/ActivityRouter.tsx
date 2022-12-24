@@ -5,6 +5,7 @@ import AppRoute from 'utils/AppRoute';
 
 import { ActivityTray } from './activity/ActivityTray/ActivityTray';
 import { ActivityContainer } from './activity/detail/ActivityContainer';
+import { useHash } from './hooks/useHash';
 
 interface IActivityRouterProps {
   setShowActionBar: (show: boolean) => void;
@@ -15,12 +16,21 @@ export const ActivityRouter: React.FunctionComponent<
 > = React.memo(props => {
   const location = useLocation();
   const history = useHistory();
+  const [hash] = useHash();
 
   let matched = matchPath(location.pathname, {
     path: '/mapview/sidebar/*/*/activity/*',
     exact: true,
     strict: true,
   });
+
+  React.useEffect(() => {
+    if (hash === '#payments' || hash === '#deposit') {
+      props.setShowActionBar(true);
+    } else {
+      props.setShowActionBar(false);
+    }
+  }, [hash, props]);
 
   React.useEffect(() => {
     if (matched !== null) {

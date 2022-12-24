@@ -72,8 +72,8 @@ describe('Add lease container component', () => {
     } = await setup({});
 
     await findByText('Other Improvements');
-    await findByText('Residential');
-    await findByText('Commercial');
+    await findByText('Residential Improvements');
+    await findByText('Commercial Improvements');
   });
 
   it('displays existing improvements', async () => {
@@ -88,8 +88,8 @@ describe('Add lease container component', () => {
     });
 
     await findByText('Other Improvements');
-    await findByText('Residential');
-    await findByText('Commercial');
+    await findByText('Residential Improvements');
+    await findByText('Commercial Improvements');
     await findByDisplayValue('test address 1');
     await findByDisplayValue('test address 2');
     await findByDisplayValue('test address 3');

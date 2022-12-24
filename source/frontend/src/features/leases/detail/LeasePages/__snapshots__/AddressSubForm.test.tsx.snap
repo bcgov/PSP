@@ -8,11 +8,6 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   <div
     class="container"
   />
-  <label
-    class="form-label"
-  >
-    Address:
-  </label>
   <div
     class="input form-group"
   >

@@ -1,10 +1,10 @@
-import { Form, InputGroup } from 'components/common/form';
-import * as Styled from 'features/leases/detail/styles';
+import { InputGroup } from 'components/common/form';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
+import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
-import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
 import AddressSubForm from '../AddressSubForm';
 
@@ -21,45 +21,28 @@ export const PropertyInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
   const formikProps = useFormikContext<IFormLease>();
-
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
-  const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'landArea'));
-  const address = getIn(formikProps.values, withNameSpace(nameSpace, 'address'));
-  const property = getIn(formikProps.values, withNameSpace(nameSpace));
-  const propertyName = getApiPropertyName(property);
   return (
-    <li key={`property-${property.id}`}>
-      <Styled.LeaseH3>Property Information</Styled.LeaseH3>
-      <Styled.FormGrid>
-        {!!address ? (
-          <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
-        ) : (
-          <>
-            <Form.Label>{`${propertyName.label}:`}</Form.Label>
-            <Styled.FormControl disabled={disabled} value={propertyName.value} />
-          </>
-        )}
-        <br />
-        {landArea !== undefined ? (
-          <>
-            <Form.Label>Lease Area</Form.Label>
-            {!disabled ? (
-              <InputGroup
-                disabled={disabled}
-                field={withNameSpace(nameSpace, 'landArea')}
-                postText={areaUnitType?.description ?? ''}
-              />
-            ) : (
-              <Styled.FormControl
-                disabled={disabled}
-                value={`${landArea} ${areaUnitType?.description ?? ''}`}
-              />
-            )}
-          </>
-        ) : null}
-      </Styled.FormGrid>
-    </li>
+    <StyledPropertyInfo>
+      <SectionField label="PID" labelWidth="3">
+        <InputGroup disabled={disabled} field={withNameSpace(nameSpace, 'pid')} />
+      </SectionField>
+      <SectionField label="Address" labelWidth="3">
+        <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
+      </SectionField>
+      <SectionField label="Area included" labelWidth="3">
+        <InputGroup
+          disabled={disabled}
+          field={withNameSpace(nameSpace, 'landArea')}
+          postText={areaUnitType?.description ?? ''}
+        />
+      </SectionField>
+      <hr />
+    </StyledPropertyInfo>
   );
 };
 
 export default PropertyInformation;
+const StyledPropertyInfo = styled.div`
+  margin-top: 4rem;
+`;
