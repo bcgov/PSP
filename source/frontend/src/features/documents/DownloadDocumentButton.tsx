@@ -1,6 +1,7 @@
+import { AxiosResponse } from 'axios';
 import { LinkButton } from 'components/common/buttons';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { FileDownload } from 'models/api/DocumentStorage';
+import fileDownload from 'js-file-download';
 import { FaDownload } from 'react-icons/fa';
 
 import { useDocumentProvider } from './hooks/useDocumentProvider';
@@ -19,22 +20,26 @@ const DownloadDocumentButton: React.FunctionComponent<
     if (mayanFileId !== undefined) {
       const data = await provider.downloadDocumentFile(mayanDocumentId, mayanFileId);
       if (data) {
-        showFile(data.payload);
+        showFile(data);
       }
     } else {
       const data = await provider.downloadDocumentFileLatest(mayanDocumentId);
       if (data) {
-        showFile(data.payload);
+        showFile(data);
       }
     }
   }
 
-  const showFile = (file: FileDownload) => {
-    const aElement = document.createElement('a');
-    aElement.href = `data:${file.mimetype};base64,` + file.filePayload;
-    aElement.download = file.fileName;
-    aElement.click();
-    window.URL.revokeObjectURL(aElement.href);
+  const showFile = async (
+    response: AxiosResponse<string | ArrayBuffer | ArrayBufferView | Blob, any>,
+  ) => {
+    const groups = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/g.exec(
+      response.headers['content-disposition'],
+    );
+    if (groups?.length) {
+      const fileName = groups[1].replace(/['"]/g, '');
+      fileDownload(response.data, fileName);
+    }
   };
 
   return (

@@ -53,6 +53,7 @@ http {
 
         location /api {
             proxy_pass          %API_URL%;
+            client_max_body_size 2000M;
         }
 
         location /ogs-internal {

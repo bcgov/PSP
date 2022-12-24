@@ -84,7 +84,11 @@ namespace Pims.Api
                 })
                 .UseSerilog()
                 .UseUrls(config.GetValue<string>("ASPNETCORE_URLS"))
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseKestrel(options =>
+                {
+                    options.Limits.MaxRequestBodySize = 524288000; //100MB
+                });
         }
     }
 }

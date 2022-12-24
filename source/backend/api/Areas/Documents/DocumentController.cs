@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -98,7 +99,7 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> DownloadFile(long mayanDocumentId, long mayanFileId)
         {
             var result = await _documentService.DownloadFileAsync(mayanDocumentId, mayanFileId);
-            return new JsonResult(result);
+            return new FileStreamResult(result.Payload.FilePayload, result.Payload.Mimetype) { FileDownloadName = result.Payload.FileName };
         }
 
         /// <summary>
@@ -151,7 +152,7 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> DownloadFile(long mayanDocumentId)
         {
             var result = await _documentService.DownloadFileLatestAsync(mayanDocumentId);
-            return new JsonResult(result);
+            return new FileStreamResult(result.Payload.FilePayload, result.Payload.Mimetype) { FileDownloadName = result.Payload.FileName };
         }
 
         /// <summary>

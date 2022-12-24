@@ -79,6 +79,9 @@ services:
   # example av test file here: https://serverfault.com/questions/484082/how-should-i-test-clam-anti-virus
   clamav:
     image: mkodockx/docker-clamav:alpine-idb-amd64
+    environment:
+      - CLAMD_CONF_MaxFileSize=500M
+      - CLAMD_CONF_StreamMaxLength=500M
     ports:
       - 3310:3310
     restart: on-failure

@@ -11,7 +11,6 @@ import {
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
   DocumentQueryResult,
-  FileDownload,
 } from 'models/api/DocumentStorage';
 import { ExternalResult } from 'models/api/ExternalResult';
 import { useCallback } from 'react';
@@ -126,8 +125,11 @@ export const useDocumentProvider = () => {
       (
         mayanDocumentId: number,
         mayanFileId: number,
-      ) => Promise<AxiosResponse<ExternalResult<FileDownload>, any>>
+      ) => Promise<
+        AxiosResponse<AxiosResponse<string | ArrayBuffer | ArrayBufferView | Blob, any>, any>
+      >
     >({
+      rawResponse: true,
       requestFunction: useCallback(
         async (mayanDocumentId: number, mayanFileId: number) =>
           await downloadDocumentFileApiCall(mayanDocumentId, mayanFileId),
@@ -145,24 +147,32 @@ export const useDocumentProvider = () => {
     });
 
   // Provides functionality for download the latest file for a document
-  const { execute: downloadDocumentFileLatest, loading: downloadDocumentFileLatestLoading } =
-    useApiRequestWrapper<
-      (documendId: number) => Promise<AxiosResponse<ExternalResult<FileDownload>, any>>
-    >({
-      requestFunction: useCallback(
-        async (mayanDocumentId: number) => await downloadDocumentFileLatestApiCall(mayanDocumentId),
-        [downloadDocumentFileLatestApiCall],
-      ),
-      requestName: 'DownloadDocumentFileLatest',
-      onSuccess: useCallback(() => toast.success('Download Downloaded Latest'), []),
-      onError: useCallback((axiosError: AxiosError<IApiError>) => {
-        if (axiosError?.response?.status === 400) {
-          toast.error(axiosError?.response.data.error);
-        } else {
-          toast.error('Download document latest error. Check responses and try again.');
-        }
-      }, []),
-    });
+  const {
+    execute: downloadDocumentFileLatest,
+    response: downloadDocumentFileLatestResponse,
+    loading: downloadDocumentFileLatestLoading,
+  } = useApiRequestWrapper<
+    (
+      documendId: number,
+    ) => Promise<
+      AxiosResponse<AxiosResponse<string | ArrayBuffer | ArrayBufferView | Blob, any>, any>
+    >
+  >({
+    rawResponse: true,
+    requestFunction: useCallback(
+      async (mayanDocumentId: number) => await downloadDocumentFileLatestApiCall(mayanDocumentId),
+      [downloadDocumentFileLatestApiCall],
+    ),
+    requestName: 'DownloadDocumentFileLatest',
+    onSuccess: useCallback(() => toast.success('Download Downloaded Latest'), []),
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error);
+      } else {
+        toast.error('Download document latest error. Check responses and try again.');
+      }
+    }, []),
+  });
 
   return {
     retrieveDocumentMetadata,
@@ -170,6 +180,7 @@ export const useDocumentProvider = () => {
     downloadDocumentFile,
     downloadDocumentFileLoading,
     downloadDocumentFileLatest,
+    downloadDocumentFileLatestResponse,
     downloadDocumentFileLatestLoading,
     retrieveDocumentTypeMetadata,
     retrieveDocumentTypeMetadataLoading,
