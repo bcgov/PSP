@@ -6,14 +6,18 @@ import { getIn } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IInsurance } from 'interfaces';
-import queryString from 'query-string';
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import InsuranceDetailsView from './details/Insurance';
 import InsuranceEditContainer from './edit/EditContainer';
 
-const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
+interface IInsuranceContainerProps {
+  isEditing?: boolean;
+}
+const InsuranceContainer: React.FunctionComponent<
+  React.PropsWithChildren<IInsuranceContainerProps>
+> = props => {
   const { hasClaim } = useKeycloakWrapper();
   const [showCancelModal, setShowCancelModal] = useState(false);
 
@@ -27,14 +31,13 @@ const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<unknow
   });
   const location = useLocation();
   const history = useHistory();
-  const { edit } = queryString.parse(location.search);
 
   return (
     <>
-      {!edit && (
+      {!props.isEditing && (
         <InsuranceDetailsView insuranceList={insuranceList} insuranceTypes={insuranceTypes} />
       )}
-      {edit && hasClaim(Claims.LEASE_EDIT) && (
+      {props.isEditing && hasClaim(Claims.LEASE_EDIT) && (
         <InsuranceEditContainer
           leaseId={leaseId}
           insuranceList={insuranceList}

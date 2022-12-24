@@ -2,9 +2,8 @@ import { ILeasePage } from 'features/leases';
 import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
 import { Form, Formik } from 'formik';
 import { defaultFormLease, IFormLease, ILease } from 'interfaces';
-import queryString from 'query-string';
 import * as React from 'react';
-import { Prompt, useLocation } from 'react-router-dom';
+import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as Styled from '../styles';
@@ -23,9 +22,7 @@ export interface ILeasePageFormProps {
 export const LeasePageForm: React.FunctionComponent<
   React.PropsWithChildren<ILeasePageFormProps>
 > = ({ leasePage, lease, refreshLease, setLease, children }) => {
-  const location = useLocation();
-  const { edit } = queryString.parse(location.search);
-
+  const edit = false;
   return (
     <StyledLeasePage>
       <StyledLeasePageHeader>

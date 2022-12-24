@@ -11,6 +11,7 @@ import ViewSelector from './ViewSelector';
 
 export interface ILeaseContainerProps {
   leaseId: number;
+  isEditing?: boolean;
   onClose?: () => void;
 }
 
@@ -23,9 +24,9 @@ const initialState: LeaseContainerState = {
   isEditing: false,
 };
 
-export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClose }) => {
+export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClose, isEditing }) => {
   // keep track of our internal container state
-  const [containerState, setContainerState] = useReducer(
+  const [setContainerState] = useReducer(
     (prevState: LeaseContainerState, newState: Partial<LeaseContainerState>) => ({
       ...prevState,
       ...newState,
@@ -63,7 +64,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
           lease={lease}
           refreshLease={refresh}
           setLease={setLease}
-          isEditing={containerState.isEditing}
+          isEditing={!!isEditing}
           setContainerState={setContainerState}
         />
       </StyledFormWrapper>

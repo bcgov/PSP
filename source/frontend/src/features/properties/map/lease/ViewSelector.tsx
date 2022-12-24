@@ -1,3 +1,4 @@
+import UpdateLeaseContainer from 'features/leases/detail/LeasePages/details/UpdateLeaseContainer';
 import { FormikProps } from 'formik';
 import { ILease } from 'interfaces';
 import React from 'react';
@@ -18,7 +19,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
     // TODO: render edit forms
     // TODO: use formikRef prop to pass as a ref to formik forms when edit forms get implemented
     if (props.isEditing && !!props.lease) {
-      return null;
+      return <UpdateLeaseContainer></UpdateLeaseContainer>;
     } else {
       // render read-only views
       return (

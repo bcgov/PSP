@@ -172,6 +172,17 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         key={'LeaseLicense'}
         title={'Lease / License File'}
       />
+      <AppRoute
+        path={`/mapview/sidebar/lease/:id/edit`}
+        customRender={({ match }) => (
+          <LeaseContextProvider>
+            <LeaseContainer isEditing={true} leaseId={Number(match.params.id)} onClose={onClose} />
+          </LeaseContextProvider>
+        )}
+        claim={Claims.LEASE_VIEW}
+        key={'LeaseLicense'}
+        title={'Lease / License File'}
+      />
     </Switch>
   );
 });

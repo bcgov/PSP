@@ -1,19 +1,17 @@
 import ProtectedComponent from 'components/common/ProtectedComponent';
 import { Claims } from 'constants/claims';
-import queryString from 'query-string';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';
 import { Tenant } from './Tenant';
-interface ITenantContainerProps {}
+interface ITenantContainerProps {
+  isEditing?: boolean;
+}
 
 const TenantContainer: React.FunctionComponent<
   React.PropsWithChildren<ITenantContainerProps>
 > = props => {
-  const location = useLocation();
-  const { edit } = queryString.parse(location.search);
-  return !!edit ? (
+  return !!props.isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
       <AddLeaseTenantContainer />
     </ProtectedComponent>
