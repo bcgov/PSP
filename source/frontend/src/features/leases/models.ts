@@ -180,11 +180,12 @@ export class FormLeaseProperty {
 
   static fromApi(apiPropertyLease: Api_PropertyLease): FormLeaseProperty {
     const model = new FormLeaseProperty(apiPropertyLease.lease?.id);
-    model.property = PropertyForm.fromApi(apiPropertyLease.property ?? {});
+    model.property = PropertyForm.fromApi(apiPropertyLease ?? {});
     model.id = apiPropertyLease.id;
     model.rowVersion = apiPropertyLease.rowVersion;
     model.landArea = apiPropertyLease.leaseArea?.toString() || '0';
     model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || PropertyAreaUnitTypes.Meter;
+    model.property.displayOrder = apiPropertyLease.displayOrder;
     return model;
   }
 

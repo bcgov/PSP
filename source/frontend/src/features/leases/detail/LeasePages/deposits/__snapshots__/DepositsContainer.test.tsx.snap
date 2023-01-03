@@ -143,16 +143,6 @@ exports[`DepositsContainer renders as expected 1`] = `
 }
 
 .c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c6 {
   float: right;
   cursor: pointer;
 }
@@ -168,18 +158,6 @@ exports[`DepositsContainer renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c5 {
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c5 .btn.btn-primary {
-  background-color: transparent;
-  padding: 0;
 }
 
 .c0 {
@@ -318,123 +296,9 @@ exports[`DepositsContainer renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="tbody"
-            role="rowgroup"
+            class="no-rows-message"
           >
-            <div
-              class="tr-wrapper"
-            >
-              <div
-                class="tr"
-                role="row"
-                style="display: flex; flex: 1 0 auto; min-width: 300px;"
-              >
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                />
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                >
-                  Pet deposit collected for one cat and one medium size dog.
-                </div>
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                >
-                  $500.00
-                </div>
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                >
-                  Sep 15, 2021
-                </div>
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                />
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                >
-                  <div
-                    class="c4 c5"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="tr-wrapper"
-            >
-              <div
-                class="tr"
-                role="row"
-                style="display: flex; flex: 1 0 auto; min-width: 300px;"
-              >
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                />
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                >
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-
-Integer nec odio.
-                </div>
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                >
-                  $2,000.00
-                </div>
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                >
-                  Mar 1, 2019
-                </div>
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                />
-                <div
-                  class="td"
-                  role="cell"
-                  style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                  title=""
-                >
-                  <div
-                    class="c4 c5"
-                  />
-                </div>
-              </div>
-            </div>
+            There is no corresponding data
           </div>
         </div>
       </div>
@@ -612,7 +476,7 @@ Integer nec odio.
             class="col-1"
           >
             <svg
-              class="c6"
+              class="c4"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -647,10 +511,8 @@ Integer nec odio.
             id="input-returnNotes"
             name="returnNotes"
             rows="5"
-            title="Tenant no longer has a dog, deposit returned, less fee for carpet cleaning"
-          >
-            Tenant no longer has a dog, deposit returned, less fee for carpet cleaning
-          </textarea>
+            title=""
+          />
         </div>
       </div>
     </div>

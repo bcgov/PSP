@@ -783,7 +783,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                   class="col-xl-6"
                                 >
                                   <div
-                                    class="flex-nowrap row"
+                                    class="flex-nowrap input-group row"
                                   >
                                     <div
                                       class="c17 col-auto"

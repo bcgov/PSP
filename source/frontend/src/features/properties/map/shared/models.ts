@@ -89,7 +89,7 @@ export class PropertyForm {
     const newForm = new PropertyForm();
     newForm.id = model.id;
     newForm.fileId = model.fileId;
-    newForm.apiId = model.property?.id;
+    newForm.apiId = model.property?.id ?? model.id;
     newForm.name = model.propertyName;
     newForm.pid = model.property?.pid?.toString();
     newForm.pin = model.property?.pin?.toString();

@@ -8,6 +8,7 @@ import { withNameSpace } from 'utils/formUtils';
 export interface IPropertiesInformationProps {
   nameSpace?: string;
   disabled?: boolean;
+  hideAddress?: boolean;
 }
 
 /**
@@ -16,7 +17,7 @@ export interface IPropertiesInformationProps {
  */
 export const PropertiesInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertiesInformationProps>
-> = ({ nameSpace, disabled }) => {
+> = ({ nameSpace, disabled, hideAddress }) => {
   const { values } = useFormikContext<ILease>();
   const properties: IProperty[] = getIn(values, withNameSpace(nameSpace, 'properties')) ?? [];
   return properties?.length ? (
@@ -29,6 +30,7 @@ export const PropertiesInformation: React.FunctionComponent<
               {...renderProps}
               nameSpace={withNameSpace(nameSpace, `properties.${index}`)}
               disabled={disabled}
+              hideAddress={hideAddress}
             />
           ))
         }

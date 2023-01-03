@@ -1,6 +1,8 @@
 import { Api_Property } from 'models/api/Property';
+import { useContext } from 'react';
 import styled from 'styled-components';
 
+import { SideBarContext } from './context/sidebarContext';
 import MapRouter from './MapRouter';
 
 interface IMapSideBarProps {
@@ -14,8 +16,9 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarPro
   setShowSideBar,
   onZoom,
 }) => {
+  const { fullWidth } = useContext(SideBarContext);
   return (
-    <StyledMapSideBar show={showSideBar}>
+    <StyledMapSideBar show={showSideBar} fullWidth={fullWidth}>
       <MapRouter showSideBar={showSideBar} setShowSideBar={setShowSideBar} onZoom={onZoom} />
     </StyledMapSideBar>
   );
@@ -23,14 +26,14 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarPro
 
 export default MapSideBar;
 
-const StyledMapSideBar = styled.div<{ show: boolean }>`
+const StyledMapSideBar = styled.div<{ show: boolean; fullWidth: boolean }>`
   display: flex;
   flex-flow: column;
   h1 {
     border-bottom: none;
     margin-bottom: 0.2rem;
   }
-  min-width: 93rem;
+  min-width: ${props => (props.fullWidth ? `100%` : `93rem`)};
   margin-left: ${props => (props.show ? `0rem` : `-93rem`)};
   padding: 1.4rem 1.6rem;
   padding-bottom: 2rem;

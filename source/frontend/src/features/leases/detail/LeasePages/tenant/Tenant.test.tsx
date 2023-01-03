@@ -1,23 +1,21 @@
-import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
-import { Formik } from 'formik';
+import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
-import { noop } from 'lodash';
+import { defaultLease, ILease } from 'interfaces';
 import { mockApiPerson, mockOrganization } from 'mocks/filterDataMock';
 import { getMockLease } from 'mocks/mockLease';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import Tenant, { FormTenant, ITenantProps } from './Tenant';
+import Tenant, { ITenantProps } from './ViewTenantForm';
 
 const history = createMemoryHistory();
 
 describe('Tenant component', () => {
-  const setup = (renderOptions: RenderOptions & ITenantProps & { lease?: IFormLease } = {}) => {
+  const setup = (renderOptions: RenderOptions & ITenantProps & { lease?: ILease } = {}) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <LeaseContextProvider initialLease={renderOptions.lease ? renderOptions.lease : defaultLease}>
         <Tenant nameSpace={renderOptions.nameSpace} />
-      </Formik>,
+      </LeaseContextProvider>,
       {
         ...renderOptions,
         history,
@@ -30,27 +28,17 @@ describe('Tenant component', () => {
   };
   it('renders as expected', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, persons: [mockApiPerson], organizations: [mockOrganization] },
+      lease: { ...defaultLease, persons: [mockApiPerson], organizations: [mockOrganization] },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
   it('renders one Person Tenant section per person', () => {
     const { component } = setup({
       lease: {
-        ...defaultFormLease,
+        ...defaultLease,
         tenants: [
-          new FormTenant({
-            lessorType: { id: 'PER' },
-            person: { ...mockApiPerson },
-            tenantTypeCode: { id: 'TEN' },
-            leaseId: 1,
-          }),
-          new FormTenant({
-            lessorType: { id: 'PER' },
-            tenantTypeCode: { id: 'REP' },
-            person: { ...mockApiPerson },
-            leaseId: 1,
-          }),
+          { leaseId: 1, personId: mockApiPerson.id, note: 'person note' },
+          { leaseId: 1, organizationId: mockOrganization.id, note: 'organization id' },
         ],
       },
     });
@@ -64,11 +52,11 @@ describe('Tenant component', () => {
   it.skip('renders one notes section per tenant note', () => {
     const { component } = setup({
       lease: {
-        ...defaultFormLease,
+        ...defaultLease,
         persons: [mockApiPerson, mockOrganization],
         tenants: [
-          { personId: mockApiPerson.id, note: 'person note' },
-          { organizationId: mockOrganization.id, note: 'organization id' },
+          { leaseId: 1, personId: mockApiPerson.id, note: 'person note' },
+          { leaseId: 1, organizationId: mockOrganization.id, note: 'organization id' },
         ],
       },
     });
@@ -80,7 +68,7 @@ describe('Tenant component', () => {
 
   it('renders representative section', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, persons: [] },
+      lease: { ...defaultLease, persons: [] },
     });
     const { getAllByText } = component;
     const repSection = getAllByText('Representative');
@@ -90,7 +78,7 @@ describe('Tenant component', () => {
 
   it('renders property manager section', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, persons: [] },
+      lease: { ...defaultLease, persons: [] },
     });
     const { getAllByText } = component;
     const propSection = getAllByText('Property Manager');
@@ -99,7 +87,7 @@ describe('Tenant component', () => {
   });
   it('renders unknown section', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, persons: [] },
+      lease: { ...defaultLease, persons: [] },
     });
     const { getAllByText } = component;
     const unknownSection = getAllByText('Unknown');
@@ -110,7 +98,7 @@ describe('Tenant component', () => {
   it('renders summary successfully', () => {
     const mockLeaseWithTenants = getMockLease();
     const { component } = setup({
-      lease: apiLeaseToFormLease(mockLeaseWithTenants),
+      lease: mockLeaseWithTenants,
     });
     const { getByText } = component;
     const summary = getByText('French Mouse Property Management');
@@ -120,7 +108,7 @@ describe('Tenant component', () => {
   it('renders primary contact successfully', () => {
     const mockLeaseWithTenants = getMockLease();
     const { component } = setup({
-      lease: apiLeaseToFormLease(mockLeaseWithTenants),
+      lease: mockLeaseWithTenants,
     });
     const { getByText } = component;
     const primaryContact = getByText('Bob Billy Smith');

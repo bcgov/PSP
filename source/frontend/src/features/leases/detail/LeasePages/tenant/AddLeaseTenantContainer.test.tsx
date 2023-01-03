@@ -4,6 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
+import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultLease, ILease } from 'interfaces';
 import { mockLookups } from 'mocks';
@@ -13,6 +14,7 @@ import {
   getMockPerson,
 } from 'mocks/mockContacts';
 import { getMockLease } from 'mocks/mockLease';
+import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   act,
@@ -35,12 +37,20 @@ const mockAxios = new MockAdapter(axios);
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+const SaveButton = () => {
+  const { submitForm } = useFormikContext();
+  return <button onClick={submitForm}>Save</button>;
+};
+
 describe('AddLeaseTenantContainer component', () => {
   const setup = async (renderOptions: RenderOptions & { lease?: ILease } = {}) => {
     // render component under test
     const component = await renderAsync(
       <LeaseContextProvider initialLease={renderOptions.lease ?? { ...defaultLease, id: 1 }}>
-        <AddLeaseTenantContainer />
+        <AddLeaseTenantContainer formikRef={React.createRef()}>
+          <SaveButton />
+        </AddLeaseTenantContainer>
       </LeaseContextProvider>,
       {
         ...renderOptions,

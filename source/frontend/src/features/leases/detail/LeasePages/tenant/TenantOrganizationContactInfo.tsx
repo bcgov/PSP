@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 import { formatApiPersonNames } from 'utils/personUtils';
 
-import { FormTenant } from './Tenant';
+import { FormTenant } from './ViewTenantForm';
 
 export interface ITenantOrganizationContactInfoProps {
   nameSpace: string;

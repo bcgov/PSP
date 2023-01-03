@@ -360,7 +360,7 @@ exports[`Research List View matches snapshot 1`] = `
                           class="col-xl-8"
                         >
                           <div
-                            class="flex-nowrap row"
+                            class="flex-nowrap input-group row"
                           >
                             <div
                               class="c6 col-auto"
@@ -507,7 +507,7 @@ exports[`Research List View matches snapshot 1`] = `
                           class="col-xl-8 col-lg-12"
                         >
                           <div
-                            class="c8 flex-nowrap row"
+                            class="c8 flex-nowrap input-group row"
                           >
                             <div
                               class="c6 col-auto"
@@ -601,7 +601,7 @@ exports[`Research List View matches snapshot 1`] = `
                       class="col-xl-12"
                     >
                       <div
-                        class="idir-input-group flex-nowrap row"
+                        class="idir-input-group flex-nowrap input-group row"
                       >
                         <div
                           class="c6 col-auto"

@@ -1,11 +1,9 @@
-import { Button } from 'components/common/buttons/Button';
 import { Form } from 'components/common/form/Form';
 import { FormSectionClear } from 'components/common/form/styles';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { IInsurance } from 'interfaces';
 import { IBatchUpdateRequest, IEntryModification, UpdateOperation } from 'interfaces/batchUpdate';
-import React, { useRef } from 'react';
-import { ButtonToolbar, Col, Row } from 'react-bootstrap';
+import React from 'react';
 import { ILookupCode } from 'store/slices/lookupCodes/interfaces';
 import { withNameSpace } from 'utils/formUtils';
 
@@ -20,13 +18,12 @@ export interface InsuranceEditContainerProps {
   insuranceTypes: ILookupCode[];
   onCancel: (dirty?: boolean) => void;
   onSuccess: () => void;
+  formikRef: React.RefObject<FormikProps<any>>;
 }
 
 const InsuranceEditContainer: React.FunctionComponent<
   React.PropsWithChildren<InsuranceEditContainerProps>
-> = ({ leaseId, insuranceList, insuranceTypes, onSuccess, onCancel }) => {
-  const formikRef = useRef<FormikProps<IUpdateFormInsurance>>(null);
-
+> = ({ leaseId, insuranceList, insuranceTypes, onSuccess, onCancel, formikRef }) => {
   const handleOnChange = (e: any, codeType: any, arrayHelpers: any) => {
     if (formikRef.current) {
       let found = initialInsurances.findIndex(x => x.insuranceType.id === codeType.id);
@@ -49,10 +46,6 @@ const InsuranceEditContainer: React.FunctionComponent<
     if (leaseResponse?.errorMessages.length === 0) {
       onSuccess();
     }
-  };
-
-  const handleCancel = () => {
-    onCancel(formikRef?.current?.dirty);
   };
 
   const initialInsurances = insuranceTypes.map<FormInsurance>(x => {
@@ -167,25 +160,6 @@ const InsuranceEditContainer: React.FunctionComponent<
               </div>
             )}
           />
-          <Row className="justify-content-md-end">
-            <ButtonToolbar className="cancelSave">
-              <Col>
-                <Button className="mr-5" variant="secondary" type="button" onClick={handleCancel}>
-                  Cancel
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  className="mr-5"
-                  type="button"
-                  disabled={!formikProps.dirty}
-                  onClick={formikProps.submitForm}
-                >
-                  Save
-                </Button>
-              </Col>
-            </ButtonToolbar>
-          </Row>
         </>
       )}
     </Formik>

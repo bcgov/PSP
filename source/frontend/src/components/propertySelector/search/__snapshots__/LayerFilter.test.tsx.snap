@@ -184,7 +184,7 @@ exports[`LayerFilter component renders as expected - search by legal description
         class="col-xl-10"
       >
         <div
-          class="flex-nowrap row"
+          class="flex-nowrap input-group row"
         >
           <div
             class="c1 col-auto"
@@ -513,7 +513,7 @@ exports[`LayerFilter component renders as expected 1`] = `
         class="col-xl-6"
       >
         <div
-          class="flex-nowrap row"
+          class="flex-nowrap input-group row"
         >
           <div
             class="c1 col-auto"

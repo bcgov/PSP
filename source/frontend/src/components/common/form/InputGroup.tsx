@@ -77,6 +77,7 @@ export const InputGroup: React.FC<React.PropsWithChildren<InputGroupProps>> = ({
         className,
         disabled ? 'disabled' : '',
         'flex-nowrap',
+        'input-group',
       )}
     >
       {!!label && required && <Label required={required}>{label}</Label>}

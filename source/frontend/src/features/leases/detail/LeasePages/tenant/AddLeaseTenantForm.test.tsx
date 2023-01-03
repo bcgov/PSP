@@ -3,7 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
-import { Formik } from 'formik';
+import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import { IFormLease } from 'interfaces';
 import { noop } from 'lodash';
@@ -19,7 +19,7 @@ import {
 } from 'utils/test-utils';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
-import { FormTenant } from './Tenant';
+import { FormTenant } from './ViewTenantForm';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -28,6 +28,11 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+};
+
+const SaveButton = () => {
+  const { submitForm } = useFormikContext();
+  return <button onClick={submitForm}>Save</button>;
 };
 describe('AddLeaseTenantForm component', () => {
   const setup = async (
@@ -41,16 +46,15 @@ describe('AddLeaseTenantForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <AddLeaseTenantForm
-          selectedTenants={renderOptions.selectedTenants ?? []}
-          setSelectedTenants={renderOptions.setSelectedTenants ?? noop}
-          onCancel={renderOptions.onCancel ?? noop}
-          onSubmit={noop as any}
-          formikRef={null}
-          initialValues={renderOptions.initialValues}
-        />
-      </Formik>,
+      <AddLeaseTenantForm
+        selectedTenants={renderOptions.selectedTenants ?? []}
+        setSelectedTenants={renderOptions.setSelectedTenants ?? noop}
+        onSubmit={noop as any}
+        formikRef={null}
+        initialValues={renderOptions.initialValues}
+      >
+        <SaveButton />
+      </AddLeaseTenantForm>,
       {
         ...renderOptions,
         store: storeState,
@@ -84,18 +88,6 @@ describe('AddLeaseTenantForm component', () => {
     const { component } = await setup({});
 
     expect(component.asFragment()).toMatchSnapshot();
-  });
-
-  it('the cancel button triggers the cancel action', async () => {
-    const cancel = jest.fn();
-    mockAxios.onGet().reply(200, { items: [] });
-    const {
-      component: { getByText },
-    } = await setup({ onCancel: cancel });
-
-    const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
-    expect(cancel).toHaveBeenCalled();
   });
 
   it('items from the contact list view can be added', async () => {

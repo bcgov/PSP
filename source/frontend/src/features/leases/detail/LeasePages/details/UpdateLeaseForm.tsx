@@ -4,13 +4,11 @@ import LeaseDetailSubForm from 'features/leases/add/LeaseDetailSubForm';
 import ReferenceSubForm from 'features/leases/add/ReferenceSubForm';
 import * as Styled from 'features/leases/add/styles';
 import { getDefaultFormLease, LeaseFormModel } from 'features/leases/models';
-import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
 interface IUpdateLeaseFormProps {
-  onCancel: () => void;
   onSubmit: (lease: LeaseFormModel) => Promise<void>;
   initialValues?: LeaseFormModel;
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
@@ -18,7 +16,7 @@ interface IUpdateLeaseFormProps {
 
 export const UpdateLeaseForm: React.FunctionComponent<
   React.PropsWithChildren<IUpdateLeaseFormProps>
-> = ({ onCancel, onSubmit, initialValues, formikRef }) => {
+> = ({ onSubmit, initialValues, formikRef }) => {
   return (
     <Formik
       validationSchema={AddLeaseYupSchema}
@@ -37,7 +35,6 @@ export const UpdateLeaseForm: React.FunctionComponent<
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
             <ReferenceSubForm />
           </Styled.LeaseForm>
-          <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
         </>
       )}
     </Formik>
