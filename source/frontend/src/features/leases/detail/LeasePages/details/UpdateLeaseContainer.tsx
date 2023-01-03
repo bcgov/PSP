@@ -10,7 +10,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { UpdateLeaseForm } from './UpdateLeaseForm';
 
@@ -34,7 +33,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   } = useLeaseDetail(lease?.id);
   const [addLeaseParams, setAddLeaseParams] = useState<IAddLeaseParams | undefined>();
   const { updateApiLease } = useUpdateLease();
-  const history = useHistory();
 
   const leaseId = lease?.id;
   //TODO: For now we make a duplicate request here for the lease in the newer format. In the future all lease pages will use the new format so this will no longer be necessary.
@@ -73,12 +71,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen></LoadingBackdrop>
-      <UpdateLeaseForm
-        onCancel={() => history.push(`/lease/${apiLease?.id}`)}
-        onSubmit={onSubmit}
-        initialValues={initialValues}
-        formikRef={formikRef}
-      />
+      <UpdateLeaseForm onSubmit={onSubmit} initialValues={initialValues} formikRef={formikRef} />
       <GenericModal
         title="Warning"
         display={!!addLeaseParams}

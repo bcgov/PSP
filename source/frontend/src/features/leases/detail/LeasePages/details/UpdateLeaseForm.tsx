@@ -9,7 +9,6 @@ import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
 interface IUpdateLeaseFormProps {
-  onCancel: () => void;
   onSubmit: (lease: LeaseFormModel) => Promise<void>;
   initialValues?: LeaseFormModel;
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
@@ -17,7 +16,7 @@ interface IUpdateLeaseFormProps {
 
 export const UpdateLeaseForm: React.FunctionComponent<
   React.PropsWithChildren<IUpdateLeaseFormProps>
-> = ({ onCancel, onSubmit, initialValues, formikRef }) => {
+> = ({ onSubmit, initialValues, formikRef }) => {
   return (
     <Formik
       validationSchema={AddLeaseYupSchema}

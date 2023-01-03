@@ -156,7 +156,6 @@ export const DocumentListView: React.FunctionComponent<
   };
 
   const getHeader = () => {
-    console.log(props.disableAdd);
     if (props.disableAdd === true) {
       return 'Documents';
     }
