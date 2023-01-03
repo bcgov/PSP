@@ -2,7 +2,6 @@ import { Button } from 'components/common/buttons';
 import { TableSelect } from 'components/common/form';
 import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import { TENANT_TYPES } from 'constants/API';
-import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { defaultFormLease, IContactSearchResult, IFormLease } from 'interfaces';
@@ -12,14 +11,14 @@ import { Link, Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 
+import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';
 import getColumns from './columns';
 import SelectedTableHeader from './SelectedTableHeader';
 import * as Styled from './styles';
-import { FormTenant } from './Tenant';
+import { FormTenant } from './ViewTenantForm';
 export interface IAddLeaseTenantFormProps {
   selectedTenants: FormTenant[];
   setSelectedTenants: (selectedTenants: IContactSearchResult[]) => void;
-  onCancel: () => void;
   onSubmit: (lease: IFormLease) => Promise<void>;
   initialValues?: IFormLease;
   formikRef: React.Ref<FormikProps<IFormLease>>;
@@ -27,7 +26,7 @@ export interface IAddLeaseTenantFormProps {
 
 export const AddLeaseTenantForm: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseTenantFormProps>
-> = ({ selectedTenants, setSelectedTenants, onCancel, onSubmit, initialValues, formikRef }) => {
+> = ({ selectedTenants, setSelectedTenants, onSubmit, initialValues, formikRef, children }) => {
   const lookupCodes = useLookupCodeHelpers();
   const tenantTypes = lookupCodes.getByType(TENANT_TYPES).map(c => mapLookupCode(c));
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
@@ -53,7 +52,7 @@ export const AddLeaseTenantForm: React.FunctionComponent<
       </p>
 
       <Formik
-        // validationSchema={AddLeaseTenantYupSchema}
+        validationSchema={AddLeaseTenantYupSchema}
         onSubmit={values => {
           onSubmit(values);
         }}
@@ -114,8 +113,8 @@ export const AddLeaseTenantForm: React.FunctionComponent<
                   isSummary={false}
                 ></ContactManagerModal>
               </TableSelect>
-              <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
             </StyledFormBody>
+            {children}
           </>
         )}
       </Formik>

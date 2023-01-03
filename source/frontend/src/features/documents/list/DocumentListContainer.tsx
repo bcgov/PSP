@@ -79,6 +79,7 @@ const DocumentListContainer: React.FunctionComponent<
       setStaleFile(true);
     }
   }, [file, setStaleFile, retrieveDocuments]);
+  console.log(props.disableAdd);
 
   return (
     <DocumentListView

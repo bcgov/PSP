@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import { formatApiPersonNames } from 'utils/personUtils';
 
-import { FormTenant } from './Tenant';
+import { FormTenant } from './ViewTenantForm';
 const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] => {
   return [
     {

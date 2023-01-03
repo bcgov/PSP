@@ -113,7 +113,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             class="c5 text-left col"
           >
             <div
-              class="flex-nowrap row"
+              class="flex-nowrap input-group row"
             >
               <div
                 class="c6 col"
@@ -221,7 +221,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             class="c5 text-left col"
           >
             <div
-              class="flex-nowrap row"
+              class="flex-nowrap input-group row"
             >
               <div
                 class="c6 col"
@@ -237,6 +237,15 @@ exports[`PropertiesInformation component renders as expected 1`] = `
                     value="123"
                   />
                 </div>
+              </div>
+              <div
+                class="input-group-append"
+              >
+                <span
+                  class="input-group-text"
+                >
+                  undefined.
+                </span>
               </div>
             </div>
           </div>

@@ -3,7 +3,6 @@ import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import * as React from 'react';
-import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
 export interface IDetailDocumentationProps {
@@ -28,7 +27,7 @@ export const DetailDocumentation: React.FunctionComponent<
           <YesNoSelect disabled={disabled} field={withNameSpace(nameSpace, 'hasDigitalLicense')} />
         </SectionField>
         <SectionField label="Document location" labelWidth="3">
-          <TextAreaInput
+          <TextArea
             disabled={disabled}
             field={withNameSpace(nameSpace, 'documentationReference')}
           />
@@ -46,8 +45,4 @@ export const DetailDocumentation: React.FunctionComponent<
     </>
   );
 };
-
-const TextAreaInput = styled(TextArea)`
-  padding: 0.6rem 1.2rem;
-`;
 export default DetailDocumentation;

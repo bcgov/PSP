@@ -512,7 +512,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                       class="col-xl-6"
                     >
                       <div
-                        class="flex-nowrap row"
+                        class="flex-nowrap input-group row"
                       >
                         <div
                           class="c11 col-auto"

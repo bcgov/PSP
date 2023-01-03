@@ -37,10 +37,6 @@ exports[`DetailDocumentation component renders a complete lease as expected 1`] 
   font-weight: bold;
 }
 
-.c5 {
-  padding: 0.6rem 1.2rem;
-}
-
 <div
     class="c0 form-section"
   >
@@ -185,7 +181,7 @@ exports[`DetailDocumentation component renders a complete lease as expected 1`] 
           class="c4 text-left col"
         >
           <div
-            class="c5 textarea input form-group"
+            class="textarea input form-group"
           >
             <textarea
               class="form-control"
@@ -322,10 +318,6 @@ exports[`DetailDocumentation component renders minimally as expected 1`] = `
   font-weight: bold;
 }
 
-.c5 {
-  padding: 0.6rem 1.2rem;
-}
-
 <div
     class="c0 form-section"
   >
@@ -470,7 +462,7 @@ exports[`DetailDocumentation component renders minimally as expected 1`] = `
           class="c4 text-left col"
         >
           <div
-            class="c5 textarea input form-group"
+            class="textarea input form-group"
           >
             <textarea
               class="form-control"

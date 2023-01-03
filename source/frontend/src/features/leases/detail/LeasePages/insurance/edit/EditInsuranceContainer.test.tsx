@@ -6,7 +6,7 @@ import { noop } from 'lodash';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, RenderResult } from 'utils/test-utils';
 
-import InsuranceEditContainer, { InsuranceEditContainerProps } from './EditContainer';
+import InsuranceEditContainer, { InsuranceEditContainerProps } from './EditInsuranceContainer';
 
 const mockInsuranceTypeHome: ILookupCode = {
   id: 'HOME',
@@ -40,11 +40,12 @@ const defaultProps: InsuranceEditContainerProps = {
   insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
   onCancel: () => {},
   onSuccess: () => {},
+  formikRef: {} as any,
 };
 
 const history = createMemoryHistory();
 
-describe('Lease Insurance', () => {
+describe('Edit Lease Insurance', () => {
   const setup = (
     renderOptions: RenderOptions & InsuranceEditContainerProps = {
       leaseId: defaultProps.leaseId,
@@ -52,6 +53,7 @@ describe('Lease Insurance', () => {
       insuranceTypes: defaultProps.insuranceTypes,
       onCancel: () => defaultProps.onCancel,
       onSuccess: () => defaultProps.onSuccess,
+      formikRef: defaultProps.formikRef,
     },
   ): RenderResult => {
     // render component under test
@@ -63,6 +65,7 @@ describe('Lease Insurance', () => {
           leaseId={renderOptions.leaseId}
           onCancel={renderOptions.onCancel}
           onSuccess={renderOptions.onSuccess}
+          formikRef={renderOptions.formikRef}
         />
       </Formik>,
       {

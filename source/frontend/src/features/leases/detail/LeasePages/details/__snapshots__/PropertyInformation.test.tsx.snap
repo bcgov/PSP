@@ -51,7 +51,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
         class="c2 text-left col"
       >
         <div
-          class="flex-nowrap row"
+          class="flex-nowrap input-group row"
         >
           <div
             class="c3 col"
@@ -159,7 +159,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
         class="c2 text-left col"
       >
         <div
-          class="flex-nowrap row"
+          class="flex-nowrap input-group row"
         >
           <div
             class="c3 col"
@@ -175,6 +175,15 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
                 value="123"
               />
             </div>
+          </div>
+          <div
+            class="input-group-append"
+          >
+            <span
+              class="input-group-text"
+            >
+              undefined.
+            </span>
           </div>
         </div>
       </div>
@@ -235,7 +244,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
         class="c2 text-left col"
       >
         <div
-          class="flex-nowrap row"
+          class="flex-nowrap input-group row"
         >
           <div
             class="c3 col"
@@ -343,7 +352,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
         class="c2 text-left col"
       >
         <div
-          class="flex-nowrap row"
+          class="flex-nowrap input-group row"
         >
           <div
             class="c3 col"
@@ -359,6 +368,15 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
                 value="123"
               />
             </div>
+          </div>
+          <div
+            class="input-group-append"
+          >
+            <span
+              class="input-group-text"
+            >
+              undefined.
+            </span>
           </div>
         </div>
       </div>

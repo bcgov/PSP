@@ -8,6 +8,7 @@ import { defaultLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { defaultApiLease } from 'models/api/Lease';
+import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { renderAsync, RenderOptions } from 'utils/test-utils';
 
@@ -24,7 +25,7 @@ describe('Update lease container component', () => {
     // render component under test
     const component = await renderAsync(
       <LeaseStateContext.Provider value={{ lease: { ...defaultLease, id: 1 }, setLease: noop }}>
-        <UpdateLeaseContainer />
+        <UpdateLeaseContainer formikRef={React.createRef()} onEdit={noop} />
       </LeaseStateContext.Provider>,
       {
         ...renderOptions,
@@ -45,14 +46,6 @@ describe('Update lease container component', () => {
   it('renders as expected', async () => {
     const { component } = await setup({});
     expect(component.asFragment()).toMatchSnapshot();
-  });
-
-  it('cancels the form', async () => {
-    const {
-      component: { getAllByText },
-    } = await setup({});
-    userEvent.click(getAllByText('Cancel')[0]);
-    expect(history.location.pathname).toBe('/lease/undefined');
   });
 
   // TODOL: Disabled until Lease update refactor is completed

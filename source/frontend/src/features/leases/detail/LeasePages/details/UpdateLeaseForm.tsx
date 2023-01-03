@@ -4,7 +4,6 @@ import LeaseDetailSubForm from 'features/leases/add/LeaseDetailSubForm';
 import ReferenceSubForm from 'features/leases/add/ReferenceSubForm';
 import * as Styled from 'features/leases/add/styles';
 import { getDefaultFormLease, LeaseFormModel } from 'features/leases/models';
-import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
@@ -37,7 +36,6 @@ export const UpdateLeaseForm: React.FunctionComponent<
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
             <ReferenceSubForm />
           </Styled.LeaseForm>
-          <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
         </>
       )}
     </Formik>

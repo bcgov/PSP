@@ -21,7 +21,7 @@ exports[`SelectInput tests renders correctly... 1`] = `
 }
 
 <div
-    class="idir-input-group flex-nowrap row"
+    class="idir-input-group flex-nowrap input-group row"
   >
     <div
       class="c0 col-auto"

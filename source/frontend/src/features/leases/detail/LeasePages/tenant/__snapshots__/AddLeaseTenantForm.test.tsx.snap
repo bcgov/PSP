@@ -179,29 +179,6 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c5 {
-  z-index: 100;
-  width: 100%;
-  padding: 0.5rem 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  gap: 1rem;
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0rem;
-  background-color: white;
-}
-
-.c5 .btn {
-  min-height: 3rem;
-}
-
 .c0 {
   margin-top: 3rem;
   text-align: left;
@@ -362,31 +339,9 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
         </div>
       </div>
     </div>
-    <div
-      class="c5"
-    >
-      <button
-        class="c1 Button btn btn-secondary"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          Cancel
-        </div>
-      </button>
-      <button
-        class="c1 Button Button--disabled btn btn-primary"
-        disabled=""
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          Save
-        </div>
-      </button>
-    </div>
   </div>
+  <button>
+    Save
+  </button>
 </DocumentFragment>
 `;

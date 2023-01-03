@@ -41,7 +41,6 @@ export const LeaseFileTabs: React.FC<ILeaseFileTabsProps> = ({
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
         const tab = Object.values(LeaseFileTabNames).find(value => value === eventKey);
-        window.location.hash = '#' + tab;
         tab && setActiveTab(tab);
       }}
     >

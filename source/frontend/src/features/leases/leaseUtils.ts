@@ -1,4 +1,4 @@
-import { FormTenant } from 'features/leases/detail/LeasePages/tenant/Tenant';
+import { FormTenant } from 'features/leases/detail/LeasePages/tenant/ViewTenantForm';
 import { IFormLeaseTerm, ILease } from 'interfaces';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import {

@@ -502,7 +502,7 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
                       class="col-xl-6"
                     >
                       <div
-                        class="flex-nowrap row"
+                        class="flex-nowrap input-group row"
                       >
                         <div
                           class="c11 col-auto"

@@ -10,6 +10,7 @@ import AddressSubForm from '../AddressSubForm';
 
 export interface IPropertyInformationProps {
   nameSpace: string;
+  hideAddress?: boolean;
   disabled?: boolean;
 }
 
@@ -19,7 +20,7 @@ export interface IPropertyInformationProps {
  */
 export const PropertyInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
-> = ({ nameSpace, disabled }) => {
+> = ({ nameSpace, disabled, hideAddress }) => {
   const formikProps = useFormikContext<IFormLease>();
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
   return (
@@ -27,14 +28,16 @@ export const PropertyInformation: React.FunctionComponent<
       <SectionField label="PID" labelWidth="3">
         <InputGroup disabled={disabled} field={withNameSpace(nameSpace, 'pid')} />
       </SectionField>
-      <SectionField label="Address" labelWidth="3">
-        <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
-      </SectionField>
+      {!hideAddress ? (
+        <SectionField label="Address" labelWidth="3">
+          <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
+        </SectionField>
+      ) : null}
       <SectionField label="Area included" labelWidth="3">
         <InputGroup
           disabled={disabled}
           field={withNameSpace(nameSpace, 'landArea')}
-          postText={areaUnitType?.description ?? ''}
+          postText={`${areaUnitType?.description}.` ?? ''}
         />
       </SectionField>
       <hr />

@@ -1,15 +1,18 @@
 import { FormSection } from 'components/common/form/styles';
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import { getApiPersonOrOrgMailingAddress, getDefaultContact } from 'features/contacts/contactUtils';
+import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
 import { Section } from 'features/mapSideBar/tabs/Section';
-import { FieldArray, Formik, getIn, useFormikContext } from 'formik';
-import { IAddress, IContactSearchResult, ILease } from 'interfaces';
+import { FieldArray, Formik, getIn } from 'formik';
+import { defaultFormLease, IAddress, IContactSearchResult } from 'interfaces';
 import ITypeCode from 'interfaces/ITypeCode';
 import { Api_Address } from 'models/api/Address';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import { Api_OrganizationPerson } from 'models/api/Organization';
 import { Api_Person } from 'models/api/Person';
 import * as React from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
 import { fromTypeCode, withNameSpace } from 'utils/formUtils';
@@ -125,14 +128,19 @@ export interface ITenantProps {
  * Tenant lease page displays all tenant information (persons and organizations)
  * @param {ITenantProps} param0
  */
-export const Tenant: React.FunctionComponent<React.PropsWithChildren<ITenantProps>> = ({
+export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITenantProps>> = ({
   nameSpace,
 }) => {
-  const { values: lease } = useFormikContext<ILease>();
-  const tenants: FormTenant[] = getIn(lease, withNameSpace(nameSpace, 'tenants')) ?? [];
+  const { lease } = useContext(LeaseStateContext);
+  const formLease = apiLeaseToFormLease(lease);
+  const tenants: FormTenant[] = getIn(formLease, withNameSpace(nameSpace, 'tenants')) ?? [];
   return (
     <FormSectionOne>
-      <Formik initialValues={lease} onSubmit={() => {}} enableReinitialize>
+      <Formik
+        initialValues={{ ...defaultFormLease, ...formLease }}
+        onSubmit={() => {}}
+        enableReinitialize
+      >
         <FieldArray
           name={withNameSpace(nameSpace, 'properties')}
           render={renderProps => (
@@ -234,4 +242,4 @@ export const FormSectionOne = styled(FormSection)`
   }
 `;
 
-export default Tenant;
+export default ViewTenantForm;

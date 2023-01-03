@@ -1,25 +1,27 @@
 import { ProtectedComponent } from 'components/common/ProtectedComponent';
 import { Claims } from 'constants/claims';
 import { UpdateLeaseContainer } from 'features/leases/detail/LeasePages/details/UpdateLeaseContainer';
-import queryString from 'query-string';
+import { LeaseFormModel } from 'features/leases/models';
+import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
+import { FormikProps } from 'formik';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 
-import Details from './Details';
+import LeaseDetailsForm from './LeaseDetailsForm';
 
-interface IDetailContainerProps {}
-
-const DetailContainer: React.FunctionComponent<
-  React.PropsWithChildren<IDetailContainerProps>
-> = props => {
-  const location = useLocation();
-  const { edit } = queryString.parse(location.search);
-  return !!edit ? (
+const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
+  isEditing,
+  onEdit,
+  formikRef,
+}) => {
+  return !!isEditing && !!onEdit ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
-      <UpdateLeaseContainer />
+      <UpdateLeaseContainer
+        onEdit={onEdit}
+        formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
+      />
     </ProtectedComponent>
   ) : (
-    <Details />
+    <LeaseDetailsForm />
   );
 };
 
