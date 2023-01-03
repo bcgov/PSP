@@ -1,4 +1,3 @@
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IAddLeaseContainerProps } from 'features/leases';
