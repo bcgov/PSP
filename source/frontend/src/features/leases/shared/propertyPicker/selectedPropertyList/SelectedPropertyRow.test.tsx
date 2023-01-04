@@ -19,7 +19,7 @@ const onRemove = jest.fn();
 describe('SelectedPropertyRow component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<ISelectedPropertyRowProps> & { values?: { properties: PropertyForm[] } } = {},
+      Partial<ISelectedPropertyRowProps> & { values?: { properties: IMapProperty[] } } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
@@ -28,7 +28,7 @@ describe('SelectedPropertyRow component', () => {
           <SelectedPropertyRow
             property={
               renderOptions.values?.properties
-                ? renderOptions.values?.properties[0]
+                ? PropertyForm.fromMapProperty(renderOptions.values?.properties[0])
                 : PropertyForm.fromMapProperty({})
             }
             index={renderOptions.index ?? 0}
@@ -83,7 +83,7 @@ describe('SelectedPropertyRow component', () => {
     const {
       component: { getByText },
     } = await setup({
-      values: { properties: mapProperties.map(x => PropertyForm.fromMapProperty(x)) },
+      values: { properties: mapProperties.map(x => x) },
     });
     expect(getByText('PIN: 1234')).toBeVisible();
   });

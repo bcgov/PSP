@@ -4,6 +4,8 @@ import { IMapProperty } from 'components/propertySelector/models';
 import { ModalContext } from 'contexts/modalContext';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
+import { useBcaAddress } from 'features/properties/map/hooks/useBcaAddress';
+import { AddressForm } from 'features/properties/map/shared/models';
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
@@ -31,6 +33,8 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
   const [propertiesToConfirm, setPropertiesToConfirm] = useState<FormLeaseProperty[]>([]);
 
   const [propertyIndexToRemove, setPropertyIndexToRemove] = useState<number | undefined>(undefined);
+
+  const { getPrimaryAddressByPid } = useBcaAddress();
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
@@ -93,8 +97,11 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       const property = newProperties[i];
       const formProperty = FormLeaseProperty.fromMapProperty(property);
 
+      const address = property?.pid ? await getPrimaryAddressByPid(property.pid) : undefined;
+
       // Retrieve the pims id of the property if it exists
       if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
+        formProperty.property.address = address ? AddressForm.fromBcaAddress(address) : undefined;
         const result = await searchProperty(property);
         if (result !== undefined && result.length > 0) {
           formProperty.property.apiId = result[0].id;

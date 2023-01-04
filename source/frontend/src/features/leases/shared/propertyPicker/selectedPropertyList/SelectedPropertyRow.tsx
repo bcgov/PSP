@@ -16,13 +16,12 @@ export interface ISelectedPropertyRowProps {
   property: PropertyForm;
 }
 
-export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
-  nameSpace,
-  onRemove,
-  index,
+export const SelectedPropertyRow: React.FunctionComponent<
+  React.PropsWithChildren<ISelectedPropertyRowProps>
+> = ({ nameSpace, onRemove, index, property }) => {
+  const propertyName = getPropertyName(property.toMapProperty());
   property,
 }) => {
-  const propertyName = getPropertyName(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:

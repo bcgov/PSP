@@ -23,6 +23,9 @@ export const useBcAssessmentLayer = (
   getSummaryWrapper: IResponseWrapper<
     (pid: string) => Promise<AxiosResponse<IBcAssessmentSummary>>
   >;
+  getBcaAddressesWrapper: IResponseWrapper<
+    (pid: string) => Promise<AxiosResponse<IBcAssessmentSummary['ADDRESSES']>>
+  >;
 } => {
   const keycloak = useKeycloakWrapper();
   const logout = keycloak.obj.logout;
@@ -194,12 +197,74 @@ export const useBcAssessmentLayer = (
     ],
   );
 
+  const getBcaAddresses = useCallback(
+    async (pid: string): Promise<AxiosResponse<IBcAssessmentSummary['ADDRESSES'] | undefined>> => {
+      const parsedPid = pidParser(pid);
+      if (parsedPid === undefined) {
+        throw Error(`Unable to parse PID, invalid format: ${pid}`);
+      }
+      if (process.env.NODE_ENV === 'development') {
+        return {
+          data: mockBcAssessmentSummary.ADDRESSES,
+          status: 200,
+          statusText: 'Success',
+          headers: {},
+          config: {},
+        };
+      }
+      let legalDescriptionResponse;
+      try {
+        legalDescriptionResponse = await getLegalDescriptions(
+          { PID_NUMBER: parsedPid.toString() },
+          { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+        );
+      } catch (e: any) {
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          try {
+            // Test to see if the service is at all available.
+            await axios.get(url, { withCredentials: true });
+          } catch (err) {
+            if (axiosError.response === undefined && axiosError.code === undefined) {
+              return { data: undefined, status: 500, statusText: 'Error', headers: {}, config: {} };
+            }
+          }
+        }
+      }
+
+      if (!legalDescriptionResponse?.features?.length) {
+        return { data: undefined, status: 200, statusText: 'Error', headers: {}, config: {} };
+      }
+      let folioId = legalDescriptionResponse?.features[0]?.properties?.FOLIO_ID;
+      let rollNumber = legalDescriptionResponse?.features[0]?.properties?.ROLL_NUMBER;
+
+      if (!folioId || !rollNumber) {
+        return { data: undefined, status: 200, statusText: 'Error', headers: {}, config: {} };
+      }
+
+      const addressResponse = await getAddresses(
+        { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+        { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+      );
+
+      const addresses: IBcAssessmentSummary['ADDRESSES'] =
+        addressResponse?.features?.map((f: { properties: any }) => f.properties ?? {}) ?? [];
+      return { data: addresses, status: 200, statusText: 'Success', headers: {}, config: {} };
+    },
+    [getAddresses, getLegalDescriptions, url],
+  );
+
   const getSummaryWrapper = useApiRequestWrapper<
     (pid: string) => Promise<AxiosResponse<IBcAssessmentSummary>>
   >({ requestFunction: getSummary, requestName: 'BC_ASSESSMENT_SUMMARY' });
 
+  const getBcaAddressesWrapper = useApiRequestWrapper<
+    (pid: string) => Promise<AxiosResponse<IBcAssessmentSummary['ADDRESSES'] | undefined>>
+  >({ requestFunction: getBcaAddresses, requestName: 'BC_ASSESSMENT_ADDRESSES' });
+
   return {
     getSummaryWrapper,
+    getBcaAddressesWrapper,
   };
 };
 

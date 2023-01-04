@@ -6,7 +6,8 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, FormikProps } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 
-import { PropertyForm } from '../../shared/models';
+import { useBcaAddress } from '../../hooks/useBcaAddress';
+import { AddressForm, PropertyForm } from '../../shared/models';
 import { AcquisitionForm } from './models';
 
 interface AcquisitionPropertiesProp {
@@ -17,6 +18,7 @@ export const AcquisitionProperties: React.FunctionComponent<
   React.PropsWithChildren<AcquisitionPropertiesProp>
 > = ({ formikProps }) => {
   const { values } = formikProps;
+  const { getPrimaryAddressByPid } = useBcaAddress();
 
   return (
     <>
@@ -32,11 +34,17 @@ export const AcquisitionProperties: React.FunctionComponent<
               <Col>
                 <MapSelectorContainer
                   addSelectedProperties={(newProperties: IMapProperty[]) => {
-                    newProperties.forEach((property, index) => {
+                    newProperties.forEach(async (property, index) => {
                       const formProperty = PropertyForm.fromMapProperty(property);
                       if (values.properties?.length === 0 && index === 0) {
                         formikProps.setFieldValue(`region`, formProperty.region);
                       }
+                      const address = property?.pid
+                        ? await getPrimaryAddressByPid(property.pid)
+                        : undefined;
+                      formProperty.address = address
+                        ? AddressForm.fromBcaAddress(address)
+                        : undefined;
                       push(formProperty);
                     });
                   }}
@@ -52,7 +60,7 @@ export const AcquisitionProperties: React.FunctionComponent<
                   onRemove={() => remove(index)}
                   nameSpace={`properties.${index}`}
                   index={index}
-                  property={property}
+                  property={property.toMapProperty()}
                 />
               ))}
               {formikProps.values.properties.length === 0 && <span>No Properties selected</span>}

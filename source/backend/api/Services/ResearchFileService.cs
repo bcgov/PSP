@@ -21,6 +21,7 @@ namespace Pims.Api.Services
         private readonly IResearchFilePropertyRepository _researchFilePropertyRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
+        private readonly ILookupRepository _lookupRepository;
 
         public ResearchFileService(
             ClaimsPrincipal user,
@@ -28,7 +29,8 @@ namespace Pims.Api.Services
             IResearchFileRepository researchFileRepository,
             IResearchFilePropertyRepository researchFilePropertyRepository,
             IPropertyRepository propertyRepository,
-            ICoordinateTransformService coordinateService)
+            ICoordinateTransformService coordinateService,
+            ILookupRepository lookupRepository)
         {
             _user = user;
             _logger = logger;
@@ -36,6 +38,7 @@ namespace Pims.Api.Services
             _researchFilePropertyRepository = researchFilePropertyRepository;
             _propertyRepository = propertyRepository;
             _coordinateService = coordinateService;
+            _lookupRepository = lookupRepository;
         }
 
         public PimsResearchFile GetById(long id)
@@ -202,6 +205,16 @@ namespace Pims.Api.Services
             property.SurplusDeclarationTypeCode = "UNKNOWN";
 
             property.IsPropertyOfInterest = true;
+
+            if(property.Address != null)
+            {
+                var provinceId = _lookupRepository.GetProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                if(provinceId.HasValue)
+                {
+                    property.Address.ProvinceStateId = provinceId.Value;
+                }
+                property.Address.CountryId = _lookupRepository.GetCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+            }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;

@@ -1,3 +1,4 @@
+import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
 import { IAddress } from 'interfaces';
 import { Api_Address } from 'models/api/Address';
 
@@ -104,3 +105,22 @@ export const formatStreetAddress = (address?: IAddress) => {
   ];
   return values.filter(text => text !== '').join(' ');
 };
+
+/**
+ * Provides a formatted street address as a string.
+ * Combines data from a BC assessment address into a formatted address string.
+ *
+ * @param address Address object from bc assessment.
+ * @returns Civic address string value.
+ */
+export const formatBcaAddress = (address?: IBcAssessmentSummary['ADDRESSES'][0]) =>
+  [
+    address?.UNIT_NUMBER,
+    address?.STREET_NUMBER,
+    address?.STREET_DIRECTION_PREFIX,
+    address?.STREET_NAME,
+    address?.STREET_TYPE,
+    address?.STREET_DIRECTION_SUFFIX,
+  ]
+    .filter(a => !!a)
+    .join(' ');

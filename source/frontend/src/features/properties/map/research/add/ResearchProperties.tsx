@@ -7,11 +7,13 @@ import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { PropertyForm } from '../../shared/models';
+import { useBcaAddress } from '../../hooks/useBcaAddress';
+import { AddressForm, PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 
 const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { values } = useFormikContext<ResearchForm>();
+  const { getPrimaryAddressByPid } = useBcaAddress();
 
   return (
     <>
@@ -28,8 +30,14 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
               <Col>
                 <MapSelectorContainer
                   addSelectedProperties={(newProperties: IMapProperty[]) => {
-                    newProperties.forEach(property => {
+                    newProperties.forEach(async property => {
                       const formProperty = PropertyForm.fromMapProperty(property);
+                      const address = property?.pid
+                        ? await getPrimaryAddressByPid(property.pid)
+                        : undefined;
+                      formProperty.address = address
+                        ? AddressForm.fromBcaAddress(address)
+                        : undefined;
                       push(formProperty);
                     });
                   }}
@@ -45,7 +53,7 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
                   onRemove={() => remove(index)}
                   nameSpace={`properties.${index}`}
                   index={index}
-                  property={property}
+                  property={property.toMapProperty()}
                 />
               ))}
               {values.properties.length === 0 && <span>No Properties selected</span>}
