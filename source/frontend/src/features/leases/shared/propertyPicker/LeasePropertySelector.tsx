@@ -91,31 +91,36 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
   const processAddedProperties = async (newProperties: IMapProperty[]) => {
     let needsWarning = false;
-    const newFormProperties = [];
+    const newFormProperties: FormLeaseProperty[] = [];
 
-    for (let i = 0; i < newProperties.length; i++) {
-      const property = newProperties[i];
-      const formProperty = FormLeaseProperty.fromMapProperty(property);
+    newProperties.reduce(async (promise, property, i) => {
+      return promise.then(async () => {
+        const property = newProperties[i];
+        const formProperty = FormLeaseProperty.fromMapProperty(property);
 
-      const address = property?.pid ? await getPrimaryAddressByPid(property.pid) : undefined;
+        const bcaSummary = property?.pid ? await getPrimaryAddressByPid(property.pid) : undefined;
 
-      // Retrieve the pims id of the property if it exists
-      if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
-        formProperty.property.address = address ? AddressForm.fromBcaAddress(address) : undefined;
-        const result = await searchProperty(property);
-        if (result !== undefined && result.length > 0) {
-          formProperty.property.apiId = result[0].id;
+        // Retrieve the pims id of the property if it exists
+        if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
+          formProperty.property.address = bcaSummary?.address
+            ? AddressForm.fromBcaAddress(bcaSummary?.address)
+            : undefined;
+          formProperty.property.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
+          const result = await searchProperty(property);
+          if (result !== undefined && result.length > 0) {
+            formProperty.property.apiId = result[0].id;
+          }
         }
-      }
 
-      newFormProperties.push(formProperty);
+        newFormProperties.push(formProperty);
 
-      if (formProperty.property?.apiId === undefined) {
-        needsWarning = needsWarning || true;
-      } else {
-        needsWarning = needsWarning || false;
-      }
-    }
+        if (formProperty.property?.apiId === undefined) {
+          needsWarning = needsWarning || true;
+        } else {
+          needsWarning = needsWarning || false;
+        }
+      });
+    }, Promise.resolve());
 
     if (needsWarning) {
       setPropertiesToConfirm(newFormProperties);

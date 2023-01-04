@@ -30,16 +30,19 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
               <Col>
                 <MapSelectorContainer
                   addSelectedProperties={(newProperties: IMapProperty[]) => {
-                    newProperties.forEach(async property => {
-                      const formProperty = PropertyForm.fromMapProperty(property);
-                      const address = property?.pid
-                        ? await getPrimaryAddressByPid(property.pid)
-                        : undefined;
-                      formProperty.address = address
-                        ? AddressForm.fromBcaAddress(address)
-                        : undefined;
-                      push(formProperty);
-                    });
+                    newProperties.reduce(async (promise, property) => {
+                      return promise.then(async () => {
+                        const formProperty = PropertyForm.fromMapProperty(property);
+                        if (property.pid) {
+                          const bcaSummary = await getPrimaryAddressByPid(property.pid);
+                          formProperty.address = bcaSummary?.address
+                            ? AddressForm.fromBcaAddress(bcaSummary?.address)
+                            : undefined;
+                          formProperty.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
+                        }
+                        push(formProperty);
+                      });
+                    }, Promise.resolve());
                   }}
                   modifiedProperties={values.properties}
                 />
