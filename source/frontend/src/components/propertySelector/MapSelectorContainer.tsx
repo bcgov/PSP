@@ -30,7 +30,6 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
     SelectorTabNames.map,
   );
   const modifiedMapProperties = modifiedProperties.map(mp => mp.toMapProperty());
-  console.log(modifiedProperties);
   const [lastSelectedProperty, setLastSelectedProperty] = React.useState<IMapProperty | undefined>(
     modifiedProperties?.length === 1 && modifiedProperties[0].apiId === undefined // why? Because create from map needs to show the info differently
       ? modifiedMapProperties[0]
