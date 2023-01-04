@@ -13,7 +13,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import InsuranceDetailsView from './details/Insurance';
 import InsuranceEditContainer from './edit/EditContainer';
 
-const InsuranceContainer: React.FunctionComponent = () => {
+const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { hasClaim } = useKeycloakWrapper();
   const [showCancelModal, setShowCancelModal] = useState(false);
 

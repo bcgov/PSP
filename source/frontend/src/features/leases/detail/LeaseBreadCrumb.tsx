@@ -15,11 +15,9 @@ interface ILeaseAndLicenseBreadCrumbProps {
  * breadcrumb navigation for leases pages.
  * @param {ILeaseAndLicenseBreadCrumbProps} param0
  */
-export const LeaseBreadCrumb: React.FunctionComponent<ILeaseAndLicenseBreadCrumbProps> = ({
-  leaseId,
-  leasePage,
-  onClickManagement,
-}) => {
+export const LeaseBreadCrumb: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseAndLicenseBreadCrumbProps>
+> = ({ leaseId, leasePage, onClickManagement }) => {
   return (
     <CommonStyled.Breadcrumb>
       <Breadcrumb.Item onClick={onClickManagement}>Management</Breadcrumb.Item>

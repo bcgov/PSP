@@ -3,7 +3,7 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { useLeaseDetail } from 'features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from 'features/leases/hooks/useUpdateLease';
-import { FormLease } from 'features/leases/models';
+import { LeaseFormModel } from 'features/leases/models';
 import { FormikProps } from 'formik/dist/types';
 import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
@@ -20,7 +20,9 @@ interface IAddLeaseParams {
   userOverride?: string;
 }
 
-export const UpdateLeaseContainer: React.FunctionComponent = props => {
+export const UpdateLeaseContainer: React.FunctionComponent<
+  React.PropsWithChildren<unknown>
+> = props => {
   const { lease } = useContext(LeaseStateContext);
   const {
     getApiLeaseById: { execute, response: apiLease, loading },
@@ -36,15 +38,15 @@ export const UpdateLeaseContainer: React.FunctionComponent = props => {
     const exec = async () => {
       if (leaseId) {
         var lease = await execute(leaseId);
-        formikRef?.current?.resetForm({ values: FormLease.fromApi(lease) });
+        formikRef?.current?.resetForm({ values: LeaseFormModel.fromApi(lease) });
       }
     };
     exec();
   }, [execute, leaseId]);
 
-  const formikRef = useRef<FormikProps<FormLease>>(null);
+  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
 
-  const onSubmit = async (lease: FormLease) => {
+  const onSubmit = async (lease: LeaseFormModel) => {
     try {
       const leaseToUpdate = lease.toApi();
 
@@ -71,7 +73,7 @@ export const UpdateLeaseContainer: React.FunctionComponent = props => {
       <UpdateLeaseForm
         onCancel={() => history.push(`/lease/${apiLease?.id}`)}
         onSubmit={onSubmit}
-        initialValues={FormLease.fromApi(apiLease)}
+        initialValues={LeaseFormModel.fromApi(apiLease)}
         formikRef={formikRef}
       />
       <GenericModal

@@ -4,6 +4,7 @@ import { ColumnWithProps } from 'components/Table';
 import { DateTimeCell } from 'components/Table/DateCell';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+import { stringToFragment } from 'utils';
 
 import { RowActions } from '../components/RowActions';
 import { FormUser } from '../models';
@@ -71,7 +72,7 @@ export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[]
     minWidth: 200,
     Cell: (props: CellProps<FormUser>) => {
       const rolesString = props.row?.original?.roles?.map(userRole => userRole?.name);
-      return rolesString?.join(', ');
+      return stringToFragment(rolesString?.join(', '));
     },
   },
   {
@@ -84,7 +85,7 @@ export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[]
       const regionsString = props.row?.original?.regions?.map(
         regionUser => regionUser?.description,
       );
-      return regionsString?.join(', ');
+      return stringToFragment(regionsString?.join(', '));
     },
   },
   {

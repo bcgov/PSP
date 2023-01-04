@@ -28,7 +28,9 @@ export interface IContactFilterComponentProps {
  * Filter bar for contact list.
  * @param {IContactFilterComponentProps} param0
  */
-export const ContactFilterComponent: React.FunctionComponent<IContactFilterComponentProps> = ({
+export const ContactFilterComponent: React.FunctionComponent<
+  React.PropsWithChildren<IContactFilterComponentProps>
+> = ({
   filter,
   setFilter,
   showActiveSelector,

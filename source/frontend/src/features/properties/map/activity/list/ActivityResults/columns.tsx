@@ -4,12 +4,13 @@ import { ColumnWithProps, renderTypeCode } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
-import { Api_Activity, Api_ActivityTemplate } from 'models/api/Activity';
+import { Api_Activity, Api_ActivityTemplate, Api_PropertyActivity } from 'models/api/Activity';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { FaTrash } from 'react-icons/fa';
 import { ImEye } from 'react-icons/im';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
+import { stringToFragment } from 'utils';
 
 export function createActivityTableColumns(
   onShowActivity: (activity: Api_Activity) => void,
@@ -32,7 +33,7 @@ export function createActivityTableColumns(
             {cellProps.value?.activityTemplateTypeCode?.description ?? ''}
           </LinkButton>
         ) : (
-          cellProps.value?.activityTemplateTypeCode?.description ?? ''
+          stringToFragment(cellProps.value?.activityTemplateTypeCode?.description ?? '')
         );
       },
     },
@@ -48,19 +49,19 @@ export function createActivityTableColumns(
       accessor: 'actInstPropRsrchFiles',
       width: 20,
       maxWidth: 30,
-      Cell: (cellProps: CellProps<Api_Activity, Api_ActivityTemplate>) => {
+      Cell: (cellProps: CellProps<Api_Activity, Api_PropertyActivity[] | undefined>) => {
         const activityProperties =
           cellProps.row.original.actInstPropAcqFiles?.length !== 0
             ? cellProps.row.original.actInstPropAcqFiles ?? []
             : cellProps.row.original.actInstPropRsrchFiles ?? [];
         if (fileProperties.length === activityProperties?.length) {
-          return 'All';
+          return stringToFragment('All');
         }
         const activityPropertyIndexes = activityProperties
           .filter(ap => ap?.propertyFileId !== undefined)
           .map(ap => getFilePropertyIndexById(ap.propertyFileId as number) + 1)
           .sort((a: number, b: number) => a - b);
-        return activityPropertyIndexes.join(', ');
+        return stringToFragment(activityPropertyIndexes.join(', '));
       },
     },
     {

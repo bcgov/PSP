@@ -20,13 +20,9 @@ export interface ILeasePageFormProps {
  * Wraps the lease page in a formik form
  * @param {ILeasePageFormProps} param0
  */
-export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
-  leasePage,
-  lease,
-  refreshLease,
-  setLease,
-  children,
-}) => {
+export const LeasePageForm: React.FunctionComponent<
+  React.PropsWithChildren<ILeasePageFormProps>
+> = ({ leasePage, lease, refreshLease, setLease, children }) => {
   const location = useLocation();
   const { edit } = queryString.parse(location.search);
 

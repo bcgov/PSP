@@ -14,7 +14,9 @@ export interface PersonViewProps {
   person: IContactPerson;
 }
 
-const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
+const PersonView: React.FunctionComponent<React.PropsWithChildren<PersonViewProps>> = ({
+  person,
+}) => {
   let personAddresses: AddressField[];
   if (person.addresses === undefined) {
     personAddresses = [];

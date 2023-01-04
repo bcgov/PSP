@@ -33,7 +33,7 @@ describe('useAddNotesFormManagement hook', () => {
           onSuccess,
         }),
       {
-        wrapper: props => (
+        wrapper: (props: React.PropsWithChildren) => (
           <TestCommonWrapper store={mockStore} history={history}>
             {props.children}
           </TestCommonWrapper>

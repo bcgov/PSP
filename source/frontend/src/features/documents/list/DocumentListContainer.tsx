@@ -15,7 +15,9 @@ interface IDocumentListContainerProps {
   addButtonText?: string;
 }
 
-const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps> = props => {
+const DocumentListContainer: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentListContainerProps>
+> = props => {
   const isMounted = useIsMounted();
 
   const [documentResults, setDocumentResults] = useState<Api_DocumentRelationship[]>([]);

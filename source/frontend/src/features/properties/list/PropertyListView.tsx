@@ -32,7 +32,7 @@ const defaultFilterValues: IPropertyFilter = {
   address: '',
 };
 
-const PropertyListView: React.FC = () => {
+const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
   const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
 
@@ -150,6 +150,7 @@ const PropertyListView: React.FC = () => {
       <Container fluid className="filter-container border-bottom">
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
+            useGeocoder={false}
             defaultFilter={defaultFilterValues}
             onChange={handleFilterChange}
             sort={sort}

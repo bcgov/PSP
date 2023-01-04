@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNoteResponse } from 'mocks/mockNoteResponses';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fakeText, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { NoteForm } from '../models';
 import { IUpdateNoteFormModalProps, UpdateNoteFormModal } from './UpdateNoteFormModal';
@@ -125,7 +125,7 @@ describe('UpdateNoteFormModal component', () => {
     initialValues.note = 'foo bar baz';
     const { getSaveButton } = setup({ initialValues });
 
-    await waitFor(() => userEvent.click(getSaveButton()));
+    await act(() => userEvent.click(getSaveButton()));
 
     expect(onSaveClick).toBeCalled();
     expect(validationSchema).toBeCalled();

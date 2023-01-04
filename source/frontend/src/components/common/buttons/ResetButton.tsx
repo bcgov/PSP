@@ -8,7 +8,7 @@ import { Button, ButtonProps } from '.';
  * Button displaying a reset/recycle icon, used to reset form data.
  * @param param0
  */
-export const ResetButton: React.FC<ButtonProps> = ({ ...props }) => {
+export const ResetButton: React.FC<React.PropsWithChildren<ButtonProps>> = ({ ...props }) => {
   return (
     <TooltipWrapper toolTipId="map-filter-reset-tooltip" toolTip="Reset Filter">
       <Button

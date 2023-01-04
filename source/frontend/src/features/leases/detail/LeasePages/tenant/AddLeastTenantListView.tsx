@@ -8,10 +8,9 @@ interface IAddLeaseTenantListViewProps {
   setSelectedTenants: (selectedTenants: IContactSearchResult[]) => void;
 }
 
-export const AddLeaseTenantListView: React.FunctionComponent<IAddLeaseTenantListViewProps> = ({
-  selectedTenants,
-  setSelectedTenants,
-}) => {
+export const AddLeaseTenantListView: React.FunctionComponent<
+  React.PropsWithChildren<IAddLeaseTenantListViewProps>
+> = ({ selectedTenants, setSelectedTenants }) => {
   return (
     <>
       <Styled.TenantH2>Step 1 - Select Tenant(s)</Styled.TenantH2>

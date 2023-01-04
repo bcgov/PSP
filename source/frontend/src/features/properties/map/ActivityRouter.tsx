@@ -10,7 +10,9 @@ interface IActivityRouterProps {
   setShowActionBar: (show: boolean) => void;
 }
 
-export const ActivityRouter: React.FunctionComponent<IActivityRouterProps> = React.memo(props => {
+export const ActivityRouter: React.FunctionComponent<
+  React.PropsWithChildren<IActivityRouterProps>
+> = React.memo(props => {
   const location = useLocation();
   const history = useHistory();
 

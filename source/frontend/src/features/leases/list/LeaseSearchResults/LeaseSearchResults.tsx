@@ -26,7 +26,9 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     width: 10,
     maxWidth: 20,
     Cell: (props: CellProps<ILeaseSearchResult>) => (
-      <Link to={`/lease/${props.row.original.id}`}>{props.row.original.lFileNo}</Link>
+      <Link to={`/mapview/sidebar/lease/${props.row.original.id}`}>
+        {props.row.original.lFileNo}
+      </Link>
     ),
   },
   {

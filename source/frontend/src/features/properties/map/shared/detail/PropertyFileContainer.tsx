@@ -16,13 +16,13 @@ import { useState } from 'react';
 export interface IPropertyFileContainerProps {
   fileProperty: Api_PropertyFile;
   setEditFileProperty: () => void;
-  View: React.FunctionComponent<IInventoryTabsProps>;
+  View: React.FunctionComponent<React.PropsWithChildren<IInventoryTabsProps>>;
   customTabs: TabInventoryView[];
   defaultTab: InventoryTabNames;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
-  IPropertyFileContainerProps
+  React.PropsWithChildren<IPropertyFileContainerProps>
 > = props => {
   const pid = props.fileProperty?.property?.pid;
   const id = props.fileProperty?.property?.id;

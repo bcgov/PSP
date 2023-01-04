@@ -18,7 +18,7 @@ export interface IDetailTermsProps {
  * Display all term related information in a table.
  * @param param0
  */
-export const DetailTerms: React.FunctionComponent<IDetailTermsProps> = ({
+export const DetailTerms: React.FunctionComponent<React.PropsWithChildren<IDetailTermsProps>> = ({
   disabled,
   nameSpace,
 }) => {

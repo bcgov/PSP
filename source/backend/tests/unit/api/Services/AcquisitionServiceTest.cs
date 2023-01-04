@@ -451,7 +451,7 @@ namespace Pims.Api.Test.Services
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
-            propertyRepository.Setup(x => x.GetAssociations(It.IsAny<long>())).Returns(property);
+            propertyRepository.Setup(x => x.GetAssociations(It.IsAny<long>())).Returns(EntityHelper.CreateProperty(12345));
 
             // Act
             service.UpdateProperties(acqFile);

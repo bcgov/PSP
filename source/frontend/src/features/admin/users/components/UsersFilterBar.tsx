@@ -16,7 +16,7 @@ interface IProps {
   onChange: (filter: IUsersFilter) => void;
 }
 
-export const UsersFilterBar: React.FC<IProps> = ({ values, onChange }) => {
+export const UsersFilterBar: React.FC<React.PropsWithChildren<IProps>> = ({ values, onChange }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const roles = getOptionsByType(API.ROLE_TYPES);
   const regions = getOptionsByType(API.REGION_TYPES);

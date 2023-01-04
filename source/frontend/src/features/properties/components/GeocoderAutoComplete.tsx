@@ -31,7 +31,9 @@ interface IGeocoderAutoCompleteProps {
   outerClassName?: string;
 }
 
-export const GeocoderAutoComplete: React.FC<IGeocoderAutoCompleteProps> = ({
+export const GeocoderAutoComplete: React.FC<
+  React.PropsWithChildren<IGeocoderAutoCompleteProps>
+> = ({
   field,
   placeholder,
   disabled,
@@ -52,6 +54,7 @@ export const GeocoderAutoComplete: React.FC<IGeocoderAutoCompleteProps> = ({
   const { handleBlur } = useFormikContext<any>();
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
   const { searchAddress } = useGeocoderRepository();
+  const [textValue, setTextValue] = React.useState<string | undefined>(value);
   const debouncedSearch = React.useRef(
     debounce(
       async (val: string, abort: boolean) => {
@@ -67,6 +70,7 @@ export const GeocoderAutoComplete: React.FC<IGeocoderAutoCompleteProps> = ({
 
   const onTextChanged = async (val?: string) => {
     onTextChange && onTextChange(val);
+    setTextValue(val);
     if (val && val.length >= 5 && val !== value) {
       debouncedSearch(val, false);
     } else {
@@ -83,6 +87,7 @@ export const GeocoderAutoComplete: React.FC<IGeocoderAutoCompleteProps> = ({
     setOptions([]);
     if (onSelectionChanged) {
       val.fullAddress = (val.fullAddress || '').split(',')[0];
+      setTextValue(val.fullAddress);
       onSelectionChanged(val);
     }
   };
@@ -114,9 +119,10 @@ export const GeocoderAutoComplete: React.FC<IGeocoderAutoCompleteProps> = ({
         >
           <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
             <InputControl
+              data-testid="geocoder-input"
               autoComplete={autoSetting}
               field={field}
-              value={value}
+              value={textValue}
               isInvalid={!!touch && !!error}
               onTextChange={onTextChanged}
               placeholder={placeholder}
@@ -148,7 +154,10 @@ interface IDebounceInputProps extends FormControlProps {
   };
 }
 
-const InputControl: React.FC<IDebounceInputProps> = ({ onTextChange, ...props }) => {
+const InputControl: React.FC<React.PropsWithChildren<IDebounceInputProps>> = ({
+  onTextChange,
+  ...props
+}) => {
   const onChange = (value: string) => {
     onTextChange(value);
   };

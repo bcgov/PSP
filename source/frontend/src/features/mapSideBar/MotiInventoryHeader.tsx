@@ -1,15 +1,15 @@
 import { StyledIconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { IMapProperty } from 'components/propertySelector/models';
 import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
-import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
-import { IMapProperty } from 'features/properties/selector/models';
 import { Api_Property } from 'models/api/Property';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaSearchPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
+import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
 import { HeaderField } from './tabs/HeaderField';
 
@@ -18,7 +18,9 @@ export interface IMotiInventoryHeaderProps {
   onZoom?: (apiProperty?: Api_Property | undefined) => void;
 }
 
-export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
+export const MotiInventoryHeader: React.FunctionComponent<
+  React.PropsWithChildren<IMotiInventoryHeaderProps>
+> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
   const parcelMapData = props.composedProperty.parcelMapWrapper?.response;
   let property: IMapProperty | null = null;

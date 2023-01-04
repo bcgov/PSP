@@ -1,50 +1,33 @@
 import { InlineYesNoSelect } from 'components/common/form/styles';
+import { Section } from 'features/mapSideBar/tabs/Section';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
 
-import { LeaseH3 } from '../detail/styles';
 import * as Styled from './styles';
 
-interface IReferenceSubFormProps {}
-
-const ReferenceSubForm: React.FunctionComponent<IReferenceSubFormProps> = props => {
+const ReferenceSubForm: React.FunctionComponent = () => {
   return (
-    <>
-      <Row>
-        <Col>
-          <LeaseH3>Reference Information</LeaseH3>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Styled.LargeInlineInput label="LIS #:" field="tfaFileNumber" />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Styled.LargeInlineInput label="PS #:" field="psFileNo" />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <InlineYesNoSelect label="Physical lease/license exists:" field="hasPhysicalLicense" />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <InlineYesNoSelect label="Digital lease/license exists:" field="hasDigitalLicense" />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Styled.MediumTextArea
-            label="Location of documents:"
-            field="documentationReference"
-            tooltip="Use this space to paste in links or system paths to relevant documents"
-          />
-        </Col>
-      </Row>
-    </>
+    <Section header="Documentation">
+      <SectionField label="Physical lease/license exists" contentWidth="5">
+        <InlineYesNoSelect field="hasPhysicalLicense" />
+      </SectionField>
+      <SectionField label="Digital lease/license exists" contentWidth="5">
+        <InlineYesNoSelect field="hasDigitalLicense" />
+      </SectionField>
+      <SectionField
+        label="Document location"
+        tooltip="Use this space to paste in links or system paths to relevant documents"
+      >
+        <Styled.MediumTextArea field="documentationReference" />
+      </SectionField>
+
+      <SectionField label="LIS #" labelWidth="2">
+        <Styled.LargeInlineInput field="tfaFileNumber" />
+      </SectionField>
+      <SectionField label="PS #" labelWidth="2">
+        <Styled.LargeInlineInput field="psFileNo" />
+      </SectionField>
+    </Section>
   );
 };
 

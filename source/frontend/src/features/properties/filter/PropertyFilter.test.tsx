@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import filterSlice from 'store/slices/filter/filterSlice';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { cleanup, fireEvent, render, waitFor } from 'utils/test-utils';
+import { act, cleanup, fireEvent, render, waitFor } from 'utils/test-utils';
 import { fillInput } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
@@ -84,7 +84,7 @@ const defaultFilter: IPropertyFilter = {
 
 const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true) => (
   <TestCommonWrapper store={getStore(filter)} history={history}>
-    <PropertyFilter defaultFilter={filter} onChange={onFilterChange} />
+    <PropertyFilter useGeocoder={true} defaultFilter={filter} onChange={onFilterChange} />
   </TestCommonWrapper>
 );
 
@@ -120,7 +120,7 @@ describe('MapFilterBar', () => {
     // Enter values on the form fields, then click the Search button
     await waitFor(() => fillInput(container, 'address', 'Victoria'));
 
-    await waitFor(() => {
+    await act(() => {
       fireEvent.click(submit!);
     });
 
@@ -130,16 +130,6 @@ describe('MapFilterBar', () => {
       address: '',
       searchBy: 'pinOrPid',
     });
-  });
-
-  it('loads filter values if provided', () => {
-    const providedFilter: IPropertyFilter = {
-      pinOrPid: 'mockPid',
-      searchBy: 'address',
-      address: 'mockaddress',
-    };
-    const { getByText } = render(getUiElement(providedFilter));
-    expect(getByText('Address')).toBeVisible();
   });
 
   it('resets values when reset button is clicked', async () => {

@@ -1,53 +1,50 @@
-import Api_TypeCode from 'models/api/TypeCode';
 import * as Yup from 'yup';
 
 import { isLeaseCategoryVisible } from './AdministrationSubForm';
 
-export const LeaseSchema = Yup.object().shape({
-  statusType: Yup.object().shape({ id: Yup.string().required('Required') }),
+export const AddLeaseYupSchema = Yup.object().shape({
+  statusTypeCode: Yup.string().required('Required'),
   startDate: Yup.date().required('Required'),
   expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
-  paymentReceivableType: Yup.object().shape({
-    id: Yup.string().required('Payment Receivable Type is required'),
-  }),
-  region: Yup.object().shape({ id: Yup.string().required('MOTI Region Type is required') }),
-  programType: Yup.object().shape({ id: Yup.string().required('Program Type is required') }),
+  paymentReceivableTypeCode: Yup.string().required('Payment Receivable Type is required'),
+  regionId: Yup.string().required('MOTI Region Type is required'),
+  programTypeCode: Yup.string().required('Program Type is required'),
   motiName: Yup.string().max(200, 'MOTI Contact must be at most 200 characters'),
-  otherProgramType: Yup.string().when('programType', {
-    is: (programType: string) => programType && programType === 'OTHER',
+  otherProgramTypeDescription: Yup.string().when('programTypeCode', {
+    is: (programTypeCode: string) => programTypeCode && programTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most 200 characters'),
     otherwise: Yup.string().nullable(),
   }),
-  type: Yup.object().shape({ id: Yup.string().required('Lease Type is required') }),
+  leaseTypeCode: Yup.string().required('Lease Type is required'),
   hasPhysicalLicense: Yup.string().nullable(),
   hasDigitalLicense: Yup.string().nullable(),
-  otherType: Yup.string().when('type', {
-    is: (type: Api_TypeCode<string>) => type?.id && type.id === 'OTHER',
+  otherLeaseTypeDescription: Yup.string().when('leaseTypeCode', {
+    is: (leaseTypeCode: string) => leaseTypeCode && leaseTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most 200 characters'),
     otherwise: Yup.string().nullable(),
   }),
-  categoryType: Yup.object()
-    .when('type', {
-      is: (type: Api_TypeCode<string>) => type?.id && isLeaseCategoryVisible(type.id),
-      then: Yup.object().shape({ id: Yup.string().required('Category type required') }),
-      otherwise: Yup.object().nullable(),
+  categoryTypeCode: Yup.string()
+    .when('leaseTypeCode', {
+      is: (leaseTypeCode: string) => leaseTypeCode && isLeaseCategoryVisible(leaseTypeCode),
+      then: Yup.string().required('Category type required'),
+      otherwise: Yup.string().nullable(),
     })
     .nullable()
-    .default({}),
-  otherCategoryType: Yup.string().when('categoryType', {
-    is: (categoryType: string) => categoryType && categoryType === 'OTHER',
+    .default(''),
+  otherCategoryTypeDescription: Yup.string().when('categoryTypeCode', {
+    is: (categoryTypeCode: string) => categoryTypeCode && categoryTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most 200 characters'),
     otherwise: Yup.string().nullable(),
   }),
-  purposeType: Yup.object().shape({ id: Yup.string().required('Purpose Type is required') }),
-  otherPurposeType: Yup.string().when('purposeType', {
-    is: (purposeType: string) => purposeType && purposeType === 'OTHER',
+  purposeTypeCode: Yup.string().required('Purpose Type is required'),
+  otherPurposeTypeDescription: Yup.string().when('purposeTypeCode', {
+    is: (purposeTypeCode: string) => purposeTypeCode && purposeTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most 200 characters'),
@@ -61,43 +58,4 @@ export const LeaseSchema = Yup.object().shape({
   note: Yup.string().max(4000, 'Notes must be at most 4000 characters'),
   tfaFileNumber: Yup.string().max(50, `LIS # must be at most 50 characters`),
   psFileNo: Yup.string().max(50, 'PS # must be at most 50 characters'),
-  properties: Yup.array().of(
-    Yup.object().shape({
-      property: Yup.object().shape(
-        {
-          pid: Yup.string().when(['pin', 'coordinates'], {
-            is: (pin: string, coordinates: string) => !!pin || !!coordinates,
-            then: Yup.string().nullable(),
-            otherwise: Yup.string()
-              .required('valid PID, PIN or Coordinates required')
-              .max(10, 'PID must be at most 10 characters'),
-          }),
-          pin: Yup.string().when(['pid', 'coordinates'], {
-            is: (pid: string, coordinates: string) => !!pid || !!coordinates,
-            then: Yup.string().nullable(),
-            otherwise: Yup.string()
-              .required('valid PID, PIN or Coordinates required')
-              .max(10, 'PIN must be at most 10 characters'),
-          }),
-          coordinates: Yup.string().when(['pid', 'pin'], {
-            is: (pid: string, pin: string) => !!pid || !!pin,
-            then: Yup.string().nullable(),
-            otherwise: Yup.string()
-              .required('valid PID, PIN or Coordinates required')
-              .max(50, 'Coordinates must be at most 50 characters'),
-          }),
-          landArea: Yup.number().max(
-            Number.MAX_VALUE,
-            `Land Area must be less than ${Number.MAX_VALUE}`,
-          ),
-        },
-        [
-          ['pid', 'pin'],
-          ['pin', 'pid'],
-          ['pid', 'coordinates'],
-          ['pin', 'coordinates'],
-        ],
-      ),
-    }),
-  ),
 });

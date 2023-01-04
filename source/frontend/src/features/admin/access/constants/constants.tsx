@@ -49,11 +49,15 @@ export const getAccessRequestColumns = (
     accessor: 'accessRequestStatusTypeCodeId',
     align: 'left',
     width: 100,
-    Cell: (props: CellProps<FormAccessRequest>) => {
-      return AccessStatusDisplayMapper[
-        props.row.original.accessRequestStatusTypeCodeId as AccessRequestStatus
-      ];
-    },
+    Cell: (props: CellProps<FormAccessRequest>) => (
+      <>
+        {
+          AccessStatusDisplayMapper[
+            props.row.original.accessRequestStatusTypeCodeId as AccessRequestStatus
+          ]
+        }
+      </>
+    ),
   },
   {
     Header: 'Role',

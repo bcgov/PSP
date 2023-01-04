@@ -24,11 +24,9 @@ interface IPropertySearchToggleProps {
  * SearchToggle displaying two buttons which act like a toggle to navigate from the map to the property list view (and vise-versa).
  * @param param0
  */
-export const PropertySearchToggle: React.FunctionComponent<IPropertySearchToggleProps> = ({
-  toggle = SearchToggleOption.Map,
-  toolId,
-  onPageToggle,
-}) => {
+export const PropertySearchToggle: React.FunctionComponent<
+  React.PropsWithChildren<IPropertySearchToggleProps>
+> = ({ toggle = SearchToggleOption.Map, toolId, onPageToggle }) => {
   return (
     <StyledToggle toggle={toggle}>
       <StyledNav>

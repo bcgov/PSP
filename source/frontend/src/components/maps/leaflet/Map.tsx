@@ -6,7 +6,7 @@ import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { LatLngBounds, Map as LeafletMap } from 'leaflet';
+import { LatLngBounds, Map as LeafletMap, Popup as LeafletPopup, PopupEvent } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -59,9 +59,18 @@ const defaultFilterValues: IPropertyFilter = {
   searchBy: 'pinOrPid',
   pinOrPid: '',
   address: '',
+  latitude: '',
+  longitude: '',
 };
 
-const whitelistedFilterKeys = ['PID', 'PIN', 'STREET_ADDRESS_1', 'LOCATION'];
+const whitelistedFilterKeys = [
+  'PID',
+  'PIN',
+  'STREET_ADDRESS_1',
+  'LOCATION',
+  'latitude',
+  'longitude',
+];
 
 /**
  * Converts the map filter to a geo search filter.
@@ -72,8 +81,11 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
   return {
     PID: pinOrPidValue,
-    PIN: undefined,
+    PIN: pinOrPidValue,
     STREET_ADDRESS_1: filter.address,
+    latitude: filter.latitude,
+    longitude: filter.longitude,
+    forceExactMatch: true,
   };
 };
 
@@ -83,7 +95,7 @@ const defaultBounds = new LatLngBounds([60.09114547, -119.49609429], [48.7837042
  * Creates a Leaflet map and by default includes a number of preconfigured layers.
  * @param param0
  */
-const Map: React.FC<MapProps> = ({
+const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
   lat,
   lng,
   zoom: zoomProp,
@@ -109,6 +121,8 @@ const Map: React.FC<MapProps> = ({
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
+  // a reference to the layer popup
+  const popupRef = useRef<LeafletPopup>(null);
 
   const { setState, selectedInventoryProperty, selectedFeature } = useContext(MapStateContext);
   const { propertiesLoading } = useContext(PropertyContext);
@@ -205,6 +219,16 @@ const Map: React.FC<MapProps> = ({
     }
   };
 
+  const onPopupClose = (event: PopupEvent) => {
+    if (event.popup === popupRef.current) {
+      setLayerPopup(undefined);
+      setState({
+        type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
+        selectedInventoryProperty: null,
+      });
+    }
+  };
+
   const [layersOpen, setLayersOpen] = React.useState(false);
 
   return (
@@ -213,6 +237,7 @@ const Map: React.FC<MapProps> = ({
       {!showSideBar ? (
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
+            useGeocoder={true}
             defaultFilter={{
               ...defaultFilterValues,
             }}
@@ -231,13 +256,14 @@ const Map: React.FC<MapProps> = ({
           zoom={lastZoom}
           maxZoom={MAP_MAX_ZOOM}
           closePopupOnClick={true}
-          whenCreated={handleMapCreated}
+          ref={handleMapCreated}
           whenReady={handleMapReady}
         >
           <MapEvents
             click={e => showLocationDetails(e.latlng)}
             zoomend={e => setZoom(e.sourceTarget.getZoom())}
             moveend={handleBounds}
+            popupclose={onPopupClose}
           />
           {activeBasemap && (
             <LayerGroup attribution={activeBasemap.attribution}>
@@ -254,15 +280,9 @@ const Map: React.FC<MapProps> = ({
           )}
           {!!layerPopup && (
             <LayerPopup
+              ref={popupRef}
               layerPopup={layerPopup}
               onViewPropertyInfo={onViewPropertyClick}
-              onClose={() => {
-                setLayerPopup(undefined);
-                setState({
-                  type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-                  selectedInventoryProperty: null,
-                });
-              }}
             />
           )}
           <LegendControl />

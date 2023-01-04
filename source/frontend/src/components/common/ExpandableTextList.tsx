@@ -1,5 +1,4 @@
 import { ReactElement, useState } from 'react';
-import styled from 'styled-components';
 
 import { LinkButton } from './buttons';
 
@@ -34,21 +33,12 @@ export function ExpandableTextList<T>({
         </span>
       ))}
       {!!maxCollapsedLength && maxCollapsedLength < items.length && (
-        <StyledLinkButton data-testid="expand" onClick={() => setIsExpanded(collapse => !collapse)}>
+        <LinkButton data-testid="expand" onClick={() => setIsExpanded(collapse => !collapse)}>
           {isExpanded ? 'hide' : `[+${items.length - displayedItemsLength} more...]`}
-        </StyledLinkButton>
+        </LinkButton>
       )}
     </div>
   );
 }
-
-const StyledLinkButton = styled(LinkButton)`
-  &&.btn.btn-link {
-    color: white;
-    &:hover {
-      color: white;
-    }
-  }
-`;
 
 export default ExpandableTextList;

@@ -1,6 +1,5 @@
-import { act, cleanup, render } from '@testing-library/react';
+import { cleanup, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { IApiVersion } from 'hooks/pims-api';
-import React from 'react';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
 
@@ -28,18 +27,15 @@ describe('ApiVersionInfo suite', () => {
   });
 
   it('Displays version component', async () => {
-    await act(async () => {
-      const { container } = render(<ApiVersionInfo />);
-      expect(container).toMatchSnapshot();
-    });
+    const { asFragment, getByText } = render(<ApiVersionInfo />);
+    await waitForElementToBeRemoved(() => getByText('api unavailable'));
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('Displays version information', async () => {
-    await act(async () => {
-      const { findByText } = render(<ApiVersionInfo />);
-      const element = await findByText(`v${defaultVersion.informationalVersion}`);
-      expect(element).toBeInTheDocument();
-      expect(mockGetVersion).toHaveBeenCalledTimes(1);
-    });
+    const { findByText } = render(<ApiVersionInfo />);
+    const element = await findByText(`v${defaultVersion.informationalVersion}`);
+    expect(element).toBeInTheDocument();
+    expect(mockGetVersion).toHaveBeenCalledTimes(1);
   });
 });

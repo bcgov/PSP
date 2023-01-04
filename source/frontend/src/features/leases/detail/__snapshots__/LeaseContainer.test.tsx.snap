@@ -32,21 +32,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
 <div
     class="container"
   />
-  @media only screen and (max-width:1250px) {
-
-}
-
-@media only screen and (max-width:1250px) {
-
-}
-
-@media only screen and (max-width:1250px) {
-
-}
-
-<div
-    class="Toastify"
-  />
   .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -73,6 +58,15 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c1 ol {
   background-color: white;
+}
+
+.c9 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .c4 {
@@ -141,6 +135,14 @@ exports[`LeaseContainer component renders as expected 1`] = `
   min-width: 23rem;
 }
 
+.c3.c3 .btn.btn-link {
+  color: white;
+}
+
+.c3.c3 .btn.btn-link:hover {
+  color: white;
+}
+
 .c16 {
   width: 100%;
   height: 100%;
@@ -207,15 +209,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c5.draft {
   border: 1px solid;
-}
-
-.c9 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .c8 {

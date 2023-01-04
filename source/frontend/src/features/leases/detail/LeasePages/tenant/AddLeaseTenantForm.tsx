@@ -21,14 +21,9 @@ export interface IAddLeaseTenantFormProps {
   formikRef: React.Ref<FormikProps<IFormLease>>;
 }
 
-export const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProps> = ({
-  selectedTenants,
-  setSelectedTenants,
-  onCancel,
-  onSubmit,
-  initialValues,
-  formikRef,
-}) => {
+export const AddLeaseTenantForm: React.FunctionComponent<
+  React.PropsWithChildren<IAddLeaseTenantFormProps>
+> = ({ selectedTenants, setSelectedTenants, onCancel, onSubmit, initialValues, formikRef }) => {
   return (
     <>
       <Styled.TenantH2>Add tenants to this Lease/License</Styled.TenantH2>

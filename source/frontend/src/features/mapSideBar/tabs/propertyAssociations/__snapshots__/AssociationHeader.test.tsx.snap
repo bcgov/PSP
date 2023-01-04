@@ -8,9 +8,6 @@ exports[`AssociationHeader component renders as expected when provided valid dat
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   color: white;
   font-size: 1.5rem;

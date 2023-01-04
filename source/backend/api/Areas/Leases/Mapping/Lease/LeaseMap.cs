@@ -1,6 +1,7 @@
 using System.Linq;
 using Mapster;
 using Pims.Api.Helpers.Extensions;
+using Pims.Api.Models;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
@@ -58,11 +59,11 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.HasPhysicalFile, src => src.HasPhysicalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
-                .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense);
+                .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense)
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<Model.LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)
-                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.LeaseAmount, src => src.Amount)
                 .Map(dest => dest.PimsPropertyLeases, src => src.Properties)
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
@@ -95,6 +96,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.HasPhysicialLicense, src => src.HasPhysicalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
+                .Inherits<BaseAppModel, Entity.IBaseAppEntity>()
                 .IgnoreNullValues(true);
         }
     }

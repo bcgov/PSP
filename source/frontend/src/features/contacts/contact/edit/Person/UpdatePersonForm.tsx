@@ -37,7 +37,7 @@ import { onValidatePerson } from '../../utils/contactUtils';
 /**
  * Formik-connected form to Update Individual Contacts
  */
-export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
+export const UpdatePersonForm: React.FC<React.PropsWithChildren<{ id: number }>> = ({ id }) => {
   const history = useHistory();
   const { updatePerson } = useUpdateContact();
 
@@ -98,16 +98,9 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
 /**
  * Sub-component that is wrapped by Formik
  */
-const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
-  values,
-  errors,
-  touched,
-  dirty,
-  resetForm,
-  submitForm,
-  setFieldValue,
-  initialValues,
-}) => {
+const UpdatePersonComponent: React.FC<
+  React.PropsWithChildren<FormikProps<IEditablePersonForm>>
+> = ({ values, errors, touched, dirty, resetForm, submitForm, setFieldValue, initialValues }) => {
   const history = useHistory();
   const { getOrganization } = useApiContacts();
   const [showConfirmation, setShowConfirmation] = useState(false);

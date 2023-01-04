@@ -4,7 +4,9 @@ import * as React from 'react';
 
 import * as Styled from './styles';
 
-const SelectedTableHeader: React.FC<ISelectedTableHeaderProps> = ({ selectedCount }) => {
+const SelectedTableHeader: React.FC<React.PropsWithChildren<ISelectedTableHeaderProps>> = ({
+  selectedCount,
+}) => {
   return (
     <>
       <Styled.TenantH2>Step 2 - Review Tenant(s)</Styled.TenantH2>

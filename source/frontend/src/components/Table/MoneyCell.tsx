@@ -41,10 +41,10 @@ export const EditableMoneyCell = ({
   );
 };
 
-export const MoneyCell = ({ cell: { value } }: CellProps<IProperty, number | ''>) => (
+export const MoneyCell = ({ cell: { value } }: CellProps<any, number | '' | undefined>) => (
   <div>{value === undefined || value === '' ? '' : formatMoney(value)}</div>
 );
 
-export const AsterixMoneyCell = ({ cell: { value } }: CellProps<IProperty, number | ''>) => (
+export const AsterixMoneyCell = ({ cell: { value } }: CellProps<any, number | '' | undefined>) => (
   <div>{value === undefined || value === '' ? '' : `${formatMoney(value)} *`}</div>
 );

@@ -1,4 +1,4 @@
-import { DraftCircleNumber } from 'features/properties/selector/components/DraftCircleNumber';
+import { DraftCircleNumber } from 'components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { IProperty } from 'interfaces';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
 import React from 'react';
@@ -10,6 +10,30 @@ import { ICluster, PointFeature } from '../types';
 // parcel icon (green)
 export const parcelIcon = L.icon({
   iconUrl: require('assets/images/pins/land-reg.png') ?? 'assets/images/pins/land-reg.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// not owned property icon (red)
+export const notOwnedPropertyIcon = L.icon({
+  iconUrl:
+    require('assets/images/pins/marker-info-orange.png') ??
+    'assets/images/pins/marker-info-orange.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// not owned property icon (orange)
+export const notOwnedPropertyIconSelect = L.icon({
+  iconUrl:
+    require('assets/images/pins/marker-info-orange-highlight.png') ??
+    'assets/images/pins/marker-info-orange-highlight.png',
   shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -96,8 +120,16 @@ export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
     } else {
       return propertyOfInterestIcon;
     }
-  } else if (selected) {
-    return parcelIconSelect;
+  }
+  if (feature.properties.PROPERTY_ID || feature.properties.id) {
+    if (selected) {
+      return parcelIconSelect;
+    }
+  } else {
+    if (selected) {
+      return notOwnedPropertyIconSelect;
+    }
+    return notOwnedPropertyIcon;
   }
   return parcelIcon;
 };
@@ -187,8 +219,12 @@ export const asProperty = (point: PointFeature): IProperty => {
  * The resulting filter is URL-encoded
  * @param object an object to convert to a cql filter string.
  */
-export const toCqlFilter = (object: Record<string, any>, pidOverride?: boolean) => {
-  const cqlValue: string = toCqlFilterValue(object, pidOverride);
+export const toCqlFilter = (
+  object: Record<string, any>,
+  pidOverride?: boolean,
+  forcePerfectMatch?: boolean,
+) => {
+  const cqlValue: string = toCqlFilterValue(object, pidOverride, forcePerfectMatch);
   return cqlValue.length ? `cql_filter=${encodeURIComponent(cqlValue)}` : '';
 };
 
@@ -219,5 +255,6 @@ export const toCqlFilterValue = (
       }
     }
   });
-  return cql.length ? cql.join(' AND ') : '';
+
+  return cql.length ? (forceExactMatch ? cql.join(' OR ') : cql.join(' AND ')) : '';
 };

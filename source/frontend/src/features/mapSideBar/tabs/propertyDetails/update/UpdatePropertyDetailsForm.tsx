@@ -30,7 +30,7 @@ export interface IUpdatePropertyDetailsFormProps {
 }
 
 export const UpdatePropertyDetailsForm: React.FunctionComponent<
-  IUpdatePropertyDetailsFormProps
+  React.PropsWithChildren<IUpdatePropertyDetailsFormProps>
 > = ({ formikProps }) => {
   const { values } = useFormikContext<UpdatePropertyDetailsFormModel>();
 

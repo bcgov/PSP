@@ -18,7 +18,7 @@ export interface IPropertyAssociationTabViewProps {
 }
 
 const PropertyAssociationTabView: React.FunctionComponent<
-  IPropertyAssociationTabViewProps
+  React.PropsWithChildren<IPropertyAssociationTabViewProps>
 > = props => {
   return (
     <StyledSummarySection>

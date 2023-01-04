@@ -144,6 +144,7 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
   tableToolbarText?: string;
   manualPagination?: boolean;
   isSingleSelect?: boolean;
+  disableSelection?: boolean;
   // Limit where you would like an expansion button to appear based off this props criteria
   canRowExpand?: (val: any) => boolean;
   className?: string;
@@ -175,6 +176,7 @@ const IndeterminateCheckbox = React.forwardRef(
       checked,
       row,
       isSingleSelect,
+      disableSelection,
       ...rest
     }: any,
     ref,
@@ -217,6 +219,7 @@ const IndeterminateCheckbox = React.forwardRef(
     return (
       <>
         <input
+          disabled={disableSelection}
           type={isSingleSelect === true ? 'radio' : 'checkbox'}
           name={isSingleSelect === true ? 'table-radio' : ''}
           ref={resolvedRef}
@@ -287,6 +290,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     renderBodyComponent,
     externalSort,
     isSingleSelect,
+    disableSelection,
   } = props;
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
@@ -350,7 +354,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                 // The header can use the table's getToggleAllRowsSelectedProps method
                 // to render a checkbox
                 Header: ({ getToggleAllRowsSelectedProps }) =>
-                  isSingleSelect !== true && (
+                  isSingleSelect !== true ? (
                     <div>
                       <IndeterminateCheckbox
                         {...getToggleAllRowsSelectedProps()}
@@ -358,9 +362,10 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                         setSelected={setExternalSelectedRows}
                         selectedRef={selectedRowsRef}
                         allDataRef={dataRef}
+                        disableSelection={disableSelection}
                       />
                     </div>
-                  ),
+                  ) : null,
                 // The cell can use the individual row's getToggleRowSelectedProps method
                 // to the render a checkbox
                 Cell: ({ row }: { row: any }) => (
@@ -368,6 +373,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                     <IndeterminateCheckbox
                       {...row.getToggleRowSelectedProps()}
                       row={row}
+                      disableSelection={disableSelection}
                       setSelected={(values: T[]) => {
                         if (isSingleSelect === true) {
                           setExternalSelectedRows && setExternalSelectedRows([...values]);

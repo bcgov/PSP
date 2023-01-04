@@ -26,7 +26,9 @@ export interface IUpdateNoteContainerProps {
   onCancelClick?: () => void;
 }
 
-export const UpdateNoteContainer: React.FC<IUpdateNoteContainerProps> = props => {
+export const UpdateNoteContainer: React.FC<
+  React.PropsWithChildren<IUpdateNoteContainerProps>
+> = props => {
   const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
   const formikRef = useRef<FormikProps<NoteForm>>(null);
 

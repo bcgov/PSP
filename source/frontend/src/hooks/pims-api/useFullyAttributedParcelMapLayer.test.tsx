@@ -17,7 +17,9 @@ const wfsLayer = 'PMBC_PARCEL_POLYGON_FABRIC';
 describe('useFullyAttributedParcelMapLayer hook', () => {
   const setup = () => {
     const { result } = renderHook(() => useFullyAttributedParcelMapLayer(wfsUrl, wfsLayer), {
-      wrapper: props => <TestCommonWrapper store={mockStore}>{props.children}</TestCommonWrapper>,
+      wrapper: (props: React.PropsWithChildren) => (
+        <TestCommonWrapper store={mockStore}>{props.children}</TestCommonWrapper>
+      ),
     });
 
     return result.current;

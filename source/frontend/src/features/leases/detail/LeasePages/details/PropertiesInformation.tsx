@@ -13,10 +13,9 @@ export interface IPropertiesInformationProps {
  * Formik Field array wrapper around leased properties.
  * @param {IPropertiesInformationProps} param0
  */
-export const PropertiesInformation: React.FunctionComponent<IPropertiesInformationProps> = ({
-  nameSpace,
-  disabled,
-}) => {
+export const PropertiesInformation: React.FunctionComponent<
+  React.PropsWithChildren<IPropertiesInformationProps>
+> = ({ nameSpace, disabled }) => {
   const { values } = useFormikContext<ILease>();
   const properties: IProperty[] = getIn(values, withNameSpace(nameSpace, 'properties')) ?? [];
   return (

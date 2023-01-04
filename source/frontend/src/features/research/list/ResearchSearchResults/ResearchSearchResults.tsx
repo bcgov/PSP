@@ -7,6 +7,7 @@ import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+import { stringToFragment } from 'utils';
 
 const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
@@ -26,7 +27,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
           </Link>
         );
       }
-      return props.row.original.rfileNumber;
+      return stringToFragment(props.row.original.rfileNumber);
     },
   },
   {
@@ -45,9 +46,9 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: ({ value }: CellProps<any, Api_ResearchFileProperty[]>) => {
-      const regions = [...new Set(value.map(pr => pr?.property?.region?.description))];
-      return regions.join(', ');
+    Cell: ({ value }: CellProps<any, Api_ResearchFileProperty[] | undefined>) => {
+      const regions = [...new Set(value?.map(pr => pr?.property?.region?.description))];
+      return stringToFragment(regions.join(', '));
     },
   },
   {

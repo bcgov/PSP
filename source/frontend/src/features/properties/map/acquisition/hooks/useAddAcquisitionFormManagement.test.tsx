@@ -23,7 +23,7 @@ const mockStore = configureMockStore([thunk]);
 const onSuccess = jest.fn();
 
 describe('useAddAcquisitionFormManagement hook', () => {
-  const Wrapper: React.FC = props => (
+  const Wrapper: React.FC<React.PropsWithChildren<unknown>> = props => (
     <TestCommonWrapper store={mockStore} history={history}>
       {props.children}
     </TestCommonWrapper>

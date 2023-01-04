@@ -67,8 +67,9 @@ describe('LeaseContainer component', () => {
   it('throws an error if the lease fails to load', async () => {
     getLease.mockRejectedValue({});
     const {
-      component: { findByText },
+      component: { findAllByText },
     } = setup({ store: storeState });
-    expect(await findByText('Failed to load lease, reload this page to try again.')).toBeVisible();
+    const toasts = await findAllByText('Failed to load lease, reload this page to try again.');
+    expect(toasts[0]).toBeVisible();
   });
 });

@@ -17,7 +17,7 @@ import { ActivityModel } from './models';
 export interface IActivityContainerProps {
   activityId?: number;
   onClose: () => void;
-  View: React.FunctionComponent<IActivityTrayProps>;
+  View: React.FunctionComponent<React.PropsWithChildren<IActivityTrayProps>>;
 }
 
 export interface ActivityFile extends TypedFile {
@@ -28,11 +28,9 @@ export interface Activity extends Api_Activity {
   id: number;
 }
 
-export const ActivityContainer: React.FunctionComponent<IActivityContainerProps> = ({
-  activityId,
-  onClose,
-  View,
-}) => {
+export const ActivityContainer: React.FunctionComponent<
+  React.PropsWithChildren<IActivityContainerProps>
+> = ({ activityId, onClose, View }) => {
   const [editMode, setEditMode] = useState(false);
   const [display, setDisplay] = useState(false);
   const [selectedFileProperties, setSelectedFileProperties] = useState<Api_Property[]>([]);

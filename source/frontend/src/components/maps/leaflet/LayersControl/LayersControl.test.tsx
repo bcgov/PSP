@@ -1,12 +1,8 @@
-import 'leaflet';
-import 'leaflet/dist/leaflet.css';
-
-import userEvent from '@testing-library/user-event';
 import L from 'leaflet';
 import { noop } from 'lodash';
 import { useState } from 'react';
 import { cleanup, render, waitFor } from 'utils/test-utils';
-import { createMapContainer, deferred } from 'utils/test-utils';
+import { createMapContainer, deferred, userEvent } from 'utils/test-utils';
 
 import LayersControl from './LayersControl';
 
