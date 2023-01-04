@@ -144,8 +144,9 @@ namespace Pims.Api.Services
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
                     var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
                     var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
-                    if (leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount == 0 && deletedProperty?.Property?.IsPropertyOfInterest == true)
+                    if (leaseAssociationCount + researchAssociationCount == 0 && acquisitionAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
                     {
+                        _acqFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
                 }
