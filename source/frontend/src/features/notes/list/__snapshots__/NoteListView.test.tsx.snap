@@ -5,9 +5,6 @@ exports[`Note List View renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -298,15 +295,6 @@ exports[`Note List View renders as expected 1`] = `
               class="align-self-center col-auto"
             />
           </div>
-          <div
-            class="container"
-          />
-          <div
-            class="container"
-          />
-          <div
-            class="container"
-          />
         </div>
       </div>
     </div>

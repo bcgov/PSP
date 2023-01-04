@@ -5,9 +5,6 @@ exports[`Lease Documents Page renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -635,14 +632,5 @@ exports[`Lease Documents Page renders as expected 1`] = `
       </div>
     </div>
   </div>
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
 </DocumentFragment>
 `;

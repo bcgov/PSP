@@ -156,9 +156,6 @@ exports[`SideNavbar display and logic renders 1`] = `
     class="Toastify"
   />
   <div
-    class="container"
-  />
-  <div
     class="c0"
   >
     <div

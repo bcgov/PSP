@@ -5,9 +5,6 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c5.c5.form-control.is-valid {
   background-image: none;
 }

@@ -5,12 +5,569 @@ exports[`TermModal component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
+  .c5.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c5.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c5.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c5.btn.btn-primary {
+  border: none;
+}
+
+.c5.btn.btn-secondary {
+  background: none;
+}
+
+.c5.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
+  background: none;
+}
+
+.c5.btn.btn-light {
+  border: none;
+}
+
+.c5.btn.btn-dark {
+  border: none;
+}
+
+.c5.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c5.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c5.Button--icon-only:focus {
+  outline: none;
+}
+
+.c5.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+  top: 0;
+  z-index: 1;
+}
+
+.c0 .modal-header {
+  height: 3.8rem;
+  padding: 0 1rem;
+}
+
+.c0 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c0 .modal-header .close {
+  color: white;
+  opacity: 1;
+}
+
+.c4.c4.form-control.is-valid {
+  background-image: none;
+}
+
+.c4.c4.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c1 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c2 {
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  grid-template-columns: [controls] 1fr;
+}
+
+.c2 label {
+  font-family: 'BCSans-Bold';
+}
+
+.c2 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c2 .check-field label {
+  width: 100%;
+}
+
+.c2 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c2 .form-group input,
+.c2 .form-group select {
+  width: 70%;
+}
+
+.c2 > .form-label {
+  grid-column: controls;
+  font-family: 'BcSans-Bold';
+}
+
+.c2 .form-control {
+  font-family: 'BcSans';
+}
+
+.c2 .required .form-label:after {
+  content: ' *';
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+<div
+    class="c0 c1"
+  >
+    <div
+      class="modal-header"
+    >
+      <div
+        class="modal-title h4"
+      >
+        Add a Term
+      </div>
+    </div>
+    <div
+      class="modal-body"
+    >
+      <div
+        class="c2"
+      >
+        <div
+          class="c3"
+        >
+          <div
+            class="required form-group"
+          >
+            <label
+              class="form-label"
+              for="datepicker-startDate"
+            >
+              Start date:
+            </label>
+            <div
+              class="react-datepicker-wrapper d-block"
+            >
+              <div
+                class="react-datepicker__input-container"
+              >
+                <input
+                  autocomplete="off"
+                  class="c4 form-control date-picker"
+                  id="datepicker-startDate"
+                  name="startDate"
+                  placeholder="--/--/----"
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="datepicker-expiryDate"
+            >
+              End date:
+            </label>
+            <div
+              class="react-datepicker-wrapper d-block"
+            >
+              <div
+                class="react-datepicker__input-container"
+              >
+                <input
+                  autocomplete="off"
+                  class="c4 form-control date-picker"
+                  id="datepicker-expiryDate"
+                  name="expiryDate"
+                  placeholder="--/--/----"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-leasePmtFreqTypeCode.id"
+          >
+            Payment frequency: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-leasePmtFreqTypeCode.id"
+            name="leasePmtFreqTypeCode.id"
+          >
+            <option
+              value=""
+            >
+              Select
+            </option>
+            <option
+              class="option"
+              value="ANNUAL"
+            >
+              Annually
+            </option>
+            <option
+              class="option"
+              value="BIMONTH"
+            >
+              Bi-Monthly
+            </option>
+            <option
+              class="option"
+              value="BIWEEK"
+            >
+              Bi-Weekly
+            </option>
+            <option
+              class="option"
+              value="DAILY"
+            >
+              Daily
+            </option>
+            <option
+              class="option"
+              value="MONTHLY"
+            >
+              Monthly
+            </option>
+            <option
+              class="option"
+              value="NOMINAL"
+            >
+              Nominal ($1)
+            </option>
+            <option
+              class="option"
+              value="PREPAID"
+            >
+              Prepaid / One Time
+            </option>
+            <option
+              class="option"
+              value="QUARTER"
+            >
+              Quarterly
+            </option>
+            <option
+              class="option"
+              value="SEMIANN"
+            >
+              Semi Annually
+            </option>
+            <option
+              class="option"
+              value="WEEKLY"
+            >
+              Weekly
+            </option>
+          </select>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-paymentAmount"
+          >
+            Agreed payment ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-paymentAmount"
+              inputmode="numeric"
+              name="paymentAmount"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-paymentDueDate"
+          >
+            Payments due 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="paymentDueDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <input
+            class="form-control"
+            id="input-paymentDueDate"
+            name="paymentDueDate"
+            title=""
+            value=""
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <div
+            class="check-field"
+          >
+            <label
+              class="form-label"
+              for="input-isGstEligible"
+            >
+              Subject to GST?
+            </label>
+            <div
+              class="form-check"
+            >
+              <input
+                class="form-check-input"
+                id="input-isGstEligible"
+                name="isGstEligible"
+                type="radio"
+                value="false"
+              />
+              <label
+                class="form-check-label"
+                for="input-isGstEligible"
+                title=""
+              >
+                Y
+              </label>
+            </div>
+            <div
+              class="form-check"
+            >
+              <input
+                checked=""
+                class="form-check-input"
+                id="input-isGstEligible-2"
+                name="isGstEligible"
+                type="radio"
+                value="false"
+              />
+              <label
+                class="form-check-label"
+                for="input-isGstEligible-2"
+                title=""
+              >
+                N
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-statusTypeCode.id"
+          >
+            Term Status 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-statusTypeCode.id"
+            name="statusTypeCode.id"
+          >
+            <option
+              class="option"
+              value="EXER"
+            >
+              Exercised
+            </option>
+            <option
+              class="option"
+              value="NEXER"
+            >
+              Not Exercised
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-footer"
+    >
+      <button
+        class="c5 Button btn btn-secondary"
+        title="cancel-modal"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Cancel
+        </div>
+      </button>
+      <button
+        class="c5 Button btn btn-primary"
+        title="ok-modal"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Save term
+        </div>
+      </button>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
@@ -19,11 +576,568 @@ exports[`TermModal component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
+  .c5.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c5.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c5.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c5.btn.btn-primary {
+  border: none;
+}
+
+.c5.btn.btn-secondary {
+  background: none;
+}
+
+.c5.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
+  background: none;
+}
+
+.c5.btn.btn-light {
+  border: none;
+}
+
+.c5.btn.btn-dark {
+  border: none;
+}
+
+.c5.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c5.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c5.Button--icon-only:focus {
+  outline: none;
+}
+
+.c5.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+  top: 0;
+  z-index: 1;
+}
+
+.c0 .modal-header {
+  height: 3.8rem;
+  padding: 0 1rem;
+}
+
+.c0 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c0 .modal-header .close {
+  color: white;
+  opacity: 1;
+}
+
+.c4.c4.form-control.is-valid {
+  background-image: none;
+}
+
+.c4.c4.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c1 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c2 {
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  grid-template-columns: [controls] 1fr;
+}
+
+.c2 label {
+  font-family: 'BCSans-Bold';
+}
+
+.c2 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c2 .check-field label {
+  width: 100%;
+}
+
+.c2 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c2 .form-group input,
+.c2 .form-group select {
+  width: 70%;
+}
+
+.c2 > .form-label {
+  grid-column: controls;
+  font-family: 'BcSans-Bold';
+}
+
+.c2 .form-control {
+  font-family: 'BcSans';
+}
+
+.c2 .required .form-label:after {
+  content: ' *';
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+<div
+    class="c0 c1"
+  >
+    <div
+      class="modal-header"
+    >
+      <div
+        class="modal-title h4"
+      >
+        Add a Term
+      </div>
+    </div>
+    <div
+      class="modal-body"
+    >
+      <div
+        class="c2"
+      >
+        <div
+          class="c3"
+        >
+          <div
+            class="required form-group"
+          >
+            <label
+              class="form-label"
+              for="datepicker-startDate"
+            >
+              Start date:
+            </label>
+            <div
+              class="react-datepicker-wrapper d-block"
+            >
+              <div
+                class="react-datepicker__input-container"
+              >
+                <input
+                  autocomplete="off"
+                  class="c4 form-control date-picker"
+                  id="datepicker-startDate"
+                  name="startDate"
+                  placeholder="--/--/----"
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="datepicker-expiryDate"
+            >
+              End date:
+            </label>
+            <div
+              class="react-datepicker-wrapper d-block"
+            >
+              <div
+                class="react-datepicker__input-container"
+              >
+                <input
+                  autocomplete="off"
+                  class="c4 form-control date-picker"
+                  id="datepicker-expiryDate"
+                  name="expiryDate"
+                  placeholder="--/--/----"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-leasePmtFreqTypeCode.id"
+          >
+            Payment frequency: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-leasePmtFreqTypeCode.id"
+            name="leasePmtFreqTypeCode.id"
+          >
+            <option
+              value=""
+            >
+              Select
+            </option>
+            <option
+              class="option"
+              value="ANNUAL"
+            >
+              Annually
+            </option>
+            <option
+              class="option"
+              value="BIMONTH"
+            >
+              Bi-Monthly
+            </option>
+            <option
+              class="option"
+              value="BIWEEK"
+            >
+              Bi-Weekly
+            </option>
+            <option
+              class="option"
+              value="DAILY"
+            >
+              Daily
+            </option>
+            <option
+              class="option"
+              value="MONTHLY"
+            >
+              Monthly
+            </option>
+            <option
+              class="option"
+              value="NOMINAL"
+            >
+              Nominal ($1)
+            </option>
+            <option
+              class="option"
+              value="PREPAID"
+            >
+              Prepaid / One Time
+            </option>
+            <option
+              class="option"
+              value="QUARTER"
+            >
+              Quarterly
+            </option>
+            <option
+              class="option"
+              value="SEMIANN"
+            >
+              Semi Annually
+            </option>
+            <option
+              class="option"
+              value="WEEKLY"
+            >
+              Weekly
+            </option>
+          </select>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-paymentAmount"
+          >
+            Agreed payment ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-paymentAmount"
+              inputmode="numeric"
+              name="paymentAmount"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-paymentDueDate"
+          >
+            Payments due 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="paymentDueDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <input
+            class="form-control"
+            id="input-paymentDueDate"
+            name="paymentDueDate"
+            title=""
+            value=""
+          />
+        </div>
+        <div
+          class="form-group"
+        >
+          <div
+            class="check-field"
+          >
+            <label
+              class="form-label"
+              for="input-isGstEligible"
+            >
+              Subject to GST?
+            </label>
+            <div
+              class="form-check"
+            >
+              <input
+                class="form-check-input"
+                id="input-isGstEligible"
+                name="isGstEligible"
+                type="radio"
+                value="false"
+              />
+              <label
+                class="form-check-label"
+                for="input-isGstEligible"
+                title=""
+              >
+                Y
+              </label>
+            </div>
+            <div
+              class="form-check"
+            >
+              <input
+                checked=""
+                class="form-check-input"
+                id="input-isGstEligible-2"
+                name="isGstEligible"
+                type="radio"
+                value="false"
+              />
+              <label
+                class="form-check-label"
+                for="input-isGstEligible-2"
+                title=""
+              >
+                N
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-statusTypeCode.id"
+          >
+            Term Status 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-statusTypeCode.id"
+            name="statusTypeCode.id"
+          >
+            <option
+              class="option"
+              value="EXER"
+            >
+              Exercised
+            </option>
+            <option
+              class="option"
+              value="NEXER"
+            >
+              Not Exercised
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-footer"
+    >
+      <button
+        class="c5 Button btn btn-secondary"
+        title="cancel-modal"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Cancel
+        </div>
+      </button>
+      <button
+        class="c5 Button btn btn-primary"
+        title="ok-modal"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Save term
+        </div>
+      </button>
+    </div>
+  </div>
 </DocumentFragment>
 `;

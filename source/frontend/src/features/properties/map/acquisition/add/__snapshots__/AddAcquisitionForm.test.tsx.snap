@@ -5,9 +5,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c16.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1249,17 +1246,8 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
             + Add another team member
           </div>
         </button>
-        <div
-          class="container"
-        />
-        <div
-          class="container"
-        />
       </div>
     </div>
   </div>
-  <div
-    class="container"
-  />
 </DocumentFragment>
 `;

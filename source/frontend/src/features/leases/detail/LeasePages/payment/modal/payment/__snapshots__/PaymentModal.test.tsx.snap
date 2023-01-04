@@ -5,12 +5,504 @@ exports[`PaymentModal component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
+  .c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  border: none;
+}
+
+.c7.btn.btn-secondary {
+  background: none;
+}
+
+.c7.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  background: none;
+}
+
+.c7.btn.btn-light {
+  border: none;
+}
+
+.c7.btn.btn-dark {
+  border: none;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+  top: 0;
+  z-index: 1;
+}
+
+.c0 .modal-header {
+  height: 3.8rem;
+  padding: 0 1rem;
+}
+
+.c0 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c0 .modal-header .close {
+  color: white;
+  opacity: 1;
+}
+
+.c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c2 {
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  grid-template-columns: [controls] 1fr;
+}
+
+.c2 label {
+  font-family: 'BCSans-Bold';
+}
+
+.c2 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c2 .check-field label {
+  width: 100%;
+}
+
+.c2 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c2 .form-group input,
+.c2 .form-group select {
+  width: 70%;
+}
+
+.c2 > .form-label {
+  grid-column: controls;
+  font-family: 'BcSans-Bold';
+}
+
+.c2 .form-control {
+  font-family: 'BcSans';
+}
+
+.c2 .required .form-label:after {
+  content: ' *';
+}
+
+.c5 {
+  margin-left: -1rem;
+  padding-left: 1rem;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+}
+
+.c5 input {
+  width: 100%;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+<div
+    class="c0 c1"
+  >
+    <div
+      class="modal-header"
+    >
+      <div
+        class="modal-title h4"
+      >
+        Payment details
+      </div>
+    </div>
+    <div
+      class="modal-body"
+    >
+      <div
+        class="c2"
+      >
+        <div
+          class="required form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-receivedDate"
+          >
+            Sent date:
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-receivedDate"
+                name="receivedDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-leasePaymentMethodType.id"
+          >
+            Method: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-leasePaymentMethodType.id"
+            name="leasePaymentMethodType.id"
+          >
+            <option
+              class="option"
+              value="CASH"
+            >
+              Cash
+            </option>
+            <option
+              class="option"
+              value="CHEQ"
+            >
+              Cheque
+            </option>
+            <option
+              class="option"
+              value="CRDR"
+            >
+              Credit / Debit
+            </option>
+            <option
+              class="option"
+              value="EFT"
+            >
+              EFT
+            </option>
+            <option
+              class="option"
+              value="H120"
+            >
+              H120
+            </option>
+            <option
+              class="option"
+              value="OTHR"
+            >
+              Other
+            </option>
+            <option
+              class="option"
+              value="POST"
+            >
+              Post-dated cheque
+            </option>
+          </select>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountTotal"
+          >
+            Total received ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountTotal"
+              inputmode="numeric"
+              name="amountTotal"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="c4 c5"
+        >
+          <div
+            class="c6"
+          >
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="actual-calculation-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="c4"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="form-label"
+                for="input-amountPreTax"
+              >
+                Expected payment ($) 
+              </label>
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-amountPreTax"
+                  inputmode="numeric"
+                  name="amountPreTax"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="form-group"
+            >
+              <label
+                class="form-label"
+                for="input-amountGst"
+              >
+                GST ($) 
+              </label>
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-amountGst"
+                  inputmode="numeric"
+                  name="amountGst"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-footer"
+    >
+      <button
+        class="c7 Button btn btn-secondary"
+        title="cancel-modal"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Cancel
+        </div>
+      </button>
+      <button
+        class="c7 Button btn btn-primary"
+        title="ok-modal"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Save payment
+        </div>
+      </button>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
@@ -19,11 +511,503 @@ exports[`PaymentModal component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
+  .c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  border: none;
+}
+
+.c7.btn.btn-secondary {
+  background: none;
+}
+
+.c7.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  background: none;
+}
+
+.c7.btn.btn-light {
+  border: none;
+}
+
+.c7.btn.btn-dark {
+  border: none;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+  top: 0;
+  z-index: 1;
+}
+
+.c0 .modal-header {
+  height: 3.8rem;
+  padding: 0 1rem;
+}
+
+.c0 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c0 .modal-header .close {
+  color: white;
+  opacity: 1;
+}
+
+.c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c2 {
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  grid-template-columns: [controls] 1fr;
+}
+
+.c2 label {
+  font-family: 'BCSans-Bold';
+}
+
+.c2 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c2 .check-field label {
+  width: 100%;
+}
+
+.c2 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c2 .form-group input,
+.c2 .form-group select {
+  width: 70%;
+}
+
+.c2 > .form-label {
+  grid-column: controls;
+  font-family: 'BcSans-Bold';
+}
+
+.c2 .form-control {
+  font-family: 'BcSans';
+}
+
+.c2 .required .form-label:after {
+  content: ' *';
+}
+
+.c5 {
+  margin-left: -1rem;
+  padding-left: 1rem;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+}
+
+.c5 input {
+  width: 100%;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+<div
+    class="c0 c1"
+  >
+    <div
+      class="modal-header"
+    >
+      <div
+        class="modal-title h4"
+      >
+        Payment details
+      </div>
+    </div>
+    <div
+      class="modal-body"
+    >
+      <div
+        class="c2"
+      >
+        <div
+          class="required form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-receivedDate"
+          >
+            Sent date:
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-receivedDate"
+                name="receivedDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-leasePaymentMethodType.id"
+          >
+            Method: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-leasePaymentMethodType.id"
+            name="leasePaymentMethodType.id"
+          >
+            <option
+              class="option"
+              value="CASH"
+            >
+              Cash
+            </option>
+            <option
+              class="option"
+              value="CHEQ"
+            >
+              Cheque
+            </option>
+            <option
+              class="option"
+              value="CRDR"
+            >
+              Credit / Debit
+            </option>
+            <option
+              class="option"
+              value="EFT"
+            >
+              EFT
+            </option>
+            <option
+              class="option"
+              value="H120"
+            >
+              H120
+            </option>
+            <option
+              class="option"
+              value="OTHR"
+            >
+              Other
+            </option>
+            <option
+              class="option"
+              value="POST"
+            >
+              Post-dated cheque
+            </option>
+          </select>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountTotal"
+          >
+            Total received ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountTotal"
+              inputmode="numeric"
+              name="amountTotal"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="c4 c5"
+        >
+          <div
+            class="c6"
+          >
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="actual-calculation-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="c4"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="form-label"
+                for="input-amountPreTax"
+              >
+                Expected payment ($) 
+              </label>
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-amountPreTax"
+                  inputmode="numeric"
+                  name="amountPreTax"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="form-group"
+            >
+              <label
+                class="form-label"
+                for="input-amountGst"
+              >
+                GST ($) 
+              </label>
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-amountGst"
+                  inputmode="numeric"
+                  name="amountGst"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-footer"
+    >
+      <button
+        class="c7 Button btn btn-secondary"
+        title="cancel-modal"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Cancel
+        </div>
+      </button>
+      <button
+        class="c7 Button btn btn-primary"
+        title="ok-modal"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Save payment
+        </div>
+      </button>
+    </div>
+  </div>
 </DocumentFragment>
 `;

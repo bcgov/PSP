@@ -5,9 +5,6 @@ exports[`PaymentForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c1.c1.form-control.is-valid {
   background-image: none;
 }
@@ -304,9 +301,6 @@ exports[`PaymentForm component renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
-  />
-  <div
-    class="container"
   />
   .c1.c1.form-control.is-valid {
   background-image: none;

@@ -135,6 +135,14 @@ exports[`NoteDetailsFormModal component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c0 {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+  top: 0;
+  z-index: 1;
+}
+
 .c0 .modal-header {
   height: 3.8rem;
   padding: 0 1rem;
@@ -150,10 +158,6 @@ exports[`NoteDetailsFormModal component renders as expected 1`] = `
 .c0 .modal-header .close {
   color: white;
   opacity: 1;
-  font-size: 3rem;
-  font-weight: 10;
-  text-shadow: none;
-  font-family: 'Helvetica Narrow';
 }
 
 .c2 {
@@ -190,167 +194,141 @@ exports[`NoteDetailsFormModal component renders as expected 1`] = `
   line-height: 2rem;
 }
 
-<body
-  class="modal-open"
-  style="padding-right: 0px;"
->
-  <div
-    aria-hidden="true"
-  >
+<body>
+  <div>
     <div
       class="Toastify"
     />
     <div
-      class="container"
-    />
-    <div
-      class="container"
-    />
-  </div>
-  <div
-    class="fade modal-backdrop show"
-  />
-  <div
-    aria-modal="true"
-    class="fade c0 c1 modal show"
-    role="dialog"
-    style="display: block;"
-    tabindex="-1"
-  >
-    <div
-      class="modal-dialog c1"
+      class="c0 c1"
     >
       <div
-        class="modal-content"
+        class="modal-header"
       >
         <div
-          class="modal-header"
+          class="modal-title h4"
         >
-          <div
-            class="modal-title h4"
-          >
-            Notes
-          </div>
-          <button
-            class="close"
-            type="button"
-          >
-            <span
-              aria-hidden="true"
-            >
-              ×
-            </span>
-            <span
-              class="sr-only"
-            >
-              Close
-            </span>
-          </button>
+          Notes
         </div>
+        <button
+          class="close"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+          <span
+            class="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+      >
         <div
-          class="modal-body"
+          class="container"
         >
           <div
-            class="container"
+            class="no-gutters row"
           >
             <div
-              class="no-gutters row"
+              class="mr-2 col-md-2"
             >
-              <div
-                class="mr-2 col-md-2"
-              >
-                Created:
-              </div>
-              <div
-                class="col"
-              >
-                <span>
-                  <strong>
-                    Jul 20, 2022
-                  </strong>
-                   by
-                   
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon"
-                    id="userNameTooltip"
-                  >
-                    <span
-                      class="c2"
-                    >
-                      admin
-                    </span>
-                  </span>
-                </span>
-              </div>
+              Created:
             </div>
             <div
-              class="no-gutters row"
+              class="col"
             >
-              <div
-                class="mr-2 col-md-2"
-              >
-                Last updated:
-              </div>
-              <div
-                class="col"
-              >
-                <span>
-                  <strong>
-                    Jul 20, 2022
-                  </strong>
-                   by
-                   
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon"
-                    id="userNameTooltip"
-                  >
-                    <span
-                      class="c2"
-                    >
-                      admin
-                    </span>
-                  </span>
-                </span>
-              </div>
-              <div
-                class="c3 col"
-              />
-            </div>
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                <textarea
-                  class="form-control"
-                  readonly=""
-                  rows="15"
-                  title="Note"
+              <span>
+                <strong>
+                  Jul 20, 2022
+                </strong>
+                 by
+                 
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon"
+                  id="userNameTooltip"
                 >
-                  Test Note
-                </textarea>
-              </div>
+                  <span
+                    class="c2"
+                  >
+                    admin
+                  </span>
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="mr-2 col-md-2"
+            >
+              Last updated:
+            </div>
+            <div
+              class="col"
+            >
+              <span>
+                <strong>
+                  Jul 20, 2022
+                </strong>
+                 by
+                 
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon"
+                  id="userNameTooltip"
+                >
+                  <span
+                    class="c2"
+                  >
+                    admin
+                  </span>
+                </span>
+              </span>
+            </div>
+            <div
+              class="c3 col"
+            />
+          </div>
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              <textarea
+                class="form-control"
+                readonly=""
+                rows="15"
+                title="Note"
+              >
+                Test Note
+              </textarea>
             </div>
           </div>
         </div>
-        <div
-          class="modal-footer"
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <button
+          class="c4 Button btn btn-primary"
+          title="ok-modal"
+          type="button"
         >
-          <button
-            class="c4 Button btn btn-primary"
-            title="ok-modal"
-            type="button"
+          <div
+            class="Button__value"
           >
-            <div
-              class="Button__value"
-            >
-              Close
-            </div>
-          </button>
-        </div>
+            Close
+          </div>
+        </button>
       </div>
     </div>
   </div>

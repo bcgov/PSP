@@ -5,12 +5,6 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
   .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;

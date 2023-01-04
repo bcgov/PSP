@@ -5,9 +5,6 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c0 {
   font-size: 2rem;
   font-family: BcSans-Bold;
@@ -213,9 +210,6 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
             </button>
           </div>
         </div>
-        <div
-          class="container"
-        />
       </div>
       <div
         class="c3"
@@ -343,8 +337,5 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
   <button>
     Save
   </button>
-  <div
-    class="container"
-  />
 </DocumentFragment>
 `;
