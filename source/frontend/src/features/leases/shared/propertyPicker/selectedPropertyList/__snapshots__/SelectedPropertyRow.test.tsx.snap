@@ -297,7 +297,6 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
       >
         <input
           class="form-control"
-          disabled=""
           id="input-name"
           name="name"
           value=""
