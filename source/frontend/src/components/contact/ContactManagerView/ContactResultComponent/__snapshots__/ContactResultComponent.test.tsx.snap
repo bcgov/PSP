@@ -5,9 +5,6 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;

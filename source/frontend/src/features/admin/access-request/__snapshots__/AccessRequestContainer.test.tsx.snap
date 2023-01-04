@@ -6,9 +6,6 @@ exports[`AccessRequestContainer component makes a request based on the access re
     class="Toastify"
   />
   <div
-    class="container"
-  />
-  <div
     class="fade alert alert-success show"
     role="alert"
   >
@@ -538,9 +535,6 @@ exports[`AccessRequestContainer component makes a request when no id is provided
 <DocumentFragment>
   <div
     class="Toastify"
-  />
-  <div
-    class="container"
   />
   <div
     class="fade alert alert-success show"

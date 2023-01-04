@@ -22,6 +22,11 @@ namespace Pims.Av.Configuration
         /// get/set - Whether or not the av scan should be skipped.
         /// </summary>
         public bool DisableScan { get; set; } = false;
+
+        /// <summary>
+        /// get/set - The max file size for scanning that should be supported by nclam.
+        /// </summary>
+        public int MaxFileSize { get; set; } = 524288000;
         #endregion
     }
 }

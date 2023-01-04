@@ -135,6 +135,14 @@ exports[`ActivityPropertyModal tests Renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c0 {
+  position: fixed;
+  background-color: white;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+  top: 0;
+  z-index: 1;
+}
+
 .c0 .modal-header {
   height: 3.8rem;
   padding: 0 1rem;
@@ -150,10 +158,6 @@ exports[`ActivityPropertyModal tests Renders as expected 1`] = `
 .c0 .modal-header .close {
   color: white;
   opacity: 1;
-  font-size: 3rem;
-  font-weight: 10;
-  text-shadow: none;
-  font-family: 'Helvetica Narrow';
 }
 
 .c3 {
@@ -178,98 +182,143 @@ exports[`ActivityPropertyModal tests Renders as expected 1`] = `
   text-align: left;
 }
 
-<body
-  class="modal-open"
-  style="padding-right: 0px;"
->
-  <div
-    aria-hidden="true"
-  >
+<body>
+  <div>
     <div
       class="Toastify"
     />
     <div
-      class="container"
-    />
-    <div
-      class="container"
-    />
-  </div>
-  <div
-    class="fade modal-backdrop show"
-  />
-  <div
-    aria-modal="true"
-    class="fade c0 modal show"
-    role="dialog"
-    style="display: block;"
-    tabindex="-1"
-  >
-    <div
-      class="modal-dialog modal-m"
+      class="c0 modal-m"
     >
       <div
-        class="modal-content"
+        class="modal-header"
       >
         <div
-          class="modal-header"
+          class="modal-title h4"
         >
-          <div
-            class="modal-title h4"
-          >
-            Related properties
-          </div>
-          <button
-            class="close"
-            type="button"
-          >
-            <span
-              aria-hidden="true"
-            >
-              ×
-            </span>
-            <span
-              class="sr-only"
-            >
-              Close
-            </span>
-          </button>
+          Related properties
         </div>
-        <div
-          class="modal-body"
+        <button
+          class="close"
+          type="button"
         >
-          <p>
-            Select the properties from the parent file that this activity relates to:
-          </p>
-          <div
-            class="c1 form-section m-0 p-0"
+          <span
+            aria-hidden="true"
           >
-            <h2
-              class="c2"
-            >
-              <div
-                class="row"
-              >
-                <div
-                  class="col"
-                >
-                  Properties (0)
-                </div>
-                <div
-                  class="col-1"
-                />
-              </div>
-            </h2>
+            ×
+          </span>
+          <span
+            class="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+      >
+        <p>
+          Select the properties from the parent file that this activity relates to:
+        </p>
+        <div
+          class="c1 form-section m-0 p-0"
+        >
+          <h2
+            class="c2"
+          >
             <div
-              class="collapse show"
+              class="row"
             >
               <div
-                class="table"
-                data-testid="selectableProperties"
-                role="table"
+                class="col"
+              >
+                Properties (0)
+              </div>
+              <div
+                class="col-1"
+              />
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="table"
+              data-testid="selectableProperties"
+              role="table"
+            >
+              <div
+                class="thead thead-light"
               >
                 <div
-                  class="thead thead-light"
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 117px;"
+                >
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      <div>
+                        <input
+                          data-testid="selectrow-parent"
+                          name=""
+                          style="cursor: pointer;"
+                          title="Click to deselect all."
+                          type="checkbox"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 7 0 auto; min-width: 7px; width: 7px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      #
+                    </div>
+                  </div>
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      Property name
+                    </div>
+                  </div>
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      Identifier
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tbody"
+                role="rowgroup"
+              >
+                <div
+                  class="tr-wrapper"
                 >
                   <div
                     class="tr"
@@ -277,170 +326,99 @@ exports[`ActivityPropertyModal tests Renders as expected 1`] = `
                     style="display: flex; flex: 1 0 auto; min-width: 117px;"
                   >
                     <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
+                      class="td"
+                      role="cell"
                       style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
                     >
-                      <div
-                        class="sortable-column"
-                      >
-                        <div>
-                          <input
-                            data-testid="selectrow-parent"
-                            name=""
-                            style="cursor: pointer;"
-                            title="Click to deselect all."
-                            type="checkbox"
-                          />
-                        </div>
+                      <div>
+                        <input
+                          data-testid="selectrow-1"
+                          name=""
+                          style="cursor: pointer;"
+                          title="Toggle Row Selected"
+                          type="checkbox"
+                        />
                       </div>
                     </div>
                     <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
+                      class="td"
+                      role="cell"
                       style="box-sizing: border-box; flex: 7 0 auto; min-width: 7px; width: 7px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
                     >
-                      <div
-                        class="sortable-column"
-                      >
-                        #
-                      </div>
+                      1
                     </div>
                     <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
+                      class="td"
+                      role="cell"
                       style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
                     >
-                      <div
-                        class="sortable-column"
-                      >
-                        Property name
-                      </div>
+                      test property name
                     </div>
                     <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
+                      class="td"
+                      role="cell"
                       style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
                     >
                       <div
-                        class="sortable-column"
+                        class="c3"
                       >
-                        Identifier
+                        PID: 007-723-385
                       </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="tbody"
-                  role="rowgroup"
+                  class="tr-wrapper"
                 >
                   <div
-                    class="tr-wrapper"
+                    class="tr"
+                    role="row"
+                    style="display: flex; flex: 1 0 auto; min-width: 117px;"
                   >
                     <div
-                      class="tr"
-                      role="row"
-                      style="display: flex; flex: 1 0 auto; min-width: 117px;"
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
                     >
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      >
-                        <div>
-                          <input
-                            data-testid="selectrow-1"
-                            name=""
-                            style="cursor: pointer;"
-                            title="Toggle Row Selected"
-                            type="checkbox"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 7 0 auto; min-width: 7px; width: 7px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      >
-                        1
-                      </div>
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      >
-                        test property name
-                      </div>
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      >
-                        <div
-                          class="c3"
-                        >
-                          PID: 007-723-385
-                        </div>
+                      <div>
+                        <input
+                          data-testid="selectrow-2"
+                          name=""
+                          style="cursor: pointer;"
+                          title="Toggle Row Selected"
+                          type="checkbox"
+                        />
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="tr-wrapper"
-                  >
                     <div
-                      class="tr"
-                      role="row"
-                      style="display: flex; flex: 1 0 auto; min-width: 117px;"
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 7 0 auto; min-width: 7px; width: 7px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
+                    >
+                      2
+                    </div>
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
+                    />
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
                     >
                       <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
+                        class="c3"
                       >
-                        <div>
-                          <input
-                            data-testid="selectrow-2"
-                            name=""
-                            style="cursor: pointer;"
-                            title="Toggle Row Selected"
-                            type="checkbox"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 7 0 auto; min-width: 7px; width: 7px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      >
-                        2
-                      </div>
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      />
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      >
-                        <div
-                          class="c3"
-                        >
-                          PID: 011-041-404
-                        </div>
+                        PID: 011-041-404
                       </div>
                     </div>
                   </div>
@@ -449,32 +427,32 @@ exports[`ActivityPropertyModal tests Renders as expected 1`] = `
             </div>
           </div>
         </div>
-        <div
-          class="modal-footer"
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <button
+          class="c4 Button btn btn-secondary"
+          title="cancel-modal"
+          type="button"
         >
-          <button
-            class="c4 Button btn btn-secondary"
-            title="cancel-modal"
-            type="button"
+          <div
+            class="Button__value"
           >
-            <div
-              class="Button__value"
-            >
-              Cancel
-            </div>
-          </button>
-          <button
-            class="c4 Button btn btn-primary"
-            title="ok-modal"
-            type="button"
+            Cancel
+          </div>
+        </button>
+        <button
+          class="c4 Button btn btn-primary"
+          title="ok-modal"
+          type="button"
+        >
+          <div
+            class="Button__value"
           >
-            <div
-              class="Button__value"
-            >
-              Save
-            </div>
-          </button>
-        </div>
+            Save
+          </div>
+        </button>
       </div>
     </div>
   </div>

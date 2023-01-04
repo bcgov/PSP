@@ -5,9 +5,6 @@ exports[`LayersControl View renders correctly 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;

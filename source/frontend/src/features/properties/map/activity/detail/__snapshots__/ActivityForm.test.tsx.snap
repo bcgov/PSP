@@ -5,9 +5,6 @@ exports[`ActivityForm test Renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c1 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
@@ -945,15 +942,6 @@ exports[`ActivityForm test Renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="container"
-    />
-    <div
-      class="container"
-    />
-    <div
-      class="container"
-    />
-    <div
       class="c10"
     >
       <div
@@ -1162,15 +1150,6 @@ exports[`ActivityForm test Renders as expected 1`] = `
                 class="align-self-center col-auto"
               />
             </div>
-            <div
-              class="container"
-            />
-            <div
-              class="container"
-            />
-            <div
-              class="container"
-            />
           </div>
         </div>
       </div>

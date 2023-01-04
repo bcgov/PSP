@@ -5,9 +5,6 @@ exports[`Tenant Header Header MOTI background 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c0 {
   background-color: #003366;
   border: none;
@@ -26,9 +23,6 @@ exports[`Tenant Header Header black background 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c0 {
   background-color: black;
   border: none;
@@ -46,9 +40,6 @@ exports[`Tenant Header Header default background 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
-  />
-  <div
-    class="container"
   />
   .c0 {
   background-color: #003366;

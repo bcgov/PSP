@@ -5,9 +5,6 @@ exports[`AcquisitionHeader component renders as expected when no data is provide
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c2 {
   font-weight: bold;
 }

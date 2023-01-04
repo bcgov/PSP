@@ -5,9 +5,6 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c2 {
   float: right;
   cursor: pointer;
@@ -367,9 +364,6 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
-  />
-  <div
-    class="container"
   />
   .c2 {
   float: right;

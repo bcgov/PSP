@@ -5,9 +5,6 @@ exports[`Activity Results Table matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c3 {
   display: -webkit-box;
   display: -webkit-flex;

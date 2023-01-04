@@ -166,7 +166,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
 const ModalContainer = (props: BsModalProps & ModalProps) => {
   const { modalSize, ...rest } = props;
 
-  return !props.asPopup ? (
+  return !props.asPopup === false ? (
     <Container>
       <StyledModal
         {...rest}

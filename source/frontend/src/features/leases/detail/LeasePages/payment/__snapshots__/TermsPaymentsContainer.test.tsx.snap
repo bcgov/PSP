@@ -5,9 +5,6 @@ exports[`PaymentsForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -98,9 +95,6 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -190,9 +184,6 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
-  />
-  <div
-    class="container"
   />
   .c1 {
   font-weight: bold;
@@ -494,18 +485,6 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
 </DocumentFragment>
 `;
 
@@ -513,9 +492,6 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
-  />
-  <div
-    class="container"
   />
   .c4.btn {
   display: -webkit-box;
@@ -1237,17 +1213,5 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
       </div>
     </div>
   </div>
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
 </DocumentFragment>
 `;

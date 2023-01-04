@@ -5,9 +5,6 @@ exports[`Activity List View renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;

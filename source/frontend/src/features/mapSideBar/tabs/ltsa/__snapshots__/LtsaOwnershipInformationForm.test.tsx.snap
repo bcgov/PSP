@@ -5,9 +5,6 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c4.required::before {
   content: '*';
   position: absolute;

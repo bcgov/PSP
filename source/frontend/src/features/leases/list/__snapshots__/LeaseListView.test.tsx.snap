@@ -5,9 +5,6 @@ exports[`Lease and License List View matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
   .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;

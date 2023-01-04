@@ -9,13 +9,6 @@ exports[`Tenant component renders as expected 1`] = `
 <div
     class="Toastify"
   />
-  @media only screen and (max-width:1500px) {
-
-}
-
-<div
-    class="container"
-  />
   .c0 {
   border-radius: 1rem;
   width: 100%;
