@@ -16,9 +16,12 @@ export interface ISelectedPropertyRowProps {
   property: PropertyForm;
 }
 
-export const SelectedPropertyRow: React.FunctionComponent<
-  React.PropsWithChildren<ISelectedPropertyRowProps>
-> = ({ nameSpace, onRemove, index, property }) => {
+export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
+  nameSpace,
+  onRemove,
+  index,
+  property,
+}) => {
   const propertyName = getPropertyName(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
@@ -47,7 +50,6 @@ export const SelectedPropertyRow: React.FunctionComponent<
           label=""
           field={withNameSpace(nameSpace, 'name')}
           displayErrorTooltips={true}
-          disabled
         />
       </Col>
       <Col md={2}>

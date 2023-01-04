@@ -20,9 +20,10 @@ export interface IMapSelectorContainerProps {
   modifiedProperties: PropertyForm[];
 }
 
-export const MapSelectorContainer: React.FunctionComponent<
-  React.PropsWithChildren<IMapSelectorContainerProps>
-> = ({ addSelectedProperties, modifiedProperties }) => {
+export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
+  addSelectedProperties,
+  modifiedProperties,
+}) => {
   const { setState } = React.useContext(MapStateContext);
   const [searchSelectedProperties, setSearchSelectedProperties] = useState<IMapProperty[]>([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
