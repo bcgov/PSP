@@ -20,9 +20,9 @@ interface LeasePropertySelectorProp {
   formikProps: FormikProps<LeaseFormModel>;
 }
 
-export const LeasePropertySelector: React.FunctionComponent<
-  React.PropsWithChildren<LeasePropertySelectorProp>
-> = ({ formikProps }) => {
+export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelectorProp> = ({
+  formikProps,
+}) => {
   const { values } = formikProps;
 
   const { getProperties } = useProperties();
