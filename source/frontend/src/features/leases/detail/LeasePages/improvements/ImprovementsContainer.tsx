@@ -1,25 +1,34 @@
 import ProtectedComponent from 'components/common/ProtectedComponent';
 import { Claims } from 'constants/claims';
-import queryString from 'query-string';
+import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
+import { Formik, FormikProps } from 'formik';
+import { defaultFormLease, IFormLease } from 'interfaces';
+import noop from 'lodash/noop';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
 
+import { StyledDetails } from '../details/LeaseDetailsForm';
 import { AddImprovementsContainer } from './AddImprovementsContainer';
 import { Improvements } from './Improvements';
 
-interface IImprovementsContainerProps {}
-
 export const ImprovementsContainer: React.FunctionComponent<
-  React.PropsWithChildren<IImprovementsContainerProps>
-> = props => {
-  const location = useLocation();
-  const { edit } = queryString.parse(location.search);
-  return !!edit ? (
+  React.PropsWithChildren<LeasePageProps>
+> = ({ isEditing, formikRef, onEdit }) => {
+  const { lease } = useContext(LeaseStateContext);
+  return !!isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
-      <AddImprovementsContainer />
+      <AddImprovementsContainer
+        formikRef={formikRef as React.RefObject<FormikProps<IFormLease>>}
+        onEdit={onEdit}
+      />
     </ProtectedComponent>
   ) : (
-    <Improvements disabled={true} />
+    <Formik onSubmit={noop} enableReinitialize initialValues={{ ...defaultFormLease, ...lease }}>
+      <StyledDetails>
+        <Improvements disabled={true} />
+      </StyledDetails>
+    </Formik>
   );
 };
 

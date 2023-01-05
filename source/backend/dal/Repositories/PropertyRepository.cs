@@ -250,7 +250,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsProperty GetAssociations(long id)
         {
-            PimsProperty property = this.Context.PimsProperties
+            PimsProperty property = this.Context.PimsProperties.AsNoTracking()
                 .Include(p => p.PimsPropertyLeases)
                     .ThenInclude(pl => pl.Lease)
                     .ThenInclude(l => l.LeaseStatusTypeCodeNavigation)
@@ -275,8 +275,9 @@ namespace Pims.Dal.Repositories
             property.ThrowIfNull(nameof(property));
 
             var propertyId = property.Id;
-            var existingProperty = this.Context.PimsProperties.FirstOrDefault(p => p.PropertyId == propertyId)
-                 ?? throw new KeyNotFoundException();
+            var existingProperty = this.Context.PimsProperties
+                .Include(p => p.Address)
+                .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
 
             // ignore a number of properties that we don't the frontend to override - for now
             property.Boundary = existingProperty.Boundary;
@@ -307,31 +308,37 @@ namespace Pims.Dal.Repositories
             }
 
             // update main entity - PimsProperty
-            this.Context.Entry(existingProperty).CurrentValues.SetValues(property);
+            Context.Entry(existingProperty).CurrentValues.SetValues(property);
+
+            // add/update property address
+            var newAddress = property.Address;
+            if (newAddress != null)
+            {
+                existingProperty.Address ??= new PimsAddress();
+                Context.Entry(existingProperty.Address).CurrentValues.SetValues(newAddress);
+            }
+            else
+            {
+                // remove the linkage to existing address
+                existingProperty.Address = null;
+            }
 
             // update direct relationships - anomalies, tenures, etc
-            this.Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
-            this.Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
-            this.Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
-            this.Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
 
             return existingProperty;
         }
 
+        /// <summary>
+        /// Delete a property. Note that this method will fail unless all dependencies are removed first.
+        /// </summary>
+        /// <param name="property"></param>
         public void Delete(PimsProperty property)
         {
-            var existingProperty = this.Context.PimsProperties.AsNoTracking()
-                .Where(p => p.PropertyId == property.Id)
-                .Include(p => p.PimsPropertyResearchFiles)
-                .Include(p => p.PimsPropertyAcquisitionFiles)
-                .Include(p => p.PimsPropertyLeases)
-                .FirstOrDefault();
-
-            existingProperty.PimsPropertyResearchFiles.ForEach(pr => this.Context.Remove(new PimsPropertyResearchFile() { Id = pr.Id }));
-            existingProperty.PimsPropertyAcquisitionFiles.ForEach(pa => this.Context.Remove(new PimsPropertyAcquisitionFile() { Id = pa.Id }));
-            existingProperty.PimsPropertyLeases.ForEach(l => this.Context.Remove(new PimsPropertyLease() { Id = l.Id }));
-
-            this.Context.Entry(existingProperty).State = EntityState.Deleted;
+            this.Context.Entry(new PimsProperty() { PropertyId = property.PropertyId }).State = EntityState.Deleted;
         }
 
         #endregion

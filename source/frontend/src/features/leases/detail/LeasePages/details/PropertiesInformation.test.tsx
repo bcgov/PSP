@@ -42,7 +42,7 @@ describe('PropertiesInformation component', () => {
     const { getAllByText } = component;
     const propertyHeaders = getAllByText('Property Information');
 
-    expect(propertyHeaders).toHaveLength(2);
+    expect(propertyHeaders).toHaveLength(1);
   });
 
   it('renders no property information section if there are no properties', () => {

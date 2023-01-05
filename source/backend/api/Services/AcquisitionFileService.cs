@@ -24,6 +24,7 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
+        private readonly ILookupRepository _lookupRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -32,7 +33,8 @@ namespace Pims.Api.Services
             IAcquisitionFilePropertyRepository acqFilePropertyRepository,
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
-            ICoordinateTransformService coordinateService)
+            ICoordinateTransformService coordinateService,
+            ILookupRepository lookupRepository)
         {
             _user = user;
             _logger = logger;
@@ -41,6 +43,7 @@ namespace Pims.Api.Services
             _userRepository = userRepository;
             _propertyRepository = propertyRepository;
             _coordinateService = coordinateService;
+            _lookupRepository = lookupRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -144,8 +147,9 @@ namespace Pims.Api.Services
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
                     var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
                     var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
-                    if (leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount == 0 && deletedProperty?.Property?.IsPropertyOfInterest == true)
+                    if (leaseAssociationCount + researchAssociationCount == 0 && acquisitionAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
                     {
+                        _acqFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
                 }
@@ -209,6 +213,16 @@ namespace Pims.Api.Services
             property.SurplusDeclarationTypeCode = "UNKNOWN";
 
             property.IsPropertyOfInterest = true;
+
+            if (property.Address != null)
+            {
+                var provinceId = _lookupRepository.GetProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                if (provinceId.HasValue)
+                {
+                    property.Address.ProvinceStateId = provinceId.Value;
+                }
+                property.Address.CountryId = _lookupRepository.GetCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+            }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;

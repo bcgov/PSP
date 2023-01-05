@@ -1,20 +1,19 @@
-import { ILeasePage, LeasePageForm } from 'features/leases';
-import { ILease } from 'interfaces';
+import { LeaseViewPageForm } from 'features/leases';
+import { LeaseFormModel } from 'features/leases/models';
+import { FormikProps } from 'formik';
+import { IFormLease } from 'interfaces';
 import React from 'react';
 
+import { ILeasePage } from '../LeaseContainer';
+
 export interface ILeaseTabProps {
-  lease?: ILease;
   leasePage?: ILeasePage;
-  refreshLease: () => void;
-  setLease: (lease: ILease) => void;
+  onEdit?: () => void;
+  isEditing: boolean;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel | IFormLease>>;
 }
 
-export const LeaseTab: React.FC<ILeaseTabProps> = ({
-  lease,
-  leasePage,
-  refreshLease,
-  setLease,
-}) => {
+export const LeaseTab: React.FC<ILeaseTabProps> = ({ leasePage, onEdit, isEditing, formikRef }) => {
   if (!leasePage) {
     throw Error('The requested lease page does not exist');
   }
@@ -22,13 +21,8 @@ export const LeaseTab: React.FC<ILeaseTabProps> = ({
   const Component = leasePage.component;
 
   return (
-    <LeasePageForm
-      refreshLease={refreshLease}
-      leasePage={leasePage}
-      lease={lease}
-      setLease={setLease}
-    >
-      <Component />
-    </LeasePageForm>
+    <LeaseViewPageForm isEditing={isEditing} onEdit={onEdit}>
+      <Component onEdit={onEdit} isEditing={isEditing} formikRef={formikRef} />
+    </LeaseViewPageForm>
   );
 };

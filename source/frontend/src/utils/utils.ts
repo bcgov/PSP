@@ -134,7 +134,7 @@ export const handleAxiosResponse = <ResponseType>(
   dispatch(showLoading());
   return axiosPromise
     .then((response: AxiosResponse<ResponseType>) => {
-      dispatch(logSuccess({ name: actionType }));
+      dispatch(logSuccess({ name: actionType, status: response.status }));
       dispatch(hideLoading());
       return response?.data;
     })

@@ -40,6 +40,7 @@ describe('UpdateProperties component', () => {
       </SideBarContextProvider>,
       {
         ...renderOptions,
+        claims: [],
         store: {
           [lookupCodesSlice.name]: { lookupCodes: mockLookups },
         },

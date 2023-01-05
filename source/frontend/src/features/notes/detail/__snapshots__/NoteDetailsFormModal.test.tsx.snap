@@ -200,12 +200,8 @@ exports[`NoteDetailsFormModal component renders as expected 1`] = `
     <div
       class="Toastify"
     />
-    <div
-      class="container"
-    />
-    <div
-      class="container"
-    />
+    <div />
+    <div />
   </div>
   <div
     class="fade modal-backdrop show"

@@ -15,6 +15,7 @@ export const useUsers = () => {
   const activate = useApiRequestWrapper({
     requestFunction: activateUser,
     requestName: actionTypes.ADD_ACTIVATE_USER,
+    throwError: true,
   });
 
   /**

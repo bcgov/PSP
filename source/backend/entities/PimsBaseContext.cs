@@ -5393,6 +5393,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LeaseArea).HasComment("Leased area measurement");
 
+                entity.Property(e => e.Name).HasComment("Property/lease name");
+
                 entity.HasOne(d => d.AreaUnitTypeCodeNavigation)
                     .WithMany(p => p.PimsPropertyLeases)
                     .HasForeignKey(d => d.AreaUnitTypeCode)
@@ -7454,6 +7456,22 @@ namespace Pims.Dal
             modelBuilder.HasSequence("PIMS_PRF_PROP_RESEARCH_PURPOSE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(21474483647);
+
+            modelBuilder.HasSequence("PIMS_PRODUCT_BUSINESS_FUNCTION_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PRODUCT_COST_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PRODUCT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PRODUCT_WORK_ACTIVITY_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_PROJECT_H_ID_SEQ")
                 .HasMin(1)

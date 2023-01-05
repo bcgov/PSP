@@ -34,7 +34,6 @@ export const AddressSubForm: React.FunctionComponent<
 
   return (
     <>
-      <Form.Label>Address:</Form.Label>
       {streetAddress1 && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress1')} />
       )}

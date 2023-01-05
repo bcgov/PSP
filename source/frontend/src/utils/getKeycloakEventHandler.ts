@@ -22,7 +22,7 @@ const getKeycloakEventHandler = (keycloak: KeycloakInstance) => {
       store.dispatch(setKeycloakReady(true));
     } else {
       toast.error(errorMessage);
-      console.debug(`keycloak event: ${eventType} error ${error}`);
+      console.debug(`keycloak event: ${eventType} error ${JSON.stringify(error)}`);
     }
   };
   return keycloakEventHandler;

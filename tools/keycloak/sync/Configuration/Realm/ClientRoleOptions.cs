@@ -6,6 +6,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
     public class ClientRoleOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The client id for the related roles.
         /// </summary>

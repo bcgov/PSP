@@ -51,6 +51,7 @@ export interface IProperty {
   isOwned?: boolean;
   isPropertyOfInterest?: boolean;
   isVisibleToOtherAgencies?: boolean;
+  isPayableLease?: boolean;
   zoning?: string;
   zoningPotential?: string;
 

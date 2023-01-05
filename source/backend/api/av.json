@@ -1,6 +1,7 @@
 {
   "Av": {
     "DisableScan": "false",
-    "Port": 3310
+    "Port": 3310,
+    "MaxFileSize": "524288000"
   }
 }

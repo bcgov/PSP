@@ -5,9 +5,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c15.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -460,9 +458,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
         </label>
       </div>
     </div>
-    <div
-      class="container"
-    />
+    <div />
     <div
       class="c5 c6"
     >
@@ -1535,9 +1531,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
         </div>
       </button>
     </div>
-    <div
-      class="container"
-    />
+    <div />
   </div>
 </DocumentFragment>
 `;

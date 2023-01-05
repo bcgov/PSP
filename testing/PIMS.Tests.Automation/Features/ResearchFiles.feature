@@ -38,7 +38,9 @@ Scenario: Verify List View and Results Content
 Scenario: Changes on Properties from Research File
 	Given I update an existing research file properties
 	
-Scenario: Create an activity
+Scenario: Create an activity within a Research File
 	Given I create a new Research File
-	When I create a new activity
+	When I add several Properties to the research File
+	And I create a new activity
+	Then An activity is created successfully
 	

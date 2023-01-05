@@ -1,0 +1,257 @@
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.ts]
+indent_size = 2
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+[*.env]
+insert_final_newline = false
+
+[{Makefile,**.mk}]
+# Use tabs for indentation (Makefiles require tabs)
+indent_style = tab
+
+[*.cs]
+indent_size = 4
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning
+# CA1032: Implement standard exception constructors
+dotnet_diagnostic.CA1032.severity = warning
+# CA1816: Call GC.SuppressFinalize correctly
+dotnet_diagnostic.CA1816.severity = error
+# CA1063: Implement IDisposable correctly
+dotnet_diagnostic.CA1063.severity = error
+# CA2007: Do not directly await a Task
+dotnet_diagnostic.CA2007.severity = none
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = none
+# CA1031: Do not catch general exception types
+dotnet_diagnostic.CA1031.severity = none
+# CA2000: Dispose objects before losing scope
+dotnet_diagnostic.CA2000.severity = error
+# CA1508: Avoid dead conditional code
+dotnet_diagnostic.CA1508.severity = none #TODO: Requires further analysis
+# CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = none # #TODO: Requires further analysis
+# CA1801: Review unused parameters
+dotnet_diagnostic.CA1801.severity = none # #TODO: Requires further analysis
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = warning
+# CS1591: Missing XML comment
+dotnet_diagnostic.CS1591.severity = none
+# CS0108 X member hides inherited member Y. Use the new keyword if hiding was intended.
+dotnet_diagnostic.CS0108.severity = error
+# SA1400 Element X should declare an access modifier
+dotnet_diagnostic.SA1400.severity = error
+# SA1314 Type parameter names should begin with T
+dotnet_diagnostic.SA1314.severity = error
+
+# SonarQube
+# S4487 Unread "private" fields should be removed.
+dotnet_diagnostic.S4487.severity = warning
+# S927 Parameter names should match base declaration and other partial definitions
+dotnet_diagnostic.S927.severity = error
+# S1006 Remove the default parameter value to match the signature of overridden method
+dotnet_diagnostic.S1006.severity = error
+# S3928 The parameter name '{param}' is not declared in the argument list
+dotnet_diagnostic.S3928.severity = error
+# S1481 Remove the unused local variable
+dotnet_diagnostic.S1481.severity = warning
+# S1116 Remove empty statement
+dotnet_diagnostic.S1116.severity = warning
+# S1118 Utility classes should not have public constructors
+dotnet_diagnostic.S1118.severity = error
+# S3925 "ISerializable" should be implemented correctly
+dotnet_diagnostic.S3925.severity = error
+# S4457 Parameter validation in "async"/"await" methods should be wrapped
+dotnet_diagnostic.S4457.severity = error
+# S3442 "abstract" classes should not have "public" constructors
+dotnet_diagnostic.S3442.severity = error
+# S125 Remove commented out code
+dotnet_diagnostic.S125.severity = warning
+# S4136 Method overloads should be adjacent
+dotnet_diagnostic.S4136.severity = none
+# S1128 Remove this unnecessary 'using'
+dotnet_diagnostic.S1128.severity = warning
+# S3358 Extract this nested ternary operation into an independent statement.
+dotnet_diagnostic.S3358.severity = warning
+# SA1617 Void return value should not be documented
+dotnet_diagnostic.SA1617.severity = error
+# SA1122 Use string.Empty for empty strings
+dotnet_diagnostic.SA1122.severity = error
+
+# StyleCop
+# SA1600 Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+# SA1200 Using directive should appear within a namespace declaration
+dotnet_diagnostic.SA1200.severity = none
+# SA1633 The file header is missing or not located at the top of the file. 
+dotnet_diagnostic.SA1633.severity = none
+# SA1642 Constructor summary documentation should begin with standard text
+dotnet_diagnostic.SA1642.severity = none
+# SA1614 Element parameter documentation should have text 
+dotnet_diagnostic.SA1614.severity = none
+# SA1101 Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+# SA1616 Element return value documentation should have text
+dotnet_diagnostic.SA1616.severity = none
+# SA1623 The property's documentation summary text should begin with: 'Gets or sets'
+dotnet_diagnostic.SA1623.severity = none
+# SA1309 Field should not begin with an underscore
+dotnet_diagnostic.SA1309.severity = none
+# SA1513 Closing brace should be followed by an empty line
+dotnet_diagnostic.SA1505.severity = none
+# SA1505 Opening brace should be followed by an empty line
+dotnet_diagnostic.SA1513.severity = none
+# SA1124 Do not use regions
+dotnet_diagnostic.SA1124.severity = none
+# SA1139 Use literal suffix notation  
+dotnet_diagnostic.SA1139.severity = none
+# SA1501 Statement should not be on a single line.
+dotnet_diagnostic.SA1501.severity = none
+# SA1000 The keyword 'new' should be followed by a space
+dotnet_diagnostic.SA1000.severity = none
+
+# TODO: Fix these
+# SA1622 Generic type parameter documentation should have text. // TODO: This should get added
+dotnet_diagnostic.SA1622.severity = none 
+# SA1618 The documentation for type parameter 'T' is missing. // TODO: This should be an error
+dotnet_diagnostic.SA1618.severity = none 
+# SA1402 File may only contain a single type. // TODO: This should be enabled
+dotnet_diagnostic.SA1402.severity = none
+# SA1649 File name should match first type name. // TODO: This should be an error || LTSA needs to be skiped
+dotnet_diagnostic.SA1649.severity = none 
+# CA2254 The logging message template should not vary between calls. // TODO: requires code changes
+dotnet_diagnostic.CA2254.severity = none
+# SA1129 Do not use default value type constructor.
+dotnet_diagnostic.SA1129.severity = none 
+# S1135 Complete the task associated to this 'TODO' comment
+dotnet_diagnostic.S1135.severity = none
+##
+
+# SA1611: The documentation for parameter X is missing. // Not necessary unless it proves value
+dotnet_diagnostic.SA1611.severity = none
+# SA1615 Element return value should be documented // Not necessary unless it proves value
+dotnet_diagnostic.SA1615.severity = none
+# SA1201 A constructor should not follow a property
+dotnet_diagnostic.SA1201.severity = none
+# SA1602 Enumeration items should be documented.  // Not necessary unless it proves value
+dotnet_diagnostic.SA1602.severity = none
+
+# SA0001 XML comment analysis is disabled due to project configuration
+dotnet_diagnostic.SA0001.severity = none
+
+# --- Set to error before running formatter ---
+# dotnet format --severity error --exclude entities/ef/** --exclude entities/PimsBaseContext.cs
+# SA1515 Single-line comment should be preceded by blank line.
+dotnet_diagnostic.SA1515.severity = warning
+# SA1516 Elements should be separated by blank line 
+dotnet_diagnostic.SA1516.severity = warning
+# SA1208 Using directive for 'X' should appear before directive 'Y'
+dotnet_diagnostic.SA1208.severity = warning
+# SA1507 Code should not contain multiple blank lines in a row
+dotnet_diagnostic.SA1507.severity = warning
+# SA1629 Documentation text should end with a period
+dotnet_diagnostic.SA1629.severity = warning
+# SA1121 Use built-in type alias
+dotnet_diagnostic.SA1121.severity = warning
+# SA1413 Use trailing comma in multi-line initializers
+dotnet_diagnostic.SA1413.severity = warning
+# SA1128 Put constructor initializers on their own line
+dotnet_diagnostic.SA1128.severity = warning
+# SA1514 Element documentation header should be preceded by blank line
+dotnet_diagnostic.SA1514.severity = warning
+# SA1502 Element should not be on a single line
+dotnet_diagnostic.SA1502.severity = warning
+# S1128 Remove this unnecessary 'using'
+dotnet_diagnostic.S1128.severity = warning
+# SA1517 Code should not contain blank lines at start of file
+dotnet_diagnostic.SA1517.severity = warning
+# S1128 Remove this unnecessary 'using'
+dotnet_diagnostic.S1128.severity = warning
+# SA1508 A closing brace should not be preceded by a blank line.
+dotnet_diagnostic.SA1508.severity = warning
+# SA1009 Closing parenthesis should be followed by a space
+dotnet_diagnostic.SA1009.severity = warning
+# SA1210 Using directives should be ordered alphabetically by the namespaces
+dotnet_diagnostic.SA1210.severity = warning
+# SA1610 Property documentation should have value text
+dotnet_diagnostic.SA1610.severity = warning
+# CS8019: Using directive is unnecessary.
+dotnet_diagnostic.CS8019.severity = warning
+# SA1005 Single line comment should begin with a space.
+dotnet_diagnostic.SA1005.severity = warning
+# SA1411 Attribute constructor should not use unnecessary parenthesis
+dotnet_diagnostic.SA1411.severity = warning
+# SA1519 Braces should not be omitted from multi-line child statement
+dotnet_diagnostic.SA1519.severity = warning
+# SA1202 'public' members should come before 'private' members 
+dotnet_diagnostic.SA1202.severity = warning
+# SA1204 Static members should appear before non-static members.
+dotnet_diagnostic.SA1204.severity = warning
+# SA1127 Generic type constraints should be on their own line 
+dotnet_diagnostic.SA1127.severity = warning
+# SA1520 Use braces consistently
+dotnet_diagnostic.SA1520.severity = warning
+# SA1028 Code should not contain trailing whitespace.
+dotnet_diagnostic.SA1028.severity = warning
+# SA1512 Single-line comments should not be followed by blank line.
+dotnet_diagnostic.SA1512.severity = warning
+# SA1500 Braces for multi-line statements should not share line
+dotnet_diagnostic.SA1500.severity = warning
+# SA1119 Statement should not use unnecessary parenthesis.
+dotnet_diagnostic.SA1119.severity = warning
+# CA1847 Use 'string.Contains(char)' instead of 'string.Contains(string)' when searching for a single character
+dotnet_diagnostic.CA1847.severity = warning
+# SA1107 Code should not contain multiple statements on one line 
+dotnet_diagnostic.SA1107.severity = warning
+# IDE0005 Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning
+# SA1518 Code should not contain blank lines at the end of the file
+dotnet_diagnostic.SA1518.severity = warning
+# SA1510 'else' statement should not be preceded by a blank line.
+dotnet_diagnostic.SA1510.severity = warning
+# SA1116 The parameters should begin on the line after the declaration.
+dotnet_diagnostic.SA1116.severity = warning
+# SA1137 Elements should have the same indentation 
+dotnet_diagnostic.SA1137.severity = warning
+# SA1117 The parameters should all be placed on the same line or each parameter should be placed on its own line.
+dotnet_diagnostic.SA1117.severity = warning
+# SA1115 The parameter should begin on the line after the previous parameter.
+dotnet_diagnostic.SA1115.severity = warning
+# SA1612 The parameter 'id' does not exist.
+dotnet_diagnostic.SA1612.severity = warning
+# SA1025 Code should not contain multiple whitespace characters in a row.
+dotnet_diagnostic.SA1025.severity = warning
+# IDE0052 Private member X can be removed as the value assigned to it is never read.
+dotnet_diagnostic.IDE0052.severity = warning
+# SA1214 Readonly fields should appear before non-readonly fields.
+dotnet_diagnostic.SA1214.severity = warning
+# SA1300 Element X should begin with an uppercase letter
+dotnet_diagnostic.SA1300.severity = warning
+
+# Entity Framework files
+[**{entities/ef/*,PIMSContext,PimsBaseContext}.cs]
+# CS8019: Using directive is unnecessary.
+dotnet_diagnostic.CS8019.severity = none
+# SA1502 Element should not be on a single line
+dotnet_diagnostic.SA1502.severity = none
+# SA1516 Elements should be separated by blank line 
+dotnet_diagnostic.SA1516.severity = none
+# SonarQube
+# S1128 Remove this unnecessary 'using'
+dotnet_diagnostic.S1128.severity = none
+# S3251 Supply an implementation for this partial method.
+dotnet_diagnostic.S3251.severity = none

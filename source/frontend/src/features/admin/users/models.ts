@@ -73,7 +73,14 @@ export class FormUser {
           regionCode: region.id,
           region: { id: region.id },
         })) ?? [],
-      person: { ...this.person, firstName: this.firstName, surname: this.surname },
+      person: {
+        ...this.person,
+        firstName: this.firstName,
+        surname: this.surname,
+        contactMethods: [
+          { contactMethodType: { id: ContactMethodTypes.WorkEmail }, value: this.email },
+        ],
+      },
       rowVersion: this.rowVersion ? this.rowVersion : undefined,
     };
   }

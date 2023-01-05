@@ -22,7 +22,7 @@ namespace Pims.Av
             return services
                 .Configure<Configuration.ClamAvOptions>(section)
                 .AddSingleton<IAvService, ClamAvService>()
-                .AddSingleton<IClamClient, ClamClient>(x => new ClamClient(ClamAvOptions.DEFAULTURI));
+                .AddSingleton<IClamClient, ClamClient>(x => new ClamClient(ClamAvOptions.DEFAULTURI) { MaxStreamSize = int.Parse(section["MaxFileSize"]), MaxChunkSize = int.Parse(section["MaxFileSize"]) });
         }
     }
 }

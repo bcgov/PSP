@@ -5,9 +5,7 @@ exports[`Multiselect component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="form-group"
   >

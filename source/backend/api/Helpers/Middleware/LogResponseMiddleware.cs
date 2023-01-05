@@ -19,6 +19,7 @@ namespace Pims.Api.Helpers.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<LogResponseMiddleware> _logger;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
+        private readonly int maxStreamLength = 2000;
         #endregion
 
         #region Constructors
@@ -63,7 +64,11 @@ namespace Pims.Api.Helpers.Middleware
 
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             using var reader = new StreamReader(context.Response.Body);
-            var body = await reader.ReadToEndAsync();
+            string body = null;
+            if (reader.BaseStream.Length < maxStreamLength)
+            {
+                body = await reader.ReadToEndAsync();
+            }
             context.Response.Body.Seek(0, SeekOrigin.Begin);
 
             using (_logger.BeginScope("HTTP Response"))

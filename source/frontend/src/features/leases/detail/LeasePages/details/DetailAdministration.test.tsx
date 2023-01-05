@@ -98,44 +98,6 @@ describe('DetailAdministration component', () => {
     expect(queryByDisplayValue('other type')).toBeNull();
   });
 
-  it('renders the Physical lease/license exists field', () => {
-    const {
-      component: { getAllByDisplayValue },
-    } = setup({
-      lease: {
-        ...defaultFormLease,
-        hasPhysicalLicense: 'Unknown',
-        hasDigitalLicense: 'Yes',
-      },
-    });
-    expect(getAllByDisplayValue('Unknown')[1]).toBeVisible();
-  });
-
-  it('renders the Digital lease/license exists field', () => {
-    const {
-      component: { getAllByDisplayValue },
-    } = setup({
-      lease: {
-        ...defaultFormLease,
-        hasPhysicalLicense: 'Yes',
-        hasDigitalLicense: 'Unknown',
-      },
-    });
-    expect(getAllByDisplayValue('Unknown')[0]).toBeVisible();
-  });
-
-  it('renders the Location of documents field', () => {
-    const {
-      component: { getByDisplayValue },
-    } = setup({
-      lease: {
-        ...defaultFormLease,
-        documentationReference: 'documentation Reference',
-      },
-    });
-    expect(getByDisplayValue('documentation Reference')).toBeVisible();
-  });
-
   it('renders the program name', () => {
     const {
       component: { getByDisplayValue },

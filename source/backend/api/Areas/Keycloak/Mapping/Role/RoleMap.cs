@@ -1,6 +1,5 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using KModel = Pims.Keycloak.Models;
 using Model = Pims.Api.Areas.Keycloak.Models.Role;
 
 namespace Pims.Api.Areas.Admin.Keycloak.Role
@@ -26,10 +25,6 @@ namespace Pims.Api.Areas.Admin.Keycloak.Role
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Inherits<Api.Models.BaseModel, Entity.IBaseEntity>();
-
-            config.NewConfig<KModel.GroupModel, Entity.PimsRole>()
-                .Map(dest => dest.KeycloakGroupId, src => src.Id)
-                .Map(dest => dest.Name, src => src.Name);
         }
     }
 }

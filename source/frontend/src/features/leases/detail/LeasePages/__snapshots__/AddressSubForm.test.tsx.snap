@@ -5,14 +5,7 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  <label
-    class="form-label"
-  >
-    Address:
-  </label>
+  <div />
   <div
     class="input form-group"
   >

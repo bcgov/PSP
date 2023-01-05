@@ -1,9 +1,10 @@
-import * as Styled from 'features/leases/detail/styles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import { ILeaseTerm } from 'interfaces/ILeaseTerm';
 import moment from 'moment';
 import * as React from 'react';
+import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
 import { DetailTermInformationBox } from './DetailTermInformationBox';
@@ -27,20 +28,28 @@ export const DetailTermInformation: React.FunctionComponent<
     moment().isSameOrBefore(moment(term.expiryDate), 'day'),
   );
   return (
-    <Styled.SpacedInlineListItem>
-      <DetailTermInformationBox
-        title="Lease / License"
-        startDate={startDate}
-        expiryDate={expiryDate}
-      />
-      <DetailTermInformationBox
-        title="Current Term"
-        startDate={currentTerm?.startDate}
-        expiryDate={currentTerm?.expiryDate}
-        inverted
-      />
-    </Styled.SpacedInlineListItem>
+    <Section>
+      <StyledDiv>
+        <DetailTermInformationBox
+          title="Lease / License"
+          startDate={startDate}
+          expiryDate={expiryDate}
+        />
+        <DetailTermInformationBox
+          title="Current Term"
+          startDate={currentTerm?.startDate}
+          expiryDate={currentTerm?.expiryDate}
+          inverted
+        />
+      </StyledDiv>
+    </Section>
   );
 };
 
 export default DetailTermInformation;
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10rem;
+  padding-right: 10rem;
+`;

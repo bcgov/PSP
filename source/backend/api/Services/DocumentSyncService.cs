@@ -3,12 +3,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Mayan.Sync;
 using Pims.Api.Repositories.Mayan;
+using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -24,24 +26,27 @@ namespace Pims.Api.Services
         private readonly IEdmsDocumentRepository mayanDocumentRepository;
         private readonly IEdmsMetadataRepository mayanMetadataRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
+        private readonly IOptionsMonitor<AuthClientOptions> keycloakOptions;
 
         public DocumentSyncService(
             ClaimsPrincipal user,
             ILogger<DocumentSyncService> logger,
             IEdmsDocumentRepository edmsDocumentRepository,
             IEdmsMetadataRepository emdMetadataRepository,
-            IDocumentTypeRepository documentTypeRepository)
+            IDocumentTypeRepository documentTypeRepository,
+            IOptionsMonitor<AuthClientOptions> options)
             : base(user, logger)
         {
             this.mayanDocumentRepository = edmsDocumentRepository;
             this.mayanMetadataRepository = emdMetadataRepository;
             this.documentTypeRepository = documentTypeRepository;
+            this.keycloakOptions = options;
         }
 
         public ExternalBatchResult SyncMayanMetadataTypes(SyncModel model)
         {
             this.Logger.LogInformation("Synchronizing Mayan metadata types");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentAdmin, this.keycloakOptions);
 
             ExternalBatchResult batchResult = new ExternalBatchResult();
 
@@ -91,7 +96,7 @@ namespace Pims.Api.Services
         public ExternalBatchResult SyncMayanDocumentTypes(SyncModel model)
         {
             this.Logger.LogInformation("Synchronizing Mayan document types");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentAdmin, this.keycloakOptions);
 
             ExternalBatchResult batchResult = new ExternalBatchResult();
 
@@ -142,7 +147,7 @@ namespace Pims.Api.Services
         public async Task<IList<PimsDocumentTyp>> SyncBackendDocumentTypes()
         {
             this.Logger.LogInformation("Synchronizing Pims DB and Mayan document types");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentAdmin, this.keycloakOptions);
 
             ExternalResult<QueryResult<DocumentType>> mayanResult = await mayanDocumentRepository.GetDocumentTypesAsync(pageSize: 5000);
 

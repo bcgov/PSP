@@ -5,10 +5,8 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  .c3.btn {
+  <div />
+  .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,49 +36,49 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c3.btn:hover {
+.c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c2.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c2.btn.btn-primary {
   border: none;
 }
 
-.c3.btn.btn-secondary {
+.c2.btn.btn-secondary {
   background: none;
 }
 
-.c3.btn.btn-info {
+.c2.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
   background: none;
 }
 
-.c3.btn.btn-light {
+.c2.btn.btn-light {
   border: none;
 }
 
-.c3.btn.btn-dark {
+.c2.btn.btn-dark {
   border: none;
 }
 
-.c3.btn.btn-link {
+.c2.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -101,9 +99,9 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -112,14 +110,14 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -130,19 +128,19 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c3.Button .Button__icon {
+.c2.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c2.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c2.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c4 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -152,146 +150,71 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
 .c1 {
-  font-size: 1.6rem;
-  font-family: 'BCSans-Bold';
-}
-
-.c2 {
-  font-size: 1.8rem;
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c5 {
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c4 {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
 }
 
-.c5 .btn.btn-primary {
+.c4 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
 }
 
 <div
-    class="c0"
+    class="c0 form-section"
   >
-    <label
-      class="c1 c2 form-label"
-    >
-      Deposits Received
-    </label>
-    <button
-      class="c3 Button Button--disabled mb-4 px-5 btn btn-secondary"
-      disabled=""
-      type="button"
+    <h2
+      class="c1"
     >
       <div
-        class="Button__value"
+        class="row"
       >
-        Add a deposit
+        <div
+          class="col"
+        >
+          Deposits Received
+        </div>
+        <div
+          class="col-1"
+        />
       </div>
-    </button>
+    </h2>
     <div
-      class="table"
-      data-testid="securityDepositsTable"
-      role="table"
+      class="collapse show"
     >
-      <div
-        class="thead thead-light"
+      <button
+        class="c2 Button Button--disabled mb-4 px-5 btn btn-secondary"
+        disabled=""
+        type="button"
       >
         <div
-          class="tr"
-          role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 300px;"
+          class="Button__value"
         >
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Deposit type
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Description
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Amount paid
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Paid date
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Deposit holder
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Actions
-            </div>
-          </div>
+          Add a deposit
         </div>
-      </div>
+      </button>
       <div
-        class="tbody"
-        role="rowgroup"
+        class="table"
+        data-testid="securityDepositsTable"
+        role="table"
       >
         <div
-          class="tr-wrapper"
+          class="thead thead-light"
         >
           <div
             class="tr"
@@ -299,122 +222,209 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
             style="display: flex; flex: 1 0 auto; min-width: 300px;"
           >
             <div
-              class="td"
-              role="cell"
+              class="th"
+              colspan="1"
+              role="columnheader"
               style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              Pet deposit
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              Test deposit 1
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              $1,234.00
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              Feb 9, 2022
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              <a
-                href="/contact/O3"
-              >
-                test organization
-              </a>
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
             >
               <div
-                class="c4 c5"
-              />
+                class="sortable-column"
+              >
+                Deposit type
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Description
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Amount paid
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Paid date
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Deposit holder
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Actions
+              </div>
             </div>
           </div>
         </div>
         <div
-          class="tr-wrapper"
+          class="tbody"
+          role="rowgroup"
         >
           <div
-            class="tr"
-            role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 300px;"
+            class="tr-wrapper"
           >
             <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              TestCustomDeposit (Other)
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              Test deposit 2
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              $444.00
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              Feb 9, 2022
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
-            >
-              <a
-                href="/contact/P1"
-              >
-                test person
-              </a>
-            </div>
-            <div
-              class="td"
-              role="cell"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-              title=""
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 300px;"
             >
               <div
-                class="c4 c5"
-              />
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Pet deposit
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Test deposit 1
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                $1,234.00
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Feb 9, 2022
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/contact/O3"
+                >
+                  test organization
+                </a>
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="c3 c4"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 300px;"
+            >
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                TestCustomDeposit (Other)
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Test deposit 2
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                $444.00
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Feb 9, 2022
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/contact/P1"
+                >
+                  test person
+                </a>
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="c3 c4"
+                />
+              </div>
             </div>
           </div>
         </div>

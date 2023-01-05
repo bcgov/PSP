@@ -6,7 +6,8 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, FormikProps } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 
-import { PropertyForm } from '../../shared/models';
+import { useBcaAddress } from '../../hooks/useBcaAddress';
+import { AddressForm, PropertyForm } from '../../shared/models';
 import { AcquisitionForm } from './models';
 
 interface AcquisitionPropertiesProp {
@@ -17,6 +18,7 @@ export const AcquisitionProperties: React.FunctionComponent<
   React.PropsWithChildren<AcquisitionPropertiesProp>
 > = ({ formikProps }) => {
   const { values } = formikProps;
+  const { getPrimaryAddressByPid } = useBcaAddress();
 
   return (
     <>
@@ -32,13 +34,22 @@ export const AcquisitionProperties: React.FunctionComponent<
               <Col>
                 <MapSelectorContainer
                   addSelectedProperties={(newProperties: IMapProperty[]) => {
-                    newProperties.forEach((property, index) => {
-                      const formProperty = PropertyForm.fromMapProperty(property);
-                      if (values.properties?.length === 0 && index === 0) {
-                        formikProps.setFieldValue(`region`, formProperty.region);
-                      }
-                      push(formProperty);
-                    });
+                    newProperties.reduce(async (promise, property, index) => {
+                      return promise.then(async () => {
+                        const formProperty = PropertyForm.fromMapProperty(property);
+                        if (property.pid) {
+                          const bcaSummary = await getPrimaryAddressByPid(property.pid);
+                          formProperty.address = bcaSummary?.address
+                            ? AddressForm.fromBcaAddress(bcaSummary?.address)
+                            : undefined;
+                          formProperty.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
+                        }
+                        if (values.properties?.length === 0 && index === 0) {
+                          formikProps.setFieldValue(`region`, formProperty.region);
+                        }
+                        push(formProperty);
+                      });
+                    }, Promise.resolve());
                   }}
                   modifiedProperties={values.properties}
                 />
@@ -52,7 +63,7 @@ export const AcquisitionProperties: React.FunctionComponent<
                   onRemove={() => remove(index)}
                   nameSpace={`properties.${index}`}
                   index={index}
-                  property={property}
+                  property={property.toMapProperty()}
                 />
               ))}
               {formikProps.values.properties.length === 0 && <span>No Properties selected</span>}
