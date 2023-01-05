@@ -5,6 +5,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
   <div
     class="Toastify"
   />
+  <div />
   .c4.required::before {
   content: '*';
   position: absolute;

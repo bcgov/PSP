@@ -5,6 +5,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c1.required::before {
   content: '*';
   position: absolute;

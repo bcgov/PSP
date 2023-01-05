@@ -5,6 +5,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   font-weight: bold;
   border-bottom: 0.2rem solid;

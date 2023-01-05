@@ -5,6 +5,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
   <div
     class="Toastify"
   />
+  <div />
   .c3:not(:first-child) {
   padding-left: 0;
 }
@@ -195,6 +196,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c3:not(:first-child) {
   padding-left: 0;
 }

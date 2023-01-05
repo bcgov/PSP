@@ -5,6 +5,7 @@ exports[`Update lease container component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   width: 100%;
   height: 100%;
@@ -2229,5 +2230,6 @@ exports[`Update lease container component renders as expected 1`] = `
       </div>
     </div>
   </div>
+  <div />
 </DocumentFragment>
 `;

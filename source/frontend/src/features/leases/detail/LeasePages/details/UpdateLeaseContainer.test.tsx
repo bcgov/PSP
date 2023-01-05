@@ -18,6 +18,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 const mockAxios = new MockAdapter(axios);
+jest.mock('@react-keycloak/web');
 
 describe('Update lease container component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
@@ -30,6 +31,7 @@ describe('Update lease container component', () => {
         ...renderOptions,
         store: storeState,
         history,
+        claims: [],
       },
     );
 

@@ -5,6 +5,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   display: -webkit-box;
   display: -webkit-flex;

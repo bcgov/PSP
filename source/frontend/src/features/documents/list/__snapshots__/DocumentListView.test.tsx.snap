@@ -5,6 +5,7 @@ exports[`Document List View renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1002,6 +1003,9 @@ exports[`Document List View renders as expected 1`] = `
       </div>
     </div>
   </div>
+  <div />
+  <div />
+  <div />
 </DocumentFragment>
 `;
 
@@ -1010,6 +1014,7 @@ exports[`Document List View renders as expected 2`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -2007,5 +2012,8 @@ exports[`Document List View renders as expected 2`] = `
       </div>
     </div>
   </div>
+  <div />
+  <div />
+  <div />
 </DocumentFragment>
 `;

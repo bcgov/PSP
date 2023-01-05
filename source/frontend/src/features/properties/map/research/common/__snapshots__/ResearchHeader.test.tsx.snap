@@ -5,6 +5,7 @@ exports[`ResearchHeader component renders as expected when provided no research 
   <div
     class="Toastify"
   />
+  <div />
   .c2 {
   font-weight: bold;
 }

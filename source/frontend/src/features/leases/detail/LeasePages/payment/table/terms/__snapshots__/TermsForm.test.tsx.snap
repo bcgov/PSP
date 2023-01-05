@@ -5,6 +5,7 @@ exports[`TermsForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -313,6 +314,7 @@ exports[`TermsForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;

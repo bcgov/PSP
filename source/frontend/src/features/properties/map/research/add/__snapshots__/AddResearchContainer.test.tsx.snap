@@ -5,6 +5,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;

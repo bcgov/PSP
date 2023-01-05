@@ -5,6 +5,7 @@ exports[`ResearchFileNameGuide renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   font-size: 16px;
   color: #1a5a96;

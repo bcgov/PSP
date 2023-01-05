@@ -5,6 +5,7 @@ exports[`ContactViewContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c1 {
   grid-area: breadcrumb;
 }

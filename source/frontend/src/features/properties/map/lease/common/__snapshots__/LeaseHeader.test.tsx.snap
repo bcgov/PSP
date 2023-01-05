@@ -5,6 +5,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
   <div
     class="Toastify"
   />
+  <div />
   .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;

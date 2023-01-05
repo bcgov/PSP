@@ -5,6 +5,7 @@ exports[`renders correctly... 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   <div
     class="GeocoderAutoComplete"
   >

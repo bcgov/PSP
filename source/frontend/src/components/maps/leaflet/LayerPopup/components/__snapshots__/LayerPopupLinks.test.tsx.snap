@@ -5,6 +5,7 @@ exports[`Layer Popup links Renders correctly 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;

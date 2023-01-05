@@ -5,6 +5,7 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   <div
     class="py-2"
   >

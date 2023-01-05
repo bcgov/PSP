@@ -398,6 +398,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
     <div
       class="Toastify"
     />
+    <div />
     <div
       class=""
     >
@@ -1156,6 +1157,8 @@ exports[`UpdateProperties component renders as expected 1`] = `
         </div>
       </div>
     </div>
+    <div />
+    <div />
   </div>
 </body>
 `;

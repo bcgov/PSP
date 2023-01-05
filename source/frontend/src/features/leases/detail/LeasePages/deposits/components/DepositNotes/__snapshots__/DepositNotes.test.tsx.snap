@@ -5,6 +5,7 @@ exports[`DepositNotes component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c2 {
   float: right;
   cursor: pointer;

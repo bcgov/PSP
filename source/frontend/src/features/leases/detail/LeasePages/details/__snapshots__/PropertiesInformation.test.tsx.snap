@@ -5,6 +5,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c6:not(:first-child) {
   padding-left: 0;
 }

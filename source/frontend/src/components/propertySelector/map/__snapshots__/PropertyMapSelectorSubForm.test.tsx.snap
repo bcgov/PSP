@@ -5,6 +5,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
   <div
     class="Toastify"
   />
+  <div />
   .c1:hover {
   cursor: pointer;
 }

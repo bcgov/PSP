@@ -5,6 +5,7 @@ exports[`Edit Lease Insurance renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   <h2>
     Required coverage
   </h2>

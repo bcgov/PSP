@@ -5,6 +5,7 @@ exports[`Contact PersonView component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   border-radius: 1rem;
   width: 100%;
