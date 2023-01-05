@@ -93,9 +93,8 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     let needsWarning = false;
     const newFormProperties: FormLeaseProperty[] = [];
 
-    newProperties.reduce(async (promise, property, i) => {
+    await newProperties.reduce(async (promise, property, i) => {
       return promise.then(async () => {
-        const property = newProperties[i];
         const formProperty = FormLeaseProperty.fromMapProperty(property);
 
         const bcaSummary = property?.pid ? await getPrimaryAddressByPid(property.pid) : undefined;

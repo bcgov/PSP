@@ -20,8 +20,6 @@ export const SelectedPropertyRow: React.FunctionComponent<
   React.PropsWithChildren<ISelectedPropertyRowProps>
 > = ({ nameSpace, onRemove, index, property }) => {
   const propertyName = getPropertyName(property.toMapProperty());
-  property,
-}) => {
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
