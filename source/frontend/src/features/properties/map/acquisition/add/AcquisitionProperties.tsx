@@ -34,7 +34,7 @@ export const AcquisitionProperties: React.FunctionComponent<
               <Col>
                 <MapSelectorContainer
                   addSelectedProperties={(newProperties: IMapProperty[]) => {
-                    newProperties.reduce(async (promise, property) => {
+                    newProperties.reduce(async (promise, property, index) => {
                       return promise.then(async () => {
                         const formProperty = PropertyForm.fromMapProperty(property);
                         if (property.pid) {
@@ -43,6 +43,9 @@ export const AcquisitionProperties: React.FunctionComponent<
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
                           formProperty.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
+                        }
+                        if (values.properties?.length === 0 && index === 0) {
+                          formikProps.setFieldValue(`region`, formProperty.region);
                         }
                         push(formProperty);
                       });

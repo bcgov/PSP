@@ -703,7 +703,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                   title=""
                 >
                   <a
-                    href="/lease/34/details"
+                    href="/mapview/sidebar/lease/34"
                   >
                     951547254
                   </a>
