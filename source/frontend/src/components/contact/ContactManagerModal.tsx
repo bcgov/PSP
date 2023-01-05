@@ -14,6 +14,7 @@ export interface IContactManagerModalProps {
   handleModalCancel?: Function;
   isSingleSelect?: boolean;
   showOnlyIndividuals?: boolean;
+  isSummary?: boolean;
 }
 
 export const ContactManagerModal: React.FunctionComponent<
@@ -38,7 +39,7 @@ export const ContactManagerModal: React.FunctionComponent<
             noInitialSearch={props.selectedRows.length === 0}
             isSingleSelect={props.isSingleSelect}
             showOnlyIndividuals={props.showOnlyIndividuals}
-            isSummary
+            isSummary={props.isSummary ?? true}
             showSelectedRowCount
           />
         </>

@@ -5,9 +5,7 @@ exports[`LeaseStatusSummary component renders as expected when active 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
@@ -66,9 +64,7 @@ exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;

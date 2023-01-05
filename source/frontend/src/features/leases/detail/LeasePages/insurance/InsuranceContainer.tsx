@@ -2,18 +2,22 @@ import { CancelConfirmationModal } from 'components/common/CancelConfirmationMod
 import { INSURANCE_TYPES } from 'constants/API';
 import { Claims } from 'constants/claims';
 import { useLeaseDetail } from 'features/leases';
+import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { getIn } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IInsurance } from 'interfaces';
-import queryString from 'query-string';
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import InsuranceDetailsView from './details/Insurance';
-import InsuranceEditContainer from './edit/EditContainer';
+import InsuranceEditContainer from './edit/EditInsuranceContainer';
 
-const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
+const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
+  isEditing,
+  onEdit,
+  formikRef,
+}) => {
   const { hasClaim } = useKeycloakWrapper();
   const [showCancelModal, setShowCancelModal] = useState(false);
 
@@ -27,27 +31,25 @@ const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<unknow
   });
   const location = useLocation();
   const history = useHistory();
-  const { edit } = queryString.parse(location.search);
 
   return (
     <>
-      {!edit && (
+      {!isEditing && (
         <InsuranceDetailsView insuranceList={insuranceList} insuranceTypes={insuranceTypes} />
       )}
-      {edit && hasClaim(Claims.LEASE_EDIT) && (
+      {isEditing && hasClaim(Claims.LEASE_EDIT) && (
         <InsuranceEditContainer
+          formikRef={formikRef}
           leaseId={leaseId}
           insuranceList={insuranceList}
           insuranceTypes={insuranceTypes}
           onSuccess={async () => {
             await refresh();
-            history.push(location.pathname);
+            onEdit && onEdit(false);
           }}
           onCancel={(dirty?: boolean) => {
             if (dirty) {
               setShowCancelModal(true);
-            } else {
-              history.push(location.pathname);
             }
           }}
         />

@@ -1,4 +1,6 @@
 import { GeoJsonProperties } from 'geojson';
+import isEmpty from 'lodash/isEmpty';
+import { Api_Address, Api_CodeType } from 'models/api/Address';
 import { Api_Property } from 'models/api/Property';
 import { booleanToString, fromTypeCode, stringToBoolean, toTypeCode } from 'utils/formUtils';
 
@@ -8,6 +10,59 @@ import {
   PropertyRoadFormModel,
   PropertyTenureFormModel,
 } from './';
+
+export class AddressFormModel {
+  id?: number;
+  rowVersion?: number;
+  streetAddress1?: string;
+  streetAddress2?: string;
+  streetAddress3?: string;
+  municipality?: string;
+  postal?: string;
+  province?: Api_CodeType;
+  country?: Api_CodeType;
+
+  static fromApi(apiAddress: Api_Address): AddressFormModel {
+    const model = new AddressFormModel();
+    model.id = apiAddress.id;
+    model.rowVersion = apiAddress.rowVersion;
+    model.streetAddress1 = apiAddress.streetAddress1;
+    model.streetAddress2 = apiAddress.streetAddress2;
+    model.streetAddress3 = apiAddress.streetAddress3;
+    model.municipality = apiAddress.municipality;
+    model.postal = apiAddress.postal;
+    model.province = apiAddress.province;
+    model.country = apiAddress.country;
+
+    return model;
+  }
+
+  toApi(): Api_Address | undefined {
+    // Only submit valid addresses to the backend
+    if (!this.isValid()) {
+      return undefined;
+    }
+
+    return {
+      id: this.id,
+      rowVersion: this.rowVersion,
+      streetAddress1: this.streetAddress1,
+      streetAddress2: this.streetAddress2,
+      streetAddress3: this.streetAddress3,
+      municipality: this.municipality,
+      postal: this.postal,
+      province: this.province,
+      country: this.country,
+    };
+  }
+
+  private isValid(): boolean {
+    if (isEmpty(this.streetAddress1) && isEmpty(this.municipality) && isEmpty(this.postal)) {
+      return false;
+    }
+    return true;
+  }
+}
 
 export class UpdatePropertyDetailsFormModel {
   id?: number;
@@ -31,6 +86,8 @@ export class UpdatePropertyDetailsFormModel {
 
   latitude?: number;
   longitude?: number;
+
+  address?: AddressFormModel;
 
   landArea?: number;
   landLegalDescription?: string;
@@ -86,6 +143,9 @@ export class UpdatePropertyDetailsFormModel {
 
     model.latitude = base.latitude;
     model.longitude = base.longitude;
+
+    model.address =
+      base.address !== undefined ? AddressFormModel.fromApi(base.address) : new AddressFormModel();
 
     model.landLegalDescription = base.landLegalDescription;
     model.landArea = base.landArea;
@@ -144,6 +204,7 @@ export class UpdatePropertyDetailsFormModel {
       status: toTypeCode(this.statusTypeCode),
       district: toTypeCode(this.districtTypeCode),
       region: toTypeCode(this.regionTypeCode),
+      address: this.address !== undefined ? this.address.toApi() : undefined,
       // multi-selects
       anomalies: this.anomalies?.map(e => e.toApi()),
       tenures: this.tenures?.map(e => e.toApi()),

@@ -2,6 +2,7 @@ import GenericModal from 'components/common/GenericModal';
 import { FormikHelpers, FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { useAxiosErrorHandlerWithConfirmation } from 'utils';
 
@@ -44,6 +45,12 @@ export const UpdateAcquisitionContainer = React.forwardRef<
       const response = await updateAcquisitionFile(acquisitionFile, allowMinistryOverride);
 
       if (!!response?.id) {
+        if (acquisitionFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
+          toast.warn(
+            'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+            { autoClose: 15000 },
+          );
+        }
         formikHelpers?.resetForm();
         if (typeof onSuccess === 'function') {
           onSuccess();

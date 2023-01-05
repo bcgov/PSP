@@ -24,7 +24,7 @@ namespace Pims.Api.Test.Core.Extensions
             var id = Guid.NewGuid();
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+                new Claim("idir_user_guid", id.ToString()),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -258,7 +258,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("username", "test"),
+                new Claim("idir_username", "test@"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -275,8 +275,8 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("username", "test1"),
-                new Claim("username", "test2"),
+                new Claim("idir_username", "test1@"),
+                new Claim("idir_username", "test2@"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 

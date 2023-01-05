@@ -5,9 +5,7 @@ exports[`Basemap Toggle renders correctly - defaults to street layer 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="basemap-container"
   >

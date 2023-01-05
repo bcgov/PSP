@@ -75,7 +75,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "auth" })]
         public IActionResult Register(string redirect_uri)
         {
-            var uri = new UriBuilder($"{_optionsKeycloak.Authority}{_optionsKeycloak.OpenIdConnect.Register}");
+            var uri = new UriBuilder($"{_optionsKeycloak.OpenIdConnect.Authority}{_optionsKeycloak.OpenIdConnect.Register}");
             uri.AppendQuery("client_id", _optionsKeycloak.Client);
             uri.AppendQuery("redirect_uri", redirect_uri);
             return Redirect(uri.ToString());
@@ -89,7 +89,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "auth" })]
         public IActionResult Login(string redirect_uri)
         {
-            var uri = new UriBuilder($"{_optionsKeycloak.Authority}{_optionsKeycloak.OpenIdConnect.Login}");
+            var uri = new UriBuilder($"{_optionsKeycloak.OpenIdConnect.Authority}{_optionsKeycloak.OpenIdConnect.Login}");
             uri.AppendQuery("client_id", _optionsKeycloak.Client);
             uri.AppendQuery("redirect_uri", redirect_uri);
             return Redirect(uri.ToString());
@@ -103,7 +103,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "auth" })]
         public IActionResult Logout(string redirect_uri)
         {
-            var uri = new UriBuilder($"{_optionsKeycloak.Authority}{_optionsKeycloak.OpenIdConnect.Logout}");
+            var uri = new UriBuilder($"{_optionsKeycloak.OpenIdConnect.Authority}{_optionsKeycloak.OpenIdConnect.Logout}");
             uri.AppendQuery("client_id", _optionsKeycloak.Client);
             uri.AppendQuery("redirect_uri", redirect_uri);
             return Redirect(uri.ToString());

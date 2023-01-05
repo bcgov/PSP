@@ -8,6 +8,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Search Bar Elements
         private By searchByTab = By.XPath("//a[contains(text(),'Search')]");
+        private By searchBySubtitle = By.XPath("//h3[contains(text(), 'Search for a property')]");
         private By searchBySelect = By.Id("input-searchBy");
         private By searchByPIDInput = By.Id("input-pid");
         private By searchByPINInput = By.Id("input-pin");
@@ -17,8 +18,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchByPlanInput = By.Id("input-planNumber");
         private By searchByLegalDescriptionInput = By.Id("input-legalDescription");
         private By searchByButton = By.Id("search-button");
+        private By searchResetButton = By.Id("reset-button");
 
         //Search Results Elements
+        private By searchPropertiesResultTableHeader = By.CssSelector("div[class='thead thead-light']");
+        private By searchPropsResultSelectAllInput = By.CssSelector("input[data-testid='selectrow-parent']");
+        private By searchPropResultsPIDHeader = By.XPath("//div[@class='th']/div[contains(text(), 'PID')]");
+        private By searchPropResultsPINHeader = By.XPath("//div[@class='th']/div[contains(text(), 'PIN')]");
+        private By searchPropResultsPlanHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Plan #')]");
+        private By searchPropResultsAddressHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Address')]");
+        private By searchPropResultsLegalDescriptHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Legal Description')]");
+
         private By searchPropertiesNoRowsResult = By.CssSelector("div[data-testid='map-properties'] div[class='no-rows-message']");
         private By searchProperties1stResultPropDiv = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
@@ -137,11 +147,12 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntil(searchProperties1stResultPropDiv);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
+            Wait(3000);
             ButtonElement("Add to selection");
 
             if (webDriver.FindElements(generalToastBody).Count() > 0)
             {
-                Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already beed added to the selected properties list"));
+                Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
             }
         }
 
@@ -151,7 +162,22 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(searchPropertiesNoRowsResult).Text;
         }
 
-        
+        public void VerifySearchPropertiesFeature()
+        {
+            Assert.True(webDriver.FindElement(searchByTab).Displayed);
+            Assert.True(webDriver.FindElement(searchBySubtitle).Displayed);
+            Assert.True(webDriver.FindElement(searchBySelect).Displayed);
+            Assert.True(webDriver.FindElement(searchByPIDInput).Displayed);
+            Assert.True(webDriver.FindElement(searchByButton).Displayed);
+            Assert.True(webDriver.FindElement(searchResetButton).Displayed);
+            Assert.True(webDriver.FindElement(searchPropertiesResultTableHeader).Displayed);
+            Assert.True(webDriver.FindElement(searchPropsResultSelectAllInput).Displayed);
+            Assert.True(webDriver.FindElement(searchPropResultsPIDHeader).Displayed);
+            Assert.True(webDriver.FindElement(searchPropResultsPINHeader).Displayed);
+            Assert.True(webDriver.FindElement(searchPropResultsPlanHeader).Displayed);
+            Assert.True(webDriver.FindElement(searchPropResultsAddressHeader).Displayed);
+            Assert.True(webDriver.FindElement(searchPropResultsLegalDescriptHeader).Displayed);
+        }
         
     }
 }

@@ -1,4 +1,3 @@
-import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
 import { defaultFormLease, IFormLease } from 'interfaces';
 import * as React from 'react';
@@ -16,7 +15,7 @@ export interface IAddImprovementsFormProps {
 
 export const AddImprovementsForm: React.FunctionComponent<
   React.PropsWithChildren<IAddImprovementsFormProps>
-> = ({ onCancel, onSubmit, initialValues, formikRef }) => {
+> = ({ onCancel, onSubmit, initialValues, formikRef, children }) => {
   return (
     <>
       <Formik
@@ -34,7 +33,7 @@ export const AddImprovementsForm: React.FunctionComponent<
             />
             <StyledFormBody>
               <Improvements disabled={false} />
-              <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
+              {children}
             </StyledFormBody>
           </>
         )}

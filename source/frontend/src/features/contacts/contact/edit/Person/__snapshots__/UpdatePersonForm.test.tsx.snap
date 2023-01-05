@@ -5,12 +5,8 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
+  <div />
+  <div />
   .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;

@@ -5,9 +5,7 @@ exports[`ActivityView test Renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c1 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;

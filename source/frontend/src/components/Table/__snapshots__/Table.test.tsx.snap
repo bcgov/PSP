@@ -5,9 +5,7 @@ exports[`Generic table component matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="table"
     data-testid="default"

@@ -95,11 +95,9 @@ export const mapFeatureToProperty = (
   selectedFeature: Feature<Geometry, GeoJsonProperties>,
 ): IMapProperty => {
   const latLng = geoJSON(selectedFeature.geometry).getBounds().getCenter();
-  //todo: PSP-4407 need alternate source for the address,
-  const address = 'placeholder';
   const latitude = selectedFeature?.properties?.CLICK_LAT_LNG?.lat ?? latLng.lat ?? undefined;
   const longitude = selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng.lng ?? undefined;
-  return toMapProperty(selectedFeature, address, latitude, longitude);
+  return toMapProperty(selectedFeature, 'unknown', latitude, longitude);
 };
 
 export const featuresToIdentifiedMapProperty = (

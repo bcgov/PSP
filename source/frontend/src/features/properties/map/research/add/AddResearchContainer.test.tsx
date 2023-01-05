@@ -17,6 +17,7 @@ const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({});
 const history = createMemoryHistory();
+jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -44,6 +45,7 @@ describe('AddResearchContainer component', () => {
       </MapStateContextProvider>,
       {
         ...renderOptions,
+        claims: [],
         store: store,
         history: history,
       },

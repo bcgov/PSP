@@ -1,7 +1,12 @@
-import { FormTenant } from 'features/leases/detail/LeasePages/tenant/Tenant';
+import { FormTenant } from 'features/leases/detail/LeasePages/tenant/ViewTenantForm';
 import { IFormLeaseTerm, ILease } from 'interfaces';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';
-import { nullableBooleanToString, stringToNull, yesNoUnknownToBoolean } from 'utils/formUtils';
+import {
+  nullableBooleanToString,
+  stringToNull,
+  toTypeCode,
+  yesNoUnknownToBoolean,
+} from 'utils/formUtils';
 import { formatNames } from 'utils/personUtils';
 
 import { IFormLease } from './../../interfaces/ILease';
@@ -42,6 +47,7 @@ export const formLeaseToApiLease = (formLease: IFormLease): ILease => {
       personId: tenant.personId,
       primaryContactId: tenant?.primaryContactId,
       note: tenant.note,
+      tenantTypeCode: toTypeCode(tenant.tenantType),
     })),
   };
 };

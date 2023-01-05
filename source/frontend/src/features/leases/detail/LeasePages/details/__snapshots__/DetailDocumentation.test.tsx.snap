@@ -1,0 +1,556 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DetailDocumentation component renders a complete lease as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          Documentation
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c2"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              collapse-section
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M7 14l5-5 5 5z"
+            />
+          </svg>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Physical copy exists:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="form-group"
+          >
+            <select
+              class="form-control"
+              id="input-hasPhysicalLicense"
+              name="hasPhysicalLicense"
+            >
+              <option
+                value="null"
+              >
+                Unknown
+              </option>
+              <option
+                value="true"
+              >
+                Yes
+              </option>
+              <option
+                value="false"
+              >
+                No
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Digital copy exists:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="form-group"
+          >
+            <select
+              class="form-control"
+              id="input-hasDigitalLicense"
+              name="hasDigitalLicense"
+            >
+              <option
+                value="null"
+              >
+                Unknown
+              </option>
+              <option
+                value="true"
+              >
+                Yes
+              </option>
+              <option
+                value="false"
+              >
+                No
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Document location:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-documentationReference"
+              name="documentationReference"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            LIS #:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-tfaFileNumber"
+              name="tfaFileNumber"
+              title="333"
+              value="333"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            PS #:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-psFileNo"
+              name="psFileNo"
+              title="444"
+              value="444"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Lease Notes:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-note"
+              name="note"
+              title="a test note"
+            >
+              a test note
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`DetailDocumentation component renders minimally as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          Documentation
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c2"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              collapse-section
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M7 14l5-5 5 5z"
+            />
+          </svg>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Physical copy exists:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="form-group"
+          >
+            <select
+              class="form-control"
+              id="input-hasPhysicalLicense"
+              name="hasPhysicalLicense"
+            >
+              <option
+                value="null"
+              >
+                Unknown
+              </option>
+              <option
+                value="true"
+              >
+                Yes
+              </option>
+              <option
+                value="false"
+              >
+                No
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Digital copy exists:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="form-group"
+          >
+            <select
+              class="form-control"
+              id="input-hasDigitalLicense"
+              name="hasDigitalLicense"
+            >
+              <option
+                value="null"
+              >
+                Unknown
+              </option>
+              <option
+                value="true"
+              >
+                Yes
+              </option>
+              <option
+                value="false"
+              >
+                No
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Document location:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-documentationReference"
+              name="documentationReference"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            LIS #:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-tfaFileNumber"
+              name="tfaFileNumber"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            PS #:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-psFileNo"
+              name="psFileNo"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Lease Notes:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-note"
+              name="note"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

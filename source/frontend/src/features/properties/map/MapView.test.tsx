@@ -149,7 +149,7 @@ describe('MapView', () => {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
-          roles: ['property-edit', 'property-view'],
+          client_roles: ['property-edit', 'property-view'],
           organizations: [0],
         },
       },

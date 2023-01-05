@@ -12,6 +12,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly IEnumerable<OrganizationContact> organizationContacts;
 
         private readonly string userName = "TRANPSP1";
+        //private readonly string userName = "sutairak";
 
         private readonly string nonExistingContact = "A non existing contact";
         private readonly string legacyOrganizationName = "BC Hydro and Telus";

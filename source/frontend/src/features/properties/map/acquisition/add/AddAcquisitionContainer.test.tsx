@@ -11,6 +11,7 @@ import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import { AcquisitionForm } from './models';
+jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -47,6 +48,7 @@ describe('AddAcquisitionContainer component', () => {
         store: {
           [lookupCodesSlice.name]: { lookupCodes: mockLookups },
         },
+        claims: [],
         history,
       },
     );

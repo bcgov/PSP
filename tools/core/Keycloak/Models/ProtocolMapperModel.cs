@@ -8,6 +8,7 @@ namespace Pims.Tools.Core.Keycloak.Models
     public class ProtocolMapperModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - A primary key for the protocol mapper.
         /// </summary>
@@ -35,10 +36,13 @@ namespace Pims.Tools.Core.Keycloak.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ProtocolMapperModel class.
         /// </summary>
-        public ProtocolMapperModel() { }
+        public ProtocolMapperModel()
+        {
+        }
         #endregion
     }
 }

@@ -13,9 +13,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 
 }
 
-<div
-    class="container"
-  />
+<div />
   .c2 {
   white-space: nowrap;
   overflow: hidden;
@@ -81,9 +79,7 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
 
 }
 
-<div
-    class="container"
-  />
+<div />
   .c2 {
   white-space: nowrap;
   overflow: hidden;

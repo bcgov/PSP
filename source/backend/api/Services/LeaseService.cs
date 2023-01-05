@@ -18,19 +18,22 @@ namespace Pims.Api.Services
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
+        private readonly ILookupRepository _lookupRepository;
 
         public LeaseService(
             ILogger<LeaseService> logger,
             ILeaseRepository leaseRepository,
             ICoordinateTransformService coordinateTransformService,
             IPropertyRepository propertyRepository,
-            IPropertyLeaseRepository propertyLeaseRepository)
+            IPropertyLeaseRepository propertyLeaseRepository,
+            ILookupRepository lookupRepository)
         {
             _logger = logger;
             _leaseRepository = leaseRepository;
             _coordinateService = coordinateTransformService;
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
+            _lookupRepository = lookupRepository;
         }
 
         public bool IsRowVersionEqual(long leaseId, long rowVersion)
@@ -168,6 +171,16 @@ namespace Pims.Api.Services
             property.SurplusDeclarationTypeCode = "UNKNOWN";
 
             property.IsPropertyOfInterest = false;
+
+            if (property.Address != null)
+            {
+                var provinceId = _lookupRepository.GetProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                if (provinceId.HasValue)
+                {
+                    property.Address.ProvinceStateId = provinceId.Value;
+                }
+                property.Address.CountryId = _lookupRepository.GetCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+            }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;

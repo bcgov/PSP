@@ -5,9 +5,7 @@ exports[`BcAssessmentTabView component renders as expected when provided valid l
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   border-radius: 1rem;
   width: 100%;

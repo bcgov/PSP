@@ -5,13 +5,15 @@ import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPrope
 import SelectedPropertyRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { Section } from 'features/mapSideBar/tabs/Section';
+import { useBcaAddress } from 'features/properties/map/hooks/useBcaAddress';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { Api_File } from 'models/api/File';
 import { useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
-import { FileForm, PropertyForm } from '../../models';
+import { AddressForm, FileForm, PropertyForm } from '../../models';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 export interface IUpdatePropertiesProps {
@@ -29,6 +31,8 @@ export const UpdateProperties: React.FunctionComponent<
 
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
+
+  const { getPrimaryAddressByPid } = useBcaAddress();
 
   const handleSaveClick = async () => {
     setShowSaveConfirmModal(true);
@@ -65,6 +69,12 @@ export const UpdateProperties: React.FunctionComponent<
     const response = await props.updateFileProperties(researchFile);
     formikRef.current?.setSubmitting(false);
     if (!!response?.fileName) {
+      if (researchFile.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
+        toast.warn(
+          'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+          { autoClose: 15000 },
+        );
+      }
       formikRef.current?.resetForm();
       props.setIsShowingPropertySelector(false);
       props.onSuccess();
@@ -100,10 +110,20 @@ export const UpdateProperties: React.FunctionComponent<
                     <Col>
                       <MapSelectorContainer
                         addSelectedProperties={(newProperties: IMapProperty[]) => {
-                          newProperties.forEach(property => {
-                            const formProperty = PropertyForm.fromMapProperty(property);
-                            push(formProperty);
-                          });
+                          newProperties.reduce(async (promise, property) => {
+                            return promise.then(async () => {
+                              const formProperty = PropertyForm.fromMapProperty(property);
+                              if (property.pid) {
+                                const bcaSummary = await getPrimaryAddressByPid(property.pid);
+                                formProperty.address = bcaSummary?.address
+                                  ? AddressForm.fromBcaAddress(bcaSummary?.address)
+                                  : undefined;
+                                formProperty.legalDescription =
+                                  bcaSummary?.legalDescription?.LEGAL_TEXT;
+                              }
+                              push(formProperty);
+                            });
+                          }, Promise.resolve());
                         }}
                         modifiedProperties={formikProps.values.properties}
                       />
@@ -117,7 +137,7 @@ export const UpdateProperties: React.FunctionComponent<
                         onRemove={() => remove(index)}
                         nameSpace={`properties.${index}`}
                         index={index}
-                        property={property}
+                        property={property.toMapProperty()}
                       />
                     ))}
                     {formikProps.values.properties.length === 0 && (

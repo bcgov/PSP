@@ -33,6 +33,7 @@ const Index = () => {
         {({ tenant }) => (
           <ThemeProvider theme={{ tenant, css }}>
             <ReactKeycloakProvider
+              initOptions={{ pkceMethod: 'S256' }}
               authClient={keycloak}
               LoadingComponent={
                 <EmptyLayout>

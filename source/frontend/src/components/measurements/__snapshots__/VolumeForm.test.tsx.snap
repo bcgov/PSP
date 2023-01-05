@@ -5,9 +5,7 @@ exports[`VolumeForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   max-width: 25rem;
   padding: 1rem;

@@ -29,7 +29,7 @@ const Login = () => {
     return <Spinner animation="border"></Spinner>;
   }
   if (keycloak?.authenticated) {
-    if (activated?.status === 201 || !keyCloakWrapper?.roles?.length) {
+    if (activated?.status === 201 || !keyCloakWrapper?.obj?.userInfo?.client_roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
     } else if (typeof redirect === 'string' && redirect.length) {
       return <Redirect to={redirect} />;

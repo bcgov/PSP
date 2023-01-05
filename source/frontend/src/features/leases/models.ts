@@ -169,6 +169,7 @@ export class FormLeaseProperty {
   property?: PropertyForm;
   leaseId?: number;
   rowVersion?: number;
+  name?: string;
   landArea: string;
   areaUnitTypeCode: string;
 
@@ -180,11 +181,13 @@ export class FormLeaseProperty {
 
   static fromApi(apiPropertyLease: Api_PropertyLease): FormLeaseProperty {
     const model = new FormLeaseProperty(apiPropertyLease.lease?.id);
-    model.property = PropertyForm.fromApi(apiPropertyLease.property ?? {});
+    model.property = PropertyForm.fromApi(apiPropertyLease ?? {});
     model.id = apiPropertyLease.id;
     model.rowVersion = apiPropertyLease.rowVersion;
+    model.name = apiPropertyLease.propertyName;
     model.landArea = apiPropertyLease.leaseArea?.toString() || '0';
     model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || PropertyAreaUnitTypes.Meter;
+    model.property.displayOrder = apiPropertyLease.displayOrder;
     return model;
   }
 
@@ -201,6 +204,7 @@ export class FormLeaseProperty {
       rowVersion: this.rowVersion,
       property: this.property?.toApi(),
       lease: { id: this.leaseId },
+      propertyName: this.name,
       leaseArea: numberLeaseArea,
       areaUnitType: numberLeaseArea !== undefined ? toTypeCode(this.areaUnitTypeCode) : undefined,
     };

@@ -4,7 +4,7 @@ using Pims.Core.Exceptions;
 namespace Pims.Core.Http.Configuration
 {
     /// <summary>
-    /// OpenIdConnectOptions class, provides a way to configure Open ID Connect.
+    /// AuthClientOptions class, provides a way to configure keycloak.
     /// </summary>
     public class AuthClientOptions
     {
@@ -32,6 +32,12 @@ namespace Pims.Core.Http.Configuration
         /// </summary>
         [Required(ErrorMessage = "Configuration 'Client' is required.")]
         public string Client { get; set; }
+
+        /// <summary>
+        /// get/set - The open id connect 'token' URL.
+        /// </summary>
+        [Required(ErrorMessage = "Configuration 'Token' is required.")]
+        public string Token { get; set; }
         #endregion
 
         #region Methods
@@ -44,17 +50,22 @@ namespace Pims.Core.Http.Configuration
         {
             if (string.IsNullOrWhiteSpace(this.Authority))
             {
-                throw new ConfigurationException("The configuration for OpenIdConnect:Authority is invalid or missing.");
+                throw new ConfigurationException("The configuration for Keycloak:Authority is invalid or missing.");
             }
 
             if (string.IsNullOrWhiteSpace(this.Audience))
             {
-                throw new ConfigurationException("The configuration for OpenIdConnect:Audience is invalid or missing.");
+                throw new ConfigurationException("The configuration for Keycloak:Audience is invalid or missing.");
             }
 
             if (string.IsNullOrWhiteSpace(this.Client))
             {
-                throw new ConfigurationException("The configuration for OpenIdConnect:Client is invalid or missing.");
+                throw new ConfigurationException("The configuration for Keycloak:Client is invalid or missing.");
+            }
+
+            if (string.IsNullOrWhiteSpace(this.Token))
+            {
+                throw new ConfigurationException("The configuration for Keycloak:Token is invalid or missing.");
             }
         }
         #endregion

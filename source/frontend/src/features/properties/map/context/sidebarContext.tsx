@@ -16,6 +16,8 @@ export interface ISideBarContext {
   fileLoading: boolean;
   setFileLoading: (loading: boolean) => void;
   getFilePropertyIndexById: (filePropertyId: number) => number;
+  fullWidth: boolean;
+  setFullWidth: (fullWidth: boolean) => void;
 }
 
 export const SideBarContext = React.createContext<ISideBarContext>({
@@ -34,6 +36,10 @@ export const SideBarContext = React.createContext<ISideBarContext>({
   getFilePropertyIndexById: (filePropertyId: number) => {
     throw Error('setStaleFile function not defined');
   },
+  fullWidth: false,
+  setFullWidth: (fullWidth: boolean) => {
+    throw Error('setFullWidth function not defined');
+  },
 });
 
 export const SideBarContextProvider = (props: {
@@ -43,6 +49,7 @@ export const SideBarContextProvider = (props: {
   const [file, setFile] = useState<TypedFile | undefined>(props.file);
   const [staleFile, setStaleFile] = useState<boolean>(false);
   const [fileLoading, setFileLoading] = useState<boolean>(false);
+  const [fullWidth, setFullWidth] = useState<boolean>(false);
 
   const setFileAndStale = useCallback(
     (file?: TypedFile) => {
@@ -65,6 +72,8 @@ export const SideBarContextProvider = (props: {
         staleFile,
         setStaleFile,
         getFilePropertyIndexById,
+        fullWidth,
+        setFullWidth,
       }}
     >
       {props.children}

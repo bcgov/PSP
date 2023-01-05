@@ -5,9 +5,7 @@ exports[`Input component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="input form-group"
   >

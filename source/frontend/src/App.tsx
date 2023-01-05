@@ -9,6 +9,7 @@ import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
 import { useUsers } from 'features/admin/users/hooks/useUsers';
 import { useFavicon } from 'hooks/useFavicon';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import PublicLayout from 'layouts/PublicLayout';
 import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
@@ -20,6 +21,7 @@ const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const { fetchLookupCodes } = useLookupCodes();
+  const { lookupCodes } = useLookupCodeHelpers();
   const { fetchSystemConstants } = useSystemConstants();
   const {
     activateUser: { execute: activate },
@@ -37,7 +39,7 @@ const App = () => {
   return (
     <AuthStateContext.Consumer>
       {(context: IAuthState) => {
-        if (!context.ready) {
+        if (!context.ready || !lookupCodes) {
           return (
             <PublicLayout>
               <Col>

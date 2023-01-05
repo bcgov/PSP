@@ -49,6 +49,24 @@ exports[`Map Legend View renders correctly 1`] = `
           Property of Interest
         </div>
       </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-2"
+        >
+          <img
+            class=""
+            height="25"
+            src="land-lease.svg"
+          />
+        </div>
+        <div
+          class="label col"
+        >
+          Payable lease/license
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>

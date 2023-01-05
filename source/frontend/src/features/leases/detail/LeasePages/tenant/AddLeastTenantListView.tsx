@@ -1,7 +1,7 @@
+import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import { IContactSearchResult } from 'interfaces';
 import * as React from 'react';
-
-import * as Styled from './styles';
+import { Button } from 'react-bootstrap';
 
 interface IAddLeaseTenantListViewProps {
   selectedTenants: IContactSearchResult[];
@@ -11,24 +11,35 @@ interface IAddLeaseTenantListViewProps {
 export const AddLeaseTenantListView: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseTenantListViewProps>
 > = ({ selectedTenants, setSelectedTenants }) => {
+  const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
+  const handleContactManagerOk = () => {
+    setShowContactManager(false);
+  };
   return (
     <>
-      <Styled.TenantH2>Step 1 - Select Tenant(s)</Styled.TenantH2>
-      <ul>
-        <li>Search the Contacts list for the tenant(s) who are listed on the lease.</li>
-        <li>Select the checkbox next to their name.</li>
-        <li>Click the "add selected tenants" button.</li>
-      </ul>
-      <p>
-        Repeat these steps for any additional tenants. Your selections will not be saved to the
-        lease/license until you click the final "Save" button.
-      </p>
-      <Styled.ContactListViewWrapper
-        setSelectedRows={setSelectedTenants}
+      <div>
+        {' '}
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setShowContactManager(true);
+          }}
+        >
+          Select Tenant(s)
+        </Button>
+      </div>
+      <ContactManagerModal
         selectedRows={selectedTenants}
-        showActiveSelector
-        showSelectedRowCount
-      />
+        setSelectedRows={setSelectedTenants}
+        display={showContactManager}
+        setDisplay={setShowContactManager}
+        handleModalOk={handleContactManagerOk}
+        handleModalCancel={() => {
+          setShowContactManager(false);
+          setSelectedTenants([]);
+        }}
+        showActiveSelector={true}
+      ></ContactManagerModal>
     </>
   );
 };

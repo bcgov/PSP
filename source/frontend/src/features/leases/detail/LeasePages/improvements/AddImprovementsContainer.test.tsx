@@ -3,6 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IAddLeaseContainerProps } from 'features/leases';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultLease, ILeaseImprovement } from 'interfaces';
 import { noop } from 'lodash';
@@ -18,6 +19,11 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 const mockAxios = new MockAdapter(axios);
+
+const SaveButton = () => {
+  const { submitForm } = useFormikContext();
+  return <button onClick={submitForm}>Save</button>;
+};
 
 describe('Add lease container component', () => {
   const setup = async (
@@ -36,7 +42,9 @@ describe('Add lease container component', () => {
           setLease: noop,
         }}
       >
-        <AddImprovementsContainer />
+        <AddImprovementsContainer formikRef={React.createRef()} onEdit={noop}>
+          <SaveButton />
+        </AddImprovementsContainer>
       </LeaseStateContext.Provider>,
       {
         ...renderOptions,
@@ -58,22 +66,14 @@ describe('Add lease container component', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('cancels the form', async () => {
-    const {
-      component: { getAllByText },
-    } = await setup({});
-    userEvent.click(getAllByText('Cancel')[0]);
-    expect(history.location.pathname).toBe('/lease/1/improvements');
-  });
-
   it('displays all three improvement types', async () => {
     const {
       component: { findByText },
     } = await setup({});
 
     await findByText('Other Improvements');
-    await findByText('Residential');
-    await findByText('Commercial');
+    await findByText('Residential Improvements');
+    await findByText('Commercial Improvements');
   });
 
   it('displays existing improvements', async () => {
@@ -88,8 +88,8 @@ describe('Add lease container component', () => {
     });
 
     await findByText('Other Improvements');
-    await findByText('Residential');
-    await findByText('Commercial');
+    await findByText('Residential Improvements');
+    await findByText('Commercial Improvements');
     await findByDisplayValue('test address 1');
     await findByDisplayValue('test address 2');
     await findByDisplayValue('test address 3');

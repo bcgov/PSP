@@ -5,9 +5,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="py-3 mb-4 pl-3"
   >
@@ -577,9 +575,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
         </div>
       </div>
     </div>
-    <div
-      class="container"
-    />
+    <div />
   </form>
 </DocumentFragment>
 `;
@@ -589,9 +585,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="py-3 mb-4 pl-3"
   >
@@ -1161,9 +1155,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
         </div>
       </div>
     </div>
-    <div
-      class="container"
-    />
+    <div />
   </form>
 </DocumentFragment>
 `;

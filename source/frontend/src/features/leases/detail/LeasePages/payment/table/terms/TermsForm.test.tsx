@@ -2,7 +2,6 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Claims from 'constants/claims';
 import { LeaseTermStatusTypes } from 'constants/leaseStatusTypes';
-import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import {
   defaultFormLease,
@@ -12,6 +11,7 @@ import {
   IFormLeasePayment,
 } from 'interfaces';
 import { noop } from 'lodash';
+import React from 'react';
 import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { ITermsFormProps, TermsForm } from './TermsForm';
@@ -39,15 +39,15 @@ describe('TermsForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <TermsForm
-          onEdit={noop}
-          onDelete={noop}
-          onEditPayment={noop}
-          onDeletePayment={noop}
-          onSavePayment={noop}
-        />
-      </Formik>,
+      <TermsForm
+        onEdit={noop}
+        onDelete={noop}
+        onEditPayment={noop}
+        onDeletePayment={noop}
+        onSavePayment={noop}
+        formikRef={React.createRef()}
+        lease={renderOptions.initialValues ?? ({} as any)}
+      />,
       {
         ...renderOptions,
         claims: [Claims.LEASE_EDIT, Claims.LEASE_DELETE],
