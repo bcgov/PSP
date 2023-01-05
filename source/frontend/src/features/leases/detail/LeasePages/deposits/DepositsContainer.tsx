@@ -20,7 +20,9 @@ import * as Styled from './styles';
 
 export interface IDepositsContainerProps {}
 
-export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps> = () => {
+export const DepositsContainer: React.FunctionComponent<
+  React.PropsWithChildren<IDepositsContainerProps>
+> = () => {
   const { lease, setLease } = useContext(LeaseStateContext);
   const { values, setFieldValue } = useFormikContext<IFormLease>();
   const securityDeposits: Api_SecurityDeposit[] = getIn(values, 'securityDeposits') ?? [];

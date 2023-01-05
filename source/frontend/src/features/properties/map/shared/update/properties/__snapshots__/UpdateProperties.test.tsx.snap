@@ -144,40 +144,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c25.c25.btn {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c25.c25.btn .text {
-  display: none;
-}
-
-.c25.c25.btn:hover,
-.c25.c25.btn:active,
-.c25.c25.btn:focus {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c25.c25.btn:hover .text,
-.c25.c25.btn:active .text,
-.c25.c25.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
-}
-
 .c15 {
   padding-right: 0;
 }
@@ -242,14 +208,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
   border-color: transparent;
 }
 
-.c19 {
-  margin: 0;
-}
-
-.c19 [class^='col-'] {
-  padding: 0;
-}
-
 .c0 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
@@ -268,31 +226,44 @@ exports[`UpdateProperties component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c2 {
-  width: 100%;
-  position: relative;
-  overflow: auto;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+.c25.c25.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
 }
 
-.c3 {
-  height: 100%;
-  width: 100%;
+.c25.c25.btn .text {
+  display: none;
 }
 
-.c1 {
-  width: 100%;
-  border-bottom: solid 0.5rem;
+.c25.c25.btn:hover,
+.c25.c25.btn:active,
+.c25.c25.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
-.c26 {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  background: white;
-  z-index: 10;
+.c25.c25.btn:hover .text,
+.c25.c25.btn:active .text,
+.c25.c25.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c19 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
 }
 
 .c7 {
@@ -300,23 +271,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c20 {
-  font-size: 1.6rem;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
-.c23 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .c10:hover {
@@ -394,6 +348,51 @@ exports[`UpdateProperties component renders as expected 1`] = `
   max-width: 100%;
 }
 
+.c20 {
+  font-size: 1.6rem;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c23 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.c2 {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c3 {
+  height: 100%;
+  width: 100%;
+}
+
+.c1 {
+  width: 100%;
+  border-bottom: solid 0.5rem;
+}
+
+.c26 {
+  position: -webkit-sticky;
+  position: sticky;
+  padding-top: 2rem;
+  bottom: 0;
+  background: white;
+  z-index: 10;
+}
+
 <body>
   <div>
     <div
@@ -401,9 +400,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
     />
     <div
       class="container"
-    />
-    <div
-      class="Toastify"
     />
     <div
       class=""
@@ -491,16 +487,14 @@ exports[`UpdateProperties component renders as expected 1`] = `
                           <div
                             class="d-flex flex-column align-items-center"
                           >
-                            <div>
-                              <svg
-                                class="c10"
-                                height="97"
-                                title="select properties on the map"
-                                width="97"
-                              >
-                                icon-draft.svg
-                              </svg>
-                            </div>
+                            <svg
+                              class="c10"
+                              height="97"
+                              title="select properties on the map"
+                              width="97"
+                            >
+                              icon-draft.svg
+                            </svg>
                             <ol>
                               <li>
                                 Click pin above
@@ -720,7 +714,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
                                     title=""
                                     value=""
                                   />
-                                  
                                 </div>
                               </div>
                             </div>
@@ -739,7 +732,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
                                   data-testid="search"
                                   id="search-button"
                                   title="search"
-                                  type="submit"
+                                  type="button"
                                 >
                                   <div
                                     class="Button__icon"
@@ -927,192 +920,203 @@ exports[`UpdateProperties component renders as expected 1`] = `
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c19"
+          >
             <div
-              class="c7 form-section"
+              class="row"
             >
               <div
-                class="collapse show"
+                class="col"
               >
-                <h3
-                  class="c8"
+                Selected properties
+              </div>
+              <div
+                class="col-1"
+              />
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="c20 no-gutters row"
+            >
+              <div
+                class="col-md-3"
+              >
+                Identifier
+              </div>
+              <div
+                class="col-md-9"
+              >
+                Provide a descriptive name for this land
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon"
+                  id="property-selector-tooltip"
                 >
-                  Selected properties
-                </h3>
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="align-items-center mb-3 no-gutters row"
+            >
+              <div
+                class="col-md-3"
+              >
                 <div
-                  class="c19 c20 row"
+                  class="mb-0 d-flex align-items-center"
                 >
-                  <div
-                    class="col-md-3"
+                  <svg
+                    class="c21"
+                    height="45"
+                    id="Layer_2"
+                    viewBox="0 0 20 30"
+                    width="30"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Identifier
-                  </div>
-                  <div
-                    class="col-md-9"
-                  >
-                    Provide a descriptive name for this land
-                    <span
-                      class="tooltip-icon"
-                      data-testid="tooltip-icon"
-                      id="property-selector-tooltip"
+                    <defs>
+                      <style />
+                    </defs>
+                    <g
+                      id="PDF_preview"
                     >
-                      <svg
-                        class="tooltip-icon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-                <div
-                  class="c19 align-items-center mb-3 row"
-                >
-                  <div
-                    class="col-md-3"
-                  >
-                    <p
-                      class="mb-0 d-flex align-items-center"
+                      <path
+                        class="cls-1"
+                        d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                        fill="#2a81cb"
+                      />
+                    </g>
+                    <svg
+                      height="16"
+                      overflow="visible"
+                      preserveAspectRatio="none"
+                      version="1.2"
+                      viewBox="0 0 22 21"
+                      width="16"
+                      x="2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      y="2"
                     >
-                      <svg
-                        class="c21"
-                        height="45"
-                        id="Layer_2"
-                        viewBox="0 0 20 30"
-                        width="30"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <g
+                        transform="translate(1, 1)"
                       >
                         <defs>
-                          <style />
+                          <path
+                            d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                            id="path-1648484224573577"
+                            vector-effect="non-scaling-stroke"
+                          />
                         </defs>
                         <g
-                          id="PDF_preview"
+                          transform="translate(0, 0)"
                         >
                           <path
-                            class="cls-1"
-                            d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
-                            fill="#2a81cb"
+                            class="path-2"
+                            d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                            fill="rgb(252, 186, 25)"
+                            stroke="rgb(255, 255, 255)"
+                            stroke-linecap="butt"
+                            stroke-linejoin="miter"
+                            stroke-width="1"
+                            vector-effect="non-scaling-stroke"
                           />
                         </g>
-                        <svg
-                          height="16"
-                          overflow="visible"
-                          preserveAspectRatio="none"
-                          version="1.2"
-                          viewBox="0 0 22 21"
-                          width="16"
-                          x="2"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="2"
-                        >
-                          <g
-                            transform="translate(1, 1)"
-                          >
-                            <defs>
-                              <path
-                                d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
-                                id="path-1648484224573577"
-                                vector-effect="non-scaling-stroke"
-                              />
-                            </defs>
-                            <g
-                              transform="translate(0, 0)"
-                            >
-                              <path
-                                class="path-2"
-                                d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
-                                fill="rgb(252, 186, 25)"
-                                stroke="rgb(255, 255, 255)"
-                                stroke-linecap="butt"
-                                stroke-linejoin="miter"
-                                stroke-width="1"
-                                vector-effect="non-scaling-stroke"
-                              />
-                            </g>
-                          </g>
-                          <text
-                            class="c22"
-                            textLength="1.25rem"
-                            x="7"
-                            y="15"
-                          >
-                            1
-                          </text>
-                        </svg>
-                        <title>
-                          1
-                        </title>
-                      </svg>
-                      <div
-                        class="c23 pl-3"
+                      </g>
+                      <text
+                        class="c22"
+                        textLength="1.25rem"
+                        x="7"
+                        y="15"
                       >
-                        PID: 123-456-789
-                      </div>
-                    </p>
-                  </div>
+                        1
+                      </text>
+                    </svg>
+                    <title>
+                      1
+                    </title>
+                  </svg>
                   <div
-                    class="col-md-7"
+                    class="c23 pl-3"
                   >
-                    <div
-                      class="c24 mb-0 w-100 input form-group"
-                    >
-                      <input
-                        class="form-control"
-                        id="input-properties.0.name"
-                        name="properties.0.name"
-                        value=""
-                      />
-                    </div>
-                  </div>
-                  <div
-                    class="col-md-2"
-                  >
-                    <button
-                      class="c17 Button c25 btn btn-link"
-                      type="button"
-                    >
-                      <div
-                        class="Button__value"
-                      >
-                        <svg
-                          data-testid="remove-button"
-                          fill="currentColor"
-                          height="2rem"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="2rem"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <title>
-                            remove
-                          </title>
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
-                          <path
-                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
-                      </div>
-                    </button>
+                    PID: 123-456-789
                   </div>
                 </div>
+              </div>
+              <div
+                class="col-md-7"
+              >
+                <div
+                  class="c24 mb-0 w-100 input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-properties.0.name"
+                    name="properties.0.name"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="col-md-2"
+              >
+                <button
+                  class="c17 Button c25 btn btn-link"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      data-testid="remove-button"
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
               </div>
             </div>
           </div>

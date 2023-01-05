@@ -23,7 +23,7 @@ interface IEditUserFormProps {
   onCancel: () => void;
 }
 
-const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
+const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFormProps>> = ({
   updateUserDetail,
   formUser,
   onCancel,

@@ -8,9 +8,6 @@ exports[`Add lease container component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;

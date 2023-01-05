@@ -22,7 +22,9 @@ interface AddressField {
   postal?: string;
 }
 
-const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ organization }) => {
+const OrganizationView: React.FunctionComponent<React.PropsWithChildren<OrganizationViewProps>> = ({
+  organization,
+}) => {
   let personAddresses: AddressField[];
   if (organization.addresses === undefined) {
     personAddresses = [];

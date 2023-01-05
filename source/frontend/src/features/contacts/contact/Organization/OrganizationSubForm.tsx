@@ -13,9 +13,9 @@ interface IOrganizationSubFormProps {
   isContactMethodInvalid: boolean;
 }
 
-export const OrganizationSubForm: React.FunctionComponent<IOrganizationSubFormProps> = ({
-  isContactMethodInvalid,
-}) => {
+export const OrganizationSubForm: React.FunctionComponent<
+  React.PropsWithChildren<IOrganizationSubFormProps>
+> = ({ isContactMethodInvalid }) => {
   const { values } = useFormikContext<IEditableOrganizationForm>();
 
   return (

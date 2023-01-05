@@ -8,9 +8,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c15.btn {
   display: -webkit-box;
   display: -webkit-flex;

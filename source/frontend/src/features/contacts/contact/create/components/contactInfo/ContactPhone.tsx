@@ -18,7 +18,10 @@ export interface IContactPhone {
  * Form fields to capture phone contact information for this Person.
  * @param {IContactPhone} param0
  */
-export const ContactPhone: React.FunctionComponent<IContactPhone> = ({ namespace, onRemove }) => {
+export const ContactPhone: React.FunctionComponent<React.PropsWithChildren<IContactPhone>> = ({
+  namespace,
+  onRemove,
+}) => {
   const { phoneTypes } = useContactInfoHelpers();
 
   return (

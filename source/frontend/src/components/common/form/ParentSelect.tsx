@@ -49,7 +49,7 @@ interface IParentSelect {
 /** Component used to group children items with their parent.
  *  Can click the parent item as a value or the subsequent children
  **/
-export const ParentSelect: React.FC<IParentSelect> = ({
+export const ParentSelect: React.FC<React.PropsWithChildren<IParentSelect>> = ({
   field,
   options,
   placeholder,

@@ -2,36 +2,34 @@
 
 exports[`renders correctly 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    class="Menu-root"
+  >
     <div
-      class="Menu-root"
+      class="Menu-button"
+    >
+      <span>
+        Menu
+      </span>
+    </div>
+    <div
+      class="Menu-items"
+      style="width: 10.0rem;"
     >
       <div
-        class="Menu-button"
-      >
-        <span>
-          Menu
-        </span>
-      </div>
-      <div
-        class="Menu-items"
-        style="width: 10.0rem;"
+        class="Menu-options scrollable list-group"
       >
         <div
-          class="Menu-options scrollable list-group"
+          class="Menu-item list-group-item"
+          title="menu-item-Option 1"
         >
-          <div
-            class="Menu-item list-group-item"
-            title="menu-item-Option 1"
-          >
-            Option 1
-          </div>
-          <div
-            class="Menu-item list-group-item"
-            title="menu-item-Option 2"
-          >
-            Option 2
-          </div>
+          Option 1
+        </div>
+        <div
+          class="Menu-item list-group-item"
+          title="menu-item-Option 2"
+        >
+          Option 2
         </div>
       </div>
     </div>

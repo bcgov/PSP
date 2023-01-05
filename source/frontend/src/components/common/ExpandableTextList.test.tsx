@@ -6,7 +6,7 @@ import noop from 'lodash/noop';
 import { mockLookups } from 'mocks/mockLookups';
 import { getMockProperties } from 'mocks/mockProperties';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import ExpandableTextList, { IExpandableTextListProps } from './ExpandableTextList';
 
@@ -123,8 +123,9 @@ describe('ExpandableTextList component', () => {
     });
 
     const moreButton = getByText('[+1 more...]');
-    userEvent.click(moreButton);
-
+    act(() => {
+      userEvent.click(moreButton);
+    });
     expect(getByText('000-000-000')).toBeVisible();
     expect(getByText('000-000-001')).toBeVisible();
     expect(getByText('000-000-002')).toBeVisible();
@@ -140,10 +141,13 @@ describe('ExpandableTextList component', () => {
     });
 
     const moreButton = getByTestId('expand');
-    userEvent.click(moreButton);
+    act(() => {
+      userEvent.click(moreButton);
+    });
     const hideButton = getByText('hide');
-    userEvent.click(hideButton);
-
+    act(() => {
+      userEvent.click(hideButton);
+    });
     expect(getByText('000-000-000')).toBeVisible();
     expect(getByText('000-000-001')).toBeVisible();
     expect(queryByText('000-000-002')).toBeNull();

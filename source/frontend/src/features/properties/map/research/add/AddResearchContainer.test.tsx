@@ -3,12 +3,12 @@ import {
   IMapStateContext,
   MapStateContextProvider,
 } from 'components/maps/providers/MapStateContext';
-import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';

@@ -1,95 +1,115 @@
+import { ReactComponent as Fence } from 'assets/images/fence.svg';
 import GenericModal from 'components/common/GenericModal';
-import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
-import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
+import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
-import { AddLeaseLayout, LeaseBreadCrumb, LeaseHeader, LeaseIndex } from 'features/leases';
-import { FormikProps } from 'formik';
+import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import { PropertyForm } from 'features/properties/map/shared/models';
+import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
+import { FormikHelpers, FormikProps } from 'formik';
 import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
-import { useContext, useRef, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useMemo, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
+import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
-import { LeasePageNames, leasePages } from '../detail/LeaseContainer';
 import { useAddLease } from '../hooks/useAddLease';
-import { FormLease } from '../models';
+import { LeaseFormModel } from '../models';
 import AddLeaseForm from './AddLeaseForm';
 
-export interface IAddLeaseContainerProps {}
+export interface IAddLeaseContainerProps {
+  onClose: () => void;
+}
 
-export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps> = props => {
-  const leasePage = leasePages.get(LeasePageNames.DETAILS);
-  const { setTrayPage } = useContext(SidebarStateContext);
-  const { setState } = useContext(MapStateContext);
-  const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
+export const AddLeaseContainer: React.FunctionComponent<
+  React.PropsWithChildren<IAddLeaseContainerProps>
+> = props => {
   const history = useHistory();
+  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
+  const { selectedFileFeature, setState } = React.useContext(MapStateContext);
+  const initialForm = useMemo<LeaseFormModel>(() => {
+    return new LeaseFormModel();
+  }, []);
   const { addLease } = useAddLease();
   const [addLeaseParams, setAddLeaseParams] = useState<
     { lease: Api_Lease; userOverride?: string } | undefined
   >();
-  const formikRef = useRef<FormikProps<FormLease>>(null);
 
-  if (!leasePage) {
-    throw Error('The requested lease page does not exist');
-  }
-  const onSubmit = async (lease: Api_Lease) => {
-    const leaseResponse = await addLease(lease, (userOverrideMessage?: string) =>
-      setAddLeaseParams({ lease: lease, userOverride: userOverrideMessage }),
+  const { search } = useMapSearch();
+
+  useEffect(() => {
+    if (!!selectedFileFeature && !!formikRef.current) {
+      formikRef.current.resetForm();
+      formikRef.current?.setFieldValue('properties', [
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
+      ]);
+    }
+    return () => {
+      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
+    };
+  }, [initialForm, selectedFileFeature, setState]);
+
+  const saveLeaseFile = async (
+    leaseFormModel: LeaseFormModel,
+    formikHelpers: FormikHelpers<LeaseFormModel>,
+  ) => {
+    const leaseApi = leaseFormModel.toApi();
+    const response = await addLease(leaseFormModel.toApi(), (userOverrideMessage?: string) =>
+      setAddLeaseParams({ lease: leaseApi, userOverride: userOverrideMessage }),
     );
-    if (!!leaseResponse?.id) {
-      history.push(`/lease/${leaseResponse?.id}`);
+    formikHelpers.setSubmitting(false);
+    if (!!response?.id) {
+      formikHelpers.resetForm();
+      await search();
+      history.replace(`/mapview/sidebar/lease/${response.id}`);
     }
   };
 
-  // when leaving this page, reset any selected lease properties to ensure that future uses of this page do not include previously selected values.
-  React.useEffect(() => {
-    return () => {
-      setState({
-        type: MapStateActionTypes.SELECTED_LEASE_PROPERTY,
-        selectedLeaseProperty: null,
-      });
-    };
-  }, [setState]);
+  const handleSave = () => {
+    if (formikRef !== undefined) {
+      formikRef.current?.setSubmitting(true);
+      formikRef.current?.submitForm();
+    }
+  };
 
-  const onCancel = () => {
-    history.push('/lease/list');
+  const handleCancel = () => {
+    props.onClose();
   };
 
   return (
-    <MapStateContext.Consumer>
-      {({ selectedLeaseProperty }) => (
-        <>
-          <AddLeaseLayout>
-            <LeaseBreadCrumb leasePage={leasePage} onClickManagement={onClickManagement} />
-            <LeaseHeader />
-            <LeaseIndex currentPageName={LeasePageNames.DETAILS}></LeaseIndex>
-            <AddLeaseForm
-              propertyInfo={selectedLeaseProperty}
-              onCancel={onCancel}
-              onSubmit={onSubmit}
-              formikRef={formikRef}
-            />
-            <GenericModal
-              title="Warning"
-              display={!!addLeaseParams}
-              message={addLeaseParams?.userOverride}
-              handleOk={async () => {
-                if (!!addLeaseParams?.lease) {
-                  const leaseResponse = await addLease(addLeaseParams.lease, undefined, true);
-                  setAddLeaseParams(undefined);
-                  if (!!leaseResponse?.id) {
-                    history.push(`/lease/${leaseResponse?.id}`);
-                  }
-                }
-              }}
-              handleCancel={() => setAddLeaseParams(undefined)}
-              okButtonText="Save Anyways"
-              okButtonVariant="warning"
-              cancelButtonText="Cancel"
-            />
-          </AddLeaseLayout>
-        </>
-      )}
-    </MapStateContext.Consumer>
+    <MapSideBarLayout
+      title="Create Lease/License"
+      icon={<Fence />}
+      footer={
+        <SidebarFooter
+          isOkDisabled={formikRef.current?.isSubmitting}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
+      }
+      showCloseButton
+      onClose={handleCancel}
+    >
+      <AddLeaseForm onSubmit={saveLeaseFile} formikRef={formikRef} propertyInfo={null} />
+      <GenericModal
+        title="Warning"
+        display={!!addLeaseParams}
+        message={addLeaseParams?.userOverride}
+        handleOk={async () => {
+          if (!!addLeaseParams?.lease) {
+            const leaseResponse = await addLease(addLeaseParams.lease, undefined, true);
+            setAddLeaseParams(undefined);
+            if (!!leaseResponse?.id) {
+              history.push(`/lease/${leaseResponse?.id}`);
+            }
+          }
+        }}
+        handleCancel={() => setAddLeaseParams(undefined)}
+        okButtonText="Save Anyways"
+        okButtonVariant="warning"
+        cancelButtonText="Cancel"
+      />
+    </MapSideBarLayout>
   );
 };
 

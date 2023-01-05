@@ -7,8 +7,8 @@ interface BaseProtectedAppRoute extends RouteProps {
   claim?: string | string[];
 }
 interface ComponentRoute extends BaseProtectedAppRoute {
-  customComponent: React.ComponentType<any>;
-  layout: React.ComponentType<any>;
+  customComponent: React.ComponentType<React.PropsWithChildren<any>>;
+  layout: React.ComponentType<React.PropsWithChildren<any>>;
 }
 
 interface RenderRoute extends BaseProtectedAppRoute {
@@ -25,7 +25,7 @@ function isRenderRoute(route: RenderRoute | ComponentRoute): route is RenderRout
  * A PrivateRoute only allows a user who is authenticated and has the appropriate role(s) or claim(s).
  * @param props - Properties to pass { component, role, claim }
  */
-const PrivateRoute: React.FC<IPrivateRouteProps> = props => {
+const PrivateRoute: React.FC<React.PropsWithChildren<IPrivateRouteProps>> = props => {
   const location = useLocation();
   const keycloak = useKeycloakWrapper();
   let { ...rest } = props;

@@ -13,10 +13,9 @@ export interface InsuranceDetailsViewProps {
   insuranceTypes: ILookupCode[];
 }
 
-const InsuranceDetailsView: React.FunctionComponent<InsuranceDetailsViewProps> = ({
-  insuranceList,
-  insuranceTypes,
-}) => {
+const InsuranceDetailsView: React.FunctionComponent<
+  React.PropsWithChildren<InsuranceDetailsViewProps>
+> = ({ insuranceList, insuranceTypes }) => {
   const sortedInsuranceList = useMemo(
     () =>
       !!insuranceList?.length

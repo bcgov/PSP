@@ -17,10 +17,9 @@ export interface IAcquisitionSummaryViewProps {
   onEdit: () => void;
 }
 
-const AcquisitionSummaryView: React.FunctionComponent<IAcquisitionSummaryViewProps> = ({
-  acquisitionFile,
-  onEdit,
-}) => {
+const AcquisitionSummaryView: React.FunctionComponent<
+  React.PropsWithChildren<IAcquisitionSummaryViewProps>
+> = ({ acquisitionFile, onEdit }) => {
   const keycloak = useKeycloakWrapper();
   const detail: DetailAcquisitionFile = DetailAcquisitionFile.fromApi(acquisitionFile);
 

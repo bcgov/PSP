@@ -4,6 +4,9 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Container from 'react-bootstrap/Container';
 import { useDispatch } from 'react-redux';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from 'store/store';
 
 import download from '../utils/download';
 
@@ -11,7 +14,7 @@ import download from '../utils/download';
  * Test provides a testing page for various things.
  */
 const Test = () => {
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
 
   const fetch = (accept: 'csv' | 'excel') =>
     dispatch(

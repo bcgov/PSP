@@ -27,11 +27,9 @@ export interface IActivityListViewProps {
 /**
  * Page that displays Activity information.
  */
-export const ActivityListView: React.FunctionComponent<IActivityListViewProps> = ({
-  fileId,
-  defaultFilters,
-  fileType,
-}: IActivityListViewProps) => {
+export const ActivityListView: React.FunctionComponent<
+  React.PropsWithChildren<IActivityListViewProps>
+> = ({ fileId, defaultFilters, fileType }: IActivityListViewProps) => {
   const history = useHistory();
   const match = useRouteMatch();
   const activityMatch = useRouteMatch<{ activityId?: string }>(`${match.url}/activity/:activityId`);
@@ -58,9 +56,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   }, [getFileActivities, fileId, fileType]);
 
   React.useEffect(() => {
-    console.log('ActivityListView useEffect', staleFile);
     if (activityResults === undefined || staleFile) {
-      console.log('ActivityListView wwaaa', staleFile);
       fetchData();
       setStaleFile(false);
     }
@@ -92,14 +88,25 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
       if (sort) {
         const sortFields = Object.keys(sort);
         if (sortFields?.length > 0) {
-          const keyName = sort[sortFields[0] as keyof Api_Activity];
-          return orderBy(
-            activityItems,
-            sortFields[0] === 'activityTemplate'
-              ? 'activityTemplate.activityTemplateTypeCode.description'
-              : sortFields[0],
-            keyName,
-          );
+          const keyName = sortFields[0] as keyof Api_Activity;
+          const sortDirection = sort[keyName];
+
+          let sortBy: string;
+          switch (keyName) {
+            case 'activityTemplate':
+              sortBy = 'activityTemplate.activityTemplateTypeCode.description';
+              break;
+
+            case 'activityStatusTypeCode':
+              sortBy = 'activityStatusTypeCode.description';
+              break;
+
+            default:
+              sortBy = keyName;
+              break;
+          }
+
+          return orderBy(activityItems, sortBy, sortDirection);
         }
       }
       return activityItems;

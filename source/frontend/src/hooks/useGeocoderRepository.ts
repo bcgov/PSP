@@ -1,4 +1,5 @@
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import { IApiError } from 'interfaces/IApiError';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
@@ -18,7 +19,7 @@ export const useGeocoderRepository = () => {
       [getSitePidsApi],
     ),
     requestName: 'getSitePids',
-    onError: useCallback(axiosError => {
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
       toast.error(
         `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
       );
@@ -35,7 +36,7 @@ export const useGeocoderRepository = () => {
       [searchAddressApi],
     ),
     requestName: 'searchAddress',
-    onError: useCallback(axiosError => {
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
       toast.error(
         `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
       );
@@ -51,7 +52,7 @@ export const useGeocoderRepository = () => {
       [getNearestToPointApi],
     ),
     requestName: 'getNearestToPoint',
-    onError: useCallback(axiosError => {
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
       toast.error(
         `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
       );

@@ -31,9 +31,9 @@ export interface IDocumentListViewProps {
 /**
  * Page that displays document information as a list.
  */
-export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> = (
-  props: IDocumentListViewProps,
-) => {
+export const DocumentListView: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentListViewProps>
+> = (props: IDocumentListViewProps) => {
   const { documentResults, isLoading, defaultFilters, hideFilters } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);

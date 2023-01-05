@@ -1,6 +1,8 @@
 import DocumentTemplateManagementContainer from './DocumentTemplateManagementContainer';
 
-export const DocumentTemplateManagementPage: React.FunctionComponent = () => {
+export const DocumentTemplateManagementPage: React.FunctionComponent<
+  React.PropsWithChildren<unknown>
+> = () => {
   return <DocumentTemplateManagementContainer />;
 };
 

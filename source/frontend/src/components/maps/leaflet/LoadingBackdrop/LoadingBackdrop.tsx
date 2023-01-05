@@ -22,7 +22,10 @@ const Backdrop = styled.div<LoadingBackdropProps>`
   justify-content: center;
 `;
 
-const LoadingBackdrop: React.FC<LoadingBackdropProps> = ({ show, parentScreen }) => {
+const LoadingBackdrop: React.FC<React.PropsWithChildren<LoadingBackdropProps>> = ({
+  show,
+  parentScreen,
+}) => {
   return show ? (
     <Backdrop parentScreen={parentScreen}>
       <Spinner animation="border" variant="warning" data-testid="filter-backdrop-loading" />

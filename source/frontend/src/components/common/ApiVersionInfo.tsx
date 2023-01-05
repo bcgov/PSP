@@ -22,7 +22,7 @@ export const ApiVersionInfo = () => {
     return () => {
       isActive = false;
     };
-  }, [getVersion, setVersion]);
+  }, [getVersion]);
 
   return (
     <div className="version" data-testid="version">

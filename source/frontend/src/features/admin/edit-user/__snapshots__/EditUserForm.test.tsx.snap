@@ -8,9 +8,6 @@ exports[`EditUserForm component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;

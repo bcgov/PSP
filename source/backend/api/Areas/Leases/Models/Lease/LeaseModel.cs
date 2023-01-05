@@ -8,7 +8,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
     /// <summary>
     /// Provides a lease-oriented model.
     /// </summary>
-    public class LeaseModel
+    public class LeaseModel : BaseAppModel
     {
         #region Properties
 
@@ -16,11 +16,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - The primary key to identify the lease.
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The lease amount.

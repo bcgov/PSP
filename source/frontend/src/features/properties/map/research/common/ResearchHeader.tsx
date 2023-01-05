@@ -11,7 +11,9 @@ export interface IResearchHeaderProps {
   researchFile?: Api_ResearchFile;
 }
 
-const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
+const ResearchHeader: React.FunctionComponent<
+  React.PropsWithChildren<IResearchHeaderProps>
+> = props => {
   const leftColumnWidth = '7';
   const leftColumnLabel = '3';
   const researchFile = props.researchFile;

@@ -14,9 +14,9 @@ export interface ILtsaChargeOwnerSubFormProps {
   nameSpace?: string;
 }
 
-export const LtsaChargeOwnerSubForm: React.FunctionComponent<ILtsaChargeOwnerSubFormProps> = ({
-  nameSpace,
-}) => {
+export const LtsaChargeOwnerSubForm: React.FunctionComponent<
+  React.PropsWithChildren<ILtsaChargeOwnerSubFormProps>
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LtsaOrders>();
   const chargeOwnershipGroups: ChargeOwnershipGroup[] =
     getIn(values, withNameSpace(nameSpace, 'chargeOwnershipGroups')) ?? [];

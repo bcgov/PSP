@@ -8,10 +8,9 @@ export interface IDetailDescriptionProps {
   disabled?: boolean;
 }
 
-export const DetailDescription: React.FunctionComponent<IDetailDescriptionProps> = ({
-  nameSpace,
-  disabled,
-}) => {
+export const DetailDescription: React.FunctionComponent<
+  React.PropsWithChildren<IDetailDescriptionProps>
+> = ({ nameSpace, disabled }) => {
   return (
     <>
       <Styled.FormDescriptionLabel>Description</Styled.FormDescriptionLabel>

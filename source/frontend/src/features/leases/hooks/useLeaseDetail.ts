@@ -1,5 +1,7 @@
+import axios, { AxiosError } from 'axios';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
+import { IApiError } from 'interfaces/IApiError';
 import { useContext, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -26,13 +28,16 @@ export function useLeaseDetail(leaseId?: number) {
         setLease(data);
       } catch (e) {
         toast.error('Failed to load lease, reload this page to try again.');
-        dispatch(
-          logError({
-            name: 'LeaseLoad',
-            status: e?.response?.status,
-            error: e,
-          }),
-        );
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          dispatch(
+            logError({
+              name: 'getLeaseById',
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
+        }
       } finally {
         dispatch(hideLoading());
       }

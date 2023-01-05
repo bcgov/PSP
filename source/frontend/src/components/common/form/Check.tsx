@@ -51,7 +51,7 @@ export type CheckProps = FormCheckProps & OptionalAttributes & RequiredAttribute
 /**
  * Formik-connected <Check> form control
  */
-export const Check: React.FC<CheckProps> = ({
+export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
   field,
   label,
   postLabel,

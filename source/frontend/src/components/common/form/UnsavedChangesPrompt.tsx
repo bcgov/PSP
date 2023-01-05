@@ -13,7 +13,7 @@ export interface IUnsavedChangesPrompt {
  * Formik-connected <Prompt> to show a confirmation dialog
  * when user tries to navigate away and form has unsaved changes.
  */
-export const UnsavedChangesPrompt: React.FC<IUnsavedChangesPrompt> = ({
+export const UnsavedChangesPrompt: React.FC<React.PropsWithChildren<IUnsavedChangesPrompt>> = ({
   message = DEFAULT_PROMPT_MESSAGE,
   resetFormUponConfirmation = true,
 }) => {

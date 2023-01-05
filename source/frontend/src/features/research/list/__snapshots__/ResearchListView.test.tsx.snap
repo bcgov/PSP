@@ -8,9 +8,6 @@ exports[`Research List View matches snapshot 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;

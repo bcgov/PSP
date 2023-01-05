@@ -71,7 +71,7 @@ export const UpdateNoteFormModal = React.forwardRef<
   );
 });
 
-const FormBody: React.FC<FormikProps<NoteForm>> = ({ values }) => {
+const FormBody: React.FC<React.PropsWithChildren<FormikProps<NoteForm>>> = ({ values }) => {
   return (
     <Container>
       <Row className="no-gutters">
