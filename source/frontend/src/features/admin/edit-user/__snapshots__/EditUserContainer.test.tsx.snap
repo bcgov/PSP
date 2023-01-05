@@ -5,6 +5,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
   <div
     class="Toastify"
   />
+  <div />
   .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;

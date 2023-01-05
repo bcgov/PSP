@@ -9,6 +9,11 @@ exports[`App Header renders correctly 1`] = `
 <div
     class="Toastify"
   />
+  @media (min-width:99.2rem) {
+
+}
+
+<div />
   .c1 {
   border-left: 0.2rem solid white;
   font-size: 3.4rem;

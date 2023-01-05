@@ -5,6 +5,7 @@ exports[`NotesModal component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -185,5 +186,6 @@ exports[`NotesModal component renders as expected 1`] = `
       </svg>
     </div>
   </button>
+  <div />
 </DocumentFragment>
 `;

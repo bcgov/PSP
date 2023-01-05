@@ -5,6 +5,7 @@ exports[`AcquisitionTeam component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -150,5 +151,7 @@ exports[`AcquisitionTeam component renders as expected 1`] = `
       + Add another team member
     </div>
   </button>
+  <div />
+  <div />
 </DocumentFragment>
 `;

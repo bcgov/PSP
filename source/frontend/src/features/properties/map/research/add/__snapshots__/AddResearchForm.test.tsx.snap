@@ -5,6 +5,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 input.form-control {
   min-width: 50rem;
   max-width: 50rem;

@@ -5,6 +5,7 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c1 {
   width: 100%;
   -webkit-box-flex: 1;

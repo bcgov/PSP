@@ -197,7 +197,7 @@ describe('PropertySearchSelectorFormView component', () => {
       expect(checkbox).toBeChecked();
       expect(onSelectedProperties).toHaveBeenCalledWith([
         {
-          address: 'placeholder',
+          address: 'unknown',
           district: undefined,
           districtName: undefined,
           id: 'PID-006-772-331',

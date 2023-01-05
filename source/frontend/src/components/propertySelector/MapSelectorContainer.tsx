@@ -29,6 +29,13 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
     SelectorTabNames.map,
   );
+  const modifiedMapProperties = modifiedProperties.map(mp => mp.toMapProperty());
+  const [lastSelectedProperty, setLastSelectedProperty] = React.useState<IMapProperty | undefined>(
+    modifiedProperties?.length === 1 && modifiedProperties[0].apiId === undefined // why? Because create from map needs to show the info differently
+      ? modifiedMapProperties[0]
+      : undefined,
+  );
+
   React.useEffect(() => {
     return () => setState({ type: MapStateActionTypes.CURSOR, cursor: MapCursors.DEFAULT });
   }, [setState]);
@@ -40,15 +47,18 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
         setActiveTab={setActiveSelectorTab}
         MapSelectorView={
           <PropertyMapSelectorFormView
-            initialSelectedProperty={
-              modifiedProperties?.length === 1 && modifiedProperties[0].apiId === undefined // why? Because create from map needs to show the info differently
-                ? modifiedProperties[0]
-                : undefined
+            onSelectedProperty={(property: IMapProperty) => {
+              setLastSelectedProperty(property);
+              addProperties([property], modifiedMapProperties, addSelectedProperties);
+            }}
+            selectedProperties={modifiedMapProperties}
+            lastSelectedProperty={
+              !!lastSelectedProperty
+                ? modifiedMapProperties.find(
+                    p => getPropertyName(p).value === getPropertyName(lastSelectedProperty).value,
+                  )
+                : undefined // use the property from the modified properties list from the parent, for consistency.
             }
-            onSelectedProperty={(property: IMapProperty) =>
-              addProperties([property], modifiedProperties, addSelectedProperties)
-            }
-            selectedProperties={modifiedProperties}
           />
         }
         ListSelectorView={
@@ -62,7 +72,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
         <Button
           variant="secondary"
           onClick={() =>
-            addProperties(searchSelectedProperties, modifiedProperties, addSelectedProperties)
+            addProperties(searchSelectedProperties, modifiedMapProperties, addSelectedProperties)
           }
         >
           Add to selection

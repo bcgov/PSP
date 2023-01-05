@@ -38,6 +38,7 @@ export const PropertyInformation: React.FunctionComponent<
           disabled={disabled}
           field={withNameSpace(nameSpace, 'landArea')}
           postText={`${areaUnitType?.description}.` ?? ''}
+          className="w-50"
         />
       </SectionField>
       <hr />

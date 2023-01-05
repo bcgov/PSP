@@ -4,6 +4,7 @@ import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
+import { formatBcaAddress } from 'utils';
 import { pidFormatter } from 'utils/propertyUtils';
 
 import { Section } from '../Section';
@@ -83,18 +84,7 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
             </StyledSubtleText>
 
             {address !== undefined ? (
-              <SectionField label="Address">
-                {[
-                  address?.UNIT_NUMBER,
-                  address?.STREET_NUMBER,
-                  address?.STREET_DIRECTION_PREFIX,
-                  address?.STREET_NAME,
-                  address?.STREET_TYPE,
-                  address?.STREET_DIRECTION_SUFFIX,
-                ]
-                  .filter(a => !!a)
-                  .join(' ')}
-              </SectionField>
+              <SectionField label="Address">{formatBcaAddress(address)}</SectionField>
             ) : (
               <b>Unable to determine address from BC Assessment</b>
             )}

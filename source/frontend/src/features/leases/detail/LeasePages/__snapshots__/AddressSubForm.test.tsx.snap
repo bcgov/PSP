@@ -5,6 +5,7 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   <div
     class="input form-group"
   >

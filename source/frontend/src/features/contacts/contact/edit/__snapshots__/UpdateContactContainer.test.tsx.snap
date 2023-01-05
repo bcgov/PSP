@@ -5,6 +5,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -392,6 +393,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
     >
       Update Contact
     </h1>
+    <div />
     <div
       class="c3"
     >

@@ -14,6 +14,7 @@ import { AcquisitionProperties } from './AcquisitionProperties';
 import { AcquisitionForm } from './models';
 
 const mockStore = configureMockStore([thunk]);
+jest.mock('@react-keycloak/web');
 
 const setDraftProperties = jest.fn();
 
@@ -32,6 +33,7 @@ describe('AcquisitionProperties component', () => {
       {
         ...renderOptions,
         store: mockStore({}),
+        claims: [],
       },
     );
 

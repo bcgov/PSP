@@ -5,6 +5,7 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -374,6 +375,7 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;

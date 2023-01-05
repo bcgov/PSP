@@ -5,6 +5,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   font-size: 2rem;
   font-family: BcSans-Bold;
@@ -210,6 +211,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
             </button>
           </div>
         </div>
+        <div />
       </div>
       <div
         class="c3"

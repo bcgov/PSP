@@ -7,6 +7,7 @@ import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useEffect, useMemo } from 'react';
 import { useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
@@ -60,6 +61,12 @@ export const AddAcquisitionContainer: React.FC<
 
   // navigate to read-only view after file has been created
   const onSuccess = async (acqFile: Api_AcquisitionFile) => {
+    if (acqFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
+      toast.warn(
+        'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+        { autoClose: 15000 },
+      );
+    }
     formikRef.current?.resetForm();
     await search();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);

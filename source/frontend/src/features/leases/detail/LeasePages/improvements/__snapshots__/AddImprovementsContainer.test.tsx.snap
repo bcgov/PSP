@@ -5,6 +5,7 @@ exports[`Add lease container component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c3 {
   font-weight: bold;
   border-bottom: 0.2rem solid;

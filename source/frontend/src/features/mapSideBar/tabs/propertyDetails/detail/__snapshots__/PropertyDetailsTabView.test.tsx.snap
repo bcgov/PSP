@@ -5,6 +5,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   <div
     class="Toastify"
   />
+  <div />
   .c7 {
   max-width: 25rem;
   padding: 1rem;

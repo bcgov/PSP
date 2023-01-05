@@ -57,6 +57,8 @@ http {
         }
 
         location /ogs-internal {
+            proxy_ssl_server_name on;
+            proxy_ssl_session_reuse on;
             proxy_pass          %GEOSERVER_URL%;
         }
 

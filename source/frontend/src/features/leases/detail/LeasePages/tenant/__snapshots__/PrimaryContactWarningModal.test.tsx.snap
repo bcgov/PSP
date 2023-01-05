@@ -5,5 +5,7 @@ exports[`PrimaryContactWarningModal component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
+  <div />
 </DocumentFragment>
 `;

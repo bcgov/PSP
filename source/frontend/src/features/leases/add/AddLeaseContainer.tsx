@@ -11,6 +11,7 @@ import * as React from 'react';
 import { useMemo, useState } from 'react';
 import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
 import { useAddLease } from '../hooks/useAddLease';
@@ -52,6 +53,12 @@ export const AddLeaseContainer: React.FunctionComponent<
     );
     formikHelpers.setSubmitting(false);
     if (!!response?.id) {
+      if (leaseApi.properties?.find(p => !p.property?.address && !p.property?.id)) {
+        toast.warn(
+          'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+          { autoClose: 15000 },
+        );
+      }
       formikHelpers.resetForm();
       await search();
       history.replace(`/mapview/sidebar/lease/${response.id}`);

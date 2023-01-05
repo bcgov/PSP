@@ -5,6 +5,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c6:not(:first-child) {
   padding-left: 0;
 }
@@ -218,7 +219,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             class="c5 text-left col"
           >
             <div
-              class="flex-nowrap input-group row"
+              class="w-50 flex-nowrap input-group row"
             >
               <div
                 class="c6 col"

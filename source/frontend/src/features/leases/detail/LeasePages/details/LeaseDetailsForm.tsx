@@ -48,7 +48,6 @@ export const StyledDetails = styled.form`
     padding-left: 0;
   }
   .input-group.disabled {
-    display: -webkit-box;
     .input-group-text {
       background: none;
       border: none;

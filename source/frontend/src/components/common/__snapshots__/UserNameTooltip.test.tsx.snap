@@ -5,6 +5,7 @@ exports[`UserNameTooltip renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   font-weight: bold;
 }

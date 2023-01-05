@@ -4,6 +4,8 @@ import { IMapProperty } from 'components/propertySelector/models';
 import { ModalContext } from 'contexts/modalContext';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
+import { useBcaAddress } from 'features/properties/map/hooks/useBcaAddress';
+import { AddressForm } from 'features/properties/map/shared/models';
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
@@ -31,6 +33,8 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
   const [propertiesToConfirm, setPropertiesToConfirm] = useState<FormLeaseProperty[]>([]);
 
   const [propertyIndexToRemove, setPropertyIndexToRemove] = useState<number | undefined>(undefined);
+
+  const { getPrimaryAddressByPid } = useBcaAddress();
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
@@ -87,28 +91,35 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
   const processAddedProperties = async (newProperties: IMapProperty[]) => {
     let needsWarning = false;
-    const newFormProperties = [];
+    const newFormProperties: FormLeaseProperty[] = [];
 
-    for (let i = 0; i < newProperties.length; i++) {
-      const property = newProperties[i];
-      const formProperty = FormLeaseProperty.fromMapProperty(property);
+    await newProperties.reduce(async (promise, property, i) => {
+      return promise.then(async () => {
+        const formProperty = FormLeaseProperty.fromMapProperty(property);
 
-      // Retrieve the pims id of the property if it exists
-      if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
-        const result = await searchProperty(property);
-        if (result !== undefined && result.length > 0) {
-          formProperty.property.apiId = result[0].id;
+        const bcaSummary = property?.pid ? await getPrimaryAddressByPid(property.pid) : undefined;
+
+        // Retrieve the pims id of the property if it exists
+        if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
+          formProperty.property.address = bcaSummary?.address
+            ? AddressForm.fromBcaAddress(bcaSummary?.address)
+            : undefined;
+          formProperty.property.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
+          const result = await searchProperty(property);
+          if (result !== undefined && result.length > 0) {
+            formProperty.property.apiId = result[0].id;
+          }
         }
-      }
 
-      newFormProperties.push(formProperty);
+        newFormProperties.push(formProperty);
 
-      if (formProperty.property?.apiId === undefined) {
-        needsWarning = needsWarning || true;
-      } else {
-        needsWarning = needsWarning || false;
-      }
-    }
+        if (formProperty.property?.apiId === undefined) {
+          needsWarning = needsWarning || true;
+        } else {
+          needsWarning = needsWarning || false;
+        }
+      });
+    }, Promise.resolve());
 
     if (needsWarning) {
       setPropertiesToConfirm(newFormProperties);

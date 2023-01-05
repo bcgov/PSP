@@ -5,6 +5,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
+  <div />
   .c0 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
@@ -2278,6 +2279,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           </div>
         </div>
       </div>
+      <div />
     </div>
   </div>
   .c1.btn {
