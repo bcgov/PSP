@@ -1081,7 +1081,7 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new()
                     {
-                        FilePayload= new byte[1],
+                        FilePayload= new System.IO.MemoryStream(),
                         Size = 1,
                         FileName = "MyFile",
                     },
