@@ -48,6 +48,9 @@ const LeaseAndLicenseListView = lazy(() =>
 const AcquisitionListView = lazy(() =>
   componentLoader(import('features/acquisition/list/AcquisitionListView'), 2),
 );
+const FinancialCodesListView = lazy(() =>
+  componentLoader(import('features/admin/financial-codes/list/FinancialCodesListView'), 2),
+);
 
 const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const location = useLocation();
@@ -136,6 +139,14 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.DOCUMENT_ADMIN}
             title={getTitle('Document Template')}
+          ></AppRoute>
+          <AppRoute
+            protected
+            path="/admin/financial_codes"
+            customComponent={FinancialCodesListView}
+            layout={AuthLayout}
+            claim={Claims.ADMIN_FINANCIAL_CODES}
+            title={getTitle('Financial Codes')}
           ></AppRoute>
           <AppRoute
             protected
