@@ -111,7 +111,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_UploadRequest_Sucess_NoMetadata()
+        public async void UploadDocumentAsync_UploadRequest_Success_NoMetadata()
         {
             // Arrange
             var helper = new TestHelper();
@@ -697,7 +697,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void GetStorageDocumenTypes_Success()
+        public async void GetStorageDocumentTypes_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -718,11 +718,11 @@ namespace Pims.Api.Test.Services
                         Count= 5,
                         Results= new List<DocumentType>()
                         {
-                            new() { Id = 1,},
-                            new() { Id= 2,},
-                            new() { Id= 3,},
-                            new() { Id= 4,},
-                            new() { Id= 5,},
+                            new() { Id= 1 },
+                            new() { Id= 2 },
+                            new() { Id= 3 },
+                            new() { Id= 4 },
+                            new() { Id= 5 },
                         }
                     }
                 });
