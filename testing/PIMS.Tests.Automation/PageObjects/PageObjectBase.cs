@@ -126,8 +126,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 var childrenElements = parentElement.FindElements(By.TagName("li"));
 
                 int index = random.Next(1, childrenElements.Count + 1);
-                var selectedOptionBttnLocator = "ul[class='" + optionsContainerName + "'] li:nth-child(" + index + ")";
-                var selectedOption = webDriver.FindElement(By.CssSelector(selectedOptionBttnLocator));
+                //var selectedOptionBttnLocator = "ul[class='" + optionsContainerName + "'] li:nth-child(" + index + ")";
+                //var selectedOption = webDriver.FindElement(By.CssSelector(selectedOptionBttnLocator));
+                var selectedOption = childrenElements[index];
 
                 js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
 

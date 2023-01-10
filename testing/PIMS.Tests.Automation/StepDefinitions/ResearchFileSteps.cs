@@ -10,6 +10,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SearchResearchFiles searchResearchFile;
         private readonly PropertyInformation propertyInformation;
+        private readonly SearchProperties searchProperties;
 
         private readonly string userName = "TRANPSP1";
         //private readonly string userName = "sutairak";
@@ -31,6 +32,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string PID1Search = "001-505-360";
         private readonly string PID2Search = "028-753-054";
         private readonly string PID3Search = "099-123-677";
+        private readonly string PID4Search = "004-537-360";
         private readonly string PIN1Search = "8157500";
         private readonly string Plan1Search = "18TR2_RUPERT";
         private readonly string address1Search = "1818 Cornwall";
@@ -40,6 +42,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string propertyResearchPropName = "Automation Property";
         private readonly string propertyResearchDocRef = "Automation test - Document reference";
         private readonly string propertyResearchNotes = "Automation test - Testing Property Research adding information";
+        private readonly string propertyResearchEditNotes = "Automation test - Testing Property Research adding information - Automation Edit";
+
+        private readonly string propertyDetailsMunicipalZoning = "Automated Test zone";
+        private readonly string propertyDetailsAreaSqMts = "50";
+        private readonly string propertyDetailsAreaCubeMts = "100";
+        private readonly string propertyDetailsNotes = "Automated updates on Property Information from Research File";
+        private readonly string propertyDetailsNotesChanges = " Changes added automatically";
+
 
         protected string researchFileCode = "";
 
@@ -51,6 +61,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             searchResearchFile = new SearchResearchFiles(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
+            searchProperties = new SearchProperties(driver.Current);
         }
 
         [StepDefinition(@"I start creating and cancel a new Research File")]
@@ -94,6 +105,47 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
+        [StepDefinition(@"I create a Research File from a pin on map")]
+        public void CreateResearchFileFromPin()
+        {
+            /* TEST COVERAGE: PSP-3371, PSP-1546, PSP-1556 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(PID4Search);
+
+            //Select found property on Map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.ChooseCreationOptionFromPin("Research File - Create new");
+
+            //Fill basic Research File information
+            researchFile.CreateMinimumResearchFile(researchFileName);
+
+            //Fill name to selected property
+            //sharedSearchProperties.AddNameSelectedProperty("Automated Property from Pin");
+
+            //Save Research File
+            researchFile.SaveResearchFile();
+
+            //Get Research File code
+            researchFileCode = researchFile.GetResearchFileCode();
+
+            //Add additional info to the reseach File
+            researchFile.AddAdditionalResearchFileInfo(researchFileRoadName, researchFileAliasName, researchFilePurposesNbr, researchFileRequestDate, researchFileRequester,
+                researchFileDescriptionRequest, researchFileResearchCompletedDate, researchFileResultRequest, researchFileExpropiationNo, researchFileExpropiationNotes);
+
+            //Save Research File
+            researchFile.SaveResearchFile();
+
+        }
+
         [StepDefinition(@"I add additional information to an existing Research File")]
         public void AddInfoToResearchFile()
         {
@@ -130,7 +182,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Confirm saving changes
             researchFile.ConfirmChangesResearchFile();
-
         }
 
         [StepDefinition(@"I look for a Property by Legal Description")]
@@ -197,20 +248,27 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Confirm saving changes
             researchFile.ConfirmChangesResearchFile();
 
-            //Verify PIMS Files Tab
-
         }
 
         [StepDefinition(@"I search for an existing Research File")]
         public void SearchExistingResearchFileProperties()
         {
-            /* TEST COVERAGE: PSP-3294 */
+            /* TEST COVERAGE: PSP-3294, PSP-4197 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
 
-            //Navigate to Research File Search and look for the last research file created
+            //Navigate to Research File Search
             searchResearchFile.NavigateToSearchResearchFile();
+
+            //Filter research Files
+            searchResearchFile.FilterResearchFiles("South Coast Region", "Automated", "Active", "Happy", "Tranpsp1");
+            Assert.True(searchResearchFile.SearchFoundResults());
+
+            searchResearchFile.FilterResearchFiles("Cannot determine", "Automated", "Closed", "Happy", "dsmith");
+            Assert.False(searchResearchFile.SearchFoundResults());
+
+            //Look for the last created research file
             searchResearchFile.SearchLastResearchFile();
 
         }
@@ -240,7 +298,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing research file properties")]
         public void UpdateExistingResearchFileProperties()
         {
-            /* TEST COVERAGE: PSP-3460, PSP-3599, PSP-3600 */
+            /* TEST COVERAGE: PSP-3460, PSP-3599, PSP-3600, PSP-3612, PSP-3722, PSP-3462 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -271,21 +329,27 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Confirm changes
             researchFile.ConfirmChangesResearchFile();
 
-            //Select 1st property and add information
+            //Select 1st Property attached
+            researchFile.ChooseFirstPropertyOption();
+
+            //Add information
             researchFile.AddPropertyResearchMaxInfo(propertyResearchPropName, propertyResearchDocRef, propertyResearchNotes);
 
             //Save changes
             researchFile.SaveResearchFile();
 
-            //Verify Property Research Tab View
-            researchFile.VerifyPropResearchTabFormView(propertyResearchPropName, propertyResearchDocRef);
+            //Edit 1st Property Prop Research Tab
+            researchFile.EditPropertyResearch(propertyResearchEditNotes);
+
+            //Save changes
+            researchFile.SaveResearchFile();
 
         }
 
         [StepDefinition(@"I update and cancel changes on existing research file properties")]
         public void UpdateCancelExistingResearchFileProperties()
         {
-            /* TEST COVERAGE: PSP-3720, PSP-3463, PSP-3601 */
+            /* TEST COVERAGE: PSP-3720, PSP-3463, PSP-3601  */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -297,7 +361,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select 1st Search Result
             searchResearchFile.SelectFirstResult();
 
-            //Select 1st property and insert some changes
+            //Select 1st Property attached
+            researchFile.ChooseFirstPropertyOption();
+
+            //Insert some changes
             researchFile.AddPropertyResearchMinInfo(propertyResearchPropName);
 
             //Cancel changes
@@ -314,7 +381,70 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Cancel changes
             researchFile.CancelResearchFileProps();
-            
+
+        }
+
+        [StepDefinition(@"I update Property Details from a Research File")]
+        public void UpdatePropertyDetails()
+        {
+            /* TEST COVERAGE: PSP-4791 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Research File Search and look for the last research file created
+            searchResearchFile.NavigateToSearchResearchFile();
+            searchResearchFile.SearchLastResearchFile();
+
+            //Select 1st Search Result
+            searchResearchFile.SelectFirstResult();
+
+            //Select 1st Property attached
+            researchFile.ChooseFirstPropertyOption();
+
+            //Navigate to Property Information Tab
+            propertyInformation.NavigatePropertyDetailsTab();
+
+            //Click on the Edit Property Information Button
+            propertyInformation.EditPropertyInfoResearchBttn();
+
+            //Insert some changes
+            propertyInformation.UpdateMaxPropertyDetails(propertyDetailsMunicipalZoning, propertyDetailsAreaSqMts, propertyDetailsAreaCubeMts, propertyDetailsNotes);
+
+            //Save changes
+            propertyInformation.SavePropertyDetails();
+
+        }
+
+        [StepDefinition(@"I cancel changes on a Property Details from a Research File")]
+        public void CancelChangesPropertyDetails()
+        {
+            /* TEST COVERAGE: PSP-5005 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Research File Search and look for the last research file created
+            searchResearchFile.NavigateToSearchResearchFile();
+            searchResearchFile.SearchLastResearchFile();
+
+            //Select 1st Search Result
+            searchResearchFile.SelectFirstResult();
+
+            //Select 1st Property attached
+            researchFile.ChooseFirstPropertyOption();
+
+            //Navigate to Property Information Tab
+            propertyInformation.NavigatePropertyDetailsTab();
+
+            //Click on the Edit Property Information Button
+            propertyInformation.EditPropertyInfoResearchBttn();
+
+            //Insert some changes
+            propertyInformation.UpdateMinPropertyDetails(propertyDetailsNotesChanges);
+
+            //Cancel changes
+            researchFile.CancelResearchFilePropertyDetails();
         }
 
         [StepDefinition(@"A new research file is created successfully")]
@@ -344,6 +474,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("No results found for your search criteria."));
         }
 
+        [StepDefinition(@"Property Research Tab has been updated successfully")]
+        public void PropertyResearchEditSuccess()
+        {
+            
+
+            //Verify Property Research Tab View
+            researchFile.VerifyPropResearchTabFormView(propertyResearchPropName, propertyResearchDocRef);
+        }
+
         [StepDefinition(@"Research File View Form renders successfully")]
         public void VerifyResearchFileDetailsView()
         {
@@ -362,9 +501,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         }
 
         [StepDefinition(@"Expected Content is displayed on Research File Table")]
-        public void VerifyContactsTableContent()
+        public void VerifyResearchFileTableContent()
         {
-            /* TEST COVERAGE: PSP-3294 */
+            /* TEST COVERAGE: PSP-3294  */
 
             searchResearchFile.VerifyResearchFileListView();
             searchResearchFile.VerifyResearchFileTableContent(researchFileName);
@@ -377,6 +516,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-3463 */
 
             Assert.False(researchFile.PropertiesCountChange());
+        }
+
+        [StepDefinition(@"Property Information is displayed correctly")]
+        public void PropertyInformationViewDetailsSuccess()
+        {
+            /* TEST COVERAGE: PSP-4794 */
+            propertyInformation.NavigatePropertyDetailsTab();
+            propertyInformation.VerifyPropertyDetailsView("Research File");
         }
     }
 }

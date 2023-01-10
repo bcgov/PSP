@@ -18,8 +18,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchResearchFromDateInput = By.Id("datepicker-updatedOnStartDate");
         private By searchResearchToDateInput = By.Id("datepicker-updatedOnEndDate");
         private By searchResearchCreateUpdateBySelect = By.Id("input-createOrUpdateBy");
-        private By searchResearchUserIdirInput = By.Id("input-appLastUpdateUserid");
+        private By searchResearchUserUpdatedIdirInput = By.Id("input-appLastUpdateUserid");
+        private By searchResearchFileUserCreatedIdirInput = By.Id("input-appCreateUserid");
         private By searchResearchFileButton = By.Id("search-button");
+        private By searchResearchFileResetButton = By.Id("reset-button");
         private By searchResearchCreateNewBttn = By.XPath("//div[contains(text(),'Create a Research File')]/parent::button");
 
         //Search Research File List Elements
@@ -77,10 +79,13 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SearchLastResearchFile()
         {
             Wait();
-            ChooseSpecificSelectOption("input-researchFileStatusTypeCode", "All Status");
+            webDriver.FindElement(searchResearchFileResetButton).Click();
+
+            Wait();
+            //ChooseSpecificSelectOption("input-researchFileStatusTypeCode", "All Status");
             FocusAndClick(searchResearchFileButton);
 
-            Wait(1000);
+            Wait();
             webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
             webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
 
@@ -109,8 +114,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchResearchFromDateInput).Displayed);
             Assert.True(webDriver.FindElement(searchResearchToDateInput).Displayed);
             Assert.True(webDriver.FindElement(searchResearchCreateUpdateBySelect).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchUserIdirInput).Displayed);
+            Assert.True(webDriver.FindElement(searchResearchUserUpdatedIdirInput).Displayed);
             Assert.True(webDriver.FindElement(searchResearchFileButton).Displayed);
+            Assert.True(webDriver.FindElement(searchResearchFileResetButton).Displayed);
             Assert.True(webDriver.FindElement(searchResearchCreateNewBttn).Displayed);
 
             //Table Elements
@@ -143,6 +149,22 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdateDate).Text != null);
             Assert.True(webDriver.FindElement(searchResearchFile1stResultStatus).Text.Equals("Active"));
 
+        }
+
+        public void FilterResearchFiles(string region, string name, string status, string roadName, string idir)
+        {
+            Wait();
+            webDriver.FindElement(searchResearchFileResetButton).Click();
+
+            Wait();
+            ChooseSpecificSelectOption("input-regionCode", region);
+            webDriver.FindElement(searchResearchNameInput).SendKeys(name);
+            ChooseSpecificSelectOption("input-researchFileStatusTypeCode", status);
+            webDriver.FindElement(searchResearchRoadInput).SendKeys(roadName);
+            ChooseSpecificSelectOption("input-createOrUpdateBy", "Created by");
+            webDriver.FindElement(searchResearchFileUserCreatedIdirInput).SendKeys(idir);
+
+            webDriver.FindElement(searchResearchFileButton).Click();
         }
 
         public Boolean SearchFoundResults()

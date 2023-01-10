@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class SmokeTestFeature : object, Xunit.IClassFixture<SmokeTestFeature.FixtureData>, System.IDisposable
+    public partial class PropertiesFeature : object, Xunit.IClassFixture<PropertiesFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace PIMS.Tests.Automation.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "SmokeTest.feature"
+#line 1 "Properties.feature"
 #line hidden
         
-        public SmokeTestFeature(SmokeTestFeature.FixtureData fixtureData, PIMS_Tests_Automation_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public PropertiesFeature(PropertiesFeature.FixtureData fixtureData, PIMS_Tests_Automation_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace PIMS.Tests.Automation.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "SmokeTest", "Test cases allocated for Smoke Testing", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Properties", "Property Inventory and Information Details test cases", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,16 +80,16 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create a new Individual Contact with minimum fields")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "Create a new Individual Contact with minimum fields")]
-        [Xunit.TraitAttribute("Category", "Smoke-Test")]
-        public void CreateANewIndividualContactWithMinimumFields()
+        [Xunit.SkippableFactAttribute(DisplayName="Property Map Filters and Details validation")]
+        [Xunit.TraitAttribute("FeatureTitle", "Properties")]
+        [Xunit.TraitAttribute("Description", "Property Map Filters and Details validation")]
+        [Xunit.TraitAttribute("Category", "Properties")]
+        public void PropertyMapFiltersAndDetailsValidation()
         {
             string[] tagsOfScenario = new string[] {
-                    "Smoke-Test"};
+                    "Properties"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Individual Contact with minimum fields", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Property Map Filters and Details validation", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -101,23 +101,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
- testRunner.Given("I create a new Individual Contact with minimum fields Doe", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I search for a Property in the Inventory by different filters", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
- testRunner.Then("A new Individual contact is successfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("LTSA Pop-up Information validation is successful", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create a new Organization Contact with minimum fields")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "Create a new Organization Contact with minimum fields")]
-        public void CreateANewOrganizationContactWithMinimumFields()
+        [Xunit.SkippableFactAttribute(DisplayName="Invalid Property Not Found")]
+        [Xunit.TraitAttribute("FeatureTitle", "Properties")]
+        [Xunit.TraitAttribute("Description", "Invalid Property Not Found")]
+        public void InvalidPropertyNotFound()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Organization Contact with minimum fields", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid Property Not Found", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 10
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -129,23 +129,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 11
- testRunner.Given("I create a new Organization Contact with minimum fields Automation Test Corp I", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I search for an Invalid Property", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 12
- testRunner.Then("A new Organization contact is successfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("No Properties were found", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create Minimum Lease and License with One Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "Create Minimum Lease and License with One Tenant")]
-        public void CreateMinimumLeaseAndLicenseWithOneTenant()
+        [Xunit.SkippableFactAttribute(DisplayName="Property Information Tab Details")]
+        [Xunit.TraitAttribute("FeatureTitle", "Properties")]
+        [Xunit.TraitAttribute("Description", "Property Information Tab Details")]
+        public void PropertyInformationTabDetails()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Minimum Lease and License with One Tenant", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Property Information Tab Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -157,10 +157,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 15
- testRunner.Given("I create a new Lease with minimum fields", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I review a Property\'s Information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 16
- testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I make some changes on the selected property information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 17
+ testRunner.Then("A Property Information is saved successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -173,12 +176,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                SmokeTestFeature.FeatureSetup();
+                PropertiesFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                SmokeTestFeature.FeatureTearDown();
+                PropertiesFeature.FeatureTearDown();
             }
         }
     }
