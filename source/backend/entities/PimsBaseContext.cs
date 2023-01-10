@@ -2034,6 +2034,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
 
+                entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
+
                 entity.Property(e => e.MinistryProjectName).HasComment("Ministry project name.");
 
                 entity.Property(e => e.MinistryProjectNumber).HasComment("Ministry project number.");
