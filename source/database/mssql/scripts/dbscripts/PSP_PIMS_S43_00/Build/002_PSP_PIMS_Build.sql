@@ -6652,7 +6652,7 @@ CREATE TABLE [dbo].[PIMS_PROPERTY]  (
 	[PID]                                	int NULL,
 	[PIN]                                	int NULL,
 	[FILE_NUMBER]                        	int NULL,
-	[FILE_NUMBER_SUFFIX]                 	nvarchar(2) NULL,
+	[FILE_NUMBER_SUFFIX]                 	varchar(2) NULL,
 	[LAND_AREA]                          	real NULL,
 	[LAND_LEGAL_DESCRIPTION]             	nvarchar(max) NULL,
 	[BOUNDARY]                           	[sys].[geometry] NULL,
@@ -9665,7 +9665,7 @@ CREATE TABLE [dbo].[PIMS_PROPERTY_HIST]  (
 	[PID]                                	int NULL,
 	[PIN]                                	int NULL,
 	[FILE_NUMBER]                        	int NULL,
-	[FILE_NUMBER_SUFFIX]                 	nvarchar(2) NULL,
+	[FILE_NUMBER_SUFFIX]                 	varchar(2) NULL,
 	[LAND_AREA]                          	real NULL,
 	[SURVEY_PLAN_NUMBER]                 	nvarchar(250) NULL,
 	[ENCUMBRANCE_REASON]                 	nvarchar(500) NULL,
@@ -11610,7 +11610,6 @@ SELECT PROP.PROPERTY_ID
      , IIF(EXISTS (SELECT 1
                    FROM   PIMS_PROPERTY_LEASE PRLS JOIN
                           PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
-                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID
                    WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE IN ('PYBLMOTI', 'PYBLBCTFA')), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_PAYABLE_LEASE
 FROM   PIMS_PROPERTY       PROP                                                    LEFT OUTER JOIN
        PIMS_ADDRESS        ADDR ON ADDR.ADDRESS_ID        = PROP.ADDRESS_ID        LEFT OUTER JOIN
