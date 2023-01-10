@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts;
@@ -24,7 +23,6 @@ namespace Pims.Api.Areas.Admin.Controllers
     {
         #region Variables
         private readonly IFinancialCodeService _financialCodeService;
-        private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
@@ -33,11 +31,9 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// Creates a new instance of a FinancialCodeController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="financialCodeService"></param>
-        /// <param name="mapper"></param>
-        public FinancialCodeController(IFinancialCodeService financialCodeService, IMapper mapper)
+        public FinancialCodeController(IFinancialCodeService financialCodeService)
         {
             _financialCodeService = financialCodeService;
-            _mapper = mapper;
         }
         #endregion
 

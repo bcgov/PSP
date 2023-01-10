@@ -10,6 +10,11 @@ namespace Pims.Api.Models.Concepts
         #region Properties
 
         /// <summary>
+        /// get/set - The model id.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - The type for this financial code.
         /// </summary>
         public FinancialCodeTypes Type { get; set; }

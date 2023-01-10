@@ -2,7 +2,7 @@ using System;
 
 namespace Pims.Dal.Entities
 {
-    public interface IFinancialCodeEntity<T_Code>
+    public interface IFinancialCodeEntity<T_Code> : IBaseAppEntity
     {
         #region Properties
 
