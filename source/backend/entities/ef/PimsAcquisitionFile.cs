@@ -13,6 +13,8 @@ namespace Pims.Dal.Entities
     [Index(nameof(AcquisitionFundingTypeCode), Name = "ACQNFL_ACQUISITION_FUNDING_TYPE_CODE_IDX")]
     [Index(nameof(AcquisitionTypeCode), Name = "ACQNFL_ACQUISITION_TYPE_CODE_IDX")]
     [Index(nameof(AcqPhysFileStatusTypeCode), Name = "ACQNFL_ACQ_PHYS_FILE_STATUS_TYPE_CODE_IDX")]
+    [Index(nameof(FileNumber), Name = "ACQNFL_FILE_NUMBER_IDX")]
+    [Index(nameof(LegacyFileNumber), Name = "ACQNFL_LEGACY_FILE_NUMBER_IDX")]
     [Index(nameof(RegionCode), Name = "ACQNFL_REGION_CODE_IDX")]
     public partial class PimsAcquisitionFile
     {
@@ -109,6 +111,9 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("LEGACY_FILE_NUMBER")]
+        [StringLength(18)]
+        public string LegacyFileNumber { get; set; }
 
         [ForeignKey(nameof(AcqPhysFileStatusTypeCode))]
         [InverseProperty(nameof(PimsAcqPhysFileStatusType.PimsAcquisitionFiles))]

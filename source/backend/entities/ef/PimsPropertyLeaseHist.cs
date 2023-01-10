@@ -28,6 +28,9 @@ namespace Pims.Dal.Entities
         [Column("AREA_UNIT_TYPE_CODE")]
         [StringLength(20)]
         public string AreaUnitTypeCode { get; set; }
+        [Column("NAME")]
+        [StringLength(250)]
+        public string Name { get; set; }
         [Column("LEASE_AREA")]
         public float? LeaseArea { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -68,8 +71,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("NAME")]
-        [StringLength(250)]
-        public string Name { get; set; }
     }
 }
