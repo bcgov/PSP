@@ -7,56 +7,54 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.IFinancialCodeEntity<string>, FinancialCodeModel<string>>()
+            config.NewConfig<Entity.IFinancialCodeEntity<string>, FinancialCodeModel>()
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.EffectiveDate, src => src.EffectiveDate)
                 .Map(dest => dest.ExpiryDate, src => src.ExpiryDate);
 
-            config.NewConfig<Entity.IFinancialCodeEntity<int>, FinancialCodeModel<int>>()
+            config.NewConfig<Entity.IFinancialCodeEntity<int>, FinancialCodeModel>()
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.EffectiveDate, src => src.EffectiveDate)
                 .Map(dest => dest.ExpiryDate, src => src.ExpiryDate);
 
-            config.NewConfig<Entity.IFinancialCodeEntity<short>, FinancialCodeModel<short>>()
+            config.NewConfig<Entity.IFinancialCodeEntity<short>, FinancialCodeModel>()
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.EffectiveDate, src => src.EffectiveDate)
                 .Map(dest => dest.ExpiryDate, src => src.ExpiryDate);
 
-
-            config.NewConfig<Entity.PimsBusinessFunctionCode, FinancialCodeModel<string>>()
+            config.NewConfig<Entity.PimsBusinessFunctionCode, FinancialCodeModel>()
                 .Map(dest => dest.Type, src => FinancialCodeTypes.BusinessFunction)
-                .Inherits<Entity.IFinancialCodeEntity<string>, FinancialCodeModel<string>>();
+                .Inherits<Entity.IFinancialCodeEntity<string>, FinancialCodeModel>();
 
-            config.NewConfig<Entity.PimsCostTypeCode, FinancialCodeModel<string>>()
+            config.NewConfig<Entity.PimsCostTypeCode, FinancialCodeModel>()
                 .Map(dest => dest.Type, src => FinancialCodeTypes.CostTypes)
-                .Inherits<Entity.IFinancialCodeEntity<string>, FinancialCodeModel<string>>();
+                .Inherits<Entity.IFinancialCodeEntity<string>, FinancialCodeModel>();
 
-            config.NewConfig<Entity.PimsWorkActivityCode, FinancialCodeModel<string>>()
+            config.NewConfig<Entity.PimsWorkActivityCode, FinancialCodeModel>()
                 .Map(dest => dest.Type, src => FinancialCodeTypes.WorkActivity)
-                .Inherits<Entity.IFinancialCodeEntity<string>, FinancialCodeModel<string>>();
+                .Inherits<Entity.IFinancialCodeEntity<string>, FinancialCodeModel>();
 
-            config.NewConfig<Entity.PimsChartOfAccountsCode, FinancialCodeModel<int>>()
+            config.NewConfig<Entity.PimsChartOfAccountsCode, FinancialCodeModel>()
                 .Map(dest => dest.Type, src => FinancialCodeTypes.ChartOfAccounts)
-                .Inherits<Entity.IFinancialCodeEntity<int>, FinancialCodeModel<int>>();
+                .Inherits<Entity.IFinancialCodeEntity<int>, FinancialCodeModel>();
 
-            config.NewConfig<Entity.PimsFinancialActivityCode, FinancialCodeModel<short>>()
+            config.NewConfig<Entity.PimsFinancialActivityCode, FinancialCodeModel>()
                 .Map(dest => dest.Type, src => FinancialCodeTypes.FinancialActivity)
-                .Inherits<Entity.IFinancialCodeEntity<short>, FinancialCodeModel<short>>();
+                .Inherits<Entity.IFinancialCodeEntity<short>, FinancialCodeModel>();
 
-            config.NewConfig<Entity.PimsResponsibilityCode, FinancialCodeModel<int>>()
+            config.NewConfig<Entity.PimsResponsibilityCode, FinancialCodeModel>()
                 .Map(dest => dest.Type, src => FinancialCodeTypes.Responsibility)
-                .Inherits<Entity.IFinancialCodeEntity<int>, FinancialCodeModel<int>>();
+                .Inherits<Entity.IFinancialCodeEntity<int>, FinancialCodeModel>();
 
-            config.NewConfig<Entity.PimsYearlyFinancialCode, FinancialCodeModel<string>>()
+            config.NewConfig<Entity.PimsYearlyFinancialCode, FinancialCodeModel>()
                 .Map(dest => dest.Type, src => FinancialCodeTypes.YearlyFinancial)
-                .Inherits<Entity.IFinancialCodeEntity<string>, FinancialCodeModel<string>>();
-
+                .Inherits<Entity.IFinancialCodeEntity<string>, FinancialCodeModel>();
         }
     }
 }

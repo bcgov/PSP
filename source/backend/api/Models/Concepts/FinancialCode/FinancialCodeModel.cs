@@ -5,7 +5,7 @@ namespace Pims.Api.Models.Concepts
     /// <summary>
     /// Provides a model that represents a financial code from various lookup tables.
     /// </summary>
-    public class FinancialCodeModel<T> : BaseAppModel
+    public class FinancialCodeModel : BaseAppModel
     {
         #region Properties
 
@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - A unique code for the lookup.
         /// </summary>
-        public T Code { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// get/set - A description of the financial code.
