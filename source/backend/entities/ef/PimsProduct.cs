@@ -8,18 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_WORK_ACTIVITY_CODE")]
-    [Index(nameof(Code), Name = "WRKACT_CODE_IDX")]
-    public partial class PimsWorkActivityCode
+    [Table("PIMS_PRODUCT")]
+    [Index(nameof(Code), Name = "PRODCT_CODE_IDX")]
+    [Index(nameof(ParentProjectId), Name = "PRODCT_PARENT_PROJECT_ID_IDX")]
+    public partial class PimsProduct
     {
-        public PimsWorkActivityCode()
+        public PimsProduct()
         {
-            PimsProjects = new HashSet<PimsProject>();
+            PimsAcquisitionFiles = new HashSet<PimsAcquisitionFile>();
         }
 
         [Key]
         [Column("ID")]
         public long Id { get; set; }
+        [Column("PARENT_PROJECT_ID")]
+        public long ParentProjectId { get; set; }
         [Required]
         [Column("CODE")]
         [StringLength(20)]
@@ -28,12 +31,18 @@ namespace Pims.Dal.Entities
         [Column("DESCRIPTION")]
         [StringLength(200)]
         public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
-        public DateTime EffectiveDate { get; set; }
-        [Column("EXPIRY_DATE", TypeName = "datetime")]
-        public DateTime? ExpiryDate { get; set; }
+        [Column("START_DATE", TypeName = "datetime")]
+        public DateTime? StartDate { get; set; }
+        [Column("COST_ESTIMATE", TypeName = "money")]
+        public decimal? CostEstimate { get; set; }
+        [Column("COST_ESTIMATE_DATE", TypeName = "datetime")]
+        public DateTime? CostEstimateDate { get; set; }
+        [Column("OBJECTIVE")]
+        [StringLength(2000)]
+        public string Objective { get; set; }
+        [Column("SCOPE")]
+        [StringLength(2000)]
+        public string Scope { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -73,7 +82,10 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProject.WorkActivityCode))]
-        public virtual ICollection<PimsProject> PimsProjects { get; set; }
+        [ForeignKey(nameof(ParentProjectId))]
+        [InverseProperty(nameof(PimsProject.PimsProducts))]
+        public virtual PimsProject ParentProject { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionFile.Product))]
+        public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; }
     }
 }

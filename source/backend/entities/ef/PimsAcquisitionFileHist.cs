@@ -56,6 +56,9 @@ namespace Pims.Dal.Entities
         [Column("FILE_NUMBER")]
         [StringLength(18)]
         public string FileNumber { get; set; }
+        [Column("LEGACY_FILE_NUMBER")]
+        [StringLength(18)]
+        public string LegacyFileNumber { get; set; }
         [Column("FUNDING_OTHER")]
         [StringLength(200)]
         public string FundingOther { get; set; }
@@ -103,8 +106,9 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("LEGACY_FILE_NUMBER")]
-        [StringLength(18)]
-        public string LegacyFileNumber { get; set; }
+        [Column("PROJECT_ID")]
+        public long? ProjectId { get; set; }
+        [Column("PRODUCT_ID")]
+        public long? ProductId { get; set; }
     }
 }
