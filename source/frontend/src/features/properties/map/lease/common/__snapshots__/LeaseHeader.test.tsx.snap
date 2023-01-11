@@ -309,7 +309,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                by 
               <span
                 class="tooltip-icon"
-                data-testid="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
                 <span
@@ -337,7 +337,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                by 
               <span
                 class="tooltip-icon"
-                data-testid="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
                 <span

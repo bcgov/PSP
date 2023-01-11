@@ -16,14 +16,17 @@ import { ExternalResult } from 'models/api/ExternalResult';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
+import { Api_Storage_DocumentDetail } from './../../../models/api/DocumentStorage';
+
 /**
  * hook that retrieves document information.
  */
 export const useDocumentProvider = () => {
   const {
-    getDocumentMetada,
+    getDocumentMetadata,
     getDocumentTypeMetadata,
     getDocumentTypes,
+    getDocumentDetail,
     downloadDocumentFileApiCall,
     downloadDocumentFileLatestApiCall,
     updateDocumentMetadataApiCall,
@@ -39,8 +42,8 @@ export const useDocumentProvider = () => {
       >
     >({
       requestFunction: useCallback(
-        async (mayanDocumentId: number) => await getDocumentMetada(mayanDocumentId),
-        [getDocumentMetada],
+        async (mayanDocumentId: number) => await getDocumentMetadata(mayanDocumentId),
+        [getDocumentMetadata],
       ),
       requestName: 'retrieveDocumentMetadata',
       onSuccess: useCallback(() => toast.success('Document Metadata retrieved'), []),
@@ -119,6 +122,25 @@ export const useDocumentProvider = () => {
     }, []),
   });
 
+  // Provides functionality to view a document's details
+  const { execute: retrieveDocumentDetail, loading: retrieveDocumentDetailLoading } =
+    useApiRequestWrapper<
+      (
+        mayanDocumentId: number,
+      ) => Promise<AxiosResponse<ExternalResult<Api_Storage_DocumentDetail>, any>>
+    >({
+      requestFunction: useCallback(
+        async (mayanDocumentId: number) => await getDocumentDetail(mayanDocumentId),
+        [getDocumentDetail],
+      ),
+      requestName: 'DownloadDocumentDetail',
+      onError: useCallback((axiosError: AxiosError<IApiError>) => {
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response.data.error);
+        }
+      }, []),
+    });
+
   // Provides functionality for download a document file
   const { execute: downloadDocumentFile, loading: downloadDocumentFileLoading } =
     useApiRequestWrapper<
@@ -180,6 +202,8 @@ export const useDocumentProvider = () => {
     retrieveDocumentTypeMetadataLoading,
     retrieveDocumentTypes,
     retrieveDocumentTypesLoading,
+    retrieveDocumentDetail,
+    retrieveDocumentDetailLoading,
     updateDocument,
     updateDocumentLoading,
   };

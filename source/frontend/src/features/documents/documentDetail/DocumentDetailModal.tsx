@@ -1,15 +1,15 @@
 import GenericModal, { ModalSize } from 'components/common/GenericModal';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { Api_Document } from 'models/api/Document';
 import { FaEye } from 'react-icons/fa';
 
+import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailContainer } from './DocumentDetailContainer';
 
 export interface IDocumentDetailModalProps {
   display?: boolean;
   relationshipType: DocumentRelationshipType;
   setDisplay?: (display: boolean) => void;
-  pimsDocument?: Api_Document;
+  pimsDocument?: DocumentRow;
   onUpdateSuccess: () => void;
   onClose: () => void;
 }
@@ -17,6 +17,7 @@ export interface IDocumentDetailModalProps {
 export const DocumentDetailModal: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailModalProps>
 > = props => {
+  console.log(props.pimsDocument);
   return (
     <GenericModal
       display={props.display}

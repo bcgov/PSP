@@ -694,7 +694,7 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
             >
               <span
                 class="tooltip-icon"
-                data-testid="tooltip-icon"
+                data-testid="tooltip-icon-section-field-tooltip"
                 id="section-field-tooltip"
               >
                 <svg
@@ -774,7 +774,7 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
                 >
                   <span
                     class="tooltip-icon"
-                    data-testid="tooltip-icon"
+                    data-testid="tooltip-icon-section-field-tooltip"
                     id="section-field-tooltip"
                   >
                     <svg

@@ -22,7 +22,7 @@ exports[`FastCurrencyInput fast currency input renders correctly 1`] = `
         />
         <span
           class="tooltip-icon"
-          data-testid="tooltip-icon"
+          data-testid="tooltip-icon-currency"
           id="currency"
         >
           <svg

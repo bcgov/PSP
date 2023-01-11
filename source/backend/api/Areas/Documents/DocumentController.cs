@@ -143,6 +143,19 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
+        /// Retrieves the document detail for a document type.
+        /// </summary>
+        [HttpGet("storage/{mayanDocumentId}/detail")]
+        [HasPermission(Permissions.DocumentAdd)]
+        [ProducesResponseType(typeof(ExternalResult<DocumentDetail>), 200)]
+        [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        public async Task<IActionResult> GetDocumentStorageTypeDetail(long mayanDocumentId)
+        {
+            var result = await _documentService.GetStorageDocumentDetail(mayanDocumentId);
+            return new JsonResult(result);
+        }
+
+        /// <summary>
         /// Downloads the latest file for the corresponding document id.
         /// </summary>
         [HttpGet("storage/{mayanDocumentId}/download")]

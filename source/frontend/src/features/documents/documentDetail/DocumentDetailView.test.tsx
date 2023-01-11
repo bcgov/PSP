@@ -68,9 +68,13 @@ const mockDocument: ComposedDocument = {
 };
 describe('DocumentDetailView component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions) => {
+  const setup = (renderOptions: RenderOptions & { document?: ComposedDocument }) => {
     const utils = render(
-      <DocumentDetailView document={mockDocument} isLoading={false} setIsEditable={jest.fn()} />,
+      <DocumentDetailView
+        document={renderOptions.document ?? mockDocument}
+        isLoading={false}
+        setIsEditable={jest.fn()}
+      />,
       {
         ...renderOptions,
         store: {
@@ -117,5 +121,23 @@ describe('DocumentDetailView component', () => {
     const textarea = getAllByText('Tag1234')[0];
 
     expect(textarea).toBeVisible();
+  });
+
+  it('displays tooltip if file not available', async () => {
+    const { getAllByTestId } = setup({});
+    const downloadButtonTooltip = await getAllByTestId(
+      'tooltip-icon-document-not-available-tooltip',
+    );
+
+    expect(downloadButtonTooltip[0]).toBeVisible();
+  });
+
+  it('displays tooltip if file not available', async () => {
+    const { getAllByTestId } = setup({
+      document: { ...mockDocument, documentDetail: { file_latest: { id: 1 } } as any },
+    });
+    const downloadButtonTooltip = await getAllByTestId('document-download-button');
+
+    expect(downloadButtonTooltip[0]).toBeVisible();
   });
 });
