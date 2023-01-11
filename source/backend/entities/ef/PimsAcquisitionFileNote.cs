@@ -8,32 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_WORK_ACTIVITY_CODE")]
-    [Index(nameof(Code), Name = "WRKACT_CODE_IDX")]
-    public partial class PimsWorkActivityCode
+    [Table("PIMS_ACQUISITION_FILE_NOTE")]
+    [Index(nameof(AcquisitionFileId), Name = "ACQNOT_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(AcquisitionFileId), Name = "ACQNOT_ACQUISITION_FILE_ID_TUC", IsUnique = true)]
+    [Index(nameof(NoteId), Name = "ACQNOT_NOTE_ID_IDX")]
+    [Index(nameof(NoteId), Name = "ACQNOT_NOTE_ID_TUC", IsUnique = true)]
+    public partial class PimsAcquisitionFileNote
     {
-        public PimsWorkActivityCode()
-        {
-            PimsProjects = new HashSet<PimsProject>();
-        }
-
         [Key]
-        [Column("ID")]
-        public long Id { get; set; }
-        [Required]
-        [Column("CODE")]
-        [StringLength(20)]
-        public string Code { get; set; }
-        [Required]
-        [Column("DESCRIPTION")]
-        [StringLength(200)]
-        public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
-        public DateTime EffectiveDate { get; set; }
-        [Column("EXPIRY_DATE", TypeName = "datetime")]
-        public DateTime? ExpiryDate { get; set; }
+        [Column("ACQUISITION_FILE_NOTE_ID")]
+        public long AcquisitionFileNoteId { get; set; }
+        [Column("NOTE_ID")]
+        public long NoteId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -73,7 +63,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProject.WorkActivityCode))]
-        public virtual ICollection<PimsProject> PimsProjects { get; set; }
+        [ForeignKey(nameof(AcquisitionFileId))]
+        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionFileNote))]
+        public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [ForeignKey(nameof(NoteId))]
+        [InverseProperty(nameof(PimsNote.PimsAcquisitionFileNote))]
+        public virtual PimsNote Note { get; set; }
     }
 }

@@ -8,32 +8,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_WORK_ACTIVITY_CODE")]
-    [Index(nameof(Code), Name = "WRKACT_CODE_IDX")]
-    public partial class PimsWorkActivityCode
+    [Table("PIMS_PROJECT_HIST")]
+    [Index(nameof(ProjectHistId), nameof(EndDateHist), Name = "PIMS_PROJCT_H_UK", IsUnique = true)]
+    public partial class PimsProjectHist
     {
-        public PimsWorkActivityCode()
-        {
-            PimsProjects = new HashSet<PimsProject>();
-        }
-
         [Key]
+        [Column("_PROJECT_HIST_ID")]
+        public long ProjectHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
         [Column("ID")]
         public long Id { get; set; }
         [Required]
-        [Column("CODE")]
+        [Column("PROJECT_STATUS_TYPE_CODE")]
         [StringLength(20)]
-        public string Code { get; set; }
+        public string ProjectStatusTypeCode { get; set; }
+        [Column("BUSINESS_FUNCTION_CODE_ID")]
+        public long? BusinessFunctionCodeId { get; set; }
+        [Column("COST_TYPE_CODE_ID")]
+        public long? CostTypeCodeId { get; set; }
+        [Column("WORK_ACTIVITY_CODE_ID")]
+        public long? WorkActivityCodeId { get; set; }
+        [Column("REGION_CODE")]
+        public short? RegionCode { get; set; }
+        [Column("CODE")]
+        public int Code { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
         public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
-        public DateTime EffectiveDate { get; set; }
-        [Column("EXPIRY_DATE", TypeName = "datetime")]
-        public DateTime? ExpiryDate { get; set; }
+        [Column("NOTE")]
+        [StringLength(2000)]
+        public string Note { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -72,8 +80,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [InverseProperty(nameof(PimsProject.WorkActivityCode))]
-        public virtual ICollection<PimsProject> PimsProjects { get; set; }
     }
 }
