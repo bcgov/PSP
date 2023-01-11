@@ -12,12 +12,7 @@ import {
 } from 'interfaces';
 import { noop } from 'lodash';
 import React from 'react';
-import {
-  getAllByRole as getAllByRoleBase,
-  getByTestId,
-  renderAsync,
-  RenderOptions,
-} from 'utils/test-utils';
+import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { ITermsFormProps, TermsForm } from './TermsForm';
 
