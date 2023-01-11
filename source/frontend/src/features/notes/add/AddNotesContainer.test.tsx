@@ -116,7 +116,10 @@ describe('AddNotesContainer component', () => {
     formValues.parentId = BASIC_PROPS.parentId;
     formValues.note.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-    const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, type: NoteTypes.File });
+    const { getSaveButton, findByLabelText } = setup({
+      ...BASIC_PROPS,
+      type: NoteTypes.Acquisition_File,
+    });
 
     const textarea = await findByLabelText(/Type a note/i);
     userEvent.type(textarea, formValues.note.note);

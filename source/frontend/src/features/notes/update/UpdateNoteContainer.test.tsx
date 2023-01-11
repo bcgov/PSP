@@ -115,7 +115,10 @@ describe('UpdateNoteContainer component', () => {
     const formValues = NoteForm.fromApi(BASIC_PROPS.note as Api_Note);
     formValues.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-    const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, type: NoteTypes.File });
+    const { getSaveButton, findByLabelText } = setup({
+      ...BASIC_PROPS,
+      type: NoteTypes.Acquisition_File,
+    });
 
     const textarea = await findByLabelText(/Type a note/i);
     userEvent.clear(textarea);

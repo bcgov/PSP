@@ -1,8 +1,10 @@
 import { Claims } from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { FileTypes } from 'constants/fileTypes';
+import { NoteTypes } from 'constants/noteTypes';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
+import NoteListView from 'features/notes/list/NoteListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
@@ -63,6 +65,14 @@ export const AcquisitionFileTabs: React.FunctionComponent<
       ),
       key: FileTabNames.documents,
       name: 'Documents',
+    });
+  }
+
+  if (acquisitionFile?.id && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: <NoteListView type={NoteTypes.Acquisition_File} entityId={acquisitionFile?.id} />,
+      key: FileTabNames.notes,
+      name: 'Notes',
     });
   }
 

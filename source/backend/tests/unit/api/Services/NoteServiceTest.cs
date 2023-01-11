@@ -46,6 +46,28 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_AcquisitionFile_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
+            var service = helper.Create<NoteService>(user);
+
+            var mapper = helper.GetService<IMapper>();
+            var acquisitionFileNote = EntityHelper.CreateAcquisitionFileNote();
+            var noteModel = mapper.Map<EntityNoteModel>(acquisitionFileNote);
+
+            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFileNote>())).Returns(acquisitionFileNote);
+
+            // Act
+            var result = service.Add(NoteType.Acquisition_File, noteModel);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFileNote>()), Times.Once);
+        }
+
+        [Fact]
         public void Add_NoPermission()
         {
             // Arrange
@@ -126,7 +148,7 @@ namespace Pims.Api.Test.Services
             var mapper = helper.GetService<IMapper>();
             var notes = new[] { EntityHelper.CreateNote("Test Note 1"), EntityHelper.CreateNote("Test Note 2") };
 
-            var repository = helper.GetService<Mock<INoteRepository>>();
+            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.GetActivityNotes(It.IsAny<long>())).Returns(notes);
 
             // Act
@@ -146,7 +168,7 @@ namespace Pims.Api.Test.Services
 
             var mapper = helper.GetService<IMapper>();
 
-            var repository = helper.GetService<Mock<INoteRepository>>();
+            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.GetActivityNotes(It.IsAny<long>()));
 
             // Act
@@ -219,7 +241,7 @@ namespace Pims.Api.Test.Services
             var service = helper.Create<NoteService>(user);
             var mapper = helper.GetService<IMapper>();
 
-            var repository = helper.GetService<Mock<INoteRepository>>();
+            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.DeleteActivityNotes(It.IsAny<long>()));
 
             // Act
@@ -227,6 +249,25 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.DeleteActivityNotes(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteNote_AcquisitionFile_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteDelete);
+            var service = helper.Create<NoteService>(user);
+            var mapper = helper.GetService<IMapper>();
+
+            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.DeleteActivityNotes(It.IsAny<long>()));
+
+            // Act
+            service.DeleteNote(NoteType.Acquisition_File, 1);
+
+            // Assert
+            repository.Verify(x => x.DeleteAcquisitionFileNotes(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -238,7 +279,7 @@ namespace Pims.Api.Test.Services
             var service = helper.Create<NoteService>(user);
             var mapper = helper.GetService<IMapper>();
 
-            var repository = helper.GetService<Mock<INoteRepository>>();
+            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.DeleteActivityNotes(It.IsAny<long>()));
 
             // Act

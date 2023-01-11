@@ -65,6 +65,14 @@ namespace Pims.Api.Services
 
                     result = _mapper.Map<EntityNoteModel>(createdEntity);
                     break;
+                case NoteType.Acquisition_File:
+                    var pimsAcqEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
+
+                    var createdAcqEntity = _entityNoteRepository.Add<PimsAcquisitionFileNote>(pimsAcqEntity);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdAcqEntity);
+                    break;
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }
@@ -103,14 +111,18 @@ namespace Pims.Api.Services
             switch (type)
             {
                 case NoteType.Activity:
-                    _noteRepository.DeleteActivityNotes(noteId);
+                    _entityNoteRepository.DeleteActivityNotes(noteId);
                     if (commitTransaction)
                     {
                         _entityNoteRepository.CommitTransaction();
                     }
                     break;
-                case NoteType.File:
-                    // Write code to delete the note from FileNotes table
+                case NoteType.Acquisition_File:
+                    _entityNoteRepository.DeleteAcquisitionFileNotes(noteId);
+                    if (commitTransaction)
+                    {
+                        _entityNoteRepository.CommitTransaction();
+                    }
                     break;
                 default:
                     break;
@@ -131,8 +143,9 @@ namespace Pims.Api.Services
             switch (type)
             {
                 case NoteType.Activity:
-                    return _noteRepository.GetActivityNotes(entityId);
-                case NoteType.File:
+                    return _entityNoteRepository.GetActivityNotes(entityId);
+                case NoteType.Acquisition_File:
+                    return _entityNoteRepository.GetAcquisitionFileNotes(entityId);
                 default:
                     return new List<PimsNote>();
             }
