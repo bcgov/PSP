@@ -1,6 +1,6 @@
 import { Button } from 'components/common/buttons/Button';
 import { TableSort } from 'components/Table/TableSort';
-import Claims from 'constants/claims';
+import { Roles } from 'constants/roles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 import React, { useCallback, useEffect, useMemo } from 'react';
@@ -18,7 +18,7 @@ import * as Styled from './styles';
  */
 export const FinancialCodeListView: React.FC = () => {
   const history = useHistory();
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasRole } = useKeycloakWrapper();
   const {
     getFinancialCodes: {
       execute: getFinancialCodes,
@@ -59,8 +59,8 @@ export const FinancialCodeListView: React.FC = () => {
             <Col>{/* <AcquisitionFilter filter={filter} setFilter={changeFilter} /> */}</Col>
           </Row>
         </Styled.PageToolbar>
-        {hasClaim(Claims.ADMIN_FINANCIAL_CODES) && (
-          <StyledAddButton onClick={() => history.push('/admin/financial-codes/new')}>
+        {hasRole(Roles.SYSTEM_ADMINISTRATOR) && (
+          <StyledAddButton onClick={() => history.push('/admin/financial-code/new')}>
             <FaPlus />
             &nbsp;Create financial code
           </StyledAddButton>

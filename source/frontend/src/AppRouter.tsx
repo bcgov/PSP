@@ -1,6 +1,7 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Claims } from 'constants/claims';
+import { Roles } from 'constants/roles';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
 import { AdminAccessRequestPage } from 'features/admin/access-request/AdminAccessRequestPage';
@@ -142,10 +143,10 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
           ></AppRoute>
           <AppRoute
             protected
-            path="/admin/financial-codes"
+            path="/admin/financial-code/list"
             customComponent={FinancialCodesListView}
             layout={AuthLayout}
-            claim={Claims.ADMIN_FINANCIAL_CODES}
+            role={Roles.SYSTEM_ADMINISTRATOR}
             title={getTitle('Financial Codes')}
           ></AppRoute>
           <AppRoute

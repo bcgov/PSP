@@ -1,6 +1,6 @@
 import { ColumnWithProps, DateCell } from 'components/Table';
-import { Claims } from 'constants/claims';
 import { FinancialCodeTypes, formatFinancialCodeType } from 'constants/financialCodeTypes';
+import { Roles } from 'constants/roles';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 import { Link } from 'react-router-dom';
@@ -17,15 +17,16 @@ export const columns: ColumnWithProps<Api_FinancialCode>[] = [
     width: 10,
     maxWidth: 20,
     Cell: (props: CellProps<Api_FinancialCode>) => {
-      const { hasClaim } = useKeycloakWrapper();
-      if (hasClaim(Claims.ADMIN_FINANCIAL_CODES)) {
+      const { hasRole } = useKeycloakWrapper();
+      const financialCode = props.row.original;
+      if (hasRole(Roles.SYSTEM_ADMINISTRATOR)) {
         return (
-          <Link to={`/admin/financial-codes/${props.row.original.id}`}>
-            {props.row.original.id}
+          <Link to={`/admin/financial-code/${financialCode.type}/${financialCode.id}`}>
+            {financialCode.code}
           </Link>
         );
       }
-      return stringToFragment(props.row.original.id);
+      return stringToFragment(financialCode.code);
     },
   },
   {
