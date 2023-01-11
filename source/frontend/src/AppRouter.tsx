@@ -49,7 +49,7 @@ const AcquisitionListView = lazy(() =>
   componentLoader(import('features/acquisition/list/AcquisitionListView'), 2),
 );
 const FinancialCodesListView = lazy(() =>
-  componentLoader(import('features/admin/financial-codes/list/FinancialCodesListView'), 2),
+  componentLoader(import('features/admin/financial-codes/list/FinancialCodeListView'), 2),
 );
 
 const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
@@ -142,7 +142,7 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
           ></AppRoute>
           <AppRoute
             protected
-            path="/admin/financial_codes"
+            path="/admin/financial-codes"
             customComponent={FinancialCodesListView}
             layout={AuthLayout}
             claim={Claims.ADMIN_FINANCIAL_CODES}
