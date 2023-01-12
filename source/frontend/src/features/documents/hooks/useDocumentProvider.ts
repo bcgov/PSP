@@ -8,6 +8,7 @@ import {
   Api_DocumentUpdateResponse,
 } from 'models/api/Document';
 import {
+  Api_Storage_DocumentDetail,
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
   DocumentQueryResult,
@@ -15,8 +16,6 @@ import {
 import { ExternalResult } from 'models/api/ExternalResult';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
-
-import { Api_Storage_DocumentDetail } from './../../../models/api/DocumentStorage';
 
 /**
  * hook that retrieves document information.

@@ -17,7 +17,6 @@ export interface IDocumentDetailModalProps {
 export const DocumentDetailModal: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailModalProps>
 > = props => {
-  console.log(props.pimsDocument);
   return (
     <GenericModal
       display={props.display}

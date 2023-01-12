@@ -132,7 +132,7 @@ describe('DocumentDetailView component', () => {
     expect(downloadButtonTooltip[0]).toBeVisible();
   });
 
-  it('displays tooltip if file not available', async () => {
+  it('displays tooltip if file available', async () => {
     const { getAllByTestId } = setup({
       document: { ...mockDocument, documentDetail: { file_latest: { id: 1 } } as any },
     });
