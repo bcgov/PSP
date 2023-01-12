@@ -128,7 +128,7 @@ describe('UpdateNoteContainer component', () => {
     await act(() => userEvent.click(getSaveButton()));
 
     expect(onSaveClick).toBeCalled();
-    expect(mockAxios.history.put[0].url).toBe('/notes/file/1');
+    expect(mockAxios.history.put[0].url).toBe('/notes/acquisition_file/1');
     expect(onSuccess).toBeCalled();
   });
 });

@@ -131,6 +131,6 @@ describe('AddNotesContainer component', () => {
 
     expect(closeModal).toBeCalled();
     expect(onSuccess).toBeCalled();
-    expect(mockAxios.history.post[0].url).toBe('/notes/file');
+    expect(mockAxios.history.post[0].url).toBe('/notes/acquisition_file');
   });
 });
