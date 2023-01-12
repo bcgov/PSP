@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { LinkButton } from 'components/common/buttons';
+import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import fileDownload from 'js-file-download';
 import { FaDownload } from 'react-icons/fa';
@@ -10,6 +11,7 @@ import { useDocumentProvider } from './hooks/useDocumentProvider';
 export interface IDownloadDocumentButtonProps {
   mayanDocumentId: number;
   mayanFileId?: number;
+  isFileAvailable?: boolean;
 }
 
 const DownloadDocumentButton: React.FunctionComponent<
@@ -50,6 +52,16 @@ const DownloadDocumentButton: React.FunctionComponent<
       fileDownload(response.data, fileName);
     }
   };
+
+  if (!props.isFileAvailable && !provider.downloadDocumentFileLoading) {
+    return (
+      <TooltipIcon
+        toolTipId="document-not-available-tooltip"
+        data-testid="document-not-available-tooltip"
+        toolTip="This document is still being processed and is not yet available to view or download. Please try again in a few minutes. If you continue to see this error, please contact the system administrator."
+      ></TooltipIcon>
+    );
+  }
 
   return (
     <div>

@@ -95,7 +95,7 @@ exports[`AcquisitionHeader component renders as expected when no data is provide
              by 
             <span
               class="tooltip-icon"
-              data-testid="tooltip-icon"
+              data-testid="tooltip-icon-userNameTooltip"
               id="userNameTooltip"
             >
               <span
@@ -121,7 +121,7 @@ exports[`AcquisitionHeader component renders as expected when no data is provide
              by 
             <span
               class="tooltip-icon"
-              data-testid="tooltip-icon"
+              data-testid="tooltip-icon-userNameTooltip"
               id="userNameTooltip"
             >
               <span

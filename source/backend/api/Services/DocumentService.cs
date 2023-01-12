@@ -240,6 +240,15 @@ namespace Pims.Api.Services
             return result;
         }
 
+        public async Task<ExternalResult<DocumentDetail>> GetStorageDocumentDetail(long mayanDocumentId)
+        {
+            this.Logger.LogInformation("Retrieving storage document");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
+            ExternalResult<DocumentDetail> result = await documentStorageRepository.GetDocumentAsync(mayanDocumentId);
+            return result;
+        }
+
         public async Task<ExternalResult<FileDownload>> DownloadFileAsync(long mayanDocumentId, long mayanFileId)
         {
             this.Logger.LogInformation("Downloading storage document");

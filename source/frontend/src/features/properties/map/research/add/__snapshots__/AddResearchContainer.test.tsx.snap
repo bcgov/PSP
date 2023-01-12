@@ -1111,7 +1111,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                 Provide a descriptive name for this land
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-property-selector-tooltip"
                   id="property-selector-tooltip"
                 >
                   <svg

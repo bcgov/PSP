@@ -261,7 +261,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                 >
                   <span
                     class="tooltip-icon"
-                    data-testid="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
                     <span
@@ -493,7 +493,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                 >
                   <span
                     class="tooltip-icon"
-                    data-testid="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
                     <span
@@ -725,7 +725,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                 >
                   <span
                     class="tooltip-icon"
-                    data-testid="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
                     <span

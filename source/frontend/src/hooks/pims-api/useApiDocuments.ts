@@ -16,6 +16,7 @@ import {
 import { ExternalResult } from 'models/api/ExternalResult';
 import React from 'react';
 
+import { Api_Storage_DocumentDetail } from './../../models/api/DocumentStorage';
 import { useAxiosApi } from '.';
 
 /**
@@ -43,9 +44,14 @@ export const useApiDocuments = () => {
         documentRelationship: Api_DocumentRelationship,
       ) => api.delete<boolean>(`/documents/${relationshipType}`, { data: documentRelationship }),
 
-      getDocumentMetada: (mayanDocumentId: number) =>
+      getDocumentMetadata: (mayanDocumentId: number) =>
         api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentMetadata>>>(
           `/documents/storage/${mayanDocumentId}/metadata`,
+        ),
+
+      getDocumentDetail: (mayanDocumentId: number) =>
+        api.get<ExternalResult<Api_Storage_DocumentDetail>>(
+          `/documents/storage/${mayanDocumentId}/detail`,
         ),
 
       downloadDocumentFileApiCall: (mayanDocumentId: number, mayanFileId: number) =>
