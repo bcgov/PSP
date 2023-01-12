@@ -10,6 +10,10 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { useFinancialCodeRepository } from '../hooks/useFinancialCodeRepository';
+import FinancialCodeFilter, {
+  defaultFinancialCodeFilter,
+  IFinancialCodeFilter,
+} from './FinancialCodeFilter/FinancialCodeFilter';
 import { FinancialCodeResults } from './FinancialCodeResults/FinancialCodeResults';
 import * as Styled from './styles';
 
@@ -39,6 +43,7 @@ export const FinancialCodeListView: React.FC = () => {
 
   // Sorting and filtering for this list view is performed client-side
   const [sort, setSort] = React.useState<TableSort<Api_FinancialCode>>({});
+  const [filter, setFilter] = React.useState<IFinancialCodeFilter>(defaultFinancialCodeFilter);
 
   const sortedFilteredFinancialCodes = useMemo(() => {
     if (financialCodeResults && financialCodeResults?.length > 0) {
@@ -56,7 +61,9 @@ export const FinancialCodeListView: React.FC = () => {
         <Styled.PageHeader>Financial Codes</Styled.PageHeader>
         <Styled.PageToolbar>
           <Row>
-            <Col>{/* <AcquisitionFilter filter={filter} setFilter={changeFilter} /> */}</Col>
+            <Col>
+              <FinancialCodeFilter filter={filter} setFilter={setFilter} />
+            </Col>
           </Row>
         </Styled.PageToolbar>
         {hasRole(Roles.SYSTEM_ADMINISTRATOR) && (
