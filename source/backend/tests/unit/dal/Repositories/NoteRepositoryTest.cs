@@ -104,7 +104,7 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
-        #region Get All Notes for Activity
+        #region Get All Notes for Entity
         [Fact]
         public void GetActivityNotes_Success()
         {
@@ -118,7 +118,7 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
 
-            var repository = helper.CreateRepository<NoteRepository>(user);
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
             var result = repository.GetActivityNotes(1);
@@ -130,6 +130,30 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
+        public void GetAcquisitionFileNotes_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+
+            var note1 = EntityHelper.CreateNote("Test Note 1", id: 1);
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            var activity = EntityHelper.CreateAcquisitionFileNote(acqFile, note1);
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var result = repository.GetAcquisitionFileNotes(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsNote>>();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
         public void GetActivityNotes_NotFound()
         {
             // Arrange
@@ -137,7 +161,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<NoteRepository>(user);
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
             var result = repository.GetActivityNotes(1);
