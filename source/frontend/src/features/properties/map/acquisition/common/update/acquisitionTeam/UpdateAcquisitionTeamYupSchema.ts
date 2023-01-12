@@ -1,6 +1,13 @@
 import * as Yup from 'yup';
 
 export const UpdateAcquisitionTeamYupSchema = Yup.object().shape({
+  fundingTypeOtherDescription: Yup.string().when('fundingTypeCode', {
+    is: (fundingTypeCode: string) => fundingTypeCode && fundingTypeCode === 'OTHER',
+    then: Yup.string()
+      .required('Other Description required')
+      .max(200, 'Other Description must be at most 200 characters'),
+    otherwise: Yup.string().nullable(),
+  }),
   team: Yup.array().of(
     Yup.object().shape(
       {
