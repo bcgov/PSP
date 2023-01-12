@@ -79,7 +79,6 @@ export const DocumentDetailContainer: React.FunctionComponent<
 
   useEffect(() => {
     const fetch = async () => {
-      console.log(props.pimsDocument.mayanDocumentId);
       if (props.pimsDocument.mayanDocumentId !== undefined) {
         const metadataPromise = retrieveDocumentMetadata(props.pimsDocument.mayanDocumentId);
         const detailPromise = retrieveDocumentDetail(props.pimsDocument.mayanDocumentId);
