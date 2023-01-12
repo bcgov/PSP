@@ -1,4 +1,4 @@
-import { FastDatePicker, Input, Select } from 'components/common/form/';
+import { AsyncTypeahead, FastDatePicker, Input, Select } from 'components/common/form/';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -9,6 +9,7 @@ import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
+import { useProjectTypeahead } from '../hooks/useProjectTypeahead';
 import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
 import { AcquisitionProperties } from './AcquisitionProperties';
 import { AcquisitionForm } from './models';
@@ -35,6 +36,7 @@ export const AddAcquisitionForm = React.forwardRef<
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
+  const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
   const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] =
     React.useState<boolean>(false);
   const isMinistryRegionDiff = (values: AcquisitionForm): boolean => {
@@ -46,6 +48,8 @@ export const AddAcquisitionForm = React.forwardRef<
       false
     );
   };
+
+  const { handleTypeaheadSearch, isTypeaheadLoading, matchedProjects } = useProjectTypeahead();
 
   const handleSubmit = (values: AcquisitionForm, formikHelpers: FormikHelpers<AcquisitionForm>) => {
     if (isMinistryRegionDiff(values)) {
@@ -66,6 +70,39 @@ export const AddAcquisitionForm = React.forwardRef<
       {formikProps => (
         <>
           <Container>
+            <Section header="Project">
+              <SectionField label="Ministry project">
+                <AsyncTypeahead
+                  field="project"
+                  labelKey="text"
+                  isLoading={isTypeaheadLoading}
+                  options={matchedProjects}
+                  onSearch={handleTypeaheadSearch}
+                />
+              </SectionField>
+              <SectionField label="Product">
+                <Select field="product" options={[]} placeholder="Select..." />
+              </SectionField>
+              <SectionField label="Funding">
+                <Select
+                  field="fundingTypeCode"
+                  options={acquisitionFundingTypes}
+                  placeholder="Select..."
+                  onChange={() => {
+                    let fundingTypeCode = formikProps.values?.fundingTypeCode;
+                    if (!!fundingTypeCode && fundingTypeCode !== 'OTHER') {
+                      formikProps.setFieldValue('fundingTypeOtherDescription', '');
+                    }
+                  }}
+                />
+              </SectionField>
+              {formikProps.values?.fundingTypeCode === 'OTHER' && (
+                <SectionField label="Other funding">
+                  <LargeInput field="fundingTypeOtherDescription" />
+                </SectionField>
+              )}
+            </Section>
+
             <Section header="Schedule">
               <SectionField label="Assigned date">
                 <FastDatePicker field="assignedDate" formikProps={formikProps} />

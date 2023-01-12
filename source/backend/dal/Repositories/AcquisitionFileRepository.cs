@@ -76,6 +76,7 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.AcqPhysFileStatusTypeCodeNavigation)
                 .Include(r => r.AcquisitionTypeCodeNavigation)
                 .Include(r => r.RegionCodeNavigation)
+                .Include(r => r.AcquisitionFundingTypeCodeNavigation)
                 .Include(r => r.PimsPropertyAcquisitionFiles)
                     .ThenInclude(rp => rp.Property)
                     .ThenInclude(p => p.RegionCodeNavigation)

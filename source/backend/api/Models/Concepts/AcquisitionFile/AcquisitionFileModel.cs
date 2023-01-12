@@ -43,6 +43,26 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<string> AcquisitionTypeCode { get; set; }
 
         /// <summary>
+        /// get/set - The acquisition product.
+        /// </summary>
+        public ProductModel Product { get; set; }
+
+        /// <summary>
+        /// get/set - The funding type.
+        /// </summary>
+        public TypeModel<string> FundingTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - Description of funding type if Other.
+        /// </summary>
+        public string FundingOther { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition project.
+        /// </summary>
+        public ProjectModel Project { get; set; }
+
+        /// <summary>
         /// get/set - The MOTI region that this acquisition file falls under.
         /// </summary>
         public TypeModel<short> RegionCode { get; set; }

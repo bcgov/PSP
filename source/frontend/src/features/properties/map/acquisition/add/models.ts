@@ -1,3 +1,4 @@
+import { IAutocompletePrediction } from 'interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFilePerson,
@@ -23,6 +24,10 @@ export class AcquisitionForm implements WithAcquisitionTeam {
   properties: PropertyForm[] = [];
   team: AcquisitionTeamFormModel[] = [];
 
+  project?: IAutocompletePrediction;
+  fundingTypeCode?: string;
+  fundingTypeOtherDescription: string = '';
+
   toApi(): Api_AcquisitionFile {
     return {
       id: this.id,
@@ -34,15 +39,18 @@ export class AcquisitionForm implements WithAcquisitionTeam {
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
+      project: { id: this.project?.id },
+      fundingTypeCode: toTypeCode(this.fundingTypeCode),
+      fundingOther: this.fundingTypeOtherDescription,
       // ACQ file properties
-      fileProperties: this.properties.map<Api_AcquisitionFileProperty>(x => {
+      fileProperties: this.properties.map<Api_AcquisitionFileProperty>(ap => {
         return {
-          id: x.id,
-          propertyName: x.name,
-          isDisabled: x.isDisabled,
-          displayOrder: x.displayOrder,
-          rowVersion: x.rowVersion,
-          property: x.toApi(),
+          id: ap.id,
+          propertyName: ap.name,
+          isDisabled: ap.isDisabled,
+          displayOrder: ap.displayOrder,
+          rowVersion: ap.rowVersion,
+          property: ap.toApi(),
           acquisitionFile: { id: this.id },
         };
       }),
@@ -65,6 +73,12 @@ export class AcquisitionForm implements WithAcquisitionTeam {
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     // ACQ file properties
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+    newForm.fundingTypeCode = model.fundingTypeCode?.id;
+    newForm.fundingTypeOtherDescription = model.fundingOther || '';
+    newForm.project =
+      model.project !== undefined
+        ? { id: model.project?.id || 0, text: model.project?.description || '' }
+        : undefined;
 
     return newForm;
   }
