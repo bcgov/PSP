@@ -444,12 +444,6 @@ exports[`Research List View matches snapshot 1`] = `
                               </option>
                               <option
                                 class="option"
-                                value="ANY"
-                              >
-                                Any status
-                              </option>
-                              <option
-                                class="option"
                                 value="ARCHIVED"
                               >
                                 Archived

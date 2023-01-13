@@ -4,6 +4,7 @@ import Api_TypeCode from 'models/api/TypeCode';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Person } from './Person';
+import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
 
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
@@ -19,6 +20,11 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   // MOTI region
   regionCode?: Api_TypeCode<number>;
   acquisitionTeam?: Api_AcquisitionFilePerson[];
+
+  project?: Api_Project;
+  product?: Api_Product;
+  fundingTypeCode?: Api_TypeCode<string>;
+  fundingOther?: string;
 }
 
 export interface Api_AcquisitionFileProperty

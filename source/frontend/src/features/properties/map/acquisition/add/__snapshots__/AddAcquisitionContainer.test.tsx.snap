@@ -75,7 +75,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c19.btn {
+  .c20.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -105,49 +105,49 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c19.btn:hover {
+.c20.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c19.btn:focus {
+.c20.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c19.btn.btn-primary {
+.c20.btn.btn-primary {
   border: none;
 }
 
-.c19.btn.btn-secondary {
+.c20.btn.btn-secondary {
   background: none;
 }
 
-.c19.btn.btn-info {
+.c20.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c19.btn.btn-info:hover,
-.c19.btn.btn-info:active,
-.c19.btn.btn-info:focus {
+.c20.btn.btn-info:hover,
+.c20.btn.btn-info:active,
+.c20.btn.btn-info:focus {
   background: none;
 }
 
-.c19.btn.btn-light {
+.c20.btn.btn-light {
   border: none;
 }
 
-.c19.btn.btn-dark {
+.c20.btn.btn-dark {
   border: none;
 }
 
-.c19.btn.btn-link {
+.c20.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -168,9 +168,9 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c19.btn.btn-link:hover,
-.c19.btn.btn-link:active,
-.c19.btn.btn-link:focus {
+.c20.btn.btn-link:hover,
+.c20.btn.btn-link:active,
+.c20.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -179,14 +179,14 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c19.btn.btn-link:disabled,
-.c19.btn.btn-link.disabled {
+.c20.btn.btn-link:disabled,
+.c20.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c19.btn:disabled,
-.c19.btn:disabled:hover {
+.c20.btn:disabled,
+.c20.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -197,73 +197,77 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c19.Button .Button__icon {
+.c20.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c19.Button--icon-only:focus {
+.c20.Button--icon-only:focus {
   outline: none;
 }
 
-.c19.Button--icon-only .Button__icon {
+.c20.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8.c8.form-control.is-valid {
+.c8 button.close {
+  font-size: 2.4rem;
+}
+
+.c9.c9.form-control.is-valid {
   background-image: none;
 }
 
-.c8.c8.form-control.is-invalid {
+.c9.c9.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c17 {
+.c18 {
   padding-right: 0;
 }
 
-.c17 .form-control {
+.c18 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c18:not(:first-child) {
+.c19:not(:first-child) {
   padding-left: 0;
 }
 
-.c18:not(:first-child) .form-control {
+.c19:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c20 {
+.c21 {
   font-size: 1.4rem;
 }
 
-.c11 {
+.c12 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c11 .nav-tabs {
+.c12 .nav-tabs {
   height: 2.4rem;
 }
 
-.c11 .nav-item {
+.c12 .nav-item {
   min-width: 7rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c11 .nav-item:hover {
+.c12 .nav-item:hover {
   border-color: transparent;
 }
 
-.c11 .nav-item.active {
+.c12 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c12 {
+.c13 {
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   border-bottom: solid 0.2rem;
@@ -310,13 +314,13 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c14:hover {
+.c15:hover {
   cursor: pointer;
 }
 
-.c13.c13.c13 input,
-.c13.c13.c13 select,
-.c13.c13.c13 textarea {
+.c14.c14.c14 input,
+.c14.c14.c14 select,
+.c14.c14.c14 textarea {
   background: none;
   border: none;
   resize: none;
@@ -326,55 +330,55 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c13.c13.c13 .form-label {
+.c14.c14.c14 .form-label {
   font-weight: bold;
 }
 
-.c15 {
+.c16 {
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c9 {
+.c10 {
   height: 100%;
 }
 
-.c9 .nav-tabs {
+.c10 .nav-tabs {
   height: 2.4rem;
 }
 
-.c9 .tab-content {
+.c10 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.4rem);
   overflow-y: auto;
 }
 
-.c9 .tab-content .tab-pane {
+.c10 .tab-content .tab-pane {
   position: relative;
 }
 
-.c10 {
+.c11 {
   height: auto;
 }
 
-.c10.tab-content {
+.c11.tab-content {
   height: auto;
 }
 
-.c16 {
+.c17 {
   border-radius: 0.5rem;
 }
 
-.c16 .idir-input-group .input-group-prepend select {
+.c17 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c16 .idir-input-group input {
+.c17 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
 
-.c21 {
+.c22 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -382,7 +386,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c22 input.form-control {
+.c23 input.form-control {
   min-width: 50rem;
   max-width: 100%;
 }
@@ -448,6 +452,230 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                 <div
                   class="col"
                 >
+                  Project
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Ministry project:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                >
+                  <div
+                    class="c8 form-group"
+                  >
+                    <div
+                      class="rbt"
+                      style="outline: none; position: relative;"
+                      tabindex="-1"
+                    >
+                      <div
+                        style="display: flex; flex: 1; height: 100%; position: relative;"
+                      >
+                        <input
+                          aria-autocomplete="both"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          autocomplete="off"
+                          class="rbt-input-main form-control rbt-input"
+                          id="typeahead-project"
+                          name="typeahead-project"
+                          role="combobox"
+                          type="text"
+                          value=""
+                        />
+                        <input
+                          aria-hidden="true"
+                          class="rbt-input-hint"
+                          readonly=""
+                          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                          tabindex="-1"
+                          value=""
+                        />
+                      </div>
+                      <div
+                        class="rbt-aux"
+                      >
+                        <svg
+                          color="#bcbec5"
+                          fill="currentColor"
+                          height="2.5rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          style="color: rgb(188, 190, 197);"
+                          viewBox="0 0 512 512"
+                          width="2.5rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Product:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-product"
+                      name="product"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Funding:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-fundingTypeCode"
+                      name="fundingTypeCode"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                      <option
+                        class="option"
+                        value="BCTFA"
+                      >
+                        BCTFA
+                      </option>
+                      <option
+                        class="option"
+                        value="CAPITAL"
+                      >
+                        Capital Program
+                      </option>
+                      <option
+                        class="option"
+                        value="DFAA"
+                      >
+                        DFAA (Disaster Financial Assistance Arrangement)
+                      </option>
+                      <option
+                        class="option"
+                        value="EVERGRN"
+                      >
+                        Evergreen
+                      </option>
+                      <option
+                        class="option"
+                        value="FEDERAL"
+                      >
+                        Federal
+                      </option>
+                      <option
+                        class="option"
+                        value="MAJORPR"
+                      >
+                        Major Projects
+                      </option>
+                      <option
+                        class="option"
+                        value="MOTIDST"
+                      >
+                        MoTI District
+                      </option>
+                      <option
+                        class="option"
+                        value="MOTIREG"
+                      >
+                        MoTI Region
+                      </option>
+                      <option
+                        class="option"
+                        value="OTHER"
+                      >
+                        Other
+                      </option>
+                      <option
+                        class="option"
+                        value="REHAB"
+                      >
+                        Rehab & Maintenance
+                      </option>
+                      <option
+                        class="option"
+                        value="TICORP"
+                      >
+                        TI Corp
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c5"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
                   Schedule
                 </div>
                 <div
@@ -484,7 +712,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                       >
                         <input
                           autocomplete="off"
-                          class="c8 form-control date-picker"
+                          class="c9 form-control date-picker"
                           id="datepicker-assignedDate"
                           name="assignedDate"
                           placeholder="--/--/----"
@@ -522,7 +750,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                       >
                         <input
                           autocomplete="off"
-                          class="c8 form-control date-picker"
+                          class="c9 form-control date-picker"
                           id="datepicker-deliveryDate"
                           name="deliveryDate"
                           placeholder="--/--/----"
@@ -570,10 +798,10 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c9 c10"
+                    class="c10 c11"
                   >
                     <nav
-                      class="c11 nav nav-tabs"
+                      class="c12 nav nav-tabs"
                       role="tablist"
                     >
                       <a
@@ -610,12 +838,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                             class="collapse show"
                           >
                             <h3
-                              class="c12"
+                              class="c13"
                             >
                               Select a property
                             </h3>
                             <div
-                              class="c13 row"
+                              class="c14 row"
                             >
                               <div
                                 class="col-md-4"
@@ -624,7 +852,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                   class="d-flex flex-column align-items-center"
                                 >
                                   <svg
-                                    class="c14"
+                                    class="c15"
                                     height="97"
                                     title="select properties on the map"
                                     width="97"
@@ -648,7 +876,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                   class="row"
                                 >
                                   <div
-                                    class="c15 col"
+                                    class="c16 col"
                                   >
                                     Selected property attributes
                                   </div>
@@ -766,12 +994,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                             class="collapse show"
                           >
                             <h3
-                              class="c12"
+                              class="c13"
                             >
                               Search for a property
                             </h3>
                             <form
-                              class="c16 p-3"
+                              class="c17 p-3"
                               novalidate=""
                             >
                               <div
@@ -784,7 +1012,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                     class="flex-nowrap input-group row"
                                   >
                                     <div
-                                      class="c17 col-auto"
+                                      class="c18 col-auto"
                                     >
                                       <div
                                         class="input-group-prepend"
@@ -832,7 +1060,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                       </div>
                                     </div>
                                     <div
-                                      class="c18 col"
+                                      class="c19 col"
                                     >
                                       <div
                                         class="input form-group"
@@ -859,7 +1087,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                       class="pr-0 col"
                                     >
                                       <button
-                                        class="c19 Button Button--icon-only primary btn btn-primary"
+                                        class="c20 Button Button--icon-only primary btn btn-primary"
                                         data-testid="search"
                                         id="search-button"
                                         title="search"
@@ -888,7 +1116,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                       class="pl-0 col"
                                     >
                                       <button
-                                        class="c19 Button Button--icon-only btn btn-info"
+                                        class="c20 Button Button--icon-only btn btn-info"
                                         data-testid="reset-button"
                                         id="reset-button"
                                         title="reset-button"
@@ -1036,7 +1264,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                 class="ml-auto align-self-center col-auto"
                               >
                                 <p
-                                  class="c20"
+                                  class="c21"
                                 >
                                   0 selected
                                 </p>
@@ -1075,7 +1303,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="collapse show"
                 >
                   <div
-                    class="c21 no-gutters row"
+                    class="c22 no-gutters row"
                   >
                     <div
                       class="col-md-3"
@@ -1153,7 +1381,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="c22 input form-group"
+                    class="c23 input form-group"
                   >
                     <input
                       class="form-control"
@@ -1348,7 +1576,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
               class="collapse show"
             >
               <button
-                class="c19 Button btn btn-link"
+                class="c20 Button btn btn-link"
                 data-testid="add-team-member"
                 type="button"
               >
