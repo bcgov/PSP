@@ -1273,7 +1273,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                 PPH status last updated by 
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-userNameTooltip"
                   id="userNameTooltip"
                 >
                   <span

@@ -7,9 +7,10 @@ import { DocumentTypeName } from 'constants/documentType';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
-import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
+import { Api_Document, Api_DocumentType } from 'models/api/Document';
 import React, { useEffect, useState } from 'react';
 
+import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -20,11 +21,11 @@ export interface IDocumentListViewProps {
   parentId: number;
   relationshipType: DocumentRelationshipType;
   isLoading: boolean;
-  documentResults: Api_DocumentRelationship[];
+  documentResults: DocumentRow[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
   addButtonText?: string;
-  onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
+  onDelete: (relationship: DocumentRow) => Promise<boolean | undefined>;
   onSuccess: () => void;
   disableAdd?: boolean;
 }
@@ -75,12 +76,9 @@ export const DocumentListView: React.FunctionComponent<
 
   const sortedFilteredDocuments = React.useMemo(() => {
     if (documentResults?.length > 0) {
-      let documentItems: Api_Document[] = [
-        ...documentResults.map(x => x.document).filter((x): x is Api_Document => !!x),
-      ];
-
+      let documentItems: DocumentRow[] = [];
       if (filters) {
-        documentItems = documentItems.filter(document => {
+        documentItems = documentResults.filter(document => {
           const matchesDocumentType =
             !filters.documentTypeId ||
             document?.documentType?.id === Number(filters.documentTypeId);
@@ -131,9 +129,7 @@ export const DocumentListView: React.FunctionComponent<
 
   const onDeleteConfirm = async () => {
     if (selectedDocument) {
-      const documentRelationship = documentResults.find(
-        x => x.document?.id === selectedDocument.id,
-      );
+      const documentRelationship = documentResults.find(x => x?.id === selectedDocument.id);
 
       if (documentRelationship !== undefined) {
         let result = await props.onDelete(documentRelationship);

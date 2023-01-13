@@ -177,7 +177,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                by 
               <span
                 class="tooltip-icon"
-                data-testid="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
                 <span
@@ -205,7 +205,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                by 
               <span
                 class="tooltip-icon"
-                data-testid="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
                 <span
@@ -622,7 +622,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                               >
                                 <span
                                   class="tooltip-icon"
-                                  data-testid="tooltip-icon"
+                                  data-testid="tooltip-icon-section-field-tooltip"
                                   id="section-field-tooltip"
                                 >
                                   <svg
