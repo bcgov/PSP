@@ -47,9 +47,20 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
 
             var researchFile = _researchFileRepository.GetById(id);
-            ReprojectPropertyLocationsToWgs84(researchFile);
 
             return researchFile;
+        }
+
+        public IEnumerable<PimsPropertyResearchFile> GetProperties(long researchFileId)
+        {
+            _logger.LogInformation("Getting research file properties for file with id {id}", researchFileId);
+            _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            var propertyResearchFiles = _researchFilePropertyRepository.GetByResearchFileId(researchFileId);
+            ReprojectPropertyLocationsToWgs84(propertyResearchFiles);
+
+            return propertyResearchFiles;
         }
 
         public PimsResearchFile Add(PimsResearchFile researchFile)
@@ -242,6 +253,19 @@ namespace Pims.Api.Services
             }
 
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
+            {
+                if (researchProperty.Property.Location != null)
+                {
+                    var oldCoords = researchProperty.Property.Location.Coordinate;
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
+                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                }
+            }
+        }
+
+        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyResearchFile> propertyResearchFiles)
+        {
+            foreach (var researchProperty in propertyResearchFiles)
             {
                 if (researchProperty.Property.Location != null)
                 {

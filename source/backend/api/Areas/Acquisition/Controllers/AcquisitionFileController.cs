@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -149,6 +151,22 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
 
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+        }
+
+        /// <summary>
+        /// Get the acquisition file properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/properties")]
+        [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFilePropertyModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileProperties(long id)
+        {
+            var acquisitionFileProperties = _acquisitionService.GetProperties(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFilePropertyModel>>(acquisitionFileProperties));
         }
 
         #endregion
