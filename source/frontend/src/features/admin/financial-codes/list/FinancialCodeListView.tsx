@@ -2,7 +2,9 @@ import { Button } from 'components/common/buttons/Button';
 import { TableSort } from 'components/Table/TableSort';
 import { Roles } from 'constants/roles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import orderBy from 'lodash/orderBy';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
+import moment from 'moment';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
@@ -47,13 +49,41 @@ export const FinancialCodeListView: React.FC = () => {
 
   const sortedFilteredFinancialCodes = useMemo(() => {
     if (financialCodeResults && financialCodeResults?.length > 0) {
-      let codeItems = [...financialCodeResults];
-      // TODO: ...
-      return codeItems;
+      let records = [...financialCodeResults];
+      if (filter) {
+        records = records.filter(record => {
+          // Apply all the filters
+          if (filter.financialCodeType && record.type !== filter.financialCodeType) {
+            return false;
+          }
+          if (
+            filter.codeValueOrDescription &&
+            !record.code?.toLowerCase().includes(filter.codeValueOrDescription.toLowerCase()) &&
+            !record.description?.toLowerCase().includes(filter.codeValueOrDescription.toLowerCase())
+          ) {
+            return false;
+          }
+          if (filter.showExpiredCodes === false && isExpiredCode(record)) {
+            return false;
+          }
+          // Finally return true because record has satisfied all conditions
+          return true;
+        });
+      }
+
+      if (sort) {
+        const sortFields = Object.keys(sort);
+        if (sortFields?.length > 0) {
+          const sortBy = sortFields[0] as keyof Api_FinancialCode;
+          const sortDirection = sort[sortBy];
+          return orderBy(records, sortBy, sortDirection);
+        }
+      }
+      return records;
     } else {
       return [];
     }
-  }, [financialCodeResults]);
+  }, [filter, financialCodeResults, sort]);
 
   return (
     <Styled.ListPage>
@@ -88,5 +118,14 @@ const StyledAddButton = styled(Button)`
     background-color: ${props => props.theme.css.completedColor};
   }
 `;
+
+function isExpiredCode(value: Api_FinancialCode): boolean {
+  if (value.expiryDate !== undefined) {
+    const now = moment();
+    return moment(value.expiryDate).isBefore(now, 'day');
+  }
+  // no expiry date means the code never expires
+  return false;
+}
 
 export default FinancialCodeListView;
