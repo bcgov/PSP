@@ -257,7 +257,7 @@ exports[`UpdateNoteFormModal component renders as expected 1`] = `
                    
                   <span
                     class="tooltip-icon"
-                    data-testid="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
                     <span
@@ -288,7 +288,7 @@ exports[`UpdateNoteFormModal component renders as expected 1`] = `
                    
                   <span
                     class="tooltip-icon"
-                    data-testid="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
                     <span

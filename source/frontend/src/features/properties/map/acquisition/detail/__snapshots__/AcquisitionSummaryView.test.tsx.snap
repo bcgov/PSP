@@ -162,7 +162,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
               >
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
                   id="section-field-tooltip"
                 >
                   <svg
