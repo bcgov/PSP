@@ -315,6 +315,12 @@ exports[`Activity List View renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  value="FILEDOC"
+                >
+                  File Document
+                </option>
+                <option
+                  class="option"
                   value="GENERAL"
                 >
                   General
@@ -373,7 +379,7 @@ exports[`Activity List View renders as expected 1`] = `
                   class="option"
                   value="COMPLETE"
                 >
-                  Complete
+                  Completed
                 </option>
                 <option
                   class="option"

@@ -1,4 +1,3 @@
-import { Api_CodeType } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
@@ -9,7 +8,7 @@ export interface Api_Project extends Api_ConcurrentVersion {
   businessFunctionCode?: any; // TODO: Match new code types
   costTypeCode?: any; // TODO: Match new code types
   workActivityCode?: any; // TODO: Match new code types
-  regionCode?: Api_CodeType;
+  regionCode?: number;
   code?: number;
   description?: string;
   note?: string;

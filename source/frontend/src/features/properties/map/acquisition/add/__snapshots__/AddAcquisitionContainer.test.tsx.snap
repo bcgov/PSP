@@ -592,6 +592,72 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                       >
                         Select...
                       </option>
+                      <option
+                        class="option"
+                        value="BCTFA"
+                      >
+                        BCTFA
+                      </option>
+                      <option
+                        class="option"
+                        value="CAPITAL"
+                      >
+                        Capital Program
+                      </option>
+                      <option
+                        class="option"
+                        value="DFAA"
+                      >
+                        DFAA (Disaster Financial Assistance Arrangement)
+                      </option>
+                      <option
+                        class="option"
+                        value="EVERGRN"
+                      >
+                        Evergreen
+                      </option>
+                      <option
+                        class="option"
+                        value="FEDERAL"
+                      >
+                        Federal
+                      </option>
+                      <option
+                        class="option"
+                        value="MAJORPR"
+                      >
+                        Major Projects
+                      </option>
+                      <option
+                        class="option"
+                        value="MOTIDST"
+                      >
+                        MoTI District
+                      </option>
+                      <option
+                        class="option"
+                        value="MOTIREG"
+                      >
+                        MoTI Region
+                      </option>
+                      <option
+                        class="option"
+                        value="OTHER"
+                      >
+                        Other
+                      </option>
+                      <option
+                        class="option"
+                        value="REHAB"
+                      >
+                        Rehab & Maintenance
+                      </option>
+                      <option
+                        class="option"
+                        value="TICORP"
+                      >
+                        TI Corp
+                      </option>
                     </select>
                   </div>
                 </div>

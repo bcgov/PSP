@@ -12,7 +12,7 @@ export const useApiProjects = () => {
 
   return React.useMemo(
     () => ({
-      getProjectPredictions: (query: string, top: number = 5) =>
+      searchProject: (query: string, top: number = 5) =>
         api.get<Api_Project[]>(`/projects/search=${query}&top=${top}`),
     }),
     [api],

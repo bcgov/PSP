@@ -29,12 +29,12 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Retrieves the activities with the specified research file id.
+        /// Retrieves the matching projects to the given filter.
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="maxResult"></param>
         /// <returns></returns>
-        public IList<PimsProject> GetProjectPrediction(string filter, int maxResult)
+        public IList<PimsProject> SearchProjects(string filter, int maxResult)
         {
             return this.Context.PimsProjects.AsNoTracking()
                 .Where(o => EF.Functions.Like(o.Description, $"%{filter}%"))

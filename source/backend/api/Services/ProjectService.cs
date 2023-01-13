@@ -28,13 +28,14 @@ namespace Pims.Api.Services
             _projectRepository = projectRepository;
         }
 
-        public IList<PimsProject> GetProjectPredictions(string filter, int maxResult)
+        public IList<PimsProject> SearchProjects(string filter, int maxResult)
         {
             _logger.LogInformation("Getting all projects");
+            // TODO: Fix ones Project permissions are availiable
             /*this.User.ThrowIfNotAuthorized(Permissions.ActivityView);
             this.User.ThrowIfNotAuthorized(Permissions.ResearchFileView);*/
 
-            var projects = _projectRepository.GetProjectPrediction(filter, maxResult);
+            var projects = _projectRepository.SearchProjects(filter, maxResult);
 
             return projects;
         }
