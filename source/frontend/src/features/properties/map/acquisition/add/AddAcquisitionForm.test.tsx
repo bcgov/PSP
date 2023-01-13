@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
+import { mockProjects } from 'mocks/mockProjects';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
@@ -81,6 +82,8 @@ describe('AddAcquisitionForm component', () => {
 
   it('displays existing values if they exist', async () => {
     initialValues.fileName = 'foo bar baz';
+    const apiProject = mockProjects()[0];
+    initialValues.project = { id: apiProject.id || 0, text: apiProject.description || '' };
     const { getNameTextbox } = setup({ initialValues });
     const input = getNameTextbox();
 

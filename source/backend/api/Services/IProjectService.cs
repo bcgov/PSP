@@ -5,6 +5,6 @@ namespace Pims.Api.Services
 {
     public interface IProjectService
     {
-        IList<PimsProject> GetProjectPredictions(string filter, int maxResult);
+        IList<PimsProject> SearchProjects(string filter, int maxResult);
     }
 }

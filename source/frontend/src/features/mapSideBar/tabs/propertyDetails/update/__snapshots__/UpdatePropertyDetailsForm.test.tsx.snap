@@ -1182,7 +1182,17 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       <li
                         class="option  highlightOption highlight  "
                       >
+                        Adjacent Land
+                      </li>
+                      <li
+                        class="option    "
+                      >
                         Closed Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Highway/Road
                       </li>
                       <li
                         class="option    "

@@ -37,7 +37,10 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
-      project: this.project?.id !== undefined ? { id: this.project?.id } : undefined,
+      project:
+        this.project?.id !== undefined && this.project?.id !== 0
+          ? { id: this.project?.id }
+          : undefined,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       acquisitionTeam: this.team

@@ -5,6 +5,6 @@ namespace Pims.Dal.Repositories
 {
     public interface IProjectRepository : IRepository<PimsProject>
     {
-        IList<PimsProject> GetProjectPrediction(string filter, int maxResult);
+        IList<PimsProject> SearchProjects(string filter, int maxResult);
     }
 }

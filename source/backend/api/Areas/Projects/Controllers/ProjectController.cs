@@ -43,25 +43,25 @@ namespace Pims.Api.Areas.Projects.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Retrieves autocomplete predictions based on the supplied autocomplete request.
+        /// Retrieves a matching set of projects for the given input filter.
         /// </summary>
         /// <param name="input"></param>
         /// <param name="top"></param>
         /// <returns>An array of contacts matching the filter.</returns>
         [HttpGet("search={input}&top={top}")]
-        //[HasPermission(Permissions.ContactView)]
+        //[HasPermission(Permissions.ContactView)] // TODO: Add correct permision
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<ProjectModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GetProjectPredictions(string input, int top)
+        public IActionResult SearchProjects(string input, int top)
         {
             if (string.IsNullOrEmpty(input))
             {
                 throw new BadRequestException("Autocomplete request must contain valid values.");
             }
 
-            var predictions = _projectService.GetProjectPredictions(input, top);
+            var predictions = _projectService.SearchProjects(input, top);
 
             return new JsonResult(_mapper.Map<IList<ProjectModel>>(predictions));
         }
