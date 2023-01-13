@@ -88,9 +88,11 @@ export const AddAcquisitionForm = React.forwardRef<
                   field="fundingTypeCode"
                   options={acquisitionFundingTypes}
                   placeholder="Select..."
-                  onChange={() => {
-                    let fundingTypeCode = formikProps.values?.fundingTypeCode;
-                    if (!!fundingTypeCode && fundingTypeCode !== 'OTHER') {
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    const selectedValue = [].slice
+                      .call(e.target.selectedOptions)
+                      .map((option: HTMLOptionElement & number) => option.value)[0];
+                    if (!!selectedValue && selectedValue !== 'OTHER') {
                       formikProps.setFieldValue('fundingTypeOtherDescription', '');
                     }
                   }}
