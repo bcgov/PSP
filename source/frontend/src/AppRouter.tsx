@@ -8,6 +8,7 @@ import { ContactListPage } from 'features/contacts';
 import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
+import ProjectListView from 'features/projects/list/ProjectListView';
 import { ResearchListView } from 'features/research/list/ResearchListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
@@ -226,6 +227,14 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.ACQUISITION_VIEW}
             title={getTitle('View Acquisition Files')}
+          />
+          <AppRoute
+            protected
+            path="/project/list"
+            customComponent={ProjectListView}
+            layout={AuthLayout}
+            //claim={Claims.PROJECT_VIEW}
+            title={getTitle('View Projects')}
           />
           <AppRoute
             protected

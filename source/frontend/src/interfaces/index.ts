@@ -14,6 +14,7 @@ export * from './ILeaseTerm';
 export * from './IOrganization';
 export * from './IPagedItems';
 export * from './IPerson';
+export * from './IProjectSearchResults';
 export * from './IProperty';
 export * from './IRole';
 export * from './ITenant';
