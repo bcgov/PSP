@@ -39,7 +39,7 @@ export class AcquisitionForm implements WithAcquisitionTeam {
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
-      project: { id: this.project?.id },
+      project: this.project?.id !== undefined ? { id: this.project?.id } : undefined,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       // ACQ file properties

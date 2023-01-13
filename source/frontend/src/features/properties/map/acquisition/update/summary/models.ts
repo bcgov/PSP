@@ -1,3 +1,4 @@
+import { IAutocompletePrediction } from 'interfaces';
 import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
@@ -19,6 +20,10 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   region?: string;
   team: AcquisitionTeamFormModel[] = [];
 
+  project?: IAutocompletePrediction;
+  fundingTypeCode?: string;
+  fundingTypeOtherDescription: string = '';
+
   toApi(): Api_AcquisitionFile {
     return {
       id: this.id,
@@ -32,6 +37,9 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
+      project: this.project?.id !== undefined ? { id: this.project?.id } : undefined,
+      fundingTypeCode: toTypeCode(this.fundingTypeCode),
+      fundingOther: this.fundingTypeOtherDescription,
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi()),
@@ -52,6 +60,12 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     newForm.team = model.acquisitionTeam?.map(x => AcquisitionTeamFormModel.fromApi(x)) || [];
+    newForm.fundingTypeCode = model.fundingTypeCode?.id;
+    newForm.fundingTypeOtherDescription = model.fundingOther || '';
+    newForm.project =
+      model.project !== undefined
+        ? { id: model.project?.id || 0, text: model.project?.description || '' }
+        : undefined;
 
     return newForm;
   }
