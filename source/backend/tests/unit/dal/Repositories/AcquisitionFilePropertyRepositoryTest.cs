@@ -34,7 +34,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Id, Property = new PimsProperty() { RegionCodeNavigation = EntityHelper.CreateRegion(1,"test"), Address = EntityHelper.CreateAddress(1), DistrictCodeNavigation = EntityHelper.CreateDistrict(1, "test") } };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Id, Property = EntityHelper.CreateProperty(1) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyAcquisitionFile);
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
