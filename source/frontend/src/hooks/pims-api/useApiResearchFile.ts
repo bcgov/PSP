@@ -34,7 +34,7 @@ export const useApiResearchFile = () => {
           propertyResearchFile,
         ),
       getResearchFileProperties: (researchFileId: number) =>
-        api.get<Api_ResearchFileProperty[]>(`/researchfiles/${researchFileId}/properties`),
+        api.get<Api_ResearchFileProperty[]>(`/researchFiles/${researchFileId}/properties`),
     }),
     [api],
   );

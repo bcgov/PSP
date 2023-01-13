@@ -74,6 +74,9 @@ describe('AcquisitionContainer component', () => {
 
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
+    mockAxios
+      .onGet(new RegExp('acquisitionfiles/1/properties'))
+      .reply(200, mockAcquisitionFileResponse().fileProperties);
     mockAxios.onGet(new RegExp('acquisitionfiles/*')).reply(200, mockAcquisitionFileResponse());
     mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
   });
