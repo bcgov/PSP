@@ -99,5 +99,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsAcqFlPersonProfileType> GetAcqFilePersonProfileTypes();
 
         IEnumerable<PimsTenantType> GetTenantTypes();
+
+        IEnumerable<PimsProjectStatusType> GetProjectStatusTypes();
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -293,6 +292,11 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsTenantType> GetTenantTypes()
         {
             return this.Context.PimsTenantTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsProjectStatusType> GetProjectStatusTypes()
+        {
+            return this.Context.PimsProjectStatusTypes.AsNoTracking().ToArray();
         }
         #endregion
     }

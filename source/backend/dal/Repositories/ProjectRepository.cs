@@ -52,12 +52,12 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNumber))
             {
-                query = query.Where(x => EF.Functions.Like(x.Code.ToString(), filter.ProjectNumber));
+                query = query.Where(x => EF.Functions.Like(x.Code.ToString(), $"%{filter.ProjectNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectName))
             {
-                query = query.Where(x => EF.Functions.Like(x.Description, filter.ProjectName));
+                query = query.Where(x => EF.Functions.Like(x.Description, $"%{filter.ProjectName}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectStatusCode))

@@ -41,9 +41,6 @@ namespace Pims.Api.Areas.Projects
         [SwaggerOperation(Tags = new[] { "project" })]
         public async Task<IActionResult> GetProject([FromQuery] ProjectFilterModel filter)
         {
-            var uri = new Uri(this.Request.GetDisplayUrl());
-            var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
-
             var projects = await _projectService.GetPage((ProjectFilter)filter);
             return Ok(_mapper.Map<Api.Models.PageModel<ProjectSearchModel>>(projects));
         }
