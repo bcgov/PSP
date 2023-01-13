@@ -1,4 +1,4 @@
-import { ColumnWithProps, renderTypeCode, Table } from 'components/Table';
+import { ColumnWithProps, Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
 import { IProjectSearchResult } from 'interfaces';
 import { useCallback } from 'react';
@@ -9,47 +9,49 @@ import { prettyFormatDate } from 'utils';
 const columns: ColumnWithProps<IProjectSearchResult>[] = [
   {
     Header: 'Project #',
-    accessor: 'projectNumber',
+    accessor: 'code',
     align: 'center',
     clickable: false,
     sortable: false,
     width: 5,
     maxWidth: 20,
     Cell: (props: CellProps<IProjectSearchResult>) => (
-      <Link to={`/mapview/sidebar/project/${props.row.original.id}`}>{props.row.original.id}</Link>
+      <Link to={`/mapview/sidebar/project/${props.row.original.id}`}>
+        {props.row.original.code}
+      </Link>
     ),
   },
   {
     Header: 'Project name',
-    accessor: 'projectName',
+    accessor: 'description',
     align: 'left',
     clickable: false,
     sortable: false,
     width: 45,
     maxWidth: 45,
     Cell: (props: CellProps<IProjectSearchResult>) => (
-      <Link to={`/mapview/sidebar/project/${props.row.original.id}`}>{props.row.original.id}</Link>
+      <Link to={`/mapview/sidebar/project/${props.row.original.id}`}>
+        {props.row.original.description}
+      </Link>
     ),
   },
   {
     Header: 'Region',
-    accessor: 'regionType',
+    accessor: 'region',
     align: 'left',
     clickable: false,
     sortable: false,
     width: 20,
     maxWidth: 20,
-    Cell: renderTypeCode,
   },
   {
     Header: 'Status',
-    accessor: 'statusType',
+    accessor: 'status',
     align: 'left',
     clickable: false,
     sortable: false,
     width: 20,
     maxWidth: 20,
-    Cell: renderTypeCode,
   },
   {
     Header: 'Last updated by',

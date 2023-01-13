@@ -1,6 +1,8 @@
 export interface IProjectFilter {
-  regionType: string;
-  projectStatusType: string;
+  projectRegionCode: string;
+  projectStatusCode: string;
+  projectName: string;
+  projectNumber: string;
 }
 
 export interface IProjectSearchBy {

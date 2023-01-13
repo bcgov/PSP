@@ -1,18 +1,10 @@
-import { StyledIconButton } from 'components/common/buttons';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import { useApiProjects } from 'hooks/pims-api/useApiProjects';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
 import { IProjectSearchResult } from 'interfaces';
-import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
-import { generateMultiSortCriteria } from 'utils';
-import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 
 import { IProjectFilter } from '../interfaces';
 import { defaultFilter, ProjectFilter } from './ProjectFilter/ProjectFilter';
@@ -23,8 +15,7 @@ import * as Styled from './styles';
  * Page that displays Project files information.
  */
 export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
-  const history = useHistory();
-  const { getProjects } = useApiProjects();
+  const { searchProjects } = useApiProjects();
 
   const {
     results,
@@ -40,7 +31,7 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<IProjectSearchResult, IProjectFilter>(defaultFilter, getProjects);
+  } = useSearch<IProjectSearchResult, IProjectFilter>(defaultFilter, searchProjects);
 
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(

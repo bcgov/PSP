@@ -1,10 +1,9 @@
 import { ResetButton, SearchButton } from 'components/common/buttons';
 import { Input, Select } from 'components/common/form';
-import { SelectInput } from 'components/common/List/SelectInput';
 import { FilterBoxForm } from 'components/common/styles';
-import TooltipIcon from 'components/common/TooltipIcon';
-import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES, REGION_TYPES } from 'constants/API';
-import { IProjectFilter, IProjectSearchBy } from 'features/projects/interfaces';
+import { PROJECT_STATUS_TYPES, REGION_TYPES } from 'constants/API';
+import { ProjectStatusTypes } from 'constants/projectStatusTypes';
+import { IProjectFilter } from 'features/projects/interfaces';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React, { useEffect, useState } from 'react';
@@ -18,8 +17,10 @@ export interface IProjectFilterProps {
 }
 
 export const defaultFilter: IProjectFilter = {
-  regionType: '',
-  projectStatusType: 'ACTIVE',
+  projectName: '',
+  projectNumber: '',
+  projectRegionCode: '',
+  projectStatusCode: ProjectStatusTypes.Active,
 };
 
 /**
@@ -29,7 +30,14 @@ export const defaultFilter: IProjectFilter = {
 export const ProjectFilter: React.FunctionComponent<
   React.PropsWithChildren<IProjectFilterProps>
 > = ({ filter, setFilter }) => {
+  const [selectedStatus, setInitialSelectedStatus] = useState<string>(ProjectStatusTypes.Active);
+
+  useEffect(() => {
+    setInitialSelectedStatus(ProjectStatusTypes.Active);
+  }, []);
+
   const onSearchSubmit = (values: IProjectFilter, { setSubmitting }: any) => {
+    console.log(values);
     setFilter(values);
     setSubmitting(false);
   };
@@ -40,8 +48,9 @@ export const ProjectFilter: React.FunctionComponent<
 
   const lookupCodes = useLookupCodeHelpers();
   const regionOptions = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
-
-  // const leaseStatusOptions = lookupCodes.getByType(LEASE_STATUS_TYPES);
+  const projectStatusOptions = lookupCodes
+    .getByType(PROJECT_STATUS_TYPES)
+    .map(c => mapLookupCode(c));
 
   return (
     <Formik enableReinitialize initialValues={filter ?? defaultFilter} onSubmit={onSearchSubmit}>
@@ -69,10 +78,18 @@ export const ProjectFilter: React.FunctionComponent<
             <Col xl="4">
               <Row>
                 <Col xl="4">
-                  <Select field="regionType" options={regionOptions} placeholder="All Regions" />
+                  <Select
+                    field="projectRegionCode"
+                    options={regionOptions}
+                    placeholder="All Regions"
+                  />
                 </Col>
                 <Col xl="4">
-                  <Select field="projectStatusType" options={regionOptions} />
+                  <Select
+                    field="projectStatusCode"
+                    options={projectStatusOptions}
+                    value={selectedStatus}
+                  />
                 </Col>
               </Row>
             </Col>
