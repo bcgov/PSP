@@ -92,7 +92,10 @@ export const AcquisitionContainer: React.FunctionComponent<
     }
   }, [acquisitionFile, fetchAcquisitionFile]);
 
-  useEffect(() => setFileLoading(loadingAcquisitionFile), [loadingAcquisitionFile, setFileLoading]);
+  useEffect(
+    () => setFileLoading(loadingAcquisitionFile || loadingAcquisitionFileProperties),
+    [loadingAcquisitionFile, setFileLoading, loadingAcquisitionFileProperties],
+  );
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
@@ -156,7 +159,7 @@ export const AcquisitionContainer: React.FunctionComponent<
   const menuItems = acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
-  if (loadingAcquisitionFile) {
+  if (loadingAcquisitionFile || loadingAcquisitionFileProperties) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
