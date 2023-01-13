@@ -9,7 +9,6 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
