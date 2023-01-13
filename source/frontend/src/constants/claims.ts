@@ -40,6 +40,10 @@ export enum Claims {
   ACTIVITY_ADD = 'activity-add',
   ACTIVITY_DELETE = 'activity-delete',
   GENERATE_DOCUMENTS = 'generate-documents',
+  PROJECT_EDIT = 'project-edit',
+  PROJECT_VIEW = 'project-view',
+  PROJECT_ADD = 'project-add',
+  PROJECT_DELETE = 'project-delete',
 }
 
 export default Claims;
