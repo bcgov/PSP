@@ -123,7 +123,6 @@ namespace Pims.Api.Controllers
             var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAcqFilePersonProfileTypes());
             var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetTenantTypes());
 
-
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
             codes.AddRange(classificationTypes);

@@ -5,10 +5,12 @@ import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { AcquisitionTray } from './AcquisitionTray';
 import { ContactTray } from './ContactTray';
+import { ProjectTray } from './ProjectTray';
 import * as Styled from './styles';
 
 export enum SidebarContextType {
   ADMIN = 'admin',
+  PROJECT = 'project',
   LEASE = 'lease',
   RESEARCH = 'research',
   CONTACT = 'contact',
@@ -36,6 +38,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [SidebarContextType.RESEARCH, <ResearchTray onLinkClick={() => setShow(false)} />],
     [SidebarContextType.CONTACT, <ContactTray onLinkClick={() => setShow(false)} />],
     [SidebarContextType.ACQUISITION, <AcquisitionTray onLinkClick={() => setShow(false)} />],
+    [SidebarContextType.PROJECT, <ProjectTray onLinkClick={() => setShow(false)} />],
   ]);
 
   useEffect(() => {

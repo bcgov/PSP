@@ -396,6 +396,7 @@ namespace Pims.Api
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
             services.AddScoped<IDocumentGenerationService, DocumentGenerationService>();
+            services.AddScoped<IProjectService, ProjectService>();
         }
         #endregion
     }

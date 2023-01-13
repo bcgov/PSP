@@ -11,6 +11,7 @@ import { NavIcon } from 'components/layout';
 import { Claims, Roles } from 'constants/index';
 import noop from 'lodash/noop';
 import { useContext, useState } from 'react';
+import { FaBriefcase } from 'react-icons/fa';
 import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
@@ -33,6 +34,12 @@ export const SideNavBar = () => {
           onClick={() => history.push('/mapview')}
           icon={<MdHome size={24} />}
           text="Home"
+          showText={expanded}
+        />
+        <NavIcon
+          onClick={() => setTrayPage(SidebarContextType.PROJECT)}
+          icon={<FaBriefcase size={24} />}
+          text="Project"
           showText={expanded}
         />
         <NavIcon
