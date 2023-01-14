@@ -4,8 +4,7 @@ import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import React, { useEffect, useMemo } from 'react';
-import { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -67,9 +66,9 @@ export const AddAcquisitionContainer: React.FC<
         { autoClose: 15000 },
       );
     }
-    formikRef.current?.resetForm();
     await search();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
+    formikRef.current?.resetForm({ values: AcquisitionForm.fromApi(acqFile) });
   };
 
   const helper = useAddAcquisitionFormManagement({ onSuccess, initialForm });

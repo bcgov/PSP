@@ -8,7 +8,7 @@ import { useAcquisitionProvider } from './useAcquisitionProvider';
 
 export interface IUseAddAcquisitionFormManagementProps {
   /** Optional - callback to execute after acquisition file has been added to the datastore */
-  onSuccess?: (acquisitionFile: Api_AcquisitionFile) => void;
+  onSuccess?: (acquisitionFile: Api_AcquisitionFile) => Promise<void>;
   initialForm?: AcquisitionForm;
 }
 
@@ -24,14 +24,12 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
     async (values: AcquisitionForm, formikHelpers: FormikHelpers<AcquisitionForm>) => {
       const acquisitionFile = values.toApi();
       const response = await addAcquisitionFile.execute(acquisitionFile);
-      formikHelpers?.setSubmitting(false);
-
       if (!!response?.id) {
-        formikHelpers?.resetForm();
         if (typeof onSuccess === 'function') {
-          onSuccess(response);
+          await onSuccess(response);
         }
       }
+      formikHelpers?.setSubmitting(false);
     },
     [addAcquisitionFile, onSuccess],
   );

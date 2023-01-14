@@ -79,13 +79,11 @@ describe('useAddAcquisitionFormManagement hook', () => {
 
     const formikHelpers: Partial<FormikHelpers<AcquisitionForm>> = {
       setSubmitting: jest.fn(),
-      resetForm: jest.fn(),
     };
 
     await act(() => handleSubmit(formValues, formikHelpers as any));
 
     expect(formikHelpers.setSubmitting).toBeCalledWith(false);
-    expect(formikHelpers.resetForm).toBeCalled();
     expect(onSuccess).toBeCalled();
   });
 });
