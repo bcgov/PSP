@@ -3,7 +3,7 @@ import { Claims } from 'constants/index';
 import { useApiProjects } from 'hooks/pims-api/useApiProjects';
 import { IProjectSearchResult } from 'interfaces';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
 
 import { IProjectFilter } from '..';
 import { ProjectListView } from './ProjectListView';
