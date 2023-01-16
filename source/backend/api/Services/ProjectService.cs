@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -11,17 +12,37 @@ using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
-    public class ProjectService : IProjectService
+    public class ProjectService : BaseService, IProjectService
     {
-        private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IProjectRepository _projectRepository;
+        private readonly ClaimsPrincipal _user;
 
-        public ProjectService(ClaimsPrincipal user, ILogger<ProjectService> logger, IProjectRepository projectRepository)
+        /// <summary>
+        /// Creates a new instance of a ProjectService, and initializes it with the specified arguments.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="logger"></param>
+        /// <param name="projectRepository"></param>
+        public ProjectService(
+            ClaimsPrincipal user,
+            ILogger<ProjectService> logger,
+            IProjectRepository projectRepository)
+            : base(user, logger)
         {
-            _user = user;
             _logger = logger;
             _projectRepository = projectRepository;
+            _user = user;
+        }
+
+        public IList<PimsProject> SearchProjects(string filter, int maxResult)
+        {
+            _logger.LogInformation("Getting all projects");
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            var projects = _projectRepository.SearchProjects(filter, maxResult);
+
+            return projects;
         }
 
         public Task<Paged<PimsProject>> GetPage(ProjectFilter filter)

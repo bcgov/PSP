@@ -1182,7 +1182,17 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       <li
                         class="option  highlightOption highlight  "
                       >
+                        Adjacent Land
+                      </li>
+                      <li
+                        class="option    "
+                      >
                         Closed Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Highway/Road
                       </li>
                       <li
                         class="option    "
@@ -1251,7 +1261,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               PPH status last updated by 
               <span
                 class="tooltip-icon"
-                data-testid="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
                 <span

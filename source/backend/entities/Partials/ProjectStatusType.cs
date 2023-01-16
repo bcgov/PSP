@@ -3,12 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// ProjectStatusType class, provides an entity for the datamodel to manage a list of project status types.
+    /// PimsProjectStatusType class, provides an entity for the datamodel to manage project status types.
     /// </summary>
     public partial class PimsProjectStatusType : ITypeEntity<string>
     {
         /// <summary>
-        /// Create a new instance of class.
+        /// get/set - Primary key to identify property service file type.
+        /// </summary>
+        [NotMapped]
+        public string Id { get => ProjectStatusTypeCode; set => ProjectStatusTypeCode = value; }
+
+        /// <summary>
+        /// Create a new instance of a PimsProjectStatusType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsProjectStatusType(string id)
@@ -16,9 +22,6 @@ namespace Pims.Dal.Entities
         {
             Id = id;
         }
-
-        [NotMapped]
-        public string Id { get => ProjectStatusTypeCode; set => ProjectStatusTypeCode = value; }
 
         public static class PimsProjectStatusTypes
         {

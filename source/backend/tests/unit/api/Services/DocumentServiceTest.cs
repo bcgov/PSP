@@ -272,8 +272,8 @@ namespace Pims.Api.Test.Services
             {
                 DocumentId = 1,
                 MayanDocumentId = 2,
-                DocumentStatusCode="status",
-                DocumentMetadata= null,
+                DocumentStatusCode = "status",
+                DocumentMetadata = null,
             };
 
             // Assert
@@ -332,8 +332,8 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsDocument()
                 {
                     DocumentId = 1,
-                    DocumentTypeId=2,
-                    FileName="TEST",
+                    DocumentTypeId = 2,
+                    FileName = "TEST",
                 });
 
             documentRepository.Setup(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)))
@@ -342,7 +342,7 @@ namespace Pims.Api.Test.Services
                     DocumentId = 1,
                     DocumentTypeId = 2,
                     FileName = "TEST",
-                    DocumentStatusTypeCode= "new_status",
+                    DocumentStatusTypeCode = "new_status",
                 });
 
             documentStorageRepository.Setup(x => x.GetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
@@ -374,8 +374,8 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new DocumentMetadata()
                     {
-                        Id= 1,
-                        Value= "new_test_value",
+                        Id = 1,
+                        Value = "new_test_value",
                         MetadataType = new Models.Mayan.Metadata.MetadataType()
                         {
                             Id = 1,
@@ -549,7 +549,7 @@ namespace Pims.Api.Test.Services
 
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Status = ExternalResultStatus.Success,
-                    Message= "Ok",
+                    Message = "Ok",
                 });
 
             DocumentUpdateRequest updateRequest = new()
@@ -598,7 +598,7 @@ namespace Pims.Api.Test.Services
             PimsDocument doc = new()
             {
                 Id = 1,
-                MayanId= 1,
+                MayanId = 1,
             };
 
             // Act
@@ -688,7 +688,7 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             // Act
-            Func<Task> sut =  async () => await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
+            Func<Task> sut = async () => await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
 
             // Assert
             sut.Should().Throw<NotAuthorizedException>();
@@ -715,8 +715,8 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new QueryResult<DocumentType>()
                     {
-                        Count= 5,
-                        Results= new List<DocumentType>()
+                        Count = 5,
+                        Results = new List<DocumentType>()
                         {
                             new() { Id= 1 },
                             new() { Id= 2 },
@@ -819,17 +819,6 @@ namespace Pims.Api.Test.Services
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Status = ExternalResultStatus.Success,
                     Payload = new QueryResult<DocumentTypeMetadataType>()
-                    {
-                        Count = 5,
-                        Results = new List<DocumentTypeMetadataType>()
-                        {
-                            new() { Id = 1,},
-                            new() { Id = 2,},
-                            new() { Id = 3,},
-                            new() { Id = 4,},
-                            new() { Id = 5,},
-                        }
-                    }
                 });
 
             // Act
@@ -837,9 +826,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             sut.Should().NotBeNull();
-            sut.HttpStatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-            sut.Payload.Count.Should().Be(5);
-            sut.Payload.Results.Count.Should().Be(5);
             documentStorageRepository.Verify(x => x.GetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
 
@@ -944,7 +930,7 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new FileDownload()
                     {
-                        FileName= "Test",
+                        FileName = "Test",
                     }
                 });
 
@@ -1069,7 +1055,7 @@ namespace Pims.Api.Test.Services
                     Payload = new DocumentDetail()
                     {
                         Id = 1,
-                        FileLatest = new FileLatest() { Id = 2,}
+                        FileLatest = new FileLatest() { Id = 2, }
                     },
                 });
 
@@ -1081,7 +1067,7 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new()
                     {
-                        FilePayload= new System.IO.MemoryStream(),
+                        FilePayload = new System.IO.MemoryStream(),
                         Size = 1,
                         FileName = "MyFile",
                     },

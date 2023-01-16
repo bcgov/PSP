@@ -100,6 +100,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsTenantType> GetTenantTypes();
 
+        IEnumerable<PimsAcquisitionFundingType> GetAcquisitionFundingTypes();
+
         IEnumerable<PimsProjectStatusType> GetProjectStatusTypes();
     }
 }

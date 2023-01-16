@@ -3,6 +3,7 @@ import { Button } from 'components/common/buttons/Button';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode } from 'components/Table';
 import { Claims } from 'constants/index';
+import { DocumentRow } from 'features/documents/ComposedDocument';
 import DownloadDocumentButton from 'features/documents/DownloadDocumentButton';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Document, Api_DocumentType } from 'models/api/Document';
@@ -20,7 +21,7 @@ export interface IDocumentColumnProps {
 export const getDocumentColumns = ({
   onViewDetails,
   onDelete,
-}: IDocumentColumnProps): ColumnWithProps<Api_Document>[] => {
+}: IDocumentColumnProps): ColumnWithProps<DocumentRow>[] => {
   return [
     {
       Header: 'Document type',
@@ -55,12 +56,12 @@ export const getDocumentColumns = ({
   ];
 };
 
-function renderDocumentType({ value }: CellProps<Api_Document, Api_DocumentType | undefined>) {
+function renderDocumentType({ value }: CellProps<DocumentRow, Api_DocumentType | undefined>) {
   return stringToFragment(value?.documentType ?? '');
 }
 
-const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
-  return function (cell: CellProps<Api_Document, string | undefined>) {
+const renderFileName = (onViewDetails: (values: DocumentRow) => void) => {
+  return function (cell: CellProps<DocumentRow, string | undefined>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <>
@@ -80,7 +81,7 @@ const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
   };
 };
 
-function renderUploaded(cell: CellProps<Api_Document, string | undefined>) {
+function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
   return (
     <Row className="no-gutters">
       <Col>{prettyFormatDate(cell.row.original.appCreateTimestamp)}</Col>
@@ -101,13 +102,16 @@ const renderActions = (
   onViewDetails: (values: Api_Document) => void,
   onDelete: (values: Api_Document) => void,
 ) => {
-  return function ({ row: { original, index } }: CellProps<Api_Document, string>) {
+  return function ({ row: { original, index } }: CellProps<DocumentRow, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIconsRow className="no-gutters">
         {hasClaim(Claims.DOCUMENT_VIEW) && original?.mayanDocumentId !== undefined && (
           <Col>
-            <DownloadDocumentButton mayanDocumentId={original?.mayanDocumentId} />
+            <DownloadDocumentButton
+              mayanDocumentId={original?.mayanDocumentId}
+              isFileAvailable={original?.isFileAvailable}
+            />
           </Col>
         )}
         {hasClaim(Claims.DOCUMENT_VIEW) && (

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -12,6 +13,9 @@ using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
+    /// <summary>
+    /// Provides a repository to interact with projects within the datasource.
+    /// </summary>
     public class ProjectRepository : BaseRepository<PimsProject>, IProjectRepository
     {
         /// <summary>
@@ -26,6 +30,21 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Retrieves the matching projects to the given filter.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="maxResult"></param>
+        /// <returns></returns>
+        public IList<PimsProject> SearchProjects(string filter, int maxResult)
+        {
+            return this.Context.PimsProjects.AsNoTracking()
+                .Where(o => EF.Functions.Like(o.Description, $"%{filter}%"))
+                .OrderBy(a => a.Code)
+                .Take(maxResult)
+                .ToArray();
+        }
+
+        /// <summary>
         /// Returns the total number of projects in the database.
         /// </summary>
         /// <returns></returns>
@@ -34,6 +53,10 @@ namespace Pims.Dal.Repositories
             return Context.PimsProjects.Count();
         }
 
+        /// <summary>
+        /// Returns a Paged Result of Projects based on ProjectFilter params.
+        /// </summary>
+        /// <returns></returns>
         public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);

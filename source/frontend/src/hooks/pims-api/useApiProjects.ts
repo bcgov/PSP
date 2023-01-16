@@ -7,7 +7,7 @@ import React from 'react';
 import { IPaginateRequest, useAxiosApi } from '.';
 
 /**
- * PIMS API wrapper to centralize all AJAX requests to the lease endpoints.
+ * PIMS API wrapper to centralize all AJAX requests to the Project endpoints.
  * @returns Object containing functions to make requests to the PIMS API.
  */
 export const useApiProjects = () => {
@@ -15,6 +15,8 @@ export const useApiProjects = () => {
 
   return React.useMemo(
     () => ({
+      searchProject: (query: string, top: number = 5) =>
+        api.get<Api_Project[]>(`/projects/search=${query}&top=${top}`),
       searchProjects: (params: IPaginateProjects | null) =>
         api.get<IPagedItems<IProjectSearchResult>>(
           `/projects/search?${params ? queryString.stringify(params) : ''}`,

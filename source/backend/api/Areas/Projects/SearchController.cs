@@ -1,12 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Wordprocessing;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Areas.Lease.Models.Search;
 using Pims.Api.Areas.Projects.Models;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -16,7 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Projects
 {
-    // TODO: Add Authorize
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Area("projects")]
@@ -34,7 +30,7 @@ namespace Pims.Api.Areas.Projects
         }
 
         [HttpGet]
-        //[HasPermission(Permissions.ProjectView)]
+        [HasPermission(Permissions.ProjectView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<ProjectSearchModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]

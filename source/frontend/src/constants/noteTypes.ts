@@ -1,4 +1,4 @@
 export enum NoteTypes {
   Activity = 'activity',
-  File = 'file',
+  Acquisition_File = 'acquisition_file',
 }

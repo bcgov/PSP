@@ -1,10 +1,13 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { SideBarContext } from 'features/properties/map/context/sidebarContext';
 import useIsMounted from 'hooks/useIsMounted';
-import { Api_DocumentRelationship } from 'models/api/Document';
+import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
+import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { DocumentRow } from '../ComposedDocument';
+import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentListView from './DocumentListView';
 
@@ -20,7 +23,7 @@ const DocumentListContainer: React.FunctionComponent<
 > = props => {
   const isMounted = useIsMounted();
 
-  const [documentResults, setDocumentResults] = useState<Api_DocumentRelationship[]>([]);
+  const [documentResults, setDocumentResults] = useState<DocumentRow[]>([]);
 
   const { file, staleFile, setStaleFile } = useContext(SideBarContext);
 
@@ -30,16 +33,40 @@ const DocumentListContainer: React.FunctionComponent<
     deleteDocumentRelationship,
   } = useDocumentRelationshipProvider();
 
+  const { retrieveDocumentDetail } = useDocumentProvider();
+
   const retrieveDocuments = useCallback(async () => {
     const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
     if (documents !== undefined && isMounted()) {
-      setDocumentResults(documents);
+      setDocumentResults([
+        ...documents
+          .map(x => x.document)
+          .filter((x): x is Api_Document => !!x)
+          .map(x => DocumentRow.fromApi(x)),
+      ]);
     }
   }, [isMounted, retrieveDocumentRelationship, props.relationshipType, props.parentId]);
 
   useEffect(() => {
     retrieveDocuments();
   }, [retrieveDocuments]);
+
+  useEffect(() => {
+    const getDetails = async () => {
+      const newDocumentResults = [...documentResults];
+      newDocumentResults.forEach(async d => {
+        if (d?.mayanDocumentId && !d?.isFileAvailable) {
+          const detail = await retrieveDocumentDetail(d.mayanDocumentId);
+          const matchingResult = documentResults.find(dr => dr.id === d.id);
+          if (matchingResult && detail?.status === ExternalResultStatus.Success) {
+            matchingResult.isFileAvailable = !!detail.payload.file_latest?.id;
+            setDocumentResults(newDocumentResults);
+          }
+        }
+      });
+    };
+    getDetails();
+  }, [documentResults, retrieveDocumentDetail]);
 
   useEffect(() => {
     if (staleFile) {
