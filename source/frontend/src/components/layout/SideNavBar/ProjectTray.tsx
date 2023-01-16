@@ -10,16 +10,11 @@ export const ProjectTray = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <Styled.TrayHeader>Projects</Styled.TrayHeader>
-      {true && (
+      {hasClaim(Claims.PROJECT_VIEW) && (
         <Link onClick={onLinkClick} to="/project/list">
           Manage Projects
         </Link>
       )}
-      {/* {hasClaim(Claims.PROJECT_VIEW) && (
-        <Link onClick={onLinkClick} to="/project/list">
-          Manage Projects
-        </Link>
-      )} */}
     </>
   );
 };

@@ -14,15 +14,15 @@ const storeState = {
 
 jest.mock('@react-keycloak/web');
 jest.mock('hooks/pims-api/useApiProjects');
-const getProjects = jest.fn();
+const searchProjects = jest.fn();
 (useApiProjects as jest.Mock).mockReturnValue({
-  getProjects,
+  searchProjects,
 });
 
 const setupMockSearch = (searchResults?: IProjectSearchResult[]) => {
   const results = searchResults ?? [];
   const len = results.length;
-  getProjects.mockResolvedValue({
+  searchProjects.mockResolvedValue({
     data: {
       items: results,
       quantity: len,
@@ -40,34 +40,37 @@ const setup = (renderOptions: RenderOptions = { store: storeState }) => {
   return { searchButton, ...utils };
 };
 
-describe('Lease and License List View', () => {
+describe('Project List View', () => {
   beforeEach(() => {
-    getProjects.mockClear();
+    searchProjects.mockClear();
   });
 
   it('searches by Project Name', async () => {
     setupMockSearch([
       {
         id: 1,
-        projectName: 'PROJECT-NAME',
-        projectNumber: '9999',
+        description: 'PROJECT-NAME',
+        code: '9999',
+        region: 'NORTH',
+        status: 'ACTIVE',
         lastUpdatedBy: 'USER',
         lastUpdatedDate: new Date(2023, 1, 1),
       },
     ]);
     const { container, searchButton, findByText } = setup();
 
-    fillInput(container, 'searchBy', 'pinOrPid', 'select');
-    fillInput(container, 'pinOrPid', '123');
+    fillInput(container, 'projectName', 'NAME');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getProjects).toHaveBeenCalledWith(
+    expect(searchProjects).toHaveBeenCalledWith(
       expect.objectContaining<IProjectFilter>({
-        projectStatusType: 'ACTIVE',
-        regionType: '',
+        projectName: 'NAME',
+        projectNumber: '',
+        projectStatusCode: 'AC',
+        projectRegionCode: '',
       }),
     );
 
-    expect(await findByText(/TRAN-IT/i)).toBeInTheDocument();
+    expect(await findByText(/PROJECT-NAME/i)).toBeInTheDocument();
   });
 });

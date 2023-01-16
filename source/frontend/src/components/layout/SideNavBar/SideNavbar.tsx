@@ -41,6 +41,7 @@ export const SideNavBar = () => {
           icon={<FaBriefcase size={24} />}
           text="Project"
           showText={expanded}
+          claims={[Claims.PROJECT_VIEW]}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.RESEARCH)}
