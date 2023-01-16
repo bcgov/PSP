@@ -2,6 +2,8 @@ import { PointFeature } from 'components/maps/types';
 import { IGeoSearchParams } from 'constants/API';
 import { useMapProperties } from 'features/properties/map/hooks/useMapProperties';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import { useModalContext } from 'hooks/useModalContext';
 import { geoJSON } from 'leaflet';
 import { useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -16,6 +18,9 @@ export const useMapSearch = () => {
   } = useMapProperties();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
   const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
+  const { setModalContent, setDisplayModal } = useModalContext();
+  const keycloak = useKeycloakWrapper();
+  const logout = keycloak.obj.logout;
 
   useEffect(() => {
     setPropertiesLoading(
@@ -66,7 +71,24 @@ export const useMapSearch = () => {
         const pinNonInventoryData = await task2;
         const pidNonInventoryData = await task3;
 
-        tileData = pidPinInventoryData?.features.length
+        if (pidPinInventoryData?.features === undefined) {
+          setModalContent({
+            title: 'Unable to connect to PIMS Inventory',
+            message:
+              'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',
+            okButtonText: 'Log out',
+            cancelButtonText: 'Continue working',
+            handleOk: () => {
+              logout();
+            },
+            handleCancel: () => {
+              setDisplayModal(false);
+            },
+          });
+          setDisplayModal(true);
+        }
+
+        tileData = pidPinInventoryData?.features?.length
           ? pidPinInventoryData
           : ({
               type: 'FeatureCollection',
