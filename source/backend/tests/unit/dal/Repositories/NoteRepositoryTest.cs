@@ -232,6 +232,64 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region Delete
+        [Fact]
+        public void Delete_Activity_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var activityNote = EntityHelper.CreateActivityNote();
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activityNote);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteActivityNotes(1);
+
+            // Assert
+            deleted.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Delete_Acquisition_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var fileNote = EntityHelper.CreateAcquisitionFileNote();
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteAcquisitionFileNotes(1);
+
+            // Assert
+            deleted.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Delete_Acquisition_NoNote()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var context = helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteAcquisitionFileNotes(1);
+
+            // Assert
+            deleted.Should().BeFalse();
+        }
+        #endregion
+
         #region Count
         [Fact]
         public void Notes_Count()

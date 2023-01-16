@@ -16,8 +16,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsNote> GetAcquisitionFileNotes(long entityId);
 
-        void DeleteActivityNotes(long entityId);
+        bool DeleteActivityNotes(long entityId);
 
-        void DeleteAcquisitionFileNotes(long entityId);
+        bool DeleteAcquisitionFileNotes(long entityId);
     }
 }

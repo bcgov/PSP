@@ -70,7 +70,7 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.AcquisitionFileId == entityId).Select(x => x.Note).ToList();
         }
 
-        public void DeleteActivityNotes(long entityId)
+        public bool DeleteActivityNotes(long entityId)
         {
             var activityNotes = this.Context.PimsActivityInstanceNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
             if (activityNotes.Any())
@@ -80,12 +80,14 @@ namespace Pims.Dal.Repositories
                     this.Context.PimsActivityInstanceNotes.Remove(activityNote);
                     this.Context.PimsNotes.Remove(activityNote.Note);
                 }
+                return true;
             }
+            return false;
         }
 
-        public void DeleteAcquisitionFileNotes(long entityId)
+        public bool DeleteAcquisitionFileNotes(long entityId)
         {
-            var acquisitionFileNotes = this.Context.PimsAcquisitionFileNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
+            var acquisitionFileNotes = this.Context.PimsAcquisitionFileNotes.Include(ai => ai.Note).Where(x => x.AcquisitionFileId == entityId).ToList();
             if (acquisitionFileNotes.Any())
             {
                 foreach (var acquisitionFileNote in acquisitionFileNotes)
@@ -93,7 +95,9 @@ namespace Pims.Dal.Repositories
                     this.Context.PimsAcquisitionFileNotes.Remove(acquisitionFileNote);
                     this.Context.PimsNotes.Remove(acquisitionFileNote.Note);
                 }
+                return true;
             }
+            return false;
         }
 
         #endregion
