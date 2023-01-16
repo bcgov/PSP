@@ -115,7 +115,10 @@ describe('UpdateNoteContainer component', () => {
     const formValues = NoteForm.fromApi(BASIC_PROPS.note as Api_Note);
     formValues.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-    const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, type: NoteTypes.File });
+    const { getSaveButton, findByLabelText } = setup({
+      ...BASIC_PROPS,
+      type: NoteTypes.Acquisition_File,
+    });
 
     const textarea = await findByLabelText(/Type a note/i);
     userEvent.clear(textarea);
@@ -125,7 +128,7 @@ describe('UpdateNoteContainer component', () => {
     await act(() => userEvent.click(getSaveButton()));
 
     expect(onSaveClick).toBeCalled();
-    expect(mockAxios.history.put[0].url).toBe('/notes/file/1');
+    expect(mockAxios.history.put[0].url).toBe('/notes/acquisition_file/1');
     expect(onSuccess).toBeCalled();
   });
 });
