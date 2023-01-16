@@ -41,6 +41,6 @@ describe('LtsaTransferSubForm component', () => {
     } = setup({
       ltsaData: mockLtsaResponse,
     });
-    expect(getByText('this title has no transfers')).toBeVisible();
+    expect(getByText('None')).toBeVisible();
   });
 });

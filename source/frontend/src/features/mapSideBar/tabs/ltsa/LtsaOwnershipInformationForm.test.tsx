@@ -44,6 +44,6 @@ describe('LtsaOwnershipInformationForm component', () => {
     } = setup({
       ltsaData: mockLtsaResponse,
     });
-    expect(getByText('this title has no ownership information')).toBeVisible();
+    expect(getByText('None')).toBeVisible();
   });
 });

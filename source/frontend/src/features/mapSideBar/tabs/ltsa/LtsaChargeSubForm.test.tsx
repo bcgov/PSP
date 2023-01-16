@@ -41,6 +41,6 @@ describe('LtsaChargeSubForm component', () => {
     } = setup({
       ltsaData: mockLtsaResponse,
     });
-    expect(getByText('this title has no charges')).toBeVisible();
+    expect(getByText('None')).toBeVisible();
   });
 });
