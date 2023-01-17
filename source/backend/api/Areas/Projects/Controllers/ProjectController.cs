@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
+using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Projects.Controllers
@@ -49,7 +51,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         /// <param name="top"></param>
         /// <returns>An array of contacts matching the filter.</returns>
         [HttpGet("search={input}&top={top}")]
-        //[HasPermission(Permissions.ContactView)] // TODO: Add correct permision
+        [HasPermission(Permissions.ProjectView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<ProjectModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]

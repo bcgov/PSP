@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
+using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
@@ -10,7 +12,6 @@ namespace Pims.Api.Services
     {
         private readonly ILogger _logger;
         private readonly IProjectRepository _projectRepository;
-
 
         /// <summary>
         /// Creates a new instance of a ProjectService, and initializes it with the specified arguments.
@@ -31,9 +32,7 @@ namespace Pims.Api.Services
         public IList<PimsProject> SearchProjects(string filter, int maxResult)
         {
             _logger.LogInformation("Getting all projects");
-            // TODO: Fix ones Project permissions are availiable
-            /*this.User.ThrowIfNotAuthorized(Permissions.ActivityView);
-            this.User.ThrowIfNotAuthorized(Permissions.ResearchFileView);*/
+            this.User.ThrowIfNotAuthorized(Permissions.ProjectView);
 
             var projects = _projectRepository.SearchProjects(filter, maxResult);
 

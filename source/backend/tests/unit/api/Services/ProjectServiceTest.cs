@@ -33,7 +33,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityAdd); // TODO: Set correct permission
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
             var service = helper.Create<ProjectService>(user);
 
             var project = EntityHelper.CreateProject(1, 7, "Test Project");
@@ -63,8 +63,8 @@ namespace Pims.Api.Test.Services
             Action act = () => service.SearchProjects("some string", 1);
 
             // Assert
-            //act.Should().Throw<NotAuthorizedException>(); // TODO: Enable assert once the permissions are fixed
-            //repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Never);
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Never);
         }
         #endregion
     }
