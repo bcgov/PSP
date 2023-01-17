@@ -9,31 +9,31 @@ namespace Pims.Ltsa.Configuration
         /// <summary>
         /// get/set - The URI to the Ltsa API service.
         /// </summary>
-        public string HostUri { get; } = "https://tduat-x42b.ltsa.ca/titledirect/search/api";
+        public string HostUri { get; set; } = "https://tduat-x42b.ltsa.ca/titledirect/search/api";
 
         /// <summary>
         /// get/set - API endpoint for title summaries endpoint
         /// </summary>
-        public string TitleSummariesEndpoint { get; } = "titleSummaries";
+        public string TitleSummariesEndpoint { get; set; } = "titleSummaries";
         /// <summary>
         /// get/set - API endpoint for orders endpoint
         /// </summary>
-        public string OrdersEndpoint { get; } = "orders";
+        public string OrdersEndpoint { get; set; } = "orders";
 
         /// <summary>
         /// get/set - API root url for auth requests
         /// </summary>
-        public string AuthUrl { get; } = "https://appsuat.ltsa.ca/iam/api/auth";
+        public string AuthUrl { get; set; } = "https://appsuat.ltsa.ca/iam/api/auth";
 
         /// <summary>
         /// get/set - API endpoint for auth refresh token endpoint
         /// </summary>
-        public string RefreshEndpoint { get; } = "token";
+        public string RefreshEndpoint { get; set; } = "token";
 
         /// <summary>
         /// get/set - API endpoint for integrator login
         /// </summary>
-        public string LoginIntegratorEndpoint { get; } = "login/integrator";
+        public string LoginIntegratorEndpoint { get; set; } = "login/integrator";
 
         /// <summary>
         /// get/set - Integrator Username.
