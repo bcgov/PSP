@@ -16,7 +16,6 @@ export enum Claims {
   ADMIN_USERS = 'admin-users',
   ADMIN_ROLES = 'admin-roles',
   ADMIN_DOCUMENT_GENERATION = 'admin-roles', // TODO: use proper claim
-  ADMIN_FINANCIAL_CODES = 'admin-roles', // TODO: use proper claim
   ADMIN_PROPERTIES = 'admin-properties',
   ADMIN_PROJECTS = 'admin-projects',
   RESEARCH_VIEW = 'researchfile-view',

@@ -12,8 +12,9 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { useFinancialCodeRepository } from '../hooks/useFinancialCodeRepository';
-import FinancialCodeFilter, {
+import {
   defaultFinancialCodeFilter,
+  FinancialCodeFilter,
   IFinancialCodeFilter,
 } from './FinancialCodeFilter/FinancialCodeFilter';
 import { FinancialCodeResults } from './FinancialCodeResults/FinancialCodeResults';
@@ -76,7 +77,15 @@ export const FinancialCodeListView: React.FC = () => {
         if (sortFields?.length > 0) {
           const sortBy = sortFields[0] as keyof Api_FinancialCode;
           const sortDirection = sort[sortBy];
-          return orderBy(records, sortBy, sortDirection);
+          records = orderBy(records, sortBy, sortDirection);
+        } else {
+          // Need to replace "undefined" display order with Number.Infinity so they can be sorted last
+          for (const fc of records) {
+            fc.displayOrder = fc.displayOrder ?? Infinity;
+          }
+          // If no custom sorting is provided, then use default sorting:
+          // - "Display the results sorted by Code type, sort order and in absence of sort order Code value"
+          records = orderBy(records, ['type', 'displayOrder', 'code'], ['asc', 'asc', 'asc']);
         }
       }
       return records;
