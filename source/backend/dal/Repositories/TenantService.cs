@@ -38,7 +38,7 @@ namespace Pims.Dal.Repositories
         /// Get the tenant for the specified 'code'.
         /// </summary>
         /// <returns></returns>
-        public PimsTenant GetTenant(string code)
+        public PimsTenant TryGetTenantByCode(string code)
         {
             return this.Context.PimsTenants.FirstOrDefault(t => t.Code == code);
         }

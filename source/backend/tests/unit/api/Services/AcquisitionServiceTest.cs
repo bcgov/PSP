@@ -262,13 +262,13 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
 
             // Act
             service.UpdateProperties(acqFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
         }
@@ -295,13 +295,13 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
 
             var filePropertyRepository = helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
 
             // Act
             service.UpdateProperties(acqFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
             propertyRepository.Verify(x => x.GetByPid(It.IsAny<int>()), Times.Once);
@@ -327,7 +327,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyAcquisitionFile>())).Callback<PimsPropertyAcquisitionFile>(x => updatedAcquisitionFileProperty = x).Returns(acqFile.PimsPropertyAcquisitionFiles.FirstOrDefault());
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
@@ -350,7 +350,7 @@ namespace Pims.Api.Test.Services
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
             updatedProperty.IsPropertyOfInterest.Should().Be(true);
 
-            filePropertyRepository.Verify(x => x.GetByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
             propertyRepository.Verify(x => x.GetByPid(It.IsAny<int>()), Times.Once);
@@ -376,7 +376,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Id = 1, Property = property, PropertyName = "updated" } });
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Id = 1, Property = property, PropertyName = "updated" } });
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
@@ -385,7 +385,7 @@ namespace Pims.Api.Test.Services
             service.UpdateProperties(acqFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
@@ -409,7 +409,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = property } });
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = property } });
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
@@ -418,7 +418,7 @@ namespace Pims.Api.Test.Services
             service.UpdateProperties(acqFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
@@ -446,18 +446,18 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = property } });
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = property } });
             filePropertyRepository.Setup(x => x.GetAcquisitionFilePropertyRelatedCount(It.IsAny<long>())).Returns(1);
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
-            propertyRepository.Setup(x => x.GetAssociations(It.IsAny<long>())).Returns(property);
+            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
 
             // Act
             service.UpdateProperties(acqFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);

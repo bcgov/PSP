@@ -149,13 +149,13 @@ namespace Pims.Api.Test.Services
             var notes = new[] { EntityHelper.CreateNote("Test Note 1"), EntityHelper.CreateNote("Test Note 2") };
 
             var repository = helper.GetService<Mock<IEntityNoteRepository>>();
-            repository.Setup(x => x.GetActivityNotes(It.IsAny<long>())).Returns(notes);
+            repository.Setup(x => x.GetAllActivityNotesById(It.IsAny<long>())).Returns(notes);
 
             // Act
             var result = service.GetNotes(NoteType.Activity, 1);
 
             // Assert
-            repository.Verify(x => x.GetActivityNotes(It.IsAny<long>()), Times.Once);
+            repository.Verify(x => x.GetAllActivityNotesById(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -169,14 +169,14 @@ namespace Pims.Api.Test.Services
             var mapper = helper.GetService<IMapper>();
 
             var repository = helper.GetService<Mock<IEntityNoteRepository>>();
-            repository.Setup(x => x.GetActivityNotes(It.IsAny<long>()));
+            repository.Setup(x => x.GetAllActivityNotesById(It.IsAny<long>()));
 
             // Act
             Action act = () => service.GetNotes(NoteType.Activity, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetActivityNotes(It.IsAny<long>()), Times.Never);
+            repository.Verify(x => x.GetAllActivityNotesById(It.IsAny<long>()), Times.Never);
         }
         #endregion
 

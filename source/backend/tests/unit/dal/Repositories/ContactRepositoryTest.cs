@@ -34,7 +34,7 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.Get("123"));
+                service.GetById("123"));
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.Get(new ContactFilter()));
+                service.GetAll(new ContactFilter()));
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             Assert.Throws<ArgumentException>(() =>
-                service.Get(new ContactFilter()));
+                service.GetAll(new ContactFilter()));
         }
 
         [Fact]

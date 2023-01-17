@@ -5,7 +5,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IResearchFilePropertyRepository : IRepository
     {
-        List<PimsPropertyResearchFile> GetByResearchFileId(long researchFileId);
+        List<PimsPropertyResearchFile> GetAllByResearchFileId(long researchFileId);
 
         int GetResearchFilePropertyRelatedCount(long propertyId);
 

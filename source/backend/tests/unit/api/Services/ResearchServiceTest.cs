@@ -45,13 +45,13 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
 
             var filePropertyRepository = helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
             service.UpdateProperties(researchFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetByResearchFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
             propertyRepository.Verify(x => x.GetByPid(It.IsAny<int>()), Times.Once);
@@ -80,13 +80,13 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>())).Returns(property);
 
             var filePropertyRepository = helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
             service.UpdateProperties(researchFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetByResearchFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
             propertyRepository.Verify(x => x.GetByPin(It.IsAny<int>()), Times.Once);
@@ -112,7 +112,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
             var filePropertyRepository = helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
@@ -135,7 +135,7 @@ namespace Pims.Api.Test.Services
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
             updatedProperty.IsPropertyOfInterest.Should().Be(true);
 
-            filePropertyRepository.Verify(x => x.GetByResearchFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
             propertyRepository.Verify(x => x.GetByPid(It.IsAny<int>()), Times.Once);
@@ -163,7 +163,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
             var filePropertyRepository = helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
@@ -186,7 +186,7 @@ namespace Pims.Api.Test.Services
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
             updatedProperty.IsPropertyOfInterest.Should().Be(true);
 
-            filePropertyRepository.Verify(x => x.GetByResearchFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
             propertyRepository.Verify(x => x.GetByPin(It.IsAny<int>()), Times.Once);

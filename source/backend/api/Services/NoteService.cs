@@ -143,9 +143,9 @@ namespace Pims.Api.Services
             switch (type)
             {
                 case NoteType.Activity:
-                    return _entityNoteRepository.GetActivityNotes(entityId);
+                    return _entityNoteRepository.GetAllActivityNotesById(entityId);
                 case NoteType.Acquisition_File:
-                    return _entityNoteRepository.GetAcquisitionFileNotes(entityId);
+                    return _entityNoteRepository.GetAllAcquisitionNotesById(entityId);
                 default:
                     return new List<PimsNote>();
             }

@@ -196,7 +196,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.Get(1, 1);
+            var result = service.GetPage(1, 1);
 
             // Assert
             Assert.NotNull(result);
@@ -216,7 +216,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.Get(0, 1);
+            var result = service.GetPage(0, 1);
 
             // Assert
             Assert.NotNull(result);
@@ -236,7 +236,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.Get(1, 0);
+            var result = service.GetPage(1, 0);
 
             // Assert
             Assert.NotNull(result);
@@ -256,7 +256,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.Get(1, 51);
+            var result = service.GetPage(1, 51);
 
             // Assert
             Assert.NotNull(result);
@@ -276,7 +276,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.Get());
+                service.GetAllByFilter());
         }
 
         [Theory]
@@ -313,7 +313,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.Get(filter);
+            var result = service.GetAllByFilter(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -335,7 +335,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.Get(key);
+            var result = service.GetByKeycloakUserId(key);
 
             // Assert
             Assert.NotNull(result);
@@ -356,7 +356,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.Get(key));
+            var result = Assert.Throws<NotAuthorizedException>(() => service.GetByKeycloakUserId(key));
         }
 
         [Fact]
@@ -372,7 +372,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.GetTracking(euser.Id);
+            var result = service.GetTrackingById(euser.Id);
 
             // Assert
             Assert.NotNull(result);
@@ -393,7 +393,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.GetTracking(euser.Id));
+            var result = Assert.Throws<NotAuthorizedException>(() => service.GetTrackingById(euser.Id));
         }
 
         [Fact]
@@ -409,7 +409,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.GetUserInfo(key);
+            var result = service.GetUserInfoByKeycloakUserId(key);
 
             // Assert
             Assert.NotNull(result);
@@ -431,7 +431,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             service.Add(euser);
-            var result = service.Get(euser.GuidIdentifierValue.Value);
+            var result = service.GetByKeycloakUserId(euser.GuidIdentifierValue.Value);
 
             // Assert
             Assert.NotNull(result);

@@ -37,7 +37,7 @@ namespace Pims.Api.Repositories.Mayan
             _authRepository = authRepository;
         }
 
-        public async Task<ExternalResult<QueryResult<MetadataType>>> GetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResult<QueryResult<MetadataType>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving metadata types...");
 
@@ -53,7 +53,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<MetadataType>> CreateMetadataTypeAsync(MetadataType metadataType)
+        public async Task<ExternalResult<MetadataType>> TryCreateMetadataTypeAsync(MetadataType metadataType)
         {
             _logger.LogDebug("Creating metadata type...");
 
@@ -75,7 +75,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<string>> DeleteMetadataTypeAsync(long metadataTypeId)
+        public async Task<ExternalResult<string>> TryDeleteMetadataTypeAsync(long metadataTypeId)
         {
             _logger.LogDebug("Deleting metadata type...");
 

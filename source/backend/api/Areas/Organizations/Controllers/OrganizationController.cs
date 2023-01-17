@@ -75,7 +75,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         public IActionResult AddOrganization([FromBody] Models.Organization.OrganizationModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
-            var otherCountry = _lookupRepository.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
+            var otherCountry = _lookupRepository.GetAllCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
             foreach (var address in model?.Addresses)
             {
                 if (otherCountry != null && address != null && address.CountryId != otherCountry.CountryId)
