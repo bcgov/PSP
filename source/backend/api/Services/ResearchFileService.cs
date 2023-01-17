@@ -85,7 +85,7 @@ namespace Pims.Api.Services
             MatchProperties(researchFile);
 
             // Get the current properties in the research file
-            var currentProperties = _researchFilePropertyRepository.GetByResearchFileId(researchFile.Id);
+            var currentProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incommingResearchProperty in researchFile.PimsPropertyResearchFiles)
@@ -114,7 +114,7 @@ namespace Pims.Api.Services
                 _researchFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
                 {
-                    PimsProperty propertyWithAssociations = _propertyRepository.GetAssociations(deletedProperty.PropertyId);
+                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
                     var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
                     var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
@@ -208,12 +208,12 @@ namespace Pims.Api.Services
 
             if(property.Address != null)
             {
-                var provinceId = _lookupRepository.GetProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
                 if(provinceId.HasValue)
                 {
                     property.Address.ProvinceStateId = provinceId.Value;
                 }
-                property.Address.CountryId = _lookupRepository.GetCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
             }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage

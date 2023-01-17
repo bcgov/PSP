@@ -58,7 +58,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
-            var result = service.Get(filter);
+            var result = service.GetAll(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -79,7 +79,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.Get(new AccessRequestFilter() { SearchText = "test" }));
+            var result = Assert.Throws<NotAuthorizedException>(() => service.GetAll(new AccessRequestFilter() { SearchText = "test" }));
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
-            var result = service.Get();
+            var result = service.TryGet();
 
             // Assert
             Assert.NotNull(result);
@@ -115,7 +115,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
-            var result = service.Get(1);
+            var result = service.GetById(1);
 
             // Assert
             Assert.NotNull(result);
@@ -136,7 +136,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.Get(1));
+            var result = Assert.Throws<NotAuthorizedException>(() => service.GetById(1));
         }
 
         [Fact]
@@ -151,7 +151,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             // Assert
-            var result = Assert.Throws<KeyNotFoundException>(() => service.Get(1));
+            var result = Assert.Throws<KeyNotFoundException>(() => service.GetById(1));
         }
         #endregion
 

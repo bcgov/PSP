@@ -5,7 +5,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IAcquisitionFilePropertyRepository : IRepository
     {
-        List<PimsPropertyAcquisitionFile> GetByAcquisitionFileId(long acquisitionFileId);
+        List<PimsPropertyAcquisitionFile> GetPropertiesByAcquisitionFileId(long acquisitionFileId);
 
         int GetAcquisitionFilePropertyRelatedCount(long propertyId);
 

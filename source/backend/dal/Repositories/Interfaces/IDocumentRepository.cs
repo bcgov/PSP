@@ -11,7 +11,7 @@ namespace Pims.Dal.Repositories
 
         PimsDocument Add(PimsDocument document);
 
-        PimsDocument Get(long documentId);
+        PimsDocument TryGet(long documentId);
 
         PimsDocument Update(PimsDocument document, bool commitTransaction = true);
 

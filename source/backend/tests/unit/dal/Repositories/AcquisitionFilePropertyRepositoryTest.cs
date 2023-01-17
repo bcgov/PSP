@@ -40,7 +40,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
 
             // Act
-            var result = repository.GetByAcquisitionFileId(1);
+            var result = repository.GetPropertiesByAcquisitionFileId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -59,7 +59,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
 
             // Act
-            var result = repository.GetByAcquisitionFileId(1);
+            var result = repository.GetPropertiesByAcquisitionFileId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -203,7 +203,7 @@ namespace Pims.Dal.Test.Repositories
             repository.Delete(pimsPropertyAcquisitionFile);
 
             // Assert
-            var result = repository.GetByAcquisitionFileId(pimsPropertyAcquisitionFile.Id);
+            var result = repository.GetPropertiesByAcquisitionFileId(pimsPropertyAcquisitionFile.Id);
             result.Should().BeEmpty();
         }
 

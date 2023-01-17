@@ -58,13 +58,13 @@ namespace Pims.Dal.Repositories
             return this.Context.Set<T>().AsNoTracking().Where(predicate).ToArray();
         }
 
-        public IEnumerable<PimsNote> GetActivityNotes(long entityId)
+        public IEnumerable<PimsNote> GetAllActivityNotesById(long entityId)
         {
             return this.Context.PimsActivityInstanceNotes
                 .Where(x => x.ActivityInstanceId == entityId).Select(x => x.Note).ToList();
         }
 
-        public IEnumerable<PimsNote> GetAcquisitionFileNotes(long entityId)
+        public IEnumerable<PimsNote> GetAllAcquisitionNotesById(long entityId)
         {
             return this.Context.PimsAcquisitionFileNotes
                 .Where(x => x.AcquisitionFileId == entityId).Select(x => x.Note).ToList();

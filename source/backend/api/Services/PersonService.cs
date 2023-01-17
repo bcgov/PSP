@@ -28,7 +28,7 @@ namespace Pims.Api.Services
         public PimsPerson GetPerson(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
-            return _personRepository.Get(id);
+            return _personRepository.GetById(id);
         }
 
         public PimsPerson AddPerson(PimsPerson person, bool userOverride)

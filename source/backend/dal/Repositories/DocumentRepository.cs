@@ -51,7 +51,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="documentId"></param>
         /// <returns></returns>
-        public PimsDocument Get(long documentId)
+        public PimsDocument TryGet(long documentId)
         {
             return this.Context.PimsDocuments.FirstOrDefault(x => x.DocumentId == documentId);
         }

@@ -174,12 +174,12 @@ namespace Pims.Api.Services
 
             if (property.Address != null)
             {
-                var provinceId = _lookupRepository.GetProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
                 if (provinceId.HasValue)
                 {
                     property.Address.ProvinceStateId = provinceId.Value;
                 }
-                property.Address.CountryId = _lookupRepository.GetCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
             }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage

@@ -8,6 +8,6 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IProvinceRepository : IRepository<PimsProvinceState>
     {
-        IEnumerable<PimsProvinceState> Get();
+        IEnumerable<PimsProvinceState> GetAll();
     }
 }
