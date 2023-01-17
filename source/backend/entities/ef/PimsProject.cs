@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_PROJECT")]
     [Index(nameof(BusinessFunctionCodeId), Name = "PROJCT_BUSINESS_FUNCTION_CODE_ID_IDX")]
-    [Index(nameof(Code), Name = "PROJCT_CODE_IDX")]
+    [Index(nameof(Code), Name = "PROJCT_CODE_IDX", IsUnique = true)]
     [Index(nameof(CostTypeCodeId), Name = "PROJCT_COST_TYPE_CODE_ID_IDX")]
     [Index(nameof(ProjectStatusTypeCode), Name = "PROJCT_PROJECT_STATUS_CODE_IDX")]
     [Index(nameof(RegionCode), Name = "PROJCT_REGION_CODE_IDX")]
@@ -95,6 +95,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(ProjectStatusTypeCode))]
         [InverseProperty(nameof(PimsProjectStatusType.PimsProjects))]
         public virtual PimsProjectStatusType ProjectStatusTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(RegionCode))]
+        [InverseProperty(nameof(PimsRegion.PimsProjects))]
+        public virtual PimsRegion RegionCodeNavigation { get; set; }
         [ForeignKey(nameof(WorkActivityCodeId))]
         [InverseProperty(nameof(PimsWorkActivityCode.PimsProjects))]
         public virtual PimsWorkActivityCode WorkActivityCode { get; set; }

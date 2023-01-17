@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_PRODUCT")]
-    [Index(nameof(Code), Name = "PRODCT_CODE_IDX")]
+    [Index(nameof(Code), Name = "PRODCT_CODE_IDX", IsUnique = true)]
     [Index(nameof(ParentProjectId), Name = "PRODCT_PARENT_PROJECT_ID_IDX")]
     public partial class PimsProduct
     {

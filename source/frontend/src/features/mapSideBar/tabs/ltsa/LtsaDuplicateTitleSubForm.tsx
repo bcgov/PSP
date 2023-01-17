@@ -17,7 +17,7 @@ export const LtsaDuplicateTitleSubForm: React.FunctionComponent<
     getIn(values, withNameSpace(nameSpace, 'duplicateCertificatesOfTitle')) ?? [];
   return (
     <>
-      {certificates.length === 0 && 'this title has no indefeasible titles'}
+      {certificates.length === 0 && 'None'}
       <FieldArray
         name={withNameSpace(nameSpace, 'duplicateCertificatesOfTitle')}
         render={({ name }) => (

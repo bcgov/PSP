@@ -16,7 +16,7 @@ export const LtsaTransferSubForm: React.FunctionComponent<
   const transfers = getIn(values, withNameSpace(nameSpace, 'titleTransfersOrDispositions')) ?? [];
   return (
     <>
-      {transfers.length === 0 && 'this title has no transfers'}
+      {transfers.length === 0 && 'None'}
       <FieldArray
         name={withNameSpace(nameSpace, 'titleTransfersOrDispositions')}
         render={({ name }) => (

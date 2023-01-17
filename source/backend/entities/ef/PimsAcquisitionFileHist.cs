@@ -21,6 +21,10 @@ namespace Pims.Dal.Entities
         public DateTime? EndDateHist { get; set; }
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
+        [Column("PROJECT_ID")]
+        public long? ProjectId { get; set; }
+        [Column("PRODUCT_ID")]
+        public long? ProductId { get; set; }
         [Required]
         [Column("ACQUISITION_FILE_STATUS_TYPE_CODE")]
         [StringLength(20)]
@@ -106,9 +110,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("PROJECT_ID")]
-        public long? ProjectId { get; set; }
-        [Column("PRODUCT_ID")]
-        public long? ProductId { get; set; }
     }
 }
