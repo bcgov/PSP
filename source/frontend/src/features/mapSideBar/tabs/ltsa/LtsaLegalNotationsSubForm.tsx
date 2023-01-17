@@ -1,9 +1,11 @@
-import { InlineInput } from 'components/common/form/styles';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { DescriptionOfLand, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { prettyFormatDate } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
+
+import { SectionField } from '../SectionField';
 
 export interface ILtsaLegalNotationsSubFormProps {
   nameSpace?: string;
@@ -23,34 +25,31 @@ const LtsaLegalNotationsSubForm: React.FunctionComponent<
             {notations.map((notation: DescriptionOfLand, index: number) => {
               const innerNameSpace = withNameSpace(nameSpace, `legalNotationsOnTitle.${index}`);
               const legalNotationText = getIn(notation, 'legalNotation.legalNotationText');
+
               return (
                 <React.Fragment key={`notation-row-${innerNameSpace}`}>
                   <Row className="pb-2">
                     <Col>
-                      <InlineInput
-                        label="Legal notations:"
-                        field={`${withNameSpace(innerNameSpace, 'legalNotationNumber')}`}
-                      />
+                      <SectionField label="Legal notations#" labelWidth="auto">
+                        {getIn(values, innerNameSpace + '.legalNotationNumber')}
+                      </SectionField>
                     </Col>
                     <Col>
-                      <InlineInput
-                        label="Status:"
-                        field={`${withNameSpace(innerNameSpace, 'status')}`}
-                      />
+                      <SectionField label="Status" labelWidth="auto">
+                        {getIn(values, innerNameSpace + '.status')}
+                      </SectionField>
                     </Col>
                     <Col>
-                      <InlineInput
-                        label="Cancellation date:"
-                        field={`${withNameSpace(innerNameSpace, 'cancellationDate')}`}
-                      />
+                      <SectionField label="Cancellation date" labelWidth="auto">
+                        {prettyFormatDate(
+                          getIn(values, innerNameSpace + '.legalNotation.applicationReceivedDate'),
+                        )}
+                      </SectionField>
                     </Col>
                   </Row>
-                  <Row className="pb-2">
-                    <Col xs={4}></Col>
-                    <Col>
-                      <p>{legalNotationText}</p>
-                    </Col>
-                  </Row>
+                  <SectionField label="Legal notations">
+                    <p>{legalNotationText}</p>
+                  </SectionField>
                 </React.Fragment>
               );
             })}
