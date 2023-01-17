@@ -107,7 +107,8 @@ export const LtsaTabView: React.FunctionComponent<React.PropsWithChildren<ILtsaT
             </Section>
             <Section header="Notes">
               <SectionField label="Miscellaneous notes">
-                <p>{getIn(ltsaData, 'parcelInfo.orderedProduct.fieldedData.miscellaneousNotes')}</p>
+                {getIn(ltsaData, 'parcelInfo.orderedProduct.fieldedData.miscellaneousNotes') ||
+                  'None'}
               </SectionField>
               <SectionField label="Parcel status">
                 <Input disabled field="parcelInfo.orderedProduct.fieldedData.status" />

@@ -18,7 +18,7 @@ export const LtsaChargeSubForm: React.FunctionComponent<
   const charges = getIn(values, withNameSpace(nameSpace, 'chargesOnTitle')) ?? [];
   return (
     <div>
-      {charges.length === 0 && 'this title has no charges'}
+      {charges.length === 0 && 'None'}
       <FieldArray
         name={withNameSpace(nameSpace, 'chargesOnTitle')}
         render={({ push, remove, name }) => (

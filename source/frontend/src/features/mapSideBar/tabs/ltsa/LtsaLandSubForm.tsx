@@ -19,7 +19,7 @@ export const LtsaLandSubForm: React.FunctionComponent<
   return (
     <>
       {lands.length === 0 ? (
-        'this title has no land'
+        'None'
       ) : (
         <>
           <FieldArray
