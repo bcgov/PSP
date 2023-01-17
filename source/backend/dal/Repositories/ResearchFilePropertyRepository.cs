@@ -30,7 +30,7 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        public List<PimsPropertyResearchFile> GetByResearchFileId(long researchFileId)
+        public List<PimsPropertyResearchFile> GetAllByResearchFileId(long researchFileId)
         {
             return Context.PimsPropertyResearchFiles.AsNoTracking()
                 .Where(x => x.ResearchFileId == researchFileId)

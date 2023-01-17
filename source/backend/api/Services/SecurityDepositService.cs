@@ -86,7 +86,7 @@ namespace Pims.Api.Services
 
         private void ValidateDeletionRules(PimsSecurityDeposit deposit)
         {
-            IEnumerable<PimsSecurityDepositReturn> depositReturns = _securityDepositReturnRepository.GetByDepositId(deposit.SecurityDepositId);
+            IEnumerable<PimsSecurityDepositReturn> depositReturns = _securityDepositReturnRepository.GetAllByDepositId(deposit.SecurityDepositId);
             if (depositReturns.Any())
             {
                 throw new InvalidOperationException("Deposits with associated returns cannot be deleted.");

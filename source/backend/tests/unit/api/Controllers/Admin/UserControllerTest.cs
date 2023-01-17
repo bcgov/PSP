@@ -42,7 +42,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IUserRepository>>();
             var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
             // Act
             var result = controller.GetUsers();
@@ -52,7 +52,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
             mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
             var filter = new Entity.Models.UserFilter(1, 1, string.Empty, string.Empty, false, null, null, new string[0]);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
             // Act
             var result = controller.GetUsers(filter);
@@ -77,7 +77,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
             mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
         #endregion
 
@@ -94,7 +94,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
             var filter = new Entity.Models.UserFilter(1, 1, string.Empty, "email", false, null, null, new string[0]);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
             // Act
             var result = controller.GetUsers(filter);
@@ -104,7 +104,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
             mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
         #endregion
 
@@ -119,7 +119,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var repository = helper.GetService<Mock<IUserRepository>>();
             var user = EntityHelper.CreateUser("user1");
-            repository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(user);
+            repository.Setup(m => m.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var result = controller.GetUser(user.GuidIdentifierValue.Value);
@@ -129,7 +129,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
             mapper.Map<Model.UserModel>(user).Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.Get(user.GuidIdentifierValue.Value), Times.Once());
+            repository.Verify(m => m.GetByKeycloakUserId(user.GuidIdentifierValue.Value), Times.Once());
         }
         #endregion
 
@@ -197,7 +197,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var repository = helper.GetService<Mock<IUserRepository>>();
             var user = EntityHelper.CreateUser("user1");
-            repository.Setup(m => m.Get(It.IsAny<long>())).Returns(user);
+            repository.Setup(m => m.GetById(It.IsAny<long>())).Returns(user);
             var model = mapper.Map<Model.UserModel>(user);
 
             // Act
@@ -209,7 +209,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
             actualResult.RowVersion.Should().Be(user.ConcurrencyControlNumber);
             actualResult.BusinessIdentifierValue.Should().Be(user.BusinessIdentifierValue);
-            repository.Verify(m => m.Get(It.IsAny<long>()), Times.Once());
+            repository.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
         #endregion
 

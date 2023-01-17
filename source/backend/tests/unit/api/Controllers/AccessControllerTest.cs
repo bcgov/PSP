@@ -34,7 +34,7 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest(11);
-            repository.Setup(m => m.Get()).Returns(accessRequest);
+            repository.Setup(m => m.TryGet()).Returns(accessRequest);
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
             // Act
@@ -46,7 +46,7 @@ namespace PimsApi.Test.Controllers
             model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
-            repository.Verify(m => m.Get(), Times.Once());
+            repository.Verify(m => m.TryGet(), Times.Once());
         }
 
         [Fact]
@@ -60,14 +60,14 @@ namespace PimsApi.Test.Controllers
             var repository = helper.GetService<Mock<IAccessRequestRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            repository.Setup(m => m.Get());
+            repository.Setup(m => m.TryGet());
 
             // Act
             var result = controller.GetAccessRequest();
 
             // Assert
             var actionResult = Assert.IsType<NoContentResult>(result);
-            repository.Verify(m => m.Get(), Times.Once());
+            repository.Verify(m => m.TryGet(), Times.Once());
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
-            repository.Setup(m => m.Get()).Returns(accessRequest);
+            repository.Setup(m => m.TryGet()).Returns(accessRequest);
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
             // Act
@@ -94,7 +94,7 @@ namespace PimsApi.Test.Controllers
             model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
-            repository.Verify(m => m.Get(), Times.Once());
+            repository.Verify(m => m.TryGet(), Times.Once());
         }
         #endregion
 

@@ -29,7 +29,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
-        public PimsInsurance Get(long id)
+        public PimsInsurance GetById(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             return this.Context.PimsInsurances
@@ -71,7 +71,7 @@ namespace Pims.Dal.Repositories
             {
                 this.Context.CommitTransaction();
             }
-            return Get(insurance.InsuranceId);
+            return GetById(insurance.InsuranceId);
         }
 
         public PimsInsurance Delete(PimsInsurance insurance, bool commit = true)

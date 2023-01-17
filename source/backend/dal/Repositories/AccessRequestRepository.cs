@@ -42,7 +42,7 @@ namespace Pims.Dal.Repositories
         /// Get the most recent access request that has submitted.
         /// </summary>
         /// <returns></returns>
-        public PimsAccessRequest Get()
+        public PimsAccessRequest TryGet()
         {
             var key = this.User.GetUserKey();
             var accessRequest = this.Context.PimsAccessRequests
@@ -65,7 +65,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public PimsAccessRequest Get(long id)
+        public PimsAccessRequest GetById(long id)
         {
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.User)
@@ -95,7 +95,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>Paged access requests matching the filter criteria.</returns>
-        public Paged<PimsAccessRequest> Get(AccessRequestFilter filter)
+        public Paged<PimsAccessRequest> GetAll(AccessRequestFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
@@ -173,7 +173,7 @@ namespace Pims.Dal.Repositories
 
             this.Context.PimsAccessRequests.Add(addRequest);
             this.Context.CommitTransaction();
-            return Get(addRequest.AccessRequestId);
+            return GetById(addRequest.AccessRequestId);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Pims.Dal.Repositories
 
             this.Context.PimsAccessRequests.Update(accessRequest);
             this.Context.CommitTransaction();
-            return Get(updateRequest.AccessRequestId);
+            return GetById(updateRequest.AccessRequestId);
         }
         #endregion
     }

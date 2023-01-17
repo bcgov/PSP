@@ -26,7 +26,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting contact with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.ContactView);
-            return _contactRepository.Get(id);
+            return _contactRepository.GetById(id);
         }
 
         public Paged<PimsContactMgrVw> GetPage(ContactFilter filter)

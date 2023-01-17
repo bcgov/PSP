@@ -121,7 +121,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            var result = repository.GetActivityNotes(1);
+            var result = repository.GetAllActivityNotesById(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -145,7 +145,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileNotes(1);
+            var result = repository.GetAllAcquisitionNotesById(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -164,7 +164,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            var result = repository.GetActivityNotes(1);
+            var result = repository.GetAllActivityNotesById(1);
 
             // Assert
             result.Should().NotBeNull();

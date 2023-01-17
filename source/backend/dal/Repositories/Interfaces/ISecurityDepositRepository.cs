@@ -8,7 +8,7 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface ISecurityDepositRepository : IRepository<PimsSecurityDeposit>
     {
-        IEnumerable<PimsSecurityDeposit> GetByLeaseId(long leaseId);
+        IEnumerable<PimsSecurityDeposit> GetAllByLeaseId(long leaseId);
 
         PimsSecurityDeposit GetById(long id);
 

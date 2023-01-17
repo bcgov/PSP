@@ -41,7 +41,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IClaimRepository>>();
             var claims = new Entity.PimsClaim[] { EntityHelper.CreateClaim("claim1"), EntityHelper.CreateClaim("claim2") };
             var paged = new Entity.Models.Paged<Entity.PimsClaim>(claims);
-            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.GetPage(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetClaims(1, 10);
@@ -51,7 +51,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.ClaimModel>>(actionResult.Value);
             mapper.Map<Model.ClaimModel[]>(claims).Should().BeEquivalentTo(actualResult.Items);
-            repository.Verify(m => m.Get(1, 10, null), Times.Once());
+            repository.Verify(m => m.GetPage(1, 10, null), Times.Once());
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IClaimRepository>>();
             var claims = new Entity.PimsClaim[] { EntityHelper.CreateClaim("claim1"), EntityHelper.CreateClaim("claim2") };
             var paged = new Entity.Models.Paged<Entity.PimsClaim>(claims);
-            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.GetPage(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetClaims(0, 10);
@@ -75,7 +75,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.ClaimModel>>(actionResult.Value);
             mapper.Map<Model.ClaimModel[]>(claims).Should().BeEquivalentTo(actualResult.Items);
-            repository.Verify(m => m.Get(1, 10, null), Times.Once());
+            repository.Verify(m => m.GetPage(1, 10, null), Times.Once());
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IClaimRepository>>();
             var claims = new Entity.PimsClaim[] { EntityHelper.CreateClaim("claim1"), EntityHelper.CreateClaim("claim2") };
             var paged = new Entity.Models.Paged<Entity.PimsClaim>(claims);
-            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.GetPage(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetClaims(1, 0);
@@ -99,7 +99,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.ClaimModel>>(actionResult.Value);
             mapper.Map<Model.ClaimModel[]>(claims).Should().BeEquivalentTo(actualResult.Items);
-            repository.Verify(m => m.Get(1, 1, null), Times.Once());
+            repository.Verify(m => m.GetPage(1, 1, null), Times.Once());
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IClaimRepository>>();
             var claims = new Entity.PimsClaim[] { EntityHelper.CreateClaim("claim1"), EntityHelper.CreateClaim("claim2") };
             var paged = new Entity.Models.Paged<Entity.PimsClaim>(claims);
-            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.GetPage(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetClaims(1, 51);
@@ -123,7 +123,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.ClaimModel>>(actionResult.Value);
             mapper.Map<Model.ClaimModel[]>(claims).Should().BeEquivalentTo(actualResult.Items);
-            repository.Verify(m => m.Get(1, 50, null), Times.Once());
+            repository.Verify(m => m.GetPage(1, 50, null), Times.Once());
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var repository = helper.GetService<Mock<IClaimRepository>>();
             var claims = new Entity.PimsClaim[] { EntityHelper.CreateClaim("claim1"), EntityHelper.CreateClaim("claim2") };
             var paged = new Entity.Models.Paged<Entity.PimsClaim>(claims);
-            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.GetPage(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetClaims(1, 10, "test");
@@ -147,7 +147,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.ClaimModel>>(actionResult.Value);
             mapper.Map<Model.ClaimModel[]>(claims).Should().BeEquivalentTo(actualResult.Items);
-            repository.Verify(m => m.Get(1, 10, "test"), Times.Once());
+            repository.Verify(m => m.GetPage(1, 10, "test"), Times.Once());
         }
         #endregion
 
@@ -162,7 +162,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var repository = helper.GetService<Mock<IClaimRepository>>();
             var claim = EntityHelper.CreateClaim("claim1");
-            repository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(claim);
+            repository.Setup(m => m.GetByKey(It.IsAny<Guid>())).Returns(claim);
 
             // Act
             var result = controller.GetClaim(claim.ClaimUid);
@@ -172,7 +172,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.ClaimModel>(actionResult.Value);
             mapper.Map<Model.ClaimModel>(claim).Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.Get(claim.ClaimUid), Times.Once());
+            repository.Verify(m => m.GetByKey(claim.ClaimUid), Times.Once());
         }
         #endregion
 

@@ -50,7 +50,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "lookup" })]
         public IActionResult GetRoles()
         {
-            var roleCodes = _mapper.Map<Model.RoleModel[]>(_lookupRepository.GetRoles());
+            var roleCodes = _mapper.Map<Model.RoleModel[]>(_lookupRepository.GetAllRoles());
             return new JsonResult(roleCodes.ToArray());
         }
 
@@ -64,7 +64,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "lookup" })]
         public IActionResult GetPropertyClassificationTypes()
         {
-            var classifications = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyClassificationTypes());
+            var classifications = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyClassificationTypes());
             return new JsonResult(classifications.ToArray());
         }
 
