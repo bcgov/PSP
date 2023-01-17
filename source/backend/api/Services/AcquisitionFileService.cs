@@ -75,7 +75,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
-            var properties = _acquisitionFilePropertyRepository.GetByAcquisitionFileId(id);
+            var properties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(id);
             ReprojectPropertyLocationsToWgs84(properties);
             return properties;
         }

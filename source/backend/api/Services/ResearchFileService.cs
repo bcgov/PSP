@@ -57,7 +57,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
-            var propertyResearchFiles = _researchFilePropertyRepository.GetByResearchFileId(researchFileId);
+            var propertyResearchFiles = _researchFilePropertyRepository.GetAllByResearchFileId(researchFileId);
             ReprojectPropertyLocationsToWgs84(propertyResearchFiles);
 
             return propertyResearchFiles;
