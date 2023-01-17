@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
+using FluentAssertions.Common;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Moq;
+using Pims.Api.Constants;
 using Pims.Api.Controllers;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
@@ -97,6 +101,10 @@ namespace Pims.Api.Test.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var repository = helper.GetService<Mock<ILookupRepository>>();
+            var memoryCache = helper.GetService<Mock<IMemoryCache>>();
+            var cacheEntry = new Mock<ICacheEntry>();
+
+            memoryCache.Setup(m => m.CreateEntry(It.IsAny<object>())).Returns(cacheEntry.Object);
 
             var areaUnitTypes = EntityHelper.CreatePropertyAreaUnitType("area");
             repository.Setup(m => m.GetAllPropertyAreaUnitTypes()).Returns(new[] { areaUnitTypes });
@@ -144,6 +152,27 @@ namespace Pims.Api.Test.Controllers
             mapper.Map<Model.LookupModel<short>>(regions).Should().BeEquivalentTo(actualResult.Next(7));
             mapper.Map<Model.RoleModel>(roleCodes).Should().BeEquivalentTo(actualResult.Next(8));
             mapper.Map<Model.LookupModel>(tenureTypes).Should().BeEquivalentTo(actualResult.Next(9));
+        }
+
+        [Fact]
+        public void GetAll_Cached()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
+
+            var mapper = helper.GetService<IMapper>();
+            var repository = helper.GetService<Mock<ILookupRepository>>();
+            var memoryCache = helper.GetService<Mock<IMemoryCache>>();
+            var cachedResult = (object) new JsonResult("");
+
+            memoryCache.Setup(m => m.TryGetValue(It.IsAny<object>(), out cachedResult)).Returns(true);
+
+            // Act
+            var result = controller.GetAll();
+
+            // Assert
+            result.IsSameOrEqualTo(cachedResult);
         }
         #endregion
     }
