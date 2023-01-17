@@ -1,99 +1,29 @@
-import { ColumnWithProps, Table } from 'components/Table';
+import { Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
-import { IProjectSearchResult } from 'interfaces';
 import { useCallback } from 'react';
-import { Link } from 'react-router-dom';
-import { CellProps } from 'react-table';
-import { prettyFormatDate } from 'utils';
 
-const columns: ColumnWithProps<IProjectSearchResult>[] = [
-  {
-    Header: 'Project #',
-    accessor: 'code',
-    align: 'center',
-    clickable: false,
-    sortable: false,
-    width: 5,
-    maxWidth: 20,
-    Cell: (props: CellProps<IProjectSearchResult>) => (
-      <Link to={`/mapview/sidebar/project/${props.row.original.id}`}>
-        {props.row.original.code}
-      </Link>
-    ),
-  },
-  {
-    Header: 'Project name',
-    accessor: 'description',
-    align: 'left',
-    clickable: false,
-    sortable: false,
-    width: 45,
-    maxWidth: 45,
-    Cell: (props: CellProps<IProjectSearchResult>) => (
-      <Link to={`/mapview/sidebar/project/${props.row.original.id}`}>
-        {props.row.original.description}
-      </Link>
-    ),
-  },
-  {
-    Header: 'Region',
-    accessor: 'region',
-    align: 'left',
-    clickable: false,
-    sortable: false,
-    width: 20,
-    maxWidth: 20,
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-    align: 'left',
-    clickable: false,
-    sortable: false,
-    width: 20,
-    maxWidth: 20,
-  },
-  {
-    Header: 'Last updated by',
-    accessor: 'lastUpdatedBy',
-    align: 'left',
-    clickable: false,
-    sortable: false,
-    width: 10,
-    maxWidth: 20,
-  },
-  {
-    Header: 'Updated date',
-    accessor: 'lastUpdatedDate',
-    align: 'left',
-    sortable: false,
-    width: 10,
-    Cell: (props: CellProps<IProjectSearchResult>) => {
-      const updateDate = props.row.original.lastUpdatedDate;
-      return (
-        <>
-          <span>{prettyFormatDate(updateDate)}</span>
-        </>
-      );
-    },
-  },
-];
+import { columns } from './columns';
+import { ProjectSearchResultModel } from './models';
 
 export interface IProjectSearchResultsProps {
-  results: IProjectSearchResult[];
+  results: ProjectSearchResultModel[];
   totalItems?: number;
   pageCount?: number;
   pageSize?: number;
   pageIndex?: number;
-  sort?: TableSort<IProjectSearchResult>;
-  setSort: (value: TableSort<IProjectSearchResult>) => void;
+  sort?: TableSort<ProjectSearchResultModel>;
+  setSort: (value: TableSort<ProjectSearchResultModel>) => void;
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
 }
 
+/**
+ * Component that renders search results for acquisition files.
+ * @param {IProjectSearchResultsProps} props
+ */
 export const ProjectSearchResults = (props: IProjectSearchResultsProps) => {
-  const { results, sort = {}, setSort, setPageSize, setPageIndex, ...rest } = props;
+  const { results, sort = {}, setSort, setPageSize, setPageIndex, totalItems, ...rest } = props;
 
   // This will get called when the table needs new data
   const updateCurrentPage = useCallback(
@@ -102,15 +32,15 @@ export const ProjectSearchResults = (props: IProjectSearchResultsProps) => {
   );
 
   return (
-    <Table<IProjectSearchResult>
+    <Table<ProjectSearchResultModel>
       name="projectsTable"
       columns={columns}
       data={results ?? []}
       externalSort={{ sort: sort, setSort: setSort }}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
-      noRowsMessage="Project details do not exist in PIMS inventory"
-      totalItems={props.totalItems}
+      noRowsMessage="No matching results can be found. Try widening your search criteria."
+      totalItems={totalItems}
       {...rest}
     ></Table>
   );

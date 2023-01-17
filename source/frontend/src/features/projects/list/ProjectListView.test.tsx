@@ -1,12 +1,12 @@
 import userEvent from '@testing-library/user-event';
 import { Claims } from 'constants/index';
 import { useApiProjects } from 'hooks/pims-api/useApiProjects';
-import { IProjectSearchResult } from 'interfaces';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { IProjectFilter } from '..';
 import { ProjectListView } from './ProjectListView';
+import { ProjectSearchResultModel } from './ProjectSearchResults/models';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
@@ -19,7 +19,7 @@ const searchProjects = jest.fn();
   searchProjects,
 });
 
-const setupMockSearch = (searchResults?: IProjectSearchResult[]) => {
+const setupMockSearch = (searchResults?: ProjectSearchResultModel[]) => {
   const results = searchResults ?? [];
   const len = results.length;
   searchProjects.mockResolvedValue({
@@ -43,6 +43,14 @@ const setup = (renderOptions: RenderOptions = { store: storeState }) => {
 describe('Project List View', () => {
   beforeEach(() => {
     searchProjects.mockClear();
+  });
+
+  it('matches snapshot', async () => {
+    setupMockSearch();
+    const { asFragment } = setup();
+
+    const fragment = await waitFor(() => asFragment());
+    expect(fragment).toMatchSnapshot();
   });
 
   it('searches by Project Name', async () => {
