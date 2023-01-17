@@ -55,6 +55,13 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.ISequenceRepository, Repositories.SequenceRepository>();
             repositories.AddScoped<Repositories.IPropertyLeaseRepository, Repositories.PropertyLeaseRepository>();
             repositories.AddScoped<Repositories.IProjectRepository, Repositories.ProjectRepository>();
+            repositories.AddScoped<Repositories.IBusinessFunctionCodeRepository, Repositories.BusinessFunctionCodeRepository>();
+            repositories.AddScoped<Repositories.IChartOfAccountsCodeRepository, Repositories.ChartOfAccountsCodeRepository>();
+            repositories.AddScoped<Repositories.IYearlyFinancialCodeRepository, Repositories.YearlyFinancialCodeRepository>();
+            repositories.AddScoped<Repositories.ICostTypeCodeRepository, Repositories.CostTypeCodeRepository>();
+            repositories.AddScoped<Repositories.IFinancialActivityCodeRepository, Repositories.FinancialActivityCodeRepository>();
+            repositories.AddScoped<Repositories.IWorkActivityCodeRepository, Repositories.WorkActivityCodeRepository>();
+            repositories.AddScoped<Repositories.IResponsibilityCodeRepository, Repositories.ResponsibilityCodeRepository>();
             return repositories; // TODO: PSP-4424 Use reflection to find all Repositories.
         }
 
