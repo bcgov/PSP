@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Pims.Api.Constants;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 using Model = Pims.Api.Models.Lookup;
@@ -20,8 +23,10 @@ namespace Pims.Api.Controllers
     public class LookupController : ControllerBase
     {
         #region Variables
+        private const int OneHourInSeconds = 60 * 60;
         private readonly ILookupRepository _lookupRepository;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Constructors
@@ -31,10 +36,12 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="lookupRepository"></param>
         /// <param name="mapper"></param>
-        public LookupController(ILookupRepository lookupRepository, IMapper mapper)
+        /// <param name="memoryCache"></param>
+        public LookupController(ILookupRepository lookupRepository, IMapper mapper, IMemoryCache memoryCache)
         {
             _lookupRepository = lookupRepository;
             _mapper = mapper;
+            _memoryCache = memoryCache;
         }
         #endregion
 
@@ -76,8 +83,12 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Model.LookupModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lookup" })]
+        [ResponseCache(Duration = OneHourInSeconds)]
         public IActionResult GetAll()
         {
+
+            if (!_memoryCache.TryGetValue(CacheKeys.Lookup, out JsonResult cachedLookupResponse))
+            {
             var areaUnitTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyAreaUnitTypes());
             var classificationTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyClassificationTypes());
             var contactMethodTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllContactMethodTypes());
@@ -124,54 +135,60 @@ namespace Pims.Api.Controllers
             var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTenantTypes());
             var acqFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFundingTypes());
 
-            var codes = new List<object>();
-            codes.AddRange(areaUnitTypes);
-            codes.AddRange(classificationTypes);
-            codes.AddRange(contactMethodTypes);
-            codes.AddRange(countries);
-            codes.AddRange(districts);
-            codes.AddRange(insuranceTypes);
-            codes.AddRange(leaseCategoryTypes);
-            codes.AddRange(leaseInitiatorTypes);
-            codes.AddRange(leasePaymentFrequencyTypes);
-            codes.AddRange(leasePaymentMethodTypes);
-            codes.AddRange(leasePaymentReceivableTypes);
-            codes.AddRange(leasePaymentStatusTypes);
-            codes.AddRange(leaseProgramTypes);
-            codes.AddRange(leasePurposeTypes);
-            codes.AddRange(leaseResponsibilityTypes);
-            codes.AddRange(leaseStatusTypes);
-            codes.AddRange(leaseTermStatusTypes);
-            codes.AddRange(leaseTypes);
-            codes.AddRange(organizationTypes);
-            codes.AddRange(propertyImprovementTypes);
-            codes.AddRange(propertyTypes);
-            codes.AddRange(provinces);
-            codes.AddRange(regions);
-            codes.AddRange(roleCodes);
-            codes.AddRange(securityDepositTypes);
-            codes.AddRange(tenureTypes);
-            codes.AddRange(researchStatusTypes);
-            codes.AddRange(requestSourceTypes);
-            codes.AddRange(researchPurposeTypes);
-            codes.AddRange(propertyResearchPurposeTypes);
-            codes.AddRange(propertyAnomalyTypes);
-            codes.AddRange(propertyRoadTypes);
-            codes.AddRange(propertyAdjacentLandTypes);
-            codes.AddRange(volumeUnitTypes);
-            codes.AddRange(propertyVolumetricTypes);
-            codes.AddRange(pphStatusType);
-            codes.AddRange(documentStatusTypes);
-            codes.AddRange(acquisitionFileStatusTypes);
-            codes.AddRange(acquisitionPhysFileStatusTypes);
-            codes.AddRange(acquisitionTypes);
-            codes.AddRange(activityTemplateTypes);
-            codes.AddRange(activityStatusTypes);
-            codes.AddRange(acqFilePersonProfileTypes);
-            codes.AddRange(tenantTypes);
-            codes.AddRange(acqFundingTypes);
+                var codes = new List<object>();
+                codes.AddRange(areaUnitTypes);
+                codes.AddRange(classificationTypes);
+                codes.AddRange(contactMethodTypes);
+                codes.AddRange(countries);
+                codes.AddRange(districts);
+                codes.AddRange(insuranceTypes);
+                codes.AddRange(leaseCategoryTypes);
+                codes.AddRange(leaseInitiatorTypes);
+                codes.AddRange(leasePaymentFrequencyTypes);
+                codes.AddRange(leasePaymentMethodTypes);
+                codes.AddRange(leasePaymentReceivableTypes);
+                codes.AddRange(leasePaymentStatusTypes);
+                codes.AddRange(leaseProgramTypes);
+                codes.AddRange(leasePurposeTypes);
+                codes.AddRange(leaseResponsibilityTypes);
+                codes.AddRange(leaseStatusTypes);
+                codes.AddRange(leaseTermStatusTypes);
+                codes.AddRange(leaseTypes);
+                codes.AddRange(organizationTypes);
+                codes.AddRange(propertyImprovementTypes);
+                codes.AddRange(propertyTypes);
+                codes.AddRange(provinces);
+                codes.AddRange(regions);
+                codes.AddRange(roleCodes);
+                codes.AddRange(securityDepositTypes);
+                codes.AddRange(tenureTypes);
+                codes.AddRange(researchStatusTypes);
+                codes.AddRange(requestSourceTypes);
+                codes.AddRange(researchPurposeTypes);
+                codes.AddRange(propertyResearchPurposeTypes);
+                codes.AddRange(propertyAnomalyTypes);
+                codes.AddRange(propertyRoadTypes);
+                codes.AddRange(propertyAdjacentLandTypes);
+                codes.AddRange(volumeUnitTypes);
+                codes.AddRange(propertyVolumetricTypes);
+                codes.AddRange(pphStatusType);
+                codes.AddRange(documentStatusTypes);
+                codes.AddRange(acquisitionFileStatusTypes);
+                codes.AddRange(acquisitionPhysFileStatusTypes);
+                codes.AddRange(acquisitionTypes);
+                codes.AddRange(activityTemplateTypes);
+                codes.AddRange(activityStatusTypes);
+                codes.AddRange(acqFilePersonProfileTypes);
+                codes.AddRange(tenantTypes);
+                codes.AddRange(acqFundingTypes);
 
-            return new JsonResult(codes);
+                var response = new JsonResult(codes);
+
+                _memoryCache.Set(CacheKeys.Lookup, response);
+                return response;
+            }
+
+            return cachedLookupResponse;
         }
         #endregion
     }
