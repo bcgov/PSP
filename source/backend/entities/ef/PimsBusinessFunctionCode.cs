@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_BUSINESS_FUNCTION_CODE")]
-    [Index(nameof(Code), Name = "BIZFCN_CODE_IDX", IsUnique = true)]
+    [Index(nameof(Code), Name = "BIZFCN_CODE_IDX")]
     public partial class PimsBusinessFunctionCode
     {
         public PimsBusinessFunctionCode()

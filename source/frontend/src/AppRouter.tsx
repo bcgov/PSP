@@ -1,6 +1,7 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Claims } from 'constants/claims';
+import { Roles } from 'constants/roles';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
 import { AdminAccessRequestPage } from 'features/admin/access-request/AdminAccessRequestPage';
@@ -47,6 +48,9 @@ const LeaseAndLicenseListView = lazy(() =>
 );
 const AcquisitionListView = lazy(() =>
   componentLoader(import('features/acquisition/list/AcquisitionListView'), 2),
+);
+const FinancialCodesListView = lazy(() =>
+  componentLoader(import('features/admin/financial-codes/list/FinancialCodeListView'), 2),
 );
 
 const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
@@ -136,6 +140,14 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.DOCUMENT_ADMIN}
             title={getTitle('Document Template')}
+          ></AppRoute>
+          <AppRoute
+            protected
+            path="/admin/financial-code/list"
+            customComponent={FinancialCodesListView}
+            layout={AuthLayout}
+            role={Roles.SYSTEM_ADMINISTRATOR}
+            title={getTitle('Financial Codes')}
           ></AppRoute>
           <AppRoute
             protected

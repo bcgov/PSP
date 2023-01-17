@@ -10,9 +10,8 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACQUISITION_FILE_NOTE")]
     [Index(nameof(AcquisitionFileId), Name = "ACQNOT_ACQUISITION_FILE_ID_IDX")]
-    [Index(nameof(AcquisitionFileId), Name = "ACQNOT_ACQUISITION_FILE_ID_TUC", IsUnique = true)]
-    [Index(nameof(NoteId), Name = "ACQNOT_NOTE_ID_IDX")]
-    [Index(nameof(NoteId), Name = "ACQNOT_NOTE_ID_TUC", IsUnique = true)]
+    [Index(nameof(AcquisitionFileId), nameof(NoteId), Name = "ACQNOT_ACQUISITION_FILE_NOTE_TUC", IsUnique = true)]
+    [Index(nameof(NoteId), Name = "ACQNOT_NOTE_ID_IDX", IsUnique = true)]
     public partial class PimsAcquisitionFileNote
     {
         [Key]
@@ -64,7 +63,7 @@ namespace Pims.Dal.Entities
         public string DbLastUpdateUserid { get; set; }
 
         [ForeignKey(nameof(AcquisitionFileId))]
-        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionFileNote))]
+        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionFileNotes))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
         [ForeignKey(nameof(NoteId))]
         [InverseProperty(nameof(PimsNote.PimsAcquisitionFileNote))]
