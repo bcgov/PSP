@@ -2136,8 +2136,8 @@ namespace Pims.Dal
                     .HasComment("Indicates if the relationship has been disabled.");
 
                 entity.HasOne(d => d.AcquisitionFile)
-                    .WithOne(p => p.PimsAcquisitionFileNote)
-                    .HasForeignKey<PimsAcquisitionFileNote>(d => d.AcquisitionFileId)
+                    .WithMany(p => p.PimsAcquisitionFileNotes)
+                    .HasForeignKey(d => d.AcquisitionFileId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_ACQNOT_FK");
 
@@ -2796,8 +2796,6 @@ namespace Pims.Dal
                 entity.Property(e => e.ActivityTemplateHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_TEMPLATE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsActivityTemplateType>(entity =>
@@ -2949,7 +2947,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Code).HasComment("Name of the code.");
+                entity.Property(e => e.Code)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Name of the code.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -3002,7 +3002,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Code).HasComment("Name of the code.");
+                entity.Property(e => e.Code)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Name of the code.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -3164,7 +3166,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Code).HasComment("Name of the code.");
+                entity.Property(e => e.Code)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Name of the code.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -3459,7 +3463,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Code).HasComment("Value of the code.");
+                entity.Property(e => e.Code)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Value of the code.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -4902,6 +4908,11 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.ProjectStatusTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PRJSTS_PIM_PROJCT_FK");
+
+                entity.HasOne(d => d.RegionCodeNavigation)
+                    .WithMany(p => p.PimsProjects)
+                    .HasForeignKey(d => d.RegionCode)
+                    .HasConstraintName("PIM_REGION_PIM_PROJCT_FK");
 
                 entity.HasOne(d => d.WorkActivityCode)
                     .WithMany(p => p.PimsProjects)
@@ -6471,7 +6482,7 @@ namespace Pims.Dal
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.Code)
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESPONSIBILITY_CODE_SEQ])")
+                    .HasDefaultValueSql("('<Empty>')")
                     .HasComment("Name of the code.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
@@ -7233,7 +7244,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Code).HasComment("Name of the code.");
+                entity.Property(e => e.Code)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Name of the code.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -7286,7 +7299,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Code).HasComment("Standard Object of Expenditure (STOB) code.");
+                entity.Property(e => e.Code)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Standard Object of Expenditure (STOB) code.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
