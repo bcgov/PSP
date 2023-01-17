@@ -1,5 +1,5 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { Formik, FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
@@ -28,31 +28,27 @@ export const AddResearchContainer: React.FunctionComponent<
 > = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const { selectedFileFeature: selectedResearchFeature, setState } =
-    React.useContext(MapStateContext);
+  const { selectedFileFeature } = React.useContext(MapStateContext);
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
-    if (!!selectedResearchFeature) {
+    if (!!selectedFileFeature) {
       researchForm.properties = [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ];
     }
     return researchForm;
-  }, [selectedResearchFeature]);
+  }, [selectedFileFeature]);
   const { addResearchFile } = useAddResearch();
   const { search } = useMapSearch();
 
   useEffect(() => {
-    if (!!selectedResearchFeature && !!formikRef.current) {
+    if (!!selectedFileFeature && !!formikRef.current) {
       formikRef.current.resetForm();
       formikRef.current?.setFieldValue('properties', [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ]);
     }
-    return () => {
-      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
-    };
-  }, [initialForm, selectedResearchFeature, setState]);
+  }, [initialForm, selectedFileFeature]);
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
