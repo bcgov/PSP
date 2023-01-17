@@ -21,8 +21,10 @@ namespace Pims.Dal.Entities
         public DateTime? EndDateHist { get; set; }
         [Column("ID")]
         public long Id { get; set; }
+        [Required]
         [Column("CODE")]
-        public int Code { get; set; }
+        [StringLength(20)]
+        public string Code { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]

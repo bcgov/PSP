@@ -28,6 +28,9 @@ namespace Pims.Dal.Entities
         [Required]
         [Column("ACTIVITY_TEMPLATE_JSON")]
         public string ActivityTemplateJson { get; set; }
+        [Required]
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -66,9 +69,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Required]
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
 
         [ForeignKey(nameof(ActivityTemplateTypeCode))]
         [InverseProperty(nameof(PimsActivityTemplateType.PimsActivityTemplates))]
