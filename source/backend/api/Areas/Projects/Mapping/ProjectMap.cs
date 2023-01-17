@@ -13,7 +13,7 @@ namespace Pims.Api.Areas.Projects.Mapping
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Status, src => src.ProjectStatusTypeCodeNavigation.Description)
-                .Map(dest => dest.Region, src => src.RegionCode.ToString())
+                .Map(dest => dest.Region, src => src.RegionCodeNavigation.Description)
                 .Map(dest => dest.LastUpdatedBy, src => src.AppLastUpdateUserid)
                 .Map(dest => dest.LastUpdatedDate, src => src.AppLastUpdateTimestamp);
         }

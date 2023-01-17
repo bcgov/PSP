@@ -111,6 +111,7 @@ namespace Pims.Dal.Repositories
 
             var items = await query
                 .Include(x => x.ProjectStatusTypeCodeNavigation)
+                .Include(x => x.RegionCodeNavigation)
                 .Skip(skip)
                 .Take(filter.Quantity)
                 .ToListAsync();
