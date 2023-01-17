@@ -184,8 +184,7 @@ namespace Pims.Api.Controllers
 
                 var response = new JsonResult(codes);
 
-                _memoryCache.Set(CacheKeys.Lookup, response);
-                return response;
+                return _memoryCache.Set(CacheKeys.Lookup, response);
             }
 
             return cachedLookupResponse;
