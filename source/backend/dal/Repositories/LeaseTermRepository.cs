@@ -42,7 +42,7 @@ namespace Pims.Dal.Repositories
             return pimsLeaseTerm;
         }
 
-        public IEnumerable<PimsLeaseTerm> GetByLeaseId(long leaseId)
+        public IEnumerable<PimsLeaseTerm> GetAllByLeaseId(long leaseId)
         {
             return this.Context.PimsLeaseTerms.AsNoTracking().Where(t => t.LeaseId == leaseId).ToArray();
         }

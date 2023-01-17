@@ -50,7 +50,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "user" })]
         public IActionResult GetAccessRequest()
         {
-            var accessRequest = _accessRequestRepository.Get();
+            var accessRequest = _accessRequestRepository.TryGet();
             if (accessRequest == null)
             {
                 return NoContent();

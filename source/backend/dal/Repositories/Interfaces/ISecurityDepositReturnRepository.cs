@@ -10,7 +10,7 @@ namespace Pims.Dal.Repositories
     {
         PimsSecurityDepositReturn GetById(long id);
 
-        IEnumerable<PimsSecurityDepositReturn> GetByDepositId(long id);
+        IEnumerable<PimsSecurityDepositReturn> GetAllByDepositId(long id);
 
         PimsSecurityDepositReturn Add(PimsSecurityDepositReturn depositReturn);
 

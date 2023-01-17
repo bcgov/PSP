@@ -30,7 +30,7 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        public List<PimsPropertyAcquisitionFile> GetByAcquisitionFileId(long acquisitionFileId)
+        public List<PimsPropertyAcquisitionFile> GetPropertiesByAcquisitionFileId(long acquisitionFileId)
         {
             return Context.PimsPropertyAcquisitionFiles
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)

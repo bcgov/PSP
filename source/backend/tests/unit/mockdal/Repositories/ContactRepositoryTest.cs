@@ -77,7 +77,7 @@ namespace Pims.Dal.Test.Services
             var service = helper.CreateMockRepository<ContactRepository>(user, dbContextMock.Object);
 
             // Act
-            var result = service.Get(filter);
+            var result = service.GetAll(filter);
 
             // Assert
             Assert.NotNull(result);

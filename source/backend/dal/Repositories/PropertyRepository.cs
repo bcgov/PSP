@@ -50,7 +50,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<PimsProperty> Get(PropertyFilter filter)
+        public IEnumerable<PimsProperty> GetAllByFilter(PropertyFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -97,7 +97,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public PimsProperty Get(long id)
+        public PimsProperty GetById(long id)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
@@ -233,7 +233,7 @@ namespace Pims.Dal.Repositories
             return property;
         }
 
-        public PimsProperty GetByLocation(Geometry location)
+        public PimsProperty TryGetByLocation(Geometry location)
         {
             return this.Context.PimsProperties
                     .AsNoTracking()
@@ -248,7 +248,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public PimsProperty GetAssociations(long id)
+        public PimsProperty GetAllAssociationsById(long id)
         {
             PimsProperty property = this.Context.PimsProperties.AsNoTracking()
                 .Include(p => p.PimsPropertyLeases)

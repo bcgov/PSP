@@ -48,7 +48,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<PimsContactMgrVw> Get(ContactFilter filter)
+        public IEnumerable<PimsContactMgrVw> GetAll(ContactFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
             filter.ThrowIfNull(nameof(filter));
@@ -67,7 +67,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id">The id of the contact to retrieve.</param>
         /// <returns></returns>
-        public PimsContactMgrVw Get(string id)
+        public PimsContactMgrVw GetById(string id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
             var contact = Context.PimsContactMgrVws.Where(x => x.Id == id).FirstOrDefault();

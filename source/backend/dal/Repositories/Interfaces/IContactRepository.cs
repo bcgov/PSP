@@ -11,9 +11,9 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        IEnumerable<PimsContactMgrVw> Get(ContactFilter filter);
+        IEnumerable<PimsContactMgrVw> GetAll(ContactFilter filter);
 
-        PimsContactMgrVw Get(string id);
+        PimsContactMgrVw GetById(string id);
 
         Paged<PimsContactMgrVw> GetPage(ContactFilter filter);
     }

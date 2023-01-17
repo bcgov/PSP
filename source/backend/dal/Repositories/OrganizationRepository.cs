@@ -57,7 +57,7 @@ namespace Pims.Dal.Repositories
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">Organization does not exists for the specified 'id'.</exception>
         /// <returns></returns>
-        public PimsOrganization Get(long id)
+        public PimsOrganization GetById(long id)
         {
             return this.Context.PimsOrganizations
                .Include(o => o.PimsOrganizationAddresses)

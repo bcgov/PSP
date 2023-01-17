@@ -59,8 +59,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
-            userRepository.Setup(m => m.Get(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
             roleRepository.Setup(m => m.GetByKeycloakId(It.IsAny<System.Guid>())).Returns(removeRole);
             userRepository.Setup(m => m.RemoveRole(It.IsAny<Pims.Dal.Entities.PimsUser>(), removeRole.RoleId)).Returns((Pims.Dal.Entities.PimsUser eUser, long roleId) =>
@@ -126,8 +126,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
-            userRepository.Setup(m => m.Get(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
             roleRepository.Setup(m => m.Find(removeRole.RoleId)).Returns(removeRole);
 
@@ -213,8 +213,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
-            userRepository.Setup(m => m.Get(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(euser);
             roleRepository.Setup(m => m.Find(removeRole.RoleId)).Returns(removeRole);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
 
@@ -262,8 +262,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.Get(It.IsAny<long>())).Returns(euser);
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
 
             var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
@@ -308,7 +308,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
             roleRepository.Setup(m => m.Find(removeRole.RoleId)).Returns<Entity.PimsRole>(null);
 
@@ -355,7 +355,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
             userRepository.Setup(m => m.RemoveRole(It.IsAny<Pims.Dal.Entities.PimsUser>(), existingRole.RoleId)).Returns((Pims.Dal.Entities.PimsUser eUser, long roleId) =>
             {
@@ -410,7 +410,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             var values = new List<Entity.PimsUser>();
             userRepository.Setup(m => m.UpdateOnly(Capture.In(values))).Returns(euser);
             roleRepository.Setup(m => m.Find(existingRole.RoleId)).Returns(existingRole);
@@ -451,7 +451,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
 
             var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
@@ -487,7 +487,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var userRepository = helper.GetMock<IUserRepository>();
             var roleRepository = helper.GetMock<IRoleRepository>();
 
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
 
             var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
@@ -534,9 +534,9 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var roleRepository = helper.GetMock<IRoleRepository>();
 
             var values = new List<Entity.PimsAccessRequest>();
-            accessRequestRepository.Setup(m => m.Get(It.IsAny<long>())).Returns(eAccessRequest);
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(updatedAccessRequest.User);
-            userRepository.Setup(m => m.Get(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            accessRequestRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(eAccessRequest);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(updatedAccessRequest.User);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(updatedAccessRequest.User);
             roleRepository.Setup(m => m.Find(It.IsAny<long>())).Returns(updatedAccessRequest.Role);
             accessRequestRepository.Setup(m => m.Update(Capture.In(values))).Returns(updatedAccessRequest);
@@ -585,9 +585,9 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var roleRepository = helper.GetMock<IRoleRepository>();
 
             var values = new List<Entity.PimsAccessRequest>();
-            accessRequestRepository.Setup(m => m.Get(It.IsAny<long>())).Returns(eAccessRequest);
-            userRepository.Setup(m => m.GetTracking(It.IsAny<long>())).Returns(updatedAccessRequest.User);
-            userRepository.Setup(m => m.Get(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            accessRequestRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(eAccessRequest);
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(updatedAccessRequest.User);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(updatedAccessRequest.User);
             roleRepository.Setup(m => m.Find(It.IsAny<long>())).Returns(updatedAccessRequest.Role);
             accessRequestRepository.Setup(m => m.Update(Capture.In(values))).Returns(updatedAccessRequest);

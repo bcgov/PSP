@@ -132,9 +132,9 @@ namespace Pims.Dal.Repositories
         /// <param name="page"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        public Paged<PimsUser> Get(int page, int quantity)
+        public Paged<PimsUser> GetPage(int page, int quantity)
         {
-            return Get(new UserFilter(page, quantity));
+            return GetAllByFilter(new UserFilter(page, quantity));
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<PimsUser> Get(UserFilter filter = null)
+        public Paged<PimsUser> GetAllByFilter(UserFilter filter = null)
         {
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminUsers, _keycloakOptions);
 
@@ -245,7 +245,7 @@ namespace Pims.Dal.Repositories
         /// <param name="id"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public PimsUser Get(long id)
+        public PimsUser GetById(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
@@ -267,7 +267,7 @@ namespace Pims.Dal.Repositories
         /// <param name="id"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public PimsUser GetTracking(long id)
+        public PimsUser GetTrackingById(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
@@ -287,7 +287,7 @@ namespace Pims.Dal.Repositories
         /// <param name="keycloakUserId"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public PimsUser Get(Guid keycloakUserId)
+        public PimsUser GetByKeycloakUserId(Guid keycloakUserId)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
@@ -315,7 +315,7 @@ namespace Pims.Dal.Repositories
             add.IssueDate = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
-            return Get(add.UserId);
+            return GetById(add.UserId);
         }
 
         /// <summary>
@@ -473,7 +473,7 @@ namespace Pims.Dal.Repositories
         /// <param name="keycloakUserId"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public PimsUser GetUserInfo(Guid keycloakUserId)
+        public PimsUser GetUserInfoByKeycloakUserId(Guid keycloakUserId)
         {
             return this.Context.PimsUsers
                 .Include(u => u.Person)

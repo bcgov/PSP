@@ -44,7 +44,7 @@ namespace Pims.Api.Repositories.Mayan
             _authRepository = authRepository;
         }
 
-        public async Task<ExternalResult<DocumentType>> CreateDocumentTypeAsync(DocumentType documentType)
+        public async Task<ExternalResult<DocumentType>> TryCreateDocumentTypeAsync(DocumentType documentType)
         {
             _logger.LogDebug("Creating document type...");
 
@@ -66,7 +66,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<string>> DeleteDocumentTypeAsync(long documentTypeId)
+        public async Task<ExternalResult<string>> TryDeleteDocumentTypeAsync(long documentTypeId)
         {
             _logger.LogDebug("Deleting document type...");
 
@@ -80,7 +80,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<QueryResult<DocumentType>>> GetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResult<QueryResult<DocumentType>>> TryGetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving document types...");
 
@@ -96,7 +96,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> TryGetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving document type metadata types...");
             string authenticationToken = await _authRepository.GetTokenAsync();
@@ -111,7 +111,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<QueryResult<DocumentDetail>>> GetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResult<QueryResult<DocumentDetail>>> TryGetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving document list...");
 
@@ -127,7 +127,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<DocumentDetail>> GetDocumentAsync(long documentId)
+        public async Task<ExternalResult<DocumentDetail>> TryGetDocumentAsync(long documentId)
         {
             _logger.LogDebug("Retrieving document...");
 
@@ -140,7 +140,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<QueryResult<DocumentMetadata>>> GetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResult<QueryResult<DocumentMetadata>>> TryGetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving document metadata...");
 
@@ -156,7 +156,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<FileDownload>> DownloadFileAsync(long documentId, long fileId)
+        public async Task<ExternalResult<FileDownload>> TryDownloadFileAsync(long documentId, long fileId)
         {
             _logger.LogDebug("Downloading file...");
             string authenticationToken = await _authRepository.GetTokenAsync();
@@ -218,7 +218,7 @@ namespace Pims.Api.Repositories.Mayan
             return retVal;
         }
 
-        public async Task<ExternalResult<string>> DeleteDocument(long documentId)
+        public async Task<ExternalResult<string>> TryDeleteDocument(long documentId)
         {
             _logger.LogDebug("Deleting document...");
             _logger.LogTrace("Document id {documentId}", documentId);
@@ -233,7 +233,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile file)
+        public async Task<ExternalResult<DocumentDetail>> TryUploadDocumentAsync(long documentType, IFormFile file)
         {
             _logger.LogDebug("Uploading document...");
             string authenticationToken = await _authRepository.GetTokenAsync();
@@ -259,7 +259,7 @@ namespace Pims.Api.Repositories.Mayan
             return result;
         }
 
-        public async Task<ExternalResult<QueryResult<MetadataType>>> GetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResult<QueryResult<MetadataType>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving metadata types...");
             string authenticationToken = await _authRepository.GetTokenAsync();
@@ -274,7 +274,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<DocumentTypeMetadataType>> CreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired)
+        public async Task<ExternalResult<DocumentTypeMetadataType>> TryCreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired)
         {
             _logger.LogDebug("Creating document type's metadata type...");
 
@@ -292,7 +292,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<DocumentMetadata>> CreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value)
+        public async Task<ExternalResult<DocumentMetadata>> TryCreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value)
         {
             _logger.LogDebug("Add existing metadata type with value to an existing document");
 
@@ -310,7 +310,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<DocumentMetadata>> UpdateDocumentMetadataAsync(long documentId, long metadataId, string value)
+        public async Task<ExternalResult<DocumentMetadata>> TryUpdateDocumentMetadataAsync(long documentId, long metadataId, string value)
         {
             _logger.LogDebug("Update existing metadata type with value to an existing document");
 
@@ -328,7 +328,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<string>> DeleteDocumentMetadataAsync(long documentId, long metadataId)
+        public async Task<ExternalResult<string>> TryDeleteDocumentMetadataAsync(long documentId, long metadataId)
         {
             _logger.LogDebug("Delete existing metadata type from an existing document");
 
@@ -341,7 +341,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired)
+        public async Task<ExternalResult<DocumentTypeMetadataType>> TryUpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired)
         {
             _logger.LogDebug("Updating document type and metadata type...");
 
@@ -359,7 +359,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<string>> DeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId)
+        public async Task<ExternalResult<string>> TryDeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId)
         {
             _logger.LogDebug("Deleting document type's metadata type...");
 

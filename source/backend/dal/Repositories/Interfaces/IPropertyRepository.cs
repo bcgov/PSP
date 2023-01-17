@@ -12,11 +12,11 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        IEnumerable<PimsProperty> Get(PropertyFilter filter);
+        IEnumerable<PimsProperty> GetAllByFilter(PropertyFilter filter);
 
         Paged<PimsProperty> GetPage(PropertyFilter filter);
 
-        PimsProperty Get(long id);
+        PimsProperty GetById(long id);
 
         PimsProperty GetByPid(string pid);
 
@@ -24,9 +24,9 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPin(int pin);
 
-        PimsProperty GetByLocation(Geometry location);
+        PimsProperty TryGetByLocation(Geometry location);
 
-        PimsProperty GetAssociations(long id);
+        PimsProperty GetAllAssociationsById(long id);
 
         PimsProperty Update(PimsProperty property);
 
