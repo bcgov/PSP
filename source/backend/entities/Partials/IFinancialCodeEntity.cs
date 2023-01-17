@@ -2,14 +2,14 @@ using System;
 
 namespace Pims.Dal.Entities
 {
-    public interface IFinancialCodeEntity<T_Code> : IBaseAppEntity
+    public interface IFinancialCodeEntity : IBaseAppEntity
     {
         #region Properties
 
         /// <summary>
         /// get/set - A unique code for the lookup.
         /// </summary>
-        T_Code Code { get; set; }
+        string Code { get; set; }
 
         string Description { get; set; }
 
