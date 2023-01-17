@@ -1,3 +1,5 @@
+using System;
+
 namespace Pims.Api.Models.Concepts
 {
     public class ProjectModel : BaseModel
@@ -22,7 +24,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Cost type code.
         /// </summary>
-        public long CostTypeCode { get; set; } // TODO: Use the correct type. 
+        public long CostTypeCode { get; set; } // TODO: Use the correct type.
 
         /// <summary>
         /// get/set - Work activity code.
@@ -32,7 +34,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The region code.
         /// </summary>
-        public short RegionCode { get; set; } // TODO: Use the correct type.
+        public RegionModel RegionCode { get; set; } // TODO: Use the correct type.
 
         /// <summary>
         /// get/set - The project code.
@@ -48,6 +50,16 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Project notes.
         /// </summary>
         public string Note { get; set; }
+
+        /// <summary>
+        /// get/set - Last Updated Date.
+        /// </summary>
+        public DateTime AppLastUpdateTimestamp { get; set; }
+
+        /// <summary>
+        /// get/set - Last Updated by.
+        /// </summary>
+        public string AppLastUpdateUserid { get; set; }
         #endregion
     }
 }
