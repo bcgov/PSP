@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useApiAcquisitionFile } from 'hooks/pims-api/useApiAcquisitionFile';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
@@ -16,6 +16,7 @@ export const useAcquisitionProvider = () => {
     postAcquisitionFile,
     putAcquisitionFile,
     putAcquisitionFileProperties,
+    getAcquisitionFileProperties,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -68,18 +69,31 @@ export const useAcquisitionProvider = () => {
     onError: useAxiosErrorHandler('Failed to update Acquisition File Properties'),
   });
 
+  const getAcquisitionPropertiesApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileProperty[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionFileProperties(acqFileId),
+      [getAcquisitionFileProperties],
+    ),
+    requestName: 'GetAcquisitionFileProperties',
+    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Properties'),
+  });
+
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
       getAcquisitionFile: getAcquisitionFileApi,
       updateAcquisitionFile: updateAcquisitionFileApi,
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
+      getAcquisitionProperties: getAcquisitionPropertiesApi,
     }),
     [
       addAcquisitionFileApi,
       getAcquisitionFileApi,
       updateAcquisitionFileApi,
       updateAcquisitionPropertiesApi,
+      getAcquisitionPropertiesApi,
     ],
   );
 };

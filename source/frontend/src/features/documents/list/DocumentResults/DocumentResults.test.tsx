@@ -31,6 +31,8 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
       setSort={setSort}
       onViewDetails={noop}
       onDelete={noop}
+      onPageChange={noop}
+      pageProps={{ pageSize: 10, pageIndex: 0 }}
     />,
     {
       ...rest,

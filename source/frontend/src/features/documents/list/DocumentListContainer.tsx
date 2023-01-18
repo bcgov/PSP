@@ -1,10 +1,12 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { SideBarContext } from 'features/properties/map/context/sidebarContext';
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { getPage } from 'utils';
 
 import { DocumentRow } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -26,6 +28,11 @@ const DocumentListContainer: React.FunctionComponent<
   const [documentResults, setDocumentResults] = useState<DocumentRow[]>([]);
 
   const { file, staleFile, setStaleFile } = useContext(SideBarContext);
+
+  const [pageProps, setPageProps] = useState<{ pageIndex?: number; pageSize: number }>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   const {
     retrieveDocumentRelationship,
@@ -51,22 +58,27 @@ const DocumentListContainer: React.FunctionComponent<
     retrieveDocuments();
   }, [retrieveDocuments]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     const getDetails = async () => {
-      const newDocumentResults = [...documentResults];
-      newDocumentResults.forEach(async d => {
-        if (d?.mayanDocumentId && !d?.isFileAvailable) {
+      const currentPage = getPage(pageProps.pageIndex ?? 0, pageProps.pageSize, documentResults);
+      const newDocumentResults = [...currentPage];
+      let updated = false;
+      await newDocumentResults.forEach(async (d, index) => {
+        if (d?.mayanDocumentId && d?.isFileAvailable === undefined) {
+          updated = true;
           const detail = await retrieveDocumentDetail(d.mayanDocumentId);
           const matchingResult = documentResults.find(dr => dr.id === d.id);
           if (matchingResult && detail?.status === ExternalResultStatus.Success) {
             matchingResult.isFileAvailable = !!detail.payload.file_latest?.id;
-            setDocumentResults(newDocumentResults);
           }
         }
       });
+      if (updated) {
+        setDocumentResults(documentResults);
+      }
     };
     getDetails();
-  }, [documentResults, retrieveDocumentDetail]);
+  }, [retrieveDocumentDetail, documentResults, pageProps]);
 
   useEffect(() => {
     if (staleFile) {
@@ -107,6 +119,14 @@ const DocumentListContainer: React.FunctionComponent<
     }
   }, [file, setStaleFile, retrieveDocuments]);
 
+  const currentPageIndex = pageProps.pageIndex;
+  const onPageChange = useCallback(
+    ({ pageIndex, pageSize }: { pageIndex?: number; pageSize: number }) => {
+      setPageProps({ pageIndex: pageIndex ?? currentPageIndex, pageSize });
+    },
+    [currentPageIndex],
+  );
+
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -117,6 +137,8 @@ const DocumentListContainer: React.FunctionComponent<
       onDelete={onDelete}
       onSuccess={onSuccess}
       disableAdd={props.disableAdd}
+      onPageChange={onPageChange}
+      pageProps={pageProps}
     />
   );
 };
