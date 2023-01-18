@@ -292,7 +292,6 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsTenantType> GetAllTenantTypes()
         {
             return this.Context.PimsTenantTypes.AsNoTracking().ToArray();
-
         }
 
         public IEnumerable<PimsAcquisitionFundingType> GetAllAcquisitionFundingTypes()
@@ -300,6 +299,10 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsAcquisitionFundingTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsProjectStatusType> GetAllProjectStatusTypes()
+        {
+            return this.Context.PimsProjectStatusTypes.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }

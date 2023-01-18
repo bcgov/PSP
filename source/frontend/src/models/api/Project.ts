@@ -8,10 +8,12 @@ export interface Api_Project extends Api_ConcurrentVersion {
   businessFunctionCode?: any; // TODO: Match new code types
   costTypeCode?: any; // TODO: Match new code types
   workActivityCode?: any; // TODO: Match new code types
-  regionCode?: number;
+  regionCode?: Api_TypeCode<number>;
   code?: number;
   description?: string;
   note?: string;
+  appLastUpdateUserid?: string;
+  appLastUpdateTimestamp?: Date;
 }
 
 export interface Api_Product extends Api_ConcurrentVersion, Api_AuditFields {

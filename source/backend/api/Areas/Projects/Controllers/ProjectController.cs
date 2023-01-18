@@ -22,12 +22,10 @@ namespace Pims.Api.Areas.Projects.Controllers
     [Route("[area]")]
     public class ProjectController : ControllerBase
     {
-        #region Variables
+        #region fields
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
         #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Creates a new instance of a ProjectController class, initializes it with the specified arguments.
@@ -40,9 +38,6 @@ namespace Pims.Api.Areas.Projects.Controllers
             _projectService = projectService;
             _mapper = mapper;
         }
-        #endregion
-
-        #region Endpoints
 
         /// <summary>
         /// Retrieves a matching set of projects for the given input filter.
@@ -67,7 +62,5 @@ namespace Pims.Api.Areas.Projects.Controllers
 
             return new JsonResult(_mapper.Map<IList<ProjectModel>>(predictions));
         }
-
-        #endregion
     }
 }

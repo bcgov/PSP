@@ -7,16 +7,11 @@ namespace Pims.Dal.Entities
     /// </summary>
     public partial class PimsProjectStatusType : ITypeEntity<string>
     {
-        #region Properties
-
         /// <summary>
         /// get/set - Primary key to identify property service file type.
         /// </summary>
         [NotMapped]
         public string Id { get => ProjectStatusTypeCode; set => ProjectStatusTypeCode = value; }
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Create a new instance of a PimsProjectStatusType class.
@@ -27,6 +22,5 @@ namespace Pims.Dal.Entities
         {
             Id = id;
         }
-        #endregion
     }
 }
