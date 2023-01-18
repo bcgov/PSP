@@ -157,8 +157,11 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             protected
             exact
             path="/admin/financial-code/new"
-            customRender={() => <AddFinancialCodeContainer View={AddFinancialCodeForm} />}
-            layout={AuthLayout}
+            customRender={() => (
+              <AuthLayout>
+                <AddFinancialCodeContainer View={AddFinancialCodeForm} />
+              </AuthLayout>
+            )}
             role={Roles.SYSTEM_ADMINISTRATOR}
             title={getTitle('Create Financial Code')}
           ></AppRoute>
