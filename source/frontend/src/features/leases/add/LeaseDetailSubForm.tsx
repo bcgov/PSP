@@ -8,7 +8,6 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { LeaseFormModel } from '../models';
-import * as Styled from './styles';
 
 export interface ILeaseDetailsSubFormProps {
   formikProps: FormikProps<LeaseFormModel>;
