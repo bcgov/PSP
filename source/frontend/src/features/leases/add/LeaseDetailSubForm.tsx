@@ -35,19 +35,16 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
       </SectionField>
       <Row>
         <Col>
-          <SectionField label="Start Date" required>
+          <SectionField label="Start date" required>
             <FastDatePicker formikProps={formikProps} field="startDate" required />
           </SectionField>
         </Col>
         <Col>
-          <SectionField label="Expiry Date">
+          <SectionField label="Expiry date">
             <FastDatePicker formikProps={formikProps} field="expiryDate" />
           </SectionField>
         </Col>
       </Row>
-      <SectionField label="Description">
-        <Styled.MediumTextArea field="description" />
-      </SectionField>
     </Section>
   );
 };

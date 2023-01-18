@@ -43,7 +43,7 @@ export const DetailDocumentation: React.FunctionComponent<
         <SectionField label="PS #" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'psFileNo')} />
         </SectionField>
-        <SectionField label="Lease Notes" labelWidth="3">
+        <SectionField label="Lease notes" labelWidth="3">
           {note}
         </SectionField>
       </Section>

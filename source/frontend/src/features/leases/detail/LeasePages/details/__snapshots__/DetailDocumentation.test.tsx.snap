@@ -177,17 +177,7 @@ exports[`DetailDocumentation component renders a complete lease as expected 1`] 
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="textarea input form-group"
-          >
-            <textarea
-              class="form-control"
-              id="input-documentationReference"
-              name="documentationReference"
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -254,24 +244,13 @@ exports[`DetailDocumentation component renders a complete lease as expected 1`] 
           <label
             class="c3"
           >
-            Lease Notes:
+            Lease notes:
           </label>
         </div>
         <div
           class="c4 text-left col"
         >
-          <div
-            class="textarea input form-group"
-          >
-            <textarea
-              class="form-control"
-              id="input-note"
-              name="note"
-              title="a test note"
-            >
-              a test note
-            </textarea>
-          </div>
+          a test note
         </div>
       </div>
     </div>
@@ -456,17 +435,7 @@ exports[`DetailDocumentation component renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="textarea input form-group"
-          >
-            <textarea
-              class="form-control"
-              id="input-documentationReference"
-              name="documentationReference"
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -533,22 +502,12 @@ exports[`DetailDocumentation component renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Lease Notes:
+            Lease notes:
           </label>
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="textarea input form-group"
-          >
-            <textarea
-              class="form-control"
-              id="input-note"
-              name="note"
-            />
-          </div>
-        </div>
+        />
       </div>
     </div>
   </div>

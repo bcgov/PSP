@@ -40,7 +40,7 @@ exports[`Update lease container component renders as expected 1`] = `
       data-testid="filter-backdrop-loading"
     />
   </div>
-  .c16.btn {
+  .c15.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -70,49 +70,49 @@ exports[`Update lease container component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c16.btn:hover {
+.c15.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c16.btn:focus {
+.c15.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c16.btn.btn-primary {
+.c15.btn.btn-primary {
   border: none;
 }
 
-.c16.btn.btn-secondary {
+.c15.btn.btn-secondary {
   background: none;
 }
 
-.c16.btn.btn-info {
+.c15.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c16.btn.btn-info:hover,
-.c16.btn.btn-info:active,
-.c16.btn.btn-info:focus {
+.c15.btn.btn-info:hover,
+.c15.btn.btn-info:active,
+.c15.btn.btn-info:focus {
   background: none;
 }
 
-.c16.btn.btn-light {
+.c15.btn.btn-light {
   border: none;
 }
 
-.c16.btn.btn-dark {
+.c15.btn.btn-dark {
   border: none;
 }
 
-.c16.btn.btn-link {
+.c15.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -133,9 +133,9 @@ exports[`Update lease container component renders as expected 1`] = `
   padding: 0;
 }
 
-.c16.btn.btn-link:hover,
-.c16.btn.btn-link:active,
-.c16.btn.btn-link:focus {
+.c15.btn.btn-link:hover,
+.c15.btn.btn-link:active,
+.c15.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -144,14 +144,14 @@ exports[`Update lease container component renders as expected 1`] = `
   outline: none;
 }
 
-.c16.btn.btn-link:disabled,
-.c16.btn.btn-link.disabled {
+.c15.btn.btn-link:disabled,
+.c15.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c16.btn:disabled,
-.c16.btn:disabled:hover {
+.c15.btn:disabled,
+.c15.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -162,15 +162,15 @@ exports[`Update lease container component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c16.Button .Button__icon {
+.c15.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c16.Button--icon-only:focus {
+.c15.Button--icon-only:focus {
   outline: none;
 }
 
-.c16.Button--icon-only .Button__icon {
+.c15.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -182,25 +182,25 @@ exports[`Update lease container component renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c14 {
+.c13 {
   padding-right: 0;
 }
 
-.c14 .form-control {
+.c13 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c15:not(:first-child) {
+.c14:not(:first-child) {
   padding-left: 0;
 }
 
-.c15:not(:first-child) .form-control {
+.c14:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c19 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -212,7 +212,7 @@ exports[`Update lease container component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c19 .form-label {
+.c18 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -236,35 +236,35 @@ exports[`Update lease container component renders as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c17 {
+.c16 {
   font-size: 1.4rem;
 }
 
-.c9 {
+.c8 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c9 .nav-tabs {
+.c8 .nav-tabs {
   height: 2.4rem;
 }
 
-.c9 .nav-item {
+.c8 .nav-item {
   min-width: 7rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c9 .nav-item:hover {
+.c8 .nav-item:hover {
   border-color: transparent;
 }
 
-.c9 .nav-item.active {
+.c8 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c10 {
+.c9 {
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   border-bottom: solid 0.2rem;
@@ -273,7 +273,7 @@ exports[`Update lease container component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c6 {
+.c5 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -302,19 +302,19 @@ exports[`Update lease container component renders as expected 1`] = `
   max-width: 50rem;
 }
 
-.c5 textarea.form-control {
+.c19 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
 }
 
-.c12:hover {
+.c11:hover {
   cursor: pointer;
 }
 
-.c11.c11.c11 input,
-.c11.c11.c11 select,
-.c11.c11.c11 textarea {
+.c10.c10.c10 input,
+.c10.c10.c10 select,
+.c10.c10.c10 textarea {
   background: none;
   border: none;
   resize: none;
@@ -324,42 +324,42 @@ exports[`Update lease container component renders as expected 1`] = `
   padding: 0;
 }
 
-.c11.c11.c11 .form-label {
+.c10.c10.c10 .form-label {
   font-weight: bold;
 }
 
-.c13 {
+.c12 {
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c7 {
+.c6 {
   height: 100%;
 }
 
-.c7 .nav-tabs {
+.c6 .nav-tabs {
   height: 2.4rem;
 }
 
-.c7 .tab-content {
+.c6 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.4rem);
   overflow-y: auto;
 }
 
-.c7 .tab-content .tab-pane {
+.c6 .tab-content .tab-pane {
   position: relative;
 }
 
-.c8 {
+.c7 {
   height: auto;
 }
 
-.c8.tab-content {
+.c7.tab-content {
   height: auto;
 }
 
-.c18 {
+.c17 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -508,7 +508,7 @@ exports[`Update lease container component renders as expected 1`] = `
                   <label
                     class="c2"
                   >
-                    Start Date:
+                    Start date:
                   </label>
                 </div>
                 <div
@@ -551,7 +551,7 @@ exports[`Update lease container component renders as expected 1`] = `
                   <label
                     class="c2"
                   >
-                    Expiry Date:
+                    Expiry date:
                   </label>
                 </div>
                 <div
@@ -582,40 +582,13 @@ exports[`Update lease container component renders as expected 1`] = `
               </div>
             </div>
           </div>
-          <div
-            class="pb-2 row"
-          >
-            <div
-              class="pr-0 text-left col-4"
-            >
-              <label
-                class="c2"
-              >
-                Description:
-              </label>
-            </div>
-            <div
-              class="c3 text-left col"
-            >
-              <div
-                class="c5 textarea input form-group"
-              >
-                <textarea
-                  class="form-control"
-                  id="input-description"
-                  name="description"
-                  title=""
-                />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <div
         class="c1 form-section"
       >
         <h2
-          class="c6"
+          class="c5"
         >
           <div
             class="row"
@@ -645,10 +618,10 @@ exports[`Update lease container component renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c7 c8"
+                class="c6 c7"
               >
                 <nav
-                  class="c9 nav nav-tabs"
+                  class="c8 nav nav-tabs"
                   role="tablist"
                 >
                   <a
@@ -685,12 +658,12 @@ exports[`Update lease container component renders as expected 1`] = `
                         class="collapse show"
                       >
                         <h3
-                          class="c10"
+                          class="c9"
                         >
                           Select a property
                         </h3>
                         <div
-                          class="c11 row"
+                          class="c10 row"
                         >
                           <div
                             class="col-md-4"
@@ -699,7 +672,7 @@ exports[`Update lease container component renders as expected 1`] = `
                               class="d-flex flex-column align-items-center"
                             >
                               <svg
-                                class="c12"
+                                class="c11"
                                 height="97"
                                 title="select properties on the map"
                                 width="97"
@@ -723,7 +696,7 @@ exports[`Update lease container component renders as expected 1`] = `
                               class="row"
                             >
                               <div
-                                class="c13 col"
+                                class="c12 col"
                               >
                                 Selected property attributes
                               </div>
@@ -841,7 +814,7 @@ exports[`Update lease container component renders as expected 1`] = `
                         class="collapse show"
                       >
                         <h3
-                          class="c10"
+                          class="c9"
                         >
                           Search for a property
                         </h3>
@@ -855,7 +828,7 @@ exports[`Update lease container component renders as expected 1`] = `
                               class="flex-nowrap input-group row"
                             >
                               <div
-                                class="c14 col-auto"
+                                class="c13 col-auto"
                               >
                                 <div
                                   class="input-group-prepend"
@@ -903,7 +876,7 @@ exports[`Update lease container component renders as expected 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="c15 col"
+                                class="c14 col"
                               >
                                 <div
                                   class="input form-group"
@@ -930,7 +903,7 @@ exports[`Update lease container component renders as expected 1`] = `
                                 class="pr-0 col"
                               >
                                 <button
-                                  class="c16 Button Button--icon-only primary btn btn-primary"
+                                  class="c15 Button Button--icon-only primary btn btn-primary"
                                   data-testid="search"
                                   id="search-button"
                                   title="search"
@@ -959,7 +932,7 @@ exports[`Update lease container component renders as expected 1`] = `
                                 class="pl-0 col"
                               >
                                 <button
-                                  class="c16 Button Button--icon-only btn btn-info"
+                                  class="c15 Button Button--icon-only btn btn-info"
                                   data-testid="reset-button"
                                   id="reset-button"
                                   title="reset-button"
@@ -1106,7 +1079,7 @@ exports[`Update lease container component renders as expected 1`] = `
                             class="ml-auto align-self-center col-auto"
                           >
                             <p
-                              class="c17"
+                              class="c16"
                             >
                               0 selected
                             </p>
@@ -1126,7 +1099,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="c1 form-section"
           >
             <h2
-              class="c6"
+              class="c5"
             >
               <div
                 class="row"
@@ -1145,7 +1118,7 @@ exports[`Update lease container component renders as expected 1`] = `
               class="collapse show"
             >
               <div
-                class="c18 no-gutters row"
+                class="c17 no-gutters row"
               >
                 <div
                   class="col-3"
@@ -1195,7 +1168,7 @@ exports[`Update lease container component renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c6"
+        class="c5"
       >
         <div
           class="row"
@@ -1222,14 +1195,14 @@ exports[`Update lease container component renders as expected 1`] = `
             <label
               class="c2"
             >
-              MOTI Contact:
+              MOTI contact:
             </label>
           </div>
           <div
             class="c3 text-left col-8"
           >
             <div
-              class="c19 input form-group"
+              class="c18 input form-group"
             >
               <input
                 class="form-control"
@@ -1250,7 +1223,7 @@ exports[`Update lease container component renders as expected 1`] = `
             <label
               class="c2"
             >
-              MOTI Region:
+              MOTI region:
             </label>
           </div>
           <div
@@ -2012,13 +1985,40 @@ exports[`Update lease container component renders as expected 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Intended use:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="c19 textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-description"
+                name="description"
+                title=""
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div
       class="c1 form-section"
     >
       <h2
-        class="c6"
+        class="c5"
       >
         <div
           class="row"
@@ -2160,7 +2160,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="c5 textarea input form-group"
+              class="c19 textarea input form-group"
             >
               <textarea
                 class="form-control"
@@ -2187,7 +2187,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="c19 c21 input form-group"
+              class="c18 c21 input form-group"
             >
               <input
                 class="form-control"
@@ -2215,7 +2215,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="c19 c21 input form-group"
+              class="c18 c21 input form-group"
             >
               <input
                 class="form-control"
@@ -2223,6 +2223,33 @@ exports[`Update lease container component renders as expected 1`] = `
                 name="psFileNo"
                 title=""
                 value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-2"
+          >
+            <label
+              class="c2"
+            >
+              Lease notes:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="c19 textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-note"
+                name="note"
+                title=""
               />
             </div>
           </div>

@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockParcel } from 'mocks/filterDataMock';
-import { render, RenderOptions } from 'utils/test-utils';
+import { getByText, render, RenderOptions } from 'utils/test-utils';
 
 import DetailDocumentation, { IDetailDocumentationProps } from './DetailDocumentation';
 
@@ -88,14 +88,14 @@ describe('DetailDocumentation component', () => {
 
   it('renders the Location of documents field', () => {
     const {
-      component: { getByDisplayValue },
+      component: { getByText },
     } = setup({
       lease: {
         ...defaultFormLease,
         documentationReference: 'documentation Reference',
       },
     });
-    expect(getByDisplayValue('documentation Reference')).toBeVisible();
+    expect(getByText('documentation Reference')).toBeVisible();
   });
 
   it('renders the PS # name', () => {

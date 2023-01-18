@@ -46,7 +46,7 @@ export const PropertyInformation: React.FunctionComponent<
           <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
         </SectionField>
       ) : null}
-      <SectionField label="Legal Description" labelWidth="3">
+      <SectionField label="Legal description" labelWidth="3">
         {legalPidText}
       </SectionField>
 
