@@ -1,5 +1,5 @@
 using Mapster;
-using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Mapping
@@ -8,9 +8,10 @@ namespace Pims.Api.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsRegion, RegionModel>()
-                .Map(dest => dest.Id, src => src.RegionCode)
-                .Map(dest => dest.Description, src => src.RegionName);
+            config.NewConfig<Entity.PimsRegion, CodeTypeModel>()
+                .Map(dest => dest.Code, src => src.RegionCode)
+                .Map(dest => dest.Description, src => src.RegionName)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
         }
     }
 }

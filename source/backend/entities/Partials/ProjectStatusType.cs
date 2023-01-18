@@ -22,15 +22,5 @@ namespace Pims.Dal.Entities
         {
             Id = id;
         }
-
-        public static class PimsProjectStatusTypes
-        {
-            public const string ACTIVE = "AC";
-            public const string CANCELLED = "CA";
-            public const string CONSOLIDATED = "CNCN";
-            public const string COMPLETED = "CO";
-            public const string ONHOLD = "HO";
-            public const string PLANNING = "PL";
-        }
     }
 }

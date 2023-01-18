@@ -22,8 +22,10 @@ namespace Pims.Api.Areas.Projects.Controllers
     [Route("[area]")]
     public class ProjectController : ControllerBase
     {
+        #region fields
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
+        #endregion
 
         /// <summary>
         /// Creates a new instance of a ProjectController class, initializes it with the specified arguments.

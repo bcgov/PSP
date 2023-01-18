@@ -1,8 +1,6 @@
-using System;
-
 namespace Pims.Api.Models.Concepts
 {
-    public class ProjectModel : BaseModel
+    public class ProjectModel : BaseAppModel
     {
         #region Properties
 
@@ -34,7 +32,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The region code.
         /// </summary>
-        public RegionModel RegionCode { get; set; } // TODO: Use the correct type.
+        public CodeTypeModel RegionCode { get; set; } // TODO: Use the correct type.
 
         /// <summary>
         /// get/set - The project code.
@@ -50,16 +48,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Project notes.
         /// </summary>
         public string Note { get; set; }
-
-        /// <summary>
-        /// get/set - Last Updated Date.
-        /// </summary>
-        public DateTime AppLastUpdateTimestamp { get; set; }
-
-        /// <summary>
-        /// get/set - Last Updated by.
-        /// </summary>
-        public string AppLastUpdateUserid { get; set; }
         #endregion
     }
 }

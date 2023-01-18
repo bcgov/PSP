@@ -19,7 +19,7 @@ export interface IProjectSearchResultsProps {
 }
 
 /**
- * Component that renders search results for acquisition files.
+ * Component that renders search results for Projects.
  * @param {IProjectSearchResultsProps} props
  */
 export const ProjectSearchResults = (props: IProjectSearchResultsProps) => {

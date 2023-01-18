@@ -77,10 +77,10 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action act = () => service.GetPage(new ProjectFilter {  ProjectName = "test" });
+            Action result = () => service.GetPage(new ProjectFilter {  ProjectName = "test" });
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            result.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Never);
         }
 
@@ -95,10 +95,10 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action act = () => service.GetPage(null);
+            Action result = () => service.GetPage(null);
 
             // Assert
-            act.Should().Throw<ArgumentException>();
+            result.Should().Throw<ArgumentException>();
             repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Never);
         }
 
@@ -113,10 +113,10 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action act = () => service.GetPage(new ProjectFilter { Page = 0 });
+            Action result = () => service.GetPage(new ProjectFilter { Page = 0 });
 
             // Assert
-            act.Should().Throw<ArgumentException>();
+            result.Should().Throw<ArgumentException>();
             repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Never);
         }
 
@@ -137,10 +137,10 @@ namespace Pims.Api.Test.Services
 
 
             // Act
-            var sut = await service.GetPage(new ProjectFilter { ProjectName = "test" });
+            var result = await service.GetPage(new ProjectFilter { ProjectName = "test" });
 
             // Assert
-            sut.Should().NotBeNull();
+            result.Should().NotBeNull();
             repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Once);
         }
     }

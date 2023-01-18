@@ -97,11 +97,6 @@ namespace Pims.Dal.Repositories
             {
                 query = query.OrderByProperty(filter.Sort);
             }
-
-            if (filter.Sort?.Any() == true)
-            {
-                query = query.OrderByProperty(filter.Sort);
-            }
             else
             {
                 query = query.OrderBy(l => l.Code);

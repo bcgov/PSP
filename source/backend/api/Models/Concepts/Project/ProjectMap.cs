@@ -27,7 +27,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.BusinessFunctionCodeId, src => src.BusinessFunctionCode)
                 .Map(dest => dest.CostTypeCodeId, src => src.CostTypeCode)
                 .Map(dest => dest.WorkActivityCodeId, src => src.WorkActivityCode)
-                .Map(dest => dest.RegionCode, src => src.RegionCode)
+                .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Note, src => src.Note)

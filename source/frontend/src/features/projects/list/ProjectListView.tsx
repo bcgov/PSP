@@ -1,10 +1,8 @@
 import { useApiProjects } from 'hooks/pims-api/useApiProjects';
 import { useSearch } from 'hooks/useSearch';
 import { Api_Project } from 'models/api/Project';
-import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-toastify';
 
 import { IProjectFilter } from '../interfaces';
 import { defaultFilter, ProjectFilter } from './ProjectFilter/ProjectFilter';
@@ -22,7 +20,6 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
     results,
     filter,
     sort,
-    error,
     totalItems,
     currentPage,
     totalPages,
@@ -47,12 +44,6 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
     [setFilter, setCurrentPage],
   );
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error?.message);
-    }
-  }, [error]);
-
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
@@ -60,7 +51,11 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
         <Styled.PageToolbar>
           <Row>
             <Col>
-              <ProjectFilter filter={filter} setFilter={changeFilter} />
+              <ProjectFilter
+                filter={filter}
+                setFilter={changeFilter}
+                initialFilter={defaultFilter}
+              />
             </Col>
           </Row>
         </Styled.PageToolbar>

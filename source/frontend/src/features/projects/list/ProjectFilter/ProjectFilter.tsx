@@ -6,7 +6,7 @@ import { ProjectStatusTypes } from 'constants/projectStatusTypes';
 import { IProjectFilter } from 'features/projects/interfaces';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
@@ -14,6 +14,7 @@ import { mapLookupCode } from 'utils';
 export interface IProjectFilterProps {
   filter?: IProjectFilter;
   setFilter: (filter: IProjectFilter) => void;
+  initialFilter?: IProjectFilter;
 }
 
 export const defaultFilter: IProjectFilter = {
@@ -29,21 +30,14 @@ export const defaultFilter: IProjectFilter = {
  */
 export const ProjectFilter: React.FunctionComponent<
   React.PropsWithChildren<IProjectFilterProps>
-> = ({ filter, setFilter }) => {
-  const [selectedStatus, setInitialSelectedStatus] = useState<string>(ProjectStatusTypes.Active);
-
-  useEffect(() => {
-    setInitialSelectedStatus(ProjectStatusTypes.Active);
-  }, []);
-
+> = ({ setFilter, initialFilter }) => {
   const onSearchSubmit = (values: IProjectFilter, { setSubmitting }: any) => {
-    console.log(values);
     setFilter(values);
     setSubmitting(false);
   };
 
   const resetFilter = () => {
-    setFilter(defaultFilter);
+    setFilter(initialFilter ?? defaultFilter);
   };
 
   const lookupCodes = useLookupCodeHelpers();
@@ -53,7 +47,11 @@ export const ProjectFilter: React.FunctionComponent<
     .map(c => mapLookupCode(c));
 
   return (
-    <Formik enableReinitialize initialValues={filter ?? defaultFilter} onSubmit={onSearchSubmit}>
+    <Formik
+      enableReinitialize
+      initialValues={initialFilter ?? defaultFilter}
+      onSubmit={onSearchSubmit}
+    >
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
@@ -88,7 +86,7 @@ export const ProjectFilter: React.FunctionComponent<
                   <Select
                     field="projectStatusCode"
                     options={projectStatusOptions}
-                    value={selectedStatus}
+                    value={initialFilter?.projectStatusCode}
                   />
                 </Col>
               </Row>

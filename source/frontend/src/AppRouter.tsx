@@ -245,7 +245,7 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             path="/project/list"
             customComponent={ProjectListView}
             layout={AuthLayout}
-            //claim={Claims.PROJECT_VIEW}
+            claim={Claims.PROJECT_VIEW}
             title={getTitle('View Projects')}
           />
           <AppRoute
