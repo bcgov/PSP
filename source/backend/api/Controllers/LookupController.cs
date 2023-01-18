@@ -134,6 +134,7 @@ namespace Pims.Api.Controllers
                 var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcqFilePersonProfileTypes());
                 var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTenantTypes());
                 var acqFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFundingTypes());
+                var projectStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllProjectStatusTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -181,6 +182,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acqFilePersonProfileTypes);
                 codes.AddRange(tenantTypes);
                 codes.AddRange(acqFundingTypes);
+                codes.AddRange(projectStatusTypes);
 
                 var response = new JsonResult(codes);
 
