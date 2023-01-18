@@ -1,3 +1,4 @@
+import { TextArea } from 'components/common/form';
 import { InlineYesNoSelect } from 'components/common/form/styles';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -26,6 +27,10 @@ const ReferenceSubForm: React.FunctionComponent = () => {
       </SectionField>
       <SectionField label="PS #" labelWidth="2">
         <Styled.LargeInlineInput field="psFileNo" />
+      </SectionField>
+
+      <SectionField label="Lease Notes" labelWidth="2">
+        <Styled.MediumTextArea field="note" />
       </SectionField>
     </Section>
   );
