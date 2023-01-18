@@ -62,5 +62,22 @@ namespace Pims.Api.Areas.Projects.Controllers
 
             return new JsonResult(_mapper.Map<IList<ProjectModel>>(predictions));
         }
+
+        /// <summary>
+        /// Add the specified lease. Allows the user to override the normal restriction on adding properties already associated to a lease.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [HasPermission(Permissions.ProjectAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public IActionResult AddLease(ProjectModel projectModel)
+        {
+            var leaseEntity = _mapper.Map<Dal.Entities.PimsProject>(projectModel);
+            var project = _projectService.Add(leaseEntity);
+
+            return new JsonResult(_mapper.Map<ProjectModel>(project));
+        }
     }
 }

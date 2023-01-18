@@ -16,6 +16,7 @@ export enum MapState {
   RESEARCH_FILE = 'RESEARCH_FILE',
   ACQUISITION_FILE = 'ACQUISITION_FILE',
   LEASE_FILE = 'LEASE_FILE',
+  PROJECT = 'PROJECT',
 }
 
 export enum MapStateActionTypes {

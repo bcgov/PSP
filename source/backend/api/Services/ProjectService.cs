@@ -61,6 +61,21 @@ namespace Pims.Api.Services
             return GetPageAsync(filter);
         }
 
+        public Task<PimsProject> Add(PimsProject project)
+        {
+            if (project == null)
+            {
+                throw new ArgumentNullException(nameof(project), "Project cannot be null.");
+            }
+
+            return AddInternalAsync(project);
+        }
+
+        private async Task<PimsProject> AddInternalAsync(PimsProject project)
+        {
+            return await _projectRepository.Add(project);
+        }
+
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
         {
             return await _projectRepository.GetPageAsync(filter);

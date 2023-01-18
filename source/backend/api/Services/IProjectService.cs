@@ -10,5 +10,7 @@ namespace Pims.Api.Services
         IList<PimsProject> SearchProjects(string filter, int maxResult);
 
         Task<Paged<PimsProject>> GetPage(ProjectFilter filter);
+
+        Task<PimsProject> Add(PimsProject project);
     }
 }

@@ -69,6 +69,36 @@ namespace Pims.Dal.Repositories
             return GetPage(filter);
         }
 
+        /// <summary>
+        /// Get by ID - Search Projects by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<PimsProject> Get(long id)
+        {
+            User.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            return await Context.PimsProjects
+                    .AsNoTracking()
+                    .Include(x => x.ProjectStatusTypeCodeNavigation)
+                    .Where(x => x.Id == id)
+                    .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Add Project to Context.
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
+        public async Task<PimsProject> Add(PimsProject project)
+        {
+            User.ThrowIfNotAuthorized(Permissions.ProjectAdd);
+
+            await Context.PimsProjects.AddAsync(project);
+            Context.CommitTransaction();
+            return await Get(project.Id);
+        }
+
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter)
         {
             var query = Context.PimsProjects.AsNoTracking();

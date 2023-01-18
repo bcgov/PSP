@@ -16,6 +16,7 @@ import AppRoute from 'utils/AppRoute';
 import AcquisitionContainer from './acquisition/AcquisitionContainer';
 import AddAcquisitionContainer from './acquisition/add/AddAcquisitionContainer';
 import LeaseContainer from './lease/LeaseContainer';
+import AddProjectContainer from './project/add/AddProjectContainer';
 import AddResearchContainer from './research/add/AddResearchContainer';
 import ResearchContainer from './research/ResearchContainer';
 
@@ -70,6 +71,16 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     [location],
   );
 
+  const isProject = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/project/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
   const setShowSideBar = props.setShowSideBar;
 
   useEffect(() => {
@@ -80,13 +91,15 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.RESEARCH_FILE });
       } else if (isLease) {
         setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.LEASE_FILE });
+      } else if (isProject) {
+        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
       }
       setShowSideBar(true);
     } else {
       setShowSideBar(false);
       setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
     }
-  }, [isAcquisition, isResearch, isLease, matched, setShowSideBar, setState]);
+  }, [isAcquisition, isResearch, isLease, isProject, matched, setShowSideBar, setState]);
 
   const onClose = () => {
     history.push('/mapview');
@@ -160,6 +173,14 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         exact
         key={'NewLease'}
         title={'Create Lease'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/project/new`}
+        customRender={() => <AddProjectContainer onClose={onClose} />}
+        claim={Claims.PROJECT_ADD}
+        exact
+        key={'NewProject'}
+        title={'Create Project'}
       />
       <AppRoute
         path={`/mapview/sidebar/lease/:id`}
