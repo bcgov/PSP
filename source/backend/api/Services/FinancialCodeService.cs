@@ -82,6 +82,7 @@ namespace Pims.Api.Services
                 case FinancialCodeTypes.BusinessFunction:
                     var pimsEntity = _mapper.Map<PimsBusinessFunctionCode>(model);
                     var createdEntity = _businessFunctionRepository.Add(pimsEntity);
+                    _businessFunctionRepository.CommitTransaction();
                     return _mapper.Map<FinancialCodeModel>(createdEntity);
                 default:
                     throw new BadRequestException("Financial code type not valid.");
