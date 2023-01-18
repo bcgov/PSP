@@ -31,7 +31,7 @@ const DocumentListContainer: React.FunctionComponent<
 
   const [pageProps, setPageProps] = useState<{ pageIndex?: number; pageSize: number }>({
     pageIndex: 0,
-    pageSize: 5,
+    pageSize: 10,
   });
 
   const {
