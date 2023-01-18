@@ -9,6 +9,7 @@ import React from 'react';
 import { ButtonToolbar, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { formatAsSelectOptions } from '../financialCodeUtils';
 import { IAddFinancialCodeFormProps } from './AddFinancialCodeContainer';
 import { FinancialCodeForm } from './models';
 
@@ -18,6 +19,9 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
   onSuccess,
   onError,
 }) => {
+  const codeTypes: SelectOption[] = formatAsSelectOptions();
+
+  // show confirmation message if user has made changes
   const { setModalContent, setDisplayModal } = useModalContext();
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     const resetFormAndCancel = () => {
@@ -37,9 +41,6 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
       setDisplayModal(true);
     }
   };
-
-  // TODO:
-  const codeTypes: SelectOption[] = [];
 
   return (
     <Formik<FinancialCodeForm>

@@ -1,11 +1,15 @@
 import { AxiosError } from 'axios';
 import { H1 } from 'components/common/styles';
+import { FinancialCodeTypes } from 'constants/index';
 import { IApiError } from 'interfaces/IApiError';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 import React, { useState } from 'react';
 import { Alert, Col, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+
+import { useFinancialCodeRepository } from '../hooks/useFinancialCodeRepository';
 
 export interface IAddFinancialCodeFormProps {
   onSave: (financialCode: Api_FinancialCode) => Promise<Api_FinancialCode | undefined>;
@@ -20,22 +24,27 @@ export interface IAddFinancialCodeContainerProps {
 
 export const AddFinancialCodeContainer: React.FC<IAddFinancialCodeContainerProps> = ({ View }) => {
   const [duplicateError, setDuplicateError] = useState(false);
+  const history = useHistory();
+  const {
+    addFinancialCode: { execute: addFinancialCode },
+  } = useFinancialCodeRepository();
 
   const createFinancialCode = async (financialCode: Api_FinancialCode) => {
-    // TODO: Implement
-    return financialCode;
+    return addFinancialCode(financialCode.type as FinancialCodeTypes, financialCode);
   };
 
+  // navigate back to list view
   const onCancel = () => {
-    // TODO: navigate back to list view
+    history.replace(`/admin/financial-code/list`);
   };
 
   const onCreateSuccess = async (financialCode: Api_FinancialCode) => {
-    // TODO:
+    toast.success(`Financial code saved`);
+    history.replace(`/admin/financial-code/list`);
   };
 
+  // generic error handler: 409 means duplicate active code already found on datastore.
   const onCreateError = (e: AxiosError<IApiError>) => {
-    // TODO: generic error handler
     if (e?.response?.status === 409) {
       setDuplicateError(true);
     } else {
