@@ -34,9 +34,14 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsPropertyResearchFiles.AsNoTracking()
                 .Where(x => x.ResearchFileId == researchFileId)
-                .Include(rp => rp.Property)
                 .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
                 .Include(rp => rp.PimsActInstPropRsrchFiles)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.RegionCodeNavigation)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.DistrictCodeNavigation)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.Address)
                 .ToList();
         }
 

@@ -346,9 +346,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                 <div
                   class="pl-1 text-left col-9"
                 >
-                  <strong>
-                    South Coast Region
-                  </strong>
+                  <strong />
                 </div>
               </div>
             </div>
@@ -372,9 +370,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                 <div
                   class="pl-1 text-left col-9"
                 >
-                  <strong>
-                    Lower Mainland District
-                  </strong>
+                  <strong />
                 </div>
               </div>
             </div>
@@ -531,9 +527,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                 </div>
                 <div
                   class="col"
-                >
-                  123-456-789
-                </div>
+                />
               </div>
             </div>
           </div>

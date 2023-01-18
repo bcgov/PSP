@@ -227,6 +227,8 @@ namespace Pims.Api
             services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddScoped<IProxyRequestClient, ProxyRequestClient>();
             services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
+            services.AddResponseCaching();
+            services.AddMemoryCache();
             int maxFileSize = int.Parse(this.Configuration.GetSection("Av")?["MaxFileSize"]);
             services.Configure<FormOptions>(x =>
             {
@@ -340,6 +342,7 @@ namespace Pims.Api
 
             app.UseRouting();
             app.UseCors();
+            app.UseResponseCaching();
 
             app.UseAuthentication();
             app.UseAuthorization();
