@@ -63,7 +63,6 @@ const DocumentListContainer: React.FunctionComponent<
       const currentPage = getPage(pageProps.pageIndex ?? 0, pageProps.pageSize, documentResults);
       const newDocumentResults = [...currentPage];
       let updated = false;
-      console.log([...currentPage], pageProps);
       await newDocumentResults.forEach(async (d, index) => {
         if (d?.mayanDocumentId && d?.isFileAvailable === undefined) {
           updated = true;
