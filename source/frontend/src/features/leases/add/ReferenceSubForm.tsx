@@ -1,4 +1,3 @@
-import { TextArea } from 'components/common/form';
 import { InlineYesNoSelect } from 'components/common/form/styles';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';

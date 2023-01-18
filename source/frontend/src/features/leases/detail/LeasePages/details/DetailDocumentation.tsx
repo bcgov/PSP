@@ -1,4 +1,4 @@
-import { Input, TextArea } from 'components/common/form';
+import { Input } from 'components/common/form';
 import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
