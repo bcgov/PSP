@@ -5,7 +5,7 @@ import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useModalContext } from 'hooks/useModalContext';
 import { geoJSON } from 'leaflet';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { toast } from 'react-toastify';
 
 import { PARCELS_LAYER_URL, PIMS_BOUNDARY_LAYER_URL, useLayerQuery } from '../leaflet/LayerPopup';
