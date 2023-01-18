@@ -19,6 +19,7 @@ const storeState = {
 };
 
 const deleteMock = jest.fn().mockResolvedValue(true);
+const onPageChange = jest.fn();
 
 const mockDocumentRowResponse = () =>
   mockDocumentsResponse().map(x =>
@@ -54,6 +55,8 @@ describe('Document List View', () => {
         }
         onDelete={renderOptions?.onDelete || deleteMock}
         onSuccess={renderOptions?.onSuccess || noop}
+        onPageChange={renderOptions?.onPageChange ?? onPageChange}
+        pageProps={renderOptions?.pageProps ?? { pageSize: 10, pageIndex: 0 }}
       />,
       {
         ...renderOptions,
@@ -94,6 +97,8 @@ describe('Document List View', () => {
       onDelete: deleteMock,
       onSuccess: noop,
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
     });
     expect(getByTestId('document-type')).toBeInTheDocument();
   });
@@ -108,6 +113,8 @@ describe('Document List View', () => {
       onDelete: deleteMock,
       onSuccess: noop,
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
     });
     expect(getByTestId('document-filename')).toBeInTheDocument();
   });
@@ -122,6 +129,8 @@ describe('Document List View', () => {
       onDelete: deleteMock,
       onSuccess: noop,
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
     });
     expect(getByText('Add a Document')).toBeInTheDocument();
   });
@@ -136,6 +145,8 @@ describe('Document List View', () => {
       onDelete: deleteMock,
       onSuccess: noop,
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
     });
     const downloadButtonTooltip = await findAllByTestId(
       'tooltip-icon-document-not-available-tooltip',
@@ -156,6 +167,8 @@ describe('Document List View', () => {
       onDelete: deleteMock,
       onSuccess: noop,
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
     });
     const downloadButtonTooltip = await findByTestId('document-download-button');
     expect(downloadButtonTooltip).toBeInTheDocument();
