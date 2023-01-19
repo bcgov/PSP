@@ -51,10 +51,12 @@ namespace Pims.Dal.Repositories
                     c => EF.Functions.Collate(c.Code, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == pimsCode.Code)
                 .ToList();
 
-            // Active codes have no expiry date or they expire in the future.
             var now = DateTime.UtcNow;
+            var newCodeIsActive = !pimsCode.ExpiryDate.HasValue || pimsCode.ExpiryDate?.Date > now.Date;
+
+            // Active codes have no expiry date or they expire in the future.
             var isDuplicate = existingCodes.Any(c => !c.ExpiryDate.HasValue || c.ExpiryDate?.Date > now.Date);
-            if (isDuplicate)
+            if (newCodeIsActive && isDuplicate)
             {
                 throw new DuplicateEntityException("Duplicate business function code found");
             }
