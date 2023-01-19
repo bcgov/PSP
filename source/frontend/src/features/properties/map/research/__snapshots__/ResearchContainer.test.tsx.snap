@@ -203,9 +203,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
     <div
       class="Toastify"
     />
-    <div
-      class="container"
-    />
+    <div />
     <div
       class=""
     >
@@ -545,9 +543,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
             <div
               class="c15"
             >
-              <div
-                class="container"
-              />
+              <div />
               <div
                 class="c16"
               >

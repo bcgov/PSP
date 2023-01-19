@@ -1,6 +1,14 @@
 import GenericModal from 'components/common/GenericModal';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { formLeasePaymentToApiPayment, IFormLeasePayment } from 'interfaces';
+import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
+import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
+import { FormikProps } from 'formik';
+import {
+  defaultLease,
+  formLeasePaymentToApiPayment,
+  IFormLease,
+  IFormLeasePayment,
+} from 'interfaces';
 import { formLeaseTermToApiLeaseTerm, IFormLeaseTerm, ILeaseTerm } from 'interfaces/ILeaseTerm';
 import { find, noop } from 'lodash';
 import * as React from 'react';
@@ -15,14 +23,12 @@ import PaymentModal from './modal/payment/PaymentModal';
 import TermModal from './modal/term/TermModal';
 import TermsForm from './table/terms/TermsForm';
 
-export interface ITermPaymentsContainerProps {}
-
 /**
  * Orchestrates the display and modification of lease terms and payments.
  */
 export const TermPaymentsContainer: React.FunctionComponent<
-  React.PropsWithChildren<ITermPaymentsContainerProps>
-> = () => {
+  React.PropsWithChildren<LeasePageProps>
+> = ({ formikRef }) => {
   const { setLease, lease } = useContext(LeaseStateContext);
   const [editModalValues, setEditModalValues] = useState<IFormLeaseTerm | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
@@ -102,6 +108,8 @@ export const TermPaymentsContainer: React.FunctionComponent<
         onDeletePayment={onDeletePayment}
         onSavePayment={onSavePayment}
         isReceivable={lease?.paymentReceivableType?.id === 'RCVBL'}
+        lease={apiLeaseToFormLease(lease ?? defaultLease)}
+        formikRef={formikRef as React.RefObject<FormikProps<IFormLease>>}
       ></TermsForm>
       <PaymentModal
         displayModal={!!editPaymentModalValues}

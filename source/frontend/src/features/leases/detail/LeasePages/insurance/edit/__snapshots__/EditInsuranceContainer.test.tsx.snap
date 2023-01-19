@@ -1,0 +1,300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Edit Lease Insurance renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <h2>
+    Required coverage
+  </h2>
+  <div>
+    Select the coverage types that are required for this lease or license.
+  </div>
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding-top: 1rem;
+  padding-left: 2.5rem;
+  padding-bottom: 1rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="form-group"
+    >
+      <div
+        class="form-check"
+      >
+        <input
+          checked=""
+          class="form-check-input"
+          data-testid="insurance-checkbox"
+          id="insurance-0"
+          name="checkedTypes"
+          type="checkbox"
+          value="HOME"
+        />
+        <label
+          class="form-check-label"
+          for="insurance-0"
+        >
+          Home Insurance
+        </label>
+      </div>
+      <div
+        class="form-check"
+      >
+        <input
+          class="form-check-input"
+          data-testid="insurance-checkbox"
+          id="insurance-1"
+          name="checkedTypes"
+          type="checkbox"
+          value="CAR"
+        />
+        <label
+          class="form-check-label"
+          for="insurance-1"
+        >
+          Car insurance
+        </label>
+      </div>
+    </div>
+  </div>
+  <h2>
+    Coverage details
+  </h2>
+  .c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c1.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c1.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c1.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c1.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c1.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c1 .form-label {
+  margin-bottom: unset;
+}
+
+<div>
+    <div
+      class="c0 mb-3"
+      data-testid="insurance-form"
+    >
+      <h2
+        class=""
+        data-testid="insurance-form-title"
+      >
+        Home Insurance
+      </h2>
+      <div
+        class="py-4 row"
+      >
+        <div
+          class="col-md-auto"
+        >
+          <strong>
+            Insurance In Place:
+          </strong>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c1 form-group"
+          >
+            <div
+              class="radio-group"
+            >
+              <div
+                class="c2"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    checked=""
+                    class="form-check-input position-static"
+                    id="input-yes"
+                    name="insurances.0.isInsuranceInPlaceRadio"
+                    type="radio"
+                    value="yes"
+                  />
+                </div>
+                <label
+                  class="form-check-label form-label"
+                  for="input-insurances.0.isInsuranceInPlaceRadio"
+                >
+                  Yes
+                </label>
+              </div>
+              <div
+                class="c2"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input position-static"
+                    id="input-no"
+                    name="insurances.0.isInsuranceInPlaceRadio"
+                    type="radio"
+                    value="no"
+                  />
+                </div>
+                <label
+                  class="form-check-label form-label"
+                  for="input-insurances.0.isInsuranceInPlaceRadio"
+                >
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <div>
+            <strong>
+              Limit ($)
+            </strong>
+          </div>
+          <div
+            class="form-group"
+          >
+            <div
+              class="input-tooltip-wrapper"
+            >
+              <input
+                class="form-control input-number"
+                id="input-insurances.0.coverageLimit"
+                inputmode="numeric"
+                name="insurances.0.coverageLimit"
+                placeholder=""
+                type="text"
+                value="$777.00"
+              />
+            </div>
+          </div>
+          <div>
+            <strong>
+              Policy Expiry date:
+            </strong>
+          </div>
+          <div
+            class="form-group"
+          >
+            <div
+              class="react-datepicker-wrapper d-block"
+            >
+              <div
+                class="react-datepicker__input-container"
+              >
+                <input
+                  autocomplete="off"
+                  class="c3 form-control date-picker"
+                  id="datepicker-insurances.0.expiryDate"
+                  name="insurances.0.expiryDate"
+                  placeholder="--/--/----"
+                  type="text"
+                  value="01/01/2022"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-8"
+        >
+          <div>
+            <strong>
+              Description of Coverage
+            </strong>
+          </div>
+          <div
+            class="textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              data-testid="insurance-form-description"
+              id="input-insurances.0.coverageDescription"
+              name="insurances.0.coverageDescription"
+              rows="4"
+              title=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

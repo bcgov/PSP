@@ -45,9 +45,6 @@ const PropertyListView = lazy(() =>
 const LeaseAndLicenseListView = lazy(() =>
   componentLoader(import('features/leases/list/LeaseListView'), 2),
 );
-const LeaseContainerWrapper = lazy(() =>
-  componentLoader(import('features/leases/detail/LeaseContainerWrapper'), 2),
-);
 const AcquisitionListView = lazy(() =>
   componentLoader(import('features/acquisition/list/AcquisitionListView'), 2),
 );
@@ -179,14 +176,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.LEASE_VIEW}
             title={getTitle('View Lease & Licenses')}
-          />
-          <AppRoute
-            protected
-            path="/lease/:leaseId"
-            customComponent={LeaseContainerWrapper}
-            layout={AuthLayout}
-            claim={Claims.LEASE_VIEW}
-            title={getTitle('Create/Edit Lease & Licenses')}
           />
           <AppRoute
             protected

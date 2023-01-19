@@ -10,34 +10,32 @@ import { Api_Person } from 'models/api/Person';
 import * as React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
-import { useHistory } from 'react-router';
 
 import AddLeaseTenantForm from './AddLeaseTenantForm';
 import PrimaryContactWarningModal, {
   getOrgsWithNoPrimaryContact,
 } from './PrimaryContactWarningModal';
-import { FormTenant } from './Tenant';
+import { FormTenant } from './ViewTenantForm';
 
-interface IAddLeaseTenantContainerProps {}
+interface IAddLeaseTenantContainerProps {
+  formikRef: React.RefObject<FormikProps<IFormLease>>;
+  onEdit?: (isEditing: boolean) => void;
+}
 
 export const AddLeaseTenantContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseTenantContainerProps>
-> = () => {
-  const formikRef = React.useRef<FormikProps<IFormLease>>(null);
+> = ({ formikRef, onEdit, children }) => {
   const { lease, setLease } = useContext(LeaseStateContext);
-  const [selectedTenants, setSelectedTenants] = useState<FormTenant[]>([]);
+  const [selectedTenants, setSelectedTenants] = useState<FormTenant[]>(
+    apiLeaseToFormLease(lease as ILease)?.tenants || [],
+  );
   const [handleSubmit, setHandleSubmit] = useState<Function | undefined>(undefined);
   const { updateLease } = useUpdateLease();
-  const history = useHistory();
   const { getPersonConcept } = useApiContacts();
   const { execute } = useApiRequestWrapper({
     requestFunction: getPersonConcept,
     requestName: 'get person by id',
   });
-
-  const onCancel = () => {
-    history.push(`/lease/${lease?.id}/tenant`);
-  };
 
   const setSelectedTenantsWithPersonData = async (tenants?: IContactSearchResult[]) => {
     const personPersonIdList = getTenantOrganizationPersonList(tenants);
@@ -60,9 +58,14 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
           op.person = matchingPerson;
         }
       });
+      tenant.tenantType = tenant.tenantType ? tenant.tenantType : 'TEN';
       return tenant;
     });
     setSelectedTenants(tenantsWithPersons?.map(t => new FormTenant(undefined, t)) ?? []);
+    formikRef.current?.setFieldValue(
+      'tenants',
+      tenantsWithPersons?.map(t => new FormTenant(undefined, t)) ?? [],
+    );
   };
 
   const submit = async (leaseToUpdate: ILease) => {
@@ -71,10 +74,10 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       if (!!updatedLease?.id) {
         formikRef?.current?.resetForm({ values: apiLeaseToFormLease(updatedLease) });
         setLease(updatedLease);
-        history.push(`/lease/${updatedLease?.id}/tenant`);
       }
     } finally {
       formikRef?.current?.setSubmitting(false);
+      onEdit && onEdit(false);
     }
   };
 
@@ -91,12 +94,17 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     <>
       <AddLeaseTenantForm
         initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease as ILease) }}
-        selectedTenants={selectedTenants}
+        selectedTenants={
+          selectedTenants.length
+            ? selectedTenants
+            : apiLeaseToFormLease(lease as ILease)?.tenants ?? []
+        }
         setSelectedTenants={setSelectedTenantsWithPersonData}
-        onCancel={onCancel}
         onSubmit={onSubmit}
         formikRef={formikRef}
-      />
+      >
+        {children}
+      </AddLeaseTenantForm>
       <PrimaryContactWarningModal
         saveCallback={handleSubmit}
         onCancel={() => setHandleSubmit(undefined)}

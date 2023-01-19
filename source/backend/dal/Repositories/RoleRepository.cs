@@ -4,7 +4,9 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
+using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -18,6 +20,7 @@ namespace Pims.Dal.Repositories
     public class RoleRepository : BaseRepository<PimsRole>, IRoleRepository
     {
         #region Variables
+        private readonly IOptionsMonitor<AuthClientOptions> _keycloakOptions;
         #endregion
 
         #region Constructors
@@ -28,9 +31,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public RoleRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<RoleRepository> logger)
+        public RoleRepository(PimsContext dbContext, ClaimsPrincipal user, IOptionsMonitor<AuthClientOptions> options, ILogger<RoleRepository> logger)
             : base(dbContext, user, logger)
         {
+            this._keycloakOptions = options;
         }
         #endregion
 
@@ -45,7 +49,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public Paged<PimsRole> Get(int page, int quantity, string name = null)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminRoles, _keycloakOptions);
 
             var query = this.Context.PimsRoles.AsNoTracking();
 
@@ -66,8 +70,6 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsRole Get(Guid key)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
-
             return this.Context.PimsRoles
                 .Include(r => r.PimsRoleClaims).ThenInclude(c => c.Claim)
                 .AsNoTracking()
@@ -150,7 +152,7 @@ namespace Pims.Dal.Repositories
         public PimsRole UpdateWithoutSave(PimsRole update)
         {
             update.ThrowIfNull(nameof(update));
-            this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminRoles, _keycloakOptions);
 
             var role = this.Context.PimsRoles.Find(update.RoleId) ?? throw new KeyNotFoundException();
 

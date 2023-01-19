@@ -99,7 +99,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
-            var updatedUser = user.AddClaim("username", "username");
+            var updatedUser = user.AddClaim("idir_username", "username@");
             updatedUser = updatedUser.AddClaim(ClaimTypes.GivenName, "first");
             updatedUser = updatedUser.AddClaim(ClaimTypes.Surname, "last");
             helper.CreatePimsContext(updatedUser, true);
@@ -116,7 +116,7 @@ namespace Pims.Dal.Test.Repositories
             result.Person.Surname.Should().Be("last");
             result.BusinessIdentifierValue.Should().Be("username");
             result.IsDisabled.Should().BeFalse();
-            result.GuidIdentifierValue.Value.Should().Be(updatedUser.FindFirstValue(ClaimTypes.NameIdentifier));
+            result.GuidIdentifierValue.Value.Should().Be(updatedUser.FindFirstValue("idir_user_guid"));
             result.Person.PimsContactMethods.First().ContactMethodValue.Should().Be("test@test.com");
         }
 
@@ -153,7 +153,7 @@ namespace Pims.Dal.Test.Repositories
             result.Person.Surname.Should().Be("last");
             result.BusinessIdentifierValue.Should().Be("username");
             result.IsDisabled.Should().BeFalse();
-            result.GuidIdentifierValue.Value.Should().Be(user.FindFirstValue(ClaimTypes.NameIdentifier));
+            result.GuidIdentifierValue.Value.Should().Be(user.FindFirstValue("idir_user_guid"));
             result.Person.PimsContactMethods.First().ContactMethodValue.Should().Be("test@test.com");
         }
 
@@ -163,9 +163,9 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var updatedUser = user.AddClaim("username", "username");
+            var updatedUser = user.AddClaim("idir_username", "username@");
             var euser = EntityHelper.CreateUser("Tester");
-            euser.GuidIdentifierValue = new Guid(user.FindFirstValue(ClaimTypes.NameIdentifier));
+            euser.GuidIdentifierValue = new Guid(user.FindFirstValue("idir_user_guid"));
             helper.CreatePimsContext(updatedUser, true).AddAndSaveChanges(euser);
             var now = DateTime.UtcNow;
 
@@ -525,7 +525,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
             var euser = EntityHelper.CreateUser("Test");
-            euser.GuidIdentifierValue = new Guid(user.FindFirstValue(ClaimTypes.NameIdentifier));
+            euser.GuidIdentifierValue = new Guid(user.FindFirstValue("idir_user_guid"));
             euser.PimsUserOrganizations.Clear();
             var updateUser = EntityHelper.CreateUser(1, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(euser);

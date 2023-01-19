@@ -1,25 +1,23 @@
+import { LinkButton } from 'components/common/buttons';
 import { ProtectedComponent } from 'components/common/ProtectedComponent';
 import { Claims } from 'constants/claims';
-import queryString from 'query-string';
 import * as React from 'react';
 import { FaEdit } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
 
 interface ILeaseEditButtonProps {
-  linkTo: string;
+  onEdit?: () => void;
+  isEditing: boolean;
 }
 
 export const LeaseEditButton: React.FunctionComponent<
   React.PropsWithChildren<ILeaseEditButtonProps>
-> = ({ linkTo }) => {
-  const location = useLocation();
-  const { edit } = queryString.parse(location.search);
+> = ({ onEdit, isEditing }) => {
   return (
     <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
-      {!edit && (
-        <Link to={linkTo} className="float-right">
-          <FaEdit />
-        </Link>
+      {!isEditing && !!onEdit && (
+        <LinkButton onClick={onEdit} className="float-right">
+          <FaEdit size={'2rem'} />
+        </LinkButton>
       )}
     </ProtectedComponent>
   );

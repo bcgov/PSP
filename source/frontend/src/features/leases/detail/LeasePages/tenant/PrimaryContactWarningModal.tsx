@@ -3,7 +3,7 @@ import { IFormLease } from 'interfaces/ILease';
 import filter from 'lodash/filter';
 import * as React from 'react';
 
-import { FormTenant } from './Tenant';
+import { FormTenant } from './ViewTenantForm';
 
 interface IPrimaryContactWarningModalProps {
   saveCallback?: Function;

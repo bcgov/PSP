@@ -8,6 +8,7 @@ export interface Api_PropertyLease extends Api_ConcurrentVersion {
   id?: number;
   property?: Api_Property;
   lease?: Api_Lease;
+  propertyName?: string;
   leaseArea?: number;
   areaUnitType?: Api_TypeCode<string>;
   isDisabled?: boolean;

@@ -94,19 +94,10 @@ describe('Lease Insurance', () => {
     testInsurance.insuranceType = TypeCodeUtils.createFromLookup(mockInsuranceTypeCar);
 
     const result = setup({
-      insuranceList: [mockInsurance, testInsurance],
-      insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
-    });
-    const titles = result.getAllByTestId('insurance-title');
-    expect(titles.length).toBe(2);
-  });
-
-  it('Insurance title is set', () => {
-    const result = setup({
       insuranceList: [mockInsurance],
       insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
     });
-    const title = result.getByTestId('insurance-title');
-    expect(title.textContent).toBe(mockInsurance.insuranceType.description);
+    const titles = result.getAllByTestId('insurance-section');
+    expect(titles.length).toBe(2);
   });
 });

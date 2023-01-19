@@ -17,6 +17,7 @@ const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({});
 const history = createMemoryHistory();
+jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -44,6 +45,7 @@ describe('AddResearchContainer component', () => {
       </MapStateContextProvider>,
       {
         ...renderOptions,
+        claims: [],
         store: store,
         history: history,
       },
@@ -100,28 +102,6 @@ describe('AddResearchContainer component', () => {
       expect(setDraftMarkers).toHaveBeenCalledWith({
         draftProperties: [],
         type: 'DRAFT_PROPERTIES',
-      });
-    });
-  });
-
-  it('resets the selected research property when closed', async () => {
-    const setSelectedResearchFeature = jest.fn();
-    setSelectedResearchFeature.mockName('selectedResearch');
-    const {
-      component: { getByTitle, unmount },
-    } = setup({
-      onClose: noop,
-      selectedFeature: null,
-      setState: setSelectedResearchFeature,
-    });
-
-    const closeButton = getByTitle('close');
-    userEvent.click(closeButton);
-    unmount();
-    await waitFor(async () => {
-      expect(setSelectedResearchFeature).toHaveBeenCalledWith({
-        selectedFileFeature: null,
-        type: 'SELECTED_FILE_FEATURE',
       });
     });
   });

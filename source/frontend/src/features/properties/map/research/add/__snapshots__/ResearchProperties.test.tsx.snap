@@ -5,9 +5,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -512,7 +510,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                       class="col-xl-6"
                     >
                       <div
-                        class="flex-nowrap row"
+                        class="flex-nowrap input-group row"
                       >
                         <div
                           class="c11 col-auto"
@@ -917,6 +915,15 @@ exports[`ResearchProperties component renders as expected when provided no prope
   margin-right: 0;
 }
 
+.c3 {
+  min-width: 3rem;
+  min-height: 4.5rem;
+}
+
+.c4 {
+  font-size: 1.2rem;
+}
+
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -980,15 +987,6 @@ exports[`ResearchProperties component renders as expected when provided no prope
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c3 {
-  min-width: 3rem;
-  min-height: 4.5rem;
-}
-
-.c4 {
-  font-size: 1.2rem;
 }
 
 .c2 {

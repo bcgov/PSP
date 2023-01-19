@@ -5,9 +5,7 @@ exports[`LtsaLegalNotationsSubForm component renders legal notations form 1`] = 
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   display: -webkit-box;
   display: -webkit-flex;

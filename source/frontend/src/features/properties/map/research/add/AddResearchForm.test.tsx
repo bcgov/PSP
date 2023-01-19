@@ -11,6 +11,7 @@ import AddResearchForm from './AddResearchForm';
 import { ResearchForm } from './models';
 
 const history = createMemoryHistory();
+jest.mock('@react-keycloak/web');
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
@@ -28,6 +29,7 @@ describe('AddResearchForm component', () => {
       </Formik>,
       {
         ...renderOptions,
+        claims: [],
         store: storeState,
         history,
       },

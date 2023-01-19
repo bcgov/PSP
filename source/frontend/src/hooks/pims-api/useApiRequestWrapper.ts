@@ -28,6 +28,7 @@ export interface IApiRequestWrapper<
   invoke?: boolean;
   skipErrorLogCodes?: number[];
   throwError?: boolean;
+  rawResponse?: boolean;
 }
 
 type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
@@ -50,6 +51,7 @@ export const useApiRequestWrapper = <
   invoke,
   skipErrorLogCodes,
   throwError,
+  rawResponse,
 }: IApiRequestWrapper<FunctionType>): IResponseWrapper<FunctionType> => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<AxiosError<IApiError>>();
@@ -70,9 +72,14 @@ export const useApiRequestWrapper = <
         setRequestedOn(new Date());
         setError(undefined);
         setResponse(undefined);
-        const response = await handleAxiosResponse<
-          Awaited<ReturnType<FunctionType>>['data'] | undefined
-        >(dispatch, requestName, requestFunction(...args), skipErrorLogCodes);
+        const response = !rawResponse
+          ? await handleAxiosResponse<Awaited<ReturnType<FunctionType>>['data'] | undefined>(
+              dispatch,
+              requestName,
+              requestFunction(...args),
+              skipErrorLogCodes,
+            )
+          : await requestFunction(...args);
         if (!isMounted()) {
           return;
         }
@@ -100,14 +107,15 @@ export const useApiRequestWrapper = <
       }
     },
     [
+      rawResponse,
       dispatch,
       requestName,
       requestFunction,
       skipErrorLogCodes,
       isMounted,
       onSuccess,
-      onError,
       throwError,
+      onError,
     ],
   );
 

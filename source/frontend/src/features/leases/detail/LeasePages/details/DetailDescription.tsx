@@ -13,7 +13,7 @@ export const DetailDescription: React.FunctionComponent<
 > = ({ nameSpace, disabled }) => {
   return (
     <>
-      <Styled.FormDescriptionLabel>Description</Styled.FormDescriptionLabel>
+      <Styled.FormDescriptionLabel>Intended Use</Styled.FormDescriptionLabel>
       <TextArea disabled={disabled} field={withNameSpace(nameSpace, 'description')} />
     </>
   );

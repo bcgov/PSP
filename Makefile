@@ -177,10 +177,10 @@ restart: | stop build up ## Restart local docker environment
 
 refresh: | down build up ## Recreates local docker environment
 
-.PHONY: start-infra
-start-infra: ## Starts infrastructure containers (e.g. keycloak, database, geoserver). Useful for local debugging
+.PHONY: infra
+infra: ## Starts infrastructure containers (e.g. database, geoserver). Useful for local debugging
 	@echo "$(P) Starting up infrastructure containers..."
-	@"$(MAKE)" start n="keycloak database geoserver"
+	@"$(MAKE)" start n="database geoserver"
 
 start: ## Starts the local containers (n=service name)
 	@echo "$(P) Starting client and server containers..."
@@ -236,7 +236,7 @@ server-test: ## Runs the server tests in a container
 
 server-run: ## Starts local server containers
 	@echo "$(P) Starting server containers..."
-	@docker-compose up -d keycloak backend
+	@docker-compose up -d backend
 
 npm-clean: ## Removes local containers, images, volumes, for frontend application.
 	@echo "$(P) Removing frontend containers and volumes."

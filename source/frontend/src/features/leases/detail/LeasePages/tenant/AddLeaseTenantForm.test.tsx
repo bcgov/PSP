@@ -3,11 +3,13 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
-import { Formik } from 'formik';
+import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import { IFormLease } from 'interfaces';
 import { noop } from 'lodash';
+import { mockLookups } from 'mocks';
 import { getMockLease } from 'mocks/mockLease';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   getAllByRole as getAllByRoleBase,
   mockKeycloak,
@@ -17,14 +19,21 @@ import {
 } from 'utils/test-utils';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
-import { FormTenant } from './Tenant';
+import { FormTenant } from './ViewTenantForm';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+};
 
+const SaveButton = () => {
+  const { submitForm } = useFormikContext();
+  return <button onClick={submitForm}>Save</button>;
+};
 describe('AddLeaseTenantForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
@@ -37,18 +46,18 @@ describe('AddLeaseTenantForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <AddLeaseTenantForm
-          selectedTenants={renderOptions.selectedTenants ?? []}
-          setSelectedTenants={renderOptions.setSelectedTenants ?? noop}
-          onCancel={renderOptions.onCancel ?? noop}
-          onSubmit={noop as any}
-          formikRef={null}
-          initialValues={renderOptions.initialValues}
-        />
-      </Formik>,
+      <AddLeaseTenantForm
+        selectedTenants={renderOptions.selectedTenants ?? []}
+        setSelectedTenants={renderOptions.setSelectedTenants ?? noop}
+        onSubmit={noop as any}
+        formikRef={null}
+        initialValues={renderOptions.initialValues}
+      >
+        <SaveButton />
+      </AddLeaseTenantForm>,
       {
         ...renderOptions,
+        store: storeState,
         history,
       },
     );
@@ -77,47 +86,8 @@ describe('AddLeaseTenantForm component', () => {
   it('renders as expected', async () => {
     mockAxios.onGet().reply(200, []);
     const { component } = await setup({});
-    const { findByTitle } = component;
-    await findByTitle('table-loading');
 
     expect(component.asFragment()).toMatchSnapshot();
-  });
-
-  it('the cancel button triggers the cancel action', async () => {
-    const cancel = jest.fn();
-    mockAxios.onGet().reply(200, { items: [] });
-    const {
-      component: { getByText, findByTitle },
-    } = await setup({ onCancel: cancel });
-    await findByTitle('table-loading');
-
-    const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
-    expect(cancel).toHaveBeenCalled();
-  });
-
-  it('items from the contact list view can be selected', async () => {
-    const setSelectedTenants = jest.fn();
-    mockAxios.onGet().reply(200, {
-      items: sampleContactResponse,
-    });
-    const {
-      component: { findByTestId, findByTitle },
-    } = await setup({ setSelectedTenants: setSelectedTenants });
-    await findByTitle('table-loading');
-
-    const checkBox = await findByTestId('selectrow-O5');
-    userEvent.click(checkBox);
-    expect(setSelectedTenants).toHaveBeenCalledWith([
-      {
-        id: 'O5',
-        isDisabled: false,
-        organizationId: 5,
-        organizationName: "Bob's Property Management",
-        rowVersion: 0,
-        summary: "Bob's Property Management",
-      },
-    ]);
   });
 
   it('items from the contact list view can be added', async () => {
@@ -125,22 +95,12 @@ describe('AddLeaseTenantForm component', () => {
       items: sampleContactResponse,
     });
     const {
-      component: { getByText, findAllByTitle },
-      findFirstRowTableTwo,
-      findCell,
+      component: { getByText },
     } = await setup({
       initialValues: { tenants: [] } as any,
       selectedTenants: [sampleContactResponse[0] as any],
     });
 
-    const addButton = getByText('Add selected tenants');
-    userEvent.click(addButton);
-
-    await findAllByTitle('Click to remove');
-    const dataRow = findFirstRowTableTwo() as HTMLElement;
-    expect(dataRow).not.toBeNull();
-    expect(findCell(dataRow, 3)?.textContent).toBe('Bob Billy Smith');
-    expect(findCell(dataRow, 4)?.textContent).toBe('Not applicable');
     const saveButton = getByText('Save');
     expect(saveButton).not.toBeDisabled();
   });
@@ -150,13 +110,11 @@ describe('AddLeaseTenantForm component', () => {
       items: sampleContactResponse,
     });
     const {
-      component: { getByText, getByTestId, findAllByTitle },
+      component: { getByTestId, findAllByTitle },
     } = await setup({
       initialValues: { tenants: sampleContactResponse } as any,
       selectedTenants: [new FormTenant(undefined, sampleContactResponse[0])],
     });
-    const addButton = getByText('Add selected tenants');
-    userEvent.click(addButton);
 
     await findAllByTitle('Click to remove');
     const dataRows = within(getByTestId('selected-items')).getAllByRole('row');
@@ -171,14 +129,11 @@ describe('AddLeaseTenantForm component', () => {
     const {
       findFirstRowTableTwo,
       findCell,
-      component: { findAllByTitle, getByText },
+      component: { findAllByTitle },
     } = await setup({
       initialValues: { tenants: sampleContactResponse } as any,
       selectedTenants: [sampleContactResponse[0] as any],
     });
-
-    const addButton = getByText('Add selected tenants');
-    userEvent.click(addButton);
 
     await findAllByTitle('Click to remove');
     let dataRow = findFirstRowTableTwo() as HTMLElement;
@@ -244,14 +199,11 @@ describe('AddLeaseTenantForm component', () => {
         items: sampleContactResponse,
       });
       const {
-        component: { findByDisplayValue, getByText },
+        component: { findByDisplayValue },
       } = await setup({
         initialValues: apiLeaseToFormLease(getMockLease()),
         selectedTenants: [sampleContactResponse[0] as any],
       });
-
-      const addButton = getByText('Add selected tenants');
-      userEvent.click(addButton);
 
       const primaryContact = await findByDisplayValue('Bob Billy Smith');
       expect(primaryContact).toBeVisible();
@@ -262,18 +214,11 @@ describe('AddLeaseTenantForm component', () => {
         items: [orgWithOnePerson],
       });
       const {
-        component: { getByText, findByText },
+        component: { findByText },
       } = await setup({
-        initialValues: { tenants: [] } as any,
+        initialValues: { tenants: [new FormTenant(undefined, orgWithOnePerson)] } as any,
         selectedTenants: [new FormTenant(undefined, orgWithOnePerson)],
       });
-
-      const addButton = getByText('Add selected tenants');
-      userEvent.click(addButton);
-
-      const organization = await findByText('Dairy Queen Forever! Property Management');
-
-      expect(organization).toBeVisible();
 
       const primaryContact = await findByText('Stinky Cheese');
       expect(primaryContact).toBeVisible();
@@ -284,14 +229,11 @@ describe('AddLeaseTenantForm component', () => {
         items: [orgWithMultiplePeople],
       });
       const {
-        component: { findByText, getByText, findByDisplayValue },
+        component: { findByText, findByDisplayValue },
       } = await setup({
-        initialValues: { tenants: [] } as any,
+        initialValues: { tenants: [new FormTenant(undefined, orgWithMultiplePeople)] } as any,
         selectedTenants: [new FormTenant(undefined, orgWithMultiplePeople)],
       });
-
-      const addButton = getByText('Add selected tenants');
-      userEvent.click(addButton);
 
       const organization = await findByText('French Mouse Property Management');
 
@@ -309,14 +251,11 @@ describe('AddLeaseTenantForm component', () => {
         items: [orgWithNoPeople],
       });
       const {
-        component: { findByText, getByText },
+        component: { findByText },
       } = await setup({
-        initialValues: { tenants: [] } as any,
+        initialValues: { tenants: [new FormTenant(undefined, orgWithNoPeople)] } as any,
         selectedTenants: [new FormTenant(undefined, orgWithNoPeople)],
       });
-
-      const addButton = getByText('Add selected tenants');
-      userEvent.click(addButton);
 
       const organization = await findByText('Pussycat Property Management');
 

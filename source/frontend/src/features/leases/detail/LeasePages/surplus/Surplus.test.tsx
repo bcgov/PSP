@@ -1,7 +1,7 @@
-import { Formik } from 'formik';
+import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
+import { formLeaseToApiLease } from 'features/leases/leaseUtils';
 import { createMemoryHistory } from 'history';
 import { defaultFormLease, IFormLease, IProperty } from 'interfaces';
-import { noop } from 'lodash';
 import { mockOrganization, mockPerson, mockProperties } from 'mocks/filterDataMock';
 import { prettyFormatDate } from 'utils';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
@@ -14,9 +14,9 @@ describe('Lease Surplus Declaration', () => {
   const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): RenderResult => {
     // render component under test
     const result = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <LeaseContextProvider initialLease={formLeaseToApiLease(renderOptions.lease ?? ({} as any))}>
         <Surplus />
-      </Formik>,
+      </LeaseContextProvider>,
       {
         ...renderOptions,
         history,

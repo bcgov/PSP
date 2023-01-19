@@ -6,6 +6,7 @@ namespace Pims.Tools.Core.Configuration
     public class RequestOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - Whether to retry a request after a failure.
         /// </summary>

@@ -7,11 +7,7 @@ exports[`Error modal tests... renders correctly 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
+  <div />
+  <div />
 </div>
 `;

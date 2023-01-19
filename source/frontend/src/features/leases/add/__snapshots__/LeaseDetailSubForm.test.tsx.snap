@@ -5,9 +5,7 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c3.c3.form-control.is-valid {
   background-image: none;
 }

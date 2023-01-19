@@ -121,6 +121,8 @@ namespace Pims.Api.Controllers
             var activityTemplateTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetActivityTemplateTypes());
             var activityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetActivityStatusTypes());
             var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAcqFilePersonProfileTypes());
+            var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetTenantTypes());
+
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
@@ -166,6 +168,7 @@ namespace Pims.Api.Controllers
             codes.AddRange(activityTemplateTypes);
             codes.AddRange(activityStatusTypes);
             codes.AddRange(acqFilePersonProfileTypes);
+            codes.AddRange(tenantTypes);
 
             return new JsonResult(codes);
         }

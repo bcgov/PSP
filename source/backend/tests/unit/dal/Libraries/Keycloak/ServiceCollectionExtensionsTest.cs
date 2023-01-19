@@ -34,11 +34,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "test",
                 Audience = "test",
                 Client = "test",
-                Admin = new KeycloakAdminOptions
-                {
-                    Authority = "test",
-                    Users = "test",
-                },
                 OpenIdConnect = new OpenIdConnectOptions
                 {
                     Token = "test",
@@ -48,6 +43,9 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 {
                     Client = "test",
                     Secret = "test",
+                    Api = "api",
+                    Environment = "test",
+                    Integration = "4379"
                 },
             };
             mockConfig.Setup(m => m.Value).Returns(options);
@@ -94,11 +92,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "test",
                 Audience = "test",
                 Client = "test",
-                Admin = new KeycloakAdminOptions
-                {
-                    Authority = "test",
-                    Users = "test",
-                },
                 OpenIdConnect = new OpenIdConnectOptions
                 {
                     Token = "test",
@@ -108,6 +101,9 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 {
                     Client = "test",
                     Secret = "test",
+                    Api = "api",
+                    Environment = "test",
+                    Integration = "4379"
                 },
             };
             mockConfig.Setup(m => m.Value).Returns(options);

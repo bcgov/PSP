@@ -437,9 +437,9 @@ namespace Pims.Api.Test.Services
 
             var property = EntityHelper.CreateProperty(12345);
             property.IsPropertyOfInterest = true;
-            property.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>();
+            property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>();
             property.PimsPropertyLeases = new List<PimsPropertyLease>();
-            property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() };
+            property.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() };
 
             var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
@@ -451,7 +451,7 @@ namespace Pims.Api.Test.Services
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
-            propertyRepository.Setup(x => x.GetAssociations(It.IsAny<long>())).Returns(EntityHelper.CreateProperty(12345));
+            propertyRepository.Setup(x => x.GetAssociations(It.IsAny<long>())).Returns(property);
 
             // Act
             service.UpdateProperties(acqFile);

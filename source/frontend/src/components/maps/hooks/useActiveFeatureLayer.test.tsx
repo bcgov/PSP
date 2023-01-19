@@ -73,7 +73,7 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     // call to parcelmap BC and to internal pims layer
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(2);
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
     // calls to region and district layers
     expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
     await waitFor(() => {
@@ -107,7 +107,7 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     // call to parcelmap BC and to internal pims layer
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(2);
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
     // calls to region and district layers
     expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
     await waitFor(() => {
@@ -138,7 +138,6 @@ describe('useActiveFeatureLayer hook tests', () => {
       expect(setLayerPopup).toHaveBeenCalledWith(
         expect.objectContaining({
           data: { pid: '123456789' },
-          pimsProperty: { properties: { PROPERTY_ID: 200 } },
         }),
       );
     });

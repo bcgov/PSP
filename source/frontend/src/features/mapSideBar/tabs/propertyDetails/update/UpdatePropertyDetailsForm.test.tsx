@@ -209,16 +209,22 @@ describe('UpdatePropertyDetailsForm component', () => {
   let initialValues: UpdatePropertyDetailsFormModel;
 
   beforeEach(() => {
-    mockAxios.onGet('/users/info/A85F259B-FEBF-4508-87A6-1C2419036EFA').reply(200);
+    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     initialValues = UpdatePropertyDetailsFormModel.fromApi(fakeProperty);
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   it('renders as expected', () => {
     const { asFragment } = setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('shows property address if available', () => {
+    const { container } = setup({ initialValues });
+    const addressLine1 = container.querySelector(`input[name='address.streetAddress1']`);
+    expect(addressLine1).toHaveValue('45 - 904 Hollywood Crescent');
   });
 });

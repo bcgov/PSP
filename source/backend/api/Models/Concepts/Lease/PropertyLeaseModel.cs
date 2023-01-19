@@ -10,6 +10,8 @@ namespace Pims.Api.Models.Concepts
 
         public LeaseModel Lease { get; set; }
 
+        public string PropertyName { get; set; }
+
         public double? LeaseArea { get; set; }
 
         public TypeModel<string> AreaUnitType { get; set; }

@@ -5,9 +5,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -211,7 +209,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
             class="col-xl-6"
           >
             <div
-              class="flex-nowrap row"
+              class="flex-nowrap input-group row"
             >
               <div
                 class="c3 col-auto"
