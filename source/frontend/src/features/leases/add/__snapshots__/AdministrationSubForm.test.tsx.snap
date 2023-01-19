@@ -56,6 +56,12 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c6 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
+}
+
 <div
     class="c0 form-section"
   >
@@ -87,7 +93,7 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
           <label
             class="c2"
           >
-            MOTI Contact:
+            MOTI contact:
           </label>
         </div>
         <div
@@ -115,7 +121,7 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
           <label
             class="c2"
           >
-            MOTI Region:
+            MOTI region:
           </label>
         </div>
         <div
@@ -874,6 +880,33 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c2"
+          >
+            Intended use:
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+        >
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-description"
+              name="description"
+              title=""
+            />
           </div>
         </div>
       </div>

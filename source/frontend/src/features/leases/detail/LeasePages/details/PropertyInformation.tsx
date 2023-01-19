@@ -1,9 +1,10 @@
-import { InputGroup } from 'components/common/form';
+import { Input, InputGroup } from 'components/common/form';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';
+import { pidFormatter } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 
 import AddressSubForm from '../AddressSubForm';
@@ -23,24 +24,32 @@ export const PropertyInformation: React.FunctionComponent<
 > = ({ nameSpace, disabled, hideAddress }) => {
   const formikProps = useFormikContext<IFormLease>();
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
+  const legalDescription = getIn(formikProps.values, withNameSpace(nameSpace, 'legalDescription'));
+  const pid = getIn(formikProps.values, withNameSpace(nameSpace, 'pid'));
+  const pidText = pid ? `PID: ${pidFormatter(pid)}` : '';
+  const legalPidText = [legalDescription, pidText].filter(x => x).join(' ');
   return (
     <StyledPropertyInfo>
-      <SectionField label="PID" labelWidth="3">
-        <InputGroup disabled={disabled} field={withNameSpace(nameSpace, 'pid')} />
+      <SectionField label="Descriptive name" labelWidth="3">
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'propertyName')} />
+      </SectionField>
+      <SectionField label="Area included" labelWidth="3">
+        <InputGroup
+          disabled={disabled}
+          field={withNameSpace(nameSpace, 'landArea')}
+          postText={areaUnitType?.description ? `${areaUnitType?.description}.` : ''}
+          className="w-50"
+        />
       </SectionField>
       {!hideAddress ? (
         <SectionField label="Address" labelWidth="3">
           <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
         </SectionField>
       ) : null}
-      <SectionField label="Area included" labelWidth="3">
-        <InputGroup
-          disabled={disabled}
-          field={withNameSpace(nameSpace, 'landArea')}
-          postText={`${areaUnitType?.description}.` ?? ''}
-          className="w-50"
-        />
+      <SectionField label="Legal description" labelWidth="3">
+        {legalPidText}
       </SectionField>
+
       <hr />
     </StyledPropertyInfo>
   );
