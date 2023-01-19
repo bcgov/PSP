@@ -1,7 +1,9 @@
-import { Input, TextArea } from 'components/common/form';
+import { Input } from 'components/common/form';
 import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { getIn, useFormikContext } from 'formik';
+import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
@@ -17,6 +19,12 @@ export interface IDetailDocumentationProps {
 export const DetailDocumentation: React.FunctionComponent<
   React.PropsWithChildren<IDetailDocumentationProps>
 > = ({ nameSpace, disabled }) => {
+  const formikProps = useFormikContext<IFormLease>();
+  const note = getIn(formikProps.values, withNameSpace(nameSpace, 'note'));
+  const documentationReference = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace, 'documentationReference'),
+  );
   return (
     <>
       <Section initiallyExpanded={true} isCollapsable={true} header="Documentation">
@@ -27,10 +35,7 @@ export const DetailDocumentation: React.FunctionComponent<
           <YesNoSelect disabled={disabled} field={withNameSpace(nameSpace, 'hasDigitalLicense')} />
         </SectionField>
         <SectionField label="Document location" labelWidth="3">
-          <TextArea
-            disabled={disabled}
-            field={withNameSpace(nameSpace, 'documentationReference')}
-          />
+          {documentationReference}
         </SectionField>
         <SectionField label="LIS #" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'tfaFileNumber')} />
@@ -38,8 +43,8 @@ export const DetailDocumentation: React.FunctionComponent<
         <SectionField label="PS #" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'psFileNo')} />
         </SectionField>
-        <SectionField label="Lease Notes" labelWidth="3">
-          <TextArea disabled={disabled} field={withNameSpace(nameSpace, 'note')} />
+        <SectionField label="Lease notes" labelWidth="3">
+          {note}
         </SectionField>
       </Section>
     </>

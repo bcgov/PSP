@@ -5,7 +5,7 @@ import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useModalContext } from 'hooks/useModalContext';
 import { geoJSON } from 'leaflet';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { toast } from 'react-toastify';
 
 import { PARCELS_LAYER_URL, PIMS_BOUNDARY_LAYER_URL, useLayerQuery } from '../leaflet/LayerPopup';
@@ -22,25 +22,14 @@ export const useMapSearch = () => {
   const keycloak = useKeycloakWrapper();
   const logout = keycloak.obj.logout;
 
-  useEffect(() => {
-    setPropertiesLoading(
-      loading || parcelsService.findByPidLoading || parcelsService.findByPinLoading,
-    );
-  }, [
-    loading,
-    parcelsService.findByPidLoading,
-    parcelsService.findByPinLoading,
-    setPropertiesLoading,
-  ]);
-
   const search = async (
     filters?: IGeoSearchParams[],
   ): Promise<Feature<Geometry, GeoJsonProperties>[]> => {
     //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
+    let tileData;
     try {
       setProperties([]);
       const filter = filters?.length && filters.length > 1 ? filters[0] : undefined;
-      let tileData;
       if (filter?.latitude && filter.longitude) {
         const task1 = parcelsService.findOneWhereContains({
           lat: +filter.latitude,
@@ -112,8 +101,9 @@ export const useMapSearch = () => {
     } catch (error) {
       toast.error((error as Error).message, { autoClose: 7000 });
     } finally {
+      setPropertiesLoading(false);
     }
-    return [];
+    return propertiesResponseToPointFeature(tileData);
   };
 
   return {

@@ -134,7 +134,8 @@ export const MapStateContextProvider: React.FC<
           if (
             ![MapState.ACQUISITION_FILE, MapState.RESEARCH_FILE, MapState.LEASE_FILE].includes(
               prevState.mapState,
-            )
+            ) &&
+            action.isSelecting
           ) {
             throw Error(
               `Cannot enter selection mode unless in the context of a file. Current ${prevState.mapState}`,
