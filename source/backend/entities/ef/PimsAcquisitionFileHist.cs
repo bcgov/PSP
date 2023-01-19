@@ -110,8 +110,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("LEGACY_FILE_NUMBER")]
-        [StringLength(18)]
-        public string LegacyFileNumber { get; set; }
     }
 }
