@@ -80,10 +80,26 @@ namespace Pims.Api.Services
             switch (type)
             {
                 case FinancialCodeTypes.BusinessFunction:
-                    var pimsEntity = _mapper.Map<PimsBusinessFunctionCode>(model);
-                    var createdEntity = _businessFunctionRepository.Add(pimsEntity);
-                    _businessFunctionRepository.CommitTransaction();
-                    return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    {
+                        var pimsEntity = _mapper.Map<PimsBusinessFunctionCode>(model);
+                        var createdEntity = _businessFunctionRepository.Add(pimsEntity);
+                        _businessFunctionRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.ChartOfAccounts:
+                    {
+                        var pimsEntity = _mapper.Map<PimsChartOfAccountsCode>(model);
+                        var createdEntity = _chartOfAccountsRepository.Add(pimsEntity);
+                        _chartOfAccountsRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.YearlyFinancial:
+                    {
+                        var pimsEntity = _mapper.Map<PimsYearlyFinancialCode>(model);
+                        var createdEntity = _yearlyFinancialRepository.Add(pimsEntity);
+                        _yearlyFinancialRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
                 default:
                     throw new BadRequestException("Financial code type not valid.");
             }
