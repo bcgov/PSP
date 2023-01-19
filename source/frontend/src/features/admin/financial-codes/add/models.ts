@@ -1,4 +1,5 @@
 import { Api_FinancialCode } from 'models/api/FinancialCode';
+import moment from 'moment';
 
 export class FinancialCodeForm {
   id?: number;
@@ -6,7 +7,7 @@ export class FinancialCodeForm {
   code?: string = '';
   description?: string = '';
   displayOrder?: number;
-  effectiveDate?: string;
+  effectiveDate?: string = moment().format('YYYY-MM-DD');
   expiryDate?: string;
 
   toApi(): Api_FinancialCode {
