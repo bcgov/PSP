@@ -10,8 +10,10 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { useFinancialCodeRepository } from '../hooks/useFinancialCodeRepository';
+import { AddFinancialCodeYupSchema } from './AddFinancialCodeYupSchema';
 
 export interface IAddFinancialCodeFormProps {
+  validationSchema?: any;
   onSave: (financialCode: Api_FinancialCode) => Promise<Api_FinancialCode | undefined>;
   onCancel: () => void;
   onSuccess: (financialCode: Api_FinancialCode) => Promise<void>;
@@ -30,6 +32,7 @@ export const AddFinancialCodeContainer: React.FC<IAddFinancialCodeContainerProps
   } = useFinancialCodeRepository();
 
   const createFinancialCode = async (financialCode: Api_FinancialCode) => {
+    setDuplicateError(false);
     return addFinancialCode(financialCode.type as FinancialCodeTypes, financialCode);
   };
 
@@ -73,6 +76,7 @@ export const AddFinancialCodeContainer: React.FC<IAddFinancialCodeContainerProps
       <Row>
         <Col md={7}>
           <View
+            validationSchema={AddFinancialCodeYupSchema}
             onSave={createFinancialCode}
             onCancel={onCancel}
             onSuccess={onCreateSuccess}
