@@ -22,7 +22,6 @@ export enum MapStateActionTypes {
   MAP_STATE = 'MAP_STATE',
   SELECTED_FEATURE = 'SELECTED_FEATURE',
   SELECTED_INVENTORY_PROPERTY = 'SELECTED_INVENTORY_PROPERTY',
-  SELECTED_LEASE_PROPERTY = 'SELECTED_LEASE_PROPERTY',
   SELECTED_FILE_FEATURE = 'SELECTED_FILE_FEATURE',
   DRAFT_PROPERTIES = 'DRAFT_PROPERTIES',
   LOADING = 'LOADING',
@@ -82,10 +81,6 @@ export type MapStateActions =
       selectedInventoryProperty: IProperty | null;
     }
   | {
-      type: MapStateActionTypes.SELECTED_LEASE_PROPERTY;
-      selectedLeaseProperty: IProperty | null;
-    }
-  | {
       type: MapStateActionTypes.SELECTED_FILE_FEATURE;
       selectedFileFeature: Feature<Geometry, GeoJsonProperties> | null;
     }
@@ -123,10 +118,6 @@ export const MapStateContextProvider: React.FC<
           return produce(prevState, draft => {
             draft.selectedInventoryProperty = action.selectedInventoryProperty;
           });
-        case MapStateActionTypes.SELECTED_LEASE_PROPERTY:
-          return produce(prevState, draft => {
-            draft.selectedLeaseProperty = action.selectedLeaseProperty;
-          });
         case MapStateActionTypes.LOADING:
           return produce(prevState, draft => {
             draft.loading = action.loading;
@@ -143,7 +134,8 @@ export const MapStateContextProvider: React.FC<
           if (
             ![MapState.ACQUISITION_FILE, MapState.RESEARCH_FILE, MapState.LEASE_FILE].includes(
               prevState.mapState,
-            )
+            ) &&
+            action.isSelecting
           ) {
             throw Error(
               `Cannot enter selection mode unless in the context of a file. Current ${prevState.mapState}`,
