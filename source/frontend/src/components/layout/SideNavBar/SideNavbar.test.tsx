@@ -17,7 +17,12 @@ const renderComponent = (props?: IRenderProps) =>
     <TestCommonWrapper
       history={history}
       roles={props?.roles ?? [Roles.REAL_ESTATE_MANAGER]}
-      claims={[...(props?.claims ?? []), Claims.LEASE_VIEW, Claims.RESEARCH_VIEW]}
+      claims={[
+        ...(props?.claims ?? []),
+        Claims.LEASE_VIEW,
+        Claims.RESEARCH_VIEW,
+        Claims.PROJECT_VIEW,
+      ]}
     >
       <SidebarStateContextProvider>
         <SideNavBar />
@@ -169,6 +174,23 @@ describe('SideNavbar display and logic', () => {
       });
       await waitFor(async () => {
         expect(history.location.pathname).toBe('/admin/users');
+      });
+    });
+
+    it('Opens project side tray when an icon is clicked.', async () => {
+      const { getByText, getByTestId } = renderComponent({
+        roles: [Roles.SYSTEM_ADMINISTRATOR],
+      });
+      const projectButton = getByTestId('nav-tooltip-project');
+      await act(async () => {
+        userEvent.click(projectButton);
+      });
+      const searchProjectLink = getByText('Manage Projects');
+      await act(async () => {
+        userEvent.click(searchProjectLink);
+      });
+      await waitFor(async () => {
+        expect(history.location.pathname).toBe('/project/list');
       });
     });
 

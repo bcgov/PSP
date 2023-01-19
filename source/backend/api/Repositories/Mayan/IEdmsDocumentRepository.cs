@@ -11,36 +11,36 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public interface IEdmsDocumentRepository
     {
-        Task<ExternalResult<DocumentType>> CreateDocumentTypeAsync(DocumentType documentType);
+        Task<ExternalResult<DocumentType>> TryCreateDocumentTypeAsync(DocumentType documentType);
 
-        Task<ExternalResult<string>> DeleteDocumentTypeAsync(long documentTypeId);
+        Task<ExternalResult<string>> TryDeleteDocumentTypeAsync(long documentTypeId);
 
-        Task<ExternalResult<QueryResult<DocumentType>>> GetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentType>>> TryGetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> TryGetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentDetail>>> GetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentDetail>>> TryGetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentMetadata>>> GetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentMetadata>>> TryGetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<DocumentDetail>> GetDocumentAsync(long documentId);
+        Task<ExternalResult<DocumentDetail>> TryGetDocumentAsync(long documentId);
 
-        Task<ExternalResult<FileDownload>> DownloadFileAsync(long documentId, long fileId);
+        Task<ExternalResult<FileDownload>> TryDownloadFileAsync(long documentId, long fileId);
 
-        Task<ExternalResult<string>> DeleteDocument(long documentId);
+        Task<ExternalResult<string>> TryDeleteDocument(long documentId);
 
-        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile file);
+        Task<ExternalResult<DocumentDetail>> TryUploadDocumentAsync(long documentType, IFormFile file);
 
-        Task<ExternalResult<DocumentMetadata>> CreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value);
+        Task<ExternalResult<DocumentMetadata>> TryCreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value);
 
-        Task<ExternalResult<DocumentMetadata>> UpdateDocumentMetadataAsync(long documentId, long metadataId, string value);
+        Task<ExternalResult<DocumentMetadata>> TryUpdateDocumentMetadataAsync(long documentId, long metadataId, string value);
 
-        Task<ExternalResult<string>> DeleteDocumentMetadataAsync(long documentId, long metadataId);
+        Task<ExternalResult<string>> TryDeleteDocumentMetadataAsync(long documentId, long metadataId);
 
-        Task<ExternalResult<DocumentTypeMetadataType>> CreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
+        Task<ExternalResult<DocumentTypeMetadataType>> TryCreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
 
-        Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired);
+        Task<ExternalResult<DocumentTypeMetadataType>> TryUpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired);
 
-        Task<ExternalResult<string>> DeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
+        Task<ExternalResult<string>> TryDeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
     }
 }

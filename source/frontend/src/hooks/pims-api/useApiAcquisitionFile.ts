@@ -1,7 +1,6 @@
 import { IAcquisitionFilter } from 'features/acquisition/list/interfaces';
 import { IPagedItems } from 'interfaces';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -22,15 +21,17 @@ export const useApiAcquisitionFile = () => {
         ),
       getAcquisitionFile: (acqFileId: number) =>
         api.get<Api_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
-      postAcquisitionFile: (acqFile: Api_ResearchFile) =>
+      postAcquisitionFile: (acqFile: Api_AcquisitionFile) =>
         api.post<Api_AcquisitionFile>(`/acquisitionfiles`, acqFile),
-      putAcquisitionFile: (acqFile: Api_ResearchFile, userOverride = false) =>
+      putAcquisitionFile: (acqFile: Api_AcquisitionFile, userOverride = false) =>
         api.put<Api_AcquisitionFile>(
           `/acquisitionfiles/${acqFile.id}?userOverride=${userOverride}`,
           acqFile,
         ),
       putAcquisitionFileProperties: (acqFile: Api_AcquisitionFile) =>
-        api.put<Api_ResearchFile>(`/acquisitionfiles/${acqFile?.id}/properties`, acqFile),
+        api.put<Api_AcquisitionFile>(`/acquisitionfiles/${acqFile?.id}/properties`, acqFile),
+      getAcquisitionFileProperties: (acqFileId: number) =>
+        api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
     }),
     [api],
   );

@@ -23,6 +23,11 @@ const AcquisitionSummaryView: React.FunctionComponent<
   const keycloak = useKeycloakWrapper();
   const detail: DetailAcquisitionFile = DetailAcquisitionFile.fromApi(acquisitionFile);
 
+  const projectName =
+    acquisitionFile?.project !== undefined
+      ? acquisitionFile?.project?.code + ' - ' + acquisitionFile?.project?.description
+      : '';
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
@@ -30,6 +35,14 @@ const AcquisitionSummaryView: React.FunctionComponent<
           <EditButton title="Edit acquisition file" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>
+      <Section header="Project">
+        <SectionField label="Ministry project">{projectName}</SectionField>
+        <SectionField label="Funding">{acquisitionFile?.fundingTypeCode?.description}</SectionField>
+
+        {acquisitionFile?.fundingTypeCode?.id === 'OTHER' && (
+          <SectionField label="Other funding">{acquisitionFile.fundingOther}</SectionField>
+        )}
+      </Section>
       <Section header="Schedule">
         <SectionField label="Assigned date">{prettyFormatDate(detail.assignedDate)}</SectionField>
         <SectionField

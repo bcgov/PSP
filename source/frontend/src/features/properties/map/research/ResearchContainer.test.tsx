@@ -32,7 +32,7 @@ describe('ResearchContainer component', () => {
   const setup = (props: Partial<IResearchContainerProps>, renderOptions: RenderOptions = {}) => {
     const utils = render(
       <SideBarContextProvider>
-        <ResearchContainer researchFileId={1} onClose={onClose} />
+        <ResearchContainer researchFileId={getMockResearchFile().id as number} onClose={onClose} />
       </SideBarContextProvider>,
       {
         ...renderOptions,
@@ -51,7 +51,8 @@ describe('ResearchContainer component', () => {
 
   beforeEach(() => {
     mockAxios.resetHistory();
-    mockAxios.onGet().reply(200, getMockResearchFile());
+    mockAxios.reset();
+    mockAxios.onGet(/users\/info.*?/).reply(200, {});
   });
 
   afterEach(() => {
@@ -59,17 +60,24 @@ describe('ResearchContainer component', () => {
   });
 
   it('renders as expected', async () => {
+    const mockResearchFile = getMockResearchFile();
+    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, getMockResearchFile());
+    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}/properties`).reply(200, []);
     const { getByTestId } = setup({});
+
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
     expect(document.body).toMatchSnapshot();
   });
 
   it('displays a properties pid if that is the only valid identifier', async () => {
     const mockResearchFile = getMockResearchFile();
-    mockAxios.onGet().reply(200, {
+    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
       ...mockResearchFile,
-      fileProperties: [{ id: 1, property: { pid: 123456789 } }],
+      fileProperties: [{ id: 1 }],
     } as Api_ResearchFile);
+    mockAxios
+      .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
+      .reply(200, [{ id: 1, property: { pid: '123-456-789' } }]);
     const { getByTestId, findByText } = setup({});
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
@@ -79,10 +87,13 @@ describe('ResearchContainer component', () => {
 
   it('displays a properties pin if that is the only valid identifier', async () => {
     const mockResearchFile = getMockResearchFile();
-    mockAxios.onGet().reply(200, {
+    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
       ...mockResearchFile,
-      fileProperties: [{ id: 1, property: { pin: 123456 } }],
+      fileProperties: [{ id: 1 }],
     } as Api_ResearchFile);
+    mockAxios
+      .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
+      .reply(200, [{ id: 1, property: { pin: 123456 } }]);
     const { getByTestId, findByText } = setup({});
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
@@ -92,10 +103,13 @@ describe('ResearchContainer component', () => {
 
   it('displays a properties plan number if that is the only valid identifier', async () => {
     const mockResearchFile = getMockResearchFile();
-    mockAxios.onGet().reply(200, {
+    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
       ...mockResearchFile,
-      fileProperties: [{ id: 1, property: { planNumber: 'EPP92028' } }],
+      fileProperties: [{ id: 1 }],
     } as Api_ResearchFile);
+    mockAxios
+      .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
+      .reply(200, [{ id: 1, property: { planNumber: 'EPP92028' } }]);
     const { getByTestId, findByText } = setup({});
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
@@ -105,10 +119,13 @@ describe('ResearchContainer component', () => {
 
   it('displays a properties lat/lng if that is the only valid identifier', async () => {
     const mockResearchFile = getMockResearchFile();
-    mockAxios.onGet().reply(200, {
+    mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
       ...mockResearchFile,
-      fileProperties: [{ id: 1, property: { latitude: 1, longitude: 2 } }],
+      fileProperties: [{ id: 1 }],
     } as Api_ResearchFile);
+    mockAxios
+      .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
+      .reply(200, [{ id: 1, property: { latitude: 1, longitude: 2 } }]);
     const { getByTestId, findByText } = setup({});
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));

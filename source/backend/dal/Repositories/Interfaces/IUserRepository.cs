@@ -15,15 +15,15 @@ namespace Pims.Dal.Repositories
 
         PimsUser Activate();
 
-        Paged<PimsUser> Get(int page, int quantity);
+        Paged<PimsUser> GetPage(int page, int quantity);
 
-        Paged<PimsUser> Get(UserFilter filter = null);
+        Paged<PimsUser> GetAllByFilter(UserFilter filter = null);
 
-        PimsUser Get(Guid keycloakUserId);
+        PimsUser GetByKeycloakUserId(Guid keycloakUserId);
 
-        PimsUser Get(long id);
+        PimsUser GetById(long id);
 
-        PimsUser GetTracking(long id);
+        PimsUser GetTrackingById(long id);
 
         public PimsUser RemoveRole(PimsUser user, long roleId);
 
@@ -41,6 +41,6 @@ namespace Pims.Dal.Repositories
 
         void Delete(PimsUser delete);
 
-        PimsUser GetUserInfo(Guid keycloakUserId);
+        PimsUser GetUserInfoByKeycloakUserId(Guid keycloakUserId);
     }
 }

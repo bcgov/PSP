@@ -27,7 +27,7 @@ namespace Pims.Api.Services
             DateTime fiscalYearStartDate = fiscalYearStart.ToFiscalYearDate();
 
             // fiscal defined as April 01 to March 31 of following year
-            return _leaseRepository.Get(
+            return _leaseRepository.GetAllByFilter(
                 new Dal.Entities.Models.LeaseFilter()
                 {
                     ExpiryAfterDate = fiscalYearStartDate,

@@ -14,9 +14,5 @@ namespace Pims.Dal.Repositories
         long GetRowVersion(long id);
 
         int Count();
-
-        IEnumerable<PimsNote> GetActivityNotes(long entityId);
-
-        void DeleteActivityNotes(long entityId);
     }
 }

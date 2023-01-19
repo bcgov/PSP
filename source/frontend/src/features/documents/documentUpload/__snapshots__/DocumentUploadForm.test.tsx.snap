@@ -289,7 +289,7 @@ exports[`DocumentUploadView component renders as expected 1`] = `
           >
             <span
               class="tooltip-icon"
-              data-testid="tooltip-icon"
+              data-testid="tooltip-icon-initiator-tooltip"
               id="initiator-tooltip"
             >
               <svg

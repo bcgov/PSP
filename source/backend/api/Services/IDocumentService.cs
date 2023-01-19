@@ -32,5 +32,7 @@ namespace Pims.Api.Services
         Task<DocumentUpdateResponse> UpdateDocumentAsync(DocumentUpdateRequest updateRequest);
 
         Task<ExternalResult<string>> DeleteDocumentAsync(PimsDocument document);
+
+        Task<ExternalResult<DocumentDetail>> GetStorageDocumentDetail(long mayanDocumentId);
     }
 }

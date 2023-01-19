@@ -104,7 +104,7 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
-        #region Get All Notes for Activity
+        #region Get All Notes for Entity
         [Fact]
         public void GetActivityNotes_Success()
         {
@@ -118,15 +118,39 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
 
-            var repository = helper.CreateRepository<NoteRepository>(user);
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            var result = repository.GetActivityNotes(1);
+            var result = repository.GetAllActivityNotesById(1);
 
             // Assert
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<IEnumerable<PimsNote>>();
             result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void GetAcquisitionFileNotes_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+
+            var note1 = EntityHelper.CreateNote("Test Note 1", id: 1);
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            var activity = EntityHelper.CreateAcquisitionFileNote(acqFile, note1);
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var result = repository.GetAllAcquisitionNotesById(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsNote>>();
+            result.Should().HaveCount(1);
         }
 
         [Fact]
@@ -137,10 +161,10 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<NoteRepository>(user);
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
 
             // Act
-            var result = repository.GetActivityNotes(1);
+            var result = repository.GetAllActivityNotesById(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -205,6 +229,64 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             act.Should().Throw<KeyNotFoundException>();
+        }
+        #endregion
+
+        #region Delete
+        [Fact]
+        public void Delete_Activity_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var activityNote = EntityHelper.CreateActivityNote();
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activityNote);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteActivityNotes(1);
+
+            // Assert
+            deleted.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Delete_Acquisition_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var fileNote = EntityHelper.CreateAcquisitionFileNote();
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteAcquisitionFileNotes(1);
+
+            // Assert
+            deleted.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Delete_Acquisition_NoNote()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var context = helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteAcquisitionFileNotes(1);
+
+            // Assert
+            deleted.Should().BeFalse();
         }
         #endregion
 

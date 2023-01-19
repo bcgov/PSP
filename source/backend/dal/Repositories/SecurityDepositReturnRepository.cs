@@ -35,7 +35,7 @@ namespace Pims.Dal.Repositories
             return query.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
-        public IEnumerable<PimsSecurityDepositReturn> GetByDepositId(long id)
+        public IEnumerable<PimsSecurityDepositReturn> GetAllByDepositId(long id)
         {
             var depositReturns = this.Context.PimsSecurityDepositReturns.AsNoTracking().Where(t => t.SecurityDepositId == id);
             return depositReturns ?? throw new KeyNotFoundException();

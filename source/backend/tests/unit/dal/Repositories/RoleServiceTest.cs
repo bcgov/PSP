@@ -35,7 +35,7 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.Get(1, 1));
+                service.GetPage(1, 1));
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace Pims.Dal.Test.Services
 
             var service = helper.CreateRepository<RoleRepository>(user);
 
-            var result = service.Get(1, 1, "Role 1");
+            var result = service.GetPage(1, 1, "Role 1");
 
             Assert.NotNull(result);
             Assert.IsAssignableFrom<Paged<Entity.PimsRole>>(result);
@@ -71,7 +71,7 @@ namespace Pims.Dal.Test.Services
             var service = helper.CreateRepository<RoleRepository>(user);
 
             // Act
-            var result = service.Get(roleKey);
+            var result = service.GetByKey(roleKey);
 
             // Assert
             Assert.NotNull(result);
@@ -115,7 +115,7 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             Assert.Throws<KeyNotFoundException>(() =>
-                service.Get(Guid.NewGuid()));
+                service.GetByKey(Guid.NewGuid()));
         }
 
         [Fact]

@@ -11,7 +11,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        IEnumerable<PimsLease> Get(LeaseFilter filter, bool loadPayments = false);
+        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, bool loadPayments = false);
 
         long GetRowVersion(long id);
 

@@ -86,11 +86,13 @@ namespace PIMS.Tests.Automation.PageObjects
         // Research File - Property UI/UX Elements
         private By researchFilePropertyCountProps = By.XPath("//div[@data-testid='menu-item-row-0']/parent::div");
 
+        // Research File - Property Research Elements
         private By researchPropertyInterestLabel = By.XPath("//div[contains(text(),'Property of Interest')]");
         private By researchPropertyNameLabel = By.XPath("//label[contains(text(),'Descriptive name')]");
         private By researchPropertyNameViewInput = By.XPath("//label[contains(text(),'Descriptive name')]/parent::div/following-sibling::div");
         private By researchPropertyPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
         private By researchPropertyPurposeViewInput = By.XPath("//label[contains(text(),'Purpose')]/parent::div/following-sibling::div");
+        private By researchProperty1stPurposeDeleteLink = By.CssSelector("div[id='purpose-selector'] div span:nth-child(1) i");
         private By researchPropertyLegalReqLabel = By.XPath("//label[contains(text(),'Legal opinion req')]");
         private By researchPropertyLegalReqViewInput = By.XPath("//label[contains(text(),'Legal opinion req')]/parent::div/following-sibling::div");
         private By researchPropertyLegalObtLabel = By.XPath("//label[contains(text(),'Legal opinion obtained')]");
@@ -138,6 +140,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(researchRFileSummaryLink).Click();
             }
             webDriver.FindElement(researchEditPropertiesBttn).Click();
+        }
+
+        public void ChooseFirstPropertyOption()
+        {
+            Wait();
+            webDriver.FindElement(researchProperty1stPropLink).Click();
         }
 
         public void AddAdditionalResearchFileInfo(string roadName, string roadAlias, int purposes, string requestDate, string requester, string descriptionRequest, string researchCompletedDate, string resultRequest, Boolean expropiation, string expropiationNotes)
@@ -242,10 +250,20 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.ModalClickOKBttn();
         }
 
-        public void AddPropertyResearchMinInfo(string propertyName)
+        public void CancelResearchFilePropertyDetails()
         {
             Wait();
-            webDriver.FindElement(researchProperty1stPropLink).Click();
+            ButtonElement("Cancel");
+
+            Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
+            Assert.True(webDriver.FindElement(researchFileContentModal1).Text.Equals("If you cancel now, this research file will not be saved."));
+            Assert.True(webDriver.FindElement(researchFileContentModal2).Text.Equals("Are you sure you want to Cancel?"));
+
+            sharedModals.ModalClickOKBttn();
+        }
+
+        public void AddPropertyResearchMinInfo(string propertyName)
+        {
 
             Wait();
             webDriver.FindElement(researchPropertyResearchEditBttn).Click();
@@ -257,8 +275,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddPropertyResearchMaxInfo(string propertyName, string docReference, string notes)
         {
-            Wait();
-            webDriver.FindElement(researchProperty1stPropLink).Click();
 
             Wait();
             webDriver.FindElement(researchPropertyResearchEditBttn).Click();
@@ -272,6 +288,19 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(researchPropertyDocReferenceInput).SendKeys(docReference);
             webDriver.FindElement(researchPropertyNotesTextArea).SendKeys(notes);
 
+        }
+
+        public void EditPropertyResearch(string notes)
+        {
+            Wait();
+            webDriver.FindElement(researchPropertyResearchEditBttn).Click();
+
+            Wait();
+            webDriver.FindElement(researchPropertyPurposeSelect).Click();
+            ChooseMultiSelectRandomOptions(researchPropertyPurposeOptions, "optionContainer", 1);
+            webDriver.FindElement(researchProperty1stPurposeDeleteLink).Click();
+            ClearInput(researchPropertyNotesTextArea);
+            webDriver.FindElement(researchPropertyNotesTextArea).SendKeys(notes);
         }
 
         //Get the research file number

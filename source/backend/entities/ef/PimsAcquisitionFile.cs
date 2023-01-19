@@ -15,12 +15,15 @@ namespace Pims.Dal.Entities
     [Index(nameof(AcqPhysFileStatusTypeCode), Name = "ACQNFL_ACQ_PHYS_FILE_STATUS_TYPE_CODE_IDX")]
     [Index(nameof(FileNumber), Name = "ACQNFL_FILE_NUMBER_IDX")]
     [Index(nameof(LegacyFileNumber), Name = "ACQNFL_LEGACY_FILE_NUMBER_IDX")]
+    [Index(nameof(ProductId), Name = "ACQNFL_PRODUCT_ID_IDX")]
+    [Index(nameof(ProjectId), Name = "ACQNFL_PROJECT_ID_IDX")]
     [Index(nameof(RegionCode), Name = "ACQNFL_REGION_CODE_IDX")]
     public partial class PimsAcquisitionFile
     {
         public PimsAcquisitionFile()
         {
             PimsAcquisitionActivityInstances = new HashSet<PimsAcquisitionActivityInstance>();
+            PimsAcquisitionFileNotes = new HashSet<PimsAcquisitionFileNote>();
             PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
             PimsAcquisitionOwners = new HashSet<PimsAcquisitionOwner>();
             PimsPropertyAcquisitionFiles = new HashSet<PimsPropertyAcquisitionFile>();
@@ -29,6 +32,10 @@ namespace Pims.Dal.Entities
         [Key]
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
+        [Column("PROJECT_ID")]
+        public long? ProjectId { get; set; }
+        [Column("PRODUCT_ID")]
+        public long? ProductId { get; set; }
         [Required]
         [Column("ACQUISITION_FILE_STATUS_TYPE_CODE")]
         [StringLength(20)]
@@ -64,6 +71,9 @@ namespace Pims.Dal.Entities
         [Column("FILE_NUMBER")]
         [StringLength(18)]
         public string FileNumber { get; set; }
+        [Column("LEGACY_FILE_NUMBER")]
+        [StringLength(18)]
+        public string LegacyFileNumber { get; set; }
         [Column("FUNDING_OTHER")]
         [StringLength(200)]
         public string FundingOther { get; set; }
@@ -111,9 +121,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("LEGACY_FILE_NUMBER")]
-        [StringLength(18)]
-        public string LegacyFileNumber { get; set; }
 
         [ForeignKey(nameof(AcqPhysFileStatusTypeCode))]
         [InverseProperty(nameof(PimsAcqPhysFileStatusType.PimsAcquisitionFiles))]
@@ -127,11 +134,19 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionTypeCode))]
         [InverseProperty(nameof(PimsAcquisitionType.PimsAcquisitionFiles))]
         public virtual PimsAcquisitionType AcquisitionTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(ProductId))]
+        [InverseProperty(nameof(PimsProduct.PimsAcquisitionFiles))]
+        public virtual PimsProduct Product { get; set; }
+        [ForeignKey(nameof(ProjectId))]
+        [InverseProperty(nameof(PimsProject.PimsAcquisitionFiles))]
+        public virtual PimsProject Project { get; set; }
         [ForeignKey(nameof(RegionCode))]
         [InverseProperty(nameof(PimsRegion.PimsAcquisitionFiles))]
         public virtual PimsRegion RegionCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsAcquisitionActivityInstance.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionFileNote.AcquisitionFile))]
+        public virtual ICollection<PimsAcquisitionFileNote> PimsAcquisitionFileNotes { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFilePerson.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionFilePerson> PimsAcquisitionFilePeople { get; set; }
         [InverseProperty(nameof(PimsAcquisitionOwner.AcquisitionFile))]

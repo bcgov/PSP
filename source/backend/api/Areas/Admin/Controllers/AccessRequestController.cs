@@ -76,7 +76,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             var filter = new EModel.AccessRequestFilter(page, quantity, searchText, new[] { sort });
             filter.StatusType = new Entity.PimsAccessRequestStatusType() { Id = "Received" };
 
-            var result = _accessRequestRepository.Get(filter);
+            var result = _accessRequestRepository.GetAll(filter);
             var models = _mapper.Map<AccessRequestModel[]>(result.Items);
             var paged = new PageModel<AccessRequestModel>(models, page, quantity, result.Total);
             return new JsonResult(paged);
@@ -95,7 +95,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "user" })]
         public IActionResult GetAccessRequest(long id)
         {
-            var accessRequest = _accessRequestRepository.Get(id);
+            var accessRequest = _accessRequestRepository.GetById(id);
             return new JsonResult(_mapper.Map<AccessRequestModel>(accessRequest));
         }
 

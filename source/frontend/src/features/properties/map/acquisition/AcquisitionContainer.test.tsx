@@ -4,6 +4,7 @@ import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/index';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
+import { mockNotesResponse } from 'mocks/mockNoteResponses';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { prettyFormatDate } from 'utils';
 import {
@@ -73,7 +74,11 @@ describe('AcquisitionContainer component', () => {
 
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
+    mockAxios
+      .onGet(new RegExp('acquisitionfiles/1/properties'))
+      .reply(200, mockAcquisitionFileResponse().fileProperties);
     mockAxios.onGet(new RegExp('acquisitionfiles/*')).reply(200, mockAcquisitionFileResponse());
+    mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
   });
 
   afterEach(() => {
@@ -141,5 +146,23 @@ describe('AcquisitionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     expect(queryByTitle('Edit acquisition properties')).toBeNull();
+  });
+
+  it('should display the notes tab if the user has permissions', async () => {
+    const { getAllByText, getByTestId } = setup(undefined, { claims: [Claims.NOTE_VIEW] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    expect(getAllByText(/Notes/g)[0]).toBeVisible();
+  });
+
+  it('should not display the notes tab if the user does not have permissions', async () => {
+    const { queryByText, getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    expect(queryByText('Notes')).toBeNull();
   });
 });

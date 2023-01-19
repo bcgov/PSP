@@ -36,7 +36,7 @@ namespace Pims.Api.Repositories.Cdogs
             _authRepository = authRepository;
         }
 
-        public async Task<ExternalResult<FileTypes>> GetFileTypesAsync()
+        public async Task<ExternalResult<FileTypes>> TryGetFileTypesAsync()
         {
             _logger.LogDebug("Retrieving supported file types...");
             string authenticationToken = await _authRepository.GetTokenAsync();
@@ -49,7 +49,7 @@ namespace Pims.Api.Repositories.Cdogs
             return result;
         }
 
-        public async Task<ExternalResult<string>> UploadTemplateAsync(IFormFile file)
+        public async Task<ExternalResult<string>> TryUploadTemplateAsync(IFormFile file)
         {
             _logger.LogDebug("Uploading document template...");
             string authenticationToken = await _authRepository.GetTokenAsync();

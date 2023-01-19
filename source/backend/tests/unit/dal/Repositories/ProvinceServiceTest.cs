@@ -27,7 +27,7 @@ namespace Pims.Dal.Test.Services
             var service = helper.CreateRepository<ProvinceRepository>(user);
 
             // Act
-            var result = service.Get();
+            var result = service.GetAll();
 
             // Assert
             Assert.True(result.Any());

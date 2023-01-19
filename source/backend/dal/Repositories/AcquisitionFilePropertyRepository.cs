@@ -30,12 +30,17 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        public List<PimsPropertyAcquisitionFile> GetByAcquisitionFileId(long acquisitionFileId)
+        public List<PimsPropertyAcquisitionFile> GetPropertiesByAcquisitionFileId(long acquisitionFileId)
         {
             return Context.PimsPropertyAcquisitionFiles
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .Include(rp => rp.Property)
                 .Include(rp => rp.PimsActInstPropAcqFiles)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.RegionCodeNavigation)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.DistrictCodeNavigation)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.Address)
                 .AsNoTracking()
                 .ToList();
         }

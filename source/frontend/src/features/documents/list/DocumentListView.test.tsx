@@ -5,10 +5,12 @@ import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks';
+import { mockDocumentDetailResponse } from 'mocks/mockDocumentDetail';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { cleanup, mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
 
+import { DocumentRow } from '../ComposedDocument';
 import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
 
 const mockAxios = new MockAdapter(axios);
@@ -17,6 +19,12 @@ const storeState = {
 };
 
 const deleteMock = jest.fn().mockResolvedValue(true);
+const onPageChange = jest.fn();
+
+const mockDocumentRowResponse = () =>
+  mockDocumentsResponse().map(x =>
+    x?.document ? DocumentRow.fromApi(x.document) : new DocumentRow(),
+  );
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -39,9 +47,16 @@ describe('Document List View', () => {
         relationshipType={
           renderOptions?.relationshipType || DocumentRelationshipType.RESEARCH_FILES
         }
-        documentResults={renderOptions?.documentResults || mockDocumentsResponse()}
+        documentResults={
+          renderOptions?.documentResults ||
+          mockDocumentsResponse().map(x =>
+            x?.document ? DocumentRow.fromApi(x.document) : new DocumentRow(),
+          )
+        }
         onDelete={renderOptions?.onDelete || deleteMock}
         onSuccess={renderOptions?.onSuccess || noop}
+        onPageChange={renderOptions?.onPageChange ?? onPageChange}
+        pageProps={renderOptions?.pageProps ?? { pageSize: 10, pageIndex: 0 }}
       />,
       {
         ...renderOptions,
@@ -72,49 +87,90 @@ describe('Document List View', () => {
     expect(fragment).toMatchSnapshot();
   });
 
-  it('renders as expected', async () => {
-    const { asFragment } = setup();
-    const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
-  });
-
-  it('should have the Documents type in the component', () => {
+  it('should have the Documents type in the component', async () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
       parentId: 0,
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
-      documentResults: mockDocumentsResponse(),
+      documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
       onSuccess: noop,
+      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
     });
     expect(getByTestId('document-type')).toBeInTheDocument();
   });
 
-  it('should have the Documents filename in the component', () => {
+  it('should have the Documents filename in the component', async () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
       parentId: 0,
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
-      documentResults: mockDocumentsResponse(),
+      documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
       onSuccess: noop,
+      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
     });
     expect(getByTestId('document-filename')).toBeInTheDocument();
   });
 
-  it('should have the Documents add button in the component', () => {
-    mockKeycloak({ claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE] });
+  it('should have the Documents add button in the component', async () => {
     const { getByText } = setup({
       hideFilters: false,
       isLoading: false,
       parentId: 0,
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
-      documentResults: mockDocumentsResponse(),
+      documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
       onSuccess: noop,
+      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
     });
     expect(getByText('Add a Document')).toBeInTheDocument();
+  });
+
+  it('should display the warning tooltip instead of the download icon', async () => {
+    const { findAllByTestId } = setup({
+      hideFilters: false,
+      isLoading: false,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      documentResults: mockDocumentRowResponse(),
+      onDelete: deleteMock,
+      onSuccess: noop,
+      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
+    });
+    const downloadButtonTooltip = await findAllByTestId(
+      'tooltip-icon-document-not-available-tooltip',
+    );
+    expect(downloadButtonTooltip[0]).toBeInTheDocument();
+  });
+
+  it('should display the download icon if download is available', async () => {
+    mockAxios.onGet().reply(200, mockDocumentDetailResponse());
+    const documentRows = mockDocumentRowResponse();
+    documentRows[0].isFileAvailable = true;
+    const { findByTestId } = setup({
+      hideFilters: false,
+      isLoading: false,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      documentResults: documentRows,
+      onDelete: deleteMock,
+      onSuccess: noop,
+      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
+    });
+    const downloadButtonTooltip = await findByTestId('document-download-button');
+    expect(downloadButtonTooltip).toBeInTheDocument();
   });
 });
