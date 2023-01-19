@@ -31,13 +31,13 @@ export const DetailAdministration: React.FunctionComponent<
             />
           )}
         </SectionField>
-        <SectionField label="Account Type" labelWidth="3">
+        <SectionField label="Account type" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'type.description')} />
           {values.otherType && values?.type?.id === 'OTHER' && (
             <Input disabled={disabled} field={withNameSpace(nameSpace, 'otherType')} />
           )}
         </SectionField>
-        <SectionField label="Receivable To" labelWidth="3">
+        <SectionField label="Receivable to" labelWidth="3">
           <Input
             disabled={disabled}
             field={withNameSpace(nameSpace, 'paymentReceivableType.description')}
@@ -64,7 +64,7 @@ export const DetailAdministration: React.FunctionComponent<
             field={withNameSpace(nameSpace, 'responsibilityType.description')}
           />
         </SectionField>
-        <SectionField label="Effective Date" labelWidth="3">
+        <SectionField label="Effective date" labelWidth="3">
           <Input
             disabled={disabled}
             field={withNameSpace(nameSpace, 'responsibilityEffectiveDate')}
@@ -73,7 +73,7 @@ export const DetailAdministration: React.FunctionComponent<
         <SectionField label="MoTI contact" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'motiName')} />
         </SectionField>
-        <SectionField label="Intended Use" labelWidth="3">
+        <SectionField label="Intended use" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'description')} />
         </SectionField>
       </Section>

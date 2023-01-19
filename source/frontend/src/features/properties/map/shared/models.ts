@@ -128,6 +128,7 @@ export class PropertyForm {
     newForm.address = model.property?.address
       ? AddressForm.fromApi(model.property?.address)
       : undefined;
+    newForm.legalDescription = model.property?.landLegalDescription;
 
     return newForm;
   }
@@ -144,6 +145,7 @@ export class PropertyForm {
       rowVersion: this.propertyRowVersion,
       isOwned: this.isOwned,
       address: this.address?.toApi(),
+      landLegalDescription: this.legalDescription,
     };
   }
 }

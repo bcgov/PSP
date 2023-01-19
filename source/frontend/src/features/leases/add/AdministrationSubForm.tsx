@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { LeaseFormModel } from '../models';
+import * as Styled from './styles';
 
 export interface IAdministrationSubFormProps {
   formikProps: FormikProps<LeaseFormModel>;
@@ -57,11 +58,11 @@ const AdministrationSubForm: React.FunctionComponent<
 
   return (
     <Section header="Administration">
-      <SectionField label="MOTI Contact" labelWidth="2" contentWidth="8">
+      <SectionField label="MOTI contact" labelWidth="2" contentWidth="8">
         <InlineInput field="motiName" />
       </SectionField>
 
-      <SectionField label="MOTI Region" labelWidth="2" contentWidth="4" required>
+      <SectionField label="MOTI region" labelWidth="2" contentWidth="4" required>
         <Select field="regionId" options={regionTypes} placeholder="Select region" required />
       </SectionField>
       <Row>
@@ -163,6 +164,9 @@ const AdministrationSubForm: React.FunctionComponent<
           </SectionField>
         </Col>
       </Row>
+      <SectionField label="Intended use">
+        <Styled.MediumTextArea field="description" />
+      </SectionField>
     </Section>
   );
 };

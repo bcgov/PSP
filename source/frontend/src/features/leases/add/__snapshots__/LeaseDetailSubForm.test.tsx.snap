@@ -32,12 +32,6 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c4 textarea.form-control {
-  min-width: 80rem;
-  height: 7rem;
-  resize: none;
-}
-
 <div
     class="c0 form-section"
   >
@@ -167,7 +161,7 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
               <label
                 class="c1"
               >
-                Start Date:
+                Start date:
               </label>
             </div>
             <div
@@ -210,7 +204,7 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
               <label
                 class="c1"
               >
-                Expiry Date:
+                Expiry date:
               </label>
             </div>
             <div
@@ -238,33 +232,6 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c1"
-          >
-            Description:
-          </label>
-        </div>
-        <div
-          class="c2 text-left col"
-        >
-          <div
-            class="c4 textarea input form-group"
-          >
-            <textarea
-              class="form-control"
-              id="input-description"
-              name="description"
-              title=""
-            />
           </div>
         </div>
       </div>
