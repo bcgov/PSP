@@ -2,6 +2,7 @@ import { FormikHelpers } from 'formik';
 import { Api_Project } from 'models/api/Project';
 import { useCallback } from 'react';
 
+import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
 import { ProjectForm } from '../add/models';
 import { useProjectProvider } from './useProjectProvider';
 
@@ -35,6 +36,6 @@ export function useAddProjectFormManagement(props: IUseAddProjectFormManagementP
   return {
     handleSubmit,
     initialValues: props.initialForm ?? new ProjectForm(),
-    // validationSchema: AddAcquisitionFileYupSchema,
+    validationSchema: AddProjectYupSchema,
   };
 }
