@@ -1,11 +1,10 @@
 import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import React, { useEffect, useMemo } from 'react';
-import { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -29,7 +28,7 @@ export const AddAcquisitionContainer: React.FC<
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
-  const { selectedFileFeature, setState } = React.useContext(MapStateContext);
+  const { selectedFileFeature } = React.useContext(MapStateContext);
   const { search } = useMapSearch();
 
   const initialForm = useMemo(() => {
@@ -49,10 +48,7 @@ export const AddAcquisitionContainer: React.FC<
         PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ]);
     }
-    return () => {
-      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
-    };
-  }, [initialForm, selectedFileFeature, setState]);
+  }, [initialForm, selectedFileFeature]);
 
   const handleSave = () => {
     formikRef.current?.setSubmitting(true);
@@ -67,9 +63,9 @@ export const AddAcquisitionContainer: React.FC<
         { autoClose: 15000 },
       );
     }
-    formikRef.current?.resetForm();
     await search();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
+    formikRef.current?.resetForm({ values: AcquisitionForm.fromApi(acqFile) });
   };
 
   const helper = useAddAcquisitionFormManagement({ onSuccess, initialForm });

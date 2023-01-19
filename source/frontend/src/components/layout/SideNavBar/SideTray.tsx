@@ -1,6 +1,7 @@
 import clsx from 'classnames';
 import { AdminTools, LeaseAndLicenses, ResearchTray } from 'components/layout';
-import { ReactElement, useEffect, useState } from 'react';
+import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { AcquisitionTray } from './AcquisitionTray';
@@ -28,16 +29,25 @@ export interface ISideTrayPageProps {
 
 export const SideTray = ({ context, setContext }: ISideTrayProps) => {
   const [show, setShow] = useState(false);
+  const { setState } = useContext(MapStateContext);
+
+  const handleFileSet = () => {
+    setShow(false);
+    setState({
+      type: MapStateActionTypes.SELECTED_FILE_FEATURE,
+      selectedFileFeature: null,
+    });
+  };
 
   const sideTrayPages: Map<SidebarContextType, ReactElement> = new Map<
     SidebarContextType,
     ReactElement
   >([
-    [SidebarContextType.ADMIN, <AdminTools onLinkClick={() => setShow(false)} />],
-    [SidebarContextType.LEASE, <LeaseAndLicenses onLinkClick={() => setShow(false)} />],
-    [SidebarContextType.RESEARCH, <ResearchTray onLinkClick={() => setShow(false)} />],
-    [SidebarContextType.CONTACT, <ContactTray onLinkClick={() => setShow(false)} />],
-    [SidebarContextType.ACQUISITION, <AcquisitionTray onLinkClick={() => setShow(false)} />],
+    [SidebarContextType.ADMIN, <AdminTools onLinkClick={handleFileSet} />],
+    [SidebarContextType.LEASE, <LeaseAndLicenses onLinkClick={handleFileSet} />],
+    [SidebarContextType.RESEARCH, <ResearchTray onLinkClick={handleFileSet} />],
+    [SidebarContextType.CONTACT, <ContactTray onLinkClick={handleFileSet} />],
+    [SidebarContextType.ACQUISITION, <AcquisitionTray onLinkClick={handleFileSet} />],
     [SidebarContextType.PROJECT, <ProjectTray onLinkClick={() => setShow(false)} />],
   ]);
 

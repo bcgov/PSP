@@ -2,8 +2,10 @@ import { PointFeature } from 'components/maps/types';
 import { IGeoSearchParams } from 'constants/API';
 import { useMapProperties } from 'features/properties/map/hooks/useMapProperties';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import { useModalContext } from 'hooks/useModalContext';
 import { geoJSON } from 'leaflet';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { toast } from 'react-toastify';
 
 import { PARCELS_LAYER_URL, PIMS_BOUNDARY_LAYER_URL, useLayerQuery } from '../leaflet/LayerPopup';
@@ -16,26 +18,18 @@ export const useMapSearch = () => {
   } = useMapProperties();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
   const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
-
-  useEffect(() => {
-    setPropertiesLoading(
-      loading || parcelsService.findByPidLoading || parcelsService.findByPinLoading,
-    );
-  }, [
-    loading,
-    parcelsService.findByPidLoading,
-    parcelsService.findByPinLoading,
-    setPropertiesLoading,
-  ]);
+  const { setModalContent, setDisplayModal } = useModalContext();
+  const keycloak = useKeycloakWrapper();
+  const logout = keycloak.obj.logout;
 
   const search = async (
     filters?: IGeoSearchParams[],
   ): Promise<Feature<Geometry, GeoJsonProperties>[]> => {
     //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
+    let tileData;
     try {
       setProperties([]);
       const filter = filters?.length && filters.length > 1 ? filters[0] : undefined;
-      let tileData;
       if (filter?.latitude && filter.longitude) {
         const task1 = parcelsService.findOneWhereContains({
           lat: +filter.latitude,
@@ -66,7 +60,24 @@ export const useMapSearch = () => {
         const pinNonInventoryData = await task2;
         const pidNonInventoryData = await task3;
 
-        tileData = pidPinInventoryData?.features.length
+        if (pidPinInventoryData?.features === undefined) {
+          setModalContent({
+            title: 'Unable to connect to PIMS Inventory',
+            message:
+              'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',
+            okButtonText: 'Log out',
+            cancelButtonText: 'Continue working',
+            handleOk: () => {
+              logout();
+            },
+            handleCancel: () => {
+              setDisplayModal(false);
+            },
+          });
+          setDisplayModal(true);
+        }
+
+        tileData = pidPinInventoryData?.features?.length
           ? pidPinInventoryData
           : ({
               type: 'FeatureCollection',
@@ -90,8 +101,9 @@ export const useMapSearch = () => {
     } catch (error) {
       toast.error((error as Error).message, { autoClose: 7000 });
     } finally {
+      setPropertiesLoading(false);
     }
-    return [];
+    return propertiesResponseToPointFeature(tileData);
   };
 
   return {

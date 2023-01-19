@@ -154,8 +154,11 @@ export const AddAcquisitionForm = React.forwardRef<
 
           <Prompt
             when={
-              (formikProps.dirty && formikProps.submitCount === 0) ||
-              (!formikProps.values.id && formikProps.values.properties.length > 0)
+              (formikProps.dirty ||
+                (formikProps.values.properties !== initialValues.properties &&
+                  formikProps.submitCount === 0) ||
+                (!formikProps.values.id && formikProps.values.properties.length > 0)) &&
+              !formikProps.isSubmitting
             }
             message="You have made changes on this form. Do you wish to leave without saving?"
           />

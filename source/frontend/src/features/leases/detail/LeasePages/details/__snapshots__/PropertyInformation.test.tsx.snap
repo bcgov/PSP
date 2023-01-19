@@ -42,14 +42,41 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
         <label
           class="c1"
         >
-          PID:
+          Descriptive name:
         </label>
       </div>
       <div
         class="c2 text-left col"
       >
         <div
-          class="flex-nowrap input-group row"
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-properties.0.propertyName"
+            name="properties.0.propertyName"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-3"
+      >
+        <label
+          class="c1"
+        >
+          Area included:
+        </label>
+      </div>
+      <div
+        class="c2 text-left col"
+      >
+        <div
+          class="w-50 flex-nowrap input-group row"
         >
           <div
             class="c3 col"
@@ -59,10 +86,10 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
             >
               <input
                 class="form-control"
-                id="input-properties.0.pid"
-                name="properties.0.pid"
-                title="000-000-000"
-                value="000-000-000"
+                id="input-properties.0.landArea"
+                name="properties.0.landArea"
+                title="123"
+                value="123"
               />
             </div>
           </div>
@@ -150,40 +177,13 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
         <label
           class="c1"
         >
-          Area included:
+          Legal description:
         </label>
       </div>
       <div
         class="c2 text-left col"
       >
-        <div
-          class="w-50 flex-nowrap input-group row"
-        >
-          <div
-            class="c3 col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-properties.0.landArea"
-                name="properties.0.landArea"
-                title="123"
-                value="123"
-              />
-            </div>
-          </div>
-          <div
-            class="input-group-append"
-          >
-            <span
-              class="input-group-text"
-            >
-              undefined.
-            </span>
-          </div>
-        </div>
+        PID: 000-000-000
       </div>
     </div>
     <hr />
@@ -233,14 +233,41 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
         <label
           class="c1"
         >
-          PID:
+          Descriptive name:
         </label>
       </div>
       <div
         class="c2 text-left col"
       >
         <div
-          class="flex-nowrap input-group row"
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-properties.0.propertyName"
+            name="properties.0.propertyName"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-3"
+      >
+        <label
+          class="c1"
+        >
+          Area included:
+        </label>
+      </div>
+      <div
+        class="c2 text-left col"
+      >
+        <div
+          class="w-50 flex-nowrap input-group row"
         >
           <div
             class="c3 col"
@@ -250,10 +277,10 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
             >
               <input
                 class="form-control"
-                id="input-properties.0.pid"
-                name="properties.0.pid"
-                title="000-000-000"
-                value="000-000-000"
+                id="input-properties.0.landArea"
+                name="properties.0.landArea"
+                title="123"
+                value="123"
               />
             </div>
           </div>
@@ -341,40 +368,13 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
         <label
           class="c1"
         >
-          Area included:
+          Legal description:
         </label>
       </div>
       <div
         class="c2 text-left col"
       >
-        <div
-          class="w-50 flex-nowrap input-group row"
-        >
-          <div
-            class="c3 col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-properties.0.landArea"
-                name="properties.0.landArea"
-                title="123"
-                value="123"
-              />
-            </div>
-          </div>
-          <div
-            class="input-group-append"
-          >
-            <span
-              class="input-group-text"
-            >
-              undefined.
-            </span>
-          </div>
-        </div>
+        PID: 000-000-000
       </div>
     </div>
     <hr />
