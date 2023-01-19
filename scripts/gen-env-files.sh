@@ -1,11 +1,5 @@
 #!/bin/bash
 
-echo 'Enter a username for the keycloak database.'
-read -p 'Username: ' varKeycloakDb
-
-echo 'Enter a username for the keycloak realm administrator'
-read -p 'Username: ' varKeycloak
-
 echo 'Enter a username for the API database.'
 read -p 'Username: ' varApiDb
 
@@ -17,36 +11,6 @@ then
     echo 'A password is randomly being generated.'
     passvar=$(date +%s | sha256sum | base64 | head -c 29)A8
     echo $passvar
-fi
-
-# Set environment variables.
-# Keycloak
-if test -f "./auth/keycloak/.env"; then
-    echo "./auth/keycloak/.env exists"
-else
-echo \
-"PROXY_ADDRESS_FORWARDING=true
-# DB_VENDOR=POSTGRES
-# DB_ADDR=keycloak-db
-# DB_DATABASE=keycloak
-# DB_USER=$varKeycloakDb
-# DB_PASSWORD=$passvar
-KEYCLOAK_USER=$varKeycloak
-KEYCLOAK_PASSWORD=$passvar
-KEYCLOAK_IMPORT=/tmp/realm-export.json -Dkeycloak.profile.feature.scripts=enabled -Dkeycloak.profile.feature.upload_scripts=enabled
-KEYCLOAK_LOGLEVEL=WARN
-ROOT_LOGLEVEL=WARN" >> ./auth/keycloak/.env
-fi
-
-# Keycloak Database
-if test -f "./auth/postgres/.env"; then
-    echo "./auth/postgres/.env exists"
-else
-echo \
-"POSTGRESQL_DATABASE=keycloak
-POSTGRESQL_USER=$varKeycloakDb
-POSTGRESQL_PASSWORD=$passvar
-" >> ./auth/postgres/.env
 fi
 
 # API Database
@@ -124,7 +88,8 @@ echo \
 "# Local
 TZ=America/Los_Angeles
 ASPNETCORE_ENVIRONMENT=Local
-Auth__Keycloak__Secret=" >> ./tools/keycloak/sync/.env
+Auth__Keycloak__Secret=
+Auth__Keycloak__ServiceAccount__Secret=" >> ./tools/keycloak/sync/.env
 fi
 
 if test -f "./geoserver/.env"; then

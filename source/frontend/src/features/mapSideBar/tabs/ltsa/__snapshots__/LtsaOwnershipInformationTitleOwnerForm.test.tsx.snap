@@ -5,8 +5,6 @@ exports[`LtsaOwnershipInformationTitleOwnerForm component renders ownership info
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
 </DocumentFragment>
 `;

@@ -4,11 +4,14 @@ import { IMapProperty } from 'components/propertySelector/models';
 import { ModalContext } from 'contexts/modalContext';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
+import { useBcaAddress } from 'features/properties/map/hooks/useBcaAddress';
+import { AddressForm } from 'features/properties/map/shared/models';
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import { useProperties } from 'hooks/useProperties';
 import { IProperty } from 'interfaces';
-import { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
@@ -19,15 +22,19 @@ interface LeasePropertySelectorProp {
   formikProps: FormikProps<LeaseFormModel>;
 }
 
-export const LeasePropertySelector: React.FunctionComponent<
-  React.PropsWithChildren<LeasePropertySelectorProp>
-> = ({ formikProps }) => {
+export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelectorProp> = ({
+  formikProps,
+}) => {
   const { values } = formikProps;
 
   const { getProperties } = useProperties();
 
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const [propertiesToConfirm, setPropertiesToConfirm] = useState<FormLeaseProperty[]>([]);
+
+  const [propertyIndexToRemove, setPropertyIndexToRemove] = useState<number | undefined>(undefined);
+
+  const { getPrimaryAddressByPid } = useBcaAddress();
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
@@ -64,7 +71,7 @@ export const LeasePropertySelector: React.FunctionComponent<
     setPropertiesToConfirm([]);
   }, [setDisplayModal]);
 
-  const customModalProps: ModalProps = useMemo(() => {
+  const addModalProps: ModalProps = useDeepCompareMemo(() => {
     return {
       title: 'Not inventory property',
       message:
@@ -79,33 +86,40 @@ export const LeasePropertySelector: React.FunctionComponent<
   }, [confirmAdd, cancelAdd]);
 
   useDeepCompareEffect(() => {
-    setModalContent(customModalProps);
-  }, [customModalProps]);
+    setModalContent(addModalProps);
+  }, [addModalProps]);
 
   const processAddedProperties = async (newProperties: IMapProperty[]) => {
     let needsWarning = false;
-    const newFormProperties = [];
+    const newFormProperties: FormLeaseProperty[] = [];
 
-    for (let i = 0; i < newProperties.length; i++) {
-      const property = newProperties[i];
-      const formProperty = FormLeaseProperty.fromMapProperty(property);
+    await newProperties.reduce(async (promise, property, i) => {
+      return promise.then(async () => {
+        const formProperty = FormLeaseProperty.fromMapProperty(property);
 
-      // Retrieve the pims id of the property if it exists
-      if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
-        const result = await searchProperty(property);
-        if (result !== undefined && result.length > 0) {
-          formProperty.property.apiId = result[0].id;
+        const bcaSummary = property?.pid ? await getPrimaryAddressByPid(property.pid) : undefined;
+
+        // Retrieve the pims id of the property if it exists
+        if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
+          formProperty.property.address = bcaSummary?.address
+            ? AddressForm.fromBcaAddress(bcaSummary?.address)
+            : undefined;
+          formProperty.property.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
+          const result = await searchProperty(property);
+          if (result !== undefined && result.length > 0) {
+            formProperty.property.apiId = result[0].id;
+          }
         }
-      }
 
-      newFormProperties.push(formProperty);
+        newFormProperties.push(formProperty);
 
-      if (formProperty.property?.apiId === undefined) {
-        needsWarning = needsWarning || true;
-      } else {
-        needsWarning = needsWarning || false;
-      }
-    }
+        if (formProperty.property?.apiId === undefined) {
+          needsWarning = needsWarning || true;
+        } else {
+          needsWarning = needsWarning || false;
+        }
+      });
+    }, Promise.resolve());
 
     if (needsWarning) {
       setPropertiesToConfirm(newFormProperties);
@@ -113,6 +127,43 @@ export const LeasePropertySelector: React.FunctionComponent<
     } else {
       addProperties(newFormProperties);
     }
+  };
+
+  const cancelRemove = useCallback(() => {
+    if (propertyIndexToRemove !== undefined) {
+      setPropertyIndexToRemove(undefined);
+    }
+    setDisplayModal(false);
+  }, [propertyIndexToRemove, setDisplayModal]);
+
+  const confirmRemove = useCallback(() => {
+    if (propertyIndexToRemove !== undefined) {
+      arrayHelpersRef.current?.remove(propertyIndexToRemove);
+      setPropertyIndexToRemove(undefined);
+    }
+    setDisplayModal(false);
+  }, [propertyIndexToRemove, setDisplayModal]);
+
+  const removeModalProps: ModalProps = useDeepCompareMemo(() => {
+    return {
+      title: 'Removing Property from form',
+      message: 'Are you sure you want to remove this property from this lease/license?',
+      display: false,
+      closeButton: false,
+      okButtonText: 'Remove',
+      cancelButtonText: 'Cancel',
+      handleOk: confirmRemove,
+      handleCancel: cancelRemove,
+    };
+  }, [confirmRemove, cancelRemove]);
+
+  useDeepCompareEffect(() => {
+    setModalContent(removeModalProps);
+  }, [removeModalProps]);
+
+  const onRemoveClick = (index: number) => {
+    setPropertyIndexToRemove(index);
+    setDisplayModal(true);
   };
 
   return (
@@ -144,7 +195,7 @@ export const LeasePropertySelector: React.FunctionComponent<
                     return (
                       <SelectedPropertyRow
                         key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                        onRemove={() => arrayHelpers.remove(index)}
+                        onRemove={() => onRemoveClick(index)}
                         nameSpace={`properties.${index}`}
                         index={index}
                         property={property}

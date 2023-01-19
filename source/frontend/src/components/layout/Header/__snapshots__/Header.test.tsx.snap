@@ -13,9 +13,7 @@ exports[`App Header renders correctly 1`] = `
 
 }
 
-<div
-    class="container"
-  />
+<div />
   .c1 {
   border-left: 0.2rem solid white;
   font-size: 3.4rem;

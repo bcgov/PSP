@@ -22,7 +22,6 @@ namespace Pims.Api.Areas.Lease.Controllers
     public class LeaseController : ControllerBase
     {
         #region Variables
-        private readonly ILeaseRepository _leaseRepository;
         private readonly ILeaseService _leaseService;
         private readonly IMapper _mapper;
         #endregion
@@ -32,13 +31,11 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <summary>
         /// Creates a new instance of a LeaseController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="leaseRepository"></param>
         /// <param name="leaseService"></param>
         /// <param name="mapper"></param>
         ///
-        public LeaseController(ILeaseRepository leaseRepository, ILeaseService leaseService, IMapper mapper)
+        public LeaseController(ILeaseService leaseService, IMapper mapper)
         {
-            _leaseRepository = leaseRepository;
             _mapper = mapper;
             _leaseService = leaseService;
         }

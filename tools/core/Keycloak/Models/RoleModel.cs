@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Pims.Tools.Core.Keycloak.Models
 {
     /// <summary>
@@ -9,10 +6,6 @@ namespace Pims.Tools.Core.Keycloak.Models
     public class RoleModel
     {
         #region Properties
-        /// <summary>
-        /// get/set - The primary key IDENTITY.
-        /// </summary>
-        public Guid Id { get; set; }
 
         /// <summary>
         /// get/set - A unique name to identify the role.
@@ -20,36 +13,19 @@ namespace Pims.Tools.Core.Keycloak.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// get/set - A description.
+        /// get/set - true if this role has sub-roles.
         /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// get/set - Whether this is a composite role.
-        /// </summary>
-        public bool Composite { get; set; }
-
-        /// <summary>
-        /// get/set - Whether this is a client role.
-        /// </summary>
-        public bool ClientRole { get; set; }
-
-        /// <summary>
-        /// get/set - The container this role belongs in.
-        /// </summary>
-        public string ContainerId { get; set; }
-
-        /// <summary>
-        /// get/set - A dictionary of attributes.
-        /// </summary>
-        public Dictionary<string, string[]> Attributes { get; set; }
+        public bool? Composite { get; set; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a RoleModel class.
         /// </summary>
-        public RoleModel() { }
+        public RoleModel()
+        {
+        }
         #endregion
     }
 }

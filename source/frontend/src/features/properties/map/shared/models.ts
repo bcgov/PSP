@@ -1,9 +1,13 @@
 import { IMapProperty } from 'components/propertySelector/models';
+import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
+import { Api_Address } from 'models/api/Address';
 import { Api_File } from 'models/api/File';
 import { Api_Property } from 'models/api/Property';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import { formatApiAddress, pidParser } from 'utils';
 import { toTypeCode } from 'utils/formUtils';
+
+import { formatBcaAddress } from './../../../../utils/propertyUtils';
 
 export class FileForm {
   public id?: number;
@@ -61,7 +65,8 @@ export class PropertyForm {
   public rowVersion?: number;
   public propertyRowVersion?: number;
   public legalDescription?: string;
-  public address?: string;
+  public formattedAddress?: string;
+  public address?: AddressForm;
   public isDisabled?: boolean;
   public displayOrder?: number;
   public isOwned?: boolean;
@@ -80,16 +85,32 @@ export class PropertyForm {
     newForm.district = model.district;
     newForm.districtName = model.districtName;
     newForm.legalDescription = model.legalDescription;
-    newForm.address = model.address;
+    newForm.formattedAddress = model.address;
 
     return newForm;
+  }
+
+  public toMapProperty(): IMapProperty {
+    return {
+      pid: this.pid,
+      pin: this.pin,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      planNumber: this.planNumber,
+      region: this.region,
+      regionName: this.regionName,
+      district: this.district,
+      districtName: this.districtName,
+      legalDescription: this.legalDescription,
+      address: this.address ? formatApiAddress(this.address.toApi()) : this.formattedAddress,
+    };
   }
 
   public static fromApi(model: Api_PropertyFile): PropertyForm {
     const newForm = new PropertyForm();
     newForm.id = model.id;
     newForm.fileId = model.fileId;
-    newForm.apiId = model.property?.id;
+    newForm.apiId = model.property?.id ?? model.id;
     newForm.name = model.propertyName;
     newForm.pid = model.property?.pid?.toString();
     newForm.pin = model.property?.pin?.toString();
@@ -103,7 +124,10 @@ export class PropertyForm {
     newForm.isDisabled = model.isDisabled;
     newForm.displayOrder = model.displayOrder;
     newForm.isOwned = model.property?.isOwned;
-    newForm.address = formatApiAddress(model.property?.address);
+    newForm.formattedAddress = formatApiAddress(model.property?.address);
+    newForm.address = model.property?.address
+      ? AddressForm.fromApi(model.property?.address)
+      : undefined;
 
     return newForm;
   }
@@ -119,6 +143,57 @@ export class PropertyForm {
       district: toTypeCode(this.district),
       rowVersion: this.propertyRowVersion,
       isOwned: this.isOwned,
+      address: this.address?.toApi(),
+    };
+  }
+}
+
+export class AddressForm {
+  public id?: number;
+  public apiId?: number;
+  public rowVersion?: number;
+  public isDisabled?: boolean;
+  public displayOrder?: number;
+  public streetAddress1?: string;
+  public streetAddress2?: string;
+  public streetAddress3?: string;
+  public municipality?: string;
+  public postalCode?: string;
+
+  private constructor() {}
+
+  public static fromBcaAddress(model: IBcAssessmentSummary['ADDRESSES'][0]): AddressForm {
+    const newForm = new AddressForm();
+    newForm.streetAddress1 = formatBcaAddress(model);
+    newForm.municipality = model.CITY;
+    newForm.postalCode = model.POSTAL_CODE;
+
+    return newForm;
+  }
+
+  public static fromApi(model: Api_Address): AddressForm {
+    const newForm = new AddressForm();
+    newForm.id = model.id;
+    newForm.streetAddress1 = model.streetAddress1;
+    newForm.streetAddress2 = model.streetAddress2;
+    newForm.streetAddress3 = model.streetAddress3;
+    newForm.municipality = model.municipality;
+    newForm.postalCode = model.postal;
+    newForm.apiId = model?.id;
+    newForm.rowVersion = model.rowVersion;
+
+    return newForm;
+  }
+
+  public toApi(): Api_Address {
+    return {
+      id: this.apiId,
+      rowVersion: this.rowVersion,
+      streetAddress1: this.streetAddress1,
+      streetAddress2: this.streetAddress2,
+      streetAddress3: this.streetAddress3,
+      municipality: this.municipality,
+      postal: this.postalCode,
     };
   }
 }

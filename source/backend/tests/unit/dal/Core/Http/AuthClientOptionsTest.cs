@@ -38,6 +38,7 @@ namespace Pims.Api.Test.Helpers
                 Audience = "Audience",
                 Authority = "Authority",
                 Client = "Client",
+                Token = "Token",
             };
 
             // Act

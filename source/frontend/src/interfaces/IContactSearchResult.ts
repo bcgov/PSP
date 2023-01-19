@@ -22,6 +22,7 @@ export interface IContactSearchResult {
   note?: string;
   landline?: string;
   mobile?: string;
+  tenantType?: string;
 }
 
 export function fromContact(baseModel: Api_Contact): IContactSearchResult {

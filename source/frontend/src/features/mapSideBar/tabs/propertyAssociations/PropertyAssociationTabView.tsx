@@ -69,7 +69,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
         <AssociationContent
           associationName="lease"
           associations={props.associations?.leaseAssociations}
-          linkUrlMask="/lease/|id|/details"
+          linkUrlMask="/mapview/sidebar/lease/|id|"
         />
       </Section>
       <Section

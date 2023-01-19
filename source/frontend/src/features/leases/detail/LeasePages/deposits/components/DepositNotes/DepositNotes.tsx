@@ -1,15 +1,13 @@
 import { TextArea } from 'components/common/form';
 import { Claims } from 'constants/index';
 import SaveCancelButtons from 'features/leases/SaveCancelButtons';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { getIn, useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { ILease } from 'interfaces';
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { FaPencilAlt } from 'react-icons/fa';
 import styled from 'styled-components';
-
-import * as Styled from '../../styles';
 
 export interface IDepositNotesProps {
   disabled?: boolean;
@@ -31,33 +29,39 @@ export const DepositNotes: React.FunctionComponent<React.PropsWithChildren<IDepo
   const { hasClaim } = useKeycloakWrapper();
   const formikProps = useFormikContext();
   const notes = getIn(formikProps.values, 'returnNotes');
+  const [collapsed, setCollapsed] = React.useState<boolean>(true);
   return (
-    <>
-      <Row>
-        <Col>
-          <Styled.FormDescriptionLabel>Deposit Notes</Styled.FormDescriptionLabel>
+    <Section
+      isCollapsable={collapsed}
+      initiallyExpanded={false}
+      header={
+        <>
+          <span>Deposit Notes</span>
           {hasClaim(Claims.LEASE_EDIT) && disabled && (
-            <EditButton data-testid="edit-notes" className="ml-2" onClick={() => onEdit()} />
-          )}
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <TextArea rows={5} disabled={disabled} field="returnNotes" />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {hasClaim(Claims.LEASE_EDIT) && !disabled && (
-            <StyledButtons
-              onCancel={onCancel}
-              onSaveOverride={() => onSave(notes)}
-              formikProps={formikProps}
+            <EditButton
+              data-testid="edit-notes"
+              className="ml-2"
+              onClick={() => {
+                onEdit();
+                setCollapsed(false);
+              }}
             />
           )}
-        </Col>
-      </Row>
-    </>
+        </>
+      }
+    >
+      <TextArea rows={5} disabled={disabled} field="returnNotes" />
+      {hasClaim(Claims.LEASE_EDIT) && !disabled && (
+        <StyledButtons
+          onCancel={() => {
+            onCancel();
+            setCollapsed(true);
+          }}
+          onSaveOverride={() => onSave(notes)}
+          formikProps={formikProps}
+        />
+      )}
+    </Section>
   );
 };
 

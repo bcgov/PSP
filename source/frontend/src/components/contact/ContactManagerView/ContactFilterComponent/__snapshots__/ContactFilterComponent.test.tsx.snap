@@ -5,9 +5,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;

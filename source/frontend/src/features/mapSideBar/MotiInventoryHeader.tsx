@@ -8,7 +8,7 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaSearchPlus } from 'react-icons/fa';
 import styled from 'styled-components';
-import { pidFormatter } from 'utils';
+import { formatApiAddress, pidFormatter } from 'utils';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
 import { HeaderField } from './tabs/HeaderField';
@@ -18,11 +18,10 @@ export interface IMotiInventoryHeaderProps {
   onZoom?: (apiProperty?: Api_Property | undefined) => void;
 }
 
-export const MotiInventoryHeader: React.FunctionComponent<
-  React.PropsWithChildren<IMotiInventoryHeaderProps>
-> = props => {
+export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
   const parcelMapData = props.composedProperty.parcelMapWrapper?.response;
+  const apiProperty = props.composedProperty.apiWrapper?.response;
   let property: IMapProperty | null = null;
   if (parcelMapData?.features[0]) {
     property = mapFeatureToProperty(parcelMapData?.features[0]);
@@ -40,7 +39,7 @@ export const MotiInventoryHeader: React.FunctionComponent<
           <Row className="no-gutters">
             <Col xs="8">
               <HeaderField label="Civic Address:" labelWidth={'3'} contentWidth="9">
-                -
+                {apiProperty?.address !== undefined ? formatApiAddress(apiProperty?.address) : '-'}
               </HeaderField>
             </Col>
             <Col>
@@ -61,7 +60,7 @@ export const MotiInventoryHeader: React.FunctionComponent<
                 contentWidth="5"
                 className="justify-content-end"
               >
-                {props.composedProperty.apiWrapper?.response?.propertyType?.description}
+                {apiProperty?.propertyType?.description}
               </HeaderField>
             </Col>
           </Row>
@@ -72,9 +71,7 @@ export const MotiInventoryHeader: React.FunctionComponent<
               variant="info"
               disabled={!props.onZoom}
               title="Zoom Map"
-              onClick={() =>
-                props?.onZoom && props?.onZoom(props.composedProperty.apiWrapper?.response)
-              }
+              onClick={() => props?.onZoom && props?.onZoom(apiProperty)}
             >
               <FaSearchPlus size={22} />
             </StyledIconButton>

@@ -1,0 +1,169 @@
+import { Form } from 'components/common/form/Form';
+import { FormSectionClear } from 'components/common/form/styles';
+import { FieldArray, Formik, FormikProps } from 'formik';
+import { IInsurance } from 'interfaces';
+import { IBatchUpdateRequest, IEntryModification, UpdateOperation } from 'interfaces/batchUpdate';
+import React from 'react';
+import { ILookupCode } from 'store/slices/lookupCodes/interfaces';
+import { withNameSpace } from 'utils/formUtils';
+
+import { useUpdateInsurance } from './hooks/useUpdateInsurance';
+import InsuranceForm from './InsuranceForm';
+import { InsuranceYupSchema } from './InsuranceYupSchema';
+import { FormInsurance, IUpdateFormInsurance } from './models';
+
+export interface InsuranceEditContainerProps {
+  leaseId: number;
+  insuranceList: IInsurance[];
+  insuranceTypes: ILookupCode[];
+  onCancel: (dirty?: boolean) => void;
+  onSuccess: () => void;
+  formikRef: React.RefObject<FormikProps<any>>;
+}
+
+const InsuranceEditContainer: React.FunctionComponent<
+  React.PropsWithChildren<InsuranceEditContainerProps>
+> = ({ leaseId, insuranceList, insuranceTypes, onSuccess, onCancel, formikRef }) => {
+  const handleOnChange = (e: any, codeType: any, arrayHelpers: any) => {
+    if (formikRef.current) {
+      let found = initialInsurances.findIndex(x => x.insuranceType.id === codeType.id);
+
+      if (e.target.checked) {
+        arrayHelpers.push(codeType.id);
+        formikRef.current.values.insurances[found].isShown = true;
+      } else {
+        const idx = formikRef.current?.values.visibleTypes.indexOf(codeType.id + '');
+        arrayHelpers.remove(idx);
+        formikRef.current.values.insurances[found].isShown = false;
+      }
+    }
+  };
+
+  const { batchUpdateInsurances } = useUpdateInsurance();
+
+  const handleSave = async (lease: IBatchUpdateRequest<IInsurance>) => {
+    const leaseResponse = await batchUpdateInsurances(leaseId, lease);
+    if (leaseResponse?.errorMessages.length === 0) {
+      onSuccess();
+    }
+  };
+
+  const initialInsurances = insuranceTypes.map<FormInsurance>(x => {
+    let foundInsurance = insuranceList.find(i => i.insuranceType.id === x.id);
+    if (foundInsurance) {
+      return FormInsurance.createFromModel(foundInsurance);
+    } else {
+      return FormInsurance.createEmpty(x);
+    }
+  });
+
+  const initialTypes = insuranceList.map<string>(x => x.insuranceType.id);
+
+  const initialValues: IUpdateFormInsurance = {
+    insurances: initialInsurances,
+    visibleTypes: initialTypes,
+  };
+
+  return (
+    <Formik<IUpdateFormInsurance>
+      initialValues={initialValues}
+      validationSchema={InsuranceYupSchema}
+      onSubmit={(values: IUpdateFormInsurance, formikHelpers) => {
+        const updatedVals = values.insurances.reduce(
+          (accumulator: IEntryModification<IInsurance>[], entry: FormInsurance) => {
+            const existingEntry = initialValues.insurances.find(i => i.id === entry.id && !i.isNew);
+            if (existingEntry) {
+              if (!entry.isShown) {
+                accumulator.push({
+                  entry: entry.toInterfaceModel(),
+                  operation: UpdateOperation.DELETE,
+                });
+              } else if (!existingEntry.isEqual(entry)) {
+                accumulator.push({
+                  entry: entry.toInterfaceModel(),
+                  operation: UpdateOperation.UPDATE,
+                });
+              }
+            } else if (entry.isNew && entry.isShown) {
+              accumulator.push({
+                entry: entry.toInterfaceModel(),
+                operation: UpdateOperation.ADD,
+              });
+            }
+
+            return accumulator;
+          },
+          [],
+        );
+
+        formikHelpers.setSubmitting(false);
+
+        if (updatedVals.length > 0) {
+          const updateRequest: IBatchUpdateRequest<IInsurance> = { payload: updatedVals };
+          handleSave(updateRequest);
+        }
+      }}
+      innerRef={formikRef}
+    >
+      {formikProps => (
+        <>
+          <h2>Required coverage</h2>
+          <div>Select the coverage types that are required for this lease or license.</div>
+
+          <FormSectionClear>
+            <FieldArray
+              name={withNameSpace('visibleTypes')}
+              render={arrayHelpers => (
+                <Form.Group>
+                  {insuranceTypes.map((code: ILookupCode, index: number) => (
+                    <Form.Check
+                      id={`insurance-checbox-${index}`}
+                      type="checkbox"
+                      name="checkedTypes"
+                      key={index + '-' + code.id}
+                    >
+                      <Form.Check.Input
+                        id={'insurance-' + index}
+                        data-testid="insurance-checkbox"
+                        type="checkbox"
+                        name="checkedTypes"
+                        value={code.id + ''}
+                        checked={formikProps.values.visibleTypes.includes(code.id + '')}
+                        onChange={(e: any) => {
+                          handleOnChange(e, code, arrayHelpers);
+                        }}
+                      />
+                      <Form.Check.Label htmlFor={'insurance-' + index}>
+                        {code.name}
+                      </Form.Check.Label>
+                    </Form.Check>
+                  ))}
+                </Form.Group>
+              )}
+            />
+          </FormSectionClear>
+
+          <h2>Coverage details</h2>
+          <FieldArray
+            name={withNameSpace('insurances')}
+            render={() => (
+              <div>
+                {formikProps.values.insurances.map(
+                  (insurance: FormInsurance, index: number) =>
+                    insurance.isShown && (
+                      <InsuranceForm
+                        nameSpace={withNameSpace(`insurances.${index}`)}
+                        key={`insurances.${index}`}
+                      />
+                    ),
+                )}
+              </div>
+            )}
+          />
+        </>
+      )}
+    </Formik>
+  );
+};
+
+export default InsuranceEditContainer;

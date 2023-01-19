@@ -5,9 +5,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1164,9 +1162,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
         </div>
       </div>
     </div>
-    <div
-      class="container"
-    />
+    <div />
   </div>
 </DocumentFragment>
 `;

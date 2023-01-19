@@ -15,7 +15,6 @@ import { pidParser } from 'utils';
 import Map from '../../../components/maps/leaflet/Map';
 import ActivityRouter from './ActivityRouter';
 import { SideBarContextProvider } from './context/sidebarContext';
-import MapActionWindow from './MapActionWindow';
 import MapSideBar from './MapSideBar';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
@@ -66,16 +65,14 @@ const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = (props: MapView
     <MapStateContext.Consumer>
       {({ cursor }) => (
         <PropertyContextProvider>
-          <StyleMapView data-test="map-view" className={clsx(cursor)}>
+          <StyleMapView className={clsx(cursor)}>
             <SideBarContextProvider>
               <MapSideBar
                 showSideBar={showSideBar}
                 setShowSideBar={setShowSideBar}
                 onZoom={onZoom}
               />
-              <MapActionWindow showWindow={showActionBar}>
-                <ActivityRouter setShowActionBar={setShowActionBar} />
-              </MapActionWindow>
+              <ActivityRouter setShowActionBar={setShowActionBar} />
             </SideBarContextProvider>
             {!showActionBar && (
               <FilterProvider>

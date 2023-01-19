@@ -1,46 +1,22 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Pims.Core.Extensions;
 using Pims.Keycloak.Extensions;
+using Pims.Keycloak.Models;
 
 namespace Pims.Keycloak
 {
     /// <summary>
-    /// KeycloakAdmin class, provides a service for sending HTTP requests to the keycloak admin API.
-    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview.
+    /// KeycloakService class, provides a service for sending HTTP requests to the keycloak admin API.
+    ///     - https://api.loginproxy.gov.bc.ca/openapi/swagger#/ .
     /// </summary>
     public partial class KeycloakService : IKeycloakService
     {
         #region Methods
-
-        /// <summary>
-        /// Get the total number of users.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<int> GetUserCountAsync()
-        {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/users/count");
-            var result = await response.HandleResponseAsync<Models.CountModel>();
-
-            return result.Count;
-        }
-
-        /// <summary>
-        /// Get an array of users.
-        /// This function supports paging.
-        /// </summary>
-        /// <param name="first"></param>
-        /// <param name="max"></param>
-        /// <param name="search"></param>
-        /// <returns></returns>
-        public async Task<Models.UserModel[]> GetUsersAsync(int first = 0, int max = 10, string search = null)
-        {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/users?first={first}&max={max}&search={search}");
-
-            return await response.HandleResponseAsync<Models.UserModel[]>();
-        }
 
         /// <summary>
         /// Get the user for the specified 'id'.
@@ -49,49 +25,10 @@ namespace Pims.Keycloak
         /// <returns></returns>
         public async Task<Models.UserModel> GetUserAsync(Guid id)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/users/{id}");
+            var response = await _client.GetAsync($"{this.Options.ServiceAccount.Api}/{this.Options.ServiceAccount.Environment}/idir/users?guid={id.ToString().Replace("-", string.Empty)}");
+            var result = await response.HandleResponseAsync<ResponseWrapper<Models.UserModel>>();
 
-            return await response.HandleResponseAsync<Models.UserModel>();
-        }
-
-        /// <summary>
-        /// Create a new user.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public async Task<Models.UserModel> CreateUserAsync(Models.UserModel user)
-        {
-            var json = user.Serialize();
-            using var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/users", content);
-
-            return await response.HandleResponseAsync<Models.UserModel>();
-        }
-
-        /// <summary>
-        /// Update the specified user.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public async Task<Guid> UpdateUserAsync(Models.UserModel user)
-        {
-            var json = user.Serialize();
-            using var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PutAsync($"{this.Options.Admin.Authority}/users/{user.Id}", content);
-
-            return response.HandleResponse(user.Id);
-        }
-
-        /// <summary>
-        /// Delete the user for the specified 'id'.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<Guid> DeleteUserAsync(Guid id)
-        {
-            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/users/{id}");
-
-            return response.HandleResponse(id);
+            return result.Data.FirstOrDefault();
         }
 
         /// <summary>
@@ -99,11 +36,13 @@ namespace Pims.Keycloak
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Models.GroupModel[]> GetUserGroupsAsync(Guid id)
+        public async Task<Models.RoleModel[]> GetUserGroupsAsync(Guid id)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/users/{id}/groups");
+            var response = await _client.GetAsync($"{this.Options.ServiceAccount.Api}/integrations/{this.Options.ServiceAccount.Integration}/{this.Options.ServiceAccount.Environment}/user-role-mappings/?username={id.ToString().Replace("-", string.Empty)}@idir");
 
-            return await response.HandleResponseAsync<Models.GroupModel[]>();
+            var userRoleModel = await response.HandleResponseAsync<Models.UserRoleModel>();
+
+            return userRoleModel.Roles.Where(r => r.Composite).ToArray();
         }
 
         /// <summary>
@@ -113,35 +52,23 @@ namespace Pims.Keycloak
         /// <returns></returns>
         public async Task<int> GetUserGroupCountAsync(Guid id)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/users/{id}/groups/count");
-
-            return await response.HandleResponseAsync<int>();
+            var response = await GetUserGroupsAsync(id);
+            return response.Length;
         }
 
         /// <summary>
-        /// Add the user to the group for the specified 'userKey' and 'groupKey'.
+        /// execute all passed operations
         /// </summary>
-        /// <param name="userKey"></param>
-        /// <param name="groupKey"></param>
+        /// <param name="operations"></param>
         /// <returns></returns>
-        public async Task<Guid> AddGroupToUserAsync(Guid userKey, Guid groupKey)
+        public async Task ModifyUserRoleMappings(IEnumerable<UserRoleOperation> operations)
         {
-            var response = await _client.PutAsync($"{this.Options.Admin.Authority}/users/{userKey}/groups/{groupKey}");
-
-            return response.HandleResponse(userKey);
-        }
-
-        /// <summary>
-        /// Remove the user from the group for the specified 'userKey' and 'groupKey'.
-        /// </summary>
-        /// <param name="userKey"></param>
-        /// <param name="groupKey"></param>
-        /// <returns></returns>
-        public async Task<Guid> RemoveGroupFromUserAsync(Guid userKey, Guid groupKey)
-        {
-            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/users/{userKey}/groups/{groupKey}");
-
-            return response.HandleResponse(userKey);
+            foreach (UserRoleOperation operation in operations) {
+                var json = operation.Serialize();
+                using var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _client.PostAsync($"{this.Options.ServiceAccount.Api}/integrations/{this.Options.ServiceAccount.Integration}/{this.Options.ServiceAccount.Environment}/user-role-mappings", content);
+                await response.HandleResponseAsync<Models.UserRoleModel>();
+            }
         }
         #endregion
     }

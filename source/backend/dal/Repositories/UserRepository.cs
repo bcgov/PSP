@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
+using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Comparers;
 using Pims.Dal.Entities.Models;
@@ -22,6 +23,7 @@ namespace Pims.Dal.Repositories
     {
         #region Variables
         private readonly PimsOptions _options;
+        private readonly IOptionsMonitor<AuthClientOptions> _keycloakOptions;
         #endregion
 
         #region Constructors
@@ -33,10 +35,11 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IOptionsMonitor<PimsOptions> options, ILogger<UserRepository> logger)
+        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IOptionsMonitor<PimsOptions> options, IOptionsMonitor<AuthClientOptions> keycloakOptions, ILogger<UserRepository> logger)
             : base(dbContext, user, logger)
         {
             _options = options.CurrentValue;
+            _keycloakOptions = keycloakOptions;
         }
         #endregion
 
@@ -142,7 +145,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public Paged<PimsUser> Get(UserFilter filter = null)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminUsers, _keycloakOptions);
 
             var query = this.Context.PimsUsers
                 .Include(u => u.PimsUserOrganizations)
@@ -249,9 +252,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
                 .ThenInclude(r => r.Role)
-                .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
-                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
                 .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
@@ -274,9 +274,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
                 .ThenInclude(r => r.Role)
-                .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
-                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
                 .Include(u => u.PimsRegionUsers)
@@ -297,9 +294,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
                 .ThenInclude(r => r.Role)
-                .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
-                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
                 .AsNoTracking()
@@ -377,7 +371,6 @@ namespace Pims.Dal.Repositories
         public PimsUser UpdateOnly(PimsUser update)
         {
             this.Context.PimsUsers.Update(update);
-            this.Context.CommitTransaction();
 
             return update;
         }

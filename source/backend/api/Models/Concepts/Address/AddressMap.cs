@@ -45,6 +45,24 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Code, src => src.DistrictCode)
                 .Map(dest => dest.Description, src => src.DistrictName)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
+
+            config.NewConfig<AddressModel, Entity.PimsAddress>()
+                .Map(dest => dest.AddressId, src => src.Id)
+                .Map(dest => dest.StreetAddress1, src => src.StreetAddress1)
+                .Map(dest => dest.StreetAddress2, src => src.StreetAddress2)
+                .Map(dest => dest.StreetAddress3, src => src.StreetAddress3)
+                .Map(dest => dest.MunicipalityName, src => src.Municipality)
+                .Map(dest => dest.ProvinceStateId, src => src.Province.Id)
+                .Map(dest => dest.CountryId, src => src.Country.Id)
+                .Map(dest => dest.RegionCode, src => src.Region.Code)
+                .Map(dest => dest.DistrictCode, src => src.District.Code)
+                .Map(dest => dest.OtherCountry, src => src.CountryOther)
+                .Map(dest => dest.PostalCode, src => src.Postal)
+                .Map(dest => dest.Latitude, src => src.Latitude)
+                .Map(dest => dest.Longitude, src => src.Longitude)
+                .Map(dest => dest.Comment, src => src.Comment)
+                .Inherits<BaseModel, Entity.IBaseEntity>();
+
         }
     }
 }

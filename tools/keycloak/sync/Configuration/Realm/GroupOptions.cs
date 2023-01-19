@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
 {
     /// <summary>
@@ -8,6 +6,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
     public class GroupOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The name of the gruop.
         /// </summary>

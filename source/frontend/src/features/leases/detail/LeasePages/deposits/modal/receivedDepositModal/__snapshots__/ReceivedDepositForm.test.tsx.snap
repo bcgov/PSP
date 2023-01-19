@@ -5,9 +5,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -472,9 +470,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
         </div>
       </div>
     </div>
-    <div
-      class="container"
-    />
+    <div />
   </form>
 </DocumentFragment>
 `;
@@ -484,9 +480,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -951,9 +945,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
         </div>
       </div>
     </div>
-    <div
-      class="container"
-    />
+    <div />
   </form>
 </DocumentFragment>
 `;

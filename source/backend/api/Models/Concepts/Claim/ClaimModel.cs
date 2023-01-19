@@ -1,5 +1,3 @@
-using System;
-
 namespace Pims.Api.Models.Concepts
 {
     public class ClaimModel : Api.Models.BaseModel
@@ -14,7 +12,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - A unique key to identify the claim.
         /// </summary>
-        public Guid Key { get; set; }
+        public string Key { get; set; }
 
         /// <summary>
         /// get/set - The claims display name.
@@ -24,7 +22,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The GUID that identifies this Role in Keycloak.
         /// </summary>
-        public Guid? KeycloakRoleId { get; set; }
+        public string? KeycloakRoleId { get; set; }
 
         /// <summary>
         /// get/set - The claims first name.

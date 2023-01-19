@@ -4,6 +4,7 @@ import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
+import { formatBcaAddress } from 'utils';
 import { pidFormatter } from 'utils/propertyUtils';
 
 import { Section } from '../Section';
@@ -78,19 +79,12 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
             <SectionField label="Document number">Not available</SectionField>
           </Section>
           <Section header="Property Address">
+            <StyledSubtleText>
+              This is the property address as per BC Assessment (for reference).
+            </StyledSubtleText>
+
             {address !== undefined ? (
-              <SectionField label="Address">
-                {[
-                  address?.UNIT_NUMBER,
-                  address?.STREET_NUMBER,
-                  address?.STREET_DIRECTION_PREFIX,
-                  address?.STREET_NAME,
-                  address?.STREET_TYPE,
-                  address?.STREET_DIRECTION_SUFFIX,
-                ]
-                  .filter(a => !!a)
-                  .join(' ')}
-              </SectionField>
+              <SectionField label="Address">{formatBcaAddress(address)}</SectionField>
             ) : (
               <b>Unable to determine address from BC Assessment</b>
             )}
@@ -148,6 +142,11 @@ export const StyledForm = styled.div`
       font-weight: bold;
     }
   }
+`;
+
+const StyledSubtleText = styled.p`
+  color: ${props => props.theme.css.subtleColor};
+  text-align: left;
 `;
 
 export default BcAssessmentTabView;

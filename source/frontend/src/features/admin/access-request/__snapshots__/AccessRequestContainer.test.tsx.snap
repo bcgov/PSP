@@ -5,9 +5,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="fade alert alert-success show"
     role="alert"
@@ -284,11 +282,11 @@ exports[`AccessRequestContainer component makes a request based on the access re
             class="form-control"
             id="input-email"
             name="email"
-            placeholder="devin.smith@gov.bc.ca"
+            placeholder="test@test.com"
             readonly=""
-            title=""
+            title="test@test.com"
             type="email"
-            value=""
+            value="test@test.com"
           />
         </div>
       </div>
@@ -539,9 +537,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="fade alert alert-success show"
     role="alert"
@@ -818,7 +814,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             class="form-control"
             id="input-email"
             name="email"
-            placeholder="devin.smith@gov.bc.ca"
+            placeholder="test@test.com"
             readonly=""
             title="test@test.com"
             type="email"

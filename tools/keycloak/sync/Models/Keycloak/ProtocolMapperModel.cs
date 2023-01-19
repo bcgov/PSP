@@ -11,10 +11,13 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ProtocolMapperModel class.
         /// </summary>
-        public ProtocolMapperModel() { }
+        public ProtocolMapperModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ProtocolMapperModel, initializes with specified arguments.
@@ -22,10 +25,10 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         /// <param name="options"></param>
         public ProtocolMapperModel(ProtocolMapperOptions options)
         {
-            this.Name = options.Name;
-            this.Protocol = options.Protocol;
-            this.ProtocolMapper = options.ProtocolMapper;
-            this.Config = options.Config;
+            Name = options.Name;
+            Protocol = options.Protocol;
+            ProtocolMapper = options.ProtocolMapper;
+            Config = options.Config;
         }
         #endregion
     }

@@ -3,16 +3,18 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims, LeaseTermStatusTypes } from 'constants/index';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultFormLease, defaultFormLeaseTerm, defaultLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
+import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsForm.test';
-import TermPaymentsContainer, { ITermPaymentsContainerProps } from './TermPaymentsContainer';
+import TermPaymentsContainer from './TermPaymentsContainer';
 
 jest.mock('@react-keycloak/web');
 
@@ -34,10 +36,10 @@ const defaultLeaseWithTermsPayments: IFormLease = {
   ],
 };
 
-describe('PaymentsContainer component', () => {
+describe('TermsPaymentsContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<ITermPaymentsContainerProps> & {
+      Partial<LeasePageProps> & {
         initialValues?: any;
       } = {},
   ) => {
@@ -55,7 +57,7 @@ describe('PaymentsContainer component', () => {
         }}
       >
         <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-          <TermPaymentsContainer />
+          <TermPaymentsContainer formikRef={React.createRef()} isEditing={false} />
         </Formik>
       </LeaseStateContext.Provider>,
       {

@@ -5,9 +5,7 @@ exports[`Research Filter matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -267,7 +265,7 @@ exports[`Research Filter matches snapshot 1`] = `
                 class="col-xl-8"
               >
                 <div
-                  class="flex-nowrap row"
+                  class="flex-nowrap input-group row"
                 >
                   <div
                     class="c1 col-auto"
@@ -414,7 +412,7 @@ exports[`Research Filter matches snapshot 1`] = `
                 class="col-xl-8 col-lg-12"
               >
                 <div
-                  class="c3 flex-nowrap row"
+                  class="c3 flex-nowrap input-group row"
                 >
                   <div
                     class="c1 col-auto"
@@ -508,7 +506,7 @@ exports[`Research Filter matches snapshot 1`] = `
             class="col-xl-12"
           >
             <div
-              class="idir-input-group flex-nowrap row"
+              class="idir-input-group flex-nowrap input-group row"
             >
               <div
                 class="c1 col-auto"

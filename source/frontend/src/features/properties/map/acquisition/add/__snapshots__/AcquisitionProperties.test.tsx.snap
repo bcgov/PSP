@@ -5,9 +5,7 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   <div
     class="py-2"
   >
@@ -502,7 +500,7 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
                       class="col-xl-6"
                     >
                       <div
-                        class="flex-nowrap row"
+                        class="flex-nowrap input-group row"
                       >
                         <div
                           class="c11 col-auto"
@@ -907,6 +905,15 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c3 {
+  min-width: 3rem;
+  min-height: 4.5rem;
+}
+
+.c4 {
+  font-size: 1.2rem;
+}
+
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -970,15 +977,6 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c3 {
-  min-width: 3rem;
-  min-height: 4.5rem;
-}
-
-.c4 {
-  font-size: 1.2rem;
 }
 
 .c2 {

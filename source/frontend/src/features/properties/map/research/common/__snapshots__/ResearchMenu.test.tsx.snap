@@ -5,9 +5,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   text-align: left;
   padding: 0px;

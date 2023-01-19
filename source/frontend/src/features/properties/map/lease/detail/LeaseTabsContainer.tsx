@@ -1,28 +1,37 @@
 import { Claims } from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
-import { LeasePageNames, leasePages } from 'features/leases';
+import { LeaseFormModel } from 'features/leases/models';
 import {
   LeaseFileTabNames,
   LeaseFileTabs,
   LeaseTabFileView,
 } from 'features/mapSideBar/tabs/LeaseFileTabs';
+import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { ILease } from 'interfaces';
-import React, { useState } from 'react';
+import { IFormLease, ILease } from 'interfaces';
+import React from 'react';
 
+import { LeaseContainerState, LeasePageNames, leasePages } from '../LeaseContainer';
 import { LeaseTab } from './LeaseTab';
 
 export interface ILeaseTabsContainerProps {
   lease?: ILease;
   refreshLease: () => void;
   setLease: (lease: ILease) => void;
+  setContainerState: (value: Partial<LeaseContainerState>) => void;
+  isEditing: boolean;
+  onEdit?: () => {};
+  activeTab?: LeaseFileTabNames;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel | IFormLease>>;
 }
 
 export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   lease,
-  setLease,
-  refreshLease,
+  setContainerState,
+  isEditing,
+  activeTab,
+  formikRef,
 }) => {
   const tabViews: LeaseTabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
@@ -30,10 +39,12 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        lease={lease}
-        setLease={setLease}
-        refreshLease={refreshLease}
         leasePage={leasePages.get(LeasePageNames.DETAILS)}
+        onEdit={() =>
+          setContainerState({ activeEditForm: LeasePageNames.DETAILS, isEditing: true })
+        }
+        isEditing={isEditing}
+        formikRef={formikRef}
       />
     ),
     key: LeaseFileTabNames.fileDetails,
@@ -43,10 +54,10 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        lease={lease}
-        setLease={setLease}
-        refreshLease={refreshLease}
         leasePage={leasePages.get(LeasePageNames.TENANT)}
+        onEdit={() => setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })}
+        isEditing={isEditing}
+        formikRef={formikRef}
       />
     ),
     key: LeaseFileTabNames.tenant,
@@ -56,10 +67,12 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        lease={lease}
-        setLease={setLease}
-        refreshLease={refreshLease}
         leasePage={leasePages.get(LeasePageNames.IMPROVEMENTS)}
+        onEdit={() =>
+          setContainerState({ activeEditForm: LeasePageNames.IMPROVEMENTS, isEditing: true })
+        }
+        isEditing={isEditing}
+        formikRef={formikRef}
       />
     ),
     key: LeaseFileTabNames.improvements,
@@ -69,10 +82,12 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        lease={lease}
-        setLease={setLease}
-        refreshLease={refreshLease}
         leasePage={leasePages.get(LeasePageNames.INSURANCE)}
+        onEdit={() =>
+          setContainerState({ activeEditForm: LeasePageNames.INSURANCE, isEditing: true })
+        }
+        isEditing={isEditing}
+        formikRef={formikRef}
       />
     ),
     key: LeaseFileTabNames.insurance,
@@ -82,10 +97,9 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        lease={lease}
-        setLease={setLease}
-        refreshLease={refreshLease}
         leasePage={leasePages.get(LeasePageNames.DEPOSIT)}
+        isEditing={isEditing}
+        formikRef={formikRef}
       />
     ),
     key: LeaseFileTabNames.deposit,
@@ -95,10 +109,9 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        lease={lease}
-        setLease={setLease}
-        refreshLease={refreshLease}
         leasePage={leasePages.get(LeasePageNames.PAYMENTS)}
+        isEditing={isEditing}
+        formikRef={formikRef}
       />
     ),
     key: LeaseFileTabNames.payments,
@@ -108,10 +121,9 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        lease={lease}
-        setLease={setLease}
-        refreshLease={refreshLease}
         leasePage={leasePages.get(LeasePageNames.SURPLUS)}
+        isEditing={isEditing}
+        formikRef={formikRef}
       />
     ),
     key: LeaseFileTabNames.surplusDeclaration,
@@ -124,7 +136,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         <DocumentListContainer
           parentId={lease?.id}
           relationshipType={DocumentRelationshipType.LEASES}
-          disableAdd
         />
       ),
       key: LeaseFileTabNames.documents,
@@ -134,14 +145,12 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
 
   var defaultTab = LeaseFileTabNames.fileDetails;
 
-  const [activeTab, setActiveTab] = useState<LeaseFileTabNames>(defaultTab);
-
   return (
     <LeaseFileTabs
       tabViews={tabViews}
       defaultTabKey={defaultTab}
-      activeTab={activeTab}
-      setActiveTab={setActiveTab}
+      activeTab={activeTab ?? defaultTab}
+      setActiveTab={(tab: LeaseFileTabNames) => setContainerState({ activeTab: tab })}
     />
   );
 };

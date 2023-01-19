@@ -10,8 +10,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { useRef } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { UpdateLeaseForm } from './UpdateLeaseForm';
 
@@ -20,9 +18,14 @@ interface IAddLeaseParams {
   userOverride?: string;
 }
 
+interface UpdateLeaseContainerProps {
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
+  onEdit: (isEditing: boolean) => void;
+}
+
 export const UpdateLeaseContainer: React.FunctionComponent<
-  React.PropsWithChildren<unknown>
-> = props => {
+  React.PropsWithChildren<UpdateLeaseContainerProps>
+> = ({ formikRef, onEdit }) => {
   const { lease } = useContext(LeaseStateContext);
   const {
     getApiLeaseById: { execute, response: apiLease, loading },
@@ -30,7 +33,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   } = useLeaseDetail(lease?.id);
   const [addLeaseParams, setAddLeaseParams] = useState<IAddLeaseParams | undefined>();
   const { updateApiLease } = useUpdateLease();
-  const history = useHistory();
 
   const leaseId = lease?.id;
   //TODO: For now we make a duplicate request here for the lease in the newer format. In the future all lease pages will use the new format so this will no longer be necessary.
@@ -42,9 +44,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
       }
     };
     exec();
-  }, [execute, leaseId]);
-
-  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
+  }, [execute, leaseId, formikRef]);
 
   const onSubmit = async (lease: LeaseFormModel) => {
     try {
@@ -63,19 +63,15 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     if (!!updatedLease?.id) {
       formikRef?.current?.resetForm({ values: formikRef?.current?.values });
       await refresh();
-      history.push(`/lease/${updatedLease?.id}`);
+      onEdit(false);
     }
   };
 
+  const initialValues = LeaseFormModel.fromApi(apiLease);
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen></LoadingBackdrop>
-      <UpdateLeaseForm
-        onCancel={() => history.push(`/lease/${apiLease?.id}`)}
-        onSubmit={onSubmit}
-        initialValues={LeaseFormModel.fromApi(apiLease)}
-        formikRef={formikRef}
-      />
+      <UpdateLeaseForm onSubmit={onSubmit} initialValues={initialValues} formikRef={formikRef} />
       <GenericModal
         title="Warning"
         display={!!addLeaseParams}

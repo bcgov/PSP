@@ -43,8 +43,6 @@ exports[`PropertyFileContainer component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  <div
-    class="container"
-  />
+  <div />
 </DocumentFragment>
 `;

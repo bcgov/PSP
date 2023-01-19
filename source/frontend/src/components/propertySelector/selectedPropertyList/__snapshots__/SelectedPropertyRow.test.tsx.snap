@@ -5,9 +5,7 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   min-width: 3rem;
   min-height: 4.5rem;

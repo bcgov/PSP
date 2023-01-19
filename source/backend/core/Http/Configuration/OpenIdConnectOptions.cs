@@ -10,6 +10,11 @@ namespace Pims.Core.Http.Configuration
         #region Properties
 
         /// <summary>
+        /// get/set - The login authority uri.
+        /// </summary>
+        public string Authority { get; set; }
+
+        /// <summary>
         /// get/set - The login endpoint path.
         /// </summary>
         public string Login { get; set; }
