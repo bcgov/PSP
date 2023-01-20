@@ -8,96 +8,100 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface ILookupRepository : IRepository
     {
-        IEnumerable<PimsOrganization> GetOrganizations();
+        IEnumerable<PimsOrganization> GetAllOrganizations();
 
-        IEnumerable<PimsOrganizationType> GetOrganizationTypes();
+        IEnumerable<PimsOrganizationType> GetAllOrganizationTypes();
 
-        IEnumerable<PimsCountry> GetCountries();
+        IEnumerable<PimsCountry> GetAllCountries();
 
-        IEnumerable<PimsProvinceState> GetProvinces();
+        IEnumerable<PimsProvinceState> GetAllProvinces();
 
-        IEnumerable<PimsRegion> GetRegions();
+        IEnumerable<PimsRegion> GetAllRegions();
 
-        IEnumerable<PimsDistrict> GetDistricts();
+        IEnumerable<PimsDistrict> GetAllDistricts();
 
-        IEnumerable<PimsPropertyType> GetPropertyTypes();
+        IEnumerable<PimsPropertyType> GetAllPropertyTypes();
 
-        IEnumerable<PimsPropertyClassificationType> GetPropertyClassificationTypes();
+        IEnumerable<PimsPropertyClassificationType> GetAllPropertyClassificationTypes();
 
-        IEnumerable<PimsAreaUnitType> GetPropertyAreaUnitTypes();
+        IEnumerable<PimsAreaUnitType> GetAllPropertyAreaUnitTypes();
 
-        IEnumerable<PimsVolumeUnitType> GetPropertyVolumeUnitTypes();
+        IEnumerable<PimsVolumeUnitType> GetAllPropertyVolumeUnitTypes();
 
-        IEnumerable<PimsPropertyTenureType> GetPropertyTenureTypes();
+        IEnumerable<PimsPropertyTenureType> GetAllPropertyTenureTypes();
 
-        IEnumerable<PimsRole> GetRoles();
+        IEnumerable<PimsRole> GetAllRoles();
 
-        IEnumerable<PimsLeasePayRvblType> GetPaymentReceivableTypes();
+        IEnumerable<PimsLeasePayRvblType> GetAllPaymentReceivableTypes();
 
-        IEnumerable<PimsLeaseProgramType> GetLeaseProgramTypes();
+        IEnumerable<PimsLeaseProgramType> GetAllLeaseProgramTypes();
 
-        IEnumerable<PimsLeaseStatusType> GetLeaseStatusTypes();
+        IEnumerable<PimsLeaseStatusType> GetAllLeaseStatusTypes();
 
-        IEnumerable<PimsLeaseLicenseType> GetLeaseTypes();
+        IEnumerable<PimsLeaseLicenseType> GetAllLeaseTypes();
 
-        IEnumerable<PimsLeaseCategoryType> GetLeaseCategoryTypes();
+        IEnumerable<PimsLeaseCategoryType> GetAllLeaseCategoryTypes();
 
-        IEnumerable<PimsLeasePurposeType> GetLeasePurposeTypes();
+        IEnumerable<PimsLeasePurposeType> GetAllLeasePurposeTypes();
 
-        IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes();
+        IEnumerable<PimsLeaseInitiatorType> GetAllLeaseInitiatorTypes();
 
-        IEnumerable<PimsLeaseTermStatusType> GetLeaseTermStatusTypes();
+        IEnumerable<PimsLeaseTermStatusType> GetAllLeaseTermStatusTypes();
 
-        IEnumerable<PimsLeasePmtFreqType> GetLeasePmtFreqTypes();
+        IEnumerable<PimsLeasePmtFreqType> GetAllLeasePmtFreqTypes();
 
-        IEnumerable<PimsLeaseResponsibilityType> GetLeaseResponsibilityTypes();
+        IEnumerable<PimsLeaseResponsibilityType> GetAllLeaseResponsibilityTypes();
 
-        IEnumerable<PimsInsuranceType> GetInsuranceTypes();
+        IEnumerable<PimsInsuranceType> GetAllInsuranceTypes();
 
-        IEnumerable<PimsContactMethodType> GetContactMethodTypes();
+        IEnumerable<PimsContactMethodType> GetAllContactMethodTypes();
 
-        IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes();
+        IEnumerable<PimsPropertyImprovementType> GetAllPropertyImprovementTypes();
 
-        IEnumerable<PimsSecurityDepositType> GetSecurityDepositTypes();
+        IEnumerable<PimsSecurityDepositType> GetAllSecurityDepositTypes();
 
-        IEnumerable<PimsLeasePaymentStatusType> GetLeasePaymentStatusTypes();
+        IEnumerable<PimsLeasePaymentStatusType> GetAllLeasePaymentStatusTypes();
 
-        IEnumerable<PimsLeasePaymentMethodType> GetLeasePaymentMethodTypes();
+        IEnumerable<PimsLeasePaymentMethodType> GetAllLeasePaymentMethodTypes();
 
-        IEnumerable<PimsResearchFileStatusType> GetResearchFileStatusTypes();
+        IEnumerable<PimsResearchFileStatusType> GetAllResearchFileStatusTypes();
 
-        IEnumerable<PimsRequestSourceType> GeRequestSourceTypes();
+        IEnumerable<PimsRequestSourceType> GetAllRequestSourceTypes();
 
-        IEnumerable<PimsResearchPurposeType> GetResearchPurposeTypes();
+        IEnumerable<PimsResearchPurposeType> GetAllResearchPurposeTypes();
 
-        IEnumerable<PimsPropResearchPurposeType> GetPropertyResearchPurposeTypes();
+        IEnumerable<PimsPropResearchPurposeType> GetAllPropertyResearchPurposeTypes();
 
-        IEnumerable<PimsPropertyAnomalyType> GetPropertyAnomalyTypes();
+        IEnumerable<PimsPropertyAnomalyType> GetAllPropertyAnomalyTypes();
 
-        IEnumerable<PimsPropertyRoadType> GetPropertyRoadTypes();
+        IEnumerable<PimsPropertyRoadType> GetAllPropertyRoadTypes();
 
-        IEnumerable<PimsPropertyAdjacentLandType> GetPropertyAdjacentLandTypes();
+        IEnumerable<PimsPropertyAdjacentLandType> GetAllPropertyAdjacentLandTypes();
 
-        IEnumerable<PimsVolumetricType> GetPropertyVolumetricTypes();
+        IEnumerable<PimsVolumetricType> GetAllPropertyVolumetricTypes();
 
-        IEnumerable<PimsPphStatusType> GetPPHStatusType();
+        IEnumerable<PimsPphStatusType> GetAllPPHStatusType();
 
-        IEnumerable<PimsDocumentStatusType> GetDocumentStatusTypes();
+        IEnumerable<PimsDocumentStatusType> GetAllDocumentStatusTypes();
 
-        IEnumerable<PimsDocumentTyp> GetDocumentTypes();
+        IEnumerable<PimsDocumentTyp> GetAllDocumentTypes();
 
-        IEnumerable<PimsAcquisitionFileStatusType> GetAcquisitionFileStatusTypes();
+        IEnumerable<PimsAcquisitionFileStatusType> GetAllAcquisitionFileStatusTypes();
 
-        IEnumerable<PimsAcqPhysFileStatusType> GetAcquisitionPhysFileStatusTypes();
+        IEnumerable<PimsAcqPhysFileStatusType> GetAllAcquisitionPhysFileStatusTypes();
 
-        IEnumerable<PimsAcquisitionType> GetAcquisitionTypes();
+        IEnumerable<PimsAcquisitionType> GetAllAcquisitionTypes();
 
-        IEnumerable<PimsActivityTemplateType> GetActivityTemplateTypes();
+        IEnumerable<PimsActivityTemplateType> GetAllActivityTemplateTypes();
 
-        IEnumerable<PimsActivityInstanceStatusType> GetActivityStatusTypes();
+        IEnumerable<PimsActivityInstanceStatusType> GetAllActivityStatusTypes();
 
-        IEnumerable<PimsAcqFlPersonProfileType> GetAcqFilePersonProfileTypes();
-        IEnumerable<PimsTenantType> GetTenantTypes();
+        IEnumerable<PimsAcqFlPersonProfileType> GetAllAcqFilePersonProfileTypes();
 
+        IEnumerable<PimsTenantType> GetAllTenantTypes();
+
+        IEnumerable<PimsAcquisitionFundingType> GetAllAcquisitionFundingTypes();
+
+        IEnumerable<PimsProjectStatusType> GetAllProjectStatusTypes();
     }
 }

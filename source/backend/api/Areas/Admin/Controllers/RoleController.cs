@@ -72,7 +72,7 @@ namespace Pims.Api.Areas.Admin.Controllers
                 quantity = 50;
             }
 
-            var paged = _roleRepository.Get(page, quantity, name);
+            var paged = _roleRepository.GetPage(page, quantity, name);
             var result = _mapper.Map<Api.Models.PageModel<Model.RoleModel>>(paged);
             return new JsonResult(result);
         }
@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult GetRole(Guid key)
         {
-            var entity = _roleRepository.Get(key);
+            var entity = _roleRepository.GetByKey(key);
             var role = _mapper.Map<Model.RoleModel>(entity);
             return new JsonResult(role);
         }

@@ -1,4 +1,4 @@
-import { FastDatePicker, Input, Select } from 'components/common/form';
+import { AsyncTypeahead, FastDatePicker, Input, Select } from 'components/common/form';
 import TooltipIcon from 'components/common/TooltipIcon';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
@@ -10,6 +10,7 @@ import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
+import { useProjectTypeahead } from '../../hooks/useProjectTypeahead';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import StatusToolTip from './StatusToolTip';
 
@@ -36,6 +37,9 @@ export const UpdateAcquisitionForm = React.forwardRef<
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
+  const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
+
+  const { handleTypeaheadSearch, isTypeaheadLoading, matchedProjects } = useProjectTypeahead();
 
   return (
     <Formik<UpdateAcquisitionSummaryFormModel>
@@ -67,6 +71,41 @@ export const UpdateAcquisitionForm = React.forwardRef<
                   required
                 />
               </SectionField>
+            </Section>
+
+            <Section header="Project">
+              <SectionField label="Ministry project">
+                <AsyncTypeahead
+                  field="project"
+                  labelKey="text"
+                  isLoading={isTypeaheadLoading}
+                  options={matchedProjects}
+                  onSearch={handleTypeaheadSearch}
+                />
+              </SectionField>
+              <SectionField label="Product">
+                <Select field="product" options={[]} placeholder="Select..." />
+              </SectionField>
+              <SectionField label="Funding">
+                <Select
+                  field="fundingTypeCode"
+                  options={acquisitionFundingTypes}
+                  placeholder="Select..."
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    const selectedValue = [].slice
+                      .call(e.target.selectedOptions)
+                      .map((option: HTMLOptionElement & number) => option.value)[0];
+                    if (!!selectedValue && selectedValue !== 'OTHER') {
+                      formikProps.setFieldValue('fundingTypeOtherDescription', '');
+                    }
+                  }}
+                />
+              </SectionField>
+              {formikProps.values?.fundingTypeCode === 'OTHER' && (
+                <SectionField label="Other funding">
+                  <Input field="fundingTypeOtherDescription" />
+                </SectionField>
+              )}
             </Section>
 
             <Section header="Schedule">

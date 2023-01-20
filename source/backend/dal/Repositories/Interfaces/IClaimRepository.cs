@@ -9,9 +9,9 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IClaimRepository : IRepository<PimsClaim>
     {
-        Paged<PimsClaim> Get(int page, int quantity, string name = null);
+        Paged<PimsClaim> GetPage(int page, int quantity, string name = null);
 
-        PimsClaim Get(Guid key);
+        PimsClaim GetByKey(Guid key);
 
         PimsClaim GetByName(string name);
 

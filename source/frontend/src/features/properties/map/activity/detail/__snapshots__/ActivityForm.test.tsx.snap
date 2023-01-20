@@ -59,7 +59,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
            by 
           <span
             class="tooltip-icon"
-            data-testid="tooltip-icon"
+            data-testid="tooltip-icon-userNameTooltip"
             id="userNameTooltip"
           >
             <span
@@ -86,7 +86,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
            by 
           <span
             class="tooltip-icon"
-            data-testid="tooltip-icon"
+            data-testid="tooltip-icon-userNameTooltip"
             id="userNameTooltip"
           >
             <span

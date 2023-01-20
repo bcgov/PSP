@@ -137,5 +137,17 @@ namespace Pims.Dal.Security
 
         [Display(GroupName = "activity", Name = "activity-delete", Description = "Can delete existing activities.")]
         ActivityDelete = 44,
+
+        [Display(GroupName = "project", Name = "project-view", Description = "Can view projects.")]
+        ProjectView = 45,
+
+        [Display(GroupName = "project", Name = "project-add", Description = "Can add new projects.")]
+        ProjectAdd = 46,
+
+        [Display(GroupName = "project", Name = "project-edit", Description = "Can update existing projects.")]
+        ProjectEdit = 47,
+
+        [Display(GroupName = "project", Name = "project-delete", Description = "Can delete existing projects.")]
+        ProjectDelete = 48,
     }
 }

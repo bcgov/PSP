@@ -1,11 +1,14 @@
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using System.Collections.Generic;
 
 namespace Pims.Api.Services
 {
     public interface IResearchFileService
     {
         PimsResearchFile GetById(long id);
+
+        IEnumerable<PimsPropertyResearchFile> GetProperties(long researchFileId);
 
         PimsResearchFile Add(PimsResearchFile researchFile);
 

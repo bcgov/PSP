@@ -19,6 +19,7 @@ export enum FileTabNames {
   fileDetails = 'fileDetails',
   activities = 'activities',
   documents = 'documents',
+  notes = 'notes',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.

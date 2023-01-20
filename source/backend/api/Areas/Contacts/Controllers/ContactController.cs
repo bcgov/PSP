@@ -63,18 +63,18 @@ namespace Pims.Api.Areas.Contact.Controllers
         [SwaggerOperation(Tags = new[] { "contact" })]
         public IActionResult GetContact(string id)
         {
-            var contactView = _contactRepository.Get(id);
+            var contactView = _contactRepository.GetById(id);
 
             if (id.StartsWith("P"))
             {
-                var person = _personRepository.Get(contactView.PersonId.Value);
+                var person = _personRepository.GetById(contactView.PersonId.Value);
                 var mappedPerson = _mapper.Map<Models.Contact.ContactModel>(person);
                 mappedPerson.Id = contactView.Id;
                 return new JsonResult(mappedPerson);
             }
             else
             {
-                var organization = _organizationRepository.Get(contactView.OrganizationId.Value);
+                var organization = _organizationRepository.GetById(contactView.OrganizationId.Value);
                 var mappedOrganization = _mapper.Map<Models.Contact.ContactModel>(organization);
                 mappedOrganization.Id = contactView.Id;
                 return new JsonResult(mappedOrganization);

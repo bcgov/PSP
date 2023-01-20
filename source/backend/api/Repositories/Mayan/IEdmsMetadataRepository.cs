@@ -10,10 +10,10 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public interface IEdmsMetadataRepository
     {
-        Task<ExternalResult<MetadataType>> CreateMetadataTypeAsync(MetadataType metadataType);
+        Task<ExternalResult<MetadataType>> TryCreateMetadataTypeAsync(MetadataType metadataType);
 
-        Task<ExternalResult<string>> DeleteMetadataTypeAsync(long metadataTypeId);
+        Task<ExternalResult<string>> TryDeleteMetadataTypeAsync(long metadataTypeId);
 
-        Task<ExternalResult<QueryResult<MetadataType>>> GetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<MetadataType>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
     }
 }

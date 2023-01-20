@@ -41,6 +41,6 @@ describe('LtsaDuplicateTitleSubForm component', () => {
     } = setup({
       ltsaData: mockLtsaResponse,
     });
-    expect(getByText('this title has no indefeasible titles')).toBeVisible();
+    expect(getByText('None')).toBeVisible();
   });
 });

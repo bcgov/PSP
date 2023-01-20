@@ -294,7 +294,7 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
                 Expected payment ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-expectedPaymentTooltip"
                   id="expectedPaymentTooltip"
                 >
                   <svg
@@ -338,7 +338,7 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
                 GST ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-gstAmountTooltip"
                   id="gstAmountTooltip"
                 >
                   <svg
@@ -370,7 +370,7 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
                 Expected total ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-expectedTotalTooltip"
                   id="expectedTotalTooltip"
                 >
                   <svg
@@ -402,7 +402,7 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
                 Expected term ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-expectedTermTooltip"
                   id="expectedTermTooltip"
                 >
                   <svg
@@ -434,7 +434,7 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
                 Actual total ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-actualTotalTooltip"
                   id="actualTotalTooltip"
                 >
                   <svg
@@ -791,7 +791,7 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                 Expected payment ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-expectedPaymentTooltip"
                   id="expectedPaymentTooltip"
                 >
                   <svg
@@ -835,7 +835,7 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                 GST ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-gstAmountTooltip"
                   id="gstAmountTooltip"
                 >
                   <svg
@@ -867,7 +867,7 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                 Expected total ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-expectedTotalTooltip"
                   id="expectedTotalTooltip"
                 >
                   <svg
@@ -899,7 +899,7 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                 Expected term ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-expectedTermTooltip"
                   id="expectedTermTooltip"
                 >
                   <svg
@@ -931,7 +931,7 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                 Actual total ($)
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-actualTotalTooltip"
                   id="actualTotalTooltip"
                 >
                   <svg

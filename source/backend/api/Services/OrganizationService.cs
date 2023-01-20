@@ -28,7 +28,7 @@ namespace Pims.Api.Services
         public PimsOrganization GetOrganization(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
-            return _organizationRepository.Get(id);
+            return _organizationRepository.GetById(id);
         }
 
         public PimsOrganization AddOrganization(PimsOrganization organization, bool userOverride)

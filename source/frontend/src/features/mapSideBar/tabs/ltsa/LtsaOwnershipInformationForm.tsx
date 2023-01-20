@@ -19,7 +19,7 @@ export const LtsaOwnershipInformationForm: React.FunctionComponent<
   const ownershipGroups = getIn(values, withNameSpace(nameSpace, 'ownershipGroups')) ?? [];
   return (
     <React.Fragment key={`ownership-info-main-row-${nameSpace}`}>
-      {ownershipGroups.length === 0 && 'this title has no ownership information'}
+      {ownershipGroups.length === 0 && 'None'}
       <FieldArray
         name={withNameSpace(nameSpace, 'ownershipGroups')}
         render={({ push, remove, name }) => (

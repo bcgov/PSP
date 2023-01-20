@@ -36,6 +36,10 @@ export const ResearchContainer: React.FunctionComponent<
 > = props => {
   const {
     retrieveResearchFile: { execute: getResearchFile, loading: loadingResearchFile },
+    retrieveResearchFileProperties: {
+      execute: getResearchFileProperties,
+      loading: loadingResearchFileProperties,
+    },
   } = useGetResearch();
 
   const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
@@ -58,13 +62,20 @@ export const ResearchContainer: React.FunctionComponent<
 
   const { updateResearchFileProperties } = useUpdateResearchProperties();
 
-  useEffect(() => setFileLoading(loadingResearchFile), [loadingResearchFile, setFileLoading]);
+  useEffect(
+    () => setFileLoading(loadingResearchFile || loadingResearchFileProperties),
+    [loadingResearchFile, loadingResearchFileProperties, setFileLoading],
+  );
 
   const fetchResearchFile = React.useCallback(async () => {
     var retrieved = await getResearchFile(props.researchFileId);
+    var researchProperties = await getResearchFileProperties(props.researchFileId);
+    retrieved?.fileProperties?.forEach(async fp => {
+      fp.property = researchProperties?.find(ap => fp.id === ap.id)?.property;
+    });
     setResearchFile(retrieved);
     setFile({ ...retrieved, fileType: FileTypes.Research });
-  }, [getResearchFile, props.researchFileId, setFile]);
+  }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
 
   React.useEffect(() => {
     if (researchFile === undefined) {
@@ -72,7 +83,7 @@ export const ResearchContainer: React.FunctionComponent<
     }
   }, [fetchResearchFile, researchFile]);
 
-  if (researchFile === undefined && loadingResearchFile) {
+  if (researchFile === undefined && (loadingResearchFile || loadingResearchFileProperties)) {
     return (
       <>
         <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>

@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Project Search Results Table matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="table"
+    data-testid="projectsTable"
+    role="table"
+  >
+    <div
+      class="thead thead-light"
+    >
+      <div
+        class="tr"
+        role="row"
+        style="display: flex; flex: 1 0 auto; min-width: 180px;"
+      >
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Project #
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 45 0 auto; min-width: 30px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Project name
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Region
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Status
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Last updated by
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Updated date
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="no-rows-message"
+    >
+      No matching results can be found. Try widening your search criteria.
+    </div>
+  </div>
+  <div
+    class="row"
+  >
+    <div
+      class="align-self-center col-auto"
+    />
+    <div
+      class="ml-auto align-self-center col-auto"
+    />
+    <div
+      class="align-self-center col-auto"
+    />
+  </div>
+</DocumentFragment>
+`;

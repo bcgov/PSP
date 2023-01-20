@@ -60,7 +60,7 @@ namespace Pims.Api.Controllers
             {
                 return new JsonResult(new Models.ErrorResponseModel("Invalid keycloakUserId", "keycloakUserId should be a valid non empty guid"));
             }
-            var entity = _userRepository.GetUserInfo(keycloakUserId);
+            var entity = _userRepository.GetUserInfoByKeycloakUserId(keycloakUserId);
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
         }

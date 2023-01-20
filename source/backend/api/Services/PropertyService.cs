@@ -30,7 +30,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             // return property spatial location in lat/long (4326)
-            var property = _propertyRepository.Get(id);
+            var property = _propertyRepository.GetById(id);
             if (property?.Location != null)
             {
                 var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, property.Location.Coordinate);

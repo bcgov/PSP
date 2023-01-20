@@ -15,7 +15,7 @@ export enum Claims {
   PROPERTY_DELETE = 'property-delete',
   ADMIN_USERS = 'admin-users',
   ADMIN_ROLES = 'admin-roles',
-  ADMIN_DOCUMENT_GENERATION = 'admin-roles', // Todo: set the propper role
+  ADMIN_DOCUMENT_GENERATION = 'admin-roles', // TODO: use proper claim
   ADMIN_PROPERTIES = 'admin-properties',
   ADMIN_PROJECTS = 'admin-projects',
   RESEARCH_VIEW = 'researchfile-view',
@@ -40,6 +40,10 @@ export enum Claims {
   ACTIVITY_ADD = 'activity-add',
   ACTIVITY_DELETE = 'activity-delete',
   GENERATE_DOCUMENTS = 'generate-documents',
+  PROJECT_EDIT = 'project-edit',
+  PROJECT_VIEW = 'project-view',
+  PROJECT_ADD = 'project-add',
+  PROJECT_DELETE = 'project-delete',
 }
 
 export default Claims;

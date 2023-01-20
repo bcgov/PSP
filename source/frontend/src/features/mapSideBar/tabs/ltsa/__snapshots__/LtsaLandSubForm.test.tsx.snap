@@ -79,22 +79,15 @@ PLAN 24843
       </p>
     </div>
   </div>
-  .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
-.c0 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+.c0 {
+  font-weight: bold;
 }
 
 <div
@@ -104,73 +97,92 @@ PLAN 24843
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Legal notations: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
-          title="CV1442411"
-          value="CV1442411"
-        />
+          <label
+            class="c0"
+          >
+            Legal notations#:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
+        >
+          CV1442411
+        </div>
       </div>
     </div>
     <div
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Status: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
-          title="ACTIVE"
-          value="ACTIVE"
-        />
+          <label
+            class="c0"
+          >
+            Status:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
+        >
+          ACTIVE
+        </div>
       </div>
     </div>
     <div
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Cancellation date: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
-          value=""
+          <label
+            class="c0"
+          >
+            Cancellation date:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
         />
       </div>
     </div>
   </div>
-  <div
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
     class="pb-2 row"
   >
     <div
-      class="col-4"
-    />
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Legal notations:
+      </label>
+    </div>
     <div
-      class="col"
+      class="c1 text-left col"
     >
       <p>
         THIS CERTIFICATE OF TITLE MAY BE AFFECTED BY THE AGRICULTURAL LAND
@@ -179,22 +191,15 @@ DEPOSITED JULY 30TH, 1974.
       </p>
     </div>
   </div>
-  .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
-.c0 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+.c0 {
+  font-weight: bold;
 }
 
 <div
@@ -204,73 +209,92 @@ DEPOSITED JULY 30TH, 1974.
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Legal notations: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
-          title="CV1442412"
-          value="CV1442412"
-        />
+          <label
+            class="c0"
+          >
+            Legal notations#:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
+        >
+          CV1442412
+        </div>
       </div>
     </div>
     <div
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Status: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
-          title="ACTIVE"
-          value="ACTIVE"
-        />
+          <label
+            class="c0"
+          >
+            Status:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
+        >
+          ACTIVE
+        </div>
       </div>
     </div>
     <div
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Cancellation date: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
-          value=""
+          <label
+            class="c0"
+          >
+            Cancellation date:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
         />
       </div>
     </div>
   </div>
-  <div
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
     class="pb-2 row"
   >
     <div
-      class="col-4"
-    />
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Legal notations:
+      </label>
+    </div>
     <div
-      class="col"
+      class="c1 text-left col"
     >
       <p>
         ZONING REGULATION AND PLAN UNDER THE AERONAUTICS ACT (CANADA) FILED
@@ -278,22 +302,15 @@ DEPOSITED JULY 30TH, 1974.
       </p>
     </div>
   </div>
-  .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
-.c0 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+.c0 {
+  font-weight: bold;
 }
 
 <div
@@ -303,73 +320,92 @@ DEPOSITED JULY 30TH, 1974.
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Legal notations: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
-          title="CV1442414"
-          value="CV1442414"
-        />
+          <label
+            class="c0"
+          >
+            Legal notations#:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
+        >
+          CV1442414
+        </div>
       </div>
     </div>
     <div
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Status: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
-          title="ACTIVE"
-          value="ACTIVE"
-        />
+          <label
+            class="c0"
+          >
+            Status:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
+        >
+          ACTIVE
+        </div>
       </div>
     </div>
     <div
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="pb-2 row"
       >
-        <label
-          class="form-label"
-          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+        <div
+          class="pr-0 text-left col-auto"
         >
-          Cancellation date: 
-        </label>
-        <input
-          class="form-control"
-          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
-          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
-          value=""
+          <label
+            class="c0"
+          >
+            Cancellation date:
+          </label>
+        </div>
+        <div
+          class="c1 text-left col"
         />
       </div>
     </div>
   </div>
-  <div
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
     class="pb-2 row"
   >
     <div
-      class="col-4"
-    />
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Legal notations:
+      </label>
+    </div>
     <div
-      class="col"
+      class="c1 text-left col"
     >
       <p>
         LAND HEREIN CHARGED UNDER THE

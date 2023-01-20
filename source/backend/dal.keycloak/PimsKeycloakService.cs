@@ -73,7 +73,7 @@ namespace Pims.Dal.Keycloak
         public async Task<Entity.PimsUser> UpdateUserAsync(Entity.PimsUser user)
         {
             var kuser = await _keycloakService.GetUserAsync(user.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
-            var euser = _userRepository.GetTracking(user.Id);
+            var euser = _userRepository.GetTrackingById(user.Id);
 
             return await SaveUserChanges(user, euser, kuser, true);
         }
@@ -87,7 +87,7 @@ namespace Pims.Dal.Keycloak
         public async Task<Entity.PimsUser> AppendToUserAsync(Entity.PimsUser update)
         {
             var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
-            var euser = _userRepository.GetTracking(update.Id);
+            var euser = _userRepository.GetTrackingById(update.Id);
 
             return await SaveUserChanges(update, euser, kuser, true);
         }
@@ -103,8 +103,8 @@ namespace Pims.Dal.Keycloak
             update.ThrowIfNull(nameof(update));
             _user.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            var accessRequest = _accessRequestRepository.Get(update.AccessRequestId);
-            var user = _userRepository.Get(accessRequest.UserId);
+            var accessRequest = _accessRequestRepository.GetById(update.AccessRequestId);
+            var user = _userRepository.GetById(accessRequest.UserId);
 
             if (update.AccessRequestStatusTypeCode == AccessRequestStatusTypes.APPROVED)
             {
@@ -180,7 +180,7 @@ namespace Pims.Dal.Keycloak
             await _keycloakService.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
             _userRepository.CommitTransaction();
 
-            return _userRepository.Get(euser.Id);
+            return _userRepository.GetById(euser.Id);
         }
     }
     #endregion

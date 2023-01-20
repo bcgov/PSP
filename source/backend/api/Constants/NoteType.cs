@@ -8,7 +8,7 @@ namespace Pims.Api.Constants
     {
         [EnumMember(Value = "activity")]
         Activity,
-        [EnumMember(Value = "file")]
-        File,
+        [EnumMember(Value = "acquisition_file")]
+        Acquisition_File,
     }
 }

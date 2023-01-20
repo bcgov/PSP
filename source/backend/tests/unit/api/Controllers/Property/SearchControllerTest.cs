@@ -121,7 +121,7 @@ namespace Pims.Api.Test.Controllers.Property
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetProperties());
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Pims.Api.Test.Controllers.Property
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetProperties(null));
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
         #endregion
         #endregion

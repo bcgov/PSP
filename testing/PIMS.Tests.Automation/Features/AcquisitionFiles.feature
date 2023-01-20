@@ -12,6 +12,7 @@ Scenario: Create a new Acquisition File with pins
 Scenario: Create an Acquisition File from Pin and Edition
 	Given I create an Acquisition File from a pin on map
 	When I edit an existing Acquisition File
+	Then A new Acquisition file is created successfully
 
 Scenario: Create an Activity within an Acquisition File
 	Given I create a new Acquisition File

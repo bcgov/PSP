@@ -317,7 +317,7 @@ describe('TermsForm component', () => {
 
   it('renders a tooltip instead of a delete icon when term is exercised', async () => {
     const {
-      component: { getAllByTestId, queryByTitle },
+      component: { getByTestId, queryByTitle },
     } = await setup({
       initialValues: {
         ...defaultFormLease,
@@ -333,7 +333,7 @@ describe('TermsForm component', () => {
       },
     });
 
-    const tooltip = getAllByTestId('tooltip-icon')[5];
+    const tooltip = getByTestId('tooltip-icon-no-delete-tooltip-term-1');
     expect(queryByTitle('delete term')).toBeNull();
     expect(tooltip).toBeVisible();
     expect(tooltip.id).toBe('no-delete-tooltip-term-1');
@@ -341,7 +341,7 @@ describe('TermsForm component', () => {
 
   it('renders a tooltip instead of a delete icon when term has one or more payments', async () => {
     const {
-      component: { getAllByTestId, queryByTitle },
+      component: { getByTestId, queryByTitle },
     } = await setup({
       initialValues: {
         ...defaultFormLease,
@@ -356,7 +356,7 @@ describe('TermsForm component', () => {
       },
     });
 
-    const tooltip = getAllByTestId('tooltip-icon')[5];
+    const tooltip = getByTestId('tooltip-icon-no-delete-tooltip-term-1');
     expect(queryByTitle('delete term')).toBeNull();
     expect(tooltip).toBeVisible();
     expect(tooltip.id).toBe('no-delete-tooltip-term-1');

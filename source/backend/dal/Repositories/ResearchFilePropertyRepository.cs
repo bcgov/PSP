@@ -30,13 +30,18 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
-        public List<PimsPropertyResearchFile> GetByResearchFileId(long researchFileId)
+        public List<PimsPropertyResearchFile> GetAllByResearchFileId(long researchFileId)
         {
             return Context.PimsPropertyResearchFiles.AsNoTracking()
                 .Where(x => x.ResearchFileId == researchFileId)
-                .Include(rp => rp.Property)
                 .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
                 .Include(rp => rp.PimsActInstPropRsrchFiles)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.RegionCodeNavigation)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.DistrictCodeNavigation)
+                .Include(rp => rp.Property)
+                .ThenInclude(rp => rp.Address)
                 .ToList();
         }
 

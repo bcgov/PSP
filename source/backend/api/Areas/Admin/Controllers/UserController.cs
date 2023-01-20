@@ -72,7 +72,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUsers(EModel.UserFilter filter)
         {
-            var page = _userRepository.Get(filter);
+            var page = _userRepository.GetAllByFilter(filter);
             var result = _mapper.Map<Api.Models.PageModel<Model.UserModel>>(page);
             return new JsonResult(result);
         }
@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUser(long id)
         {
-            var entity = _userRepository.Get(id);
+            var entity = _userRepository.GetById(id);
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
         }
@@ -106,7 +106,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUser(Guid key)
         {
-            var entity = _userRepository.Get(key);
+            var entity = _userRepository.GetByKeycloakUserId(key);
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
         }

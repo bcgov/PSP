@@ -34,13 +34,13 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Id, Property = new PimsProperty() { RegionCode = 1 } };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Id, Property = EntityHelper.CreateProperty(1) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyAcquisitionFile);
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
 
             // Act
-            var result = repository.GetByAcquisitionFileId(1);
+            var result = repository.GetPropertiesByAcquisitionFileId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -59,7 +59,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
 
             // Act
-            var result = repository.GetByAcquisitionFileId(1);
+            var result = repository.GetPropertiesByAcquisitionFileId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -203,7 +203,7 @@ namespace Pims.Dal.Test.Repositories
             repository.Delete(pimsPropertyAcquisitionFile);
 
             // Assert
-            var result = repository.GetByAcquisitionFileId(pimsPropertyAcquisitionFile.Id);
+            var result = repository.GetPropertiesByAcquisitionFileId(pimsPropertyAcquisitionFile.Id);
             result.Should().BeEmpty();
         }
 

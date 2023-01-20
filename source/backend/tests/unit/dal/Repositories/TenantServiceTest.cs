@@ -42,7 +42,7 @@ namespace Pims.Dal.Test.Services
             var service = helper.CreateRepository<TenantRepository>(user);
 
             // Act
-            var result = service.GetTenant(tenant.Code);
+            var result = service.TryGetTenantByCode(tenant.Code);
 
             // Assert
             Assert.NotNull(result);
@@ -64,7 +64,7 @@ namespace Pims.Dal.Test.Services
             var service = helper.CreateRepository<TenantRepository>(user);
 
             // Act
-            var result = service.GetTenant("FAKE");
+            var result = service.TryGetTenantByCode("FAKE");
 
             // Assert
             result.Should().BeNull();

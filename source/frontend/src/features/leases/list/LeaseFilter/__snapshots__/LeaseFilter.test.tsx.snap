@@ -511,7 +511,7 @@ exports[`Lease Filter matches snapshot 1`] = `
                   >
                     <span
                       class="tooltip-icon"
-                      data-testid="tooltip-icon"
+                      data-testid="tooltip-icon-lease-search-keyword-tooltip"
                       id="lease-search-keyword-tooltip"
                     >
                       <svg
