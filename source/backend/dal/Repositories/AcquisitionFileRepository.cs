@@ -78,6 +78,7 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.RegionCodeNavigation)
                 .Include(r => r.AcquisitionFundingTypeCodeNavigation)
                 .Include(r => r.Project)
+                .Include(r => r.Product)
                 .Include(r => r.PimsPropertyAcquisitionFiles)
                 .Include(r => r.PimsAcquisitionFilePeople)
                     .ThenInclude(rp => rp.Person)
