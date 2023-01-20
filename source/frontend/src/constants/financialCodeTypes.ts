@@ -1,6 +1,6 @@
 export enum FinancialCodeTypes {
   BusinessFunction = 'BusinessFunction',
-  CostTypes = 'CostTypes',
+  CostType = 'CostType',
   WorkActivity = 'WorkActivity',
   ChartOfAccounts = 'ChartOfAccounts',
   FinancialActivity = 'FinancialActivity',

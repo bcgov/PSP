@@ -5,7 +5,7 @@ export function formatFinancialCodeType(value: FinancialCodeTypes): string {
   switch (value) {
     case FinancialCodeTypes.BusinessFunction:
       return 'Business function';
-    case FinancialCodeTypes.CostTypes:
+    case FinancialCodeTypes.CostType:
       return 'Cost types';
     case FinancialCodeTypes.WorkActivity:
       return 'Work activity';
