@@ -100,6 +100,35 @@ namespace Pims.Api.Services
                         _yearlyFinancialRepository.CommitTransaction();
                         return _mapper.Map<FinancialCodeModel>(createdEntity);
                     }
+                case FinancialCodeTypes.CostType:
+                    {
+                        var pimsEntity = _mapper.Map<PimsCostTypeCode>(model);
+                        var createdEntity = _costTypeRepository.Add(pimsEntity);
+                        _costTypeRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.FinancialActivity:
+                    {
+                        var pimsEntity = _mapper.Map<PimsFinancialActivityCode>(model);
+                        var createdEntity = _financialActivityRepository.Add(pimsEntity);
+                        _financialActivityRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.WorkActivity:
+                    {
+                        var pimsEntity = _mapper.Map<PimsWorkActivityCode>(model);
+                        var createdEntity = _workActivityRepository.Add(pimsEntity);
+                        _workActivityRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.Responsibility:
+                    {
+                        var pimsEntity = _mapper.Map<PimsResponsibilityCode>(model);
+                        var createdEntity = _responsibilityRepository.Add(pimsEntity);
+                        _responsibilityRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+
                 default:
                     throw new BadRequestException("Financial code type not valid.");
             }

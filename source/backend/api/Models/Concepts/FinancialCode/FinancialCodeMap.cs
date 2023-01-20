@@ -22,7 +22,7 @@ namespace Pims.Api.Models.Concepts
 
             config.NewConfig<Entity.PimsCostTypeCode, FinancialCodeModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Type, src => FinancialCodeTypes.CostTypes)
+                .Map(dest => dest.Type, src => FinancialCodeTypes.CostType)
                 .Inherits<Entity.IFinancialCodeEntity, FinancialCodeModel>();
 
             config.NewConfig<Entity.PimsWorkActivityCode, FinancialCodeModel>()
