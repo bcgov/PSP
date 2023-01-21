@@ -4,6 +4,7 @@ using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -74,6 +75,8 @@ namespace Pims.Api.Services
 
         public FinancialCodeModel Add(FinancialCodeTypes type, FinancialCodeModel model)
         {
+            model.ThrowIfNull(nameof(model));
+
             _logger.LogInformation("Adding financial code with type {type} and model {model}", type, model);
             User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 
