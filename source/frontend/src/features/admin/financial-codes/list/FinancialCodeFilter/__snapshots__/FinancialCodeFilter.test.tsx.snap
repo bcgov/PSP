@@ -186,7 +186,7 @@ exports[`Financial Code Filter matches snapshot 1`] = `
             </option>
             <option
               class="option"
-              value="CostTypes"
+              value="CostType"
             >
               Cost types
             </option>
