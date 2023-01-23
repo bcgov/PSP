@@ -35,7 +35,7 @@ namespace Pims.Api.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
             var service = helper.Create<ProjectService>(user);
 
-            var project = EntityHelper.CreateProject(1, 7, "Test Project");
+            var project = EntityHelper.CreateProject(1, "7", "Test Project");
             var projectList = new List<PimsProject>() { project };
 
             var repository = helper.GetService<Mock<IProjectRepository>>();
