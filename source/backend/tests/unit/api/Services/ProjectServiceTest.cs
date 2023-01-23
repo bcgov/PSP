@@ -77,7 +77,7 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.GetPage(new ProjectFilter {  ProjectName = "test" });
+            Action result = () => service.GetPage(new ProjectFilter { ProjectName = "test" });
 
             // Assert
             result.Should().Throw<NotAuthorizedException>();
@@ -142,6 +142,61 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().NotBeNull();
             repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_Project_ShouldFail_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action result = () => service.Add(new PimsProject());
+
+            // Assert
+            result.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Add_Project_ShouldFail_Filter_IsNull()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action result = () => service.Add(null);
+
+            // Assert
+            result.Should().Throw<ArgumentException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public async void Add_Project_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsProject>())).ReturnsAsync(new PimsProject());
+
+            // Act
+            var result = await service.Add(new PimsProject());
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Once);
         }
     }
 }

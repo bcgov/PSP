@@ -63,6 +63,9 @@ namespace Pims.Api.Services
 
         public Task<PimsProject> Add(PimsProject project)
         {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectAdd);
+
+            _logger.LogInformation("Adding new project...");
             if (project == null)
             {
                 throw new ArgumentNullException(nameof(project), "Project cannot be null.");

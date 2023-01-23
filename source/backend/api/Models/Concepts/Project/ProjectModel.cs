@@ -17,17 +17,17 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Bussiness function code.
         /// </summary>
-        public long BusinessFunctionCode { get; set; } // TODO: Use the correct type.
+        public long? BusinessFunctionCode { get; set; } // TODO: Use the correct type.
 
         /// <summary>
         /// get/set - Cost type code.
         /// </summary>
-        public long CostTypeCode { get; set; } // TODO: Use the correct type.
+        public long? CostTypeCode { get; set; } // TODO: Use the correct type.
 
         /// <summary>
         /// get/set - Work activity code.
         /// </summary>
-        public long WorkActivityCode { get; set; } // TODO: Use the correct type.
+        public long? WorkActivityCode { get; set; } // TODO: Use the correct type.
 
         /// <summary>
         /// get/set - The region code.
@@ -37,7 +37,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The project code.
         /// </summary>
-        public int Code { get; set; }
+        public int? Code { get; set; }
 
         /// <summary>
         /// get/set - Project description.

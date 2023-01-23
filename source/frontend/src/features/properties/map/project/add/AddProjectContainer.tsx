@@ -5,8 +5,9 @@ import { FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_Project } from 'models/api/Project';
 import { useCallback, useRef } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { FaBriefcase } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 
@@ -61,7 +62,14 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
       }
     >
       <StyledFormWrapper>
-        <p>my form here</p>
+        <StyledRow>
+          <Col>
+            <p>
+              Before creating a project, <Link to={'/project/list'}>do a search</Link> to ensure the
+              the project you're creating doesn't already exist.
+            </p>
+          </Col>
+        </StyledRow>
         <AddProjectForm
           ref={formikRef}
           initialValues={helper.initialValues}
@@ -82,8 +90,19 @@ const StyledFormWrapper = styled.div`
   flex-direction: column;
   flex-grow: 1;
   text-align: left;
-  height: 100%;
+  height: auto;
   overflow-y: auto;
   padding-right: 1rem;
   padding-bottom: 1rem;
+`;
+
+const StyledRow = styled(Row)`
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  margin-left: 0;
+  margin-right: 0;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+  text-align: left;
 `;

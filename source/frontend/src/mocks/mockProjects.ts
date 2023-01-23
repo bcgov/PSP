@@ -1,4 +1,5 @@
 import { Api_Project } from 'models/api/Project';
+import Api_TypeCode from 'models/api/TypeCode';
 
 export const mockProjects = (): Api_Project[] => [
   {
@@ -30,3 +31,29 @@ export const mockProjects = (): Api_Project[] => [
     rowVersion: 1,
   },
 ];
+
+export const mockProjectPostResponse = (
+  id: number = 1,
+  rowVersion = 1,
+  description: string = 'TRANS-CANADA HWY - 10',
+  regionCodeId: number = 1,
+): Api_Project => ({
+  id,
+  rowVersion,
+  code: undefined,
+  description,
+  regionCode: {
+    id: regionCodeId,
+    description: 'REGON',
+  },
+  projectStatusTypeCode: undefined,
+  businessFunctionCode: null,
+  workActivityCode: null,
+  note: '',
+  appCreateTimestamp: '2022-05-28T00:57:37.42',
+  appLastUpdateTimestamp: '2022-07-28T00:57:37.42',
+  appLastUpdateUserid: 'admin',
+  appCreateUserid: 'admin',
+  appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+});

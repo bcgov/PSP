@@ -72,12 +72,10 @@ namespace Pims.Api.Areas.Projects.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult AddLease(ProjectModel projectModel)
+        public IActionResult AddProject(ProjectModel projectModel)
         {
-            var leaseEntity = _mapper.Map<Dal.Entities.PimsProject>(projectModel);
-            var project = _projectService.Add(leaseEntity);
-
-            return new JsonResult(_mapper.Map<ProjectModel>(project));
+            var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+            return Ok(newProject);
         }
     }
 }

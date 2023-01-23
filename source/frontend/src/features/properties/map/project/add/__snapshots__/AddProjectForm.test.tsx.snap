@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddProjectForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
+}
+
+.c3 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
+}
+
+<div
+    class="container"
+  >
+    <div
+      class="c0 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              Project name:
+            </label>
+          </div>
+          <div
+            class="c2 required text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-projectName"
+                name="projectName"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              Project number:
+            </label>
+          </div>
+          <div
+            class="c2 required text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-projectNumber"
+                name="projectNumber"
+                placeholder="if known"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              Status:
+            </label>
+          </div>
+          <div
+            class="c2 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-projectStatusType"
+                name="projectStatusType"
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              MoTI region:
+            </label>
+          </div>
+          <div
+            class="c2 required text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-region"
+                name="region"
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c1"
+            >
+              Project summary:
+            </label>
+          </div>
+          <div
+            class="c2 text-left col"
+          >
+            <div
+              class="c3 textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-summary"
+                name="summary"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

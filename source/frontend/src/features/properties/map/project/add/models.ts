@@ -1,12 +1,13 @@
 import { Api_Project } from 'models/api/Project';
+import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { toTypeCode } from 'utils/formUtils';
 
 export class ProjectForm {
   id?: number;
   projectName?: string;
-  projectNumber?: string;
+  projectNumber?: NumberFieldValue;
   projectStatusType?: string;
-  region?: string;
+  region?: NumberFieldValue;
   summary?: string;
 
   toApi(): Api_Project {
@@ -15,6 +16,7 @@ export class ProjectForm {
       code: Number(this.projectNumber) ?? 0,
       description: this.projectName,
       projectStatusTypeCode: toTypeCode(this.projectStatusType),
+      regionCode: this.region ? toTypeCode<number>(this.region) : undefined,
       note: this.summary,
     };
   }
