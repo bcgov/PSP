@@ -39,7 +39,7 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var helper = new TestHelper();
             var controller = helper.CreateController<ProjectController>(Permissions.AcquisitionFileAdd); // TODO: set permission correctly
-            var project = EntityHelper.CreateProject(1, 7, "Test Project");
+            var project = EntityHelper.CreateProject(1, "7", "Test Project");
             var projectList = new List<PimsProject>() { project };
 
             var service = helper.GetService<Mock<IProjectService>>();
