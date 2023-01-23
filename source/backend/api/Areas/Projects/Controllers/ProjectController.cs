@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -72,12 +73,13 @@ namespace Pims.Api.Areas.Projects.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult AddProject(ProjectModel projectModel)
+        public async Task<IActionResult> AddProject(ProjectModel projectModel)
         {
-            var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+            var newProject = await _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
             return Ok(newProject);
-        }    
-        
+        }
+
+        /// <summary>
         /// Retrieves a the products for the given project.
         /// </summary>
         /// <param name="projectId"></param>

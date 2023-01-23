@@ -71,8 +71,8 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Geting products for project ...");
             return _productRepository.GetByProject(projectId);
-        }    
-            
+        }
+
         public Task<PimsProject> Add(PimsProject project)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectAdd);
