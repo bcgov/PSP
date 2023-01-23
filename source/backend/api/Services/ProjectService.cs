@@ -16,6 +16,7 @@ namespace Pims.Api.Services
     {
         private readonly ILogger _logger;
         private readonly IProjectRepository _projectRepository;
+        private readonly IProductRepository _productRepository;
         private readonly ClaimsPrincipal _user;
 
         /// <summary>
@@ -24,14 +25,17 @@ namespace Pims.Api.Services
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <param name="projectRepository"></param>
+        /// <param name="productRepository"></param>
         public ProjectService(
             ClaimsPrincipal user,
             ILogger<ProjectService> logger,
-            IProjectRepository projectRepository)
+            IProjectRepository projectRepository,
+            IProductRepository productRepository)
             : base(user, logger)
         {
             _logger = logger;
             _projectRepository = projectRepository;
+            _productRepository = productRepository;
             _user = user;
         }
 
@@ -59,6 +63,14 @@ namespace Pims.Api.Services
             }
 
             return GetPageAsync(filter);
+        }
+
+        public IList<PimsProduct> GetProducts(int projectId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            _logger.LogInformation("Geting products for project ...");
+            return _productRepository.GetByProject(projectId);
         }
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
