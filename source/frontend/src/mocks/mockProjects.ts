@@ -1,5 +1,4 @@
 import { Api_Project } from 'models/api/Project';
-import Api_TypeCode from 'models/api/TypeCode';
 
 export const mockProjects = (): Api_Project[] => [
   {

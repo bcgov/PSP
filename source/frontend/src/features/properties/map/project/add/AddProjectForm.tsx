@@ -4,7 +4,6 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import styled from 'styled-components';
 
 import { ProjectForm } from './models';
 import * as Styled from './styles';
