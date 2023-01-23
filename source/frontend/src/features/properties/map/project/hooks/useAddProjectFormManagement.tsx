@@ -1,10 +1,10 @@
 import { FormikHelpers } from 'formik';
+import { useProjectProvider } from 'hooks/providers/useProjectProvider';
 import { Api_Project } from 'models/api/Project';
 import { useCallback } from 'react';
 
 import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
 import { ProjectForm } from '../add/models';
-import { useProjectProvider } from './useProjectProvider';
 
 export interface IUseAddProjectFormManagementProps {
   /** Optional - callback to execute after acquisition file has been added to the datastore */
