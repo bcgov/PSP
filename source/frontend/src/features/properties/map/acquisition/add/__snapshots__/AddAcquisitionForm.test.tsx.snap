@@ -430,38 +430,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
             <label
               class="c3"
             >
-              Product:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
-          >
-            <div
-              class="form-group"
-            >
-              <select
-                class="form-select form-control"
-                id="input-product"
-                name="product"
-              >
-                <option
-                  value=""
-                >
-                  Select...
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c3"
-            >
               Funding:
             </label>
           </div>

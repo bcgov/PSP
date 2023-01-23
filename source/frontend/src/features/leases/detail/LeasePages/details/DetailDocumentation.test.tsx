@@ -88,14 +88,14 @@ describe('DetailDocumentation component', () => {
 
   it('renders the Location of documents field', () => {
     const {
-      component: { getByDisplayValue },
+      component: { getByText },
     } = setup({
       lease: {
         ...defaultFormLease,
         documentationReference: 'documentation Reference',
       },
     });
-    expect(getByDisplayValue('documentation Reference')).toBeVisible();
+    expect(getByText('documentation Reference')).toBeVisible();
   });
 
   it('renders the PS # name', () => {

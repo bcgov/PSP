@@ -120,7 +120,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           <label
             class="c3"
           >
-            Account Type:
+            Account type:
           </label>
         </div>
         <div
@@ -147,7 +147,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           <label
             class="c3"
           >
-            Receivable To:
+            Receivable to:
           </label>
         </div>
         <div
@@ -282,7 +282,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           <label
             class="c3"
           >
-            Effective Date:
+            Effective date:
           </label>
         </div>
         <div
@@ -337,7 +337,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           <label
             class="c3"
           >
-            Intended Use:
+            Intended use:
           </label>
         </div>
         <div
@@ -481,7 +481,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Account Type:
+            Account type:
           </label>
         </div>
         <div
@@ -508,7 +508,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Receivable To:
+            Receivable to:
           </label>
         </div>
         <div
@@ -643,7 +643,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Effective Date:
+            Effective date:
           </label>
         </div>
         <div
@@ -698,7 +698,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Intended Use:
+            Intended use:
           </label>
         </div>
         <div

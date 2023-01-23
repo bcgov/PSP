@@ -1,6 +1,6 @@
 import { IProjectFilter } from 'features/projects';
 import { IPagedItems } from 'interfaces';
-import { Api_Project } from 'models/api/Project';
+import { Api_Product, Api_Project } from 'models/api/Project';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -23,6 +23,7 @@ export const useApiProjects = () => {
           `/projects/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getProject: (id: number) => api.get<Api_Project>(`/projects/${id}`),
+      getProjectProducts: (id: number) => api.get<Api_Product[]>(`/projects/${id}/products`),
     }),
     [api],
   );

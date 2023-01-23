@@ -26,6 +26,16 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string Name { get; set; }
 
         /// <summary>
+        /// get/set - The descriptive name.
+        /// </summary>
+        public string PropertyName { get; set; }
+
+        /// <summary>
+        /// get/set - The legal description.
+        /// </summary>
+        public string LegalDescription { get; set; }
+
+        /// <summary>
         /// get/set - The property description.
         /// </summary>
         public string Description { get; set; }

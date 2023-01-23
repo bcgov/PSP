@@ -1,7 +1,4 @@
 using Mapster;
-using Pims.Dal.Constants;
-using Pims.Dal.Helpers;
-using System;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 
@@ -17,6 +14,8 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.PID, src => src.Property.Pid)
                 .Map(dest => dest.PIN, src => src.Property.Pin)
                 .Map(dest => dest.Name, src => src.Property.Name)
+                .Map(dest => dest.PropertyName, src => src.Name)
+                .Map(dest => dest.LegalDescription, src => src.Property.LandLegalDescription)
                 .Map(dest => dest.AreaUnitType, src => src.AreaUnitTypeCodeNavigation)
                 .Map(dest => dest.Address, src => src.Property.Address)
                 .Map(dest => dest.IsSensitive, src => src.Property.IsSensitive)

@@ -100,7 +100,7 @@ export const AddLeaseContainer: React.FunctionComponent<
             const leaseResponse = await addLease(addLeaseParams.lease, undefined, true);
             setAddLeaseParams(undefined);
             if (!!leaseResponse?.id) {
-              history.push(`/lease/${leaseResponse?.id}`);
+              history.push(`/mapview/sidebar/lease/${leaseResponse?.id}`);
             }
           }
         }}

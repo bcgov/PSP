@@ -76,6 +76,23 @@ namespace Pims.Api.Areas.Projects.Controllers
         {
             var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
             return Ok(newProject);
+        }    
+        
+        /// Retrieves a the products for the given project.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>An array of contacts matching the filter.</returns>
+        [HttpGet("{projectId}/products")]
+        [HasPermission(Permissions.ProjectView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ProductModel>), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public IActionResult GetProducts(int projectId)
+        {
+            var predictions = _projectService.GetProducts(projectId);
+
+            return new JsonResult(_mapper.Map<IList<ProductModel>>(predictions));
         }
     }
 }

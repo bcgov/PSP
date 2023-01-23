@@ -1,4 +1,5 @@
 import { ReactComponent as Fence } from 'assets/images/fence.svg';
+import GenericModal from 'components/common/GenericModal';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Claims } from 'constants/claims';
 import { useLeaseDetail } from 'features/leases';
@@ -203,6 +204,22 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         )
       }
     >
+      <GenericModal
+        display={containerState.showConfirmModal}
+        title={'Confirm changes'}
+        message={
+          <>
+            <div>If you cancel now, this research file will not be saved.</div>
+            <br />
+            <strong>Are you sure you want to Cancel?</strong>
+          </>
+        }
+        handleOk={handleCancelConfirm}
+        handleCancel={() => setContainerState({ showConfirmModal: false })}
+        okButtonText="Ok"
+        cancelButtonText="Resume editing"
+        show
+      />
       <StyledFormWrapper>
         <ViewSelector
           formikRef={formikRef}
