@@ -4887,11 +4887,15 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description).HasComment("Project description.");
+                entity.Property(e => e.Description)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Project description.");
 
                 entity.Property(e => e.Note).HasComment("Descriptive note relevant to the project.");
 
                 entity.Property(e => e.ProjectStatusTypeCode).HasDefaultValueSql("('ACTIVE')");
+
+                entity.Property(e => e.RegionCode).HasDefaultValueSql("((4))");
 
                 entity.HasOne(d => d.BusinessFunctionCode)
                     .WithMany(p => p.PimsProjects)
@@ -4906,12 +4910,12 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ProjectStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsProjects)
                     .HasForeignKey(d => d.ProjectStatusTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PRJSTS_PIM_PROJCT_FK");
 
                 entity.HasOne(d => d.RegionCodeNavigation)
                     .WithMany(p => p.PimsProjects)
                     .HasForeignKey(d => d.RegionCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_REGION_PIM_PROJCT_FK");
 
                 entity.HasOne(d => d.WorkActivityCode)
