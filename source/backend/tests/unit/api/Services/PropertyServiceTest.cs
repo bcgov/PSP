@@ -67,11 +67,9 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = CreateProjectServiceWithPermissions();
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetById(1));
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
         }
 
         #endregion

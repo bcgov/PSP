@@ -487,8 +487,8 @@ namespace Pims.Api.Test.Controllers.Reports
             var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
             _webHost.SetupGet(m => m.ContentRootPath).Returns(path);
 
-            lookupRepository.Setup(m => m.GetAllRegions()).Returns(new List<PimsRegion>() { lease.RegionCodeNavigation });
-            lookupRepository.Setup(m => m.GetAllLeaseProgramTypes()).Returns(new List<PimsLeaseProgramType>() { lease.LeaseProgramTypeCodeNavigation });
+            _lookupRepository.Setup(m => m.GetAllRegions()).Returns(new List<PimsRegion>() { lease.RegionCodeNavigation });
+            _lookupRepository.Setup(m => m.GetAllLeaseProgramTypes()).Returns(new List<PimsLeaseProgramType>() { lease.LeaseProgramTypeCodeNavigation });
             _service.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
 
             // Act

@@ -33,15 +33,16 @@ namespace Pims.Api.Test.Controllers
         private Mock<ILookupRepository> _repository;
         private LookupController _controller;
         private IMapper _mapper;
+        private TestHelper _helper;
         #endregion
 
         #region Constructors
         public LookupControllerTest()
         {
-            var helper = new TestHelper();
-            _controller = helper.CreateController<LookupController>(Permissions.SystemAdmin);
-            _mapper = helper.GetService<IMapper>();
-            _repository = helper.GetService<Mock<ILookupRepository>>();
+            _helper = new TestHelper();
+            _controller = _helper.CreateController<LookupController>(Permissions.SystemAdmin);
+            _mapper = _helper.GetService<IMapper>();
+            _repository = _helper.GetService<Mock<ILookupRepository>>();
         }
         #endregion
 
@@ -88,8 +89,7 @@ namespace Pims.Api.Test.Controllers
         public void GetAll()
         {
             // Arrange
-            var helper = new TestHelper();
-            var memoryCache = helper.GetService<Mock<IMemoryCache>>();
+            var memoryCache = _helper.GetService<Mock<IMemoryCache>>();
             var cacheEntry = new Mock<ICacheEntry>();
 
             memoryCache.Setup(m => m.CreateEntry(It.IsAny<object>())).Returns(cacheEntry.Object);
