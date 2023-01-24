@@ -6,12 +6,12 @@ import { useCallback } from 'react';
 import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
 import { ProjectForm } from '../add/models';
 
-export interface IUseAddProjectFormManagementProps {
+export interface IUseAddProjectFormProps {
   onSuccess?: (project: Api_Project) => void;
   initialForm?: ProjectForm;
 }
 
-export function useAddProjectFormManagement(props: IUseAddProjectFormManagementProps) {
+export function useAddProjectForm(props: IUseAddProjectFormProps) {
   const { onSuccess } = props;
   const { addProject } = useProjectProvider();
 

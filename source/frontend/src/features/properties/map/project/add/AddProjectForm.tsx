@@ -1,12 +1,12 @@
-import { Input, Select, SelectOption } from 'components/common/form';
+import { Input, Select, SelectOption, TextArea } from 'components/common/form';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { ProjectForm } from './models';
-import * as Styled from './styles';
 
 export interface IAddProjectFormProps {
   /** Initial values of the form */
@@ -51,7 +51,7 @@ export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddPro
                 <SectionField label="Project number">
                   <Input field="projectNumber" placeholder="if known" />
                 </SectionField>
-                <SectionField label="Status">
+                <SectionField label="Status" required={true}>
                   <Select
                     field="projectStatusType"
                     options={projectStatusOptions}
@@ -62,7 +62,7 @@ export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddPro
                   <Select field="region" options={projectRegionOptions} placeholder="Select..." />
                 </SectionField>
                 <SectionField label="Project summary">
-                  <Styled.MediumTextArea field="summary" />
+                  <MediumTextArea field="summary" />
                 </SectionField>
               </Section>
             </Container>
@@ -74,3 +74,11 @@ export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddPro
 );
 
 export default AddProjectForm;
+
+export const MediumTextArea = styled(TextArea)`
+  textarea.form-control {
+    min-width: 80rem;
+    height: 7rem;
+    resize: none;
+  }
+`;

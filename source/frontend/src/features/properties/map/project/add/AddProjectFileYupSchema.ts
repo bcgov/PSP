@@ -6,7 +6,7 @@ export const AddProjectYupSchema = Yup.object().shape({
   projectName: Yup.string()
     .required('Name is required.')
     .max(200, 'Project name must be at most ${max} characters'),
-  projectStatusType: Yup.string(),
+  projectStatusType: Yup.string().required(),
   region: Yup.string().required('Region is required.'),
   summary: Yup.string().max(2000, 'Project summary must be at most ${max} characters'),
 });

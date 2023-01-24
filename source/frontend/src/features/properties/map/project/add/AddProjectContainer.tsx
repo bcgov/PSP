@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
-import { useAddProjectFormManagement } from '../hooks/useAddProjectFormManagement';
+import { useAddProjectForm } from '../hooks/useAddProjectFormManagement';
 import AddProjectForm from './AddProjectForm';
 import { ProjectForm } from './models';
 
@@ -44,7 +44,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
     history.replace(`/mapview/sidebar/project/${proj.id}`);
   };
 
-  const helper = useAddProjectFormManagement({ onSuccess });
+  const helper = useAddProjectForm({ onSuccess });
 
   return (
     <MapSideBarLayout
