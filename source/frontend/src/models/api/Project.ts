@@ -9,7 +9,7 @@ export interface Api_Project extends Api_ConcurrentVersion, Api_AuditFields {
   costTypeCode?: any; // TODO: Match new code types
   workActivityCode?: any; // TODO: Match new code types
   regionCode?: Api_TypeCode<number>;
-  code?: number;
+  code?: string;
   description?: string;
   note?: string;
 }

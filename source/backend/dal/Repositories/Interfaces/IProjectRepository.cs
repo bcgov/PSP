@@ -17,5 +17,7 @@ namespace Pims.Dal.Repositories
         IList<PimsProject> SearchProjects(string filter, int maxResult);
 
         Task<PimsProject> Add(PimsProject project);
+
+        Task<PimsProject> Get(long id);
     }
 }

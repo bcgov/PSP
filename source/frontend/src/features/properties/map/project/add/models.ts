@@ -5,7 +5,7 @@ import { toTypeCode } from 'utils/formUtils';
 export class ProjectForm {
   id?: number;
   projectName?: string;
-  projectNumber?: NumberFieldValue;
+  projectNumber?: string;
   projectStatusType?: string;
   region?: NumberFieldValue;
   summary?: string;
@@ -13,7 +13,7 @@ export class ProjectForm {
   toApi(): Api_Project {
     return {
       id: this.id,
-      code: Number(this.projectNumber) ?? 0,
+      code: this.projectNumber,
       description: this.projectName,
       projectStatusTypeCode: toTypeCode(this.projectStatusType),
       regionCode: this.region ? toTypeCode<number>(this.region) : undefined,

@@ -76,7 +76,6 @@ namespace Pims.Api.Services
         public Task<PimsProject> Add(PimsProject project)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectAdd);
-
             _logger.LogInformation("Adding new project...");
             if (project == null)
             {
@@ -88,7 +87,18 @@ namespace Pims.Api.Services
 
         private async Task<PimsProject> AddInternalAsync(PimsProject project)
         {
-            return await _projectRepository.Add(project);
+            try
+            {
+                var newProject = await _projectRepository.Add(project);
+                _projectRepository.CommitTransaction();
+
+                return await _projectRepository.Get(newProject.Id);
+
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)

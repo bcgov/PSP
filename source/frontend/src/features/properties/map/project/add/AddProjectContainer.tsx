@@ -38,7 +38,6 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
     formikRef.current?.submitForm();
   };
 
-  // navigate to read-only view after file has been created
   const onSuccess = async (proj: Api_Project) => {
     formikRef.current?.resetForm();
     await search();

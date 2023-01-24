@@ -163,7 +163,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Add_Project_ShouldFail_Filter_IsNull()
+        public void Add_Project_ShouldFail_IfNull()
         {
             // Arrange
             var helper = new TestHelper();
@@ -190,6 +190,7 @@ namespace Pims.Api.Test.Services
 
             var repository = helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsProject>())).ReturnsAsync(new PimsProject());
+            repository.Setup(x => x.Get(It.IsAny<long>())).ReturnsAsync(new PimsProject());
 
             // Act
             var result = await service.Add(new PimsProject());

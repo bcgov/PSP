@@ -7,7 +7,6 @@ import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
 import { ProjectForm } from '../add/models';
 
 export interface IUseAddProjectFormManagementProps {
-  /** Optional - callback to execute after acquisition file has been added to the datastore */
   onSuccess?: (project: Api_Project) => void;
   initialForm?: ProjectForm;
 }

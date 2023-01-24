@@ -8,12 +8,11 @@ import { toast } from 'react-toastify';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
 /**
- * hook that retrieves document information.
+ * hook that retrieves Project information.
  */
 export const useProjectProvider = () => {
   const { getProjectProducts, postProject } = useApiProjects();
 
-  // Provides functionality to retrieve document metadata information
   const { execute: retrieveProjectProducts, loading: retrieveProjectProductsLoading } =
     useApiRequestWrapper<(projectId: number) => Promise<AxiosResponse<Api_Product[], any>>>({
       requestFunction: useCallback(
@@ -34,7 +33,10 @@ export const useProjectProvider = () => {
   const addProjectApi = useApiRequestWrapper<
     (...args: any[]) => Promise<AxiosResponse<Api_Project, any>>
   >({
-    requestFunction: useCallback(async (pro: Api_Project) => await postProject(pro), [postProject]),
+    requestFunction: useCallback(
+      async (project: Api_Project) => await postProject(project),
+      [postProject],
+    ),
     requestName: 'AddProject',
     onSuccess: useAxiosSuccessHandler('Project saved'),
     onError: useAxiosErrorHandler('Failed to save Project'),

@@ -81,6 +81,7 @@ namespace Pims.Dal.Repositories
             return await Context.PimsProjects
                     .AsNoTracking()
                     .Include(x => x.ProjectStatusTypeCodeNavigation)
+                    .Include(x => x.RegionCodeNavigation)
                     .Where(x => x.Id == id)
                     .FirstOrDefaultAsync();
         }
@@ -95,8 +96,7 @@ namespace Pims.Dal.Repositories
             User.ThrowIfNotAuthorized(Permissions.ProjectAdd);
 
             await Context.PimsProjects.AddAsync(project);
-            Context.CommitTransaction();
-            return await Get(project.Id);
+            return project;
         }
 
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter)
@@ -105,7 +105,7 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNumber))
             {
-                query = query.Where(x => EF.Functions.Like(x.Code.ToString(), $"%{filter.ProjectNumber}%"));
+                query = query.Where(x => EF.Functions.Like(x.Code, $"%{filter.ProjectNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectName))

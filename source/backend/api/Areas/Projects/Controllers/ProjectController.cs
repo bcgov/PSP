@@ -65,17 +65,23 @@ namespace Pims.Api.Areas.Projects.Controllers
         }
 
         /// <summary>
-        /// Add the specified lease. Allows the user to override the normal restriction on adding properties already associated to a lease.
+        /// Add the specified Project.
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         [HasPermission(Permissions.ProjectAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProjectModel), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
         public async Task<IActionResult> AddProject(ProjectModel projectModel)
         {
             var newProject = await _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+            if(newProject is null)
+            {
+                return BadRequest();
+            }
+
             return Ok(newProject);
         }
 

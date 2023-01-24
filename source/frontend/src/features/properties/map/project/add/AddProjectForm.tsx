@@ -48,7 +48,7 @@ export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddPro
                 <SectionField label="Project name" required={true}>
                   <Input field="projectName" />
                 </SectionField>
-                <SectionField label="Project number" required={true}>
+                <SectionField label="Project number">
                   <Input field="projectNumber" placeholder="if known" />
                 </SectionField>
                 <SectionField label="Status">
