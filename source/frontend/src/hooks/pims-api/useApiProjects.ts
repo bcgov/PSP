@@ -15,6 +15,7 @@ export const useApiProjects = () => {
 
   return React.useMemo(
     () => ({
+      postProject: (project: Api_Project) => api.post<Api_Project>(`/projects`, project),
       searchProject: (query: string, top: number = 5) =>
         api.get<Api_Project[]>(`/projects/search=${query}&top=${top}`),
       searchProjects: (params: IPaginateProjects | null) =>

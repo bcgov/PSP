@@ -73,6 +73,34 @@ namespace Pims.Api.Services
             return _productRepository.GetByProject(projectId);
         }
 
+        public Task<PimsProject> Add(PimsProject project)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectAdd);
+            _logger.LogInformation("Adding new project...");
+            if (project == null)
+            {
+                throw new ArgumentNullException(nameof(project), "Project cannot be null.");
+            }
+
+            return AddInternalAsync(project);
+        }
+
+        private async Task<PimsProject> AddInternalAsync(PimsProject project)
+        {
+            try
+            {
+                var newProject = await _projectRepository.Add(project);
+                _projectRepository.CommitTransaction();
+
+                return await _projectRepository.Get(newProject.Id);
+
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
         {
             return await _projectRepository.GetPageAsync(filter);

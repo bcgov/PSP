@@ -15,5 +15,9 @@ namespace Pims.Dal.Repositories
         Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter);
 
         IList<PimsProject> SearchProjects(string filter, int maxResult);
+
+        Task<PimsProject> Add(PimsProject project);
+
+        Task<PimsProject> Get(long id);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,27 @@ namespace Pims.Api.Areas.Projects.Controllers
             var predictions = _projectService.SearchProjects(input, top);
 
             return new JsonResult(_mapper.Map<IList<ProjectModel>>(predictions));
+        }
+
+        /// <summary>
+        /// Add the specified Project.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [HasPermission(Permissions.ProjectAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public async Task<IActionResult> AddProject(ProjectModel projectModel)
+        {
+            var newProject = await _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+            if(newProject is null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(newProject);
         }
 
         /// <summary>
