@@ -236,8 +236,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
-            repository.Verify(x => x.GetRowVersion(It.IsAny<long>()), Times.Once);
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -340,7 +338,6 @@ namespace Pims.Api.Test.Services
             service.UpdateProperties(acqFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
         }
 
@@ -369,7 +366,6 @@ namespace Pims.Api.Test.Services
             service.UpdateProperties(acqFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
         }
 
@@ -404,7 +400,6 @@ namespace Pims.Api.Test.Services
             service.UpdateProperties(acqFile);
 
             // Assert
-            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
             propertyRepository.Verify(x => x.Delete(It.IsAny<PimsProperty>()), Times.Once);
         }

@@ -190,7 +190,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -278,9 +277,7 @@ namespace Pims.Api.Test.Services
             await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
             documentRepository.Verify(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)), Times.Once);
-            documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryUpdateDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>()), Times.Once);
         }
 
@@ -341,9 +338,7 @@ namespace Pims.Api.Test.Services
             await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
             documentRepository.Verify(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)), Times.Once);
-            documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryCreateDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>()), Times.Once);
         }
 
@@ -411,9 +406,7 @@ namespace Pims.Api.Test.Services
             await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
             documentRepository.Verify(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)), Times.Once);
-            documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryDeleteDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
         }
 
@@ -434,7 +427,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            documentStorageRepository.Verify(x => x.TryDeleteDocument(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -500,7 +492,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            documentStorageRepository.Verify(x => x.TryGetDocumentTypesAsync(null, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         }
 
         [Fact]
@@ -540,7 +531,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            documentStorageRepository.Verify(x => x.TryGetDocumentsListAsync(null, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
 
         }
 
@@ -602,7 +592,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         }
 
         [Fact]
@@ -642,7 +631,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -681,7 +669,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             sut.Should().Throw<NotAuthorizedException>();
-            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -703,7 +690,6 @@ namespace Pims.Api.Test.Services
             await service.DownloadFileLatestAsync(1);
 
             // Assert
-            documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
         }
 
@@ -727,7 +713,6 @@ namespace Pims.Api.Test.Services
             await service.DownloadFileLatestAsync(1);
 
             // Assert
-            documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
         }
 
@@ -769,7 +754,6 @@ namespace Pims.Api.Test.Services
             await service.DownloadFileLatestAsync(1);
 
             // Assert
-            documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
         }
 

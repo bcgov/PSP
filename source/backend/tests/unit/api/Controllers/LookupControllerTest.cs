@@ -55,14 +55,13 @@ namespace Pims.Api.Test.Controllers
             {
                 Id = "Surplus Active",
             };
-            repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { propertyClassification });
+            _repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { propertyClassification });
 
             // Act
             var result = _controller.GetPropertyClassificationTypes();
 
             // Assert
-            _repository.Verify(m => m.GetPropertyClassificationTypes(), Times.Once());
-            repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
         }
 
         [Fact]
@@ -76,68 +75,68 @@ namespace Pims.Api.Test.Controllers
                 Name = "Ministry of Health",
                 Description = "The Ministry of Health",
             };
-            repository.Setup(m => m.GetAllRoles()).Returns(new[] { role });
+            _repository.Setup(m => m.GetAllRoles()).Returns(new[] { role });
 
             // Act
             var result = _controller.GetRoles();
 
             // Assert
-            _repository.Verify(m => m.GetRoles(), Times.Once());
-            repository.Verify(m => m.GetAllRoles(), Times.Once());
+            _repository.Verify(m => m.GetAllRoles(), Times.Once());
         }
 
         [Fact]
         public void GetAll()
         {
             // Arrange
+            var helper = new TestHelper();
             var memoryCache = helper.GetService<Mock<IMemoryCache>>();
             var cacheEntry = new Mock<ICacheEntry>();
 
             memoryCache.Setup(m => m.CreateEntry(It.IsAny<object>())).Returns(cacheEntry.Object);
             var areaUnitTypes = EntityHelper.CreatePropertyAreaUnitType("area");
-            repository.Setup(m => m.GetAllPropertyAreaUnitTypes()).Returns(new[] { areaUnitTypes });
+            _repository.Setup(m => m.GetAllPropertyAreaUnitTypes()).Returns(new[] { areaUnitTypes });
 
             var classificationTypes = EntityHelper.CreatePropertyClassificationType("classification");
-            repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { classificationTypes });
+            _repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { classificationTypes });
 
             var countries = EntityHelper.CreateCountry(1, "CAN");
-            repository.Setup(m => m.GetAllCountries()).Returns(new[] { countries });
+            _repository.Setup(m => m.GetAllCountries()).Returns(new[] { countries });
 
             var districts = EntityHelper.CreateDistrict(1, "district");
-            repository.Setup(m => m.GetAllDistricts()).Returns(new[] { districts });
+            _repository.Setup(m => m.GetAllDistricts()).Returns(new[] { districts });
 
             var organizationTypes = EntityHelper.CreateOrganizationType("orgtype");
-            repository.Setup(m => m.GetAllOrganizationTypes()).Returns(new[] { organizationTypes });
+            _repository.Setup(m => m.GetAllOrganizationTypes()).Returns(new[] { organizationTypes });
 
             var propertyTypes = EntityHelper.CreatePropertyType("property");
-            repository.Setup(m => m.GetAllPropertyTypes()).Returns(new[] { propertyTypes });
+            _repository.Setup(m => m.GetAllPropertyTypes()).Returns(new[] { propertyTypes });
 
             var provinces = EntityHelper.CreateProvince(1, "BC");
-            repository.Setup(m => m.GetAllProvinces()).Returns(new[] { provinces });
+            _repository.Setup(m => m.GetAllProvinces()).Returns(new[] { provinces });
 
             var regions = EntityHelper.CreateRegion(1, "region");
-            repository.Setup(m => m.GetAllRegions()).Returns(new[] { regions });
+            _repository.Setup(m => m.GetAllRegions()).Returns(new[] { regions });
 
             var roleCodes = EntityHelper.CreateRole("admin");
-            repository.Setup(m => m.GetAllRoles()).Returns(new[] { roleCodes });
+            _repository.Setup(m => m.GetAllRoles()).Returns(new[] { roleCodes });
 
             var tenureTypes = EntityHelper.CreatePropertyTenureType("tenure");
-            repository.Setup(m => m.GetAllPropertyTenureTypes()).Returns(new[] { tenureTypes });
+            _repository.Setup(m => m.GetAllPropertyTenureTypes()).Returns(new[] { tenureTypes });
 
             // Act
             var result = (JsonResult)_controller.GetAll();
 
             // Assert
             var lookups = (IEnumerable<object>) result.Value;
-            _repository.Verify(m => m.GetPropertyAreaUnitTypes(), Times.Once());
-            _repository.Verify(m => m.GetPropertyClassificationTypes(), Times.Once());
-            _repository.Verify(m => m.GetCountries(), Times.Once());
-            _repository.Verify(m => m.GetDistricts(), Times.Once());
-            _repository.Verify(m => m.GetOrganizationTypes(), Times.Once());
-            _repository.Verify(m => m.GetPropertyTypes(), Times.Once());
-            _repository.Verify(m => m.GetProvinces(), Times.Once());
-            _repository.Verify(m => m.GetRegions(), Times.Once());
-            _repository.Verify(m => m.GetPropertyTenureTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyAreaUnitTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllCountries(), Times.Once());
+            _repository.Verify(m => m.GetAllDistricts(), Times.Once());
+            _repository.Verify(m => m.GetAllOrganizationTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllProvinces(), Times.Once());
+            _repository.Verify(m => m.GetAllRegions(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyTenureTypes(), Times.Once());
             
         }
 

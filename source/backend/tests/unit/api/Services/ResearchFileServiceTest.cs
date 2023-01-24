@@ -118,7 +118,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
 
             var filePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
             service.UpdateProperties(researchFile);
@@ -148,7 +148,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>())).Returns(property);
 
             var filePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
             service.UpdateProperties(researchFile);
@@ -175,7 +175,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
             var filePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
@@ -220,7 +220,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
             var filePropertyRepository = _helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();

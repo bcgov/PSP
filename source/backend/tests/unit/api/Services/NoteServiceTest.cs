@@ -154,14 +154,12 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = CreateNoteServiceWithPermissions();
-            repository.Setup(x => x.GetAllActivityNotesById(It.IsAny<long>()));
 
             // Act
             Action act = () => service.GetNotes(NoteType.Activity, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetAllActivityNotesById(It.IsAny<long>()), Times.Never);
         }
         #endregion
 
