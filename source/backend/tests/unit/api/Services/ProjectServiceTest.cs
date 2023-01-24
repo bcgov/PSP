@@ -27,18 +27,31 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class ProjectServiceTest
     {
+        private TestHelper _helper;
+
+        public ProjectServiceTest()
+        {
+            _helper = new TestHelper();
+        }
+
+        private ProjectService CreateProjectServiceWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            _helper.CreatePimsContext(user, true);
+            return _helper.Create<ProjectService>();
+        }
+
         [Fact]
         public void Search_Success()
         {
             // Arrange
-            var helper = new TestHelper();
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
             var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
 
             var project = EntityHelper.CreateProject(1, "7", "Test Project");
             var projectList = new List<PimsProject>() { project };
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>())).Returns(projectList);
 
             // Act
@@ -52,11 +65,7 @@ namespace Pims.Api.Test.Services
         public void Search_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var service = CreateProjectServiceWithPermissions();
 
             // Act
             Action act = () => service.SearchProjects("some string", 1);

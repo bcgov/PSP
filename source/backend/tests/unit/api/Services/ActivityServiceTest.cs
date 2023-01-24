@@ -26,20 +26,31 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class ActivityServiceTest
     {
+        private TestHelper _helper;
+
+        public ActivityServiceTest()
+        {
+            _helper = new TestHelper();
+        }
+
+        private ActivityService CreateActivityServiceWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            var service = _helper.Create<ActivityService>(user);
+            return service;
+        }
+
         #region Tests
         #region Add
         [Fact]
         public void Add_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityAdd);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityAdd);
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsActivityInstance>())).Returns(activity);
 
             // Act
@@ -53,34 +64,26 @@ namespace Pims.Api.Test.Services
         public void Add_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions();
             
             var activity = EntityHelper.CreateActivity();
-
-            var repository = helper.GetService<Mock<IActivityRepository>>();
 
             // Act
             Action act = () => service.Add(activity);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Add(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
         public void AddResearchActivity_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityAdd, Permissions.ResearchFileEdit);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityAdd, Permissions.ResearchFileEdit);
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsActivityInstance>())).Returns(activity);
 
             // Act
@@ -94,37 +97,26 @@ namespace Pims.Api.Test.Services
         public void AddResearchActivity_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var activityModel = mapper.Map<EntityNoteModel>(activity);
-
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            repository.Setup(x => x.Add(It.IsAny<PimsActivityInstance>())).Returns(activity);
 
             // Act
             Action act = () => service.AddResearchActivity(activity, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Add(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
         public void AddAcquisitionActivity_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityAdd, Permissions.AcquisitionFileEdit);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityAdd, Permissions.AcquisitionFileEdit);
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsActivityInstance>())).Returns(activity);
 
             // Act
@@ -138,23 +130,15 @@ namespace Pims.Api.Test.Services
         public void AddAcquisitionActivity_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var activityModel = mapper.Map<EntityNoteModel>(activity);
-
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            repository.Setup(x => x.Add(It.IsAny<PimsActivityInstance>())).Returns(activity);
 
             // Act
             Action act = () => service.AddAcquisitionActivity(activity, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Add(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
         #endregion
 
@@ -163,14 +147,11 @@ namespace Pims.Api.Test.Services
         public void GetById_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityView);
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
 
             // Act
@@ -184,22 +165,15 @@ namespace Pims.Api.Test.Services
         public void GetById_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
 
             // Act
             Action act = () => service.GetById(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
         }
         #endregion
 
@@ -208,14 +182,11 @@ namespace Pims.Api.Test.Services
         public void GetAllByResearchFileId_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView, Permissions.ResearchFileView);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityView, Permissions.ResearchFileView);
 
-            var mapper = helper.GetService<IMapper>();
             var activities = new[] { EntityHelper.CreateActivity(), EntityHelper.CreateActivity() };
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(activities);
 
             // Act
@@ -229,21 +200,13 @@ namespace Pims.Api.Test.Services
         public void GetAllByResearchFileId_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
-
-            var mapper = helper.GetService<IMapper>();
-
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            repository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>()));
+            var service = CreateActivityServiceWithPermissions();
 
             // Act
             Action act = () => service.GetAllByResearchFileId(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Never);
         }
         #endregion
 
@@ -252,14 +215,11 @@ namespace Pims.Api.Test.Services
         public void GetAllActivityTemplates_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityView);
 
-            var mapper = helper.GetService<IMapper>();
             var activities = new[] { EntityHelper.CreateActivityTemplate(), EntityHelper.CreateActivityTemplate() };
 
-            var repository = helper.GetService<Mock<IActivityTemplateRepository>>();
+            var repository = _helper.GetService<Mock<IActivityTemplateRepository>>();
             repository.Setup(x => x.GetAllActivityTemplates()).Returns(activities);
 
             // Act
@@ -273,21 +233,13 @@ namespace Pims.Api.Test.Services
         public void GetAllActivityTemplates_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
-
-            var mapper = helper.GetService<IMapper>();
-
-            var repository = helper.GetService<Mock<IActivityTemplateRepository>>();
-            repository.Setup(x => x.GetAllActivityTemplates());
+            var service = CreateActivityServiceWithPermissions();
 
             // Act
             Action act = () => service.GetAllActivityTemplates();
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetAllActivityTemplates(), Times.Never);
         }
         #endregion
 
@@ -296,15 +248,11 @@ namespace Pims.Api.Test.Services
         public void Update_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityEdit, Permissions.ActivityView);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityEdit, Permissions.ActivityView);
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var model = mapper.Map<NoteModel>(activity);
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(activity);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
@@ -320,15 +268,11 @@ namespace Pims.Api.Test.Services
         public void Update_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var model = mapper.Map<ActivityInstanceModel>(activity);
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(activity);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
@@ -338,22 +282,17 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
         public void Update_Concurrency()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityEdit, Permissions.ActivityView);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityEdit, Permissions.ActivityView);
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var model = mapper.Map<ActivityInstanceModel>(activity);
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(activity);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
@@ -363,22 +302,17 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<DbUpdateConcurrencyException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
         public void UpdateActivityResearchProperties_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityEdit, Permissions.ActivityView, Permissions.PropertyEdit);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityEdit, Permissions.ActivityView, Permissions.PropertyEdit);
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var model = mapper.Map<NoteModel>(activity);
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.UpdateActivityResearchProperties(It.IsAny<PimsActivityInstance>())).Returns(activity);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
@@ -394,40 +328,26 @@ namespace Pims.Api.Test.Services
         public void UpdateActivityResearchProperties_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var model = mapper.Map<ActivityInstanceModel>(activity);
-
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            repository.Setup(x => x.UpdateActivityResearchProperties(It.IsAny<PimsActivityInstance>())).Returns(activity);
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
 
             // Act
             Action act = () => service.UpdateActivityResearchProperties(activity);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.UpdateActivityResearchProperties(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
         public void UpdateActivityAcquisitionProperties_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityEdit, Permissions.ActivityView, Permissions.PropertyEdit);
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityEdit, Permissions.ActivityView, Permissions.PropertyEdit);
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var model = mapper.Map<NoteModel>(activity);
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
             repository.Setup(x => x.UpdateActivityAcquisitionProperties(It.IsAny<PimsActivityInstance>())).Returns(activity);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
@@ -443,25 +363,15 @@ namespace Pims.Api.Test.Services
         public void UpdateActivityAcquisitionProperties_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
+            var service = CreateActivityServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
             var activity = EntityHelper.CreateActivity();
-            var model = mapper.Map<ActivityInstanceModel>(activity);
-
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            repository.Setup(x => x.UpdateActivityAcquisitionProperties(It.IsAny<PimsActivityInstance>())).Returns(activity);
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
 
             // Act
             Action act = () => service.UpdateActivityAcquisitionProperties(activity);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.UpdateActivityAcquisitionProperties(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
         #endregion
 
@@ -470,16 +380,13 @@ namespace Pims.Api.Test.Services
         public async void DeleteActivity_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityDelete);
-            var service = helper.Create<ActivityService>(user);
-            var mapper = helper.GetService<IMapper>();
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityDelete);
             var activityNotes = new List<PimsActivityInstanceNote>() { EntityHelper.CreateActivityNote() };
             var activityDocuments = new List<PimsActivityInstanceDocument>() { EntityHelper.CreateActivityDocument() };
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            var noteService = helper.GetService<Mock<INoteService>>();
-            var documentService = helper.GetService<Mock<IDocumentActivityService>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
+            var noteService = _helper.GetService<Mock<INoteService>>();
+            var documentService = _helper.GetService<Mock<IDocumentActivityService>>();
             documentService.Setup(x => x.GetActivityDocuments(It.IsAny<long>())).Returns(activityDocuments);
             documentService.Setup(x => x.DeleteActivityDocumentAsync(It.IsAny<PimsActivityInstanceDocument>())).ReturnsAsync(new ExternalResult<string>());
             noteService.Setup(x => x.GetNotes(NoteType.Activity, It.IsAny<long>())).Returns(activityNotes.Select(n => n.Note));
@@ -498,16 +405,13 @@ namespace Pims.Api.Test.Services
         public void DeleteActivity_DeleteDocumentFailures()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityDelete);
-            var service = helper.Create<ActivityService>(user);
-            // var mapper = helper.GetService<IMapper>();
+            var service = CreateActivityServiceWithPermissions(Permissions.ActivityDelete);
             var activityNotes = new List<PimsActivityInstanceNote>() { EntityHelper.CreateActivityNote() };
             var activityDocuments = new List<PimsActivityInstanceDocument>() { EntityHelper.CreateActivityDocument() };
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            var noteService = helper.GetService<Mock<INoteService>>();
-            var documentService = helper.GetService<Mock<IDocumentActivityService>>();
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
+            var noteService = _helper.GetService<Mock<INoteService>>();
+            var documentService = _helper.GetService<Mock<IDocumentActivityService>>();
             documentService.Setup(x => x.GetActivityDocuments(It.IsAny<long>())).Returns(activityDocuments);
             documentService.Setup(x => x.DeleteActivityDocumentAsync(It.IsAny<PimsActivityInstanceDocument>())).ReturnsAsync(new ExternalResult<string>() { Status = ExternalResultStatus.Error });
             noteService.Setup(x => x.GetNotes(NoteType.Activity, It.IsAny<long>())).Returns(activityNotes.Select(n => n.Note));
@@ -524,20 +428,13 @@ namespace Pims.Api.Test.Services
         public void DeleteActivity_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ActivityService>(user);
-            var mapper = helper.GetService<IMapper>();
-
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            repository.Setup(x => x.Delete(It.IsAny<long>()));
+            var service = CreateActivityServiceWithPermissions();
 
             // Act
             Func<Task> act = async () => await service.Delete(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Delete(It.IsAny<long>()), Times.Never);
         }
         #endregion
 

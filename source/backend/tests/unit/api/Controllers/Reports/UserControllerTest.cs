@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using MapsterMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Reports.Controllers;
@@ -38,13 +39,26 @@ namespace Pims.Api.Test.Controllers.Reports
             new object [] { new Uri("http://host/api/users?Email=test") },
             new object [] { new Uri("http://host/api/users?IsDisabled=false") },
         };
+
+        private Mock<IUserRepository> _repository;
+        private UserController _controller;
+        private IMapper _mapper;
+        private TestHelper _helper;
+        private Mock<ILookupRepository> _lookupRepository;
+        private Mock<IWebHostEnvironment> _webHost;
+        private Mock<Microsoft.AspNetCore.Http.IHeaderDictionary> _headers;
         #endregion
 
-        #region Constructors
         public UserControllerTest()
         {
+            _helper = new TestHelper();
+            _controller = _helper.CreateController<UserController>(Permissions.PropertyView);
+            _mapper = _helper.GetService<IMapper>();
+            _lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            _webHost = _helper.GetService<Mock<IWebHostEnvironment>>();
+            _headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            _repository = _helper.GetService<Mock<IUserRepository>>();
         }
-        #endregion
 
         #region Tests
         #region ExportUsers
@@ -56,21 +70,16 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Csv_Success(UserFilter filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<UserController>(Permissions.PropertyView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var repository = helper.GetService<Mock<IUserRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportUsers(filter);
+            var result = _controller.ExportUsers(filter);
 
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
@@ -86,21 +95,16 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Csv_Query_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<UserController>(Permissions.PropertyView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var repository = helper.GetService<Mock<IUserRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
             repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportUsers();
+            var result = _controller.ExportUsers();
 
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
@@ -117,21 +121,16 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Excel_Success(UserFilter filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<UserController>(Permissions.PropertyView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var repository = helper.GetService<Mock<IUserRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportUsers(filter);
+            var result = _controller.ExportUsers(filter);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
@@ -149,21 +148,16 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Excel_Query_Success(Uri uri)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<UserController>(Permissions.PropertyView, uri);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var repository = helper.GetService<Mock<IUserRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
             repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportUsers();
+            var result = _controller.ExportUsers();
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
@@ -181,21 +175,16 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_ExcelX_Success(UserFilter filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<UserController>(Permissions.PropertyView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var repository = helper.GetService<Mock<IUserRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportUsers(filter);
+            var result = _controller.ExportUsers(filter);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
@@ -213,21 +202,16 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_ExcelX_Query_Success(Uri uri)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<UserController>(Permissions.PropertyView, uri);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var repository = helper.GetService<Mock<IUserRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
             repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportUsers();
+            var result = _controller.ExportUsers();
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);

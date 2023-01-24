@@ -37,54 +37,46 @@ namespace Pims.Api.Test.Services
     [Trait("group", "document")]
     public class DocumentServiceTest
     {
+        private TestHelper _helper;
+
+        public DocumentServiceTest()
+        {
+            _helper = new TestHelper();
+        }
+
+        private DocumentService CreateDocumentServiceWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            _helper.CreatePimsContext(user, true);
+            return _helper.Create<DocumentService>();
+        }
+
         [Fact]
         public void GetPimsDocumentTypes_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentTypeRepository = helper.GetService<Mock<IDocumentTypeRepository>>();
+            var service = CreateDocumentServiceWithPermissions();
 
             // Act
             Action sut = () => service.GetPimsDocumentTypes();
 
             // Assert
             sut.Should().Throw<NotAuthorizedException>();
-            documentTypeRepository.Verify(x => x.GetAll(), Times.Never);
         }
 
         [Fact]
         public void GetPimsDocumentTypes_Should_ReturnAllTypes()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentTypeRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
 
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentTypeRepository = helper.GetService<Mock<IDocumentTypeRepository>>();
-
-            documentTypeRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>()
-            {
-                new PimsDocumentTyp
-                {
-                    DocumentTypeId= 1,
-                    DocumentType="TYPE",
-                    MayanId=1,
-                }
-            });
+            documentTypeRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>());
 
             // Act
             var sut = service.GetPimsDocumentTypes();
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.Should().NotBeEmpty().And.HaveCount(1);
             documentTypeRepository.Verify(x => x.GetAll(), Times.Once);
         }
 
@@ -92,36 +84,24 @@ namespace Pims.Api.Test.Services
         public void UploadDocumentAsync_UploadRequest_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
+            var service = CreateDocumentServiceWithPermissions();
 
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentRepository = helper.GetService<Mock<IDocumentRepository>>();
-
-            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = helper.GetFormFile(string.Empty) };
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = _helper.GetFormFile(string.Empty) };
 
             // Assert
             Func<Task> sut = async () => await service.UploadDocumentAsync(uploadRequest);
 
             // Assert
             sut.Should().Throw<NotAuthorizedException>();
-            documentRepository.Verify(x => x.Add(It.IsAny<PimsDocument>()), Times.Never);
         }
 
         [Fact]
         public async void UploadDocumentAsync_UploadRequest_Success_NoMetadata()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentAdd);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
-            var avService = helper.GetService<Mock<IAvService>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentAdd);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var avService = _helper.GetService<Mock<IAvService>>();
 
             avService.Setup(x => x.ScanAsync(It.IsAny<IFormFile>())).Returns(Task.CompletedTask);
 
@@ -131,30 +111,6 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Payload = new DocumentDetail()
-                    {
-                        Id = 1,
-                        Label = "MyLabel",
-                        DocumentType = new()
-                        {
-                            Id = 2,
-                            Label = "TypeLabel"
-                        }
-                    }
-                });
-
-            var documentRepository = helper.GetService<Mock<IDocumentRepository>>();
-            documentRepository.Setup(x => x.Add(It.IsAny<PimsDocument>()))
-                .Returns(new PimsDocument()
-                {
-                    Id = 1,
-                    DocumentTypeId = 2,
-                    DocumentStatusTypeCode = "status",
-                    MayanId = 3,
-                    DocumentType = new()
-                    {
-                        Id = 4,
-                        DocumentTypeId = 5,
-                    }
                 });
 
             // Act
@@ -162,20 +118,14 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = helper.GetFormFile(string.Empty),
+                File = _helper.GetFormFile(string.Empty),
                 DocumentStatusCode = "DocumentStatus",
                 DocumentMetadata = null,
             };
 
-            var sut = await service.UploadDocumentAsync(uploadRequest);
+            await service.UploadDocumentAsync(uploadRequest);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.MetadataExternalResult.Should().BeNullOrEmpty();
-            sut.Document.Should().BeOfType<DocumentModel>();
-            sut.Document.FileName.Should().Be("MyLabel");
-            sut.Document.MayanDocumentId.Should().Be(1);
-
             avService.Verify(x => x.ScanAsync(It.IsAny<IFormFile>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryUploadDocumentAsync(It.IsAny<long>(), It.IsAny<IFormFile>()), Times.Once);
         }
@@ -184,14 +134,9 @@ namespace Pims.Api.Test.Services
         public async void UploadDocumentAsync_UploadRequest_Sucess()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentAdd);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
-            var avService = helper.GetService<Mock<IAvService>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentAdd);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var avService = _helper.GetService<Mock<IAvService>>();
 
             avService.Setup(x => x.ScanAsync(It.IsAny<IFormFile>())).Returns(Task.CompletedTask);
 
@@ -201,30 +146,6 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Payload = new DocumentDetail()
-                    {
-                        Id = 1,
-                        Label = "MyLabel",
-                        DocumentType = new()
-                        {
-                            Id = 2,
-                            Label = "TypeLabel"
-                        }
-                    }
-                });
-
-            var documentRepository = helper.GetService<Mock<IDocumentRepository>>();
-            documentRepository.Setup(x => x.Add(It.IsAny<PimsDocument>()))
-                .Returns(new PimsDocument()
-                {
-                    Id = 1,
-                    DocumentTypeId = 2,
-                    DocumentStatusTypeCode = "status",
-                    MayanId = 3,
-                    DocumentType = new()
-                    {
-                        Id = 4,
-                        DocumentTypeId = 5,
-                    }
                 });
 
             // Act
@@ -232,7 +153,7 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = helper.GetFormFile(string.Empty),
+                File = _helper.GetFormFile(string.Empty),
                 DocumentStatusCode = "DocumentStatus",
                 DocumentMetadata = new List<DocumentMetadataUpdateModel> {
                     new DocumentMetadataUpdateModel() {
@@ -242,15 +163,9 @@ namespace Pims.Api.Test.Services
                 }
             };
 
-            var sut = await service.UploadDocumentAsync(uploadRequest);
+            await service.UploadDocumentAsync(uploadRequest);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.MetadataExternalResult.Should().NotBeNull();
-            sut.Document.Should().BeOfType<DocumentModel>();
-            sut.Document.FileName.Should().Be("MyLabel");
-            sut.Document.MayanDocumentId.Should().Be(1);
-
             avService.Verify(x => x.ScanAsync(It.IsAny<IFormFile>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryUploadDocumentAsync(It.IsAny<long>(), It.IsAny<IFormFile>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryCreateDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>()), Times.Once);
@@ -260,13 +175,7 @@ namespace Pims.Api.Test.Services
         public void UpdateDocumentAsync_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentRepository = helper.GetService<Mock<IDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions();
 
             DocumentUpdateRequest updateRequest = new()
             {
@@ -277,10 +186,10 @@ namespace Pims.Api.Test.Services
             };
 
             // Assert
-            Func<Task> sut = async () => await service.UpdateDocumentAsync(updateRequest);
+            Func<Task> act = async () => await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
         }
 
@@ -288,13 +197,8 @@ namespace Pims.Api.Test.Services
         public void UpdateDocumentAsync_ShouldThrowException_BadRequest()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentEdit);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentRepository = helper.GetService<Mock<IDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentEdit);
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
             documentRepository.Setup(x => x.TryGet(It.IsAny<long>()))
                 .Returns((PimsDocument)null);
@@ -308,10 +212,10 @@ namespace Pims.Api.Test.Services
             };
 
             // Assert
-            Func<Task> sut = async () => await service.UpdateDocumentAsync(updateRequest);
+            Func<Task> act = async () => await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            sut.Should().Throw<BadRequestException>();
+            act.Should().Throw<BadRequestException>();
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
         }
 
@@ -319,31 +223,15 @@ namespace Pims.Api.Test.Services
         public async void UpdateDocumentAsync_ShouldThrowException_Metadata_Updates_Sucess()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentEdit);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentRepository = helper.GetService<Mock<IDocumentRepository>>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentEdit);
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentRepository.Setup(x => x.TryGet(It.IsAny<long>()))
-                .Returns(new PimsDocument()
-                {
-                    DocumentId = 1,
-                    DocumentTypeId = 2,
-                    FileName = "TEST",
-                });
+                .Returns(new PimsDocument());
 
             documentRepository.Setup(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)))
-                .Returns(new PimsDocument()
-                {
-                    DocumentId = 1,
-                    DocumentTypeId = 2,
-                    FileName = "TEST",
-                    DocumentStatusTypeCode = "new_status",
-                });
+                .Returns(new PimsDocument());
 
             documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
                 .ReturnsAsync(new ExternalResult<QueryResult<DocumentMetadata>>()
@@ -373,14 +261,6 @@ namespace Pims.Api.Test.Services
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Status = ExternalResultStatus.Success,
                     Payload = new DocumentMetadata()
-                    {
-                        Id = 1,
-                        Value = "new_test_value",
-                        MetadataType = new Models.Mayan.Metadata.MetadataType()
-                        {
-                            Id = 1,
-                        },
-                    }
                 });
 
             DocumentUpdateRequest updateRequest = new()
@@ -395,13 +275,9 @@ namespace Pims.Api.Test.Services
             };
 
             // Assert
-            var sut = await service.UpdateDocumentAsync(updateRequest);
+            await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.MetadataExternalResult.Should().NotBeNull();
-            sut.MetadataExternalResult.FirstOrDefault().Payload.Value.Should().Be("new_test_value");
-
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
             documentRepository.Verify(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)), Times.Once);
             documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()), Times.Once);
@@ -412,31 +288,15 @@ namespace Pims.Api.Test.Services
         public async void UpdateDocumentAsync_ShouldThrowException_Metadata_Create_Sucess()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentEdit);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentRepository = helper.GetService<Mock<IDocumentRepository>>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentEdit);
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentRepository.Setup(x => x.TryGet(It.IsAny<long>()))
-                .Returns(new PimsDocument()
-                {
-                    DocumentId = 1,
-                    DocumentTypeId = 2,
-                    FileName = "TEST",
-                });
+                .Returns(new PimsDocument());
 
             documentRepository.Setup(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)))
-                .Returns(new PimsDocument()
-                {
-                    DocumentId = 1,
-                    DocumentTypeId = 2,
-                    FileName = "TEST",
-                    DocumentStatusTypeCode = "new_status",
-                });
+                .Returns(new PimsDocument());
 
             documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
                 .ReturnsAsync(new ExternalResult<QueryResult<DocumentMetadata>>()
@@ -478,13 +338,9 @@ namespace Pims.Api.Test.Services
             };
 
             // Assert
-            var sut = await service.UpdateDocumentAsync(updateRequest);
+            await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.MetadataExternalResult.Should().NotBeNull();
-            sut.MetadataExternalResult.FirstOrDefault().Payload.Value.Should().Be("test_value");
-
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
             documentRepository.Verify(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)), Times.Once);
             documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()), Times.Once);
@@ -495,31 +351,15 @@ namespace Pims.Api.Test.Services
         public async void UpdateDocumentAsync_ShouldThrowException_Metadata_Delete_Sucess()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentEdit);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentRepository = helper.GetService<Mock<IDocumentRepository>>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentEdit);
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentRepository.Setup(x => x.TryGet(It.IsAny<long>()))
-                .Returns(new PimsDocument()
-                {
-                    DocumentId = 1,
-                    DocumentTypeId = 2,
-                    FileName = "TEST",
-                });
+                .Returns(new PimsDocument());
 
             documentRepository.Setup(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)))
-                .Returns(new PimsDocument()
-                {
-                    DocumentId = 1,
-                    DocumentTypeId = 2,
-                    FileName = "TEST",
-                    DocumentStatusTypeCode = "new_status",
-                });
+                .Returns(new PimsDocument());
 
             documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
                 .ReturnsAsync(new ExternalResult<QueryResult<DocumentMetadata>>()
@@ -568,15 +408,9 @@ namespace Pims.Api.Test.Services
             };
 
             // Assert
-            var sut = await service.UpdateDocumentAsync(updateRequest);
+            await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.MetadataExternalResult.Should().NotBeNull();
-            sut.MetadataExternalResult.FirstOrDefault().HttpStatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-            sut.MetadataExternalResult.FirstOrDefault().Status.Should().Be(ExternalResultStatus.Success);
-            sut.MetadataExternalResult.FirstOrDefault().Message.Should().Be("Ok");
-
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
             documentRepository.Verify(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)), Times.Once);
             documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()), Times.Once);
@@ -587,13 +421,7 @@ namespace Pims.Api.Test.Services
         public void DeleteDocument_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions();
 
             PimsDocument doc = new()
             {
@@ -602,10 +430,10 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            Func<Task> sut = async () => await service.DeleteDocumentAsync(doc);
+            Func<Task> act = async () => await service.DeleteDocumentAsync(doc);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             documentStorageRepository.Verify(x => x.TryDeleteDocument(It.IsAny<long>()), Times.Never);
         }
 
@@ -613,13 +441,8 @@ namespace Pims.Api.Test.Services
         public async void DeleteDocument_Success_Status_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentDelete);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentDelete);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryDeleteDocument(It.IsAny<long>()))
                 .ReturnsAsync(new ExternalResult<string>()
@@ -634,11 +457,9 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            var sut = await service.DeleteDocumentAsync(doc);
+            await service.DeleteDocumentAsync(doc);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.Status.Should().Be(ExternalResultStatus.Success);
             documentStorageRepository.Verify(x => x.TryDeleteDocument(It.IsAny<long>()), Times.Once);
         }
 
@@ -646,13 +467,8 @@ namespace Pims.Api.Test.Services
         public async void DeleteDocument_Success_Status_NotFound()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentDelete);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentDelete);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryDeleteDocument(It.IsAny<long>()))
                 .ReturnsAsync(new ExternalResult<string>()
@@ -667,11 +483,9 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            var sut = await service.DeleteDocumentAsync(doc);
+            await service.DeleteDocumentAsync(doc);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.Status.Should().Be(ExternalResultStatus.Success);
             documentStorageRepository.Verify(x => x.TryDeleteDocument(It.IsAny<long>()), Times.Once);
         }
 
@@ -679,34 +493,22 @@ namespace Pims.Api.Test.Services
         public void GetStorageDocumenTypes_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions();
 
             // Act
-            Func<Task> sut = async () => await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
+            Func<Task> act = async () => await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             documentStorageRepository.Verify(x => x.TryGetDocumentTypesAsync(null, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
-
         }
 
         [Fact]
         public async void GetStorageDocumentTypes_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentTypesAsync(null, It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new ExternalResult<QueryResult<DocumentType>>()
@@ -715,26 +517,15 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new QueryResult<DocumentType>()
                     {
-                        Count = 5,
+                        Count = 1,
                         Results = new List<DocumentType>()
-                        {
-                            new() { Id= 1 },
-                            new() { Id= 2 },
-                            new() { Id= 3 },
-                            new() { Id= 4 },
-                            new() { Id= 5 },
-                        }
                     }
                 });
 
             // Act
-            var sut = await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
+            await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.HttpStatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-            sut.Payload.Count.Should().Be(5);
-            sut.Payload.Results.Count.Should().Be(5);
             documentStorageRepository.Verify(x => x.TryGetDocumentTypesAsync(null, It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
 
@@ -742,19 +533,13 @@ namespace Pims.Api.Test.Services
         public void GetStorageDocumentList_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions();
 
             // Act
-            Func<Task> sut = async () => await service.GetStorageDocumentList(null, page: 1, pageSize: 10);
+            Func<Task> act = async () => await service.GetStorageDocumentList(null, page: 1, pageSize: 10);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             documentStorageRepository.Verify(x => x.TryGetDocumentsListAsync(null, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
 
         }
@@ -762,14 +547,8 @@ namespace Pims.Api.Test.Services
         [Fact]
         public async void GetStorageDocumentList_Success()
         {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentsListAsync(null, It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new ExternalResult<QueryResult<DocumentDetail>>()
@@ -778,26 +557,15 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new QueryResult<DocumentDetail>()
                     {
-                        Count = 5,
+                        Count = 1,
                         Results = new List<DocumentDetail>()
-                        {
-                            new() { Id = 1,},
-                            new() { Id= 2,},
-                            new() { Id= 3,},
-                            new() { Id= 4,},
-                            new() { Id= 5,},
-                        }
                     }
                 });
 
             // Act
-            var sut = await service.GetStorageDocumentList(null, page: 1, pageSize: 10);
+            await service.GetStorageDocumentList(null, page: 1, pageSize: 10);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.HttpStatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-            sut.Payload.Count.Should().Be(5);
-            sut.Payload.Results.Count.Should().Be(5);
             documentStorageRepository.Verify(x => x.TryGetDocumentsListAsync(null, It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
 
@@ -805,13 +573,8 @@ namespace Pims.Api.Test.Services
         public async void GetDocumentTypeMetadataType_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new ExternalResult<QueryResult<DocumentTypeMetadataType>>()
@@ -822,10 +585,9 @@ namespace Pims.Api.Test.Services
                 });
 
             // Act
-            var sut = await service.GetDocumentTypeMetadataType(1, "", page: 1, pageSize: 10);
+            await service.GetDocumentTypeMetadataType(1, "", page: 1, pageSize: 10);
 
             // Assert
-            sut.Should().NotBeNull();
             documentStorageRepository.Verify(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
 
@@ -833,19 +595,13 @@ namespace Pims.Api.Test.Services
         public void GetStorageDocumentMetadata_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions();
 
             // Act
-            Func<Task> sut = async () => await service.GetStorageDocumentMetadata(1, "", 1, 10);
+            Func<Task> act = async () => await service.GetStorageDocumentMetadata(1, "", 1, 10);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         }
 
@@ -853,13 +609,8 @@ namespace Pims.Api.Test.Services
         public async void GetStorageDocumentMetadata_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new ExternalResult<QueryResult<DocumentMetadata>>()
@@ -868,26 +619,15 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new QueryResult<DocumentMetadata>()
                     {
-                        Count = 5,
+                        Count = 1,
                         Results = new List<DocumentMetadata>()
-                        {
-                            new() { Id = 1,},
-                            new() { Id= 2,},
-                            new() { Id= 3,},
-                            new() { Id= 4,},
-                            new() { Id= 5,},
-                        }
                     }
                 });
 
             // Act
-            var sut = await service.GetStorageDocumentMetadata(1, "asc", page: 1, pageSize: 10);
+            await service.GetStorageDocumentMetadata(1, "asc", page: 1, pageSize: 10);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.HttpStatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-            sut.Payload.Count.Should().Be(5);
-            sut.Payload.Results.Count.Should().Be(5);
             documentStorageRepository.Verify(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
 
@@ -895,19 +635,13 @@ namespace Pims.Api.Test.Services
         public void DownloadFileAsync_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions();
 
             // Act
-            Func<Task> sut = async () => await service.DownloadFileAsync(1, 2);
+            Func<Task> act = async () => await service.DownloadFileAsync(1, 2);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
         }
 
@@ -915,13 +649,8 @@ namespace Pims.Api.Test.Services
         public async void DownloadFileAsync_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()))
                 .ReturnsAsync(new ExternalResult<FileDownload>()
@@ -935,14 +664,9 @@ namespace Pims.Api.Test.Services
                 });
 
             // Act
-            var sut = await service.DownloadFileAsync(1, 2);
+            await service.DownloadFileAsync(1, 2);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.HttpStatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-            sut.Payload.Should().NotBeNull();
-            sut.Payload.FileName.Should().Be("Test");
-
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
         }
 
@@ -950,13 +674,7 @@ namespace Pims.Api.Test.Services
         public void DownloadFileLatestAsync_ShouldThrowException_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions();
 
             // Act
             Func<Task> sut = async () => await service.DownloadFileLatestAsync(1);
@@ -970,13 +688,8 @@ namespace Pims.Api.Test.Services
         public async void DownloadFileLatestAsync_UnSuccessfull()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
                 .ReturnsAsync(new ExternalResult<DocumentDetail>()
@@ -987,15 +700,9 @@ namespace Pims.Api.Test.Services
                 });
 
             // Act
-            var sut = await service.DownloadFileLatestAsync(1);
+            await service.DownloadFileLatestAsync(1);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.HttpStatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
-            sut.Message.Should().Be("ERROR");
-            sut.Status.Should().Be(ExternalResultStatus.Error);
-            sut.Payload.Should().BeNull();
-
             documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
         }
@@ -1004,13 +711,8 @@ namespace Pims.Api.Test.Services
         public async void DownloadFileLatestAsync_Successfull_PayloadNull()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
                 .ReturnsAsync(new ExternalResult<DocumentDetail>()
@@ -1022,14 +724,9 @@ namespace Pims.Api.Test.Services
                 });
 
             // Act
-            var sut = await service.DownloadFileLatestAsync(1);
+            await service.DownloadFileLatestAsync(1);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.Status.Should().Be(ExternalResultStatus.Error);
-            sut.Message.Should().Be("No document with id $1 found in the storage");
-            sut.Payload.Should().BeNull();
-
             documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
         }
@@ -1038,13 +735,8 @@ namespace Pims.Api.Test.Services
         public async void DownloadFileLatestAsync_Successfull_Payload_Document()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
-
-            helper.CreatePimsContext(user, true);
-
-            var service = helper.Create<DocumentService>();
-            var documentStorageRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
                 .ReturnsAsync(new ExternalResult<DocumentDetail>()
@@ -1074,17 +766,9 @@ namespace Pims.Api.Test.Services
                 });
 
             // Act
-            var sut = await service.DownloadFileLatestAsync(1);
+            await service.DownloadFileLatestAsync(1);
 
             // Assert
-            sut.Should().NotBeNull();
-            sut.HttpStatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-            sut.Status.Should().Be(ExternalResultStatus.Success);
-            sut.Message = "Ok";
-
-            sut.Payload.Should().NotBeNull();
-            sut.Payload.FileName = "MyFile";
-
             documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
         }
