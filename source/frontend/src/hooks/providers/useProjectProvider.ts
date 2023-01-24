@@ -31,7 +31,7 @@ export const useProjectProvider = () => {
     });
 
   const addProjectApi = useApiRequestWrapper<
-    (...args: any[]) => Promise<AxiosResponse<Api_Project, any>>
+    (project: Api_Project) => Promise<AxiosResponse<Api_Project, any>>
   >({
     requestFunction: useCallback(
       async (project: Api_Project) => await postProject(project),
