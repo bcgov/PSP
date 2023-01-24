@@ -5,18 +5,16 @@ import {
   RenderOptions as RtlRenderOptions,
   RenderResult,
 } from '@testing-library/react';
+import { AxiosError, AxiosResponse } from 'axios';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
 import { createMemoryHistory, MemoryHistory } from 'history';
+import { IApiError } from 'interfaces/IApiError';
 import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
 import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom';
 
 import TestCommonWrapper from './TestCommonWrapper';
-
-// re-export everything from RTL
-export * from '@testing-library/react';
-export { default as userEvent } from '@testing-library/user-event';
 
 export const mockKeycloak = (
   props: {
@@ -127,6 +125,31 @@ export const deferred = () => {
     promise,
   };
 };
+
+/**
+ * Creates an AxiosError with the specified message, config, error code, request and response.
+ * @param status The HTTP status code from the server response.
+ * @param message The error message.
+ * @param data The response that was provided by the server.
+ * @returns The created error.
+ */
+export function createAxiosError(
+  status: number = 500,
+  message: string = 'Internal Server Error',
+  data: any = {},
+): AxiosError<IApiError> {
+  return {
+    isAxiosError: true,
+    name: 'AxiosError',
+    message,
+    config: {},
+    toJSON: noop as any,
+    response: {
+      status,
+      data,
+    } as AxiosResponse<IApiError>,
+  };
+}
 
 /**
  * Utility type for generic props of component testing
@@ -258,5 +281,8 @@ async function renderAsync(
   return await rtlRender(ui, { wrapper: AllTheProviders, ...renderOptions });
 }
 
+// re-export everything from RTL
+export * from '@testing-library/react';
+export { default as userEvent } from '@testing-library/user-event';
 // override render method
 export { render, renderAsync };

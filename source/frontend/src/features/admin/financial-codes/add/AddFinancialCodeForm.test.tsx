@@ -1,10 +1,7 @@
-import { AxiosError, AxiosResponse } from 'axios';
 import { FinancialCodeTypes } from 'constants/index';
-import { IApiError } from 'interfaces/IApiError';
-import noop from 'lodash/noop';
-import { mockFinancialCode } from 'mocks/mockFinancialCode';
+import { mockFinancialCode } from 'mocks';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { act, render, RenderOptions, screen, userEvent } from 'utils/test-utils';
+import { act, createAxiosError, render, RenderOptions, screen, userEvent } from 'utils/test-utils';
 import * as Yup from 'yup';
 
 import { IAddFinancialCodeFormProps } from './AddFinancialCodeContainer';
@@ -60,6 +57,7 @@ describe('AddFinancialCode form', () => {
 
   it('calls onCancel when form is not dirty and cancel is clicked', async () => {
     setup();
+
     const cancelButton = screen.getByText('Cancel');
     await act(() => userEvent.click(cancelButton));
 
@@ -70,8 +68,8 @@ describe('AddFinancialCode form', () => {
     setup();
 
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
-    await act(() => userEvent.paste(description, `another description`));
     const cancelButton = screen.getByText('Cancel');
+    await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(cancelButton));
 
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
@@ -82,8 +80,8 @@ describe('AddFinancialCode form', () => {
     setup();
 
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
-    await act(() => userEvent.paste(description, `another description`));
     const cancelButton = screen.getByText('Cancel');
+    await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const confirmButton = screen.getByText('Confirm');
@@ -97,8 +95,8 @@ describe('AddFinancialCode form', () => {
     setup();
 
     const textbox = document.querySelector(`input[name="description"]`) as HTMLInputElement;
-    await act(() => userEvent.paste(textbox, `another description`));
     const cancelButton = screen.getByText('Cancel');
+    await act(() => userEvent.paste(textbox, `another description`));
     await act(() => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const noButton = screen.getByText('No');
@@ -113,10 +111,10 @@ describe('AddFinancialCode form', () => {
     setup();
 
     const codeType = document.querySelector(`select[name="type"]`) as HTMLSelectElement;
-    await act(() => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
-    await act(() => userEvent.paste(description, `another description`));
     const saveButton = screen.getByText('Save');
+    await act(() => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
+    await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(saveButton));
 
     expect(mockProps.onSave).toHaveBeenCalledWith(
@@ -129,24 +127,14 @@ describe('AddFinancialCode form', () => {
   });
 
   it('calls onError when it cannot save the form', async () => {
-    const error500: AxiosError<IApiError> = {
-      isAxiosError: true,
-      name: 'AxiosError',
-      message: '500 - Internal Server Error',
-      config: {},
-      toJSON: noop as any,
-      response: {
-        status: 500,
-      } as AxiosResponse<IApiError>,
-    };
-    (mockProps.onSave as jest.Mock).mockRejectedValue(error500);
+    (mockProps.onSave as jest.Mock).mockRejectedValue(createAxiosError(500));
     setup();
 
     const codeType = document.querySelector(`select[name="type"]`) as HTMLSelectElement;
-    await act(() => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
-    await act(() => userEvent.paste(description, `another description`));
     const saveButton = screen.getByText('Save');
+    await act(() => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
+    await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(saveButton));
 
     expect(mockProps.onSave).toHaveBeenCalled();

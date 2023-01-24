@@ -1,10 +1,7 @@
-import { AxiosError, AxiosResponse } from 'axios';
 import { createMemoryHistory } from 'history';
-import { IApiError } from 'interfaces/IApiError';
-import noop from 'lodash/noop';
-import { mockFinancialCode } from 'mocks/mockFinancialCode';
+import { mockFinancialCode } from 'mocks';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { act, render, RenderOptions, screen } from 'utils/test-utils';
+import { act, createAxiosError, render, RenderOptions, screen } from 'utils/test-utils';
 
 import AddFinancialCodeContainer, { IAddFinancialCodeFormProps } from './AddFinancialCodeContainer';
 
@@ -53,18 +50,9 @@ describe('AddFinancialCode container', () => {
 
   it('displays error message for duplicate codes', async () => {
     const { getByText } = setup();
-    const error409: AxiosError<IApiError> = {
-      isAxiosError: true,
-      name: 'AxiosError',
-      message: 'Lorem Ipsum',
-      config: {},
-      toJSON: noop as any,
-      response: {
-        status: 409,
-      } as AxiosResponse<IApiError>,
-    };
 
     await act(async () => {
+      const error409 = createAxiosError(409, 'Duplicate code found');
       viewProps?.onError(error409);
     });
 
@@ -73,18 +61,9 @@ describe('AddFinancialCode container', () => {
 
   it('displays a toast for generic server errors', async () => {
     setup();
-    const error500: AxiosError<IApiError> = {
-      isAxiosError: true,
-      name: 'AxiosError',
-      message: '500 - Internal Server Error',
-      config: {},
-      toJSON: noop as any,
-      response: {
-        status: 500,
-      } as AxiosResponse<IApiError>,
-    };
 
     await act(async () => {
+      const error500 = createAxiosError(500);
       viewProps?.onError(error500);
     });
 
@@ -93,7 +72,7 @@ describe('AddFinancialCode container', () => {
 
   it('makes request to create a new financial code and returns the response', async () => {
     setup();
-    mockApi.execute.mockReturnValue(mockFinancialCode());
+    mockApi.execute.mockResolvedValue(mockFinancialCode());
 
     let createdCode: Api_FinancialCode | undefined;
     await act(async () => {
