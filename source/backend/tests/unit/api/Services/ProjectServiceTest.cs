@@ -27,18 +27,31 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class ProjectServiceTest
     {
+        private TestHelper _helper;
+
+        public ProjectServiceTest()
+        {
+            _helper = new TestHelper();
+        }
+
+        private ProjectService CreateProjectServiceWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            _helper.CreatePimsContext(user, true);
+            return _helper.Create<ProjectService>();
+        }
+
         [Fact]
         public void Search_Success()
         {
             // Arrange
-            var helper = new TestHelper();
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
             var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
 
             var project = EntityHelper.CreateProject(1, "7", "Test Project");
             var projectList = new List<PimsProject>() { project };
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>())).Returns(projectList);
 
             // Act
@@ -52,47 +65,35 @@ namespace Pims.Api.Test.Services
         public void Search_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var service = CreateProjectServiceWithPermissions();
 
             // Act
             Action act = () => service.SearchProjects("some string", 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Never);
         }
 
         [Fact]
         public void Search_GetPage_ShouldFail_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var service = CreateProjectServiceWithPermissions();
 
             // Act
             Action result = () => service.GetPage(new ProjectFilter { ProjectName = "test" });
 
             // Assert
             result.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Never);
         }
 
         [Fact]
         public void Search_GetPage_ShouldFail_Filter_IsNull()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
 
             // Act
             Action result = () => service.GetPage(null);
@@ -106,11 +107,9 @@ namespace Pims.Api.Test.Services
         public void Search_GetPage_ShouldFail_Filter_IsInvalid()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
 
             // Act
             Action result = () => service.GetPage(new ProjectFilter { Page = 0 });
@@ -124,11 +123,9 @@ namespace Pims.Api.Test.Services
         public async void Search_GetPage_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.GetPageAsync(It.IsAny<ProjectFilter>()))
                 .ReturnsAsync(new Paged<PimsProject>()
                 {

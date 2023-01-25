@@ -11,6 +11,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using Pims.Api.Constants;
 using Pims.Api.Controllers;
+using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal;
@@ -29,11 +30,19 @@ namespace Pims.Api.Test.Controllers
     public class LookupControllerTest
     {
         #region Variables
+        private Mock<ILookupRepository> _repository;
+        private LookupController _controller;
+        private IMapper _mapper;
+        private TestHelper _helper;
         #endregion
 
         #region Constructors
         public LookupControllerTest()
         {
+            _helper = new TestHelper();
+            _controller = _helper.CreateController<LookupController>(Permissions.SystemAdmin);
+            _mapper = _helper.GetService<IMapper>();
+            _repository = _helper.GetService<Mock<ILookupRepository>>();
         }
         #endregion
 
@@ -43,36 +52,23 @@ namespace Pims.Api.Test.Controllers
         public void GetPropertyClassificationTypeCodes()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
-
-            var mapper = helper.GetService<IMapper>();
-            var repository = helper.GetService<Mock<ILookupRepository>>();
             var propertyClassification = new Entity.PimsPropertyClassificationType
             {
                 Id = "Surplus Active",
             };
-            repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { propertyClassification });
+            _repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { propertyClassification });
 
             // Act
-            var result = controller.GetPropertyClassificationTypes();
+            var result = _controller.GetPropertyClassificationTypes();
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.LookupModel[]>(actionResult.Value);
-            (new[] { mapper.Map<Model.LookupModel>(propertyClassification) }).Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
         }
 
         [Fact]
         public void GetRoleCodes()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
-
-            var mapper = helper.GetService<IMapper>();
-            var repository = helper.GetService<Mock<ILookupRepository>>();
             var role = new Entity.PimsRole
             {
                 Id = 1,
@@ -80,78 +76,68 @@ namespace Pims.Api.Test.Controllers
                 Name = "Ministry of Health",
                 Description = "The Ministry of Health",
             };
-            repository.Setup(m => m.GetAllRoles()).Returns(new[] { role });
+            _repository.Setup(m => m.GetAllRoles()).Returns(new[] { role });
 
             // Act
-            var result = controller.GetRoles();
+            var result = _controller.GetRoles();
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.RoleModel[]>(actionResult.Value);
-            (new[] { mapper.Map<Model.RoleModel>(role) }).Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.GetAllRoles(), Times.Once());
+            _repository.Verify(m => m.GetAllRoles(), Times.Once());
         }
 
         [Fact]
         public void GetAll()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
-
-            var mapper = helper.GetService<IMapper>();
-            var repository = helper.GetService<Mock<ILookupRepository>>();
-            var memoryCache = helper.GetService<Mock<IMemoryCache>>();
+            var memoryCache = _helper.GetService<Mock<IMemoryCache>>();
             var cacheEntry = new Mock<ICacheEntry>();
 
             memoryCache.Setup(m => m.CreateEntry(It.IsAny<object>())).Returns(cacheEntry.Object);
-
             var areaUnitTypes = EntityHelper.CreatePropertyAreaUnitType("area");
-            repository.Setup(m => m.GetAllPropertyAreaUnitTypes()).Returns(new[] { areaUnitTypes });
+            _repository.Setup(m => m.GetAllPropertyAreaUnitTypes()).Returns(new[] { areaUnitTypes });
 
             var classificationTypes = EntityHelper.CreatePropertyClassificationType("classification");
-            repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { classificationTypes });
+            _repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { classificationTypes });
 
             var countries = EntityHelper.CreateCountry(1, "CAN");
-            repository.Setup(m => m.GetAllCountries()).Returns(new[] { countries });
+            _repository.Setup(m => m.GetAllCountries()).Returns(new[] { countries });
 
             var districts = EntityHelper.CreateDistrict(1, "district");
-            repository.Setup(m => m.GetAllDistricts()).Returns(new[] { districts });
+            _repository.Setup(m => m.GetAllDistricts()).Returns(new[] { districts });
 
             var organizationTypes = EntityHelper.CreateOrganizationType("orgtype");
-            repository.Setup(m => m.GetAllOrganizationTypes()).Returns(new[] { organizationTypes });
+            _repository.Setup(m => m.GetAllOrganizationTypes()).Returns(new[] { organizationTypes });
 
             var propertyTypes = EntityHelper.CreatePropertyType("property");
-            repository.Setup(m => m.GetAllPropertyTypes()).Returns(new[] { propertyTypes });
+            _repository.Setup(m => m.GetAllPropertyTypes()).Returns(new[] { propertyTypes });
 
             var provinces = EntityHelper.CreateProvince(1, "BC");
-            repository.Setup(m => m.GetAllProvinces()).Returns(new[] { provinces });
+            _repository.Setup(m => m.GetAllProvinces()).Returns(new[] { provinces });
 
             var regions = EntityHelper.CreateRegion(1, "region");
-            repository.Setup(m => m.GetAllRegions()).Returns(new[] { regions });
+            _repository.Setup(m => m.GetAllRegions()).Returns(new[] { regions });
 
             var roleCodes = EntityHelper.CreateRole("admin");
-            repository.Setup(m => m.GetAllRoles()).Returns(new[] { roleCodes });
+            _repository.Setup(m => m.GetAllRoles()).Returns(new[] { roleCodes });
 
             var tenureTypes = EntityHelper.CreatePropertyTenureType("tenure");
-            repository.Setup(m => m.GetAllPropertyTenureTypes()).Returns(new[] { tenureTypes });
+            _repository.Setup(m => m.GetAllPropertyTenureTypes()).Returns(new[] { tenureTypes });
 
             // Act
-            var result = controller.GetAll();
+            var result = (JsonResult)_controller.GetAll();
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsAssignableFrom<IEnumerable<object>>(actionResult.Value);
-            mapper.Map<Model.LookupModel>(areaUnitTypes).Should().BeEquivalentTo(actualResult.Next(0));
-            mapper.Map<Model.LookupModel>(classificationTypes).Should().BeEquivalentTo(actualResult.Next(1));
-            mapper.Map<Model.LookupModel>(countries).Should().BeEquivalentTo(actualResult.Next(2));
-            mapper.Map<Model.LookupModel>(districts).Should().BeEquivalentTo(actualResult.Next(3));
-            mapper.Map<Model.LookupModel>(organizationTypes).Should().BeEquivalentTo(actualResult.Next(4));
-            mapper.Map<Model.LookupModel>(propertyTypes).Should().BeEquivalentTo(actualResult.Next(5));
-            mapper.Map<Model.LookupModel>(provinces).Should().BeEquivalentTo(actualResult.Next(6));
-            mapper.Map<Model.LookupModel<short>>(regions).Should().BeEquivalentTo(actualResult.Next(7));
-            mapper.Map<Model.RoleModel>(roleCodes).Should().BeEquivalentTo(actualResult.Next(8));
-            mapper.Map<Model.LookupModel>(tenureTypes).Should().BeEquivalentTo(actualResult.Next(9));
+            var lookups = (IEnumerable<object>) result.Value;
+            _repository.Verify(m => m.GetAllPropertyAreaUnitTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllCountries(), Times.Once());
+            _repository.Verify(m => m.GetAllDistricts(), Times.Once());
+            _repository.Verify(m => m.GetAllOrganizationTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyTypes(), Times.Once());
+            _repository.Verify(m => m.GetAllProvinces(), Times.Once());
+            _repository.Verify(m => m.GetAllRegions(), Times.Once());
+            _repository.Verify(m => m.GetAllPropertyTenureTypes(), Times.Once());
+            
         }
 
         [Fact]

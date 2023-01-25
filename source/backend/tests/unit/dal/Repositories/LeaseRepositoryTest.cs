@@ -15,14 +15,14 @@ using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Dal.Test.Services
+namespace Pims.Dal.Test.Repositories
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]
     [Trait("area", "admin")]
     [Trait("group", "lease")]
     [ExcludeFromCodeCoverage]
-    public class LeaseServiceTest
+    public class LeaseRepositoryTest
     {
         #region Data
         public static IEnumerable<object[]> LeaseFilterData =>
