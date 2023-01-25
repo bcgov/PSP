@@ -2,7 +2,6 @@ import { toCqlFilter } from 'components/maps/leaflet/mapUtils';
 import CustomAxios from 'customAxios';
 import { Feature, FeatureCollection, Point } from 'geojson';
 import { useCallback, useContext } from 'react';
-import { toast } from 'react-toastify';
 import { TenantContext } from 'tenants';
 import { useAxiosErrorHandler } from 'utils';
 
@@ -40,7 +39,6 @@ export const useGeoServer = () => {
       [baseUrl],
     ),
     requestName: 'getPropertyWfs',
-    onSuccess: useCallback(() => toast.success('Property information retrieved from layer'), []),
     onError: useAxiosErrorHandler('Failed to retrieve property information from BC Data Warehouse'),
   });
 

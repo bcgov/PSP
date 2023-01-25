@@ -2,7 +2,6 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IApiError } from 'interfaces/IApiError';
 import { getMockAddresses, getMockLegalDescriptions } from 'mocks/bcAssessmentMock';
 import { useCallback, useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 import { getMockDescription, getMockSales, getMockValues } from './../mocks/bcAssessmentMock';
 import { pidParser } from './../utils/propertyUtils';
@@ -113,7 +112,7 @@ export const useBcAssessmentLayer = (
       try {
         legalDescriptionResponse = await getLegalDescriptions(
           { PID_NUMBER: parsedPid.toString() },
-          { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+          { timeout: 40000, forceExactMatch: true },
         );
       } catch (e: any) {
         if (axios.isAxiosError(e)) {
@@ -146,21 +145,21 @@ export const useBcAssessmentLayer = (
       const addressPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.ADDRESSES)
         ? getAddresses(
             { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+            { timeout: 40000, forceExactMatch: true },
           )
         : Promise.resolve();
 
       const valuesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
         ? getValues(
             { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+            { timeout: 40000, forceExactMatch: true },
           )
         : Promise.resolve();
 
       const chargesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
         ? getCharges(
             { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+            { timeout: 40000, forceExactMatch: true },
           )
         : Promise.resolve();
 
@@ -169,14 +168,14 @@ export const useBcAssessmentLayer = (
       )
         ? getFolioDescriptions(
             { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+            { timeout: 40000, forceExactMatch: true },
           )
         : Promise.resolve();
 
       const salesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
         ? getSales(
             { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+            { timeout: 40000, forceExactMatch: true },
           )
         : Promise.resolve();
 
@@ -232,16 +231,6 @@ export const useBcAssessmentLayer = (
     getSummaryWrapper,
   };
 };
-
-export const LAYER_UNAVAILABLE = [
-  'Error returned from BC Assessment.',
-  'Please notify ',
-  'pims@gov.bc.ca',
-  ' if this problem persists.',
-];
-
-const bcAssessmentError = () =>
-  toast.error(LAYER_UNAVAILABLE.join('\n'), { toastId: 'LAYER_DATA_ERROR_ID' });
 
 export const mockBcAssessmentSummary: IBcAssessmentSummary = {
   LEGAL_DESCRIPTION: getMockLegalDescriptions()?.features[0].properties ?? {},

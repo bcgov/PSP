@@ -51,7 +51,8 @@ export const LtsaTabView: React.FunctionComponent<React.PropsWithChildren<ILtsaT
           <b>
             Failed to load data from LTSA.
             <br />
-            <br /> Refresh this page to try again, or select a different property.
+            <br /> Refresh this page to try again, or select a different property. If this error
+            persists, contact an administrator.
           </b>
         </FormSection>
       ) : (
