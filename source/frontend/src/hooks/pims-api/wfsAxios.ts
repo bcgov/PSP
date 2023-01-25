@@ -1,6 +1,4 @@
 import axios, { AxiosError } from 'axios';
-import { layerData } from 'constants/toasts';
-import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
 
 const MAX_RETRIES = 2;
@@ -13,17 +11,12 @@ export const wfsAxios = (timeout?: number, onLayerError?: () => void) => {
     shouldRetry: (error: AxiosError) => {
       const cfg = rax.getConfig(error);
       if (cfg?.currentRetryAttempt === MAX_RETRIES) {
-        toast.dismiss(layerData.LAYER_DATA_LOADING_ID);
-        !!onLayerError ? onLayerError() : layerData.LAYER_DATA_ERROR();
+        !!onLayerError && onLayerError();
       }
       return rax.shouldRetryRequest(error);
     },
   };
   rax.attach(instance);
 
-  instance.interceptors.request.use(config => {
-    layerData.LAYER_DATA_LOADING();
-    return config;
-  });
   return instance;
 };

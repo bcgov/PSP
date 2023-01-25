@@ -39,7 +39,6 @@ export const useAcquisitionProvider = () => {
       [getAcquisitionFile],
     ),
     requestName: 'RetrieveAcquisitionFile',
-    onSuccess: useAxiosSuccessHandler('Acquisition File retrieved'),
     onError: useAxiosErrorHandler('Failed to load Acquisition File'),
   });
 
