@@ -250,7 +250,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateNoteServiceWithPermissions();
 
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
             Action act = () => service.DeleteNote(NoteType.Activity, 1);
