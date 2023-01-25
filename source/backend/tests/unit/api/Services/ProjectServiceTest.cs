@@ -199,5 +199,42 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Once);
         }
+
+        [Fact]
+        public void Get_ProjectById_ShouldFail_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Func<Task> act = async () => await service.GetById(It.IsAny<long>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Get(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public async void Get_ProjectById_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+            repository.Setup(x => x.Get(It.IsAny <long>())).ReturnsAsync(new PimsProject());
+
+            // Act
+            var result = await service.GetById(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Get(It.IsAny<long>()), Times.Once);
+        }
     }
 }
