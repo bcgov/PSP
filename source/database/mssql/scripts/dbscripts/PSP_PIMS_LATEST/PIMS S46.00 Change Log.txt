@@ -4,6 +4,8 @@ PSP_PIMS S46.00 Sprint 46 2023-JAN-20
   - PIMS_PROJECT_HIST
 - Added test scripts:
   - 39_PIMS_PROJECT.sql
+  - 41_PIMS_LEASE_TERM.sql
+  - 42_PIMS_LEASE_PAYMENT.sql
 - Requires additional metadata to meet standards
 
 PSP_PIMS S45.01 Sprint 45 2023-JAN-12
