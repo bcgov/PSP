@@ -85,6 +85,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = CreateDocumentServiceWithPermissions();
+            var documentTypeRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
 
             DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = _helper.GetFormFile(string.Empty) };
 
@@ -93,6 +94,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             sut.Should().Throw<NotAuthorizedException>();
+            documentTypeRepository.Verify(x => x.GetAll(), Times.Never);
         }
 
         [Fact]
@@ -176,6 +178,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = CreateDocumentServiceWithPermissions();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
             DocumentUpdateRequest updateRequest = new()
             {
@@ -190,6 +193,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            documentRepository.Verify(x => x.Add(It.IsAny<PimsDocument>()), Times.Never);
         }
 
         [Fact]
@@ -415,6 +419,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = CreateDocumentServiceWithPermissions();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
             PimsDocument doc = new()
             {
@@ -427,6 +432,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -486,12 +492,14 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = CreateDocumentServiceWithPermissions();
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             // Act
             Func<Task> act = async () => await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            documentStorageRepository.Verify(x => x.TryDeleteDocument(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]

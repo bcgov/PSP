@@ -7,6 +7,7 @@ using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -87,11 +88,14 @@ namespace Pims.Api.Test.Services
             var activityNote = EntityHelper.CreateActivityNote();
             var noteModel = mapper.Map<EntityNoteModel>(activityNote);
 
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
+
             // Act
             Action act = () => service.Add(NoteType.Activity, noteModel);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsActivityInstanceNote>()), Times.Never);
         }
         #endregion
 
@@ -196,11 +200,14 @@ namespace Pims.Api.Test.Services
             var note = EntityHelper.CreateNote("Test Note");
             var model = mapper.Map<NoteModel>(note);
 
+            var repository = _helper.GetService<Mock<INoteRepository>>();
+
             // Act
             Action act = () => service.Update(model);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsNote>()), Times.Never);
         }
         #endregion
 
@@ -243,11 +250,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateNoteServiceWithPermissions();
 
+            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+
             // Act
             Action act = () => service.DeleteNote(NoteType.Activity, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.DeleteActivityNotes(It.IsAny<long>()), Times.Never);
         }
         #endregion
 

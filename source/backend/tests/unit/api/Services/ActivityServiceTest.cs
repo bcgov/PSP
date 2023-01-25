@@ -12,6 +12,7 @@ using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -68,11 +69,14 @@ namespace Pims.Api.Test.Services
             
             var activity = EntityHelper.CreateActivity();
 
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
+
             // Act
             Action act = () => service.Add(activity);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
@@ -101,11 +105,14 @@ namespace Pims.Api.Test.Services
 
             var activity = EntityHelper.CreateActivity();
 
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
+
             // Act
             Action act = () => service.AddResearchActivity(activity, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
@@ -134,11 +141,14 @@ namespace Pims.Api.Test.Services
 
             var activity = EntityHelper.CreateActivity();
 
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
+
             // Act
             Action act = () => service.AddAcquisitionActivity(activity, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
         #endregion
 
@@ -282,6 +292,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
@@ -302,6 +313,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<DbUpdateConcurrencyException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
@@ -332,11 +344,14 @@ namespace Pims.Api.Test.Services
 
             var activity = EntityHelper.CreateActivity();
 
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
+
             // Act
             Action act = () => service.UpdateActivityResearchProperties(activity);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
 
         [Fact]
@@ -367,11 +382,14 @@ namespace Pims.Api.Test.Services
 
             var activity = EntityHelper.CreateActivity();
 
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
+
             // Act
             Action act = () => service.UpdateActivityAcquisitionProperties(activity);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsActivityInstance>()), Times.Never);
         }
         #endregion
 
@@ -430,11 +448,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateActivityServiceWithPermissions();
 
+            var repository = _helper.GetService<Mock<IActivityRepository>>();
+
             // Act
             Func<Task> act = async () => await service.Delete(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Delete(It.IsAny<long>()), Times.Never);
         }
         #endregion
 

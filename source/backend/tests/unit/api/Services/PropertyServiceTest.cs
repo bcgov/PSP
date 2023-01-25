@@ -6,6 +6,7 @@ using NetTopologySuite.Geometries;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -187,9 +188,11 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var repository = _helper.GetService<Mock<IPropertyRepository>>();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.Update(property));
+            repository.Verify(x => x.Update(It.IsAny<PimsProperty>()), Times.Never);
         }
 
         #endregion

@@ -31,7 +31,7 @@ namespace Pims.Api.Test.Services
             _helper = new TestHelper();
         }
 
-        private ResearchFileService CreateProjectServiceWithPermissions(params Permissions[] permissions)
+        private ResearchFileService CreateResearchFileServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
             _helper.CreatePimsContext(user, true);
@@ -47,7 +47,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var researchFile = EntityHelper.CreateResearchFile(1);
 
-            var service = CreateProjectServiceWithPermissions(Permissions.ResearchFileView);
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileView);
             var researchRepository = _helper.GetService<Mock<IResearchFileRepository>>();
             researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
 
@@ -62,7 +62,7 @@ namespace Pims.Api.Test.Services
         public void GetPage_NoPermission()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions();
+            var service = CreateResearchFileServiceWithPermissions();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetPage(new ResearchFilter()));
@@ -80,7 +80,7 @@ namespace Pims.Api.Test.Services
             pimsPropertyResearchFile.PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } };
             researchFile.PimsPropertyResearchFiles.Add(pimsPropertyResearchFile);
 
-            var service = CreateProjectServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
             var researchRepository = _helper.GetService<Mock<IResearchFileRepository>>();
             researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
             researchRepository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
@@ -102,7 +102,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_PID_Success()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile();
             researchFile.ConcurrencyControlNumber = 1;
@@ -131,7 +131,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_PIN_Success()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile();
             researchFile.ConcurrencyControlNumber = 1;
@@ -161,7 +161,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_PID_NewProperty_Success()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile();
             researchFile.ConcurrencyControlNumber = 1;
@@ -205,7 +205,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_PIN_NewProperty_Success()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions(Permissions.ResearchFileEdit);
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile();
             researchFile.ConcurrencyControlNumber = 1;
@@ -252,7 +252,7 @@ namespace Pims.Api.Test.Services
         public void GetById_Success()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions(Permissions.ResearchFileView);
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileView);
 
             var researchFile = EntityHelper.CreateResearchFile(1);
 
@@ -270,7 +270,7 @@ namespace Pims.Api.Test.Services
         public void GetById_NoPermission()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions();
+            var service = CreateResearchFileServiceWithPermissions();
 
             // Act
             Action act = () => service.GetById(1);
@@ -285,7 +285,7 @@ namespace Pims.Api.Test.Services
         public void Update_Success()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions(Permissions.ResearchFileEdit, Permissions.ResearchFileEdit);
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit, Permissions.ResearchFileEdit);
 
             var researchFile = EntityHelper.CreateResearchFile(1);
 
@@ -305,7 +305,7 @@ namespace Pims.Api.Test.Services
         public void Update_NoPermission()
         {
             // Arrange
-            var service = CreateProjectServiceWithPermissions();
+            var service = CreateResearchFileServiceWithPermissions();
 
             var researchFile = EntityHelper.CreateResearchFile(1);
 

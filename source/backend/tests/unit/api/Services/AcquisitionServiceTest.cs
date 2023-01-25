@@ -11,6 +11,7 @@ using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -69,8 +70,11 @@ namespace Pims.Api.Test.Services
             // Act
             Action act = () => service.Add(acqFile);
 
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
         [Fact]
@@ -81,11 +85,14 @@ namespace Pims.Api.Test.Services
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
             // Act
             Action act = () => service.Add(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
         #endregion
 
@@ -94,8 +101,7 @@ namespace Pims.Api.Test.Services
         public void GetById_Success()
         {
             // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
-            var service = _helper.Create<AcquisitionFileService>(user);
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
@@ -155,11 +161,13 @@ namespace Pims.Api.Test.Services
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             // Act
             Action act = () => service.Update(acqFile, true);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
         [Fact]
@@ -170,11 +178,14 @@ namespace Pims.Api.Test.Services
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
             // Act
             Action act = () => service.Update(null, false);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
         [Fact]
@@ -194,6 +205,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
         [Fact]
@@ -421,6 +433,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
         #endregion
 
