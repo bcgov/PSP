@@ -21,55 +21,57 @@ namespace Pims.Api.Test.Controllers
     {
         // xUnit.net creates a new instance of the test class for every test that is run,
         // so any code which is placed into the constructor of the test class will be run for every single test.
-        readonly TestHelper helper = new();
+        private readonly FinancialCodeController _controller;
+        private readonly Mock<IFinancialCodeService> _service;
+
+        public FinancialCodeControllerTest()
+        {
+            var helper = new TestHelper();
+            _controller = helper.CreateController<FinancialCodeController>(Permissions.SystemAdmin);
+            _service = helper.GetService<Mock<IFinancialCodeService>>();
+        }
 
         [Fact]
         public void GetFinancialCodes_Success()
         {
             // Arrange
-            var controller = helper.CreateController<FinancialCodeController>(Permissions.SystemAdmin);
-            var service = helper.GetService<Mock<IFinancialCodeService>>();
-            service.Setup(m => m.GetAllFinancialCodes());
+            _service.Setup(m => m.GetAllFinancialCodes());
 
             // Act
-            var result = controller.GetFinancialCodes();
+            var result = _controller.GetFinancialCodes();
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            service.Verify(m => m.GetAllFinancialCodes(), Times.Once());
+            _service.Verify(m => m.GetAllFinancialCodes(), Times.Once());
         }
 
         [Fact]
         public void AddFinancialCode_Success()
         {
             // Arrange
-            var controller = helper.CreateController<FinancialCodeController>(Permissions.SystemAdmin);
-            var service = helper.GetService<Mock<IFinancialCodeService>>();
-            service.Setup(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()));
+            _service.Setup(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()));
 
             // Act
-            var result = controller.AddFinancialCode(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
+            var result = _controller.AddFinancialCode(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
 
             // Assert
             result.Should().BeOfType<JsonResult>();
-            service.Verify(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
+            _service.Verify(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
         }
 
         [Fact]
         public void AddFinancialCode_DuplicateCode_ShouldThrow()
         {
             // Arrange
-            var controller = helper.CreateController<FinancialCodeController>(Permissions.SystemAdmin);
-            var service = helper.GetService<Mock<IFinancialCodeService>>();
-            service.Setup(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()))
+            _service.Setup(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()))
                 .Throws<DuplicateEntityException>();
 
             // Act
-            var result = controller.AddFinancialCode(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
+            var result = _controller.AddFinancialCode(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
 
             // Assert
             result.Should().BeOfType<ConflictObjectResult>();
-            service.Verify(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
+            _service.Verify(m => m.Add(It.IsAny<FinancialCodeTypes>(), It.IsAny<FinancialCodeModel>()), Times.Once());
         }
     }
 }

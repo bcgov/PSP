@@ -20,7 +20,14 @@ namespace Pims.Dal.Test.Repositories
     {
         // xUnit.net creates a new instance of the test class for every test that is run,
         // so any code which is placed into the constructor of the test class will be run for every single test.
-        readonly TestHelper helper = new();
+        private readonly TestHelper _helper = new();
+
+        private YearlyFinancialCodeRepository CreateWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            _helper.CreatePimsContext(user, true);
+            return _helper.CreateRepository<YearlyFinancialCodeRepository>(user);
+        }
 
         [Fact]
         public void Add_Success()
@@ -33,9 +40,7 @@ namespace Pims.Dal.Test.Repositories
                 EffectiveDate = new DateTime(1995, 07, 20)
             };
 
-            var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
-            helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<YearlyFinancialCodeRepository>(user);
+            var repository = CreateWithPermissions(Permissions.SystemAdmin);
 
             // Act
             var result = repository.Add(codeToAdd);
@@ -51,9 +56,7 @@ namespace Pims.Dal.Test.Repositories
         public void Add_ThrowIfNull()
         {
             // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
-            helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<YearlyFinancialCodeRepository>(user);
+            var repository = CreateWithPermissions(Permissions.SystemAdmin);
 
             // Act
             Action act = () => repository.Add(null);
