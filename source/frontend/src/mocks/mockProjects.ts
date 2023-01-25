@@ -3,9 +3,9 @@ import { Api_Project } from 'models/api/Project';
 export const mockProjects = (): Api_Project[] => [
   {
     id: 1,
-    businessFunctionCode: 13,
-    costTypeCode: 13,
-    workActivityCode: 11,
+    businessFunctionCode: { id: 1, code: '13' },
+    costTypeCode: { id: 1, code: '13' },
+    workActivityCode: { id: 1, code: '11' },
     regionCode: {
       id: 1,
       description: 'South Coast Region',
@@ -17,9 +17,9 @@ export const mockProjects = (): Api_Project[] => [
   },
   {
     id: 2,
-    businessFunctionCode: 12,
-    costTypeCode: 13,
-    workActivityCode: 11,
+    businessFunctionCode: { id: 1, code: '12' },
+    costTypeCode: { id: 1, code: '13' },
+    workActivityCode: { id: 1, code: '11' },
     regionCode: {
       id: 2,
       description: 'Southern Interior Region',
@@ -46,8 +46,8 @@ export const mockProjectPostResponse = (
     description: 'REGON',
   },
   projectStatusTypeCode: undefined,
-  businessFunctionCode: null,
-  workActivityCode: null,
+  businessFunctionCode: undefined,
+  workActivityCode: undefined,
   note: '',
   appCreateTimestamp: '2022-05-28T00:57:37.42',
   appLastUpdateTimestamp: '2022-07-28T00:57:37.42',
