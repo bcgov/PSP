@@ -6,5 +6,7 @@ namespace Pims.Dal.Repositories
     public interface IBusinessFunctionCodeRepository : IRepository<PimsBusinessFunctionCode>
     {
         IList<PimsBusinessFunctionCode> GetAllBusinessFunctionCodes();
+
+        PimsBusinessFunctionCode Add(PimsBusinessFunctionCode pimsCode);
     }
 }

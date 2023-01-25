@@ -43,7 +43,14 @@ namespace Pims.Api.Test.Controllers.Research
             new object [] { new Uri("http://host/api/research/search?RFileNumber=100-000-000") },
             new object [] { new Uri("http://host/api/research/search?Name=rname") },
         };
+
+        private TestHelper _helper;
         #endregion
+
+        public SearchControllerTest()
+        {
+            _helper = new TestHelper();
+        }
 
         #region Tests
         #region GetResearchFiles
@@ -55,13 +62,12 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_All_Success(SModel.ResearchFilterModel filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
+            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
             var researchFiles = new[] { EntityHelper.CreateResearchFile(1) };
 
-            var service = helper.GetService<Mock<IResearchFileService>>();
-            var mapper = helper.GetService<IMapper>();
+            var service = _helper.GetService<Mock<IResearchFileService>>();
+            var mapper = _helper.GetService<IMapper>();
 
             service.Setup(m => m.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
 
@@ -84,13 +90,12 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_Query_Success(Uri uri)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView, uri);
+            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView, uri);
 
             var researchFiles = new[] { EntityHelper.CreateResearchFile(1) };
 
-            var service = helper.GetService<Mock<IResearchFileService>>();
-            var mapper = helper.GetService<IMapper>();
+            var service = _helper.GetService<Mock<IResearchFileService>>();
+            var mapper = _helper.GetService<IMapper>();
 
             service.Setup(m => m.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
 
@@ -112,12 +117,11 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_Query_NoFilter_BadRequest()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
-            var request = helper.GetService<Mock<HttpRequest>>();
+            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView);
+            var request = _helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var service = helper.GetService<Mock<IResearchFileService>>();
+            var service = _helper.GetService<Mock<IResearchFileService>>();
 
             // Act
             // Assert
@@ -132,10 +136,9 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_NoFilter_BadRequest()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
+            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
-            var service = helper.GetService<Mock<IResearchFileService>>();
+            var service = _helper.GetService<Mock<IResearchFileService>>();
 
             // Act
             // Assert
@@ -150,10 +153,9 @@ namespace Pims.Api.Test.Controllers.Research
         public void GetResearchFiles_InvalidFilter_BadRequest()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
+            var controller = _helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
-            var service = helper.GetService<Mock<IResearchFileService>>();
+            var service = _helper.GetService<Mock<IResearchFileService>>();
             var filter = new ResearchFilterModel() { CreatedOnStartDate = DateTime.Now, CreatedOnEndDate = DateTime.Now.AddDays(-1) };
 
             // Act

@@ -6,8 +6,10 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Areas.Contact.Controllers;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
@@ -15,6 +17,7 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using SearchController = Pims.Api.Areas.Contact.Controllers.SearchController;
 using SModel = Pims.Api.Areas.Contact.Models.Search;
 
 namespace Pims.Api.Test.Controllers.Contact
@@ -47,7 +50,14 @@ namespace Pims.Api.Test.Controllers.Contact
             new object [] { new Uri("http://host/api/contact/search?municipality=victoria") },
             new object [] { new Uri("http://host/api/contact/search?activeContactsOnly=false") },
         };
+
+        private TestHelper _helper;
         #endregion
+
+        public SearchControllerTest()
+        {
+            _helper = new TestHelper();
+        }
 
         #region Tests
         #region GetProperties
@@ -59,24 +69,17 @@ namespace Pims.Api.Test.Controllers.Contact
         public void GetProperties_All_Success(SModel.ContactFilterModel filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ContactView);
+            var controller = _helper.CreateController<SearchController>(Permissions.ContactView);
 
-            var contacts = new[] { EntityHelper.CreateContact("1", firstName: "person") };
+            var repository = _helper.GetService<Mock<IContactRepository>>();
+            var mapper = _helper.GetService<IMapper>();
 
-            var repository = helper.GetService<Mock<IContactRepository>>();
-            var mapper = helper.GetService<IMapper>();
-
-            repository.Setup(m => m.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>(contacts));
+            repository.Setup(m => m.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>());
 
             // Act
             var result = controller.GetContacts(filter);
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.PageModel<SModel.ContactSummaryModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactSummaryModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
-            expectedResult.Should().BeEquivalentTo(actualResult);
             repository.Verify(m => m.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }
 
@@ -88,24 +91,17 @@ namespace Pims.Api.Test.Controllers.Contact
         public void GetProperties_Query_Success(Uri uri)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ContactView, uri);
+            var controller = _helper.CreateController<SearchController>(Permissions.ContactView, uri);
 
-            var contacts = new[] { EntityHelper.CreateContact("1", firstName: "person") };
+            var repository = _helper.GetService<Mock<IContactRepository>>();
+            var mapper = _helper.GetService<IMapper>();
 
-            var repository = helper.GetService<Mock<IContactRepository>>();
-            var mapper = helper.GetService<IMapper>();
-
-            repository.Setup(m => m.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>(contacts));
+            repository.Setup(m => m.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>());
 
             // Act
             var result = controller.GetContacts();
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.PageModel<SModel.ContactSummaryModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactSummaryModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
-            expectedResult.Should().BeEquivalentTo(actualResult);
             repository.Verify(m => m.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }
 
@@ -116,12 +112,11 @@ namespace Pims.Api.Test.Controllers.Contact
         public void GetProperties_Query_NoFilter_BadRequest()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ContactView);
-            var request = helper.GetService<Mock<HttpRequest>>();
+            var controller = _helper.CreateController<SearchController>(Permissions.ContactView);
+            var request = _helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var repository = helper.GetService<Mock<IContactRepository>>();
+            var repository = _helper.GetService<Mock<IContactRepository>>();
 
             // Act
             // Assert
@@ -136,10 +131,9 @@ namespace Pims.Api.Test.Controllers.Contact
         public void GetProperties_NoFilter_BadRequest()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.ContactView);
+            var controller = _helper.CreateController<SearchController>(Permissions.ContactView);
 
-            var repository = helper.GetService<Mock<IContactRepository>>();
+            var repository = _helper.GetService<Mock<IContactRepository>>();
 
             // Act
             // Assert

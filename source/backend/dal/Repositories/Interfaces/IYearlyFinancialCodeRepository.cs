@@ -6,5 +6,7 @@ namespace Pims.Dal.Repositories
     public interface IYearlyFinancialCodeRepository : IRepository<PimsYearlyFinancialCode>
     {
         IList<PimsYearlyFinancialCode> GetAllYearlyFinancialCodes();
+
+        PimsYearlyFinancialCode Add(PimsYearlyFinancialCode pimsCode);
     }
 }

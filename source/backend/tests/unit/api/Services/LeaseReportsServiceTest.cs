@@ -17,7 +17,7 @@ using Xunit;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Dal.Test.Repositories
+namespace Pims.Api.Test.Services
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]

@@ -7,7 +7,7 @@ export class ProjectSearchResultModel {
   region?: string;
   status?: string;
   lastUpdatedBy?: string;
-  lastUpdatedDate?: Date;
+  lastUpdatedDate?: string;
 
   static fromApi(base: Api_Project): ProjectSearchResultModel {
     var newModel = new ProjectSearchResultModel();
