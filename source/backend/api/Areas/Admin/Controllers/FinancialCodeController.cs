@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -46,12 +47,37 @@ namespace Pims.Api.Areas.Admin.Controllers
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
-        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-financialcodes" })]
         public IActionResult GetFinancialCodes()
         {
             var allCodes = _financialCodeService.GetAllFinancialCodes();
             return new JsonResult(allCodes);
+        }
+
+        /// <summary>
+        /// Adds the specified financial code to the datastore.
+        /// </summary>
+        /// <param name="type">The financial code type.</param>
+        /// <param name="codeModel">The financial code to add.</param>
+        /// <returns>The created financial code.</returns>
+        [HttpPost("{type}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(FinancialCodeModel), 200)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 409)]
+        [SwaggerOperation(Tags = new[] { "admin-financialcodes" })]
+        public IActionResult AddFinancialCode(FinancialCodeTypes type, [FromBody] FinancialCodeModel codeModel)
+        {
+            try
+            {
+                var createdCode = _financialCodeService.Add(type, codeModel);
+                return new JsonResult(createdCode);
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
         }
 
         #endregion

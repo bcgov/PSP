@@ -5,6 +5,8 @@ import { Roles } from 'constants/roles';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
 import { AdminAccessRequestPage } from 'features/admin/access-request/AdminAccessRequestPage';
+import { AddFinancialCodeContainer } from 'features/admin/financial-codes/add/AddFinancialCodeContainer';
+import { AddFinancialCodeForm } from 'features/admin/financial-codes/add/AddFinancialCodeForm';
 import { ContactListPage } from 'features/contacts';
 import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
@@ -144,11 +146,24 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
           ></AppRoute>
           <AppRoute
             protected
+            exact
             path="/admin/financial-code/list"
             customComponent={FinancialCodesListView}
             layout={AuthLayout}
             role={Roles.SYSTEM_ADMINISTRATOR}
             title={getTitle('Financial Codes')}
+          ></AppRoute>
+          <AppRoute
+            protected
+            exact
+            path="/admin/financial-code/new"
+            customRender={() => (
+              <AuthLayout>
+                <AddFinancialCodeContainer View={AddFinancialCodeForm} />
+              </AuthLayout>
+            )}
+            role={Roles.SYSTEM_ADMINISTRATOR}
+            title={getTitle('Create Financial Code')}
           ></AppRoute>
           <AppRoute
             protected

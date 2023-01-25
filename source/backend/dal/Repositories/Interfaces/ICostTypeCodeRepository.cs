@@ -6,5 +6,7 @@ namespace Pims.Dal.Repositories
     public interface ICostTypeCodeRepository : IRepository<PimsCostTypeCode>
     {
         IList<PimsCostTypeCode> GetAllCostTypeCodes();
+
+        PimsCostTypeCode Add(PimsCostTypeCode pimsCode);
     }
 }

@@ -6,5 +6,7 @@ namespace Pims.Api.Services
     public interface IFinancialCodeService
     {
         IList<FinancialCodeModel> GetAllFinancialCodes();
+
+        FinancialCodeModel Add(FinancialCodeTypes type, FinancialCodeModel model);
     }
 }

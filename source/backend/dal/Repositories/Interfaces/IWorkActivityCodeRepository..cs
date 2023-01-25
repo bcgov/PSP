@@ -6,5 +6,7 @@ namespace Pims.Dal.Repositories
     public interface IWorkActivityCodeRepository : IRepository<PimsWorkActivityCode>
     {
         IList<PimsWorkActivityCode> GetAllWorkActivityCodes();
+
+        PimsWorkActivityCode Add(PimsWorkActivityCode pimsCode);
     }
 }
