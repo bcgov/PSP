@@ -1,3 +1,4 @@
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import DetailPageContainer from 'features/projects/detail/projectPages/details/DetailPageContainer';
 import { useProjectProvider } from 'hooks/providers/useProjectProvider';
@@ -98,8 +99,11 @@ const ProjectContainer: React.FunctionComponent<
   }, [project, fetchProject]);
 
   useEffect(() => setProjectLoading(loadingProject), [loadingProject, setProjectLoading]);
-
   const close = useCallback(() => onClose && onClose(), [onClose]);
+
+  if (loadingProject) {
+    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
 
   return (
     <MapSideBarLayout

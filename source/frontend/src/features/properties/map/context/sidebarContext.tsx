@@ -98,7 +98,7 @@ export const SideBarContextProvider = (props: {
         setFullWidth,
         projectLoading,
         setProject: setProjectInstance,
-        setProjectLoading,
+        setProjectLoading: setProjectLoading,
         project: project,
       }}
     >
