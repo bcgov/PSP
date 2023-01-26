@@ -8,5 +8,9 @@ namespace Pims.Dal.Repositories
         IList<PimsBusinessFunctionCode> GetAllBusinessFunctionCodes();
 
         PimsBusinessFunctionCode Add(PimsBusinessFunctionCode pimsCode);
+
+        PimsBusinessFunctionCode Update(PimsBusinessFunctionCode pimsCode);
+
+        long GetRowVersion(long id);
     }
 }

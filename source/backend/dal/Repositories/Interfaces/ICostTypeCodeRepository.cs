@@ -8,5 +8,9 @@ namespace Pims.Dal.Repositories
         IList<PimsCostTypeCode> GetAllCostTypeCodes();
 
         PimsCostTypeCode Add(PimsCostTypeCode pimsCode);
+
+        PimsCostTypeCode Update(PimsCostTypeCode pimsCode);
+
+        long GetRowVersion(long id);
     }
 }

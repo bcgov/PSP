@@ -14,7 +14,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a repository to interact with financial codes within the datasource.
     /// </summary>
-    public class CostTypeCodeRepository : BaseRepository<PimsCostTypeCode>, ICostTypeCodeRepository
+    public class CostTypeCodeRepository : IdentityBaseRepository<PimsCostTypeCode>, ICostTypeCodeRepository
     {
         #region Constructors
 
@@ -63,6 +63,11 @@ namespace Pims.Dal.Repositories
 
             Context.PimsCostTypeCodes.Add(pimsCode);
             return pimsCode;
+        }
+
+        public PimsCostTypeCode Update(PimsCostTypeCode pimsCode)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

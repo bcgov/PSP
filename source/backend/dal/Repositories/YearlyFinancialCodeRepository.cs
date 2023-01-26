@@ -14,7 +14,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a repository to interact with financial codes within the datasource.
     /// </summary>
-    public class YearlyFinancialCodeRepository : BaseRepository<PimsYearlyFinancialCode>, IYearlyFinancialCodeRepository
+    public class YearlyFinancialCodeRepository : IdentityBaseRepository<PimsYearlyFinancialCode>, IYearlyFinancialCodeRepository
     {
         #region Constructors
 
@@ -63,6 +63,11 @@ namespace Pims.Dal.Repositories
 
             Context.PimsYearlyFinancialCodes.Add(pimsCode);
             return pimsCode;
+        }
+
+        public PimsYearlyFinancialCode Update(PimsYearlyFinancialCode pimsCode)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

@@ -14,7 +14,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a repository to interact with financial codes within the datasource.
     /// </summary>
-    public class ResponsibilityCodeRepository : BaseRepository<PimsResponsibilityCode>, IResponsibilityCodeRepository
+    public class ResponsibilityCodeRepository : IdentityBaseRepository<PimsResponsibilityCode>, IResponsibilityCodeRepository
     {
         #region Constructors
 
@@ -63,6 +63,11 @@ namespace Pims.Dal.Repositories
 
             Context.PimsResponsibilityCodes.Add(pimsCode);
             return pimsCode;
+        }
+
+        public PimsResponsibilityCode Update(PimsResponsibilityCode pimsCode)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

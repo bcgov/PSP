@@ -9,5 +9,9 @@ namespace Pims.Dal.Repositories
 
         PimsChartOfAccountsCode Add(PimsChartOfAccountsCode pimsCode);
 
+        PimsChartOfAccountsCode Update(PimsChartOfAccountsCode pimsCode);
+
+        long GetRowVersion(long id);
+
     }
 }

@@ -14,7 +14,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a repository to interact with financial codes within the datasource.
     /// </summary>
-    public class ChartOfAccountsCodeRepository : BaseRepository<PimsChartOfAccountsCode>, IChartOfAccountsCodeRepository
+    public class ChartOfAccountsCodeRepository : IdentityBaseRepository<PimsChartOfAccountsCode>, IChartOfAccountsCodeRepository
     {
         #region Constructors
 
@@ -64,6 +64,11 @@ namespace Pims.Dal.Repositories
 
             Context.PimsChartOfAccountsCodes.Add(pimsCode);
             return pimsCode;
+        }
+
+        public PimsChartOfAccountsCode Update(PimsChartOfAccountsCode pimsCode)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

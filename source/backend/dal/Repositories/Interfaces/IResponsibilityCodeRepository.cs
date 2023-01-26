@@ -8,5 +8,9 @@ namespace Pims.Dal.Repositories
         IList<PimsResponsibilityCode> GetAllResponsibilityCodes();
 
         PimsResponsibilityCode Add(PimsResponsibilityCode pimsCode);
+
+        PimsResponsibilityCode Update(PimsResponsibilityCode pimsCode);
+
+        long GetRowVersion(long id);
     }
 }

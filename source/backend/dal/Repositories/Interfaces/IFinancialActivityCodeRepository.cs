@@ -8,5 +8,9 @@ namespace Pims.Dal.Repositories
         IList<PimsFinancialActivityCode> GetAllFinancialActivityCodes();
 
         PimsFinancialActivityCode Add(PimsFinancialActivityCode pimsCode);
+
+        PimsFinancialActivityCode Update(PimsFinancialActivityCode pimsCode);
+
+        long GetRowVersion(long id);
     }
 }

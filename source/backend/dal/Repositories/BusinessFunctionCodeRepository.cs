@@ -14,7 +14,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a repository to interact with financial codes within the datasource.
     /// </summary>
-    public class BusinessFunctionCodeRepository : BaseRepository<PimsBusinessFunctionCode>, IBusinessFunctionCodeRepository
+    public class BusinessFunctionCodeRepository : IdentityBaseRepository<PimsBusinessFunctionCode>, IBusinessFunctionCodeRepository
     {
         #region Constructors
 
@@ -63,6 +63,11 @@ namespace Pims.Dal.Repositories
 
             Context.PimsBusinessFunctionCodes.Add(pimsCode);
             return pimsCode;
+        }
+
+        public PimsBusinessFunctionCode Update(PimsBusinessFunctionCode pimsCode)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

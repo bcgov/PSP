@@ -8,5 +8,9 @@ namespace Pims.Dal.Repositories
         IList<PimsWorkActivityCode> GetAllWorkActivityCodes();
 
         PimsWorkActivityCode Add(PimsWorkActivityCode pimsCode);
+
+        PimsWorkActivityCode Update(PimsWorkActivityCode pimsCode);
+
+        long GetRowVersion(long id);
     }
 }
