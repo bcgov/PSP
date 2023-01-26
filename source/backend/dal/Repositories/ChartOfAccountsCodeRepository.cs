@@ -70,6 +70,11 @@ namespace Pims.Dal.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool IsDuplicate(PimsChartOfAccountsCode pimsCode)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

@@ -13,5 +13,6 @@ namespace Pims.Dal.Repositories
 
         long GetRowVersion(long id);
 
+        bool IsDuplicate(PimsChartOfAccountsCode pimsCode);
     }
 }

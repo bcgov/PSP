@@ -31,9 +31,21 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
+        /// Retrieves the entity with the specified id.
+        /// NOTE: This does NOT load any related date, only the main entity values.
+        /// </summary>
+        /// <param name="id">The entity Id.</param>
+        /// <returns>The entity.</returns>
+        public T_Entity GetById(long id)
+        {
+            return Context.Set<T_Entity>().AsNoTracking()
+                .FirstOrDefault(x => x.Id == id) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
         /// Retrieves the row version of the entity with the specified id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">The entity Id.</param>
         /// <returns>The entity row version.</returns>
         public long GetRowVersion(long id)
         {

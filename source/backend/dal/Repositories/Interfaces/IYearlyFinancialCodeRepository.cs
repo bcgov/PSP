@@ -12,5 +12,7 @@ namespace Pims.Dal.Repositories
         PimsYearlyFinancialCode Update(PimsYearlyFinancialCode pimsCode);
 
         long GetRowVersion(long id);
+
+        bool IsDuplicate(PimsYearlyFinancialCode pimsCode);
     }
 }

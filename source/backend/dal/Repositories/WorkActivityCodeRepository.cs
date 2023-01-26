@@ -69,6 +69,11 @@ namespace Pims.Dal.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool IsDuplicate(PimsWorkActivityCode pimsCode)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

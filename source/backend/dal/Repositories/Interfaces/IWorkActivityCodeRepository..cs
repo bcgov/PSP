@@ -12,5 +12,7 @@ namespace Pims.Dal.Repositories
         PimsWorkActivityCode Update(PimsWorkActivityCode pimsCode);
 
         long GetRowVersion(long id);
+
+        bool IsDuplicate(PimsWorkActivityCode pimsCode);
     }
 }
