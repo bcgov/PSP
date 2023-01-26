@@ -1,5 +1,5 @@
-import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/mockProjects';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import { mockProjectGetResponse } from 'mocks/mockProjects';
+import { render, RenderOptions } from 'utils/test-utils';
 
 import ProjectSummaryView, { IProjectSummaryViewProps } from './ProjectSummaryView';
 
