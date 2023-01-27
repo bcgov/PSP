@@ -12,7 +12,7 @@ using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Dal.Test.Services
+namespace Pims.Dal.Test.Repositories
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]

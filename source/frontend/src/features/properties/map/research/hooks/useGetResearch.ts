@@ -19,7 +19,6 @@ export const useGetResearch = () => {
       [getResearchFile],
     ),
     requestName: 'retrieveResearchFile',
-    onSuccess: useCallback(() => toast.success('Research File retrieved'), []),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);

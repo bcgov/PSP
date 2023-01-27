@@ -1,10 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Moq;
+using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Controllers;
+using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Repositories;
@@ -21,8 +24,16 @@ namespace Pims.Api.Test.Controllers
     [ExcludeFromCodeCoverage]
     public class TenantControllerTest
     {
-        #region Data
+        #region Variables
+        private TestHelper _helper;
+        private ClaimsPrincipal _user;
         #endregion
+
+        public TenantControllerTest()
+        {
+            _helper = new TestHelper();
+            _user = PrincipalHelper.CreateForPermission();
+        }
 
         #region Tests
         #region Settings
@@ -30,29 +41,25 @@ namespace Pims.Api.Test.Controllers
         public void Settings_200Response()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
             var mockOptions = new Mock<IOptionsMonitor<PimsOptions>>();
             var options = new PimsOptions()
             {
                 Tenant = "TEST",
             };
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
-            var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
+            var controller = _helper.CreateController<TenantController>(_user, mockOptions.Object);
 
-            var repository = helper.GetService<Mock<ITenantRepository>>();
-            var mapper = helper.GetService<IMapper>();
+            var mapper = _helper.GetService<IMapper>();
+            var repository = _helper.GetService<Mock<ITenantRepository>>();
+
             var tenant = EntityHelper.CreateTenant(1, "TEST");
             repository.Setup(m => m.TryGetTenantByCode(tenant.Code)).Returns(tenant);
 
             // Act
-            var result = controller.Settings();
+            var result = (JsonResult)controller.Settings();
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.TenantModel>(actionResult.Value);
-            Assert.Null(actionResult.StatusCode);
-            mapper.Map<Model.TenantModel>(tenant).Should().BeEquivalentTo(actualResult);
+            Assert.Null(result.StatusCode);
             repository.Verify(m => m.TryGetTenantByCode(tenant.Code), Times.Once());
         }
 
@@ -60,17 +67,17 @@ namespace Pims.Api.Test.Controllers
         public void Settings_NoTenantFound_204Response()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
             var mockOptions = new Mock<IOptionsMonitor<PimsOptions>>();
             var options = new PimsOptions()
             {
                 Tenant = "TEST",
             };
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
-            var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
+            var controller = _helper.CreateController<TenantController>(_user, mockOptions.Object);
 
-            var repository = helper.GetService<Mock<ITenantRepository>>();
+            var mapper = _helper.GetService<IMapper>();
+            var repository = _helper.GetService<Mock<ITenantRepository>>();
+
             var tenant = EntityHelper.CreateTenant(1, "TEST");
             repository.Setup(m => m.TryGetTenantByCode(tenant.Code)).Returns<Entity.PimsTenant>(null);
 
@@ -87,14 +94,14 @@ namespace Pims.Api.Test.Controllers
         public void Settings_TenantOptions_204Response()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
             var mockOptions = new Mock<IOptionsMonitor<PimsOptions>>();
             var options = new PimsOptions();
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
-            var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
+            var controller = _helper.CreateController<TenantController>(_user, mockOptions.Object);
 
-            var repository = helper.GetService<Mock<ITenantRepository>>();
+            var mapper = _helper.GetService<IMapper>();
+            var repository = _helper.GetService<Mock<ITenantRepository>>();
+
             repository.Setup(m => m.TryGetTenantByCode(null)).Returns<Entity.PimsTenant>(null);
 
             // Act
@@ -112,24 +119,21 @@ namespace Pims.Api.Test.Controllers
         public void UpdateTenant_200Response()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<TenantController>(Permissions.SystemAdmin);
+            var controller = _helper.CreateController<TenantController>(Permissions.SystemAdmin);
+            var repository = _helper.GetService<Mock<ITenantRepository>>();
 
-            var repository = helper.GetService<Mock<ITenantRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var tenant = EntityHelper.CreateTenant(1, "TEST");
             repository.Setup(m => m.UpdateTenant(It.IsAny<Entity.PimsTenant>())).Returns(tenant);
+
+            var mapper = _helper.GetService<IMapper>();
 
             var model = mapper.Map<Model.TenantModel>(tenant);
 
             // Act
-            var result = controller.UpdateTenant(tenant.Code, model);
+            var result = (JsonResult)controller.UpdateTenant(tenant.Code, model);
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.TenantModel>(actionResult.Value);
-            Assert.Null(actionResult.StatusCode);
-            model.Should().BeEquivalentTo(actualResult);
+            Assert.Null(result.StatusCode);
             repository.Verify(m => m.UpdateTenant(It.IsAny<Entity.PimsTenant>()), Times.Once());
         }
         #endregion

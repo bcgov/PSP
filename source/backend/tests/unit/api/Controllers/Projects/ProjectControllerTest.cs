@@ -26,8 +26,18 @@ namespace Pims.Api.Test.Controllers
     public class ProjectControllerTest
     {
         #region Variables
-
+        private Mock<IProjectService> _service;
+        private ProjectController _controller;
+        private IMapper _mapper;
         #endregion
+
+        public ProjectControllerTest()
+        {
+            var helper = new TestHelper();
+            _controller = helper.CreateController< ProjectController>(Permissions.ProjectAdd, Permissions.ProjectEdit, Permissions.ProjectView);
+            _mapper = helper.GetService<IMapper>();
+            _service = helper.GetService<Mock<IProjectService>>();
+        }
 
         #region Tests
         /// <summary>
@@ -37,22 +47,17 @@ namespace Pims.Api.Test.Controllers
         public void SearchProjects_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<ProjectController>(Permissions.AcquisitionFileAdd); // TODO: set permission correctly
             var project = EntityHelper.CreateProject(1, "7", "Test Project");
             var projectList = new List<PimsProject>() { project };
 
-            var service = helper.GetService<Mock<IProjectService>>();
-            var mapper = helper.GetService<IMapper>();
-
-            service.Setup(m => m.SearchProjects(It.IsAny<string>(), It.IsAny<int>()))
+            _service.Setup(m => m.SearchProjects(It.IsAny<string>(), It.IsAny<int>()))
                 .Returns(projectList);
 
             // Act
-            var result = controller.SearchProjects("test string", 5);
+            var result = _controller.SearchProjects("test string", 5);
 
             // Assert
-            service.Verify(m => m.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+            _service.Verify(m => m.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
         }
 
         /// <summary>
@@ -63,10 +68,9 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<ProjectController>(Permissions.ActivityEdit);
 
             // Act
-            Action act = () => controller.SearchProjects("", 7);
+            Action act = () => _controller.SearchProjects("", 7);
 
             // Assert
             act.Should().Throw<BadRequestException>();

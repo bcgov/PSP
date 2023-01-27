@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "3.1.0-46.5",
+  "version": "3.1.0-46.10",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -115,7 +115,8 @@
   },
   "overrides": {
     "loader-utils": "2.0.4",
-    "decode-uri-component": "0.2.2"
+    "decode-uri-component": "0.2.2",
+    "json5": "1.0.2"
   },
   "scripts": {
     "start": "react-app-rewired start",

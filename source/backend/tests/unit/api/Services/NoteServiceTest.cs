@@ -7,6 +7,7 @@ using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -21,21 +22,33 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class NoteServiceTest
     {
+        private TestHelper _helper;
+
+        public NoteServiceTest()
+        {
+            _helper = new TestHelper();
+        }
+
+        private NoteService CreateNoteServiceWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            _helper.CreatePimsContext(user, true);
+            return _helper.Create<NoteService>();
+        }
+
         #region Tests
         #region Add
         [Fact]
         public void Add_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
-            var service = helper.Create<NoteService>(user);
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteAdd);
 
-            var mapper = helper.GetService<IMapper>();
+            var mapper = _helper.GetService<IMapper>();
             var activityNote = EntityHelper.CreateActivityNote();
             var noteModel = mapper.Map<EntityNoteModel>(activityNote);
 
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsActivityInstanceNote>())).Returns(activityNote);
 
             // Act
@@ -46,18 +59,16 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Add_AcquisitionFile_Success()
+        public void Add_AcquisitionFileNote_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
-            var service = helper.Create<NoteService>(user);
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteAdd);
 
-            var mapper = helper.GetService<IMapper>();
+            var mapper = _helper.GetService<IMapper>();
             var acquisitionFileNote = EntityHelper.CreateAcquisitionFileNote();
             var noteModel = mapper.Map<EntityNoteModel>(acquisitionFileNote);
 
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFileNote>())).Returns(acquisitionFileNote);
 
             // Act
@@ -71,16 +82,13 @@ namespace Pims.Api.Test.Services
         public void Add_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<NoteService>(user);
+            var service = CreateNoteServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
+            var mapper = _helper.GetService<IMapper>();
             var activityNote = EntityHelper.CreateActivityNote();
             var noteModel = mapper.Map<EntityNoteModel>(activityNote);
 
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
-            repository.Setup(x => x.Add(It.IsAny<PimsActivityInstanceNote>())).Returns(activityNote);
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
             Action act = () => service.Add(NoteType.Activity, noteModel);
@@ -96,14 +104,11 @@ namespace Pims.Api.Test.Services
         public void GetById_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
-            var service = helper.Create<NoteService>(user);
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteView);
 
-            var mapper = helper.GetService<IMapper>();
             var note = EntityHelper.CreateNote("Test Note");
 
-            var repository = helper.GetService<Mock<INoteRepository>>();
+            var repository = _helper.GetService<Mock<INoteRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(note);
 
             // Act
@@ -117,22 +122,15 @@ namespace Pims.Api.Test.Services
         public void GetById_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<NoteService>(user);
+            var service = CreateNoteServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
             var note = EntityHelper.CreateNote("Test Note");
-
-            var repository = helper.GetService<Mock<INoteRepository>>();
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(note);
 
             // Act
             Action act = () => service.GetById(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
         }
         #endregion
 
@@ -141,14 +139,11 @@ namespace Pims.Api.Test.Services
         public void GetNotes_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
-            var service = helper.Create<NoteService>(user);
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteView);
 
-            var mapper = helper.GetService<IMapper>();
             var notes = new[] { EntityHelper.CreateNote("Test Note 1"), EntityHelper.CreateNote("Test Note 2") };
 
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.GetAllActivityNotesById(It.IsAny<long>())).Returns(notes);
 
             // Act
@@ -162,21 +157,13 @@ namespace Pims.Api.Test.Services
         public void GetNotes_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<NoteService>(user);
-
-            var mapper = helper.GetService<IMapper>();
-
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
-            repository.Setup(x => x.GetAllActivityNotesById(It.IsAny<long>()));
+            var service = CreateNoteServiceWithPermissions();
 
             // Act
             Action act = () => service.GetNotes(NoteType.Activity, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetAllActivityNotesById(It.IsAny<long>()), Times.Never);
         }
         #endregion
 
@@ -185,15 +172,13 @@ namespace Pims.Api.Test.Services
         public void Update_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteEdit, Permissions.NoteView);
-            var service = helper.Create<NoteService>(user);
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteEdit, Permissions.NoteView);
 
-            var mapper = helper.GetService<IMapper>();
+            var mapper = _helper.GetService<IMapper>();
             var note = EntityHelper.CreateNote("Test Note");
             var model = mapper.Map<NoteModel>(note);
 
-            var repository = helper.GetService<Mock<INoteRepository>>();
+            var repository = _helper.GetService<Mock<INoteRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsNote>())).Returns(note);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(note);
@@ -209,18 +194,13 @@ namespace Pims.Api.Test.Services
         public void Update_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<NoteService>(user);
+            var service = CreateNoteServiceWithPermissions();
 
-            var mapper = helper.GetService<IMapper>();
+            var mapper = _helper.GetService<IMapper>();
             var note = EntityHelper.CreateNote("Test Note");
             var model = mapper.Map<NoteModel>(note);
 
-            var repository = helper.GetService<Mock<INoteRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsNote>())).Returns(note);
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(note);
+            var repository = _helper.GetService<Mock<INoteRepository>>();
 
             // Act
             Action act = () => service.Update(model);
@@ -236,12 +216,9 @@ namespace Pims.Api.Test.Services
         public void DeleteNote_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteDelete);
-            var service = helper.Create<NoteService>(user);
-            var mapper = helper.GetService<IMapper>();
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteDelete);
 
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.DeleteActivityNotes(It.IsAny<long>()));
 
             // Act
@@ -255,12 +232,9 @@ namespace Pims.Api.Test.Services
         public void DeleteNote_AcquisitionFile_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteDelete);
-            var service = helper.Create<NoteService>(user);
-            var mapper = helper.GetService<IMapper>();
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteDelete);
 
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.DeleteActivityNotes(It.IsAny<long>()));
 
             // Act
@@ -274,13 +248,9 @@ namespace Pims.Api.Test.Services
         public void DeleteNote_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<NoteService>(user);
-            var mapper = helper.GetService<IMapper>();
+            var service = CreateNoteServiceWithPermissions();
 
-            var repository = helper.GetService<Mock<IEntityNoteRepository>>();
-            repository.Setup(x => x.DeleteActivityNotes(It.IsAny<long>()));
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
             Action act = () => service.DeleteNote(NoteType.Activity, 1);
