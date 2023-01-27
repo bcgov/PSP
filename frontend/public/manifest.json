@@ -1,0 +1,31 @@
+{
+  "short_name": "PSP",
+  "name": "Property Inventory Management System",
+  "icons": [
+    {
+      "src": "tenants/moti/favicon.ico",
+      "sizes": "17x17"
+    },
+    {
+      "src": "tenants/moti/PIMS-logo.png",
+      "sizes": "161x140"
+    },
+    {
+      "src": "tenants/moti/PIMS-logo-with-text.png",
+      "sizes": "574x136"
+    },
+    {
+      "src": "tenants/moti/background-image.webp",
+      "sizes": "1920x1186",
+      "type": "image/webp"
+    },
+    {
+      "src": "tenants/moti/pims-logo.png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

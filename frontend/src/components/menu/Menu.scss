@@ -1,0 +1,58 @@
+.Menu-root {
+  position: relative;
+  border: 0.1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .Menu-button {
+    font-size: 1.4rem;
+  }
+
+  .Menu-items {
+    box-shadow: 0.2rem 0.2rem 0.5rem #888888;
+    background-color: #fff;
+    position: absolute;
+    display: none !important;
+    z-index: 700;
+    flex-direction: column;
+    &.open {
+      display: flex !important;
+    }
+
+    &.left {
+      left: 0;
+    }
+
+    &.top {
+      bottom: 0;
+    }
+
+    .Menu-filter {
+      margin: 0.5rem;
+    }
+
+    .Menu-options {
+      box-shadow: 0.2rem 0.2rem 0.5rem #888888;
+      z-index: 1000;
+      &.scrollable {
+        max-height: 22rem;
+        overflow-y: scroll;
+      }
+    }
+
+    .Menu-item {
+      width: 100% !important;
+      border-radius: 0rem !important;
+      padding: 0.8rem 1.4rem;
+      font-size: 1.2rem;
+      text-align: left;
+      &:hover {
+        background-color: lighten(grey, 45%);
+      }
+      &:active {
+        background-color: #ffc107 !important;
+      }
+    }
+  }
+}

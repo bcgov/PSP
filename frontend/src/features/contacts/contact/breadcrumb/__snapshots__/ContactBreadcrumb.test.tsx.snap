@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactBreadCrumb component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  grid-area: breadcrumb;
+}
+
+.c0 .breadcrumb-item:not(:first-child)::before {
+  content: '>';
+  width: 0px;
+  margin-right: 1rem;
+}
+
+.c0 .breadcrumb li a {
+  max-height: 24px;
+}
+
+.c0 ol {
+  background-color: white;
+}
+
+<nav
+    aria-label="breadcrumb"
+    class="c0"
+  >
+    <ol
+      class="breadcrumb"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          href="/contact/list"
+        >
+          Contact Search
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="breadcrumb-item active"
+      >
+        Contact Details
+      </li>
+    </ol>
+  </nav>
+</DocumentFragment>
+`;

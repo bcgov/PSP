@@ -1,0 +1,38 @@
+/**
+ * Claims enum, provides a list of permissions that govern what actions are available to an authenticated user.
+ */
+export enum Claims {
+  LEASE_VIEW = 'lease-view',
+  LEASE_ADD = 'lease-add',
+  LEASE_EDIT = 'lease-edit',
+  LEASE_DELETE = 'lease-delete',
+  CONTACT_EDIT = 'contact-edit',
+  CONTACT_VIEW = 'contact-view',
+  CONTACT_ADD = 'contact-add',
+  PROPERTY_VIEW = 'property-view',
+  PROPERTY_EDIT = 'property-edit',
+  PROPERTY_ADD = 'property-add',
+  PROPERTY_DELETE = 'property-delete',
+  ADMIN_USERS = 'admin-users',
+  ADMIN_ROLES = 'admin-roles',
+  ADMIN_PROPERTIES = 'admin-properties',
+  ADMIN_PROJECTS = 'admin-projects',
+  RESEARCH_VIEW = 'researchfile-view',
+  RESEARCH_ADD = 'researchfile-add',
+  RESEARCH_EDIT = 'researchfile-edit',
+  RESEARCH_DELETE = 'researchfile-delete',
+  ACQUISITION_EDIT = 'acquisitionfile-edit',
+  ACQUISITION_VIEW = 'acquisitionfile-view',
+  ACQUISITION_ADD = 'acquisitionfile-add',
+  ACQUISITION_DELETE = 'acquisitionfile-delete',
+  NOTE_EDIT = 'note-edit',
+  NOTE_VIEW = 'note-view',
+  NOTE_ADD = 'note-add',
+  NOTE_DELETE = 'note-delete',
+  DOCUMENT_EDIT = 'document-edit',
+  DOCUMENT_VIEW = 'document-view',
+  DOCUMENT_ADD = 'document-add',
+  DOCUMENT_DELETE = 'document-delete',
+}
+
+export default Claims;

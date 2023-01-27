@@ -1,0 +1,48 @@
+@import '~assets/scss/styles.scss';
+.GeocoderAutoComplete {
+  width: 25rem;
+  font-size: 1.6rem;
+  position: relative;
+}
+
+.GeocoderAutoComplete form.Control {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 1.6rem;
+  box-sizing: border-box;
+  flex: 1 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.suggestionList {
+  background-color: white;
+  border-style: solid;
+  border-color: lightslategray;
+  border-width: thin;
+  font-size: 1.4rem;
+  text-align: left;
+  max-height: 60rem;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  overflow-y: auto;
+  z-index: 999;
+  top: 0rem;
+  left: -5rem;
+}
+
+.GeocoderAutoComplete option {
+  padding: 1rem 0.5rem;
+  word-wrap: break-word;
+  width: 40rem;
+  overflow: hidden;
+  cursor: pointer;
+  color: $text-color;
+
+  &:hover {
+    background-color: $active-color;
+    color: #fff;
+  }
+}

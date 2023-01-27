@@ -1,0 +1,531 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccessRequestForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+.c2 {
+  position: absolute;
+  top: 1rem;
+  right: -0.5rem;
+}
+
+<form
+    class="userInfo"
+    novalidate=""
+  >
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
+          IDIR/BCeID:
+        </label>
+      </div>
+      <div
+        class="c1 text-left col"
+      >
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-businessIdentifierValue"
+            name="businessIdentifierValue"
+            placeholder="desmith@idir"
+            readonly=""
+            title="desmith@idir"
+            type="text"
+            value="desmith@idir"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
+          First name:
+        </label>
+      </div>
+      <div
+        class="c1 text-left col"
+      >
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-firstName"
+            name="firstName"
+            placeholder="Devin"
+            readonly=""
+            title="Devin"
+            type="text"
+            value="Devin"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
+          Last name:
+        </label>
+      </div>
+      <div
+        class="c1 text-left col"
+      >
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-surname"
+            name="surname"
+            placeholder="Smith"
+            readonly=""
+            title="Smith"
+            type="text"
+            value="Smith"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
+          Email:
+        </label>
+      </div>
+      <div
+        class="c1 text-left col"
+      >
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-email"
+            name="email"
+            placeholder="devin.smith@gov.bc.ca"
+            readonly=""
+            title="devin.smith@gov.bc.ca"
+            type="email"
+            value="devin.smith@gov.bc.ca"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
+          Position:
+        </label>
+      </div>
+      <div
+        class="c1 text-left col"
+      >
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-position"
+            name="position"
+            placeholder="e.g. Property Analyst, Integrated Transportation & Infrastructure Services"
+            title="pos"
+            type="text"
+            value="pos"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
+          Role:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
+      >
+        <div
+          class="form-group"
+        >
+          <select
+            class="form-select form-control"
+            id="input-roleId"
+            name="roleId"
+          >
+            <option
+              value=""
+            >
+              Select...
+            </option>
+            <option
+              class="option"
+              value="6"
+            >
+              Finance
+            </option>
+            <option
+              class="option"
+              value="7"
+            >
+              Functional
+            </option>
+            <option
+              class="option"
+              value="8"
+            >
+              Functional (Restricted)
+            </option>
+            <option
+              class="option"
+              value="9"
+            >
+              Read Only
+            </option>
+          </select>
+        </div>
+        <svg
+          class="c2 tooltip-icon"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
+          Region:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
+      >
+        <div
+          class="form-group"
+        >
+          <select
+            class="form-select form-control"
+            id="input-regionCodeId"
+            name="regionCodeId"
+          >
+            <option
+              value=""
+            >
+              Select MotI Region
+            </option>
+            <option
+              class="option"
+              value="1"
+            >
+              South Coast Region
+            </option>
+            <option
+              class="option"
+              value="2"
+            >
+              Southern Interior Region
+            </option>
+            <option
+              class="option"
+              value="3"
+            >
+              Northern Region
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
+          Notes:
+        </label>
+      </div>
+      <div
+        class="c1 text-left col"
+      >
+        <div
+          class="textarea input form-group"
+        >
+          <textarea
+            class="form-control"
+            id="input-note"
+            name="note"
+            placeholder="Please specify why you need access to PIMS and include your manager's name."
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="col-2"
+      />
+      <div
+        class="col"
+      >
+        <p>
+          By clicking "Submit" to request access, you agree to our 
+          <a
+            href="https://www2.gov.bc.ca//gov/content/home/disclaimer"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Terms and Conditions
+          </a>
+           and that you have read our 
+          <a
+            href="http://www.gov.bc.ca/gov/content/home/privacy"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Privacy Policy
+          </a>
+          .
+        </p>
+      </div>
+    </div>
+    <div
+      class="justify-content-md-center row"
+    >
+      <div
+        class="cancelSave btn-toolbar"
+        role="toolbar"
+      >
+        <button
+          class="c3 Button mr-2 btn btn-primary"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            Cancel
+          </div>
+        </button>
+        <button
+          class="c3 Button btn btn-primary"
+          type="submit"
+        >
+          <div
+            class="Button__value"
+          >
+            Update
+          </div>
+        </button>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

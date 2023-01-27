@@ -1,0 +1,58 @@
+// Form Controls
+$fc-height: 4.4rem;
+$fc-border-color: #ccc;
+$fc-bg: #fff;
+$fc-inner-shadow: 0.2rem 0.2rem 0.2rem #eee;
+$fc-placeholder-color: #999;
+$fc-focus-border-color: #5091cd;
+$fc-invalid-color: #d8292f;
+$fc-invalid-bg: #f2f2f2;
+// --- VALIDATION ---
+.form-group.required {
+  & .control-label {
+    &::after {
+      content: ' *';
+      color: $fc-invalid-color;
+      font-weight: 700;
+    }
+  }
+  &.horizontal {
+    display: flex;
+    :last-child {
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+.form-check-input {
+  margin-left: -2rem;
+}
+
+.error-states {
+  color: $fc-invalid-color;
+}
+
+.input-number {
+  text-align: right;
+}
+
+.form-control-sm {
+  height: calc(1.5em + 0.8rem + 2px);
+  padding: 0.4rem 0.58rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+}
+
+.form-control {
+  font-size: 1.6rem;
+  padding: 0.6rem 1.2rem;
+  height: calc(1.5em + 1.2rem + 2px);
+  border-radius: 0.4rem;
+  text-overflow: ellipsis;
+}
+
+.form-select:not(.is-invalid),
+.form-control:not(.is-invalid) {
+  border: 0.1rem solid #606060;
+}

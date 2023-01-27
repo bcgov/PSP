@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeaseStatusSummary component renders as expected when active 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  max-height: 8rem;
+  min-width: 11rem;
+  white-space: nowrap;
+  border-radius: 1rem;
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border: 1px solid;
+  padding: 0.2rem 1rem;
+  height: 90%;
+}
+
+.c0 b {
+  padding: 0.25rem 0;
+  color: black;
+}
+
+.c0.active {
+  border: 1px solid;
+}
+
+.c0.terminated {
+  border: 1px solid;
+}
+
+.c0.discard {
+  border: 1px solid;
+}
+
+.c0.draft {
+  border: 1px solid;
+}
+
+<div
+    class="c0 active"
+  >
+    <b>
+      Active
+    </b>
+    <b />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  max-height: 8rem;
+  min-width: 11rem;
+  white-space: nowrap;
+  border-radius: 1rem;
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border: 1px solid;
+  padding: 0.2rem 1rem;
+  height: 90%;
+}
+
+.c0 b {
+  padding: 0.25rem 0;
+  color: black;
+}
+
+.c0.active {
+  border: 1px solid;
+}
+
+.c0.terminated {
+  border: 1px solid;
+}
+
+.c0.discard {
+  border: 1px solid;
+}
+
+.c0.draft {
+  border: 1px solid;
+}
+
+<div
+    class="c0 active"
+  >
+    <b>
+      Active
+    </b>
+    <b />
+  </div>
+</DocumentFragment>
+`;

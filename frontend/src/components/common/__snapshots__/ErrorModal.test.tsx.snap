@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error modal tests... renders correctly 1`] = `
+<div
+  aria-hidden="true"
+>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+</div>
+`;

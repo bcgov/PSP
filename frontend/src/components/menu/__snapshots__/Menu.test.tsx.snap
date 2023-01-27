@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="Menu-root"
+    >
+      <div
+        class="Menu-button"
+      >
+        <span>
+          Menu
+        </span>
+      </div>
+      <div
+        class="Menu-items"
+        style="width: 10.0rem;"
+      >
+        <div
+          class="Menu-options scrollable list-group"
+        >
+          <div
+            class="Menu-item list-group-item"
+          >
+            Option 1
+          </div>
+          <div
+            class="Menu-item list-group-item"
+          >
+            Option 2
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

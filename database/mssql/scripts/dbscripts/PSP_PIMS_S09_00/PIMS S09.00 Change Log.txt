@@ -1,0 +1,100 @@
+PSP_PIMS S09.00 Sprint 9 2021-Aug-19
+- Altered PIMS_PROPERTY
+  - BOUNDARY altered from GEOGRAPHY to GEOMETRY
+  - LOCATION altered from GEOGRAPHY to GEOMETRY
+  - LOCATION altered from NOT NULL to NULL
+- Altered PIMS_ACCESS_REQUEST
+  - Added NOTE column
+- Altered PIMS_USER
+  - Added POSITION column
+  - Added NOTE column
+  - Added LAST_LOGIN column
+- Added 52_DML_PIMS_PROPERTY_STATUS_TYPE build script
+- Requires additional metadata to meet standards
+
+PSP_PIMS S08.01 Sprint 8 2021-Aug-17
+- Added PIMSX_TableDefinitions table
+- Added generated triggers
+- Added generated history tables
+- Requires additional metadata to meet standards
+
+PSP_PIMS S08.00 Sprint 8 2021-Aug-17
+- Altered PIMS_ADDRESS
+  - Column MUNICIPALITY_NAME length increased from 20 to 200 bytes
+ _ Partial metadata addedd to the following tables:
+   - PIMS_AREA_UNIT_TYPE
+   - PIMS_PROPERTY_TENURE_TYPE
+- Requires additional metadata to meet standards
+- Triggers remain to be generated
+- History tables remain to be generated
+
+PSP_PIMS S07.00 Sprint 7 2021-Aug-04
+- Added numerous indices to enforce uniqueness and support foreign keys
+- Altered PIMS_ADDRESS
+  - Column STREET_ADDRESS renamed to STREET_ADDRESS_1
+  - Column UNIT_NUMBER renamed to STREET_ADDRESS_2
+  - Column STREET_ADDRESS_3 added
+- Altered PIMS_PROPERTY
+  - Column PROPERTY_STATUS_TYPE_CODE added
+  - Column PROPERTY_DATA_SOURCE_TYPE_CODE added
+  - Column PROPERTY_DATA_SOURCE_EFFECTIVE_DATE added
+  - Column IS_PROPERTY_OF_INTEREST added
+- Altered PIMS_ORGANIZATION
+  - Column ORG_IDENTIFIER_TYPE_CODE added
+  - Column ORGANIZATION_IDENTIFIER added
+- Added the following tables
+  - __EFMigrationsHistory
+  - PIMS_PROPERTY_DATA_SOURCE_TYPE
+  - PIMS_PROPERTY_STATUS_TYPE
+  - PIMS_ORG_IDENTIFIER_TYPE
+  - PIMS_PROPERTY_EVALUATION
+- Requires additional metadata to meet standards
+- Triggers remain to be generated
+- History tables remain to be generated
+
+PSP_PIMS V02.01 Sprint 6 2021-Jul-21
+- Model was refactored to meet MoTI business requirements.
+  - Model now conforms to the PSP Conceptual Data Model
+- Triggers remain to be generated
+- History tables remain to be generated
+- Added the following tables:
+  - PIMS_PROPERTY_ORGANIZATION
+  - PIMS_AREA_UNIT_TYPE
+  - PIMS_PROPERTY_TENURE_TYPE
+-  Altered the following tables:
+  - PIMS_REGION
+    - REGION_CODE now SMALLINT
+  - PIMS_DISTRICT
+    - DISTRICT_CODE now SMALLINT
+    - REGION_CODE now SMALLINT
+  - PIMS_ADDRESS
+    - DISTRICT_CODE now SMALLINT
+    - REGION_CODE now SMALLINT
+    - PROVINCE_STATE_ID now SMALLINT
+    - COUNTRY_ID now SMALLINT
+  - PIMS_COUNTRY
+    - COUNTRY_ID now SMALLINT
+  - PIMS_PROVINCE_STATE
+    - PROVINCE_STATE_ID now SMALLINT
+    - COUNTRY_ID now SMALLINT
+  - PIMS_ORGANIZATION
+    - DISTRICT_CODE now SMALLINT
+    - REGION_CODE now SMALLINT
+  - PIMS_PROPERTY
+    - DISTRICT_CODE now SMALLINT
+    - REGION_CODE now SMALLINT
+  - PIMS_PROJECT_STATUS_TYPE
+    - Added column CODE_GROUP
+    - Added column TEXT
+    - Added column IS_MILESTONE
+    - Added column IS_TERMINAL
+- Requires additional metadata to meet standards
+
+PSP_PIMS V01.00 (Pre-Release) Sprint 4 2021-Jun-15
+- Initial release
+- Compliant with MoTI standards
+- Requires additional metadata to meet standards
+
+PSP_PIMS 0.1 (Pre-Release) Sprint F 2021-Apr-08
+- Initial release
+- Requires additional metadata to meet standards

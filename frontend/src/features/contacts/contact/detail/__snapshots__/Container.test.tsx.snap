@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactViewContainer component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c1 {
+  grid-area: breadcrumb;
+}
+
+.c1 .breadcrumb-item:not(:first-child)::before {
+  content: '>';
+  width: 0px;
+  margin-right: 1rem;
+}
+
+.c1 .breadcrumb li a {
+  max-height: 24px;
+}
+
+.c1 ol {
+  background-color: white;
+}
+
+.c3 {
+  text-align: left;
+}
+
+.c2 {
+  text-align: left;
+}
+
+.c0 {
+  height: 100%;
+  width: 50%;
+  min-width: 30rem;
+  overflow: auto;
+  padding: 1rem;
+}
+
+<div
+    class="c0"
+  >
+    <nav
+      aria-label="breadcrumb"
+      class="c1"
+    >
+      <ol
+        class="breadcrumb"
+      >
+        <li
+          class="breadcrumb-item"
+        >
+          <a
+            href="/contact/list"
+          >
+            Contact Search
+          </a>
+        </li>
+        <li
+          aria-current="page"
+          class="breadcrumb-item active"
+        >
+          Contact Details
+        </li>
+      </ol>
+    </nav>
+    <div
+      class="c2 row"
+    >
+      <div
+        class="col"
+      >
+        <h1
+          class="c3"
+        >
+          Contact
+        </h1>
+      </div>
+      <div
+        class="ml-auto col-md-auto"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

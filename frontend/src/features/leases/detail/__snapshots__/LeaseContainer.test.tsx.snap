@@ -1,0 +1,513 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeaseContainer component renders as expected 1`] = `
+<DocumentFragment>
+  @media only screen and (max-width:1250px) {
+
+}
+
+@media only screen and (max-width:1250px) {
+
+}
+
+@media only screen and (max-width:1250px) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  @media only screen and (max-width:1250px) {
+
+}
+
+@media only screen and (max-width:1250px) {
+
+}
+
+@media only screen and (max-width:1250px) {
+
+}
+
+<div
+    class="container"
+  />
+  @media only screen and (max-width:1250px) {
+
+}
+
+@media only screen and (max-width:1250px) {
+
+}
+
+@media only screen and (max-width:1250px) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  .c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  grid-area: breadcrumb;
+}
+
+.c1 .breadcrumb-item:not(:first-child)::before {
+  content: '>';
+  width: 0px;
+  margin-right: 1rem;
+}
+
+.c1 .breadcrumb li a {
+  max-height: 24px;
+}
+
+.c1 ol {
+  background-color: white;
+}
+
+.c4 {
+  padding: 2rem;
+  font-family: 'BCSans-Bold';
+}
+
+.c14 {
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  line-height: 4.2rem;
+  text-align: left;
+  border-bottom: solid 0.4rem;
+}
+
+.c7 {
+  max-width: 60%;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.c6 {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 2rem;
+  white-space: nowrap;
+}
+
+.c3 {
+  border-radius: 1rem 1rem 0 0;
+  grid-area: leaseheader;
+  color: white;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c3 label {
+  padding-right: 1rem;
+  margin: 0;
+}
+
+.c3 h1 {
+  min-width: 23rem;
+}
+
+.c16 {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c5 {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  max-height: 8rem;
+  min-width: 11rem;
+  white-space: nowrap;
+  border-radius: 1rem;
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border: 1px solid;
+  padding: 0.2rem 1rem;
+  height: 90%;
+}
+
+.c5 b {
+  padding: 0.25rem 0;
+  color: black;
+}
+
+.c5.active {
+  border: 1px solid;
+}
+
+.c5.terminated {
+  border: 1px solid;
+}
+
+.c5.discard {
+  border: 1px solid;
+}
+
+.c5.draft {
+  border: 1px solid;
+}
+
+.c9 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.c8 {
+  width: 100%;
+  text-align: left;
+}
+
+.c8 div {
+  font-family: 'BCSans-Bold';
+}
+
+.c11:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c11.disabled {
+  pointer-events: none;
+}
+
+.c11.active {
+  font-weight: 700;
+}
+
+.c11.active:before {
+  content: '';
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+  width: 0;
+  height: 0;
+  margin-left: -1rem;
+  display: inline-block;
+  border-top: 0.5rem solid transparent;
+  border-bottom: 0.5rem solid transparent;
+  border-left: 0.5rem solid;
+  border-right: 0.5rem solid transparent;
+}
+
+.c10 {
+  grid-area: leaseindex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-align: left;
+  white-space: nowrap;
+  margin: 2rem 0 0 3rem;
+  border-right: 1px solid grey;
+  row-gap: 0.5rem;
+}
+
+.c0 {
+  width: 100%;
+  grid: 4rem minmax(7.5rem,max-content) 5rem 1fr / 22rem 1fr;
+  grid-template-areas: 'breadcrumb breadcrumb' 'leaseheader  leaseheader' 'backbutton .' 'leaseindex leasecontent';
+  display: grid;
+  height: 100%;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.c15#leaseForm {
+  text-align: left;
+}
+
+.c15#leaseForm input:disabled,
+.c15#leaseForm select:disabled,
+.c15#leaseForm textarea:disabled {
+  background: none;
+  border: none;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.c15#leaseForm textarea:disabled {
+  padding-left: 0;
+}
+
+.c15#leaseForm .input-group.disabled .input-group-text {
+  background: none;
+  border: none;
+}
+
+.c13 {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding-bottom: 1rem;
+  background-color: white;
+  z-index: 10;
+}
+
+.c13 p {
+  height: 1rem;
+  text-align: left;
+}
+
+.c12 {
+  padding: 0 2.5rem;
+  height: 100%;
+  overflow-y: auto;
+  grid-area: leasecontent;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+}
+
+@media only screen and (max-width:1250px) {
+  .c7 {
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width:1250px) {
+  .c3 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media only screen and (max-width:1250px) {
+  .c8 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+}
+
+<div
+    class="c0"
+  >
+    <nav
+      aria-label="breadcrumb"
+      class="c1"
+    >
+      <ol
+        class="breadcrumb"
+      >
+        <li
+          class="breadcrumb-item"
+        >
+          <a
+            href="#"
+            role="button"
+          >
+            Management
+          </a>
+        </li>
+        <li
+          aria-current="page"
+          class="breadcrumb-item active"
+        >
+          Details
+        </li>
+      </ol>
+    </nav>
+    <div
+      class="c2 c3 lease-header"
+    >
+      <h1
+        class="c4"
+      >
+        Lease / License
+      </h1>
+      <div
+        class="c5 draft"
+      >
+        <b>
+          DRAFT
+        </b>
+        <b />
+      </div>
+      <div
+        class="c2 c6"
+      >
+        <label>
+          Expiry:
+        </label>
+        <b />
+      </div>
+      <div
+        class="c2 c6"
+      >
+        <b />
+      </div>
+      <div
+        class="c7"
+      >
+        <div />
+        <div
+          class="c2 c8"
+        >
+          <label>
+            Tenant:
+          </label>
+          <div
+            class="c9"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c10"
+    >
+      <a
+        class="c11 active disabled"
+        href="/lease/1"
+      >
+        Details
+      </a>
+      <a
+        class="c11 disabled"
+        href="/lease/1"
+      >
+        Tenant
+      </a>
+      <a
+        class="c11 disabled"
+        href="/lease/1"
+      >
+        Payments
+      </a>
+      <a
+        class="c11 disabled"
+        href="/lease/1"
+      >
+        Improvements
+      </a>
+      <a
+        class="c11 disabled"
+        href="/lease/1"
+      >
+        Insurance
+      </a>
+      <a
+        class="c11 disabled"
+        href="/lease/1"
+      >
+        Deposit
+      </a>
+      <a
+        class="c11 disabled"
+        href="/lease/1"
+      >
+        Surplus Declaration
+      </a>
+    </div>
+    <div
+      class="c12"
+    >
+      <div
+        class="c13"
+      >
+        <h2
+          class="c14"
+        >
+          Details 
+        </h2>
+      </div>
+      <form
+        action="#"
+        class="c15"
+        id="leaseForm"
+      />
+    </div>
+    <div
+      class="c16"
+    >
+      <div
+        class="spinner-border text-warning"
+        data-testid="filter-backdrop-loading"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

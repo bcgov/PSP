@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ApiVersionInfo suite Displays version component 1`] = `
+<div>
+  <div
+    class="version"
+    data-testid="version"
+  >
+    api unavailable
+  </div>
+</div>
+`;

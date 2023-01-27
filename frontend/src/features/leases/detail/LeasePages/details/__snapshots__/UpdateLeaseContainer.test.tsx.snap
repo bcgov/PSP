@@ -1,0 +1,1733 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Update lease container component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c11.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c11.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c11.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c11.btn.btn-primary {
+  border: none;
+}
+
+.c11.btn.btn-secondary {
+  background: none;
+}
+
+.c11.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
+  background: none;
+}
+
+.c11.btn.btn-light {
+  border: none;
+}
+
+.c11.btn.btn-dark {
+  border: none;
+}
+
+.c11.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c11.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c11.Button--icon-only:focus {
+  outline: none;
+}
+
+.c11.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c7 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c6 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline !important;
+  -webkit-box-align: baseline !important;
+  -ms-flex-align: baseline !important;
+  align-items: baseline !important;
+  gap: 2rem;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+
+.c9 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c5 {
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c8 input.form-control {
+  min-width: 50rem;
+  max-width: 50rem;
+}
+
+.c10 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
+}
+
+.c12 textarea.form-control {
+  min-width: 80rem;
+  height: 18rem;
+  width: 80rem;
+  resize: none;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 {
+  padding: 0 2.5rem;
+  height: 100%;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.c0 .required .form-label:after {
+  content: ' *';
+}
+
+.c0 .row {
+  padding: 0.5rem 0;
+}
+
+.c0 .form-label {
+  font-weight: 700;
+}
+
+.c0 .row .col:first-of-type .form-label {
+  min-width: 21.5rem;
+}
+
+.c0 .form-control {
+  min-width: 25rem;
+  max-width: 25rem;
+}
+
+.c0 .col {
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  width: 100%;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+<form
+    class="c0"
+    novalidate=""
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="c1 col"
+      >
+        <div
+          class="required c2 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-startDate"
+          >
+            Start Date
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-startDate"
+                name="startDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value="01/01/2020"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="c2 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-expiryDate"
+          >
+            Expiry Date (if known)
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-expiryDate"
+                name="expiryDate"
+                placeholder="--/--/----"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="c4"
+        />
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-statusType"
+          >
+            Status: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-statusType"
+            name="statusType"
+          >
+            <option
+              value=""
+            >
+              Select Status
+            </option>
+            <option
+              class="option"
+              value="ACTIVE"
+            >
+              Active
+            </option>
+            <option
+              class="option"
+              value="DISCARD"
+            >
+              Discarded
+            </option>
+            <option
+              class="option"
+              value="DRAFT"
+            >
+              Draft
+            </option>
+            <option
+              class="option"
+              value="INACTIVE"
+            >
+              Inactive
+            </option>
+            <option
+              class="option"
+              value="TERMINATED"
+            >
+              Terminated
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h3
+          class="c5"
+        >
+          Administration
+        </h3>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-paymentReceivableType"
+          >
+            Receivable or Payable: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-paymentReceivableType"
+            name="paymentReceivableType"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select
+            </option>
+            <option
+              class="option"
+              value="PYBLBCTFA"
+            >
+              Payable (BCTFA as tenant)
+            </option>
+            <option
+              class="option"
+              value="PYBLMOTI"
+            >
+              Payable (MOTI as tenant)
+            </option>
+            <option
+              class="option"
+              value="RCVBL"
+            >
+              Receivable
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c7 c8 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-motiName"
+          >
+            MOTI Contact: 
+          </label>
+          <input
+            class="form-control"
+            id="input-motiName"
+            name="motiName"
+            title="Moti, Name, Name"
+            value="Moti, Name, Name"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-region"
+          >
+            MOTI Region: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-region"
+            name="region"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select region
+            </option>
+            <option
+              class="option"
+              value="1"
+            >
+              South Coast Region
+            </option>
+            <option
+              class="option"
+              value="2"
+            >
+              Southern Interior Region
+            </option>
+            <option
+              class="option"
+              value="3"
+            >
+              Northern Region
+            </option>
+            <option
+              class="option"
+              value="4"
+            >
+              Cannot determine
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="c1 col"
+      >
+        <div
+          class="required c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-programType"
+          >
+            Program: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-programType"
+            name="programType"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select program
+            </option>
+            <option
+              class="option"
+              value="BCFERRIES"
+            >
+              BC Ferries
+            </option>
+            <option
+              class="option"
+              value="BCTRANSIT"
+            >
+              BC Transit
+            </option>
+            <option
+              class="option"
+              value="BELLETERM"
+            >
+              Belleville Terminal
+            </option>
+            <option
+              class="option"
+              value="COMMBLDG"
+            >
+              Commercial Buildings
+            </option>
+            <option
+              class="option"
+              value="LCLGOVT"
+            >
+              Local Government/RCMP
+            </option>
+            <option
+              class="option"
+              value="OTHER"
+            >
+              Other Licencing
+            </option>
+            <option
+              class="option"
+              value="RAILTRAIL"
+            >
+              Rail Trails
+            </option>
+            <option
+              class="option"
+              value="RESRENTAL"
+            >
+              Residential Rentals
+            </option>
+            <option
+              class="option"
+              value="TMEP"
+            >
+              TMEP
+            </option>
+            <option
+              class="option"
+              value="TRANSLINK"
+            >
+              TransLink
+            </option>
+            <option
+              class="option"
+              value="UTILITY"
+            >
+              Utilities
+            </option>
+          </select>
+        </div>
+        <div
+          class="required c7 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-otherProgramType"
+          >
+            Other Program: 
+          </label>
+          <input
+            class="form-control"
+            id="input-otherProgramType"
+            name="otherProgramType"
+            title=""
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="c1 col"
+      >
+        <div
+          class="required c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-type"
+          >
+            Type: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-type"
+            name="type"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select type
+            </option>
+            <option
+              class="option"
+              value="LICONSTRC"
+            >
+              License to Construct
+            </option>
+            <option
+              class="option"
+              value="LIMOTIPRJ"
+            >
+              MOTI Project Use License
+            </option>
+            <option
+              class="option"
+              value="LIOCCACCS"
+            >
+              License of Occupation (access)
+            </option>
+            <option
+              class="option"
+              value="LIOCCTTLD"
+            >
+              License of Occupation (titled)
+            </option>
+            <option
+              class="option"
+              value="LIOCCUSE"
+            >
+              License of Occupation (use)
+            </option>
+            <option
+              class="option"
+              value="LIOCCUTIL"
+            >
+              License of Occupation (utilities)
+            </option>
+            <option
+              class="option"
+              value="LIPPUBHWY"
+            >
+              License of Prov Public Highway
+            </option>
+            <option
+              class="option"
+              value="LSGRND"
+            >
+              Ground Lease
+            </option>
+            <option
+              class="option"
+              value="LSREG"
+            >
+              Lease - Registered
+            </option>
+            <option
+              class="option"
+              value="LSUNREG"
+            >
+              Lease - Unregistered
+            </option>
+            <option
+              class="option"
+              value="MANUFHOME"
+            >
+              Manufactured Home Act
+            </option>
+            <option
+              class="option"
+              value="OTHER"
+            >
+              Other
+            </option>
+            <option
+              class="option"
+              value="RESLNDTEN"
+            >
+              Residential Tenancy Act
+            </option>
+            <option
+              class="option"
+              value="ROADXING"
+            >
+              Road Crossing
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="c1 col"
+      >
+        <div
+          class="required c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-categoryType"
+          >
+            Category: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-categoryType"
+            name="categoryType"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select category
+            </option>
+            <option
+              class="option"
+              value="AGRIC"
+            >
+              Agricultural
+            </option>
+            <option
+              class="option"
+              value="COMM"
+            >
+              Commercial
+            </option>
+            <option
+              class="option"
+              value="GOVGOV"
+            >
+              Gov't to Gov't
+            </option>
+            <option
+              class="option"
+              value="INDUS"
+            >
+              Industrial
+            </option>
+            <option
+              class="option"
+              value="OTHER"
+            >
+              Other
+            </option>
+            <option
+              class="option"
+              value="RESID"
+            >
+              Residential
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="c1 col"
+      >
+        <div
+          class="required c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-purposeType"
+          >
+            Purpose: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-purposeType"
+            name="purposeType"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select purpose
+            </option>
+            <option
+              class="option"
+              value="ACCCCOM"
+            >
+              Access (Industrial/Commercial)
+            </option>
+            <option
+              class="option"
+              value="ACCRES"
+            >
+              Access (Residential)
+            </option>
+            <option
+              class="option"
+              value="AGRIC"
+            >
+              Agricultural
+            </option>
+            <option
+              class="option"
+              value="BCFERRIES"
+            >
+              BC Ferries
+            </option>
+            <option
+              class="option"
+              value="CAMPING"
+            >
+              Camping
+            </option>
+            <option
+              class="option"
+              value="COMMBLDG"
+            >
+              Commercial Building
+            </option>
+            <option
+              class="option"
+              value="EMERGSVCS"
+            >
+              Emergency Services
+            </option>
+            <option
+              class="option"
+              value="ENCROACH"
+            >
+              Encroachment
+            </option>
+            <option
+              class="option"
+              value="FENCEGATE"
+            >
+              Fencing/Gate
+            </option>
+            <option
+              class="option"
+              value="GARDENING"
+            >
+              Gardening
+            </option>
+            <option
+              class="option"
+              value="GRAVEL"
+            >
+              Gravel
+            </option>
+            <option
+              class="option"
+              value="GRAZING"
+            >
+              Grazing
+            </option>
+            <option
+              class="option"
+              value="LOGGING"
+            >
+              Logging/Timber Harvest
+            </option>
+            <option
+              class="option"
+              value="MARINEFAC"
+            >
+              Marine Facility
+            </option>
+            <option
+              class="option"
+              value="MOBILEHM"
+            >
+              Mobile Home Pad
+            </option>
+            <option
+              class="option"
+              value="MTCYARD"
+            >
+              Maintenance Yard
+            </option>
+            <option
+              class="option"
+              value="OTHER"
+            >
+              Other*
+            </option>
+            <option
+              class="option"
+              value="PARK"
+            >
+              Park
+            </option>
+            <option
+              class="option"
+              value="PARKING"
+            >
+              Parking
+            </option>
+            <option
+              class="option"
+              value="PARKNRID"
+            >
+              Park and Ride
+            </option>
+            <option
+              class="option"
+              value="PIPELINE"
+            >
+              Pipeline
+            </option>
+            <option
+              class="option"
+              value="PRELOAD"
+            >
+              Preload
+            </option>
+            <option
+              class="option"
+              value="PRVTRANS"
+            >
+              Private transportation
+            </option>
+            <option
+              class="option"
+              value="RAILWAY"
+            >
+              Railway
+            </option>
+            <option
+              class="option"
+              value="RESTAREA"
+            >
+              Rest Area/Pullout
+            </option>
+            <option
+              class="option"
+              value="SIDEWALK"
+            >
+              Sidewalks/Landscaping
+            </option>
+            <option
+              class="option"
+              value="SIGNAGE"
+            >
+              Signage
+            </option>
+            <option
+              class="option"
+              value="SPCLEVNT"
+            >
+              Special Event
+            </option>
+            <option
+              class="option"
+              value="STGNGAREA"
+            >
+              Staging Area
+            </option>
+            <option
+              class="option"
+              value="STKPILING"
+            >
+              Stockpiling
+            </option>
+            <option
+              class="option"
+              value="STORAGE"
+            >
+              Storage
+            </option>
+            <option
+              class="option"
+              value="TOURINFO"
+            >
+              Tourist Info
+            </option>
+            <option
+              class="option"
+              value="TRAIL"
+            >
+              Trail
+            </option>
+            <option
+              class="option"
+              value="UTILINFRA"
+            >
+              Utilities-infrastructure
+            </option>
+            <option
+              class="option"
+              value="UTILOHDXG"
+            >
+              Utilities-overhead xing
+            </option>
+            <option
+              class="option"
+              value="UTILUGDXG"
+            >
+              Utilities-underground xing
+            </option>
+            <option
+              class="option"
+              value="WATERRES"
+            >
+              Water Reservoir
+            </option>
+            <option
+              class="option"
+              value="WEIGHSCL"
+            >
+              Weigh Scale
+            </option>
+            <option
+              class="option"
+              value="XING"
+            >
+              Crossing
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-initiatorType"
+          >
+            Initiator: 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="initiatorType-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-initiatorType"
+            name="initiatorType"
+          >
+            <option
+              value=""
+            >
+              Select initiator
+            </option>
+            <option
+              class="option"
+              value="HQ"
+            >
+              Headquarters
+            </option>
+            <option
+              class="option"
+              value="PROJECT"
+            >
+              Project
+            </option>
+            <option
+              class="option"
+              value="REGION"
+            >
+              Region
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="c1 col"
+      >
+        <div
+          class="c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-responsibilityType"
+          >
+            Responsibility: 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="responsibilityType-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-responsibilityType"
+            name="responsibilityType"
+          >
+            <option
+              value=""
+            >
+              Select group responsible
+            </option>
+            <option
+              class="option"
+              value="HQ"
+            >
+              Headquarters
+            </option>
+            <option
+              class="option"
+              value="PROJECT"
+            >
+              Project
+            </option>
+            <option
+              class="option"
+              value="REGION"
+            >
+              Region
+            </option>
+          </select>
+        </div>
+        <div
+          class="c9 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-responsibilityEffectiveDate"
+          >
+            Effective date of responsibility:
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-responsibilityEffectiveDate"
+                name="responsibilityEffectiveDate"
+                placeholder="--/--/----"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h3
+          class="c5"
+        >
+          Reference Information
+        </h3>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-hasPhysicalLicense"
+          >
+            Physical lease/license exists: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-hasPhysicalLicense"
+            name="hasPhysicalLicense"
+          >
+            <option
+              class="option"
+              value=""
+            >
+              Unknown
+            </option>
+            <option
+              class="option"
+              value="Yes"
+            >
+              Yes
+            </option>
+            <option
+              class="option"
+              value="No"
+            >
+              No
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-hasDigitalLicense"
+          >
+            Digital lease/license exists: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-hasDigitalLicense"
+            name="hasDigitalLicense"
+          >
+            <option
+              class="option"
+              value=""
+            >
+              Unknown
+            </option>
+            <option
+              class="option"
+              value="Yes"
+            >
+              Yes
+            </option>
+            <option
+              class="option"
+              value="No"
+            >
+              No
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c10 textarea input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-documentationReference"
+          >
+            Location of documents: 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="documentationReference-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <textarea
+            class="form-control"
+            id="input-documentationReference"
+            name="documentationReference"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c7 c8 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-tfaFileNo"
+          >
+            LIS # 
+          </label>
+          <input
+            class="form-control"
+            id="input-tfaFileNo"
+            name="tfaFileNo"
+            type="number"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c7 c8 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-psFileNo"
+          >
+            PS #: 
+          </label>
+          <input
+            class="form-control"
+            id="input-psFileNo"
+            name="psFileNo"
+            title=""
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h3
+          class="c5"
+        >
+          Property Information
+        </h3>
+      </div>
+    </div>
+    <button
+      class="c11 Button btn btn-link"
+      type="button"
+    >
+      <div
+        class="Button__value"
+      >
+        + Add another property
+      </div>
+    </button>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c12 textarea input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-description"
+          >
+            Description 
+          </label>
+          <textarea
+            class="form-control"
+            id="input-description"
+            name="description"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c12 textarea input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-note"
+          >
+            Notes 
+          </label>
+          <textarea
+            class="form-control"
+            id="input-note"
+            name="note"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+  .c1.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c1.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c1.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c1.btn.btn-primary {
+  border: none;
+}
+
+.c1.btn.btn-secondary {
+  background: none;
+}
+
+.c1.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
+  background: none;
+}
+
+.c1.btn.btn-light {
+  border: none;
+}
+
+.c1.btn.btn-dark {
+  border: none;
+}
+
+.c1.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c1.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c1.Button--icon-only:focus {
+  outline: none;
+}
+
+.c1.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  z-index: 100;
+  width: 100%;
+  padding: 0.5rem 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  gap: 1rem;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0rem;
+  background-color: white;
+}
+
+.c0 .btn {
+  min-height: 3rem;
+}
+
+<div
+    class="c0"
+  >
+    <button
+      class="c1 Button btn btn-secondary"
+      type="button"
+    >
+      <div
+        class="Button__value"
+      >
+        Cancel
+      </div>
+    </button>
+    <button
+      class="c1 Button Button--disabled btn btn-primary"
+      disabled=""
+      type="button"
+    >
+      <div
+        class="Button__value"
+      >
+        Save
+      </div>
+    </button>
+  </div>
+  <div
+    class="container"
+  />
+</DocumentFragment>
+`;

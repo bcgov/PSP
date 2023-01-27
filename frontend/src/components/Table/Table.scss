@@ -1,0 +1,149 @@
+@import '~assets/scss/styles.scss';
+@import '~assets/scss/colors.scss';
+.table {
+  .thead-light {
+    .th {
+      color: $table-header-text-color;
+      background-color: $table-header-bg-color;
+    }
+  }
+  .thead {
+    .th {
+      border-bottom: 0.2rem solid $table-header-border-color;
+      cursor: pointer;
+      font-size: 1.6rem;
+      font-weight: bold;
+      line-height: 2.4rem;
+    }
+  }
+  .tbody {
+    .tr-wrapper {
+      &:nth-child(even) {
+        background-color: $table-even-row-bg-color;
+      }
+      &:nth-child(odd) {
+        background-color: $table-odd-row-bg-color;
+        &:last-child {
+          border-bottom: 0.1rem solid $table-column-border-color;
+        }
+      }
+      .tr {
+        &:hover {
+          background-color: $table-hover-color;
+        }
+        &.selected {
+          background-color: $selected-color;
+        }
+      }
+      .tbody {
+        padding-left: 5rem;
+        .tr-wrapper {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  .table-loading,
+  .no-rows-message {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .svg-btn {
+    color: $text-color;
+  }
+
+  .svg-btn:hover {
+    color: $icon-light-color;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .svg-btn:hover svg {
+    fill: $icon-light-color;
+    stroke: #fff;
+  }
+
+  .svg-btn.active {
+    color: $icon-light-color;
+    border-bottom-style: solid;
+    border-bottom-color: $accent-color;
+    border-bottom-width: 0.1rem;
+    background-color: none !important;
+  }
+
+  .svg-btn.active svg {
+    fill: $icon-light-color;
+    stroke: #fff;
+  }
+
+  .td,
+  .th {
+    min-height: 5rem;
+    padding: 0.5rem 1.1rem;
+    align-items: center;
+    border-right: 0.1rem solid $table-column-border-color;
+    &:last-child {
+      border-right: none;
+    }
+    &.svg-btn.expander:hover,
+    &.svg-btn.expander:hover svg {
+      fill: $accent-color;
+    }
+    &.svg-btn.reset-filter:hover,
+    &.svg-btn.reset-filter:hover svg {
+      fill: $accent-color;
+    }
+    &.expander,
+    &.reset-filter {
+      display: flex;
+      align-items: center;
+
+      &.svg-btn {
+        display: block;
+      }
+    }
+    &.clickable {
+      cursor: pointer;
+    }
+    .expand-button:focus {
+      background: none !important;
+    }
+    .sortable-column {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: inherit;
+    }
+    .filter-wrapper {
+      div {
+        div {
+          display: flex;
+          .form-group {
+            width: 100%;
+            .rbt {
+              width: 100%;
+              div {
+                input {
+                  width: 100% !important;
+                }
+              }
+              .rbt-menu {
+                width: 37rem !important;
+              }
+            }
+          }
+        }
+      }
+
+      &.active {
+        color: $active-color;
+      }
+    }
+  }
+}

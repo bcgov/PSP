@@ -1,0 +1,57 @@
+@import './colors.scss';
+@import './variables';
+
+:export {
+  mapfilterHeight: $mapfilter-height;
+  footerHeight: $footer-height;
+  headerHeight: $header-height;
+
+  primaryColor: $primary-color;
+  primaryLightColor: $primary-light-color;
+  secondaryVariantColor: $secondary-variant-color;
+  selectedColor: $selected-color;
+  lightVariantColor: $light-variant-color;
+  darkVariantColor: $dark-variant-color;
+  textColor: $text-color;
+  formTextColor: $form-text-color;
+  formControlTextColor: $form-control-text-color;
+  formBackgroundColor: $form-background-color;
+  primaryBackgroundColor: $primary-background-color;
+  dropdownBackgroundColor: $dropdown-background-color;
+  accentColor: $accent-color;
+  lightAccentColor: $light-accent-color;
+  sresIconColor: $sres-icon-color;
+  dangerColor: $danger-color;
+  lightDangerColor: $light-danger-color;
+  iconLightColor: $icon-light-color;
+  activeColor: $active-color;
+  completedColor: $completed-color;
+  filterBackgroundColor: $filter-background-color;
+  slideOutBlue: $slide-out-blue;
+  disabledColor: $disabled-color;
+  disabledFieldBackgroundColor: $disabled-field-background-color;
+  filterBoxColor: $filter-box-color;
+  draftColor: $draft-color;
+  linkColor: $link-color;
+  linkHoverColor: $link-hover-color;
+  subtleColor: $subtle-color;
+  discardedColor: $discarded-color;
+  dangerBackgroundColor: $danger-background-color;
+  summaryColor: $summary-color;
+  summaryBorderColor: $summary-border-color;
+  // table ui
+  tableHoverColor: $table-hover-color;
+  tableHeaderBgColor: $table-header-bg-color;
+  tableHeaderBorderColor: $table-header-border-color;
+  tableColumnBorderColor: $table-column-border-color;
+  tableEvenRowBgColor: $table-even-row-bg-color;
+  tableOddRowBgColor: $table-odd-row-bg-color;
+  // text headings - H1, H2 etc
+  headingTextColor: $heading-text-color;
+  headingBorderColor: $heading-border-color;
+  // map popup
+  mapPopupBackgroundColor: $map-popup-background-color;
+  // buttons
+  buttonOutlineColor: $icon-light-color;
+  buttonInfoColor: $button-info-color;
+}

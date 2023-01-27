@@ -1,0 +1,702 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Note Results Table matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c5.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c5.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c5.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c5.btn.btn-primary {
+  border: none;
+}
+
+.c5.btn.btn-secondary {
+  background: none;
+}
+
+.c5.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
+  background: none;
+}
+
+.c5.btn.btn-light {
+  border: none;
+}
+
+.c5.btn.btn-dark {
+  border: none;
+}
+
+.c5.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c5.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c5.Button--icon-only:focus {
+  outline: none;
+}
+
+.c5.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c6.c6.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c6.c6.btn:hover,
+.c6.c6.btn:focus,
+.c6.c6.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c6.c6.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c6.c6.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c2 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c1 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c4 {
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  width: 100%;
+}
+
+<div
+    class="table"
+    data-testid="notesTable"
+    role="table"
+  >
+    <div
+      class="thead thead-light"
+    >
+      <div
+        class="tr"
+        role="row"
+        style="display: flex; flex: 1 0 auto; min-width: 190px;"
+      >
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Note
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Created date
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Last updated by
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="tbody"
+      role="rowgroup"
+    >
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 190px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Note 1
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Jul 20, 2022
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            test user1
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="c3 c4"
+            >
+              <button
+                class="c5 Button c6 btn btn-light"
+                title="Delete Note"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 190px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Note 2
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Jul 20, 2022
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            test user2
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="c3 c4"
+            >
+              <button
+                class="c5 Button c6 btn btn-light"
+                title="Delete Note"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 190px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Note 3
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Jul 20, 2022
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            test user4
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="c3 c4"
+            >
+              <button
+                class="c5 Button c6 btn btn-light"
+                title="Delete Note"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 190px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Note 4
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Jul 20, 2022
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            test user2
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="c3 c4"
+            >
+              <button
+                class="c5 Button c6 btn btn-light"
+                title="Delete Note"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row"
+  >
+    <div
+      class="align-self-center col-auto"
+    >
+      <span>
+        1 - 4 of  4
+      </span>
+    </div>
+    <div
+      class="ml-auto align-self-center col-auto"
+    />
+    <div
+      class="align-self-center col-auto"
+    >
+      <ul
+        class="pagination"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Previous page"
+            class="page-link"
+            rel="prev"
+            role="button"
+            tabindex="0"
+          >
+            &lt;
+          </a>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <a
+            aria-current="page"
+            aria-label="Page 1 is your current page"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            1
+          </a>
+        </li>
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Next page"
+            class="page-link"
+            rel="next"
+            role="button"
+            tabindex="0"
+          >
+            &gt;
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;

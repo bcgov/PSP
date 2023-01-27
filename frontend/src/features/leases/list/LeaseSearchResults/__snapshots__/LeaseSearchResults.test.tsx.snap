@@ -1,0 +1,709 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lease Search Results Table matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c2 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c1 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c3 {
+  border-radius: 0.4rem;
+}
+
+<div
+    class="table"
+    data-testid="leasesTable"
+    role="table"
+  >
+    <div
+      class="thead thead-light"
+    >
+      <div
+        class="tr"
+        role="row"
+        style="display: flex; flex: 1 0 auto; min-width: 180px;"
+      >
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            L-File Number
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Expiry Date
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Program Name
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Tenant Names
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Properties
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Status
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tbody"
+      role="rowgroup"
+    >
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 180px;"
+        >
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <a
+              href="/lease/1"
+            >
+              L-123-456
+            </a>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <span />
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            TRAN-IT
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="w-100"
+            >
+              <div
+                class="mx-0  row"
+              >
+                <div
+                  class="col-md-auto"
+                >
+                  <div>
+                     Chester Tester
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="w-100"
+            >
+              <div
+                class="c3 mx-0 my-2 border border-secondary row"
+              >
+                <div
+                  class="col-md-12"
+                >
+                  <strong
+                    class="pr-2"
+                  >
+                    Address:
+                  </strong>
+                  123 mock st
+                </div>
+                <div
+                  class="col-md-auto"
+                >
+                  <div>
+                    <strong
+                      class="pr-2"
+                    >
+                      PIN:
+                    </strong>
+                     123
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 180px;"
+        >
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <a
+              href="/lease/2"
+            >
+              L-999-888
+            </a>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <span />
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            TRAN-IT
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="w-100"
+            >
+              <div
+                class="mx-0  row"
+              >
+                <div
+                  class="col-md-auto"
+                >
+                  <div>
+                     Chester Tester
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="w-100"
+            >
+              <div
+                class="c3 mx-0 my-2 border border-secondary row"
+              >
+                <div
+                  class="col-md-12"
+                >
+                  <strong
+                    class="pr-2"
+                  >
+                    Address:
+                  </strong>
+                  456 mock st
+                </div>
+                <div
+                  class="col-md-auto"
+                >
+                  <div>
+                    <strong
+                      class="pr-2"
+                    >
+                      PID:
+                    </strong>
+                     999
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  .c0 {
+  margin-top: 0.3rem;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="align-self-center col-auto"
+    >
+      <span>
+        1 - 2 of  2
+      </span>
+    </div>
+    <div
+      class="ml-auto align-self-center col-auto"
+    />
+    <div
+      class="align-self-center col-auto"
+    >
+      <div>
+        <div
+          class="Menu-root"
+        >
+          <div
+            class="Menu-button"
+          >
+            <div
+              style="display: flex;"
+            >
+              <span
+                class="c0"
+              >
+                Show
+              </span>
+              <input
+                class="form-control form-control-sm"
+                style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                type="number"
+                value="10"
+              />
+              <span
+                class="c0"
+              >
+                Entries
+              </span>
+            </div>
+          </div>
+          <div
+            class="Menu-items"
+            style="width: 10.0rem;"
+          >
+            <div
+              class="Menu-options scrollable list-group"
+            >
+              <div
+                class="Menu-item list-group-item"
+              >
+                5
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                10
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                20
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                50
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                100
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="align-self-center col-auto"
+    >
+      <ul
+        class="pagination"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Previous page"
+            class="page-link"
+            rel="prev"
+            role="button"
+            tabindex="0"
+          >
+            &lt;
+          </a>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <a
+            aria-current="page"
+            aria-label="Page 1 is your current page"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            1
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 2"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            2
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 3"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            3
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 4"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            4
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 5"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            5
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 6"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            6
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            ...
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 9"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            9
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 10"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            10
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-disabled="false"
+            aria-label="Next page"
+            class="page-link"
+            rel="next"
+            role="button"
+            tabindex="0"
+          >
+            &gt;
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HelpContainer renders correctly... 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: start;
+}
+
+<div
+    class="c0 help-box"
+  >
+    <div
+      class="col-md-4 btn-group-vertical"
+      role="group"
+    />
+    <span
+      class="col-md-8"
+    />
+  </div>
+  <hr />
+  <h5>
+    Submit
+  </h5>
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<div
+    class="c0 help-submit-box"
+  >
+    <span
+      class="col-md-4"
+    >
+      <div
+        class="form-check"
+      >
+        <input
+          checked=""
+          class="form-check-input"
+          id="ticket-Question"
+          type="radio"
+        />
+        <label
+          class="form-check-label"
+          for="ticket-Question"
+          title=""
+        >
+          Question
+        </label>
+      </div>
+      <div
+        class="form-check"
+      >
+        <input
+          class="form-check-input"
+          id="ticket-Bug"
+          type="radio"
+        />
+        <label
+          class="form-check-label"
+          for="ticket-Bug"
+          title=""
+        >
+          Bug
+        </label>
+      </div>
+      <div
+        class="form-check"
+      >
+        <input
+          class="form-check-input"
+          id="ticket-Feature Request"
+          type="radio"
+        />
+        <label
+          class="form-check-label"
+          for="ticket-Feature Request"
+          title=""
+        >
+          Feature Request
+        </label>
+      </div>
+    </span>
+    <span
+      class="col-md-8"
+    >
+      <form
+        class=""
+      >
+        <div
+          class="input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-user"
+          >
+            User 
+          </label>
+          <input
+            class="form-control"
+            id="input-user"
+            name="user"
+            title="Chester Tester"
+            value="Chester Tester"
+          />
+        </div>
+        <div
+          class="input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-email"
+          >
+            Email 
+          </label>
+          <input
+            class="form-control"
+            id="input-email"
+            name="email"
+            title="test@test.com"
+            value="test@test.com"
+          />
+        </div>
+        <div
+          class="input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-page"
+          >
+            Page 
+          </label>
+          <input
+            class="form-control"
+            id="input-page"
+            name="page"
+            title="/"
+            value="/"
+          />
+        </div>
+        <div
+          class="textarea input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-question"
+          >
+            Question 
+          </label>
+          <textarea
+            class="form-control"
+            id="input-question"
+            name="question"
+            title=""
+          />
+        </div>
+      </form>
+    </span>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,1460 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateOrganizationForm renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  .c9.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c9.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c9.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c9.btn.btn-primary {
+  border: none;
+}
+
+.c9.btn.btn-secondary {
+  background: none;
+}
+
+.c9.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
+  background: none;
+}
+
+.c9.btn.btn-light {
+  border: none;
+}
+
+.c9.btn.btn-dark {
+  border: none;
+}
+
+.c9.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c9.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c9.Button--icon-only:focus {
+  outline: none;
+}
+
+.c9.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c10.c10.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c10.c10.btn .text {
+  display: none;
+}
+
+.c10.c10.btn:hover,
+.c10.c10.btn:active,
+.c10.c10.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c10.c10.btn:hover .text,
+.c10.c10.btn:active .text,
+.c10.c10.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.c13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  gap: 1.6rem;
+}
+
+.c4 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c11 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(0,51,102);
+  text-decoration: none solid rgb(0,51,102);
+  line-height: 2.9rem;
+}
+
+.c12 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c1 {
+  width: 100%;
+  overflow: auto;
+  padding-right: 1rem;
+}
+
+.c2#createForm .form-control.is-invalid {
+  border: 2px solid #d8292f;
+}
+
+.c2#createForm .invalid-feedback {
+  color: #d8292f;
+}
+
+.c2#createForm .form-group label {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c2#createForm .form-group input,
+.c2#createForm .form-group select,
+.c2#createForm .form-group textarea {
+  border: 2px solid #606060;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 1.6rem;
+  color: #000000;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c2#createForm .form-group input.form-control:disabled,
+.c2#createForm .form-group select.form-control:disabled,
+.c2#createForm .form-group textarea.form-control:disabled,
+.c2#createForm .form-group input.form-control[readonly],
+.c2#createForm .form-group select.form-control[readonly],
+.c2#createForm .form-group textarea.form-control[readonly] {
+  opacity: 1;
+}
+
+.c2#createForm .form-group.required label:after {
+  content: ' *';
+  color: red;
+}
+
+.c14 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c15 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  -webkit-text-decoration: none solid rgb(170,170,170);
+  text-decoration: none solid rgb(170,170,170);
+  line-height: 2rem;
+}
+
+.c5 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(0,51,102);
+  text-decoration: none solid rgb(0,51,102);
+  line-height: 2.9rem;
+}
+
+.c7 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+<div
+    class="c0 c1"
+  >
+    <form
+      action="#"
+      class="c2"
+      id="createForm"
+    >
+      <div
+        class="c3"
+      >
+        <div
+          class="c4"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="required input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-name"
+                >
+                  Organization Name 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-name"
+                  name="name"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-alias"
+                >
+                  Alias 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-alias"
+                  name="alias"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-6"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-incorporationNumber"
+                >
+                  Incorporation Number 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-incorporationNumber"
+                  name="incorporationNumber"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="col"
+            />
+          </div>
+        </div>
+        <div
+          class="c4"
+        >
+          <h2
+            class="c5"
+          >
+            Contact info
+          </h2>
+          <div
+            class="c6 c7"
+          >
+            <svg
+              class="mt-2"
+              fill="currentColor"
+              height="1.8rem"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 1024 1024"
+              width="1.8rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+              />
+              <path
+                d="M464 688a48 48 0 1 0 96 0 48 48 0 1 0-96 0zm24-112h48c4.4 0 8-3.6 8-8V296c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8z"
+              />
+            </svg>
+            <p>
+              Contacts must have a minimum of one method of contact to be saved. 
+              <br />
+              <em>
+                (ex: email,phone or address)
+              </em>
+            </p>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-6"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-emailContactMethods.0.value"
+                >
+                  Email 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-emailContactMethods.0.value"
+                  name="emailContactMethods.0.value"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-emailContactMethods.0.contactMethodTypeCode"
+                >
+                  Email type 
+                </label>
+                <select
+                  class="form-select form-control"
+                  id="input-emailContactMethods.0.contactMethodTypeCode"
+                  name="emailContactMethods.0.contactMethodTypeCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                  <option
+                    class="option"
+                    value="PERSEMAIL"
+                  >
+                    Personal email
+                  </option>
+                  <option
+                    class="option"
+                    value="WORKEMAIL"
+                  >
+                    Work email
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="col-md-2"
+              style="padding-left: 0px; padding-top: 3rem;"
+            >
+              <div
+                class="c8 h-100"
+              >
+                <button
+                  class="c9 Button c10 btn btn-link"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+          <button
+            class="c9 Button btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              + Add another email address
+            </div>
+          </button>
+          <br />
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-6"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-phoneContactMethods.0.value"
+                >
+                  Phone 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-phoneContactMethods.0.value"
+                  name="phoneContactMethods.0.value"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-phoneContactMethods.0.contactMethodTypeCode"
+                >
+                  Phone type 
+                </label>
+                <select
+                  class="form-select form-control"
+                  id="input-phoneContactMethods.0.contactMethodTypeCode"
+                  name="phoneContactMethods.0.contactMethodTypeCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                  <option
+                    class="option"
+                    value="FAX"
+                  >
+                    Facsimile machine
+                  </option>
+                  <option
+                    class="option"
+                    value="PERSMOBIL"
+                  >
+                    Personal mobile phone
+                  </option>
+                  <option
+                    class="option"
+                    value="PERSPHONE"
+                  >
+                    Personal phone
+                  </option>
+                  <option
+                    class="option"
+                    value="WORKMOBIL"
+                  >
+                    Work mobile phone
+                  </option>
+                  <option
+                    class="option"
+                    value="WORKPHONE"
+                  >
+                    Work phone
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="col-md-2"
+              style="padding-left: 0px; padding-top: 3rem;"
+            >
+              <button
+                class="c9 Button c10 btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      remove
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="text"
+                  >
+                    Remove
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+          <button
+            class="c9 Button btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              + Add another phone number
+            </div>
+          </button>
+        </div>
+        <div
+          class="c4"
+        >
+          <h2
+            class="c11"
+          >
+            Address
+          </h2>
+          <h3
+            class="c12"
+          >
+            Mailing Address
+          </h3>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-8"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-mailingAddress.streetAddress1"
+                >
+                  Address (line 1) 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-mailingAddress.streetAddress1"
+                  name="mailingAddress.streetAddress1"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="col"
+              style="padding-left: 0px; padding-bottom: 2rem;"
+            />
+          </div>
+          <div
+            class="row"
+            style="margin-top: -1rem; margin-bottom: 1rem;"
+          >
+            <div
+              class="col"
+            >
+              <button
+                class="c9 Button btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  + Add an address line
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-mailingAddress.countryId"
+                >
+                  Country 
+                </label>
+                <select
+                  class="form-select form-control"
+                  id="input-mailingAddress.countryId"
+                  name="mailingAddress.countryId"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                  <option
+                    class="option"
+                    value="1"
+                  >
+                    Canada
+                  </option>
+                  <option
+                    class="option"
+                    value="2"
+                  >
+                    United States of America
+                  </option>
+                  <option
+                    class="option"
+                    value="3"
+                  >
+                    Mexico
+                  </option>
+                  <option
+                    class="option"
+                    value="4"
+                  >
+                    Other
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-mailingAddress.municipality"
+                >
+                  City 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-mailingAddress.municipality"
+                  name="mailingAddress.municipality"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-mailingAddress.provinceId"
+                  name="mailingAddress.provinceId"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-mailingAddress.postal"
+                  name="mailingAddress.postal"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c4"
+        >
+          <h3
+            class="c12"
+          >
+            Property Address
+          </h3>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-8"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-propertyAddress.streetAddress1"
+                >
+                  Address (line 1) 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-propertyAddress.streetAddress1"
+                  name="propertyAddress.streetAddress1"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="col"
+              style="padding-left: 0px; padding-bottom: 2rem;"
+            />
+          </div>
+          <div
+            class="row"
+            style="margin-top: -1rem; margin-bottom: 1rem;"
+          >
+            <div
+              class="col"
+            >
+              <button
+                class="c9 Button btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  + Add an address line
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-propertyAddress.countryId"
+                >
+                  Country 
+                </label>
+                <select
+                  class="form-select form-control"
+                  id="input-propertyAddress.countryId"
+                  name="propertyAddress.countryId"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                  <option
+                    class="option"
+                    value="1"
+                  >
+                    Canada
+                  </option>
+                  <option
+                    class="option"
+                    value="2"
+                  >
+                    United States of America
+                  </option>
+                  <option
+                    class="option"
+                    value="3"
+                  >
+                    Mexico
+                  </option>
+                  <option
+                    class="option"
+                    value="4"
+                  >
+                    Other
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-propertyAddress.municipality"
+                >
+                  City 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-propertyAddress.municipality"
+                  name="propertyAddress.municipality"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-propertyAddress.provinceId"
+                  name="propertyAddress.provinceId"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-propertyAddress.postal"
+                  name="propertyAddress.postal"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c4"
+        >
+          <h3
+            class="c12"
+          >
+            Billing Address
+          </h3>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-8"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-billingAddress.streetAddress1"
+                >
+                  Address (line 1) 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-billingAddress.streetAddress1"
+                  name="billingAddress.streetAddress1"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="col"
+              style="padding-left: 0px; padding-bottom: 2rem;"
+            />
+          </div>
+          <div
+            class="row"
+            style="margin-top: -1rem; margin-bottom: 1rem;"
+          >
+            <div
+              class="col"
+            >
+              <button
+                class="c9 Button btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  + Add an address line
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-billingAddress.countryId"
+                >
+                  Country 
+                </label>
+                <select
+                  class="form-select form-control"
+                  id="input-billingAddress.countryId"
+                  name="billingAddress.countryId"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                  <option
+                    class="option"
+                    value="1"
+                  >
+                    Canada
+                  </option>
+                  <option
+                    class="option"
+                    value="2"
+                  >
+                    United States of America
+                  </option>
+                  <option
+                    class="option"
+                    value="3"
+                  >
+                    Mexico
+                  </option>
+                  <option
+                    class="option"
+                    value="4"
+                  >
+                    Other
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-billingAddress.municipality"
+                >
+                  City 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-billingAddress.municipality"
+                  name="billingAddress.municipality"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-billingAddress.provinceId"
+                  name="billingAddress.provinceId"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-billingAddress.postal"
+                  name="billingAddress.postal"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c4"
+        >
+          <div
+            class="c13"
+          >
+            <label
+              class="c14 form-label"
+            >
+              Comments
+            </label>
+            <span
+              class="c15"
+            >
+              (Optional)
+            </span>
+          </div>
+          <div
+            class="textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-comment"
+              name="comment"
+              rows="5"
+              title=""
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  .c2.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c2.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c2.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c2.btn.btn-primary {
+  border: none;
+}
+
+.c2.btn.btn-secondary {
+  background: none;
+}
+
+.c2.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
+  background: none;
+}
+
+.c2.btn.btn-light {
+  border: none;
+}
+
+.c2.btn.btn-dark {
+  border: none;
+}
+
+.c2.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c2.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
+}
+
+.c2.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c1 {
+  width: 100%;
+  padding: 1rem 4rem;
+  gap: 2rem;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+
+<div
+    class="c0 c1"
+  >
+    <button
+      class="c2 Button btn btn-secondary"
+      type="button"
+    >
+      <div
+        class="Button__value"
+      >
+        Cancel
+      </div>
+    </button>
+    <button
+      class="c2 Button btn btn-primary"
+      type="button"
+    >
+      <div
+        class="Button__value"
+      >
+        Save
+      </div>
+    </button>
+  </div>
+  <div
+    class="container"
+  />
+</DocumentFragment>
+`;

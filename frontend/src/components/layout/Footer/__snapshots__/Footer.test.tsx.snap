@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer renders correctly 1`] = `
+.c0 {
+  padding: 1rem 20%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.c0 a {
+  display: inline;
+}
+
+.c0 a:link,
+.c0 a:visited {
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-family: 'BCSans',Fallback,sans-serif;
+  padding: 0 1rem;
+  border-right: 0.1rem solid #666;
+}
+
+.c0 a:hover,
+.c0 a:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0 div.version {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-family: 'BCSans',Fallback,sans-serif;
+  padding: 0 0 0 1rem;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: right;
+}
+
+<div
+  className="c0"
+>
+  <a
+    href="http://www.gov.bc.ca/gov/content/home/disclaimer"
+  >
+    Disclaimer
+  </a>
+  <a
+    href="http://www.gov.bc.ca/gov/content/home/privacy"
+  >
+    Privacy
+  </a>
+  <a
+    href="http://www.gov.bc.ca/gov/content/home/accessible-government"
+  >
+    Accessibility
+  </a>
+  <a
+    href="http://www.gov.bc.ca/gov/content/home/copyright"
+  >
+    Copyright
+  </a>
+  <div
+    className="version"
+    data-testid="version"
+  >
+    api unavailable
+  </div>
+</div>
+`;

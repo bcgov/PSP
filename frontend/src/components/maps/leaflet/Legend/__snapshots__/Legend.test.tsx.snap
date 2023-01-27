@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Map Legend View renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="legend-control card"
+  >
+    <div
+      class="card-header"
+    >
+      Marker Legend
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-2"
+        >
+          <img
+            class=""
+            height="25"
+          />
+        </div>
+        <div
+          class="label col"
+        >
+          Parcel
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

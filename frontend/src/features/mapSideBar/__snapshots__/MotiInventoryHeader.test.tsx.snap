@@ -1,0 +1,306 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MotiInventoryHeader component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c0.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c0.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c0.btn.btn-primary {
+  border: none;
+}
+
+.c0.btn.btn-secondary {
+  background: none;
+}
+
+.c0.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
+  background: none;
+}
+
+.c0.btn.btn-light {
+  border: none;
+}
+
+.c0.btn.btn-dark {
+  border: none;
+}
+
+.c0.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c0.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c0.Button--icon-only:focus {
+  outline: none;
+}
+
+.c0.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c1.c1.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c1.c1.btn:hover,
+.c1.c1.btn:focus,
+.c1.c1.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c1.c1.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c1.c1.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+<div
+    class="no-gutters row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col-8"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label>
+                Civic Address:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+            >
+              <strong>
+                -
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="justify-content-end row"
+          >
+            <div
+              class="pr-0 text-left col-auto"
+            >
+              <label>
+                PID:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-5"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col-8"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label>
+                Plan #:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="justify-content-end row"
+          >
+            <div
+              class="pr-0 text-left col-auto"
+            >
+              <label>
+                Land parcel type:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-5"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex p-0 align-items-center justify-content-end col-auto"
+    >
+      <button
+        class="c0 Button c1 btn btn-info"
+        title="Zoom Map"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          <svg
+            fill="currentColor"
+            height="22"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="22"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+  </div>
+  .c0 {
+  margin-top: 0.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+<div
+    class="c0"
+  />
+</DocumentFragment>
+`;

@@ -1,0 +1,339 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResearchSummaryView component renders as expected when provided no research file 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c0 {
+  text-align: right;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="c0 mr-3 my-1"
+    />
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Roads
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Road name:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Test road name
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Road alias:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Test road alias
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Research Request
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Research purpose:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Request date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+             Apr 14, 2022
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Source of request:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Headquarters (HQ)
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Requester:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Dairy Queen Forever! Property Management
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Description of request:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        a request description
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Result
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Research completed on:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Mar 30, 2022
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Result of request:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        A research result
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Expropriation
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Expropriation?:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            No
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Expropriation notes:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        An expropriation note
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

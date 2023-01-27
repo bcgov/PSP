@@ -1,0 +1,349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PropertyInformation component renders a complete lease as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c2:not(:first-child) {
+  padding-left: 0;
+}
+
+.c2:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c0 {
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c1 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c1 .form-label,
+.c1 .form-group {
+  margin: 0 0.5rem 0 0;
+}
+
+.c1 > .input,
+.c1 > .notes {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid #666666;
+}
+
+.c1 .form-control:not(.description,.notes) {
+  font-family: 'BCSans-Bold';
+}
+
+.c1 > label,
+.c1 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c1 > .textarea :not(.notes),
+.c1 > h3,
+.c1 > h5 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c1 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<li>
+    <h3
+      class="c0"
+    >
+      Property Information
+    </h3>
+    <div
+      class="c1"
+    >
+      <label
+        class="form-label"
+      >
+        Address:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.streetAddress1"
+          name="properties.0.address.streetAddress1"
+          title="1234 mock Street"
+          value="1234 mock Street"
+        />
+      </div>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.streetAddress2"
+          name="properties.0.address.streetAddress2"
+          title="N/A"
+          value="N/A"
+        />
+      </div>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.municipality"
+          name="properties.0.address.municipality"
+          title="Victoria"
+          value="Victoria"
+        />
+      </div>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.postal"
+          name="properties.0.address.postal"
+          title="V1V1V1"
+          value="V1V1V1"
+        />
+      </div>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.province"
+          name="properties.0.address.province"
+          title="BC"
+          value="BC"
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Lease Area
+      </label>
+      <div
+        class="flex-nowrap row"
+      >
+        <div
+          class="c2 col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-properties.0.landArea"
+              name="properties.0.landArea"
+              title="123"
+              value="123"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`PropertyInformation component renders minimally as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c2:not(:first-child) {
+  padding-left: 0;
+}
+
+.c2:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c0 {
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c1 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c1 .form-label,
+.c1 .form-group {
+  margin: 0 0.5rem 0 0;
+}
+
+.c1 > .input,
+.c1 > .notes {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid #666666;
+}
+
+.c1 .form-control:not(.description,.notes) {
+  font-family: 'BCSans-Bold';
+}
+
+.c1 > label,
+.c1 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c1 > .textarea :not(.notes),
+.c1 > h3,
+.c1 > h5 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c1 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<li>
+    <h3
+      class="c0"
+    >
+      Property Information
+    </h3>
+    <div
+      class="c1"
+    >
+      <label
+        class="form-label"
+      >
+        Address:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.streetAddress1"
+          name="properties.0.address.streetAddress1"
+          title="1234 mock Street"
+          value="1234 mock Street"
+        />
+      </div>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.streetAddress2"
+          name="properties.0.address.streetAddress2"
+          title="N/A"
+          value="N/A"
+        />
+      </div>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.municipality"
+          name="properties.0.address.municipality"
+          title="Victoria"
+          value="Victoria"
+        />
+      </div>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.postal"
+          name="properties.0.address.postal"
+          title="V1V1V1"
+          value="V1V1V1"
+        />
+      </div>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.0.address.province"
+          name="properties.0.address.province"
+          title="BC"
+          value="BC"
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Lease Area
+      </label>
+      <div
+        class="flex-nowrap row"
+      >
+        <div
+          class="c2 col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-properties.0.landArea"
+              name="properties.0.landArea"
+              title="123"
+              value="123"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

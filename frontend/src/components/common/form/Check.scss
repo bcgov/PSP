@@ -1,0 +1,17 @@
+@import '~assets/scss/colors.scss';
+.check-field {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 0 0.5rem;
+  .form-check {
+    margin: 0rem 0.5rem;
+  }
+}
+.required.form-group {
+  .check-field {
+    label {
+      border-bottom: 0.1rem solid $secondary-variant-color;
+    }
+  }
+}

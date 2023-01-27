@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly... 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="GeocoderAutoComplete"
+  >
+    <div>
+      <div
+        class="form-group"
+      >
+        <input
+          class="form-control"
+          field="test"
+          id="input-test"
+          name="test"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
