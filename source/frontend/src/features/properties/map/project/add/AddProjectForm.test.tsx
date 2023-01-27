@@ -22,7 +22,7 @@ describe('AddProjectForm component', () => {
     const ref = createRef<FormikProps<ProjectForm>>();
     const utils = render(
       <AddProjectForm
-        ref={ref}
+        formikRef={ref}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}

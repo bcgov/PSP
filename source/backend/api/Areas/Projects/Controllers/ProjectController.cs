@@ -74,15 +74,10 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public async Task<IActionResult> AddProject(ProjectModel projectModel)
+        public IActionResult AddProject(ProjectModel projectModel)
         {
-            var newProject = await _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
-            if(newProject is null)
-            {
-                return BadRequest();
-            }
-
-            return Ok(newProject);
+            var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+            return new JsonResult(_mapper.Map<ProjectModel>(newProject));
         }
 
         /// <summary>

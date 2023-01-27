@@ -20,10 +20,9 @@ export function useAddProjectForm(props: IUseAddProjectFormProps) {
     async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
       const project = values.toApi();
       const response = await addProject.execute(project);
-      formikHelpers?.setSubmitting(false);
 
       if (!!response?.id) {
-        formikHelpers?.resetForm();
+        formikHelpers.resetForm();
         if (typeof onSuccess === 'function') {
           onSuccess(response);
         }

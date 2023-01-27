@@ -12,6 +12,7 @@ export interface Api_Project extends Api_ConcurrentVersion, Api_AuditFields {
   code?: string;
   description?: string;
   note?: string;
+  products?: Api_Product[];
 }
 
 export interface Api_Product extends Api_ConcurrentVersion, Api_AuditFields {
