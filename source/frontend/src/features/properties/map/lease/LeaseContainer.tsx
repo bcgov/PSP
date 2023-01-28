@@ -209,7 +209,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         title={'Confirm changes'}
         message={
           <>
-            <div>If you cancel now, this research file will not be saved.</div>
+            <div>If you cancel now, this Lease/License will not be saved.</div>
             <br />
             <strong>Are you sure you want to Cancel?</strong>
           </>
