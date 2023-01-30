@@ -30,11 +30,9 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseTenantContainerProps>
 > = ({ formikRef, onEdit, children, View }) => {
   const { lease, setLease } = useContext(LeaseStateContext);
-  const [tenants, setTenants] = useState<FormTenant[]>(
-    apiLeaseToFormLease(lease as ILease)?.tenants || [],
-  );
+  const [tenants, setTenants] = useState<FormTenant[]>(apiLeaseToFormLease(lease)?.tenants || []);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(
-    apiLeaseToFormLease(lease as ILease)?.tenants.map(t => t.toContactSearchResult()) || [],
+    apiLeaseToFormLease(lease)?.tenants.map(t => t.toContactSearchResult()) || [],
   );
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
   const [handleSubmit, setHandleSubmit] = useState<Function | undefined>(undefined);
