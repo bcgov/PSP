@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -48,7 +51,7 @@ namespace Pims.Api.Services
         public IList<FinancialCodeModel> GetAllFinancialCodes()
         {
             _logger.LogInformation("Getting all financial codes");
-            this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
+            User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 
             var businessFunctions = _mapper.Map<FinancialCodeModel[]>(_businessFunctionRepository.GetAllBusinessFunctionCodes());
             var chartOfAccounts = _mapper.Map<FinancialCodeModel[]>(_chartOfAccountsRepository.GetAllChartOfAccountCodes());
@@ -68,6 +71,70 @@ namespace Pims.Api.Services
             financialCodes.AddRange(responsibilities);
 
             return financialCodes;
+        }
+
+        public FinancialCodeModel Add(FinancialCodeTypes type, FinancialCodeModel model)
+        {
+            model.ThrowIfNull(nameof(model));
+
+            _logger.LogInformation("Adding financial code with type {type} and model {model}", type, model);
+            User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
+
+            switch (type)
+            {
+                case FinancialCodeTypes.BusinessFunction:
+                    {
+                        var pimsEntity = _mapper.Map<PimsBusinessFunctionCode>(model);
+                        var createdEntity = _businessFunctionRepository.Add(pimsEntity);
+                        _businessFunctionRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.ChartOfAccounts:
+                    {
+                        var pimsEntity = _mapper.Map<PimsChartOfAccountsCode>(model);
+                        var createdEntity = _chartOfAccountsRepository.Add(pimsEntity);
+                        _chartOfAccountsRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.YearlyFinancial:
+                    {
+                        var pimsEntity = _mapper.Map<PimsYearlyFinancialCode>(model);
+                        var createdEntity = _yearlyFinancialRepository.Add(pimsEntity);
+                        _yearlyFinancialRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.CostType:
+                    {
+                        var pimsEntity = _mapper.Map<PimsCostTypeCode>(model);
+                        var createdEntity = _costTypeRepository.Add(pimsEntity);
+                        _costTypeRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.FinancialActivity:
+                    {
+                        var pimsEntity = _mapper.Map<PimsFinancialActivityCode>(model);
+                        var createdEntity = _financialActivityRepository.Add(pimsEntity);
+                        _financialActivityRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.WorkActivity:
+                    {
+                        var pimsEntity = _mapper.Map<PimsWorkActivityCode>(model);
+                        var createdEntity = _workActivityRepository.Add(pimsEntity);
+                        _workActivityRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+                case FinancialCodeTypes.Responsibility:
+                    {
+                        var pimsEntity = _mapper.Map<PimsResponsibilityCode>(model);
+                        var createdEntity = _responsibilityRepository.Add(pimsEntity);
+                        _responsibilityRepository.CommitTransaction();
+                        return _mapper.Map<FinancialCodeModel>(createdEntity);
+                    }
+
+                default:
+                    throw new BadRequestException("Financial code type not valid.");
+            }
         }
     }
 }

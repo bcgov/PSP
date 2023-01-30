@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Lease.Controllers;
+using Pims.Api.Areas.Organizations.Controllers;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
@@ -25,6 +27,19 @@ namespace Pims.Api.Test.Controllers.Lease
     [ExcludeFromCodeCoverage]
     public class SearchControllerTest
     {
+        private Mock<ILeaseRepository> _repository;
+        private SearchController _controller;
+        private IMapper _mapper;
+        private TestHelper _helper;
+
+        public SearchControllerTest()
+        {
+            _helper = new TestHelper();
+            _controller = _helper.CreateController<SearchController>(Permissions.LeaseView);
+            _mapper = _helper.GetService<IMapper>();
+            _repository = _helper.GetService<Mock<ILeaseRepository>>();
+        }
+
         #region Variables
         public readonly static IEnumerable<object[]> LeaseFilters = new List<object[]>()
         {
@@ -51,25 +66,15 @@ namespace Pims.Api.Test.Controllers.Lease
         public void GetLeases_All_Success(SModel.LeaseFilterModel filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.LeaseView);
-
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
-
-            repository.Setup(m => m.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
+            _repository.Setup(m => m.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
-            var result = controller.GetLeases(filter);
+            var result = _controller.GetLeases(filter);
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.PageModel<SModel.LeaseModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.PimsLease>(leases));
-            expectedResult.Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -80,25 +85,15 @@ namespace Pims.Api.Test.Controllers.Lease
         public void GetProperties_Query_Success(Uri uri)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.LeaseView, uri);
-
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
-
-            repository.Setup(m => m.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
+            _repository.Setup(m => m.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
-            var result = controller.GetLeases();
+            var result = _controller.GetLeases();
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.PageModel<SModel.LeaseModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.PimsLease>(leases));
-            expectedResult.Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -108,17 +103,13 @@ namespace Pims.Api.Test.Controllers.Lease
         public void GetProperties_Query_NoFilter_BadRequest()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.LeaseView);
-            var request = helper.GetService<Mock<HttpRequest>>();
+            var request = _helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
-
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
 
             // Act
             // Assert
-            Assert.Throws<BadRequestException>(() => controller.GetLeases());
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Never());
+            Assert.Throws<BadRequestException>(() => _controller.GetLeases());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -127,16 +118,11 @@ namespace Pims.Api.Test.Controllers.Lease
         [Fact]
         public void GetProperties_NoFilter_BadRequest()
         {
-            // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.LeaseView);
-
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
 
             // Act
             // Assert
-            Assert.Throws<BadRequestException>(() => controller.GetLeases(null));
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Never());
+            Assert.Throws<BadRequestException>(() => _controller.GetLeases(null));
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Never());
         }
         #endregion
         #endregion

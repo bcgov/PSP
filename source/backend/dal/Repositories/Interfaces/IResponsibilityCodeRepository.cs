@@ -6,5 +6,7 @@ namespace Pims.Dal.Repositories
     public interface IResponsibilityCodeRepository : IRepository<PimsResponsibilityCode>
     {
         IList<PimsResponsibilityCode> GetAllResponsibilityCodes();
+
+        PimsResponsibilityCode Add(PimsResponsibilityCode pimsCode);
     }
 }

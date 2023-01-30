@@ -1,11 +1,13 @@
 import { ResetButton, SearchButton } from 'components/common/buttons';
-import { Form, Input, Select, SelectOption } from 'components/common/form';
+import { Form, Input, Select } from 'components/common/form';
 import ActiveFilterCheck from 'components/common/form/ActiveFilterCheck';
-import { FinancialCodeTypes, formatFinancialCodeType } from 'constants/financialCodeTypes';
+import { FinancialCodeTypes } from 'constants/financialCodeTypes';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { formatAsSelectOptions } from '../../financialCodeUtils';
 
 export interface IFinancialCodeFilter {
   financialCodeType?: FinancialCodeTypes;
@@ -30,10 +32,7 @@ export const defaultFinancialCodeFilter: IFinancialCodeFilter = {
  */
 export const FinancialCodeFilter: React.FC<IFinancialCodeFilterProps> = ({ filter, setFilter }) => {
   // map typescript enum to SELECT options
-  const financialCodeTypeOptions = Object.keys(FinancialCodeTypes).map<SelectOption>(key => ({
-    value: key,
-    label: formatFinancialCodeType(FinancialCodeTypes[key as FinancialCodeTypes]),
-  }));
+  const financialCodeTypeOptions = formatAsSelectOptions();
 
   return (
     <Formik<IFinancialCodeFilter>

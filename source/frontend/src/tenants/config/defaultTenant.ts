@@ -1,5 +1,25 @@
 import { ITenantConfig } from 'tenants/ITenantConfig';
 
+const MUNICIPALITY_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP';
+const PARCELS_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW';
+const ELECTORAL_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW';
+const REGIONAL_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_REGIONAL_DISTRICTS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_REGIONAL_DISTRICTS_SP';
+
+const MOTI_REGION_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_REGIONAL_BNDRY_POLY/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.TADM_MOT_REGIONAL_BNDRY_POLY';
+const HWY_DISTRICT_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY';
+const ALR_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW';
+const INDIAN_RESERVES_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP';
+const PIMS_BOUNDARY_LAYER_URL =
+  '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_BOUNDARY_VW&outputformat=json&version=2.0.0';
+
 /**
  * Default tenant configuration.
  */
@@ -25,6 +45,15 @@ export const defaultTenant: ITenantConfig = {
     url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows',
     name: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW',
   },
+  electoralLayerUrl: ELECTORAL_LAYER_URL,
+  municipalLayerUrl: MUNICIPALITY_LAYER_URL,
+  parcelsLayerUrl: PARCELS_LAYER_URL,
+  regionalLayerUrl: REGIONAL_LAYER_URL,
+  motiRegionLayerUrl: MOTI_REGION_LAYER_URL,
+  hwyDistrictLayerUrl: HWY_DISTRICT_LAYER_URL,
+  alrLayerUrl: ALR_LAYER_URL,
+  reservesLayerUrl: INDIAN_RESERVES_LAYER_URL,
+  boundaryLayerUrl: PIMS_BOUNDARY_LAYER_URL,
   bcAssessment: {
     url: 'https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca',
     names: {

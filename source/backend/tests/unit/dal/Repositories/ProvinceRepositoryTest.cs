@@ -5,7 +5,7 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 
-namespace Pims.Dal.Test.Services
+namespace Pims.Dal.Test.Repositories
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]
