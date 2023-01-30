@@ -23,6 +23,7 @@ namespace Pims.Dal.Entities
         public PimsAcquisitionFile()
         {
             PimsAcquisitionActivityInstances = new HashSet<PimsAcquisitionActivityInstance>();
+            PimsAcquisitionFileDocuments = new HashSet<PimsAcquisitionFileDocument>();
             PimsAcquisitionFileNotes = new HashSet<PimsAcquisitionFileNote>();
             PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
             PimsAcquisitionOwners = new HashSet<PimsAcquisitionOwner>();
@@ -145,6 +146,8 @@ namespace Pims.Dal.Entities
         public virtual PimsRegion RegionCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsAcquisitionActivityInstance.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionFileDocument.AcquisitionFile))]
+        public virtual ICollection<PimsAcquisitionFileDocument> PimsAcquisitionFileDocuments { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFileNote.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionFileNote> PimsAcquisitionFileNotes { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFilePerson.AcquisitionFile))]

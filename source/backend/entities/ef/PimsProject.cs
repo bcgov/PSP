@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_PROJECT")]
     [Index(nameof(BusinessFunctionCodeId), Name = "PROJCT_BUSINESS_FUNCTION_CODE_ID_IDX")]
-    [Index(nameof(Code), Name = "PROJCT_CODE_IDX", IsUnique = true)]
+    [Index(nameof(Code), Name = "PROJCT_CODE_IDX")]
     [Index(nameof(CostTypeCodeId), Name = "PROJCT_COST_TYPE_CODE_ID_IDX")]
     [Index(nameof(ProjectStatusTypeCode), Name = "PROJCT_PROJECT_STATUS_CODE_IDX")]
     [Index(nameof(RegionCode), Name = "PROJCT_REGION_CODE_IDX")]

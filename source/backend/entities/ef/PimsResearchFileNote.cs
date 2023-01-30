@@ -8,25 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_NOTE")]
-    public partial class PimsNote
+    [Table("PIMS_RESEARCH_FILE_NOTE")]
+    [Index(nameof(NoteId), Name = "RSCNOT_NOTE_ID_IDX")]
+    [Index(nameof(ResearchFileId), Name = "RSCNOT_RESEARCH_FILE_ID_IDX")]
+    [Index(nameof(NoteId), nameof(ResearchFileId), Name = "RSCNOT_RSRCH_FILE_NOTE_TUC", IsUnique = true)]
+    public partial class PimsResearchFileNote
     {
-        public PimsNote()
-        {
-            PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
-            PimsResearchFileNotes = new HashSet<PimsResearchFileNote>();
-        }
-
         [Key]
+        [Column("RESEARCH_FILE_NOTE_ID")]
+        public long ResearchFileNoteId { get; set; }
+        [Key]
+        [Column("RESEARCH_FILE_ID")]
+        public long ResearchFileId { get; set; }
         [Column("NOTE_ID")]
         public long NoteId { get; set; }
-        [Required]
-        [Column("NOTE_TXT")]
-        [StringLength(4000)]
-        public string NoteTxt { get; set; }
-        [Required]
-        [Column("IS_SYSTEM_GENERATED")]
-        public bool? IsSystemGenerated { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -55,7 +52,6 @@ namespace Pims.Dal.Entities
         public string AppLastUpdateUserDirectory { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime DbCreateTimestamp { get; set; }
-        [Required]
         [Column("DB_CREATE_USERID")]
         [StringLength(30)]
         public string DbCreateUserid { get; set; }
@@ -66,11 +62,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty("Note")]
-        public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
-        [InverseProperty(nameof(PimsActivityInstanceNote.Note))]
-        public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
-        [InverseProperty(nameof(PimsResearchFileNote.Note))]
-        public virtual ICollection<PimsResearchFileNote> PimsResearchFileNotes { get; set; }
+        [ForeignKey(nameof(NoteId))]
+        [InverseProperty(nameof(PimsNote.PimsResearchFileNotes))]
+        public virtual PimsNote Note { get; set; }
+        [ForeignKey(nameof(ResearchFileId))]
+        [InverseProperty(nameof(PimsResearchFile.PimsResearchFileNotes))]
+        public virtual PimsResearchFile ResearchFile { get; set; }
     }
 }
