@@ -8,25 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_NOTE")]
-    public partial class PimsNote
+    [Table("PIMS_ACQUISITION_FILE_DOCUMENT_HIST")]
+    [Index(nameof(AcquisitionFileDocumentHistId), nameof(EndDateHist), Name = "PIMS_ACQDOC_H_UK", IsUnique = true)]
+    public partial class PimsAcquisitionFileDocumentHist
     {
-        public PimsNote()
-        {
-            PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
-            PimsResearchFileNotes = new HashSet<PimsResearchFileNote>();
-        }
-
         [Key]
-        [Column("NOTE_ID")]
-        public long NoteId { get; set; }
-        [Required]
-        [Column("NOTE_TXT")]
-        [StringLength(4000)]
-        public string NoteTxt { get; set; }
-        [Required]
-        [Column("IS_SYSTEM_GENERATED")]
-        public bool? IsSystemGenerated { get; set; }
+        [Column("_ACQUISITION_FILE_DOCUMENT_HIST_ID")]
+        public long AcquisitionFileDocumentHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("ACQUISITION_FILE_DOCUMENT_ID")]
+        public long AcquisitionFileDocumentId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
+        [Column("DOCUMENT_ID")]
+        public long DocumentId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -65,12 +65,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [InverseProperty("Note")]
-        public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
-        [InverseProperty(nameof(PimsActivityInstanceNote.Note))]
-        public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
-        [InverseProperty(nameof(PimsResearchFileNote.Note))]
-        public virtual ICollection<PimsResearchFileNote> PimsResearchFileNotes { get; set; }
     }
 }
