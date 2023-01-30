@@ -127,8 +127,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [SwaggerOperation(Tags = new[] { "note" })]
         public IActionResult DeleteNote(NoteType type, long noteId)
         {
-            _noteService.DeleteNote(type, noteId);
-            return new JsonResult(true);
+            return new JsonResult(_noteService.DeleteNote(type, noteId));
         }
         #endregion
     }

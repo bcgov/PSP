@@ -160,7 +160,7 @@ namespace Pims.Api.Test.Controllers.Note
             var service = helper.GetService<Mock<INoteService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>(), true));
+            service.Setup(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>(), true)).Returns(true);
 
             // Act
             var result = controller.DeleteNote(Constants.NoteType.Activity, 1);
