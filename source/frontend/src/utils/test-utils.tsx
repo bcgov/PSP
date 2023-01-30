@@ -30,8 +30,7 @@ export const mockKeycloak = (
   // mock what would be returned by keycloak userinfo endpoint
   const userInfo = {
     organizations: organizations ?? [1],
-    roles: claims ?? [],
-    groups: roles ?? [],
+    client_roles: [...(claims ?? []), ...(roles ?? [])] ?? [],
     email: 'test@test.com',
     name: 'Chester Tester',
   };

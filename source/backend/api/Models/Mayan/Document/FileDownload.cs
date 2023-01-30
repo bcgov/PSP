@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace Pims.Api.Models.Mayan.Document
 {
     /// <summary>
@@ -8,12 +10,12 @@ namespace Pims.Api.Models.Mayan.Document
         /// <summary>
         /// get/set - The file contents. Could be encoded.
         /// </summary>
-        public byte[] FilePayload { get; set; }
+        public Stream FilePayload { get; set; }
 
         /// <summary>
         /// get/set - The file size.
         /// </summary>
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// get/set - Name of the file.

@@ -25,6 +25,7 @@ testForm.properties = [
 
 const store = mockStore({});
 const setDraftProperties = jest.fn();
+jest.mock('@react-keycloak/web');
 
 describe('ResearchProperties component', () => {
   const setup = (
@@ -42,6 +43,7 @@ describe('ResearchProperties component', () => {
       {
         ...renderOptions,
         store: store,
+        claims: [],
       },
     );
 

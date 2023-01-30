@@ -2,7 +2,7 @@ import * as API from 'constants/API';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { useUpdateLease } from 'features/leases/hooks/useUpdateLease';
 import { apiLeaseToFormLease, formLeaseToApiLease } from 'features/leases/leaseUtils';
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import { IFormLease, ILeaseImprovement } from 'interfaces';
 import { sortBy } from 'lodash';
@@ -13,12 +13,14 @@ import { ILookupCode } from 'store/slices/lookupCodes';
 
 import AddImprovementsForm from './AddImprovementsForm';
 
-interface IAddImprovementsContainerProps {}
+interface IAddImprovementsContainerProps {
+  formikRef: React.RefObject<FormikProps<IFormLease>>;
+  onEdit?: (isEditing: boolean) => void;
+}
 
 export const AddImprovementsContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddImprovementsContainerProps>
-> = () => {
-  const formikRef = React.useRef<FormikProps<IFormLease>>(null);
+> = ({ formikRef, onEdit, children }) => {
   const { lease, setLease } = useContext(LeaseStateContext);
   const { updateLease } = useUpdateLease();
   const history = useHistory();
@@ -36,22 +38,22 @@ export const AddImprovementsContainer: React.FunctionComponent<
       if (!!updatedLease?.id) {
         formikRef?.current?.resetForm({ values: apiLeaseToFormLease(updatedLease) });
         setLease(updatedLease);
-        history.push(`/lease/${updatedLease?.id}/improvements`);
       }
     } finally {
       formikRef?.current?.setSubmitting(false);
+      onEdit && onEdit(false);
     }
   };
 
   return (
-    <>
-      <AddImprovementsForm
-        onCancel={onCancel}
-        formikRef={formikRef}
-        onSubmit={onSubmit}
-        initialValues={addEmptyImprovements(apiLeaseToFormLease(lease), improvementTypeCodes)}
-      />
-    </>
+    <AddImprovementsForm
+      onCancel={onCancel}
+      formikRef={formikRef}
+      onSubmit={onSubmit}
+      initialValues={addEmptyImprovements(apiLeaseToFormLease(lease), improvementTypeCodes)}
+    >
+      {children}
+    </AddImprovementsForm>
   );
 };
 

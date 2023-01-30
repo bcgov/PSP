@@ -1,7 +1,10 @@
 import { useKeycloak } from '@react-keycloak/web';
+import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
 import { Roles } from 'constants/roles';
 import { IProperty } from 'interfaces';
+
+import useLookupCodeHelpers from './useLookupCodeHelpers';
 
 /**
  * IUserInfo interface, represents the userinfo provided by keycloak.
@@ -15,7 +18,7 @@ export interface IUserInfo {
   surname?: string;
   email: string;
   groups: string[];
-  roles: string[];
+  client_roles: string[];
   given_name?: string;
   family_name?: string;
   organizations: number[];
@@ -51,6 +54,7 @@ export interface IKeycloak {
 export function useKeycloakWrapper(): IKeycloak {
   const { keycloak } = useKeycloak();
   const userInfo = keycloak?.userInfo as IUserInfo;
+  const { getByType } = useLookupCodeHelpers();
 
   /**
    * Determine if the user has the specified 'claim'
@@ -61,8 +65,8 @@ export function useKeycloakWrapper(): IKeycloak {
       claim !== undefined &&
       claim !== null &&
       (typeof claim === 'string'
-        ? userInfo?.roles?.includes(claim)
-        : claim.some(c => userInfo?.roles?.includes(c)))
+        ? userInfo?.client_roles?.includes(claim)
+        : claim.some(c => userInfo?.client_roles?.includes(c)))
     );
   };
 
@@ -75,8 +79,8 @@ export function useKeycloakWrapper(): IKeycloak {
       role !== undefined &&
       role !== null &&
       (typeof role === 'string'
-        ? userInfo?.groups?.includes(role)
-        : role.some(r => userInfo?.groups?.includes(r)))
+        ? userInfo?.client_roles?.includes(role)
+        : role.some(r => userInfo?.client_roles?.includes(r)))
     );
   };
 
@@ -96,7 +100,10 @@ export function useKeycloakWrapper(): IKeycloak {
    * Return an array of roles the user belongs to
    */
   const roles = (): Array<string> => {
-    return userInfo?.groups ? [...userInfo?.groups] : [];
+    const pimsRoleNames = getByType(API.ROLE_TYPES).map(r => r.name);
+    return userInfo?.client_roles
+      ? [...userInfo?.client_roles.filter(r => pimsRoleNames.includes(r))]
+      : [];
   };
 
   /**

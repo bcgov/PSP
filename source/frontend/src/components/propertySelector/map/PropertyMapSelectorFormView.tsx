@@ -6,7 +6,6 @@ import {
 } from 'components/maps/providers/MapStateContext';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import * as React from 'react';
-import { useEffect } from 'react';
 
 import MapClickMonitor from '../MapClickMonitor';
 import { IMapProperty } from '../models';
@@ -14,24 +13,14 @@ import PropertyMapSelectorSubForm from './PropertyMapSelectorSubForm';
 
 export interface IPropertyMapSelectorFormViewProps {
   onSelectedProperty: (property: IMapProperty) => void;
-  initialSelectedProperty?: IMapProperty;
+  lastSelectedProperty?: IMapProperty;
   selectedProperties: IMapProperty[];
 }
 
 const PropertyMapSelectorFormView: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorFormViewProps>
-> = ({ onSelectedProperty, initialSelectedProperty, selectedProperties }) => {
+> = ({ onSelectedProperty, lastSelectedProperty, selectedProperties }) => {
   const { setState, cursor } = React.useContext(MapStateContext);
-
-  const [selectedProperty, setSelectedProperty] = React.useState<IMapProperty | undefined>(
-    initialSelectedProperty,
-  );
-
-  useEffect(() => {
-    if (initialSelectedProperty !== undefined) {
-      setSelectedProperty(initialSelectedProperty);
-    }
-  }, [initialSelectedProperty]);
 
   const onClickDraftMarker = () => {
     setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: true });
@@ -47,10 +36,6 @@ const PropertyMapSelectorFormView: React.FunctionComponent<
     }, 100);
   };
 
-  const addProperty = (property: IMapProperty) => {
-    setSelectedProperty(property);
-    onSelectedProperty(property);
-  };
   return (
     <>
       <Section header={undefined}>
@@ -58,9 +43,9 @@ const PropertyMapSelectorFormView: React.FunctionComponent<
         <PropertyMapSelectorSubForm
           onClickDraftMarker={onClickDraftMarker}
           onClickAway={onClickAway}
-          selectedProperty={selectedProperty}
+          selectedProperty={lastSelectedProperty}
         />
-        <MapClickMonitor addProperty={addProperty} modifiedProperties={selectedProperties} />
+        <MapClickMonitor addProperty={onSelectedProperty} modifiedProperties={selectedProperties} />
       </Section>
     </>
   );

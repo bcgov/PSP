@@ -19,7 +19,7 @@ export interface ISelectedPropertyRowProps {
 export const SelectedPropertyRow: React.FunctionComponent<
   React.PropsWithChildren<ISelectedPropertyRowProps>
 > = ({ nameSpace, onRemove, index, property }) => {
-  const propertyName = getPropertyName(property);
+  const propertyName = getPropertyName(property.toMapProperty());
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -47,7 +47,6 @@ export const SelectedPropertyRow: React.FunctionComponent<
           label=""
           field={withNameSpace(nameSpace, 'name')}
           displayErrorTooltips={true}
-          disabled
         />
       </Col>
       <Col md={2}>

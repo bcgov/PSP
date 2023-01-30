@@ -1,5 +1,6 @@
 using System;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
 using Pims.Dal.Entities;
@@ -15,6 +16,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     /// ClaimController class, provides endpoints for managing claims.
     /// </summary>
     [HasPermission(Permissions.SystemAdmin)]
+    [Authorize]
     [ApiController]
     [Area("admin")]
     [ApiVersion("1.0")]

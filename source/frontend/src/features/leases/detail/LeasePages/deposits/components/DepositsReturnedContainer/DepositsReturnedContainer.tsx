@@ -1,8 +1,7 @@
-import { FormSection } from 'components/common/form/styles';
 import { Table } from 'components/Table';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 
-import * as Styled from '../../styles';
 import { getColumns, ReturnListEntry } from './columns';
 
 export interface IDepositsReturnedContainerProps {
@@ -27,9 +26,7 @@ const DepositsReturnedContainer: React.FC<
     [],
   );
   return (
-    <FormSection>
-      <Styled.SectionHeader>Deposits Returned</Styled.SectionHeader>
-
+    <Section header="Deposits Returned">
       <Table<ReturnListEntry>
         name="securityDepositReturnsTable"
         columns={columns}
@@ -38,7 +35,7 @@ const DepositsReturnedContainer: React.FC<
         hideToolbar
         noRowsMessage="There is no corresponding data"
       />
-    </FormSection>
+    </Section>
   );
 };
 

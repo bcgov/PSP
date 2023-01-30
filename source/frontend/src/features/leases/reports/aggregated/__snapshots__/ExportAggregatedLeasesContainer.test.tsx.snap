@@ -5,9 +5,7 @@ exports[`PaymentsContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c2 {
   display: -webkit-box;
   display: -webkit-flex;

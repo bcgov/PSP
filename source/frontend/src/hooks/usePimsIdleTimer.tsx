@@ -9,6 +9,7 @@ const usePimsIdleTimer = () => {
 
   // when we are idle, log out of the application.
   const onIdle = () => {
+    setDisplayModal(false);
     keycloak.logout();
   };
 

@@ -1,5 +1,5 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { Formik, FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
@@ -8,6 +8,7 @@ import { useMemo } from 'react';
 import { useEffect, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { Prompt, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
@@ -27,36 +28,38 @@ export const AddResearchContainer: React.FunctionComponent<
 > = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const { selectedFileFeature: selectedResearchFeature, setState } =
-    React.useContext(MapStateContext);
+  const { selectedFileFeature } = React.useContext(MapStateContext);
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
-    if (!!selectedResearchFeature) {
+    if (!!selectedFileFeature) {
       researchForm.properties = [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ];
     }
     return researchForm;
-  }, [selectedResearchFeature]);
+  }, [selectedFileFeature]);
   const { addResearchFile } = useAddResearch();
   const { search } = useMapSearch();
 
   useEffect(() => {
-    if (!!selectedResearchFeature && !!formikRef.current) {
+    if (!!selectedFileFeature && !!formikRef.current) {
       formikRef.current.resetForm();
       formikRef.current?.setFieldValue('properties', [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ]);
     }
-    return () => {
-      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
-    };
-  }, [initialForm, selectedResearchFeature, setState]);
+  }, [initialForm, selectedFileFeature]);
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
 
     if (!!response?.fileName) {
+      if (researchFile.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
+        toast.warn(
+          'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+          { autoClose: 15000 },
+        );
+      }
       await search();
       history.replace(`/mapview/sidebar/research/${response.id}`);
       formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });

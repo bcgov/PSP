@@ -5,9 +5,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
@@ -71,7 +69,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c18.btn {
+  .c17.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -101,49 +99,49 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c18.btn:hover {
+.c17.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c18.btn:focus {
+.c17.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c18.btn.btn-primary {
+.c17.btn.btn-primary {
   border: none;
 }
 
-.c18.btn.btn-secondary {
+.c17.btn.btn-secondary {
   background: none;
 }
 
-.c18.btn.btn-info {
+.c17.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c18.btn.btn-info:hover,
-.c18.btn.btn-info:active,
-.c18.btn.btn-info:focus {
+.c17.btn.btn-info:hover,
+.c17.btn.btn-info:active,
+.c17.btn.btn-info:focus {
   background: none;
 }
 
-.c18.btn.btn-light {
+.c17.btn.btn-light {
   border: none;
 }
 
-.c18.btn.btn-dark {
+.c17.btn.btn-dark {
   border: none;
 }
 
-.c18.btn.btn-link {
+.c17.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -164,9 +162,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c18.btn.btn-link:hover,
-.c18.btn.btn-link:active,
-.c18.btn.btn-link:focus {
+.c17.btn.btn-link:hover,
+.c17.btn.btn-link:active,
+.c17.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -175,14 +173,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c18.btn.btn-link:disabled,
-.c18.btn.btn-link.disabled {
+.c17.btn.btn-link:disabled,
+.c17.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c18.btn:disabled,
-.c18.btn:disabled:hover {
+.c17.btn:disabled,
+.c17.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -193,15 +191,15 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c18.Button .Button__icon {
+.c17.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c18.Button--icon-only:focus {
+.c17.Button--icon-only:focus {
   outline: none;
 }
 
-.c18.Button--icon-only .Button__icon {
+.c17.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -213,25 +211,25 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c16 {
+.c15 {
   padding-right: 0;
 }
 
-.c16 .form-control {
+.c15 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c17:not(:first-child) {
+.c16:not(:first-child) {
   padding-left: 0;
 }
 
-.c17:not(:first-child) .form-control {
+.c16:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c21 {
+.c20 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -243,7 +241,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c21 .form-label {
+.c20 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -267,35 +265,35 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c19 {
+.c18 {
   font-size: 1.4rem;
 }
 
-.c11 {
+.c10 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c11 .nav-tabs {
+.c10 .nav-tabs {
   height: 2.4rem;
 }
 
-.c11 .nav-item {
+.c10 .nav-item {
   min-width: 7rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c11 .nav-item:hover {
+.c10 .nav-item:hover {
   border-color: transparent;
 }
 
-.c11 .nav-item.active {
+.c10 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c12 {
+.c11 {
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   border-bottom: solid 0.2rem;
@@ -318,7 +316,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c8 {
+.c7 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -331,7 +329,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   text-align: left;
 }
 
-.c14:hover {
+.c13:hover {
   cursor: pointer;
 }
 
@@ -346,9 +344,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c13.c13.c13 input,
-.c13.c13.c13 select,
-.c13.c13.c13 textarea {
+.c12.c12.c12 input,
+.c12.c12.c12 select,
+.c12.c12.c12 textarea {
   background: none;
   border: none;
   resize: none;
@@ -358,42 +356,42 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c13.c13.c13 .form-label {
+.c12.c12.c12 .form-label {
   font-weight: bold;
 }
 
-.c15 {
+.c14 {
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c9 {
+.c8 {
   height: 100%;
 }
 
-.c9 .nav-tabs {
+.c8 .nav-tabs {
   height: 2.4rem;
 }
 
-.c9 .tab-content {
+.c8 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.4rem);
   overflow-y: auto;
 }
 
-.c9 .tab-content .tab-pane {
+.c8 .tab-content .tab-pane {
   position: relative;
 }
 
-.c10 {
+.c9 {
   height: auto;
 }
 
-.c10.tab-content {
+.c9.tab-content {
   height: auto;
 }
 
-.c20 {
+.c19 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -406,7 +404,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   max-width: 50rem;
 }
 
-.c7 textarea.form-control {
+.c21 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -559,7 +557,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                       <label
                         class="c4"
                       >
-                        Start Date:
+                        Start date:
                       </label>
                     </div>
                     <div
@@ -602,7 +600,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                       <label
                         class="c4"
                       >
-                        Expiry Date:
+                        Expiry date:
                       </label>
                     </div>
                     <div
@@ -633,40 +631,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                   </div>
                 </div>
               </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c4"
-                  >
-                    Description:
-                  </label>
-                </div>
-                <div
-                  class="c5 text-left col"
-                >
-                  <div
-                    class="c7 textarea input form-group"
-                  >
-                    <textarea
-                      class="form-control"
-                      id="input-description"
-                      name="description"
-                      title=""
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div
             class="c3 form-section"
           >
             <h2
-              class="c8"
+              class="c7"
             >
               <div
                 class="row"
@@ -696,10 +667,10 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c9 c10"
+                    class="c8 c9"
                   >
                     <nav
-                      class="c11 nav nav-tabs"
+                      class="c10 nav nav-tabs"
                       role="tablist"
                     >
                       <a
@@ -736,12 +707,12 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                             class="collapse show"
                           >
                             <h3
-                              class="c12"
+                              class="c11"
                             >
                               Select a property
                             </h3>
                             <div
-                              class="c13 row"
+                              class="c12 row"
                             >
                               <div
                                 class="col-md-4"
@@ -750,7 +721,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                   class="d-flex flex-column align-items-center"
                                 >
                                   <svg
-                                    class="c14"
+                                    class="c13"
                                     height="97"
                                     title="select properties on the map"
                                     width="97"
@@ -774,7 +745,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                   class="row"
                                 >
                                   <div
-                                    class="c15 col"
+                                    class="c14 col"
                                   >
                                     Selected property attributes
                                   </div>
@@ -892,7 +863,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                             class="collapse show"
                           >
                             <h3
-                              class="c12"
+                              class="c11"
                             >
                               Search for a property
                             </h3>
@@ -903,10 +874,10 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                 class="col-xl-6"
                               >
                                 <div
-                                  class="flex-nowrap row"
+                                  class="flex-nowrap input-group row"
                                 >
                                   <div
-                                    class="c16 col-auto"
+                                    class="c15 col-auto"
                                   >
                                     <div
                                       class="input-group-prepend"
@@ -954,7 +925,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     </div>
                                   </div>
                                   <div
-                                    class="c17 col"
+                                    class="c16 col"
                                   >
                                     <div
                                       class="input form-group"
@@ -981,7 +952,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     class="pr-0 col"
                                   >
                                     <button
-                                      class="c18 Button Button--icon-only primary btn btn-primary"
+                                      class="c17 Button Button--icon-only primary btn btn-primary"
                                       data-testid="search"
                                       id="search-button"
                                       title="search"
@@ -1010,7 +981,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                     class="pl-0 col"
                                   >
                                     <button
-                                      class="c18 Button Button--icon-only btn btn-info"
+                                      class="c17 Button Button--icon-only btn btn-info"
                                       data-testid="reset-button"
                                       id="reset-button"
                                       title="reset-button"
@@ -1157,7 +1128,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                 class="ml-auto align-self-center col-auto"
                               >
                                 <p
-                                  class="c19"
+                                  class="c18"
                                 >
                                   0 selected
                                 </p>
@@ -1177,7 +1148,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c3 form-section"
               >
                 <h2
-                  class="c8"
+                  class="c7"
                 >
                   <div
                     class="row"
@@ -1196,7 +1167,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                   class="collapse show"
                 >
                   <div
-                    class="c20 no-gutters row"
+                    class="c19 no-gutters row"
                   >
                     <div
                       class="col-3"
@@ -1246,7 +1217,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="c3 form-section"
         >
           <h2
-            class="c8"
+            class="c7"
           >
             <div
               class="row"
@@ -1273,14 +1244,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 <label
                   class="c4"
                 >
-                  MOTI Contact:
+                  MOTI contact:
                 </label>
               </div>
               <div
                 class="c5 text-left col-8"
               >
                 <div
-                  class="c21 input form-group"
+                  class="c20 input form-group"
                 >
                   <input
                     class="form-control"
@@ -1301,7 +1272,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 <label
                   class="c4"
                 >
-                  MOTI Region:
+                  MOTI region:
                 </label>
               </div>
               <div
@@ -2063,13 +2034,40 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Intended use:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col"
+              >
+                <div
+                  class="c21 textarea input form-group"
+                >
+                  <textarea
+                    class="form-control"
+                    id="input-description"
+                    name="description"
+                    title=""
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div
           class="c3 form-section"
         >
           <h2
-            class="c8"
+            class="c7"
           >
             <div
               class="row"
@@ -2211,7 +2209,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c7 textarea input form-group"
+                  class="c21 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -2238,7 +2236,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c21 c23 input form-group"
+                  class="c20 c23 input form-group"
                 >
                   <input
                     class="form-control"
@@ -2266,7 +2264,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c21 c23 input form-group"
+                  class="c20 c23 input form-group"
                 >
                   <input
                     class="form-control"
@@ -2278,12 +2276,37 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c4"
+                >
+                  Lease notes:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col"
+              >
+                <div
+                  class="c21 textarea input form-group"
+                >
+                  <textarea
+                    class="form-control"
+                    id="input-note"
+                    name="note"
+                    title=""
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class="container"
-      />
+      <div />
     </div>
   </div>
   .c1.btn {

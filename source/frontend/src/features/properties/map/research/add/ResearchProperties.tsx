@@ -7,11 +7,13 @@ import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { PropertyForm } from '../../shared/models';
+import { useBcaAddress } from '../../hooks/useBcaAddress';
+import { AddressForm, PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 
 const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { values } = useFormikContext<ResearchForm>();
+  const { getPrimaryAddressByPid } = useBcaAddress();
 
   return (
     <>
@@ -28,10 +30,19 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
               <Col>
                 <MapSelectorContainer
                   addSelectedProperties={(newProperties: IMapProperty[]) => {
-                    newProperties.forEach(property => {
-                      const formProperty = PropertyForm.fromMapProperty(property);
-                      push(formProperty);
-                    });
+                    newProperties.reduce(async (promise, property) => {
+                      return promise.then(async () => {
+                        const formProperty = PropertyForm.fromMapProperty(property);
+                        if (property.pid) {
+                          const bcaSummary = await getPrimaryAddressByPid(property.pid);
+                          formProperty.address = bcaSummary?.address
+                            ? AddressForm.fromBcaAddress(bcaSummary?.address)
+                            : undefined;
+                          formProperty.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
+                        }
+                        push(formProperty);
+                      });
+                    }, Promise.resolve());
                   }}
                   modifiedProperties={values.properties}
                 />
@@ -45,7 +56,7 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
                   onRemove={() => remove(index)}
                   nameSpace={`properties.${index}`}
                   index={index}
-                  property={property}
+                  property={property.toMapProperty()}
                 />
               ))}
               {values.properties.length === 0 && <span>No Properties selected</span>}

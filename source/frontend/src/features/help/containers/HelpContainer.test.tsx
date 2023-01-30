@@ -1,4 +1,6 @@
 import { cleanup } from '@testing-library/react';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { mockLookups } from 'mocks';
 import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -16,6 +18,9 @@ jest.mock('store/hooks', () => ({
   useAppSelector: () => mockData,
   useAppDispatch: () => jest.fn(),
 }));
+
+jest.mock('hooks/useLookupCodeHelpers');
+(useLookupCodeHelpers as jest.Mock).mockReturnValue({ getByType: () => mockLookups });
 
 afterEach(() => {
   cleanup();

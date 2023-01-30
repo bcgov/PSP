@@ -53,10 +53,10 @@ export const LayerPopupContainer: React.FC<React.PropsWithChildren<ILayerPopupCo
   };
 
   const handleCreateLeaseLicence = () => {
-    selectedFeature &&
+    selectedInventoryProperty &&
       setState({
-        type: MapStateActionTypes.SELECTED_LEASE_PROPERTY,
-        selectedLeaseProperty: selectedInventoryProperty,
+        type: MapStateActionTypes.SELECTED_FILE_FEATURE,
+        selectedFileFeature: selectedFeature,
       });
     history.push('/mapview/sidebar/lease/new');
   };

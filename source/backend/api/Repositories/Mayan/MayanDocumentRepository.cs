@@ -173,10 +173,10 @@ namespace Pims.Api.Repositories.Mayan
             {
                 Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
-                byte[] payload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
+                Stream payload = await response.Content.ReadAsStreamAsync().ConfigureAwait(true);
                 _logger.LogTrace("Response: {response}", response);
                 response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
-                int contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault()) : payload.Length;
+                long contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault()) : payload.Length;
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
@@ -376,7 +376,7 @@ namespace Pims.Api.Repositories.Mayan
         private static string GetFileNameFromContentDisposition(string contentDisposition)
         {
             const string fileNameFlag = "filename";
-            string[] parts = contentDisposition.Split(" ");
+            string[] parts = contentDisposition.Split("; ");
             string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
             return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
         }

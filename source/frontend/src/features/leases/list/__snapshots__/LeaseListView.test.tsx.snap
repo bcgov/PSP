@@ -5,9 +5,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -322,7 +320,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                           class="col-xl-7"
                         >
                           <div
-                            class="idir-input-group flex-nowrap row"
+                            class="idir-input-group flex-nowrap input-group row"
                           >
                             <div
                               class="c6 col-auto"

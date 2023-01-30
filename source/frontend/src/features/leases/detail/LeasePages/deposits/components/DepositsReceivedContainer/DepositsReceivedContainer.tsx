@@ -1,11 +1,10 @@
 import { Button } from 'components/common/buttons/Button';
-import { FormSection } from 'components/common/form/styles';
 import { Table } from 'components/Table';
 import Claims from 'constants/claims';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 
-import * as Styled from '../../styles';
 import { DepositListEntry, getColumns } from './columns';
 
 export interface IDepositsReceivedContainerProps {
@@ -25,8 +24,7 @@ const DepositsReceivedContainer: React.FC<
     return new DepositListEntry(d);
   });
   return (
-    <FormSection>
-      <Styled.SectionHeader>Deposits Received</Styled.SectionHeader>
+    <Section header="Deposits Received">
       <Button
         variant="secondary"
         onClick={() => onAdd()}
@@ -43,7 +41,7 @@ const DepositsReceivedContainer: React.FC<
         hideToolbar
         noRowsMessage="There is no corresponding data"
       />
-    </FormSection>
+    </Section>
   );
 };
 

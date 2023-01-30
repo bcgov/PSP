@@ -5,9 +5,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
@@ -857,9 +855,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                 </div>
               </div>
             </div>
-            <div
-              class="container"
-            />
+            <div />
           </div>
         </div>
       </div>

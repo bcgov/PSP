@@ -20,25 +20,6 @@ REACT_APP_SITEMINDER_LOGOUT_URL=https://logontest.gov.bc.ca/clp-cgi/logoff.cgi o
 | CHOKIDAR_USEPOLLING             | [true\|false]                                  | Whether to use polling; set to true for containers. |
 | REACT_APP_SITEMINDER_LOGOUT_URL | https://logontest.gov.bc.ca/clp-cgi/logoff.cgi | Siteminder logout URL.                              |
 
-## Keycloak Configuration
-
-Ensure the the following file exists and is configured with your Keycloak client settings.
-
-```json
-{
-  "realm": "pims",
-  "auth-server-url": "http://keycloak:8080/auth",
-  "ssl-required": "external",
-  "resource": "pims-app",
-  "public-client": true,
-  "confidential-port": 0
-}
-```
-
-Make sure the host name matches both the Docker container name found in the `docker-compose.yaml` and your local host `hosts` file.
-For example here it is set to `keycloak`, which means there is a `hosts` file entry for `127.0.0.1 keycloak` on your local computer and the `docker-compose.yaml` contains a `service` named `keycloak`.
-This is required so that Keycloak will correctly authenticate tokens for the specified **Issuer**.
-
 ## Usage
 
 ### Commands

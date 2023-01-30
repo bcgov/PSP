@@ -1,12 +1,12 @@
 import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import React, { useEffect, useMemo } from 'react';
-import { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
@@ -28,7 +28,7 @@ export const AddAcquisitionContainer: React.FC<
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
-  const { selectedFileFeature, setState } = React.useContext(MapStateContext);
+  const { selectedFileFeature } = React.useContext(MapStateContext);
   const { search } = useMapSearch();
 
   const initialForm = useMemo(() => {
@@ -48,10 +48,7 @@ export const AddAcquisitionContainer: React.FC<
         PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ]);
     }
-    return () => {
-      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
-    };
-  }, [initialForm, selectedFileFeature, setState]);
+  }, [initialForm, selectedFileFeature]);
 
   const handleSave = () => {
     formikRef.current?.setSubmitting(true);
@@ -60,9 +57,15 @@ export const AddAcquisitionContainer: React.FC<
 
   // navigate to read-only view after file has been created
   const onSuccess = async (acqFile: Api_AcquisitionFile) => {
-    formikRef.current?.resetForm();
+    if (acqFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
+      toast.warn(
+        'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+        { autoClose: 15000 },
+      );
+    }
     await search();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
+    formikRef.current?.resetForm({ values: AcquisitionForm.fromApi(acqFile) });
   };
 
   const helper = useAddAcquisitionFormManagement({ onSuccess, initialForm });

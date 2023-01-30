@@ -6,6 +6,7 @@ namespace Pims.Tools.Keycloak.Sync.Configuration.Realm
     public class ServiceAccountOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - An array of realm roles this service account has.
         /// </summary>

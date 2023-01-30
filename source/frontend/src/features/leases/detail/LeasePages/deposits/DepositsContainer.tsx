@@ -1,9 +1,10 @@
-import { FormSection } from 'components/common/form/styles';
 import GenericModal from 'components/common/GenericModal';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
+import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
+import { Formik, getIn } from 'formik';
+import { defaultLease } from 'interfaces';
 import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
+import { noop } from 'lodash';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { useContext, useState } from 'react';
 
@@ -24,8 +25,7 @@ export const DepositsContainer: React.FunctionComponent<
   React.PropsWithChildren<IDepositsContainerProps>
 > = () => {
   const { lease, setLease } = useContext(LeaseStateContext);
-  const { values, setFieldValue } = useFormikContext<IFormLease>();
-  const securityDeposits: Api_SecurityDeposit[] = getIn(values, 'securityDeposits') ?? [];
+  const securityDeposits: Api_SecurityDeposit[] = getIn(lease, 'securityDeposits') ?? [];
   const depositReturns: Api_SecurityDepositReturn[] = securityDeposits.flatMap(
     x => x.depositReturns,
   );
@@ -181,85 +181,89 @@ export const DepositsContainer: React.FunctionComponent<
     }
   };
 
+  const initialValues = apiLeaseToFormLease(lease);
+
   return (
-    <Styled.DepositsContainer>
-      <DepositsReceivedContainer
-        securityDeposits={securityDeposits}
-        onAdd={onAddDeposit}
-        onEdit={onEditDeposit}
-        onDelete={onDeleteDeposit}
-        onReturn={onReturnDeposit}
-      />
+    <Formik initialValues={{ ...defaultLease, initialValues }} onSubmit={noop}>
+      {formikProps => (
+        <Styled.DepositsContainer>
+          <DepositsReceivedContainer
+            securityDeposits={securityDeposits}
+            onAdd={onAddDeposit}
+            onEdit={onEditDeposit}
+            onDelete={onDeleteDeposit}
+            onReturn={onReturnDeposit}
+          />
 
-      <DepositsReturnedContainer
-        securityDeposits={securityDeposits}
-        depositReturns={depositReturns}
-        onEdit={onEditReturnDeposit}
-        onDelete={onDeleteDepositReturn}
-      />
+          <DepositsReturnedContainer
+            securityDeposits={securityDeposits}
+            depositReturns={depositReturns}
+            onEdit={onEditReturnDeposit}
+            onDelete={onDeleteDepositReturn}
+          />
 
-      <FormSection>
-        <DepositNotes
-          disabled={!editNotes}
-          onEdit={() => setEditNotes(true)}
-          onSave={async (notes: string) => {
-            const updatedLease = await updateLeaseDepositNote({
-              payload: { note: notes },
-              parentId: lease?.id,
-              parentRowVersion: lease?.rowVersion,
-            } as IParentConcurrencyGuard<{ note: string }>);
-            if (updatedLease?.id) {
-              setLease(updatedLease);
+          <DepositNotes
+            disabled={!editNotes}
+            onEdit={() => setEditNotes(true)}
+            onSave={async (notes: string) => {
+              const updatedLease = await updateLeaseDepositNote({
+                payload: { note: notes },
+                parentId: lease?.id,
+                parentRowVersion: lease?.rowVersion,
+              } as IParentConcurrencyGuard<{ note: string }>);
+              if (updatedLease?.id) {
+                setLease(updatedLease);
+                setEditNotes(false);
+              }
+              return updatedLease;
+            }}
+            onCancel={() => {
               setEditNotes(false);
-            }
-            return updatedLease;
-          }}
-          onCancel={() => {
-            setEditNotes(false);
-            setFieldValue('returnNotes', lease?.returnNotes ?? '');
-          }}
-        />
-      </FormSection>
+              formikProps.setFieldValue('returnNotes', lease?.returnNotes ?? '');
+            }}
+          />
 
-      <GenericModal
-        display={deleteModalWarning}
-        title="Delete Deposit"
-        message={`Are you sure you want to remove the deposit?`}
-        handleOk={() => onDeleteDepositConfirmed()}
-        okButtonText="OK"
-        closeButton
-        setDisplay={setDeleteModalWarning}
-      />
-      <GenericModal
-        display={deleteReturnModalWarning}
-        title="Delete Deposit Return"
-        message={`Are you sure you want to remove this deposit return?`}
-        handleOk={() => onDeleteDepositReturnConfirmed()}
-        okButtonText="OK"
-        closeButton
-        setDisplay={setDeleteReturnModalWarning}
-      />
+          <GenericModal
+            display={deleteModalWarning}
+            title="Delete Deposit"
+            message={`Are you sure you want to remove the deposit?`}
+            handleOk={() => onDeleteDepositConfirmed()}
+            okButtonText="OK"
+            closeButton
+            setDisplay={setDeleteModalWarning}
+          />
+          <GenericModal
+            display={deleteReturnModalWarning}
+            title="Delete Deposit Return"
+            message={`Are you sure you want to remove this deposit return?`}
+            handleOk={() => onDeleteDepositReturnConfirmed()}
+            okButtonText="OK"
+            closeButton
+            setDisplay={setDeleteReturnModalWarning}
+          />
 
-      <ReceivedDepositModal
-        display={showDepositEditModal}
-        initialValues={editDepositValue}
-        onCancel={() => {
-          setEditDepositValue(FormLeaseDeposit.createEmpty());
-          setShowEditModal(false);
-        }}
-        onSave={onSaveDeposit}
-      />
+          <ReceivedDepositModal
+            display={showDepositEditModal}
+            initialValues={editDepositValue}
+            onCancel={() => {
+              setEditDepositValue(FormLeaseDeposit.createEmpty());
+              setShowEditModal(false);
+            }}
+            onSave={onSaveDeposit}
+          />
 
-      <ReturnedDepositModal
-        display={showReturnEditModal}
-        initialValues={editReturnValue}
-        onCancel={() => {
-          setEditReturnValue(undefined);
-          setShowReturnEditModal(false);
-        }}
-        onSave={onSaveReturnDeposit}
-      />
-    </Styled.DepositsContainer>
+          <ReturnedDepositModal
+            display={showReturnEditModal}
+            initialValues={editReturnValue}
+            onCancel={() => {
+              setEditReturnValue(undefined);
+              setShowReturnEditModal(false);
+            }}
+            onSave={onSaveReturnDeposit}
+          />
+        </Styled.DepositsContainer>
+      )}
+    </Formik>
   );
 };
 

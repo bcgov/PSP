@@ -5,8 +5,6 @@ exports[`LtsaChargeOwnerSubForm component renders charge owner sub form 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
 </DocumentFragment>
 `;

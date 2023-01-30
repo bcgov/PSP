@@ -5,9 +5,7 @@ exports[`AcquisitionMenu component matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   text-align: left;
   padding: 0px;

@@ -1,4 +1,4 @@
-import { FormTenant } from 'features/leases/detail/LeasePages/tenant/Tenant';
+import { FormTenant } from 'features/leases/detail/LeasePages/tenant/ViewTenantForm';
 import { Api_AuditFields } from 'models/api/AuditFields';
 import { Api_ConcurrentVersion } from 'models/api/ConcurrentVersion';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';

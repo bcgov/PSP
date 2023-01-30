@@ -4,7 +4,7 @@ import * as Styled from 'components/common/form/styles';
 import { ColumnWithProps, Table } from 'components/Table';
 import { getIn, useFormikContext } from 'formik';
 import _ from 'lodash';
-import React, { ReactNode, useMemo } from 'react';
+import React, { ReactNode } from 'react';
 import { Container, FormControlProps } from 'react-bootstrap';
 import { getColumnsWithRemove } from 'utils/columnUtils';
 
@@ -38,6 +38,8 @@ type OptionalAttributes = {
   custom?: boolean;
   /** Optional label to be assigned to the add button */
   addLabel?: string;
+
+  disableButton?: boolean;
 };
 
 export type TableSelectProps<T extends object> = FormControlProps &
@@ -55,12 +57,13 @@ export const TableSelect = <T extends { id?: string | number }>({
   selectedTableHeader: SelectedTableHeader,
   columns,
   addLabel,
+  disableButton,
 }: TableSelectProps<T>) => {
   const { values, setFieldValue } = useFormikContext<any>();
   const existingItems: T[] = getIn(values, field) ?? [];
-  const columnsWithRemove = useMemo(
-    () => getColumnsWithRemove<T>((rows: T[]) => setFieldValue(field, rows), [...columns]),
-    [columns, field, setFieldValue],
+  const columnsWithRemove = getColumnsWithRemove<T>(
+    (rows: T[]) => setFieldValue(field, rows),
+    [...columns],
   );
 
   return (
@@ -68,17 +71,19 @@ export const TableSelect = <T extends { id?: string | number }>({
       {!disabled && (
         <div>
           {children}
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setFieldValue(
-                field,
-                _.uniqWith(_.concat(existingItems, selectedItems), (p1, p2) => p1.id === p2.id),
-              );
-            }}
-          >
-            {addLabel ?? 'Add Selected'}
-          </Button>
+          {!disableButton && (
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setFieldValue(
+                  field,
+                  _.uniqWith(_.concat(existingItems, selectedItems), (p1, p2) => p1.id === p2.id),
+                );
+              }}
+            >
+              {addLabel ?? 'Add Selected'}
+            </Button>
+          )}
         </div>
       )}
       <Styled.SaveTableWrapper>

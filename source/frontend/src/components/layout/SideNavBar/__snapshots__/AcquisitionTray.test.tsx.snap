@@ -5,9 +5,7 @@ exports[`AcquisitionTray matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   font-size: 3rem;
   padding-bottom: 0.8rem;

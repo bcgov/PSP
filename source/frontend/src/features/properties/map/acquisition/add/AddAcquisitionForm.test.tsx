@@ -15,6 +15,7 @@ const validationSchema = jest.fn().mockReturnValue(AddAcquisitionFileYupSchema);
 const onSubmit = jest.fn();
 
 type TestProps = Pick<IAddAcquisitionFormProps, 'initialValues'>;
+jest.mock('@react-keycloak/web');
 
 describe('AddAcquisitionForm component', () => {
   // render component under test
@@ -32,6 +33,7 @@ describe('AddAcquisitionForm component', () => {
         store: {
           [lookupCodesSlice.name]: { lookupCodes: mockLookups },
         },
+        claims: [],
         history,
       },
     );

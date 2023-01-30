@@ -1,8 +1,10 @@
 import { FormSection } from 'components/common/form/styles';
 import { ColumnWithProps, Table } from 'components/Table';
 import { PidCell } from 'components/Table/PidCell';
-import { getIn, useFormikContext } from 'formik';
-import { ILease, IProperty } from 'interfaces';
+import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { getIn } from 'formik';
+import { IProperty } from 'interfaces';
+import { useContext } from 'react';
 import { prettyFormatDate, stringToFragment } from 'utils';
 
 interface IDeclaration {
@@ -52,8 +54,8 @@ const columns: ColumnWithProps<IDeclaration>[] = [
 ];
 
 const Surplus: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
-  const { values } = useFormikContext<ILease>();
-  const properties: IProperty[] = getIn(values, 'properties') ?? [];
+  const { lease } = useContext(LeaseStateContext);
+  const properties: IProperty[] = getIn(lease, 'properties') ?? [];
 
   let declarations: IDeclaration[] = properties.map<IDeclaration>(x => {
     return {

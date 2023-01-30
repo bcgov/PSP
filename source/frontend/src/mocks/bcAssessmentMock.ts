@@ -33,7 +33,7 @@ export const getMockLegalDescriptions = () => ({
         LAND_BRANCH_FILE_NUMBER: undefined,
         LAND_DISTRICT: '21',
         LAND_DISTRICT_DESCRIPTION: 'Esquimalt',
-        LEGAL_TEXT: undefined,
+        LEGAL_TEXT: 'SOME EXAMPLE LEGAL TEXT',
         LOT: '1',
         PID_NUMBER: 5868530,
         PID: '005868530',

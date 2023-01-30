@@ -1,4 +1,3 @@
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IAddLeaseContainerProps } from 'features/leases';
@@ -8,6 +7,7 @@ import { defaultLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { defaultApiLease } from 'models/api/Lease';
+import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { renderAsync, RenderOptions } from 'utils/test-utils';
 
@@ -18,18 +18,20 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 const mockAxios = new MockAdapter(axios);
+jest.mock('@react-keycloak/web');
 
 describe('Update lease container component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
     // render component under test
     const component = await renderAsync(
       <LeaseStateContext.Provider value={{ lease: { ...defaultLease, id: 1 }, setLease: noop }}>
-        <UpdateLeaseContainer />
+        <UpdateLeaseContainer formikRef={React.createRef()} onEdit={noop} />
       </LeaseStateContext.Provider>,
       {
         ...renderOptions,
         store: storeState,
         history,
+        claims: [],
       },
     );
 
@@ -45,14 +47,6 @@ describe('Update lease container component', () => {
   it('renders as expected', async () => {
     const { component } = await setup({});
     expect(component.asFragment()).toMatchSnapshot();
-  });
-
-  it('cancels the form', async () => {
-    const {
-      component: { getAllByText },
-    } = await setup({});
-    userEvent.click(getAllByText('Cancel')[0]);
-    expect(history.location.pathname).toBe('/lease/undefined');
   });
 
   // TODOL: Disabled until Lease update refactor is completed

@@ -19,6 +19,8 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.PrimaryContact, src => src.PrimaryContact)
                 .Map(dest => dest.LessorType, src => src.LessorTypeCodeNavigation)
+                .Map(dest => dest.LessorType, src => src.LessorTypeCodeNavigation)
+                .Map(dest => dest.TenantTypeCode, src => src.TenantTypeCodeNavigation)
                 .Map(dest => dest.Note, src => src.Note)
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
@@ -30,6 +32,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.LessorTypeCode, src => src.PersonId != null ? LessorTypes.PERSON : LessorTypes.ORGANIZATION)
+                .Map(dest => dest.TenantTypeCode, src => src.TenantTypeCode.Id)
                 .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

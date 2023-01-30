@@ -41,6 +41,7 @@ namespace Pims.Dal.Test.Libraries.Av
                 DisableScan = true,
                 HostUri = "testuri",
                 Port = 1234,
+                MaxFileSize = 1024,
             };
             var avJson = JsonSerializer.Serialize(new { Av = options });
             IConfigurationRoot avConfig;

@@ -5,9 +5,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c0 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
@@ -783,7 +781,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                   class="col-xl-6"
                                 >
                                   <div
-                                    class="flex-nowrap row"
+                                    class="flex-nowrap input-group row"
                                   >
                                     <div
                                       class="c17 col-auto"
@@ -1360,18 +1358,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   + Add another team member
                 </div>
               </button>
-              <div
-                class="container"
-              />
-              <div
-                class="container"
-              />
+              <div />
+              <div />
             </div>
           </div>
         </div>
-        <div
-          class="container"
-        />
+        <div />
       </div>
     </div>
   </div>

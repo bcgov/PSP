@@ -24,8 +24,6 @@ namespace Pims.Api.Controllers
     public class UserController : ControllerBase
     {
         #region Variables
-        private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
-        private readonly IProxyRequestClient _requestClient;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         #endregion
@@ -35,37 +33,16 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Creates a new instance of a UserController class.
         /// </summary>
-        /// <param name="optionsKeycloak"></param>
-        /// <param name="requestClient"></param>
         /// <param name="userRepository"></param>
         /// <param name="mapper"></param>
-        public UserController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IProxyRequestClient requestClient, IUserRepository userRepository, IMapper mapper)
+        public UserController(IUserRepository userRepository, IMapper mapper)
         {
-            _optionsKeycloak = optionsKeycloak.CurrentValue;
-            _requestClient = requestClient;
             _userRepository = userRepository;
             _mapper = mapper;
         }
         #endregion
 
         #region Endpoints
-
-        /// <summary>
-        /// Redirects user to the keycloak user info endpoint.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("info")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(KModel.UserInfoModel), 200)]
-        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "user" })]
-        public async Task<IActionResult> UserInfoAsync()
-        {
-            _optionsKeycloak.Validate(); // TODO: PSP-4418 Validate configuration automatically.
-            _optionsKeycloak.OpenIdConnect.Validate();
-            var response = await _requestClient.ProxyGetAsync(Request, $"{_optionsKeycloak.Authority}{_optionsKeycloak.OpenIdConnect.UserInfo}");
-            return await response.HandleResponseAsync<KModel.UserInfoModel>();
-        }
 
         /// <summary>
         /// Returns user person info for given keycloakUserId.

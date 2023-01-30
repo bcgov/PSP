@@ -2034,6 +2034,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
 
+                entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
+
                 entity.Property(e => e.MinistryProjectName).HasComment("Ministry project name.");
 
                 entity.Property(e => e.MinistryProjectNumber).HasComment("Ministry project number.");
@@ -5393,6 +5395,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LeaseArea).HasComment("Leased area measurement");
 
+                entity.Property(e => e.Name).HasComment("Property/lease name");
+
                 entity.HasOne(d => d.AreaUnitTypeCodeNavigation)
                     .WithMany(p => p.PimsPropertyLeases)
                     .HasForeignKey(d => d.AreaUnitTypeCode)
@@ -7454,6 +7458,22 @@ namespace Pims.Dal
             modelBuilder.HasSequence("PIMS_PRF_PROP_RESEARCH_PURPOSE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(21474483647);
+
+            modelBuilder.HasSequence("PIMS_PRODUCT_BUSINESS_FUNCTION_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PRODUCT_COST_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PRODUCT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PRODUCT_WORK_ACTIVITY_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_PROJECT_H_ID_SEQ")
                 .HasMin(1)

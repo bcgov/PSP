@@ -288,6 +288,13 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsAcqFlPersonProfileTypes.AsNoTracking().ToArray();
         }
+
+        public IEnumerable<PimsTenantType> GetTenantTypes()
+        {
+            return this.Context.PimsTenantTypes.AsNoTracking().ToArray();
+
+        }
+        
         #endregion
     }
 }

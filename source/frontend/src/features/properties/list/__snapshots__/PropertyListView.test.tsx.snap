@@ -5,9 +5,7 @@ exports[`Property list view matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  <div
-    class="container"
-  />
+  <div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;

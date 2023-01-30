@@ -5,9 +5,7 @@ Array [
   <div
     className="Toastify"
   />,
-  <div
-    className="container"
-  />,
+  <div />,
   .c0 {
   cursor: pointer;
 }

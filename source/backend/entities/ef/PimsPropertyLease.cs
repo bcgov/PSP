@@ -24,6 +24,9 @@ namespace Pims.Dal.Entities
         [Column("AREA_UNIT_TYPE_CODE")]
         [StringLength(20)]
         public string AreaUnitTypeCode { get; set; }
+        [Column("NAME")]
+        [StringLength(250)]
+        public string Name { get; set; }
         [Column("LEASE_AREA")]
         public float? LeaseArea { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
