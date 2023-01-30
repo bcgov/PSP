@@ -1,4 +1,11 @@
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+import {
+  act,
+  findByLabelText,
+  prettyDOM,
+  render,
+  RenderOptions,
+  userEvent,
+} from 'utils/test-utils';
 
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
@@ -212,10 +219,44 @@ describe('Generic table component', () => {
     });
 
     expect(setSelectedRows).toHaveBeenNthCalledWith(1, [{ id: 1, name: 'one' }]);
-    expect(setSelectedRows).toHaveBeenNthCalledWith(2, [
-      { id: 1, name: 'one' },
-      { id: 2, name: 'two' },
-    ]);
+    expect(setSelectedRows).toHaveBeenNthCalledWith(2, [{ id: 2, name: 'two' }]);
+
+    expect(selectRowOneButton).toHaveAttribute('type', 'checkbox');
+    expect(selectRowOneButton).toBeChecked();
+    expect(selectRowTwoButton).toBeChecked();
+  });
+
+  it('can select multiple rows when isSingleSelect is false and page is changed', async () => {
+    const setSelectedRows = jest.fn();
+    const { getByTestId, getByLabelText, findByLabelText } = setup({
+      props: {
+        pageSize: 1,
+        isSingleSelect: false,
+        setSelectedRows,
+        showSelectedRowCount: true,
+        manualPagination: false,
+      },
+    });
+
+    const selectRowOneButton = getByTestId('selectrow-1');
+    act(() => {
+      userEvent.click(selectRowOneButton);
+    });
+
+    const page2Button = getByLabelText('Page 2');
+    act(() => {
+      userEvent.click(page2Button);
+    });
+    await findByLabelText('Page 2 is your current page');
+
+    const selectRowTwoButton = getByTestId('selectrow-2');
+    act(() => {
+      userEvent.click(selectRowTwoButton);
+    });
+
+    expect(setSelectedRows).toHaveBeenNthCalledWith(1, [{ id: 1, name: 'one' }]);
+    expect(setSelectedRows).toHaveBeenNthCalledWith(2, [{ id: 2, name: 'two' }]);
+
     expect(selectRowOneButton).toHaveAttribute('type', 'checkbox');
     expect(selectRowOneButton).toBeChecked();
     expect(selectRowTwoButton).toBeChecked();
