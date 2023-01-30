@@ -12,13 +12,7 @@ const ProjectTab: React.FC<IProjectTabProps> = ({ projectPage, onEdit, isEditing
     throw Error('The requested project page does not exist');
   }
 
-  const Component = projectPage.component;
-
-  return (
-    <ProjectPageForm isEditing={isEditing} onEdit={onEdit}>
-      {/* <Component onEdit={onEdit} isEditing={isEditing} /> */}
-    </ProjectPageForm>
-  );
+  return <ProjectPageForm isEditing={isEditing} onEdit={onEdit}></ProjectPageForm>;
 };
 
 export default ProjectTab;
