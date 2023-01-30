@@ -36,7 +36,7 @@ describe('AcquisitionHeader component', () => {
     const testAcquisitionFile = mockAcquisitionFileResponse();
     const { getByText } = setup({ acquisitionFile: testAcquisitionFile });
 
-    expect(getByText(testAcquisitionFile.fileNumber as string)).toBeVisible();
+    expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
     expect(getByText(prettyFormatDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
     expect(getByText(prettyFormatDate(testAcquisitionFile.appLastUpdateTimestamp))).toBeVisible();
   });
