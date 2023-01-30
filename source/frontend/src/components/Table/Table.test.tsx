@@ -1,11 +1,4 @@
-import {
-  act,
-  findByLabelText,
-  prettyDOM,
-  render,
-  RenderOptions,
-  userEvent,
-} from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
