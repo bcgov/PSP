@@ -1907,7 +1907,8 @@ exports[`Document List View renders as expected 2`] = `
                 </span>
                 <input
                   class="form-control form-control-sm"
-                  style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                  disabled=""
+                  style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
                   type="number"
                   value="10"
                 />

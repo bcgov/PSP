@@ -17,6 +17,7 @@ interface IExtraColumnProps {
     props?: { [key: string]: any } | (() => { [key: string]: any });
   };
   Footer?: Function;
+  className?: string;
 }
 
 // Typings for configuration sent to `react-table`

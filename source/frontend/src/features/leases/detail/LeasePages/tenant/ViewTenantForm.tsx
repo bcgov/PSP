@@ -19,6 +19,7 @@ import { fromTypeCode, withNameSpace } from 'utils/formUtils';
 import { formatApiPersonNames } from 'utils/personUtils';
 
 import TenantOrganizationContactInfo from './TenantOrganizationContactInfo';
+import TenantPersonContactInfo from './TenantPersonContactInfo';
 
 class FormAddress {
   public readonly country?: string;
@@ -62,6 +63,33 @@ export class FormTenant {
   public readonly tenantType?: string;
   public readonly original?: IContactSearchResult;
   public readonly provinceState?: string;
+
+  toContactSearchResult = (): IContactSearchResult => {
+    if (!this.id) {
+      throw Error('Invalid tenant id');
+    }
+    return (
+      this.original ?? {
+        id: this.id,
+        personId: this.personId,
+        summary: this.summary,
+        tenantType: this.tenantType,
+        organization: !!this.organizationId
+          ? {
+              id: this.organizationId,
+              organizationPersons: this.organizationPersons,
+            }
+          : undefined,
+        mailingAddress: this.mailingAddress?.streetAddress1,
+        municipalityName: this.municipalityName,
+        note: this.note,
+        organizationId: this.organizationId,
+        mobile: this.mobile,
+        landline: this.landline,
+        provinceState: this.provinceState,
+      }
+    );
+  };
 
   constructor(apiModel?: Api_LeaseTenant, selectedContactModel?: IContactSearchResult) {
     if (!!apiModel) {
@@ -151,10 +179,17 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                     tenant.tenantType === 'TEN' && (
                       <div key={`tenants-${index}`}>
                         <>
-                          <TenantOrganizationContactInfo
-                            disabled={true}
-                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                          />
+                          {tenant.organizationId ? (
+                            <TenantOrganizationContactInfo
+                              disabled={true}
+                              nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                            />
+                          ) : (
+                            <TenantPersonContactInfo
+                              disabled={true}
+                              nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                            />
+                          )}
                         </>
                       </div>
                     ),
@@ -167,10 +202,17 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                     tenant.tenantType === 'REP' && (
                       <div key={`tenants-${index}`}>
                         <>
-                          <TenantOrganizationContactInfo
-                            disabled={true}
-                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                          />
+                          {tenant.organizationId ? (
+                            <TenantOrganizationContactInfo
+                              disabled={true}
+                              nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                            />
+                          ) : (
+                            <TenantPersonContactInfo
+                              disabled={true}
+                              nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                            />
+                          )}
                         </>
                       </div>
                     ),
@@ -183,10 +225,17 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                     tenant.tenantType === 'PMGR' && (
                       <div key={`tenants-${index}`}>
                         <>
-                          <TenantOrganizationContactInfo
-                            disabled={true}
-                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                          />
+                          {tenant.organizationId ? (
+                            <TenantOrganizationContactInfo
+                              disabled={true}
+                              nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                            />
+                          ) : (
+                            <TenantPersonContactInfo
+                              disabled={true}
+                              nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                            />
+                          )}
                         </>
                       </div>
                     ),
@@ -198,10 +247,17 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                     tenant.tenantType === 'UNK' && (
                       <div key={`tenants-${index}`}>
                         <>
-                          <TenantOrganizationContactInfo
-                            disabled={true}
-                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                          />
+                          {tenant.organizationId ? (
+                            <TenantOrganizationContactInfo
+                              disabled={true}
+                              nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                            />
+                          ) : (
+                            <TenantPersonContactInfo
+                              disabled={true}
+                              nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                            />
+                          )}
                         </>
                       </div>
                     ),
