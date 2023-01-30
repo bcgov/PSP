@@ -1,10 +1,7 @@
-import { Button } from 'components/common/buttons/Button';
 import { DisplayError } from 'components/common/form';
 import * as Styled from 'components/common/form/styles';
 import { ColumnWithProps, Table } from 'components/Table';
-import { getIn, useFormikContext } from 'formik';
-import _ from 'lodash';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Container, FormControlProps } from 'react-bootstrap';
 import { getColumnsWithRemove } from 'utils/columnUtils';
 
@@ -21,81 +18,35 @@ type RequiredAttributes<T extends object> = {
   selectedTableHeader: React.FC<React.PropsWithChildren<ISelectedTableHeaderProps>>;
   /** The columns that should be used for the secondary, "saved items" table */
   columns: ColumnWithProps<T>[];
-  /** child component that handles selection */
-  children: ReactNode;
+  onRemove: (items: T[]) => void;
 };
 
-type OptionalAttributes = {
-  /** The form component label */
-  label?: string;
-  /** The underlying HTML element to use when rendering the FormControl */
-  as?: React.ElementType;
-  /** Short hint that describes the expected value of an <input> element */
-  placeholder?: string;
-  /** Specifies that the HTML element should be disabled */
-  disabled?: boolean;
-  /** Use React-Bootstrap's custom form elements to replace the browser defaults */
-  custom?: boolean;
-  /** Optional label to be assigned to the add button */
-  addLabel?: string;
-
-  disableButton?: boolean;
-};
-
-export type TableSelectProps<T extends object> = FormControlProps &
-  OptionalAttributes &
-  RequiredAttributes<T>;
+export type TableSelectProps<T extends object> = FormControlProps & RequiredAttributes<T>;
 
 /**
  * Formik-connected allowing multiple table rows to be selected/removed
  */
 export const TableSelect = <T extends { id?: string | number }>({
   field,
-  disabled,
   selectedItems,
-  children,
   selectedTableHeader: SelectedTableHeader,
+  onRemove,
   columns,
-  addLabel,
-  disableButton,
 }: TableSelectProps<T>) => {
-  const { values, setFieldValue } = useFormikContext<any>();
-  const existingItems: T[] = getIn(values, field) ?? [];
-  const columnsWithRemove = getColumnsWithRemove<T>(
-    (rows: T[]) => setFieldValue(field, rows),
-    [...columns],
-  );
+  const columnsWithRemove = getColumnsWithRemove<T>((rows: T[]) => onRemove(rows), [...columns]);
 
   return (
     <Container className="col-md-12">
-      {!disabled && (
-        <div>
-          {children}
-          {!disableButton && (
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setFieldValue(
-                  field,
-                  _.uniqWith(_.concat(existingItems, selectedItems), (p1, p2) => p1.id === p2.id),
-                );
-              }}
-            >
-              {addLabel ?? 'Add Selected'}
-            </Button>
-          )}
-        </div>
-      )}
       <Styled.SaveTableWrapper>
-        <SelectedTableHeader selectedCount={existingItems.length} />
+        <SelectedTableHeader selectedCount={selectedItems.length} />
         <Table<T>
           name="selected-items"
           lockPageSize
           hidePagination
           footer
           columns={columnsWithRemove}
-          data={existingItems}
-          pageSize={existingItems.length}
+          data={selectedItems}
+          pageSize={selectedItems.length}
         />
       </Styled.SaveTableWrapper>
       <DisplayError field={field} />

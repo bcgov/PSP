@@ -30,9 +30,10 @@ exports[`Page size selector Snapshot matches 1`] = `
         </span>
         <input
           className="form-control form-control-sm"
-          onChange={[Function]}
+          disabled={true}
           style={
             Object {
+              "backgroundColor": "white",
               "marginLeft": 10,
               "marginRight": 10,
               "width": 50,

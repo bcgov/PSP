@@ -1,11 +1,13 @@
-import { Form, Input } from 'components/common/form';
-import { FieldArrayRenderProps } from 'formik';
+import { StyledLink } from 'components/maps/leaflet/LayerPopup/styles';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
+import { IFormLease } from 'interfaces';
 import * as React from 'react';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import styled from 'styled-components';
-import { phoneFormatter, withNameSpace } from 'utils/formUtils';
+import { withNameSpace } from 'utils/formUtils';
 
-import * as Styled from '../../styles';
-import AddressSubForm from '../AddressSubForm';
+import { FormTenant } from './ViewTenantForm';
 
 export interface ITenantPersonContactInfoProps {
   nameSpace: string;
@@ -19,43 +21,26 @@ export interface ITenantPersonContactInfoProps {
 export const TenantPersonContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantPersonContactInfoProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
+  const { values } = useFormikContext<IFormLease>();
+  const tenant: FormTenant = getIn(values, nameSpace);
   return (
-    <>
-      <Styled.FormGrid>
-        <Form.Label>Tenant Name:</Form.Label>
-        <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'summary')} />
-        <br />
-        <AddressSubForm
-          nameSpace={withNameSpace(nameSpace, 'mailingAddress')}
-          disabled={disabled}
-        />
-        <br />
-        <Form.Label>E-mail address:</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'email')} />
-        <Form.Label>Phone:</Form.Label>
-        <Styled.NestedInlineField
-          label="Landline:"
-          disabled={disabled}
-          field={withNameSpace(nameSpace, 'landline')}
-          onBlurFormatter={phoneFormatter}
-          pattern={/(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d\d)/}
-        />
-        <Styled.NestedInlineField
-          label="Mobile:"
-          disabled={disabled}
-          field={withNameSpace(nameSpace, 'mobile')}
-          onBlurFormatter={phoneFormatter}
-          pattern={/(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d\d)/}
-        />
-      </Styled.FormGrid>
-    </>
+    <StyledSectionWrapper>
+      <SectionField labelWidth="2" contentWidth="10" label="Person">
+        {getIn(values, withNameSpace(nameSpace, 'summary')) && (
+          <>
+            <StyledLink to={`/contact/${tenant?.id}`} target="_blank" rel="noopener noreferrer">
+              {getIn(values, withNameSpace(nameSpace, 'summary'))} <FaExternalLinkAlt />
+            </StyledLink>
+          </>
+        )}
+      </SectionField>
+    </StyledSectionWrapper>
   );
 };
 
-const StyledLargeTextInput = styled(Input)`
-  input {
-    font-size: 1.8rem;
-  }
+const StyledSectionWrapper = styled.div`
+  border-bottom: 0.1rem gray solid;
+  padding: 0.5rem;
 `;
 
 export default TenantPersonContactInfo;

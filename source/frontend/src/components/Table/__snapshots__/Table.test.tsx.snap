@@ -243,7 +243,8 @@ exports[`Generic table component matches snapshot 1`] = `
             </span>
             <input
               class="form-control form-control-sm"
-              style="width: 50px; margin-left: 10px; margin-right: 10px;"
+              disabled=""
+              style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
               type="number"
               value="10"
             />

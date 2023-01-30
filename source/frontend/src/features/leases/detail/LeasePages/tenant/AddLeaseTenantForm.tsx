@@ -13,35 +13,48 @@ import { mapLookupCode } from 'utils';
 
 import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';
 import getColumns from './columns';
+import PrimaryContactWarningModal, {
+  IPrimaryContactWarningModalProps,
+} from './PrimaryContactWarningModal';
 import SelectedTableHeader from './SelectedTableHeader';
 import * as Styled from './styles';
 import { FormTenant } from './ViewTenantForm';
 export interface IAddLeaseTenantFormProps {
-  selectedTenants: FormTenant[];
-  setSelectedTenants: (selectedTenants: IContactSearchResult[]) => void;
+  selectedContacts: IContactSearchResult[];
+  setSelectedContacts: (selectedContacts: IContactSearchResult[]) => void;
+  setTenants: (selectedContacts: IContactSearchResult[]) => void;
+  tenants: FormTenant[];
   onSubmit: (lease: IFormLease) => Promise<void>;
   initialValues?: IFormLease;
   formikRef: React.Ref<FormikProps<IFormLease>>;
+  showContactManager: boolean;
+  setShowContactManager: (showContactManager: boolean) => void;
 }
 
 export const AddLeaseTenantForm: React.FunctionComponent<
-  React.PropsWithChildren<IAddLeaseTenantFormProps>
-> = ({ selectedTenants, setSelectedTenants, onSubmit, initialValues, formikRef, children }) => {
+  React.PropsWithChildren<IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps>
+> = ({
+  selectedContacts,
+  setSelectedContacts,
+  setTenants,
+  tenants,
+  onSubmit,
+  initialValues,
+  formikRef,
+  children,
+  showContactManager,
+  setShowContactManager,
+  saveCallback,
+  lease,
+  onCancel,
+}) => {
   const lookupCodes = useLookupCodeHelpers();
   const tenantTypes = lookupCodes.getByType(TENANT_TYPES).map(c => mapLookupCode(c));
-  const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
-  const [selectedContacts, setSelectedContact] = React.useState<IContactSearchResult[]>(
-    selectedTenants.map<IContactSearchResult>(selectedTenant => {
-      return selectedTenant.original
-        ? { ...selectedTenant.original, tenantType: selectedTenant.tenantType }
-        : {
-            id: selectedTenant?.id?.toString() ?? '',
-            summary: selectedTenant.summary,
-            tenantType: selectedTenant.tenantType,
-            email: selectedTenant.email,
-          };
-    }),
-  );
+  const onRemove = (remainingTenants: FormTenant[]) => {
+    const remainingContacts = remainingTenants.map(t => t.toContactSearchResult());
+    setTenants(remainingContacts);
+    setSelectedContacts(remainingContacts);
+  };
 
   return (
     <>
@@ -58,7 +71,7 @@ export const AddLeaseTenantForm: React.FunctionComponent<
         }}
         innerRef={formikRef}
         enableReinitialize
-        initialValues={{ ...defaultFormLease, ...initialValues }}
+        initialValues={{ ...defaultFormLease, ...initialValues, tenants: tenants }}
       >
         {formikProps => (
           <>
@@ -67,57 +80,50 @@ export const AddLeaseTenantForm: React.FunctionComponent<
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
             <StyledFormBody>
+              <Row>
+                <Col>
+                  <StyledButton
+                    className="ml-auto"
+                    variant="secondary"
+                    onClick={() => {
+                      setShowContactManager(true);
+                    }}
+                  >
+                    Select Tenant(s)
+                  </StyledButton>
+                </Col>
+              </Row>
               <TableSelect<FormTenant>
-                selectedItems={selectedTenants}
+                selectedItems={tenants}
                 columns={getColumns(tenantTypes)}
                 field="tenants"
-                disableButton={true}
-                addLabel="Selected tenant(s)"
                 selectedTableHeader={SelectedTableHeader}
-              >
-                <Row>
-                  <Col>
-                    <StyledButton
-                      className="ml-auto"
-                      variant="secondary"
-                      onClick={() => {
-                        setShowContactManager(true);
-                      }}
-                    >
-                      Select Tenant(s)
-                    </StyledButton>
-                  </Col>
-                </Row>
-
-                <ContactManagerModal
-                  selectedRows={selectedContacts}
-                  setSelectedRows={setSelectedContact}
-                  display={showContactManager}
-                  setDisplay={setShowContactManager}
-                  handleModalOk={() => {
-                    setShowContactManager(false);
-
-                    setSelectedTenants(
-                      selectedContacts.map<IContactSearchResult>(contact => {
-                        contact.tenantType =
-                          selectedTenants.find(x => x.id === contact.id)?.tenantType ?? '';
-                        return contact;
-                      }) || [],
-                    );
-                  }}
-                  handleModalCancel={() => {
-                    setShowContactManager(false);
-                    // setSelectedContact([]);
-                  }}
-                  showActiveSelector={true}
-                  isSummary={false}
-                ></ContactManagerModal>
-              </TableSelect>
+                onRemove={onRemove}
+              ></TableSelect>
+              <ContactManagerModal
+                selectedRows={selectedContacts}
+                setSelectedRows={(s: IContactSearchResult[]) => {
+                  setSelectedContacts(s);
+                }}
+                display={showContactManager}
+                setDisplay={setShowContactManager}
+                handleModalOk={() => {
+                  setShowContactManager(false);
+                  setTenants(selectedContacts);
+                }}
+                handleModalCancel={() => {
+                  setShowContactManager(false);
+                  setSelectedContacts(tenants.map(t => t.toContactSearchResult()));
+                }}
+                showActiveSelector={true}
+                isSummary={true}
+              ></ContactManagerModal>
             </StyledFormBody>
             {children}
           </>
         )}
       </Formik>
+      <PrimaryContactWarningModal saveCallback={saveCallback} onCancel={onCancel} lease={lease} />
     </>
   );
 };
