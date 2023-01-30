@@ -16,7 +16,7 @@ const ProjectTab: React.FC<IProjectTabProps> = ({ projectPage, onEdit, isEditing
 
   return (
     <ProjectPageForm isEditing={isEditing} onEdit={onEdit}>
-      <Component onEdit={onEdit} isEditing={isEditing} />
+      {/* <Component onEdit={onEdit} isEditing={isEditing} /> */}
     </ProjectPageForm>
   );
 };

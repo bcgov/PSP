@@ -1,7 +1,8 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import DetailPageContainer from 'features/projects/detail/projectPages/details/DetailPageContainer';
+import { FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/providers/useProjectProvider';
+import { IProjectForm } from 'interfaces/IProject';
 import { Api_Project } from 'models/api/Project';
 import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
@@ -9,7 +10,7 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import { SideBarContext } from '../context/sidebarContext';
-import { AddProjectYupSchema } from './add/AddProjectFileYupSchema';
+import { ProjectForm } from './add/models';
 import ProjectHeader from './common/ProjectHeader';
 import { ProjectTabNames } from './ProjectTabs';
 import ViewSelector from './ViewSelector';
@@ -22,6 +23,7 @@ export interface IProjectContainerProps {
 export interface ProjectPageProps {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
+  formikRef: React.RefObject<FormikProps<ProjectForm | IProjectForm>>;
 }
 
 export interface IProjectPage {
@@ -41,14 +43,14 @@ export const projectPages: Map<ProjectPageNames, IProjectPage> = new Map<
   ProjectPageNames,
   IProjectPage
 >([
-  [
-    ProjectPageNames.DETAILS,
-    {
-      component: DetailPageContainer,
-      title: 'Project details',
-      validation: AddProjectYupSchema,
-    },
-  ],
+  // [
+  //   ProjectPageNames.DETAILS,
+  //   {
+  //     component: UpdateProjectContainer,
+  //     title: 'Project details',
+  //     validation: AddProjectYupSchema,
+  //   },
+  // ],
 ]);
 
 // Interface for our internal state
