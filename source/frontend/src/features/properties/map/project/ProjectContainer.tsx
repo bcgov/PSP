@@ -1,23 +1,29 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/providers/useProjectProvider';
 import { IProjectForm } from 'interfaces/IProject';
 import { Api_Project } from 'models/api/Project';
 import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import { FaBriefcase } from 'react-icons/fa';
-import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { ProjectForm } from './add/models';
-import ProjectHeader from './common/ProjectHeader';
 import { ProjectTabNames } from './ProjectTabs';
-import ViewSelector from './ViewSelector';
+
+export interface IProjectContainerViewProps {
+  project?: Api_Project;
+  viewTitle?: string;
+  loadingProject?: boolean;
+  activeTab?: ProjectTabNames;
+  isEditing: boolean;
+  onSetContainerState: (value: Partial<ProjectContainerState>) => void;
+  onClose: () => void;
+  onSetProject: (project: Api_Project) => void;
+}
 
 export interface IProjectContainerProps {
   projectId: number;
   onClose: () => void;
+  View: React.FC<IProjectContainerViewProps>;
 }
 
 export interface ProjectPageProps {
@@ -70,8 +76,7 @@ const initialState: ProjectContainerState = {
 
 const ProjectContainer: React.FunctionComponent<
   React.PropsWithChildren<IProjectContainerProps>
-> = props => {
-  const { projectId, onClose } = props;
+> = ({ projectId, View, onClose }) => {
   const { setProject, setProjectLoading } = useContext(SideBarContext);
 
   const {
@@ -101,42 +106,20 @@ const ProjectContainer: React.FunctionComponent<
   }, [project, fetchProject]);
 
   useEffect(() => setProjectLoading(loadingProject), [loadingProject, setProjectLoading]);
-  const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  if (loadingProject) {
-    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
-  }
-
+  const title = containerState.isEditing ? 'Update Project' : 'Project';
   return (
-    <MapSideBarLayout
-      showCloseButton
-      onClose={close}
-      title={containerState.isEditing ? 'Update Project' : 'Project'}
-      icon={<FaBriefcase className="mr-2 mb-2" size={32} />}
-      header={<ProjectHeader project={project} />}
-    >
-      <StyledFormWrapper>
-        <ViewSelector
-          project={project}
-          setProject={setProject}
-          isEditing={containerState.isEditing}
-          activeTab={containerState.activeTab}
-          setContainerState={setContainerState}
-        />
-      </StyledFormWrapper>
-    </MapSideBarLayout>
+    <View
+      project={project}
+      viewTitle={title}
+      activeTab={containerState.activeTab}
+      loadingProject={loadingProject}
+      isEditing={containerState.isEditing}
+      onSetContainerState={setContainerState}
+      onSetProject={setProject}
+      onClose={onClose}
+    />
   );
 };
 
 export default ProjectContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

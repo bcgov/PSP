@@ -18,6 +18,7 @@ import AddAcquisitionContainer from './acquisition/add/AddAcquisitionContainer';
 import LeaseContainer from './lease/LeaseContainer';
 import AddProjectContainer from './project/add/AddProjectContainer';
 import ProjectContainer from './project/ProjectContainer';
+import ProjectContainerView from './project/ProjectContainerView';
 import AddResearchContainer from './research/add/AddResearchContainer';
 import ResearchContainer from './research/ResearchContainer';
 
@@ -186,7 +187,11 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
       <AppRoute
         path={`/mapview/sidebar/project/:id`}
         customRender={({ match }) => (
-          <ProjectContainer projectId={Number(match.params.id)} onClose={onClose} />
+          <ProjectContainer
+            projectId={Number(match.params.id)}
+            onClose={onClose}
+            View={ProjectContainerView}
+          />
         )}
         claim={Claims.PROJECT_VIEW}
         exact

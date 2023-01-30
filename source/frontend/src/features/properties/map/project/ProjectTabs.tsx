@@ -2,12 +2,7 @@ import TabView from 'components/common/TabView';
 import React from 'react';
 import { Tab } from 'react-bootstrap';
 
-interface IProjectTabsProps {
-  defaultTabKey: ProjectTabNames;
-  tabViews: ProjectTabView[];
-  activeTab: ProjectTabNames;
-  setActiveTab: (tab: ProjectTabNames) => void;
-}
+import { IProjectTabsProps } from './detail/ProjectTabsContainer';
 
 export interface ProjectTabView {
   content: React.ReactNode;

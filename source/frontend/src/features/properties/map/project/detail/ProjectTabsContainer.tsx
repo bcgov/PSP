@@ -15,6 +15,13 @@ export interface IProjectTabsContainerProps {
   activeTab?: ProjectTabNames;
 }
 
+export interface IProjectTabsProps {
+  defaultTabKey: ProjectTabNames;
+  tabViews: ProjectTabView[];
+  activeTab: ProjectTabNames;
+  setActiveTab: (tab: ProjectTabNames) => void;
+}
+
 const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
   project,
   setContainerState,

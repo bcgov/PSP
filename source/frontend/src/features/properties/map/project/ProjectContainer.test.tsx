@@ -3,20 +3,18 @@ import MockAdapter from 'axios-mock-adapter';
 import { mockLookups } from 'mocks';
 import { mockProjectGetResponse } from 'mocks/mockProjects';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, waitForElementToBeRemoved } from 'utils/test-utils';
+import { render, RenderOptions } from 'utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
-import ProjectContainer, { IProjectContainerProps } from './ProjectContainer';
+import ProjectContainer, { IProjectContainerViewProps } from './ProjectContainer';
 
 const mockAxios = new MockAdapter(axios);
 // mock auth library
 jest.mock('@react-keycloak/web');
-const onClose = jest.fn();
-
-const DEFAULT_PROPS: IProjectContainerProps = {
-  projectId: 1,
-  onClose,
+const TestView: React.FC<IProjectContainerViewProps> = () => {
+  return <span>Content Rendered</span>;
 };
+
 jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
@@ -31,17 +29,14 @@ jest.mock('react-visibility-sensor', () => {
 
 describe('ProjectContainer component', () => {
   // render component under test
-  const setup = (
-    props: IProjectContainerProps = { ...DEFAULT_PROPS },
-    renderOptions: RenderOptions = {},
-  ) => {
+  const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <SideBarContextProvider
         project={{
           ...mockProjectGetResponse(),
         }}
       >
-        <ProjectContainer {...props} />
+        <ProjectContainer projectId={1} View={TestView} onClose={jest.fn()} />
       </SideBarContextProvider>,
       {
         store: {
@@ -56,10 +51,13 @@ describe('ProjectContainer component', () => {
     return {
       ...utils,
       getCloseButton: () => utils.getByTitle('close'),
+      getCancelButton: () => utils.getByText(/Cancel/i),
     };
   };
 
   beforeEach(() => {
+    jest.resetAllMocks();
+
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios.onGet(new RegExp('projects/*')).reply(200, mockProjectGetResponse());
   });
@@ -69,12 +67,8 @@ describe('ProjectContainer component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders a spinner while loading', async () => {
-    const { getByTestId } = setup();
-
-    const spinner = getByTestId('filter-backdrop-loading');
-    expect(spinner).toBeVisible();
-
-    await waitForElementToBeRemoved(spinner);
+  it('renders the underlying form', () => {
+    const { getByText } = setup();
+    expect(getByText(/Content Rendered/)).toBeVisible();
   });
 });
