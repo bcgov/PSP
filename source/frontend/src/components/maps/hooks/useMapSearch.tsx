@@ -7,8 +7,9 @@ import { useModalContext } from 'hooks/useModalContext';
 import { geoJSON } from 'leaflet';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
+import { useTenant } from 'tenants';
 
-import { PARCELS_LAYER_URL, PIMS_BOUNDARY_LAYER_URL, useLayerQuery } from '../leaflet/LayerPopup';
+import { useLayerQuery } from '../leaflet/LayerPopup';
 import { PropertyContext } from '../providers/PropertyContext';
 
 export const useMapSearch = () => {
@@ -16,8 +17,9 @@ export const useMapSearch = () => {
   const {
     loadProperties: { execute: loadProperties, loading, response },
   } = useMapProperties();
-  const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
-  const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
+  const { parcelsLayerUrl, boundaryLayerUrl } = useTenant();
+  const parcelsService = useLayerQuery(parcelsLayerUrl);
+  const pimsService = useLayerQuery(boundaryLayerUrl, true);
   const { setModalContent, setDisplayModal } = useModalContext();
   const keycloak = useKeycloakWrapper();
   const logout = keycloak.obj.logout;

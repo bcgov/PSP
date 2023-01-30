@@ -21,7 +21,16 @@ export interface ITenantConfig {
   // the url that should be used to query the PSP properties layer.
   propertiesUrl?: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
-  parcelMapFullyAttributed: IFullyAttributedParcelLayerConfig;
+  parcelMapFullyAttributed: ILayerConfig;
+  electoralLayerUrl: string;
+  municipalLayerUrl: string;
+  parcelsLayerUrl: string;
+  regionalLayerUrl: string;
+  motiRegionLayerUrl: string;
+  hwyDistrictLayerUrl: string;
+  alrLayerUrl: string;
+  reservesLayerUrl: string;
+  boundaryLayerUrl: string;
   bcAssessment: IBcAssessmentLayerConfig;
   // the amount of time it takes to time out the idle prompt (in minutes)
   idlePromptTimeout: number;
@@ -49,7 +58,7 @@ export interface ITenantLogoConfig {
   imageWithText: string;
 }
 
-export interface IFullyAttributedParcelLayerConfig {
+export interface ILayerConfig {
   url: string;
   name: string;
 }

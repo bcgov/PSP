@@ -1,8 +1,4 @@
-import {
-  HWY_DISTRICT_LAYER_URL,
-  MOTI_REGION_LAYER_URL,
-  useLayerQuery,
-} from 'components/maps/leaflet/LayerPopup';
+import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { DistrictCodes, RegionCodes } from 'constants/index';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
@@ -31,6 +27,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
+  const { motiRegionLayerUrl, hwyDistrictLayerUrl } = useTenant();
 
   const {
     getSitePids,
@@ -44,11 +41,11 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
   const {
     findOneWhereContainsWrapped: findOneWhereContainsRegion,
     findOneWhereContainsLoading: regionSearchLoading,
-  } = useLayerQuery(MOTI_REGION_LAYER_URL);
+  } = useLayerQuery(motiRegionLayerUrl);
   const {
     findOneWhereContainsWrapped: findOneWhereContainsDistrict,
     findOneWhereContainsLoading: districtSearchLoading,
-  } = useLayerQuery(HWY_DISTRICT_LAYER_URL);
+  } = useLayerQuery(hwyDistrictLayerUrl);
 
   const { parcelMapFullyAttributed } = useTenant();
   const {

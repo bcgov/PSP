@@ -73,6 +73,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
         public virtual DbSet<PimsAcquisitionActivityInstanceHist> PimsAcquisitionActivityInstanceHists { get; set; }
         public virtual DbSet<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; }
+        public virtual DbSet<PimsAcquisitionFileDocument> PimsAcquisitionFileDocuments { get; set; }
+        public virtual DbSet<PimsAcquisitionFileDocumentHist> PimsAcquisitionFileDocumentHists { get; set; }
         public virtual DbSet<PimsAcquisitionFileHist> PimsAcquisitionFileHists { get; set; }
         public virtual DbSet<PimsAcquisitionFileNote> PimsAcquisitionFileNotes { get; set; }
         public virtual DbSet<PimsAcquisitionFileNoteHist> PimsAcquisitionFileNoteHists { get; set; }
@@ -221,7 +223,11 @@ namespace Pims.Dal
         public virtual DbSet<PimsResearchActivityInstance> PimsResearchActivityInstances { get; set; }
         public virtual DbSet<PimsResearchActivityInstanceHist> PimsResearchActivityInstanceHists { get; set; }
         public virtual DbSet<PimsResearchFile> PimsResearchFiles { get; set; }
+        public virtual DbSet<PimsResearchFileDocument> PimsResearchFileDocuments { get; set; }
+        public virtual DbSet<PimsResearchFileDocumentHist> PimsResearchFileDocumentHists { get; set; }
         public virtual DbSet<PimsResearchFileHist> PimsResearchFileHists { get; set; }
+        public virtual DbSet<PimsResearchFileNote> PimsResearchFileNotes { get; set; }
+        public virtual DbSet<PimsResearchFileNoteHist> PimsResearchFileNoteHists { get; set; }
         public virtual DbSet<PimsResearchFilePurpose> PimsResearchFilePurposes { get; set; }
         public virtual DbSet<PimsResearchFilePurposeHist> PimsResearchFilePurposeHists { get; set; }
         public virtual DbSet<PimsResearchFileStatusType> PimsResearchFileStatusTypes { get; set; }
@@ -2092,6 +2098,64 @@ namespace Pims.Dal
                     .HasConstraintName("PIM_REGION_PIM_ACQNFL_FK");
             });
 
+            modelBuilder.Entity<PimsAcquisitionFileDocument>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionFileDocumentId)
+                    .HasName("ACQDOC_PK");
+
+                entity.HasComment("Defines the relationship between an acquisition file and a document.");
+
+                entity.Property(e => e.AcquisitionFileDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_DOCUMENT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the relationship has been disabled.");
+
+                entity.HasOne(d => d.AcquisitionFile)
+                    .WithMany(p => p.PimsAcquisitionFileDocuments)
+                    .HasForeignKey(d => d.AcquisitionFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACQNFL_PIM_ACQDOC_FK");
+
+                entity.HasOne(d => d.Document)
+                    .WithMany(p => p.PimsAcquisitionFileDocuments)
+                    .HasForeignKey(d => d.DocumentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCMNT_PIM_ACQDOC_FK");
+            });
+
+            modelBuilder.Entity<PimsAcquisitionFileDocumentHist>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionFileDocumentHistId)
+                    .HasName("PIMS_ACQDOC_H_PK");
+
+                entity.Property(e => e.AcquisitionFileDocumentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_DOCUMENT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsAcquisitionFileHist>(entity =>
             {
                 entity.HasKey(e => e.AcquisitionFileHistId)
@@ -2106,6 +2170,8 @@ namespace Pims.Dal
             {
                 entity.HasKey(e => e.AcquisitionFileNoteId)
                     .HasName("ACQNOT_PK");
+
+                entity.HasComment("Defines the relationship between an acquisition file and a note.");
 
                 entity.Property(e => e.AcquisitionFileNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NOTE_ID_SEQ])");
 
@@ -4893,8 +4959,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.Note).HasComment("Descriptive note relevant to the project.");
 
-                entity.Property(e => e.ProjectStatusTypeCode).HasDefaultValueSql("('ACTIVE')");
-
                 entity.Property(e => e.RegionCode).HasDefaultValueSql("((4))");
 
                 entity.HasOne(d => d.BusinessFunctionCode)
@@ -6345,12 +6409,128 @@ namespace Pims.Dal
                     .HasConstraintName("PIM_RSRCHS_PIM_RESRCH_FK");
             });
 
+            modelBuilder.Entity<PimsResearchFileDocument>(entity =>
+            {
+                entity.HasKey(e => e.ResearchFileDocumentId)
+                    .HasName("RSCDOC_PK");
+
+                entity.HasComment("Defines the relationship betwwen a research file and a document.");
+
+                entity.Property(e => e.ResearchFileDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_DOCUMENT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the relationship has been disabled.");
+
+                entity.HasOne(d => d.Document)
+                    .WithMany(p => p.PimsResearchFileDocuments)
+                    .HasForeignKey(d => d.DocumentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCMNT_PIM_RSCDOC_FK");
+
+                entity.HasOne(d => d.ResearchFile)
+                    .WithMany(p => p.PimsResearchFileDocuments)
+                    .HasForeignKey(d => d.ResearchFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_RESRCH_PIM_RSCDOC_FK");
+            });
+
+            modelBuilder.Entity<PimsResearchFileDocumentHist>(entity =>
+            {
+                entity.HasKey(e => e.ResearchFileDocumentHistId)
+                    .HasName("PIMS_RSCDOC_H_PK");
+
+                entity.Property(e => e.ResearchFileDocumentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_DOCUMENT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsResearchFileHist>(entity =>
             {
                 entity.HasKey(e => e.ResearchFileHistId)
                     .HasName("PIMS_RESRCH_H_PK");
 
                 entity.Property(e => e.ResearchFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsResearchFileNote>(entity =>
+            {
+                entity.HasKey(e => new { e.ResearchFileNoteId, e.ResearchFileId })
+                    .HasName("RSCNOT_PK");
+
+                entity.HasComment("Defines the relationship betwwen a research file and a note.");
+
+                entity.Property(e => e.ResearchFileNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_NOTE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the relationship has been disabled.");
+
+                entity.HasOne(d => d.Note)
+                    .WithMany(p => p.PimsResearchFileNotes)
+                    .HasForeignKey(d => d.NoteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_NOTE_PIM_RSCNOT_FK");
+
+                entity.HasOne(d => d.ResearchFile)
+                    .WithMany(p => p.PimsResearchFileNotes)
+                    .HasForeignKey(d => d.ResearchFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_RESRCH_PIM_RSCNOT_FK");
+            });
+
+            modelBuilder.Entity<PimsResearchFileNoteHist>(entity =>
+            {
+                entity.HasKey(e => e.ResearchFileNoteHistId)
+                    .HasName("PIMS_RSCNOT_H_PK");
+
+                entity.Property(e => e.ResearchFileNoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_NOTE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -7378,6 +7558,14 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_DOCUMENT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_DOCUMENT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -7912,11 +8100,27 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_RESEARCH_FILE_DOCUMENT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESEARCH_FILE_DOCUMENT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_RESEARCH_FILE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_RESEARCH_FILE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESEARCH_FILE_NOTE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESEARCH_FILE_NOTE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

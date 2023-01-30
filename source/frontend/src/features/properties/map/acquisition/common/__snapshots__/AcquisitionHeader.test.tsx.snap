@@ -42,13 +42,15 @@ exports[`AcquisitionHeader component renders as expected when no data is provide
               class="pr-0 text-left col-3"
             >
               <label>
-                File #:
+                File:
               </label>
             </div>
             <div
               class="pl-1 text-left col-9"
             >
-              <strong />
+              <strong>
+                 - 
+              </strong>
             </div>
           </div>
         </div>

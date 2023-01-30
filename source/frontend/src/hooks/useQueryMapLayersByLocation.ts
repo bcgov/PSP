@@ -1,15 +1,9 @@
-import {
-  ALR_LAYER_URL,
-  ELECTORAL_LAYER_URL,
-  HWY_DISTRICT_LAYER_URL,
-  INDIAN_RESERVES_LAYER_URL,
-  IUserLayerQuery,
-  MOTI_REGION_LAYER_URL,
-  useLayerQuery,
-} from 'components/maps/leaflet/LayerPopup';
+import { IUserLayerQuery, useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { GeoJsonProperties } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
+
+import { useTenant } from './../tenants/useTenant';
 
 const initialState: IMapLayerResults = {
   isALR: null,
@@ -32,11 +26,19 @@ export interface IMapLayerResults {
  * @returns An object with information + metadata returned by the map layers queried by this hook
  */
 export function useQueryMapLayersByLocation() {
-  const motiRegionService = useLayerQuery(MOTI_REGION_LAYER_URL);
-  const highwaysService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
-  const electoralService = useLayerQuery(ELECTORAL_LAYER_URL);
-  const alrService = useLayerQuery(ALR_LAYER_URL);
-  const firstNationsService = useLayerQuery(INDIAN_RESERVES_LAYER_URL);
+  const {
+    motiRegionLayerUrl,
+    hwyDistrictLayerUrl,
+    electoralLayerUrl,
+    alrLayerUrl,
+    reservesLayerUrl,
+  } = useTenant();
+
+  const motiRegionService = useLayerQuery(motiRegionLayerUrl);
+  const highwaysService = useLayerQuery(hwyDistrictLayerUrl);
+  const electoralService = useLayerQuery(electoralLayerUrl);
+  const alrService = useLayerQuery(alrLayerUrl);
+  const firstNationsService = useLayerQuery(reservesLayerUrl);
 
   const queryAllCallback = useCallback(
     async function (location: LatLngLiteral | null): Promise<IMapLayerResults> {
