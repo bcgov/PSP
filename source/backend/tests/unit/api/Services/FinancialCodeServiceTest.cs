@@ -81,6 +81,34 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetById_Success()
+        {
+            // Arrange
+            var service = CreateWithPermissions(Permissions.SystemAdmin);
+            var repo = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            repo.Setup(x => x.GetById(It.IsAny<long>()));
+
+            // Act
+            var result = service.GetById(FinancialCodeTypes.BusinessFunction, 1);
+
+            // Assert
+            repo.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetById_NoPermission()
+        {
+            // Arrange
+            var service = CreateWithPermissions();
+
+            // Act
+            Action act = () => service.GetById(FinancialCodeTypes.BusinessFunction, 1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
         public void Add_Success()
         {
             // Arrange
@@ -139,6 +167,73 @@ namespace Pims.Api.Test.Services
                 EffectiveDate = DateTime.Now,
             };
             Action act = () => service.Add(FinancialCodeTypes.BusinessFunction, duplicate);
+
+            // Assert
+            act.Should().Throw<DuplicateEntityException>();
+        }
+
+        [Fact]
+        public void Update_Success()
+        {
+            // Arrange
+            var service = CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsBusinessFunctionCode>()));
+
+            // Act
+            var result = service.Update(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
+
+            // Assert
+            repository.Verify(x => x.Update(It.IsAny<PimsBusinessFunctionCode>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_NoPermission()
+        {
+            // Arrange
+            var service = CreateWithPermissions();
+
+            // Act
+            Action act = () => service.Update(FinancialCodeTypes.BusinessFunction, new FinancialCodeModel());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_ThrowIfNull()
+        {
+            // Arrange
+            var service = CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsBusinessFunctionCode>()));
+
+            // Act
+            Action act = () => service.Update(FinancialCodeTypes.BusinessFunction, null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Update_ThrowIfDuplicateCodeFound()
+        {
+            // Arrange
+            var service = CreateWithPermissions(Permissions.SystemAdmin);
+            var repository = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsBusinessFunctionCode>())).Throws<DuplicateEntityException>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+
+            // Act
+            var duplicate = new FinancialCodeModel()
+            {
+                Id = 1,
+                RowVersion = 1,
+                Code = "FOO",
+                Description = "Other description",
+                EffectiveDate = DateTime.Now,
+            };
+            Action act = () => service.Update(FinancialCodeTypes.BusinessFunction, duplicate);
 
             // Assert
             act.Should().Throw<DuplicateEntityException>();
