@@ -61,9 +61,10 @@ describe('UpdateFinancialCode container', () => {
     jest.resetAllMocks();
   });
 
-  it('renders the underlying form', () => {
+  it('renders the underlying form and retrieves the financial code to update', async () => {
     const { getByText } = setup();
     expect(getByText(/Content Rendered/)).toBeVisible();
+    expect(mockGetApi.execute).toHaveBeenCalled();
   });
 
   it('displays error message for duplicate codes', async () => {
@@ -74,7 +75,7 @@ describe('UpdateFinancialCode container', () => {
       viewProps?.onError(error409);
     });
 
-    expect(getByText(/Cannot create duplicate financial code/)).toBeVisible();
+    expect(getByText(/Cannot update duplicate financial code/)).toBeVisible();
   });
 
   it('displays a toast for generic server errors', async () => {
@@ -88,7 +89,7 @@ describe('UpdateFinancialCode container', () => {
     expect(await screen.findByText('Unable to save. Please try again.')).toBeVisible();
   });
 
-  it('makes request to create a new financial code and returns the response', async () => {
+  it('makes request to update financial code and returns the response', async () => {
     setup();
     mockUpdateApi.execute.mockResolvedValue(mockFinancialCode());
 

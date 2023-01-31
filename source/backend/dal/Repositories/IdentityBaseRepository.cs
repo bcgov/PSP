@@ -32,7 +32,7 @@ namespace Pims.Dal.Repositories
 
         /// <summary>
         /// Retrieves the entity with the specified id.
-        /// NOTE: This does NOT load any related date, only the main entity values.
+        /// NOTE: This does NOT load any relationships, only the main entity values.
         /// </summary>
         /// <param name="id">The entity Id.</param>
         /// <returns>The entity.</returns>

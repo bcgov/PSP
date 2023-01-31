@@ -69,14 +69,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-financialcodes" })]
         public IActionResult GetFinancialCode(FinancialCodeTypes type, long codeId)
         {
-            try
-            {
-                return new JsonResult(_financialCodeService.GetById(type, codeId));
-            }
-            catch (DuplicateEntityException e)
-            {
-                return Conflict(e.Message);
-            }
+            return new JsonResult(_financialCodeService.GetById(type, codeId));
         }
 
         /// <summary>

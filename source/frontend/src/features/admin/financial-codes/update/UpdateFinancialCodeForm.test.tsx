@@ -61,6 +61,7 @@ describe('UpdateFinancialCode form', () => {
 
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const cancelButton = screen.getByText('Cancel');
+    await act(() => userEvent.clear(description));
     await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(cancelButton));
 
@@ -73,6 +74,7 @@ describe('UpdateFinancialCode form', () => {
 
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const cancelButton = screen.getByText('Cancel');
+    await act(() => userEvent.clear(description));
     await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
@@ -86,9 +88,10 @@ describe('UpdateFinancialCode form', () => {
   it('does not call onCancel when form is dirty, cancel is clicked but modal is not confirmed', async () => {
     setup();
 
-    const textbox = document.querySelector(`input[name="description"]`) as HTMLInputElement;
+    const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const cancelButton = screen.getByText('Cancel');
-    await act(() => userEvent.paste(textbox, `another description`));
+    await act(() => userEvent.clear(description));
+    await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const noButton = screen.getByText('No');
@@ -105,7 +108,9 @@ describe('UpdateFinancialCode form', () => {
     const codeValue = document.querySelector(`input[name="code"]`) as HTMLSelectElement;
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const saveButton = screen.getByText('Save');
+    await act(() => userEvent.clear(codeValue));
     await act(() => userEvent.paste(codeValue, 'FOO'));
+    await act(() => userEvent.clear(description));
     await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(saveButton));
 
@@ -125,6 +130,7 @@ describe('UpdateFinancialCode form', () => {
 
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const saveButton = screen.getByText('Save');
+    await act(() => userEvent.clear(description));
     await act(() => userEvent.paste(description, `another description`));
     await act(() => userEvent.click(saveButton));
 
@@ -137,10 +143,12 @@ describe('UpdateFinancialCode form', () => {
     mockProps.validationSchema = UpdateFinancialCodeYupSchema;
     setup();
 
+    const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const saveButton = screen.getByText('Save');
+    await act(() => userEvent.clear(description));
     await act(() => userEvent.click(saveButton));
 
     expect(mockProps.onSave).not.toHaveBeenCalled();
-    expect(await screen.findByText('Code value is required')).toBeVisible();
+    expect(await screen.findByText('Code description is required')).toBeVisible();
   });
 });
