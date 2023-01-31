@@ -10,9 +10,9 @@ export class ProjectForm {
   region?: NumberFieldValue;
   summary?: string;
 
-  toApi(id: number = 1): Api_Project {
+  toApi(): Api_Project {
     return {
-      id: id,
+      id: this.id,
       code: this.projectNumber,
       description: this.projectName,
       projectStatusTypeCode: toTypeCode<string>(this.projectStatusType),

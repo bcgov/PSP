@@ -32,7 +32,6 @@ export const mockProjects = (): Api_Project[] => [
 ];
 
 export const mockProjectPostResponse = (
-  id: number = 1,
   rowVersion: number = 1,
   description: string = 'TRANS-CANADA HWY - 10',
   code: string,
@@ -40,7 +39,7 @@ export const mockProjectPostResponse = (
   statusCode: string = 'AC',
   summary: string = 'NEW PROJECT',
 ): Api_Project => ({
-  id: id,
+  id: 1,
   rowVersion: rowVersion,
   code: code,
   description: description,

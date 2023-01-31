@@ -133,7 +133,6 @@ describe('AddProjectContainer component', () => {
         201,
         mockProjectPostResponse(
           1,
-          1,
           formValues.projectName,
           formValues.projectNumber,
           formValues.region,
@@ -145,7 +144,7 @@ describe('AddProjectContainer component', () => {
 
     await waitFor(() => {
       const axiosData: Api_Project = JSON.parse(mockAxios.history.post[0].data);
-      const expectedValues = formValues.toApi(1);
+      const expectedValues = formValues.toApi();
 
       expect(mockAxios.history.post[0].url).toBe('/projects');
       expect(axiosData).toEqual(expectedValues);
