@@ -85,20 +85,20 @@ namespace Pims.Api.Services
             return AddInternalAsync(project);
         }
 
+        public async Task<PimsProject> GetById(long projectId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+            _logger.LogInformation("Getting Project by Id ...");
+
+            return await _projectRepository.Get(projectId);
+        }
+
         private async Task<PimsProject> AddInternalAsync(PimsProject project)
         {
-            try
-            {
-                var newProject = await _projectRepository.Add(project);
-                _projectRepository.CommitTransaction();
+            var newProject = await _projectRepository.Add(project);
+            _projectRepository.CommitTransaction();
 
-                return await _projectRepository.Get(newProject.Id);
-
-            }
-            catch(Exception ex)
-            {
-                return null;
-            }
+            return await _projectRepository.Get(newProject.Id);
         }
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
