@@ -7,7 +7,7 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsBusinessFunctionCode> GetAllBusinessFunctionCodes();
 
-        public PimsBusinessFunctionCode GetById(long id);
+        PimsBusinessFunctionCode GetById(long id);
 
         PimsBusinessFunctionCode Add(PimsBusinessFunctionCode pimsCode);
 

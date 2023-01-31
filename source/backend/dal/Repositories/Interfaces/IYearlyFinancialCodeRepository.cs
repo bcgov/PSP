@@ -7,6 +7,8 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsYearlyFinancialCode> GetAllYearlyFinancialCodes();
 
+        PimsYearlyFinancialCode GetById(long id);
+
         PimsYearlyFinancialCode Add(PimsYearlyFinancialCode pimsCode);
 
         PimsYearlyFinancialCode Update(PimsYearlyFinancialCode pimsCode);

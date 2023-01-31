@@ -79,57 +79,17 @@ namespace Pims.Api.Services
             _logger.LogInformation("Retrieving financial code with type {type} and Id {codeId}", type, codeId);
             User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 
-            switch (type)
+            return type switch
             {
-                case FinancialCodeTypes.BusinessFunction:
-                    return _mapper.Map<FinancialCodeModel>(_businessFunctionRepository.GetById(codeId));
-                case FinancialCodeTypes.ChartOfAccounts:
-                    {
-                        var pimsEntity = _mapper.Map<PimsChartOfAccountsCode>(model);
-                        var createdEntity = _chartOfAccountsRepository.Add(pimsEntity);
-                        _chartOfAccountsRepository.CommitTransaction();
-                        return _mapper.Map<FinancialCodeModel>(createdEntity);
-                    }
-                case FinancialCodeTypes.YearlyFinancial:
-                    {
-                        var pimsEntity = _mapper.Map<PimsYearlyFinancialCode>(model);
-                        var createdEntity = _yearlyFinancialRepository.Add(pimsEntity);
-                        _yearlyFinancialRepository.CommitTransaction();
-                        return _mapper.Map<FinancialCodeModel>(createdEntity);
-                    }
-                case FinancialCodeTypes.CostType:
-                    {
-                        var pimsEntity = _mapper.Map<PimsCostTypeCode>(model);
-                        var createdEntity = _costTypeRepository.Add(pimsEntity);
-                        _costTypeRepository.CommitTransaction();
-                        return _mapper.Map<FinancialCodeModel>(createdEntity);
-                    }
-                case FinancialCodeTypes.FinancialActivity:
-                    {
-                        var pimsEntity = _mapper.Map<PimsFinancialActivityCode>(model);
-                        var createdEntity = _financialActivityRepository.Add(pimsEntity);
-                        _financialActivityRepository.CommitTransaction();
-                        return _mapper.Map<FinancialCodeModel>(createdEntity);
-                    }
-                case FinancialCodeTypes.WorkActivity:
-                    {
-                        var pimsEntity = _mapper.Map<PimsWorkActivityCode>(model);
-                        var createdEntity = _workActivityRepository.Add(pimsEntity);
-                        _workActivityRepository.CommitTransaction();
-                        return _mapper.Map<FinancialCodeModel>(createdEntity);
-                    }
-                case FinancialCodeTypes.Responsibility:
-                    {
-                        var pimsEntity = _mapper.Map<PimsResponsibilityCode>(model);
-                        var createdEntity = _responsibilityRepository.Add(pimsEntity);
-                        _responsibilityRepository.CommitTransaction();
-                        return _mapper.Map<FinancialCodeModel>(createdEntity);
-                    }
-
-                default:
-                    throw new BadRequestException("Financial code type must be a known type");
-            }
-
+                FinancialCodeTypes.BusinessFunction => _mapper.Map<FinancialCodeModel>(_businessFunctionRepository.GetById(codeId)),
+                FinancialCodeTypes.ChartOfAccounts => _mapper.Map<FinancialCodeModel>(_chartOfAccountsRepository.GetById(codeId)),
+                FinancialCodeTypes.YearlyFinancial => _mapper.Map<FinancialCodeModel>(_yearlyFinancialRepository.GetById(codeId)),
+                FinancialCodeTypes.CostType => _mapper.Map<FinancialCodeModel>(_costTypeRepository.GetById(codeId)),
+                FinancialCodeTypes.FinancialActivity => _mapper.Map<FinancialCodeModel>(_financialActivityRepository.GetById(codeId)),
+                FinancialCodeTypes.WorkActivity => _mapper.Map<FinancialCodeModel>(_workActivityRepository.GetById(codeId)),
+                FinancialCodeTypes.Responsibility => _mapper.Map<FinancialCodeModel>(_responsibilityRepository.GetById(codeId)),
+                _ => throw new BadRequestException("Financial code type must be a known type"),
+            };
         }
 
         public FinancialCodeModel Add(FinancialCodeTypes type, FinancialCodeModel model)

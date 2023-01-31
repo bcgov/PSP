@@ -7,6 +7,8 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsChartOfAccountsCode> GetAllChartOfAccountCodes();
 
+        PimsChartOfAccountsCode GetById(long id);
+
         PimsChartOfAccountsCode Add(PimsChartOfAccountsCode pimsCode);
 
         PimsChartOfAccountsCode Update(PimsChartOfAccountsCode pimsCode);

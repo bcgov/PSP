@@ -7,6 +7,8 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsResponsibilityCode> GetAllResponsibilityCodes();
 
+        PimsResponsibilityCode GetById(long id);
+
         PimsResponsibilityCode Add(PimsResponsibilityCode pimsCode);
 
         PimsResponsibilityCode Update(PimsResponsibilityCode pimsCode);
