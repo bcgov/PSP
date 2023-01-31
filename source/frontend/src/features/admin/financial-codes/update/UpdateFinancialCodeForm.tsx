@@ -71,10 +71,10 @@ export const UpdateFinancialCodeForm: React.FC<IUpdateFinancialCodeFormProps> = 
     >
       {formikProps => (
         <Container>
-          <SectionField label="Code type" required labelWidth="2">
+          <SectionField label="Code type" labelWidth="2">
             <span>{formatFinancialCodeType(formikProps.values.type as FinancialCodeTypes)}</span>
           </SectionField>
-          <SectionField label="Code value" labelWidth="2">
+          <SectionField label="Code value" required labelWidth="2">
             <Input field="code" type="text" placeholder="Code value" />
           </SectionField>
           <SectionField label="Code description" required labelWidth="2">
