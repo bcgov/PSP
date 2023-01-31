@@ -143,42 +143,46 @@ export const useBcAssessmentLayer = (
         );
       }
 
-      const addressPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.ADDRESSES)
-        ? getAddresses(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
-          )
-        : Promise.resolve();
+      const addressPromise =
+        typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.ADDRESSES)
+          ? getAddresses(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
-      const valuesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
-        ? getValues(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
-          )
-        : Promise.resolve();
+      const valuesPromise =
+        typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
+          ? getValues(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
-      const chargesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
-        ? getCharges(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
-          )
-        : Promise.resolve();
+      const chargesPromise =
+        typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
+          ? getCharges(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
-      const folioDescriptionsPromise = !!typesToLoad?.find(
-        t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION,
-      )
-        ? getFolioDescriptions(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
-          )
-        : Promise.resolve();
+      const folioDescriptionsPromise =
+        typesToLoad === undefined ||
+        !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION)
+          ? getFolioDescriptions(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
-      const salesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
-        ? getSales(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
-          )
-        : Promise.resolve();
+      const salesPromise =
+        typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
+          ? getSales(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
       const responses = await Promise.all([
         addressPromise,
