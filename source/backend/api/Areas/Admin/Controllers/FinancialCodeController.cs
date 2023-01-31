@@ -61,7 +61,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <param name="type">The financial code type.</param>
         /// <param name="codeId">The id of the financial code to retrieve.</param>
         /// <returns>The financial code.</returns>
-        [HttpPut("{type}/{codeId:long}")]
+        [HttpGet("{type}/{codeId:long}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(FinancialCodeModel), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
