@@ -1,6 +1,8 @@
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import {
   Api_Document,
   Api_DocumentMetadataUpdate,
+  Api_DocumentRelationship,
   Api_DocumentType,
   Api_DocumentUpdateRequest,
   Api_DocumentUploadRequest,
@@ -28,27 +30,40 @@ export class DocumentRow {
   isFileAvailable?: boolean;
   appCreateTimestamp?: string;
   appCreateUserid?: string;
+  relationshipId?: number;
+  relationshipType?: DocumentRelationshipType;
+  parentId?: number;
 
-  public static fromApi(document: Api_Document): DocumentRow {
+  public static fromApi(relationship: Api_DocumentRelationship): DocumentRow {
     const row: DocumentRow = new DocumentRow();
-    row.id = document.id;
-    row.documentType = document.documentType;
-    row.mayanDocumentId = document.mayanDocumentId;
-    row.statusTypeCode = document.statusTypeCode;
-    row.fileName = document.fileName;
-    row.appCreateTimestamp = document.appCreateTimestamp;
-    row.appCreateUserid = document.appCreateUserid;
+    row.id = relationship.document?.id;
+    row.documentType = relationship.document?.documentType;
+    row.mayanDocumentId = relationship.document?.mayanDocumentId;
+    row.statusTypeCode = relationship.document?.statusTypeCode;
+    row.fileName = relationship.document?.fileName;
+    row.fileName = relationship.document?.fileName;
+    row.fileName = relationship.document?.fileName;
+    row.appCreateTimestamp = relationship.document?.appCreateTimestamp;
+    row.appCreateUserid = relationship.document?.appCreateUserid;
 
+    row.relationshipId = relationship.id;
+    row.relationshipType = relationship.relationshipType;
+    row.parentId = relationship.parentId;
     return row;
   }
 
-  public static toApi(document: DocumentRow): Api_Document {
+  public static toApi(document: DocumentRow): Api_DocumentRelationship {
     return {
-      id: document.id,
-      mayanDocumentId: document.mayanDocumentId,
-      documentType: document.documentType,
-      statusTypeCode: document.statusTypeCode,
-      fileName: document.fileName,
+      id: document.relationshipId,
+      relationshipType: document.relationshipType,
+      parentId: document.parentId,
+      document: {
+        id: document.id,
+        mayanDocumentId: document.mayanDocumentId,
+        documentType: document.documentType,
+        statusTypeCode: document.statusTypeCode,
+        fileName: document.fileName,
+      },
     };
   }
 }
