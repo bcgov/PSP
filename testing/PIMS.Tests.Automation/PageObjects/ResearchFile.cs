@@ -1,6 +1,4 @@
-﻿
-
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
@@ -19,6 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileCreateHeader = By.XPath("//h1[contains(text(),'Create Research File')]");
 
         //Research File Main Form Elements
+        private By researchFileStatusSelect = By.Id("input-statusTypeCode");
         private By researchFileNameInput = By.Id("input-name");
         private By researchRoadNameInput = By.Id("input-roadName");
         private By researchRoadAliasInput = By.Id("input-roadAlias");
@@ -158,12 +157,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(researchRoadAliasInput).SendKeys(roadAlias);
 
             webDriver.FindElement(researchPurposeMultiselect).Click();
-            ChooseMultiSelectRandomOptions(researchRequestPurposeOptions, "optionContainer", purposes);
+            ChooseMultiSelectRandomOptions(researchRequestPurposeOptions, purposes);
 
             //Research Request
             webDriver.FindElement(researchRequestDateInput).SendKeys(requestDate);
 
-            ChooseRandomSelectOption(researchRequestSourceSelect, "input-requestSourceTypeCode", 2);
+            ChooseRandomSelectOption(researchRequestSourceSelect, 2);
 
             Wait();
             webDriver.FindElement(selectContactButton).Click();
@@ -197,7 +196,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntil(researchFileEditButton);
             webDriver.FindElement(researchFileEditButton).Click();
 
-            ChooseSpecificSelectOption("input-statusTypeCode", "Archived");
+            ChooseSpecificSelectOption(researchFileStatusSelect, "Archived");
             webDriver.FindElement(researchFileNameInput).SendKeys(" - Automated Edition.");
             ClearInput(researchExpropiationNotes);
         }
@@ -230,8 +229,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
                 {
                     Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-                    Assert.True(webDriver.FindElement(researchFileContentModal1).Text.Equals("If you cancel now, this research file will not be saved."));
-                    Assert.True(webDriver.FindElement(researchFileContentModal2).Text.Equals("Are you sure you want to Cancel?"));
+                    Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this research file will not be saved."));
+                    Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
 
                     sharedModals.ModalClickOKBttn();
                 }
@@ -244,8 +243,8 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-            Assert.True(webDriver.FindElement(researchFileContentModal1).Text.Equals("If you cancel now, this file will not be saved."));
-            Assert.True(webDriver.FindElement(researchFileContentModal2).Text.Equals("Are you sure you want to Cancel?"));
+            Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this file will not be saved."));
+            Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
 
             sharedModals.ModalClickOKBttn();
         }
@@ -256,8 +255,8 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-            Assert.True(webDriver.FindElement(researchFileContentModal1).Text.Equals("If you cancel now, this research file will not be saved."));
-            Assert.True(webDriver.FindElement(researchFileContentModal2).Text.Equals("Are you sure you want to Cancel?"));
+            Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this research file will not be saved."));
+            Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
 
             sharedModals.ModalClickOKBttn();
         }
@@ -282,9 +281,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             webDriver.FindElement(researchPropertyNameInput).SendKeys(propertyName);
             webDriver.FindElement(researchPropertyPurposeSelect).Click();
-            ChooseMultiSelectRandomOptions(researchPropertyPurposeOptions, "optionContainer", 3);
-            ChooseRandomSelectOption(researchPropertyLegalOpinionReqSelect, "input-isLegalOpinionRequired", 1);
-            ChooseRandomSelectOption(researchPropertyLegalOpinionObtSelect, "input-isLegalOpinionObtained", 1);
+            ChooseMultiSelectRandomOptions(researchPropertyPurposeOptions, 3);
+            ChooseRandomSelectOption(researchPropertyLegalOpinionReqSelect, 1);
+            ChooseRandomSelectOption(researchPropertyLegalOpinionObtSelect, 1);
             webDriver.FindElement(researchPropertyDocReferenceInput).SendKeys(docReference);
             webDriver.FindElement(researchPropertyNotesTextArea).SendKeys(notes);
 
@@ -297,7 +296,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             webDriver.FindElement(researchPropertyPurposeSelect).Click();
-            ChooseMultiSelectRandomOptions(researchPropertyPurposeOptions, "optionContainer", 1);
+            ChooseMultiSelectRandomOptions(researchPropertyPurposeOptions, 1);
             webDriver.FindElement(researchProperty1stPurposeDeleteLink).Click();
             ClearInput(researchPropertyNotesTextArea);
             webDriver.FindElement(researchPropertyNotesTextArea).SendKeys(notes);

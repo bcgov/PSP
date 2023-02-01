@@ -103,7 +103,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(By.Id(selectElementId)).Count() > 0)
             {
-                ChooseRandomSelectOption(By.Id(selectElementId), selectElementId, 2);
+                ChooseRandomSelectOption(By.Id(selectElementId), 2);
             }
         }
 

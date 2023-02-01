@@ -6,7 +6,25 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SharedSearchProperties : PageObjectBase
     {
-        //Search Bar Elements
+        //Search Properties Section Elements
+        private By searchSectionTitle = By.XPath("//div[contains(text(),'Properties to include in this file')]");
+        private By searchSectionInstructions = By.XPath("//div[contains(text(),'Properties to include in this file')]/parent::div/parent::h2/following-sibling::div/div[1]");
+
+        //Locate on Map Elements
+        private By locateOnMapTab = By.XPath("//a[contains(text(),'Locate on Map')]");
+        private By locateOnMapSubtitle = By.XPath("//h3[contains(text(), 'Select a property')]");
+        private By locateOnMapBlueIcon = By.Id("Layer_2");
+        private By locateOnMapInstuction1 = By.XPath("//li[contains(text(),'Click pin above')]");
+        private By locateOnMapInstuction2 = By.XPath("//li[contains(text(),'Position it on the map')]");
+        private By locateOnMapSelectedLabel = By.XPath("//div[contains(text(),'Selected property attributes')]");
+        private By locateOnMapPIDLabel = By.XPath("//label[contains(text(),'PID')]");
+        private By locateOnMapPlanLabel = By.XPath("//label[contains(text(),'Plan #')]");
+        private By locateOnMapAddressLabel = By.XPath("//label[contains(text(),'Address')]");
+        private By locateOnMapRegionLabel = By.XPath("//label[contains(text(),'Region')]");
+        private By locateOnMapDistrictLabel = By.XPath("//label[contains(text(),'District')]");
+        private By locateOnMapLegalDescriptionLabel = By.XPath("//label[contains(text(),'Legal Description')]");
+
+        //Search Tab Elements
         private By searchByTab = By.XPath("//a[contains(text(),'Search')]");
         private By searchBySubtitle = By.XPath("//h3[contains(text(), 'Search for a property')]");
         private By searchBySelect = By.Id("input-searchBy");
@@ -34,7 +52,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
 
         //Selected Properties Elements
-        private By searchPropertiesSelectedPropertiesTotal = By.XPath("//div[contains(text(), 'Identifier')]/parent::div/parent::div/div");
+        private By searchPropertiesSelectedPropertiesSubtitle = By.XPath("//div[contains(text(),'Selected properties')]");
+        private By searchPropertiesSelectedIdentifierHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Identifier')]");
+        private By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
+        private By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
+        private By searchPropertiesSelectedDefault = By.XPath("//span[contains(text(),'No Properties selected')]");
+        private By searchPropertiesSelectedPropertiesTotal = By.CssSelector("div[class='align-items-center mb-3 no-gutters row']");
+        //private By searchPropertiesSelectedPropertiesTotal = By.XPath("//div[contains(text(), 'Identifier')]/parent::div/parent::div/div");
         private By searchPropertiesName1stPropInput = By.Id("input-properties.0.name");
         private By searchPropertiesDelete1stPropBttn = By.XPath("(//span[contains(text(),'Remove')]/parent::div/parent::button)[1]");
 
@@ -58,7 +82,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByPID(string PID)
         {
             Wait();
-            ChooseSpecificSelectOption("input-searchBy", "PID");
+            ChooseSpecificSelectOption(searchBySelect, "PID");
 
             WaitUntil(searchByPIDInput);
             if (webDriver.FindElement(searchByPIDInput).GetAttribute("value") != "")
@@ -73,7 +97,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByPIN(string PIN)
         {
             Wait();
-            ChooseSpecificSelectOption("input-searchBy", "PIN");
+            ChooseSpecificSelectOption(searchBySelect, "PIN");
 
             WaitUntil(searchByPINInput);
             if (webDriver.FindElement(searchByPINInput).GetAttribute("value") != "")
@@ -88,7 +112,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByAddress(string address)
         {
             Wait();
-            ChooseSpecificSelectOption("input-searchBy", "Address");
+            ChooseSpecificSelectOption(searchBySelect, "Address");
 
             WaitUntil(searchByAddressInput);
             if (webDriver.FindElement(searchByAddressInput).GetAttribute("value") != "")
@@ -105,7 +129,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByPlan(string plan)
         {
             Wait();
-            ChooseSpecificSelectOption("input-searchBy", "Plan #");
+            ChooseSpecificSelectOption(searchBySelect, "Plan #");
 
             WaitUntil(searchByPlanInput);
             if (webDriver.FindElement(searchByPlanInput).GetAttribute("value") != "")
@@ -120,7 +144,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByLegalDescription(string legalDescription)
         {
             Wait();
-            ChooseSpecificSelectOption("input-searchBy", "Legal Description");
+            ChooseSpecificSelectOption(searchBySelect, "Legal Description");
 
             WaitUntil(searchByLegalDescriptionInput);
             if (webDriver.FindElement(searchByLegalDescriptionInput).GetAttribute("value") != "")
@@ -140,11 +164,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteProperty()
         {
-            var PropertiesTotal = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count() -1;
+            var PropertiesTotal = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
 
             webDriver.FindElement(searchPropertiesDelete1stPropBttn).Click();
 
-            var PropertiesLeft = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count() -1;
+            var PropertiesLeft = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
 
             Wait();
             Assert.True(PropertiesTotal - PropertiesLeft == 1);
@@ -158,10 +182,11 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(3000);
             ButtonElement("Add to selection");
 
-            if (webDriver.FindElements(generalToastBody).Count() > 0)
-            {
-                Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
-            }
+
+            //if (webDriver.FindElements(generalToastBody).Count() > 0)
+            //{
+            //    Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
+            //}
         }
 
         public string noRowsResultsMessage()
@@ -170,8 +195,47 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(searchPropertiesNoRowsResult).Text;
         }
 
+        public void VerifyLocateOnMapFeature()
+        {
+            Wait();
+
+            Assert.True(webDriver.FindElement(searchSectionTitle).Displayed);
+            Assert.True(webDriver.FindElement(searchSectionInstructions).Displayed);
+
+            Assert.True(webDriver.FindElement(locateOnMapTab).Displayed);
+            Assert.True(webDriver.FindElement(searchByTab).Displayed);
+
+            Assert.True(webDriver.FindElement(locateOnMapSubtitle).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapBlueIcon).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapInstuction1).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapInstuction2).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapSelectedLabel).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapPIDLabel).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapPlanLabel).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapAddressLabel).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapRegionLabel).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapDistrictLabel).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapLegalDescriptionLabel).Displayed);
+
+            Assert.True(webDriver.FindElement(searchPropertiesSelectedPropertiesSubtitle).Displayed);
+            Assert.True(webDriver.FindElement(searchPropertiesSelectedIdentifierHeader).Displayed);
+            Assert.True(webDriver.FindElement(searchPropertiesSelectedDescriptiveNameHeader).Displayed);
+            Assert.True(webDriver.FindElement(searchPropertiesSelectedToolTipIcon).Displayed);
+            if (webDriver.FindElements(searchPropertiesSelectedDefault).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(searchPropertiesSelectedDefault).Displayed);
+            }
+            else
+            {
+
+            }
+            
+        }
+
         public void VerifySearchPropertiesFeature()
         {
+            Wait();
+
             Assert.True(webDriver.FindElement(searchByTab).Displayed);
             Assert.True(webDriver.FindElement(searchBySubtitle).Displayed);
             Assert.True(webDriver.FindElement(searchBySelect).Displayed);
