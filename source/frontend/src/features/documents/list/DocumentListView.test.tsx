@@ -22,9 +22,7 @@ const deleteMock = jest.fn().mockResolvedValue(true);
 const onPageChange = jest.fn();
 
 const mockDocumentRowResponse = () =>
-  mockDocumentsResponse().map(x =>
-    x?.document ? DocumentRow.fromApi(x.document) : new DocumentRow(),
-  );
+  mockDocumentsResponse().map(x => (x?.document ? DocumentRow.fromApi(x) : new DocumentRow()));
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
