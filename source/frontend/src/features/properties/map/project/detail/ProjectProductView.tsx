@@ -16,25 +16,25 @@ const ProjectProductView: React.FunctionComponent<
   return (
     <StyledSummarySection>
       <Section header="Associated Products" isCollapsable initiallyExpanded>
-        {project?.products?.map((a: Api_Product, b: number) => (
-          <StyledProductWrapper className={b === productCount - 1 ? '' : 'pb-5'}>
-            <StyledProductDescription>{`${a.code} - ${a.description}`}</StyledProductDescription>
+        {project?.products?.map((product: Api_Product, index: number) => (
+          <div className={index === productCount - 1 ? '' : 'pb-5'}>
+            <StyledProductDescription>{`${product.code} - ${product.description}`}</StyledProductDescription>
             <SectionField label="Start Date" labelWidth={'2'}>
-              {prettyFormatDate(a.startDate)}
+              {prettyFormatDate(product.startDate)}
             </SectionField>
             <SectionField label="Cost estimate" labelWidth={'2'}>
-              {formatMoney(a.costEstimate)}
-              {a.costEstimateDate !== undefined
-                ? ` as of ${prettyFormatDate(a.costEstimateDate)}`
+              {formatMoney(product.costEstimate)}
+              {product.costEstimateDate !== undefined
+                ? ` as of ${prettyFormatDate(product.costEstimateDate)}`
                 : ' no estimate date entered'}
             </SectionField>
             <SectionField label="Objectives" labelWidth={'12'}>
-              {a.objective || 'no objective entered'}
+              {product.objective || 'no objective entered'}
             </SectionField>
             <SectionField label="Scope" labelWidth={'12'}>
-              {a.scope || 'no scope entered'}
+              {product.scope || 'no scope entered'}
             </SectionField>
-          </StyledProductWrapper>
+          </div>
         ))}
       </Section>
     </StyledSummarySection>
@@ -46,8 +46,6 @@ export default ProjectProductView;
 const StyledSummarySection = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};
 `;
-
-const StyledProductWrapper = styled.div``;
 
 const StyledProductDescription = styled.div`
   font-weight: bold;

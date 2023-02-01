@@ -21,7 +21,6 @@ export const useProductProvider = () => {
         [getProductFiles],
       ),
       requestName: 'retrieveProductFiles',
-      onSuccess: useCallback(() => toast.success('Files for project retrieved'), []),
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);

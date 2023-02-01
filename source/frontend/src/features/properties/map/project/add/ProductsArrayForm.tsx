@@ -69,7 +69,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
             return (
               <>
                 {products.map((product, index, array) => (
-                  <div key={`product-${index}`}>
+                  <div key={`product-create-${index}`}>
                     <ProductSubForm
                       index={index}
                       nameSpace={`${field}.${index}`}
@@ -101,7 +101,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
 
       <GenericModal
         display={showFileModal}
-        title="Remove Product wtih Files"
+        title="Remove Product with Files"
         message={
           'Important: you cannot delete this product unless you remove it from associated files first.'
         }

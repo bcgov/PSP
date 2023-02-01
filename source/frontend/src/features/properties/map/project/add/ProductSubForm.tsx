@@ -1,4 +1,4 @@
-import { FastDatePicker, Input, TextArea } from 'components/common/form';
+import { FastCurrencyInput, FastDatePicker, Input, TextArea } from 'components/common/form';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
 import React from 'react';
@@ -40,7 +40,10 @@ export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
       <Row>
         <Col>
           <SectionField label="Cost estimate">
-            <Input field={withNameSpace(nameSpace, 'costEstimate')} />
+            <FastCurrencyInput
+              field={withNameSpace(nameSpace, 'costEstimate')}
+              formikProps={formikProps}
+            />
           </SectionField>
         </Col>
         <Col>
