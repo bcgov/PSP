@@ -72,11 +72,12 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get by ID - Search Projects by Id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="projectId"></param>
         /// <returns></returns>
+
         public PimsProject Get(long id)
         {
-            User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            User.ThrowIfNotAuthorized(Permissions.ProjectView);
 
             return Context.PimsProjects
                     .AsNoTracking()

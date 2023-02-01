@@ -1,13 +1,14 @@
 import { Api_AuditFields } from './AuditFields';
+import { Api_CodeType } from './CodeType';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Project extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   projectStatusTypeCode?: Api_TypeCode<string>;
-  businessFunctionCode?: any; // TODO: Match new code types
-  costTypeCode?: any; // TODO: Match new code types
-  workActivityCode?: any; // TODO: Match new code types
+  businessFunctionCode?: Api_CodeType;
+  costTypeCode?: Api_CodeType;
+  workActivityCode?: Api_CodeType;
   regionCode?: Api_TypeCode<number>;
   code?: string;
   description?: string;

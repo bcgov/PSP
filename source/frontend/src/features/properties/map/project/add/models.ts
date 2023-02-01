@@ -36,13 +36,13 @@ export class ProjectForm {
   summary?: string;
   products: ProductForm[] = [];
 
-  toApi(): Api_Project {
+  toApi(id: number = 1): Api_Project {
     return {
-      id: this.id,
+      id: id,
       code: this.projectNumber,
       description: this.projectName,
-      projectStatusTypeCode: toTypeCode(this.projectStatusType),
-      regionCode: this.region ? toTypeCode<number>(this.region) : undefined,
+      projectStatusTypeCode: toTypeCode<string>(this.projectStatusType),
+      regionCode: this.region ? toTypeCode<number>(+this.region) : undefined,
       note: this.summary,
       products: this.products?.map(x => x.toApi(this.id)),
     };

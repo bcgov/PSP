@@ -11,7 +11,7 @@ namespace Pims.Api.Services
 
         Task<Paged<PimsProject>> GetPage(ProjectFilter filter);
 
-        PimsProject Add(PimsProject project);
+        Task<PimsProject> GetById(long projectId);
 
         IList<PimsProduct> GetProducts(int projectId);
 

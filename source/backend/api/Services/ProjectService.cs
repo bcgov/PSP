@@ -100,6 +100,14 @@ namespace Pims.Api.Services
             return _projectRepository.Get(newProject.Id);
         }
 
+        public async Task<PimsProject> GetById(long projectId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+            _logger.LogInformation("Getting Project by Id ...");
+
+            return await _projectRepository.Get(projectId);
+        }
+
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
         {
             return await _projectRepository.GetPageAsync(filter);
