@@ -96,7 +96,7 @@ exports[`Note List View renders as expected 1`] = `
           class="c4"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"

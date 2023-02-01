@@ -93,9 +93,9 @@ namespace Pims.Api.Areas.Projects.Controllers
         [SwaggerOperation(Tags = new[] { "project" })]
         public IActionResult GetProducts(int projectId)
         {
-            var predictions = _projectService.GetProducts(projectId);
+            var products = _projectService.GetProducts(projectId);
 
-            return new JsonResult(_mapper.Map<IList<ProductModel>>(predictions));
+            return new JsonResult(_mapper.Map<IList<ProductModel>>(products));
         }
     }
 }

@@ -17,5 +17,7 @@ namespace Pims.Dal.Repositories
         long GetRowVersion(long id);
 
         short GetRegion(long id);
+
+        PimsAcquisitionFile GetByProductId(long productId);
     }
 }

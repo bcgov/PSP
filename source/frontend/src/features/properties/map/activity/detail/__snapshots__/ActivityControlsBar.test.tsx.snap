@@ -160,7 +160,7 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
       class="c1"
     >
       <div
-        class="row"
+        class="no-gutters row"
       >
         <div
           class="col"

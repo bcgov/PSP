@@ -1,7 +1,12 @@
-import { LinkButton } from 'components/common/buttons';
+import { LinkButton, StyledRemoveLinkButton } from 'components/common/buttons';
+import GenericModal from 'components/common/GenericModal';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
-import { FieldArray, FormikProps, useFormikContext } from 'formik';
-import React from 'react';
+import { FieldArray, FieldArrayRenderProps, FormikProps, useFormikContext } from 'formik';
+import { useProductProvider } from 'hooks/providers/useProductProvider';
+import React, { useRef, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { ProductForm, ProjectForm } from './models';
@@ -16,28 +21,107 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
   field,
   formikProps,
 }) => {
+  const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
   const { values } = useFormikContext<ProjectForm>();
+
+  const [showModal, setShowModal] = useState(false);
+  const [showFileModal, setShowFileModal] = useState(false);
+  const [rowToDelete, setRowToDelete] = useState<number | undefined>(undefined);
+
+  const { retrieveProductFile, retrieveProductFileLoading } = useProductProvider();
 
   const products = values.products || [];
 
+  const handleRemove = async (index: number) => {
+    const productId = products[index].id;
+    if (productId !== undefined && productId !== 0) {
+      const file = await retrieveProductFile(productId);
+      if (file !== undefined && file !== null) {
+        setShowFileModal(true);
+      } else {
+        showDeleteWarning(index);
+      }
+    } else {
+      showDeleteWarning(index);
+    }
+  };
+
+  const showDeleteWarning = (index: number) => {
+    setShowModal(true);
+    setRowToDelete(index);
+  };
+
+  const confirmDelete = () => {
+    if (rowToDelete !== undefined) {
+      arrayHelpersRef.current?.remove(rowToDelete);
+    }
+    setShowModal(false);
+  };
+
   return (
-    <Section header="Associated products">
-      <FieldArray name={field}>
-        {arrayHelpers => (
-          <>
-            {products.map((product, index, array) => (
+    <>
+      <Section header="Associated products">
+        <LoadingBackdrop show={retrieveProductFileLoading}></LoadingBackdrop>
+        <FieldArray
+          name={field}
+          render={arrayHelpers => {
+            arrayHelpersRef.current = arrayHelpers;
+            return (
               <>
-                <ProductSubForm nameSpace={`${field}.${index}`} formikProps={formikProps} />
-                {index !== products.length - 1 && <StyledSpacer className="my-5" />}
+                {products.map((product, index, array) => (
+                  <>
+                    <ProductSubForm
+                      index={index}
+                      nameSpace={`${field}.${index}`}
+                      formikProps={formikProps}
+                    />
+                    <Row className="align-items-end">
+                      <Col />
+                      <Col xs="auto">
+                        <StyledRemoveLinkButton
+                          title="Delete Note"
+                          variant="light"
+                          onClick={() => handleRemove(index)}
+                        >
+                          <FaTrash size="2rem" />
+                        </StyledRemoveLinkButton>
+                      </Col>
+                    </Row>
+                    {index !== products.length - 1 && <StyledSpacer className="my-5" />}
+                  </>
+                ))}
+                <LinkButton onClick={() => arrayHelpers.push(new ProductForm())}>
+                  + Add another product
+                </LinkButton>
               </>
-            ))}
-            <LinkButton onClick={() => arrayHelpers.push(new ProductForm())}>
-              + Add another product
-            </LinkButton>
-          </>
-        )}
-      </FieldArray>
-    </Section>
+            );
+          }}
+        ></FieldArray>
+      </Section>
+
+      <GenericModal
+        display={showFileModal}
+        title="Remove Product wtih Files"
+        message={
+          'Important: you cannot delete this product unless you remove it from associated files first.'
+        }
+        okButtonText="Cancel"
+        handleOk={() => {
+          setShowFileModal(false);
+        }}
+      />
+      <GenericModal
+        display={showModal}
+        title="Remove Product"
+        message={
+          'Deleting this product will remove it from all "Product" dropdowns. Are you certain you wish to proceed?'
+        }
+        okButtonText="Remove"
+        cancelButtonText="Cancel"
+        handleOk={() => confirmDelete()}
+        handleCancel={() => setShowModal(false)}
+      />
+    </>
   );
 };
 

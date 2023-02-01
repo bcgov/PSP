@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -15,6 +16,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The project id.
         /// </summary>
         public virtual ProjectModel ParentProject { get; set; }
+
+        /// <summary>
+        /// get/set - The product associated files.
+        /// </summary>
+        public List<AcquisitionFileModel> AcquisitionFiles { get; set; }
 
         /// <summary>
         /// get/set - Product's code.

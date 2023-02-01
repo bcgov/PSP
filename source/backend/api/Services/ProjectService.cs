@@ -17,6 +17,7 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IProjectRepository _projectRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IAcquisitionFileRepository _aquisitionFileRepository;
         private readonly ClaimsPrincipal _user;
 
         /// <summary>
@@ -26,16 +27,19 @@ namespace Pims.Api.Services
         /// <param name="logger"></param>
         /// <param name="projectRepository"></param>
         /// <param name="productRepository"></param>
+        /// <param name="acquisitionFileRepository"></param>
         public ProjectService(
             ClaimsPrincipal user,
             ILogger<ProjectService> logger,
             IProjectRepository projectRepository,
-            IProductRepository productRepository)
+            IProductRepository productRepository,
+            IAcquisitionFileRepository acquisitionFileRepository)
             : base(user, logger)
         {
             _logger = logger;
             _projectRepository = projectRepository;
             _productRepository = productRepository;
+            _aquisitionFileRepository = acquisitionFileRepository;
             _user = user;
         }
 
@@ -71,6 +75,14 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Geting products for project ...");
             return _productRepository.GetByProject(projectId);
+        }
+
+        public PimsAcquisitionFile GetProductFile(int productId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            _logger.LogInformation("Geting files for product ...");
+            return _aquisitionFileRepository.GetByProductId(productId);
         }
 
         public PimsProject Add(PimsProject project)

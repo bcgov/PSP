@@ -9,29 +9,32 @@ import { withNameSpace } from 'utils/formUtils';
 import { ProjectForm } from './models';
 
 export interface IProductSubFormProps {
+  index: number;
   nameSpace: string;
   formikProps: FormikProps<ProjectForm>;
 }
 
 export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
+  index,
   nameSpace,
   formikProps,
 }) => {
+  const costEstimate = formikProps.values.products[index].costEstimate;
   return (
     <>
       <Row>
         <Col>
-          <SectionField label="Product code">
+          <SectionField label="Product code" required>
             <Input field={withNameSpace(nameSpace, 'code')} />
           </SectionField>
         </Col>
         <Col>
-          <SectionField label="Name" labelWidth="2">
+          <SectionField label="Name" labelWidth="2" required>
             <Input field={withNameSpace(nameSpace, 'description')} />
           </SectionField>
         </Col>
       </Row>
-      <SectionField label="Start date" labelWidth="2" contentWidth="2">
+      <SectionField label="Start date" labelWidth="2" contentWidth="4">
         <FastDatePicker field={withNameSpace(nameSpace, 'startDate')} formikProps={formikProps} />
       </SectionField>
       <Row>
@@ -41,12 +44,14 @@ export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
           </SectionField>
         </Col>
         <Col>
-          <SectionField label="Estimate date">
-            <FastDatePicker
-              field={withNameSpace(nameSpace, 'costEstimateDate')}
-              formikProps={formikProps}
-            />
-          </SectionField>
+          {costEstimate?.toString() !== '' && (
+            <SectionField label="Estimate date" required>
+              <FastDatePicker
+                field={withNameSpace(nameSpace, 'costEstimateDate')}
+                formikProps={formikProps}
+              />
+            </SectionField>
+          )}
         </Col>
       </Row>
       <SectionField label="Objectives" labelWidth="12">
