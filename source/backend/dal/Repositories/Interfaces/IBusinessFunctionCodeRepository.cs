@@ -7,6 +7,14 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsBusinessFunctionCode> GetAllBusinessFunctionCodes();
 
+        PimsBusinessFunctionCode GetById(long id);
+
         PimsBusinessFunctionCode Add(PimsBusinessFunctionCode pimsCode);
+
+        PimsBusinessFunctionCode Update(PimsBusinessFunctionCode pimsCode);
+
+        long GetRowVersion(long id);
+
+        bool IsDuplicate(PimsBusinessFunctionCode pimsCode);
     }
 }

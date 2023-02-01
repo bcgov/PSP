@@ -7,6 +7,8 @@ import { LogoutPage } from 'features/account/Logout';
 import { AdminAccessRequestPage } from 'features/admin/access-request/AdminAccessRequestPage';
 import { AddFinancialCodeContainer } from 'features/admin/financial-codes/add/AddFinancialCodeContainer';
 import { AddFinancialCodeForm } from 'features/admin/financial-codes/add/AddFinancialCodeForm';
+import { UpdateFinancialCodeContainer } from 'features/admin/financial-codes/update/UpdateFinancialCodeContainer';
+import { UpdateFinancialCodeForm } from 'features/admin/financial-codes/update/UpdateFinancialCodeForm';
 import { ContactListPage } from 'features/contacts';
 import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
@@ -152,7 +154,7 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             role={Roles.SYSTEM_ADMINISTRATOR}
             title={getTitle('Financial Codes')}
-          ></AppRoute>
+          />
           <AppRoute
             protected
             exact
@@ -164,7 +166,22 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             )}
             role={Roles.SYSTEM_ADMINISTRATOR}
             title={getTitle('Create Financial Code')}
-          ></AppRoute>
+          />
+          <AppRoute
+            protected
+            path="/admin/financial-code/:type/:id"
+            customRender={({ match }) => (
+              <AuthLayout>
+                <UpdateFinancialCodeContainer
+                  type={match.params.type}
+                  id={Number(match.params.id)}
+                  View={UpdateFinancialCodeForm}
+                />
+              </AuthLayout>
+            )}
+            role={Roles.SYSTEM_ADMINISTRATOR}
+            title={getTitle('Update Financial Code')}
+          />
           <AppRoute
             protected
             path="/access/request"

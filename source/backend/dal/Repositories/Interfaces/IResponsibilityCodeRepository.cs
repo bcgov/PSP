@@ -7,6 +7,14 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsResponsibilityCode> GetAllResponsibilityCodes();
 
+        PimsResponsibilityCode GetById(long id);
+
         PimsResponsibilityCode Add(PimsResponsibilityCode pimsCode);
+
+        PimsResponsibilityCode Update(PimsResponsibilityCode pimsCode);
+
+        long GetRowVersion(long id);
+
+        bool IsDuplicate(PimsResponsibilityCode pimsCode);
     }
 }
