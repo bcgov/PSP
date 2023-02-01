@@ -5,7 +5,6 @@ import { FileTypes } from 'constants/fileTypes';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -52,7 +51,6 @@ export const ResearchContainer: React.FunctionComponent<
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
   const { search } = useMapSearch();
-  const { hasClaim } = useKeycloakWrapper();
 
   const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');

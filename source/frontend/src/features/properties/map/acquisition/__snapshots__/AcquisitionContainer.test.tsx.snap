@@ -389,8 +389,11 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
   width: 100%;
-  margin-top: 1rem;
   border-bottom: 1px solid;
 }
 
@@ -735,7 +738,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                           <div
                             class="col"
                           >
-                            Acquisition details
+                            Acquisition Details
                           </div>
                           <div
                             class="col-1"
@@ -829,7 +832,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                           <div
                             class="col"
                           >
-                            Acquisition team
+                            Acquisition Team
                           </div>
                           <div
                             class="col-1"

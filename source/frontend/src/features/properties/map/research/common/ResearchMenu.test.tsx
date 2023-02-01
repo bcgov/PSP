@@ -1,28 +1,33 @@
-import { fireEvent, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { Claims } from 'constants/index';
+import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
 
+// mock auth library
+jest.mock('@react-keycloak/web');
+
 const onChange = jest.fn();
 const onEdit = jest.fn();
+const testItems = ['First label', 'Second', 'Third'];
 
 describe('ResearchMenu component', () => {
-  const setup = (renderOptions: RenderOptions & IResearchMenuProps) => {
+  const setup = (props: IResearchMenuProps, renderOptions: RenderOptions = {}) => {
     // render component under test
-    const component = render(
+    const utils = render(
       <ResearchMenu
-        selectedIndex={renderOptions.selectedIndex}
-        items={renderOptions.items}
-        onChange={renderOptions.onChange}
-        onEdit={renderOptions.onEdit}
+        selectedIndex={props.selectedIndex}
+        items={props.items}
+        onChange={props.onChange}
+        onEdit={props.onEdit}
       />,
       {
+        useMockAuthentication: true,
+        claims: [Claims.RESEARCH_EDIT],
         ...renderOptions,
       },
     );
 
-    return {
-      component,
-    };
+    return { ...utils };
   };
 
   afterEach(() => {
@@ -30,21 +35,17 @@ describe('ResearchMenu component', () => {
   });
 
   it('renders as expected when provided no research file', () => {
-    const testItems = ['First label', 'Second', 'Third'];
-    const { component } = setup({
+    const { asFragment } = setup({
       items: testItems,
       selectedIndex: 0,
       onChange,
       onEdit,
     });
-    expect(component.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders the items ', async () => {
-    const testItems = ['First label', 'Second', 'Third'];
-    const {
-      component: { getByText },
-    } = setup({
+    const { getByText } = setup({
       items: testItems,
       selectedIndex: 0,
       onChange,
@@ -57,10 +58,7 @@ describe('ResearchMenu component', () => {
   });
 
   it('selected item is rendered with different style', async () => {
-    const testItems = ['First label', 'Second', 'Third'];
-    const {
-      component: { getByText, getByTestId },
-    } = setup({
+    const { getByTestId } = setup({
       items: testItems,
       selectedIndex: 1,
       onChange,
@@ -70,11 +68,52 @@ describe('ResearchMenu component', () => {
     expect(getByTestId('menu-item-row-0')).not.toHaveClass('selected');
     expect(getByTestId('menu-item-row-1')).toHaveClass('selected');
     expect(getByTestId('menu-item-row-2')).not.toHaveClass('selected');
+  });
 
-    const secondItem = getByText(testItems[2]);
-    await waitFor(() => {
-      fireEvent.click(secondItem);
+  it('allows the selected item to be changed', async () => {
+    const { getByText } = setup({
+      items: testItems,
+      selectedIndex: 1,
+      onChange,
+      onEdit,
     });
+
+    const lastItem = getByText(testItems[2]);
+    await waitFor(() => userEvent.click(lastItem));
+
     expect(onChange).toHaveBeenCalledWith(2);
+  });
+
+  it(`renders the edit button for users with property edit permissions`, async () => {
+    const { getByTitle } = setup(
+      {
+        items: testItems,
+        selectedIndex: 0,
+        onChange,
+        onEdit,
+      },
+      { claims: [Claims.RESEARCH_EDIT] },
+    );
+
+    const button = getByTitle('Change properties');
+    expect(button).toBeVisible();
+    await waitFor(() => userEvent.click(button));
+
+    expect(onEdit).toHaveBeenCalledWith();
+  });
+
+  it(`doesn't render the edit button for users without edit permissions`, () => {
+    const { queryByTitle } = setup(
+      {
+        items: testItems,
+        selectedIndex: 1,
+        onChange,
+        onEdit,
+      },
+      { claims: [Claims.RESEARCH_VIEW] }, // no edit permissions, just view.
+    );
+
+    const button = queryByTitle('Change properties');
+    expect(button).toBeNull();
   });
 });
