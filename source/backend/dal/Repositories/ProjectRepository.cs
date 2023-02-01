@@ -72,9 +72,9 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get by ID - Search Projects by Id.
         /// </summary>
-        /// <param name="projectId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<PimsProject> Get(long projectId)
+        public async Task<PimsProject> Get(long id)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
 
@@ -82,7 +82,7 @@ namespace Pims.Dal.Repositories
                     .AsNoTracking()
                     .Include(x => x.ProjectStatusTypeCodeNavigation)
                     .Include(x => x.RegionCodeNavigation)
-                    .Where(x => x.Id == projectId)
+                    .Where(x => x.Id == id)
                     .FirstOrDefaultAsync();
         }
 
@@ -97,6 +97,34 @@ namespace Pims.Dal.Repositories
 
             await Context.PimsProjects.AddAsync(project);
             return project;
+        }
+
+        public PimsProject Update(PimsProject project)
+        {
+            using var queryScope = Logger.QueryScope();
+            project.ThrowIfNull(nameof(project));
+
+            var existingAcqFile = Context.PimsProjects
+                .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingAcqFile).CurrentValues.SetValues(project);
+
+            return project;
+        }
+
+        /// <summary>
+        /// Retrieves the version of project
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The project row version.</returns>
+        public long GetRowVersion(long id)
+        {
+            using var log = Logger.QueryScope();
+
+            return this.Context.PimsProjects.AsNoTracking()
+                .Where(p => p.Id == id)?
+                .Select(p => p.ConcurrencyControlNumber)?
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter)

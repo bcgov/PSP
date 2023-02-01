@@ -20,7 +20,7 @@ export interface IAddProjectFormProps {
 }
 
 export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
-  (props, ref) => {
+  (props, formikRef) => {
     const {
       initialValues,
       projectStatusOptions,
@@ -36,7 +36,7 @@ export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddPro
     return (
       <Formik<ProjectForm>
         enableReinitialize
-        innerRef={ref}
+        innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}

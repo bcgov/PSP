@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -93,6 +94,20 @@ namespace Pims.Api.Services
             return await _projectRepository.Get(projectId);
         }
 
+        public PimsProject Update(long id, PimsProject project)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
+            project.ThrowIfNull(nameof(project));
+            _logger.LogInformation($"Updating project with id ${project.Id}");
+
+            ValidateVersion(id, project);
+
+            var updatedProject = _projectRepository.Update(project);
+            _projectRepository.CommitTransaction();
+
+            return updatedProject;
+        }
+
         private async Task<PimsProject> AddInternalAsync(PimsProject project)
         {
             var newProject = await _projectRepository.Add(project);
@@ -104,6 +119,15 @@ namespace Pims.Api.Services
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
         {
             return await _projectRepository.GetPageAsync(filter);
+        }
+
+        private void ValidateVersion(long id, PimsProject project)
+        {
+            long currentRowVersion = _projectRepository.GetRowVersion(id);
+            if (currentRowVersion != project.ConcurrencyControlNumber)
+            {
+                throw new DbUpdateConcurrencyException("You are working with an older version of this project file, please refresh the application and retry.");
+            }
         }
     }
 }

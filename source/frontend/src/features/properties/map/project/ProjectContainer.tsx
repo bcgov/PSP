@@ -15,9 +15,12 @@ export interface IProjectContainerViewProps {
   loadingProject?: boolean;
   activeTab?: ProjectTabNames;
   isEditing: boolean;
+  showConfirmModal: boolean;
   onSetContainerState: (value: Partial<ProjectContainerState>) => void;
   onClose: () => void;
   onSetProject: (project: Api_Project) => void;
+  onSuccess: () => void;
+  onCancel: () => void;
 }
 
 export interface IProjectContainerProps {
@@ -45,19 +48,21 @@ export enum ProjectPageNames {
   DETAILS = 'details',
 }
 
-export const projectPages: Map<ProjectPageNames, IProjectPage> = new Map<
-  ProjectPageNames,
-  IProjectPage
->([
-  // [
-  //   ProjectPageNames.DETAILS,
-  //   {
-  //     component: UpdateProjectContainer,
-  //     title: 'Project details',
-  //     validation: AddProjectYupSchema,
-  //   },
-  // ],
-]);
+// export const projectPages: Map<ProjectPageNames, IProjectPage> = new Map<
+//   ProjectPageNames,
+//   IProjectPage
+// >([
+//   [
+//     ProjectPageNames.DETAILS,
+//     {
+//       component: UpdateProjectContainer,
+//       title: 'Project details',
+//       validation: AddProjectYupSchema,
+//       claims: '',
+//       editable: true,
+//     },
+//   ],
+// ]);
 
 // Interface for our internal state
 export interface ProjectContainerState {
@@ -107,6 +112,15 @@ const ProjectContainer: React.FunctionComponent<
 
   useEffect(() => setProjectLoading(loadingProject), [loadingProject, setProjectLoading]);
 
+  const onSuccess = () => {
+    fetchProject();
+    setContainerState({ activeEditForm: undefined, isEditing: false });
+  };
+
+  const confirmHandler = () => {
+    setContainerState({ showConfirmModal: true });
+  };
+
   const title = containerState.isEditing ? 'Update Project' : 'Project';
   return (
     <View
@@ -115,9 +129,12 @@ const ProjectContainer: React.FunctionComponent<
       activeTab={containerState.activeTab}
       loadingProject={loadingProject}
       isEditing={containerState.isEditing}
+      showConfirmModal={containerState.showConfirmModal}
       onSetContainerState={setContainerState}
       onSetProject={setProject}
       onClose={onClose}
+      onSuccess={onSuccess}
+      onCancel={confirmHandler}
     />
   );
 };

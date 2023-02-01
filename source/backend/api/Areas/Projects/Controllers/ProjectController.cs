@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -26,6 +30,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         #region fields
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
         #endregion
 
         /// <summary>
@@ -34,10 +39,11 @@ namespace Pims.Api.Areas.Projects.Controllers
         /// <param name="projectService"></param>
         /// <param name="mapper"></param>
         ///
-        public ProjectController(IProjectService projectService, IMapper mapper)
+        public ProjectController(IProjectService projectService, IMapper mapper, ILogger<AcquisitionFileController> logger)
         {
             _projectService = projectService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -105,6 +111,29 @@ namespace Pims.Api.Areas.Projects.Controllers
             }
 
             return Ok(newProject);
+        }
+
+        /// <summary>
+        /// Updates the project.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
+        [HasPermission(Permissions.ProjectEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public IActionResult UpdateProject([FromRoute]long id, [FromBody] ProjectModel model)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ProjectController),
+                nameof(UpdateProject),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var updatedProject = _projectService.Update(id, _mapper.Map<Dal.Entities.PimsProject>(model));
+
+            return Ok(updatedProject);
         }
 
         /// <summary>

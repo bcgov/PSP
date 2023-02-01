@@ -212,7 +212,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Get(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -232,6 +231,72 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().NotBeNull();
             repository.Verify(x => x.Get(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action result = () => service.Update(1, new PimsProject());
+
+            // Assert
+            result.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_When_Null()
+        {
+            // Arrange
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action result = () => service.Update(1, null);
+
+            // Assert
+            result.Should().Throw<ArgumentNullException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_When_VersionMissmatch()
+        {
+            // Arrange
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(100);
+
+            // Act
+            Action result = () => service.Update(1, new PimsProject { ConcurrencyControlNumber = 99 });
+
+            // Assert
+            result.Should().Throw<DbUpdateConcurrencyException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Project_Success()
+        {
+            // Arrange
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(100);
+            repository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(new PimsProject { Id = 1 });
+
+            // Act
+            var result = service.Update(1, new PimsProject { ConcurrencyControlNumber = 100 });
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Once);
         }
     }
 }

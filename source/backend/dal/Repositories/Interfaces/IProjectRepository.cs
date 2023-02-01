@@ -18,6 +18,10 @@ namespace Pims.Dal.Repositories
 
         Task<PimsProject> Add(PimsProject project);
 
-        Task<PimsProject> Get(long projectId);
+        PimsProject Update(PimsProject project);
+
+        Task<PimsProject> Get(long id);
+
+        long GetRowVersion(long id);
     }
 }

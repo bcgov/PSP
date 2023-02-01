@@ -14,7 +14,9 @@ namespace Pims.Api.Services
         Task<PimsProject> Add(PimsProject project);
 
         Task<PimsProject> GetById(long projectId);
-        
+
         IList<PimsProduct> GetProducts(int projectId);
+
+        PimsProject Update(long id, PimsProject project);
     }
 }
