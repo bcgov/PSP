@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { Button } from 'components/common/buttons';
-import { FastDatePicker, Input, Select, SelectOption } from 'components/common/form';
+import { FastDatePicker, Input } from 'components/common/form';
+import { FinancialCodeTypes } from 'constants/index';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik } from 'formik';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
@@ -9,19 +10,18 @@ import React from 'react';
 import { ButtonToolbar, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { formatAsSelectOptions } from '../financialCodeUtils';
+import { formatFinancialCodeType } from '../financialCodeUtils';
 import { FinancialCodeForm } from '../models';
-import { IAddFinancialCodeFormProps } from './AddFinancialCodeContainer';
+import { IUpdateFinancialCodeFormProps } from './UpdateFinancialCodeContainer';
 
-export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
+export const UpdateFinancialCodeForm: React.FC<IUpdateFinancialCodeFormProps> = ({
+  financialCode,
   validationSchema,
   onSave,
   onCancel,
   onSuccess,
   onError,
 }) => {
-  const codeTypes: SelectOption[] = formatAsSelectOptions();
-
   // show confirmation message if user has made changes
   const { setModalContent, setDisplayModal } = useModalContext();
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
@@ -46,7 +46,9 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
   return (
     <Formik<FinancialCodeForm>
       enableReinitialize
-      initialValues={new FinancialCodeForm()}
+      initialValues={
+        financialCode ? FinancialCodeForm.fromApi(financialCode) : new FinancialCodeForm()
+      }
       validationSchema={validationSchema}
       onSubmit={async (values, formikHelpers) => {
         try {
@@ -69,24 +71,14 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
     >
       {formikProps => (
         <Container>
-          <SectionField label="Code type" required labelWidth="2">
-            <Select field="type" options={codeTypes} placeholder="Select code type" />
+          <SectionField label="Code type" labelWidth="2">
+            <span>{formatFinancialCodeType(formikProps.values.type as FinancialCodeTypes)}</span>
           </SectionField>
           <SectionField label="Code value" required labelWidth="2">
-            <Input
-              field="code"
-              value={formikProps.values.code}
-              type="text"
-              placeholder="Code value"
-            />
+            <Input field="code" type="text" placeholder="Code value" />
           </SectionField>
           <SectionField label="Code description" required labelWidth="2">
-            <Input
-              field="description"
-              value={formikProps.values.description}
-              type="text"
-              placeholder="Code description"
-            />
+            <Input field="description" type="text" placeholder="Code description" />
           </SectionField>
           <SectionField
             label="Effective date"
@@ -104,7 +96,7 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
             <FastDatePicker field="expiryDate" formikProps={formikProps} />
           </SectionField>
           <SectionField label="Display order" labelWidth="2">
-            <Input field="displayOrder" value={formikProps.values.displayOrder} type="number" />
+            <Input field="displayOrder" type="number" />
           </SectionField>
 
           <Row className="justify-content-md-center">
@@ -128,7 +120,7 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
   );
 };
 
-export default AddFinancialCodeForm;
+export default UpdateFinancialCodeForm;
 
 const Container = styled.div`
   .form-section {
