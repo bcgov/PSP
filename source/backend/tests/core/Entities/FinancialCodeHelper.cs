@@ -12,11 +12,12 @@ namespace Pims.Core.Test
         /// <summary>
         /// Create a new instance of a financial code.
         /// </summary>
+        /// <param name="type">Financial code type.</param>
         /// <param name="id">Financial code's id.</param>
         /// <param name="code">Financial code value.</param>
         /// <param name="description">Financial code description.</param>
         /// <returns>A financial code entity.</returns>
-        public static Entity.IFinancialCodeEntity CreateFinancialCode(FinancialCodeTypes type, long id, string code, string description)
+        public static Entity.IFinancialCodeEntity CreateFinancialCode(FinancialCodeTypes type, long id, string code, string description = "")
         {
             return type switch
             {
