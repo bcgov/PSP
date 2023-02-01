@@ -245,6 +245,6 @@ const StyledFormWrapper = styled.div`
   text-align: left;
   height: 100%;
   overflow-y: auto;
-  padding-right: 1rem;
+  padding-right: 2rem;
   padding-bottom: 1rem;
 `;

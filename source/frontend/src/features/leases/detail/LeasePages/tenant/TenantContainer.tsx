@@ -6,6 +6,7 @@ import { IFormLease } from 'interfaces';
 import * as React from 'react';
 
 import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';
+import AddLeaseTenantForm from './AddLeaseTenantForm';
 import { ViewTenantForm } from './ViewTenantForm';
 
 const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
@@ -18,6 +19,7 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
       <AddLeaseTenantContainer
         formikRef={formikRef as React.RefObject<FormikProps<IFormLease>>}
         onEdit={onEdit}
+        View={AddLeaseTenantForm}
       />
     </ProtectedComponent>
   ) : (

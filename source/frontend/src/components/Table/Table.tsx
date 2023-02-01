@@ -295,7 +295,12 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
   const pageCount = externalPageCount ?? Math.ceil(totalItems / (pageSizeProp ?? internalPageSize));
-  const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
+  const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []); // used as a global var for providing up to date list of selected rows to code within the table (that is arrow function scoped).
+
+  // manually update the contents of the global ref of selected rows if the list of external selected rows changes.
+  useEffect(() => {
+    selectedRowsRef.current = externalSelectedRows ?? [];
+  }, [selectedRowsRef, externalSelectedRows]);
 
   const dataRef = React.useRef<T[]>(data ?? []);
   React.useEffect(() => {
@@ -378,12 +383,11 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                         if (isSingleSelect === true) {
                           setExternalSelectedRows && setExternalSelectedRows([...values]);
                         } else {
-                          const allPreviouslySelected = instance.rows
-                            .filter(row => row.isSelected)
-                            .map(row => row.original);
+                          const allPreviouslySelected = selectedRowsRef?.current ?? [];
                           const previouslySelected = allPreviouslySelected.find(
                             row => values.length === 1 && row.id === values[0].id,
                           );
+
                           if (previouslySelected) {
                             setExternalSelectedRows &&
                               setExternalSelectedRows(
@@ -674,7 +678,11 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                 <div
                   {...cell.getCellProps(cellPropsGetter)}
                   title={cell.column.clickable && clickableTooltip ? clickableTooltip : ''}
-                  className={classnames('td', cell.column.clickable ? 'clickable' : '')}
+                  className={classnames(
+                    'td',
+                    cell.column.clickable ? 'clickable' : '',
+                    cell.column.className,
+                  )}
                   onClick={() =>
                     props.onRowClick && cell.column.clickable && props.onRowClick(row.original)
                   }
