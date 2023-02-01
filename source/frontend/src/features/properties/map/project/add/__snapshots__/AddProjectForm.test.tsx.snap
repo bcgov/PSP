@@ -280,7 +280,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 required text-left col"
+              class="c4 text-left col"
             >
               <div
                 class="form-group"

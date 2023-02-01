@@ -48,7 +48,7 @@ export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
         </Col>
         <Col>
           {costEstimate?.toString() !== '' && (
-            <SectionField label="Estimate date" required>
+            <SectionField label="Estimate date">
               <FastDatePicker
                 field={withNameSpace(nameSpace, 'costEstimateDate')}
                 formikProps={formikProps}

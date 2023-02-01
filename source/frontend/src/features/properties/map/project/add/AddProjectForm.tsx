@@ -57,7 +57,7 @@ export const AddProjectForm: React.FC<IAddProjectFormProps> = props => {
               <SectionField label="Project number" labelWidth="2">
                 <Input field="projectNumber" placeholder="if known" />
               </SectionField>
-              <SectionField label="Status" required labelWidth="2">
+              <SectionField label="Status" labelWidth="2">
                 <Select
                   field="projectStatusType"
                   options={projectStatusOptions}
