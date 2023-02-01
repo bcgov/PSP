@@ -6,7 +6,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`AddProjectForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c7.btn.btn-primary {
   border: none;
 }
 
-.c6.btn.btn-secondary {
+.c7.btn.btn-secondary {
   background: none;
 }
 
-.c6.btn.btn-info {
+.c7.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
   background: none;
 }
 
-.c6.btn.btn-light {
+.c7.btn.btn-light {
   border: none;
 }
 
-.c6.btn.btn-dark {
+.c7.btn.btn-dark {
   border: none;
 }
 
-.c6.btn.btn-link {
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`AddProjectForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`AddProjectForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,19 +128,19 @@ exports[`AddProjectForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c6.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 {
+.c6 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -174,6 +174,12 @@ exports[`AddProjectForm component renders as expected 1`] = `
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
   text-align: left;
+}
+
+.c5 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
 }
 
 <div
@@ -341,7 +347,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="c4 text-left col"
             >
               <div
-                class="textarea input form-group"
+                class="c5 textarea input form-group"
               >
                 <textarea
                   class="form-control"
@@ -357,7 +363,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
         class="c1 form-section"
       >
         <h2
-          class="c5"
+          class="c6"
         >
           <div
             class="no-gutters row"
@@ -376,7 +382,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
           class="collapse show"
         >
           <button
-            class="c6 Button btn btn-link"
+            class="c7 Button btn btn-link"
             type="button"
           >
             <div

@@ -95,9 +95,9 @@ const StyledRow = styled(Row)`
 `;
 
 export const MediumTextArea = styled(TextArea)`
-  /*textarea.form-control {
+  textarea.form-control {
     min-width: 80rem;
     height: 7rem;
     resize: none;
-  }*/
+  }
 `;
