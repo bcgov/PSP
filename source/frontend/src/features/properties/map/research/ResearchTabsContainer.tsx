@@ -1,7 +1,5 @@
 import { Claims } from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { FileTypes } from 'constants/fileTypes';
-import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
