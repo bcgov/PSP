@@ -72,7 +72,6 @@ export const AddProjectForm: React.FC<IAddProjectFormProps> = props => {
               </SectionField>
             </Section>
             <ProductsArrayForm formikProps={formikProps} field="products" />
-            {formikProps.isSubmitting === true ? 'true' : 'false'}
           </Form>
         </StyledFormWrapper>
       )}

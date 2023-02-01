@@ -51,15 +51,11 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(ProjectModel), 404)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public async Task<IActionResult> GetById([FromRoute] long id)
+        public IActionResult GetById([FromRoute] long id)
         {
-            var project = await _projectService.GetById(id);
-            if (project is null)
-            {
-                return NotFound();
-            }
+            var project = _projectService.GetById(id);
 
-            return Ok(_mapper.Map<ProjectModel>(project));
+            return new JsonResult(_mapper.Map<ProjectModel>(project));
         }
 
         /// <summary>

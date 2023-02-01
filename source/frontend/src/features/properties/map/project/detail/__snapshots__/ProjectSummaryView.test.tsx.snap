@@ -35,6 +35,14 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c5 {
+  font-weight: bold;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+  margin-bottom: 1rem;
+}
+
 <div
     class=""
   >
@@ -45,7 +53,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
         class="c1"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -97,7 +105,219 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
           <div
             class="c4 text-left col"
           >
-            NOTE VALUE
+            Summary of the Project Cool A
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="c0 form-section"
+      >
+        <h2
+          class="c1"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Associated Products
+            </div>
+            <div
+              class="col-1"
+            >
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  collapse-section
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 14l5-5 5 5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-5"
+          >
+            <div
+              class="c5"
+            >
+              70 - Product A
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c3"
+                >
+                  Start Date:
+                </label>
+              </div>
+              <div
+                class="c4 text-left col"
+              >
+                Feb 1, 2023
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c3"
+                >
+                  Cost estimate:
+                </label>
+              </div>
+              <div
+                class="c4 text-left col"
+              >
+                $60.00 as of Feb 2, 2023
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-12"
+              >
+                <label
+                  class="c3"
+                >
+                  Objectives:
+                </label>
+              </div>
+              <div
+                class="c4 text-left col"
+              >
+                Objective of Product A
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-12"
+              >
+                <label
+                  class="c3"
+                >
+                  Scope:
+                </label>
+              </div>
+              <div
+                class="c4 text-left col"
+              >
+                Scope of Product A
+              </div>
+            </div>
+          </div>
+          <div
+            class=""
+          >
+            <div
+              class="c5"
+            >
+              71 - Product B
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c3"
+                >
+                  Start Date:
+                </label>
+              </div>
+              <div
+                class="c4 text-left col"
+              >
+                Feb 3, 2023
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c3"
+                >
+                  Cost estimate:
+                </label>
+              </div>
+              <div
+                class="c4 text-left col"
+              >
+                $61.00 as of Feb 4, 2023
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-12"
+              >
+                <label
+                  class="c3"
+                >
+                  Objectives:
+                </label>
+              </div>
+              <div
+                class="c4 text-left col"
+              >
+                Objective of Product B
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-12"
+              >
+                <label
+                  class="c3"
+                >
+                  Scope:
+                </label>
+              </div>
+              <div
+                class="c4 text-left col"
+              >
+                Scope of Product B
+              </div>
+            </div>
           </div>
         </div>
       </div>

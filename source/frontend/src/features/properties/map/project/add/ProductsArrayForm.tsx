@@ -69,7 +69,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
             return (
               <>
                 {products.map((product, index, array) => (
-                  <>
+                  <div key={`product-${index}`}>
                     <ProductSubForm
                       index={index}
                       nameSpace={`${field}.${index}`}
@@ -88,7 +88,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
                       </Col>
                     </Row>
                     {index !== products.length - 1 && <StyledSpacer className="my-5" />}
-                  </>
+                  </div>
                 ))}
                 <LinkButton onClick={() => arrayHelpers.push(new ProductForm())}>
                   + Add another product

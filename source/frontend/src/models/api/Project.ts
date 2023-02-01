@@ -1,3 +1,4 @@
+import { Api_AcquisitionFile } from './AcquisitionFile';
 import { Api_AuditFields } from './AuditFields';
 import { Api_CodeType } from './CodeType';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
@@ -9,7 +10,7 @@ export interface Api_Project extends Api_ConcurrentVersion, Api_AuditFields {
   businessFunctionCode?: Api_CodeType;
   costTypeCode?: Api_CodeType;
   workActivityCode?: Api_CodeType;
-  regionCode?: Api_TypeCode<number>;
+  regionCode?: Api_CodeType;
   code?: string;
   description?: string;
   note?: string;
@@ -26,4 +27,5 @@ export interface Api_Product extends Api_ConcurrentVersion, Api_AuditFields {
   costEstimateDate?: string;
   objective?: string;
   scope?: string;
+  acquisitionFiles?: Api_AcquisitionFile[];
 }

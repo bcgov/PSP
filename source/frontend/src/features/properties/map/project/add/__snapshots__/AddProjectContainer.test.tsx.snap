@@ -368,7 +368,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c6 required text-left col"
                 >
                   <div
                     class="form-group"
@@ -543,7 +543,6 @@ exports[`AddProjectContainer component renders as expected 1`] = `
           </div>
           <div />
           <div />
-          false
         </form>
       </div>
     </div>

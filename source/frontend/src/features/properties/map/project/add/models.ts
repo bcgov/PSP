@@ -4,10 +4,10 @@ import { toTypeCode } from 'utils/formUtils';
 
 export class ProductForm {
   id?: number;
-  code?: string;
-  description?: string;
+  code: string = '';
+  description: string = '';
   startDate?: string;
-  costEstimate?: number;
+  costEstimate: string = '';
   costEstimateDate?: string;
   objective?: string;
   scope?: string;
@@ -36,9 +36,9 @@ export class ProjectForm {
   summary?: string;
   products: ProductForm[] = [];
 
-  toApi(id: number = 1): Api_Project {
+  toApi(): Api_Project {
     return {
-      id: id,
+      id: this.id,
       code: this.projectNumber,
       description: this.projectName,
       projectStatusTypeCode: toTypeCode<string>(this.projectStatusType),

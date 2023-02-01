@@ -69,6 +69,14 @@ namespace Pims.Api.Services
             return GetPageAsync(filter);
         }
 
+        public PimsProject GetById(long projectId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+            _logger.LogInformation("Getting Project by Id ...");
+
+            return _projectRepository.Get(projectId);
+        }
+
         public IList<PimsProduct> GetProducts(int projectId)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
@@ -98,14 +106,6 @@ namespace Pims.Api.Services
             _projectRepository.CommitTransaction();
 
             return _projectRepository.Get(newProject.Id);
-        }
-
-        public async Task<PimsProject> GetById(long projectId)
-        {
-            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
-            _logger.LogInformation("Getting Project by Id ...");
-
-            return await _projectRepository.Get(projectId);
         }
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)

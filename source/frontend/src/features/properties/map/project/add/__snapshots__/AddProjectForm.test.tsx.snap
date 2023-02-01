@@ -389,7 +389,6 @@ exports[`AddProjectForm component renders as expected 1`] = `
       </div>
       <div />
       <div />
-      false
     </form>
   </div>
 </DocumentFragment>

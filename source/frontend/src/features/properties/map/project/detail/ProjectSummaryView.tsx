@@ -3,6 +3,8 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Api_Project } from 'models/api/Project';
 import styled from 'styled-components';
 
+import ProjectProductView from './ProjectProductView';
+
 export interface IProjectSummaryViewProps {
   project?: Api_Project;
   onEdit: () => void;
@@ -18,6 +20,7 @@ const ProjectSummaryView: React.FunctionComponent<
           {project?.note}
         </SectionField>
       </Section>
+      <ProjectProductView project={project} />
     </StyledSummarySection>
   );
 };
