@@ -20,7 +20,6 @@ export interface IProjectContainerViewProps {
   onClose: () => void;
   onSetProject: (project: Api_Project) => void;
   onSuccess: () => void;
-  onCancel: () => void;
 }
 
 export interface IProjectContainerProps {
@@ -117,10 +116,6 @@ const ProjectContainer: React.FunctionComponent<
     setContainerState({ activeEditForm: undefined, isEditing: false });
   };
 
-  const confirmHandler = () => {
-    setContainerState({ showConfirmModal: true });
-  };
-
   const title = containerState.isEditing ? 'Update Project' : 'Project';
   return (
     <View
@@ -134,7 +129,6 @@ const ProjectContainer: React.FunctionComponent<
       onSetProject={setProject}
       onClose={onClose}
       onSuccess={onSuccess}
-      onCancel={confirmHandler}
     />
   );
 };

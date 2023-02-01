@@ -22,7 +22,6 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
   onSetProject,
   onSetContainerState,
   onSuccess,
-  onCancel,
 }) => {
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
@@ -49,7 +48,7 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
   const handleCancelClick = () => {
     if (formikRef !== undefined) {
       if (formikRef.current?.dirty) {
-        onCancel();
+        onSetContainerState({ showConfirmModal: true });
       } else {
         handleCancelConfirm();
       }
