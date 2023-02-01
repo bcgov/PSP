@@ -1,3 +1,4 @@
+import { ReactComponent as EditMapMarker } from 'assets/images/edit-map-marker.svg';
 import cx from 'classnames';
 import EditButton from 'components/common/EditButton';
 import { Claims } from 'constants/index';
@@ -46,7 +47,8 @@ const AcquisitionMenu: React.FunctionComponent<
               <StyledMenuHeader>Properties</StyledMenuHeader>
               {hasClaim(Claims.ACQUISITION_EDIT) && (
                 <EditButton
-                  title="Edit acquisition properties"
+                  title="Change properties"
+                  icon={<EditMapMarker width="2.6rem" height="2.6rem" />}
                   onClick={() => {
                     props.setContainerState({
                       isEditing: true,
