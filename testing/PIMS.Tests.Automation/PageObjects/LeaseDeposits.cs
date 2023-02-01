@@ -61,7 +61,7 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(licenseDepositAddBttn);
 
             WaitUntil(licenseDepositModal);
-            ChooseRandomSelectOption(licenseDepositTypeSelect, "input-depositTypeCode", 2);
+            ChooseRandomSelectOption(licenseDepositTypeSelect, 2);
 
             Wait();
             if (webDriver.FindElements(licenseDepositOtherTypeInput).Count() > 0)

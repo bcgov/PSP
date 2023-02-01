@@ -5,6 +5,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class SearchProperties : PageObjectBase
     {
         //Search Bar Elements
+        private By searchPropertyTypeSelect = By.Id("input-searchBy");
         private By searchPropertyByPIDPINInput = By.Id("input-pinOrPid");
         private By searchPropertyByAddressInput = By.Id("input-address");
         private By searchPropertyAddressSuggestionsGroup = By.CssSelector("div[class='suggestionList']");
@@ -40,7 +41,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SearchPropertyByPINPID(string PID)
         {
             Wait(5000);
-            ChooseSpecificSelectOption("input-searchBy", "PID/PIN");
+            ChooseSpecificSelectOption(searchPropertyTypeSelect, "PID/PIN");
             ClearInput(searchPropertyByPIDPINInput);
             webDriver.FindElement(searchPropertyByPIDPINInput).SendKeys(PID);
             webDriver.FindElement(searchPropertySearchBttn).Click();
@@ -49,7 +50,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SearchPropertyByAddress(string Address)
         {
             Wait(5000);
-            ChooseSpecificSelectOption("input-searchBy", "Address");
+            ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
             webDriver.FindElement(searchPropertyByAddressInput).SendKeys(Address);
 
             WaitUntil(searchPropertyAddressSuggestionsGroup);
@@ -66,7 +67,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFoundPin()
         {
-            Wait(3000);
+            WaitUntil(searchPropertyFoundPin);
             webDriver.FindElement(searchPropertyFoundPin).Click();
         }
 
