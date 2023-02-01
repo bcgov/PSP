@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public virtual string CurrentLocation => new Uri(webDriver.Url).AbsolutePath;
 
-        public virtual void Wait(int milliseconds = 1000) => Thread.Sleep(milliseconds);
+        public virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
 
 
         public void WaitUntil(By element)
@@ -60,28 +60,29 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
         }
 
-        protected void ChooseRandomSelectOption(By parentElementBy, string parentElementName, int fromOption)
+        protected void ChooseRandomSelectOption(By parentElementBy, int fromOption)
         {
             Random random = new Random();
             var js = (IJavaScriptExecutor)webDriver;
 
             var parentElement = webDriver.FindElement(parentElementBy);
             var childrenElements = parentElement.FindElements(By.TagName("option"));
-            int index = random.Next(fromOption, childrenElements.Count + 1);
-            var selectedRadioBttnLocator = "select[id='" + parentElementName + "'] option:nth-child(" + index + ")";
-            var selectedRadioBttn = webDriver.FindElement(By.CssSelector(selectedRadioBttnLocator));
+            int index = random.Next(fromOption, childrenElements.Count);
+
+            var selectedRadioBttn = childrenElements[index];
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedRadioBttn);
             Wait();
             selectedRadioBttn.Click();
         }
 
-        protected void ChooseSpecificSelectOption(string parentElementName, string option)
+        protected void ChooseSpecificSelectOption(By parentElement, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;
 
-            var selectedRadioBttnLocator = "//select[@id='"+ parentElementName +"']/option[contains(text(),'"+ option +"')]";
-            var selectedOption = webDriver.FindElement(By.XPath(selectedRadioBttnLocator));
+            var selectElement = webDriver.FindElement(parentElement);
+            var childrenElements = selectElement.FindElements(By.TagName("option"));
+            var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Contains(option)).Subject;
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
             Wait();
@@ -96,7 +97,6 @@ namespace PIMS.Tests.Automation.PageObjects
             var childrenElements = webDriver.FindElements(parentName);
             int index = random.Next(0, childrenElements.Count);
             var selectedRadioBttn = childrenElements[index];
-            //var selectedRadioBttn = webDriver.FindElement(By.CssSelector(selectedRadioBttnLocator));
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedRadioBttn);
             Wait();
@@ -115,7 +115,7 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
-        protected void ChooseMultiSelectRandomOptions(By element, string optionsContainerName, int options)
+        protected void ChooseMultiSelectRandomOptions(By element, int options)
         {
             Random random = new Random();
             var js = (IJavaScriptExecutor)webDriver;
@@ -125,9 +125,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 var parentElement = webDriver.FindElement(element);
                 var childrenElements = parentElement.FindElements(By.TagName("li"));
 
-                int index = random.Next(1, childrenElements.Count + 1);
-                //var selectedOptionBttnLocator = "ul[class='" + optionsContainerName + "'] li:nth-child(" + index + ")";
-                //var selectedOption = webDriver.FindElement(By.CssSelector(selectedOptionBttnLocator));
+                int index = random.Next(0, childrenElements.Count);
                 var selectedOption = childrenElements[index];
 
                 js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);

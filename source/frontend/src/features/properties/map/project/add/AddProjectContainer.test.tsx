@@ -59,8 +59,14 @@ describe('AddProjectContainer component', () => {
       getSaveButton: () => utils.getByText(/Save/i),
       getNameTextbox: () =>
         utils.container.querySelector(`input[name="projectName"]`) as HTMLInputElement,
+      getNumberTextbox: () =>
+        utils.container.querySelector(`input[name="projectNumber"]`) as HTMLInputElement,
       getRegionDropdown: () =>
         utils.container.querySelector(`select[name="region"]`) as HTMLSelectElement,
+      getStatusDropdown: () =>
+        utils.container.querySelector(`select[name="projectStatusType"]`) as HTMLSelectElement,
+      getSummaryTextbox: () =>
+        utils.container.querySelector(`textarea[name="summary"]`) as HTMLInputElement,
     };
   };
 
@@ -78,42 +84,73 @@ describe('AddProjectContainer component', () => {
   });
 
   it('renders the underlying form', () => {
-    const { getByText, getNameTextbox, getRegionDropdown } = setup();
+    const { getByText, getNameTextbox, getRegionDropdown, getNumberTextbox, getStatusDropdown } =
+      setup();
 
     const formTitle = getByText(/Create Project/i);
-    const input = getNameTextbox();
-    const select = getRegionDropdown();
+    const nameInput = getNameTextbox();
+    const numberInput = getNumberTextbox();
+    const selectRegion = getRegionDropdown();
+    const selectSatus = getStatusDropdown();
 
     expect(formTitle).toBeVisible();
-    expect(input).toBeVisible();
-    expect(input.tagName).toBe('INPUT');
-    expect(select).toBeVisible();
-    expect(select.tagName).toBe('SELECT');
+    expect(nameInput).toBeVisible();
+    expect(nameInput.tagName).toBe('INPUT');
+    expect(numberInput).toBeVisible();
+    expect(numberInput.tagName).toBe('INPUT');
+    expect(selectRegion).toBeVisible();
+    expect(selectRegion.tagName).toBe('SELECT');
+    expect(selectSatus).toBeVisible();
+    expect(selectSatus.tagName).toBe('SELECT');
   });
 
-  it.skip('should save the form and navigate to details view when Save button is clicked', async () => {
+  it('should save the form and navigate to details view when Save button is clicked', async () => {
     const formValues = new ProjectForm();
     formValues.projectName = 'TRANS-CANADA HWY - 10';
+    formValues.projectNumber = '99999';
     formValues.region = 1;
+    formValues.projectStatusType = 'AC';
+    formValues.summary = 'NEW PROJECT';
 
-    const { getSaveButton, getNameTextbox, getRegionDropdown } = setup(DEFAULT_PROPS);
+    const {
+      getSaveButton,
+      getNameTextbox,
+      getRegionDropdown,
+      getNumberTextbox,
+      getStatusDropdown,
+      getSummaryTextbox,
+    } = setup(DEFAULT_PROPS);
 
     await waitFor(() => userEvent.paste(getNameTextbox(), formValues.projectName as string));
+    await waitFor(() => userEvent.paste(getNumberTextbox(), formValues.projectNumber as string));
     userEvent.selectOptions(getRegionDropdown(), formValues.region.toString());
+    userEvent.selectOptions(getStatusDropdown(), formValues.projectStatusType as string);
+    await waitFor(() => userEvent.paste(getSummaryTextbox(), formValues.summary as string));
 
     mockAxios
       .onPost()
-      .reply(201, mockProjectPostResponse(1, 1, formValues.projectName, formValues.region));
+      .reply(
+        201,
+        mockProjectPostResponse(
+          1,
+          1,
+          formValues.projectName,
+          formValues.projectNumber,
+          formValues.region,
+          formValues.projectStatusType,
+          formValues.summary,
+        ),
+      );
     userEvent.click(getSaveButton());
 
     await waitFor(() => {
       const axiosData: Api_Project = JSON.parse(mockAxios.history.post[0].data);
-      const expectedValues = formValues.toApi();
+      const expectedValues = formValues.toApi(1);
 
       expect(mockAxios.history.post[0].url).toBe('/projects');
       expect(axiosData).toEqual(expectedValues);
 
-      // expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
+      expect(history.location.pathname).toBe('/mapview/sidebar/project/1');
     });
   });
 });

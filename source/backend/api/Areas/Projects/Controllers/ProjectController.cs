@@ -41,6 +41,28 @@ namespace Pims.Api.Areas.Projects.Controllers
         }
 
         /// <summary>
+        /// Get the specified Project by Id.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{id}")]
+        [HasPermission(Permissions.ProjectView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [ProducesResponseType(typeof(ProjectModel), 404)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public async Task<IActionResult> GetById([FromRoute] long id)
+        {
+            var project = await _projectService.GetById(id);
+            if (project is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<ProjectModel>(project));
+        }
+
+        /// <summary>
         /// Retrieves a matching set of projects for the given input filter.
         /// </summary>
         /// <param name="input"></param>

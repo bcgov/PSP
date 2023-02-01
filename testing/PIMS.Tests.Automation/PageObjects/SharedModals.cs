@@ -12,6 +12,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By generalModalOkBttn = By.CssSelector("button[title='ok-modal']");
 
         private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
+        private By generalConfirmationModalBody1 = By.CssSelector("div[class='modal-body'] div");
+        private By generalConfirmationModalBody2 = By.CssSelector("div[class='modal-body'] strong");
 
         public SharedModals(IWebDriver webDriver) : base(webDriver)
         {}
@@ -38,6 +40,18 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntil(generalToastBody);
             return (webDriver.FindElement(generalToastBody).Text);
+        }
+
+        public string ConfirmationModalText1()
+        {
+            WaitUntil(generalConfirmationModalBody1);
+            return (webDriver.FindElement(generalConfirmationModalBody1).Text);
+        }
+
+        public string ConfirmationModalText2()
+        {
+            WaitUntil(generalConfirmationModalBody2);
+            return (webDriver.FindElement(generalConfirmationModalBody2).Text);
         }
     }
 }

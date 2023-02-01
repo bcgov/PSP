@@ -3,9 +3,9 @@ import { Api_Project } from 'models/api/Project';
 export const mockProjects = (): Api_Project[] => [
   {
     id: 1,
-    businessFunctionCode: 13,
-    costTypeCode: 13,
-    workActivityCode: 11,
+    businessFunctionCode: { id: 1, code: '13' },
+    costTypeCode: { id: 1, code: '13' },
+    workActivityCode: { id: 1, code: '11' },
     regionCode: {
       id: 1,
       description: 'South Coast Region',
@@ -17,9 +17,9 @@ export const mockProjects = (): Api_Project[] => [
   },
   {
     id: 2,
-    businessFunctionCode: 12,
-    costTypeCode: 13,
-    workActivityCode: 11,
+    businessFunctionCode: { id: 1, code: '12' },
+    costTypeCode: { id: 1, code: '13' },
+    workActivityCode: { id: 1, code: '11' },
     regionCode: {
       id: 2,
       description: 'Southern Interior Region',
@@ -33,22 +33,52 @@ export const mockProjects = (): Api_Project[] => [
 
 export const mockProjectPostResponse = (
   id: number = 1,
-  rowVersion = 1,
+  rowVersion: number = 1,
   description: string = 'TRANS-CANADA HWY - 10',
+  code: string,
   regionCodeId: number = 1,
+  statusCode: string = 'AC',
+  summary: string = 'NEW PROJECT',
 ): Api_Project => ({
-  id,
-  rowVersion,
-  code: undefined,
-  description,
+  id: id,
+  rowVersion: rowVersion,
+  code: code,
+  description: description,
   regionCode: {
     id: regionCodeId,
-    description: 'REGON',
+    description: 'REGION',
   },
-  projectStatusTypeCode: undefined,
-  businessFunctionCode: null,
-  workActivityCode: null,
-  note: '',
+  projectStatusTypeCode: {
+    id: statusCode,
+    description: 'ACTIVE (AC)',
+  },
+  businessFunctionCode: undefined,
+  workActivityCode: undefined,
+  note: summary,
+  appCreateTimestamp: '2022-05-28T00:57:37.42',
+  appLastUpdateTimestamp: '2022-07-28T00:57:37.42',
+  appLastUpdateUserid: 'admin',
+  appCreateUserid: 'admin',
+  appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+});
+
+export const mockProjectGetResponse = (): Api_Project => ({
+  id: 1,
+  rowVersion: 1,
+  code: '9999',
+  description: 'Project Description',
+  regionCode: {
+    id: 2,
+    description: 'Southern Interior Region',
+  },
+  projectStatusTypeCode: {
+    description: 'ACTIVE',
+    id: 'AC',
+  },
+  businessFunctionCode: undefined,
+  workActivityCode: undefined,
+  note: 'NOTE VALUE',
   appCreateTimestamp: '2022-05-28T00:57:37.42',
   appLastUpdateTimestamp: '2022-07-28T00:57:37.42',
   appLastUpdateUserid: 'admin',

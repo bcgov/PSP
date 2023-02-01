@@ -1,6 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { FinancialCodeTypes } from 'constants/index';
-import { getFinancialCodes, postFinancialCode } from 'hooks/pims-api/useApiFinancialCodes';
+import {
+  getFinancialCode,
+  getFinancialCodes,
+  postFinancialCode,
+  putFinancialCode,
+} from 'hooks/pims-api/useApiFinancialCodes';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 import { useCallback, useMemo } from 'react';
@@ -12,7 +17,7 @@ const ignoreErrorCodes = [409];
  * hook that interacts with the Financial Codes API.
  */
 export const useFinancialCodeRepository = () => {
-  const getFinancialCodesApi = useApiRequestWrapper<
+  const getAllFinancialCodesApi = useApiRequestWrapper<
     () => Promise<AxiosResponse<Api_FinancialCode[], any>>
   >({
     requestFunction: useCallback(async () => await getFinancialCodes(), []),
@@ -21,7 +26,19 @@ export const useFinancialCodeRepository = () => {
     onError: useAxiosErrorHandler('Failed to load financial codes. Refresh the page to try again.'),
   });
 
-  const addFinancialCodesApi = useApiRequestWrapper<
+  const getFinancialCodeByIdApi = useApiRequestWrapper<
+    (codeType: FinancialCodeTypes, id: number) => Promise<AxiosResponse<Api_FinancialCode, any>>
+  >({
+    requestFunction: useCallback(
+      async (codeType: FinancialCodeTypes, id: number) => await getFinancialCode(codeType, id),
+      [],
+    ),
+    requestName: 'GetFinancialCodeById',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load financial code. Refresh the page to try again.'),
+  });
+
+  const addFinancialCodeApi = useApiRequestWrapper<
     (
       codeType: FinancialCodeTypes,
       financialCode: Api_FinancialCode,
@@ -37,11 +54,25 @@ export const useFinancialCodeRepository = () => {
     throwError: true,
   });
 
+  const updateFinancialCodeApi = useApiRequestWrapper<
+    (financialCode: Api_FinancialCode) => Promise<AxiosResponse<Api_FinancialCode, any>>
+  >({
+    requestFunction: useCallback(
+      async (financialCode: Api_FinancialCode) => await putFinancialCode(financialCode),
+      [],
+    ),
+    requestName: 'UpdateFinancialCodes',
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
   return useMemo(
     () => ({
-      getFinancialCodes: getFinancialCodesApi,
-      addFinancialCode: addFinancialCodesApi,
+      getFinancialCodes: getAllFinancialCodesApi,
+      getFinancialCode: getFinancialCodeByIdApi,
+      addFinancialCode: addFinancialCodeApi,
+      updateFinancialCode: updateFinancialCodeApi,
     }),
-    [getFinancialCodesApi, addFinancialCodesApi],
+    [getAllFinancialCodesApi, getFinancialCodeByIdApi, addFinancialCodeApi, updateFinancialCodeApi],
   );
 };
