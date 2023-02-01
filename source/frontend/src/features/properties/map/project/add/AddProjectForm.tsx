@@ -51,20 +51,20 @@ export const AddProjectForm: React.FC<IAddProjectFormProps> = props => {
                   </p>
                 </Col>
               </StyledRow>
-              <SectionField label="Project name" required={true} labelWidth="2">
+              <SectionField label="Project name" required labelWidth="2">
                 <Input field="projectName" />
               </SectionField>
               <SectionField label="Project number" labelWidth="2">
                 <Input field="projectNumber" placeholder="if known" />
               </SectionField>
-              <SectionField label="Status" required={true} labelWidth="2">
+              <SectionField label="Status" required labelWidth="2">
                 <Select
                   field="projectStatusType"
                   options={projectStatusOptions}
                   placeholder="Select..."
                 />
               </SectionField>
-              <SectionField label="MoTI region" required={true} labelWidth="2">
+              <SectionField label="MoTI region" required labelWidth="2">
                 <Select field="region" options={projectRegionOptions} placeholder="Select..." />
               </SectionField>
               <SectionField label="Project summary" labelWidth="12">
