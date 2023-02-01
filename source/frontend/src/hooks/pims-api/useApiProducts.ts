@@ -12,8 +12,8 @@ export const useApiProducts = () => {
 
   return React.useMemo(
     () => ({
-      getProductFile: (id: number) =>
-        api.get<Api_AcquisitionFile | null>(`/products/${id}/acquisitionfiles`),
+      getProductFiles: (id: number) =>
+        api.get<Api_AcquisitionFile[] | null>(`/products/${id}/acquisitionfiles`),
     }),
     [api],
   );

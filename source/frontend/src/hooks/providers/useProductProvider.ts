@@ -10,32 +10,32 @@ import { toast } from 'react-toastify';
  * hook that retrieves Product information.
  */
 export const useProductProvider = () => {
-  const { getProductFile } = useApiProducts();
+  const { getProductFiles } = useApiProducts();
 
-  const { execute: retrieveProductFile, loading: retrieveProductFileLoading } =
+  const { execute: retrieveProductFiles, loading: retrieveProductFilesLoading } =
     useApiRequestWrapper<
-      (projectId: number) => Promise<AxiosResponse<Api_AcquisitionFile | null, any>>
+      (projectId: number) => Promise<AxiosResponse<Api_AcquisitionFile[] | null, any>>
     >({
       requestFunction: useCallback(
-        async (productId: number) => await getProductFile(productId),
-        [getProductFile],
+        async (productId: number) => await getProductFiles(productId),
+        [getProductFiles],
       ),
-      requestName: 'retrieveProductFile',
-      onSuccess: useCallback(() => toast.success('File for project retrieved'), []),
+      requestName: 'retrieveProductFiles',
+      onSuccess: useCallback(() => toast.success('Files for project retrieved'), []),
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
         } else {
-          toast.error('Retrieve file for product error. Check responses and try again.');
+          toast.error('Retrieve files for product error. Check responses and try again.');
         }
       }, []),
     });
 
   return useMemo(
     () => ({
-      retrieveProductFile,
-      retrieveProductFileLoading,
+      retrieveProductFiles,
+      retrieveProductFilesLoading,
     }),
-    [retrieveProductFile, retrieveProductFileLoading],
+    [retrieveProductFiles, retrieveProductFilesLoading],
   );
 };

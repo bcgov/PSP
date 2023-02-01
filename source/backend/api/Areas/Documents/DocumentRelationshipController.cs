@@ -72,8 +72,8 @@ namespace Pims.Api.Controllers
                     return new JsonResult(mappedResearchFileActivityDocuments);
                 case DocumentRelationType.AcquisitionFiles:
                     var aquistionFileActivityDocuments = _documentActivityService.GetFileDocuments(FileType.Acquisition, parentId);
-                    var mappedAquisitionFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(aquistionFileActivityDocuments);
-                    return new JsonResult(mappedAquisitionFileActivityDocuments);
+                    var mappedAcquisitionFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(aquistionFileActivityDocuments);
+                    return new JsonResult(mappedAcquisitionFileActivityDocuments);
                 case DocumentRelationType.Activities:
                     var activityDocuments = _documentActivityService.GetActivityDocuments(parentId);
                     var mappedActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(activityDocuments);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,21 +39,21 @@ namespace Pims.Api.Areas.Projects.Controllers
         }
 
         /// <summary>
-        /// Retrieves a the acquisition file for the given product.
+        /// Retrieves the acquisition files for the given product.
         /// </summary>
         /// <param name="productId"></param>
         /// <returns>An array of contacts matching the filter.</returns>
         [HttpGet("{productId}/acquisitionFiles")]
         [HasPermission(Permissions.ProjectView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
+        [ProducesResponseType(typeof(List<AcquisitionFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "product" })]
-        public IActionResult GetFiles(int productId)
+        public IActionResult GetFiles(long productId)
         {
-            var acquisitionFile = _projectService.GetProductFile(productId);
+            var acquisitionFiles = _projectService.GetProductFiles(productId);
 
-            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            return new JsonResult(_mapper.Map<List<AcquisitionFileModel>>(acquisitionFiles));
         }
     }
 }

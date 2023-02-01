@@ -109,7 +109,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(List<ProductModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GetProducts(int projectId)
+        public IActionResult GetProducts(long projectId)
         {
             var products = _projectService.GetProducts(projectId);
 

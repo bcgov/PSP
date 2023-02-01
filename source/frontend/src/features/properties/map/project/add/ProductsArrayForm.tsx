@@ -28,15 +28,15 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
   const [showFileModal, setShowFileModal] = useState(false);
   const [rowToDelete, setRowToDelete] = useState<number | undefined>(undefined);
 
-  const { retrieveProductFile, retrieveProductFileLoading } = useProductProvider();
+  const { retrieveProductFiles, retrieveProductFilesLoading } = useProductProvider();
 
   const products = values.products || [];
 
   const handleRemove = async (index: number) => {
     const productId = products[index].id;
     if (productId !== undefined && productId !== 0) {
-      const file = await retrieveProductFile(productId);
-      if (file !== undefined && file !== null) {
+      const files = await retrieveProductFiles(productId);
+      if (files !== undefined && files !== null && files.length > 0) {
         setShowFileModal(true);
       } else {
         showDeleteWarning(index);
@@ -61,7 +61,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
   return (
     <>
       <Section header="Associated products">
-        <LoadingBackdrop show={retrieveProductFileLoading}></LoadingBackdrop>
+        <LoadingBackdrop show={retrieveProductFilesLoading}></LoadingBackdrop>
         <FieldArray
           name={field}
           render={arrayHelpers => {

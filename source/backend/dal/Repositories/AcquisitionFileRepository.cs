@@ -176,10 +176,10 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
-        public PimsAcquisitionFile GetByProductId(long productId)
+        public List<PimsAcquisitionFile> GetByProductId(long productId)
         {
             return this.Context.PimsAcquisitionFiles.AsNoTracking()
-                .FirstOrDefault(a => a.ProductId == productId);
+                .Where(a => a.ProductId == productId).ToList();
         }
 
         /// <summary>

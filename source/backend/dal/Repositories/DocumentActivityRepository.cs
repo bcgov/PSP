@@ -63,7 +63,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get a list of all the document activity relationships for a a given aquisition file.
+        /// Get a list of all the document activity relationships for a a given acquisition file.
         /// </summary>
         /// <returns></returns>
         public IList<PimsActivityInstanceDocument> GetAllByAcquisitionFile(long fileId)

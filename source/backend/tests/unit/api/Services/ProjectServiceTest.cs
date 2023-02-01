@@ -208,9 +208,10 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Assert.Throws<NotAuthorizedException>(() => service.GetById(1));
+            Action actionFn = () => service.GetById(1);
 
             // Assert
+            actionFn.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.Get(It.IsAny<long>()), Times.Never);
         }
 
@@ -242,13 +243,12 @@ namespace Pims.Api.Test.Services
             var service = helper.Create<ProjectService>(user);
 
             var repository = helper.GetService<Mock<IProductRepository>>();
-            //repository.Setup(x => x.GetByProject(It.IsAny<long>())).Returns(new List<PimsProduct>() { new PimsProduct() });
 
             // Act
-            Action result = () => service.GetProducts(1);
+            Action actionFn = () => service.GetProducts(1);
 
             // Assert
-            result.Should().Throw<NotAuthorizedException>();
+            actionFn.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.GetByProject(It.IsAny<long>()), Times.Never);
         }
 
@@ -261,13 +261,12 @@ namespace Pims.Api.Test.Services
             var service = helper.Create<ProjectService>(user);
 
             var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
-            //repository.Setup(x => x.GetByProject(It.IsAny<long>())).Returns(new List<PimsProduct>() { new PimsProduct() });
 
             // Act
-            Action result = () => service.GetProductFile(1);
+            Action actionFn = () => service.GetProductFiles(1);
 
             // Assert
-            result.Should().Throw<NotAuthorizedException>();
+            actionFn.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.GetByProductId(It.IsAny<long>()), Times.Never);
         }
 

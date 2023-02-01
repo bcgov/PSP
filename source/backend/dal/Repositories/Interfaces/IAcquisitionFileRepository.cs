@@ -18,6 +18,6 @@ namespace Pims.Dal.Repositories
 
         short GetRegion(long id);
 
-        PimsAcquisitionFile GetByProductId(long productId);
+        List<PimsAcquisitionFile> GetByProductId(long productId);
     }
 }

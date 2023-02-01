@@ -15,8 +15,8 @@ namespace Pims.Api.Services
 
         PimsProject GetById(long projectId);
 
-        IList<PimsProduct> GetProducts(int projectId);
+        IList<PimsProduct> GetProducts(long projectId);
 
-        PimsAcquisitionFile GetProductFile(int productId);
+        List<PimsAcquisitionFile> GetProductFiles(long productId);
     }
 }
