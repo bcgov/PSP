@@ -1,8 +1,6 @@
-import { Button } from 'components/common/buttons/Button';
 import GenericModal from 'components/common/GenericModal';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
@@ -10,9 +8,8 @@ import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { useEffect, useRef } from 'react';
-import { useState } from 'react';
-import { MdLocationPin, MdTopic } from 'react-icons/md';
+import { useEffect, useRef, useState } from 'react';
+import { MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
 import { getFilePropertyName } from 'utils/mapPropertyUtils';
 
@@ -58,7 +55,7 @@ export const ResearchContainer: React.FunctionComponent<
   const { hasClaim } = useKeycloakWrapper();
 
   const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
-  menuItems.unshift('RFile Summary');
+  menuItems.unshift('File Summary');
 
   const { updateResearchFileProperties } = useUpdateResearchProperties();
 
@@ -178,19 +175,11 @@ export const ResearchContainer: React.FunctionComponent<
         <FileLayout
           leftComponent={
             <>
-              {selectedMenuIndex === 0 &&
-              hasClaim(Claims.RESEARCH_EDIT) &&
-              researchFile !== undefined ? (
-                <Button variant="success" onClick={showPropertiesSelector}>
-                  <MdLocationPin size={'2.5rem'} />
-                  Edit properties
-                </Button>
-              ) : null}
-
               <ResearchMenu
                 items={menuItems}
                 selectedIndex={selectedMenuIndex}
                 onChange={onMenuChange}
+                onEdit={showPropertiesSelector}
               />
             </>
           }

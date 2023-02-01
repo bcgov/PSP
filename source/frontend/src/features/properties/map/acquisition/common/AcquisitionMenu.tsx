@@ -48,7 +48,7 @@ const AcquisitionMenu: React.FunctionComponent<
               {hasClaim(Claims.ACQUISITION_EDIT) && (
                 <EditButton
                   title="Change properties"
-                  icon={<EditMapMarker width="2.6rem" height="2.6rem" />}
+                  icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
                   onClick={() => {
                     props.setContainerState({
                       isEditing: true,
@@ -105,8 +105,8 @@ const StyledIconWrapper = styled.div`
 const StyledMenuHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   width: 100%;
-  margin-top: 1rem;
   border-bottom: 1px solid ${props => props.theme.css.lightVariantColor};
 `;
 

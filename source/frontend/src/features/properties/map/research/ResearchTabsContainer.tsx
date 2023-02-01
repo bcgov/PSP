@@ -41,7 +41,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
       />
     ),
     key: FileTabNames.fileDetails,
-    name: 'Research Details',
+    name: 'File Details',
   });
 
   if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {

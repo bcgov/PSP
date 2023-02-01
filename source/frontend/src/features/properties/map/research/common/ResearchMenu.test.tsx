@@ -3,6 +3,7 @@ import { fireEvent, render, RenderOptions, waitFor } from 'utils/test-utils';
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
 
 const onChange = jest.fn();
+const onEdit = jest.fn();
 
 describe('ResearchMenu component', () => {
   const setup = (renderOptions: RenderOptions & IResearchMenuProps) => {
@@ -12,6 +13,7 @@ describe('ResearchMenu component', () => {
         selectedIndex={renderOptions.selectedIndex}
         items={renderOptions.items}
         onChange={renderOptions.onChange}
+        onEdit={renderOptions.onEdit}
       />,
       {
         ...renderOptions,
@@ -33,6 +35,7 @@ describe('ResearchMenu component', () => {
       items: testItems,
       selectedIndex: 0,
       onChange,
+      onEdit,
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -45,6 +48,7 @@ describe('ResearchMenu component', () => {
       items: testItems,
       selectedIndex: 0,
       onChange,
+      onEdit,
     });
 
     expect(getByText(testItems[0])).toBeVisible();
@@ -60,6 +64,7 @@ describe('ResearchMenu component', () => {
       items: testItems,
       selectedIndex: 1,
       onChange,
+      onEdit,
     });
 
     expect(getByTestId('menu-item-row-0')).not.toHaveClass('selected');
