@@ -44,7 +44,7 @@
                 <SSIS:Property SSIS:Name="VersionBuild">275</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{30418361-52A8-4193-AB5A-8B4FE37953A4}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{7DC8A03F-D534-484B-B44D-5E91B2268C46}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
