@@ -63,6 +63,62 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           <div
             class="col"
           >
+            Project
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Ministry project:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Funding:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
             Schedule
           </div>
           <div
@@ -106,7 +162,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
               >
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
                   id="section-field-tooltip"
                 >
                   <svg

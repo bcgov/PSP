@@ -51,6 +51,10 @@ export const AcquisitionContainer: React.FunctionComponent<
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
     updateAcquisitionProperties,
+    getAcquisitionProperties: {
+      execute: retrieveAcquisitionFileProperties,
+      loading: loadingAcquisitionFileProperties,
+    },
   } = useAcquisitionProvider();
 
   const [acquisitionFile, setAcquisitionFile] = useState<Api_AcquisitionFile | undefined>(
@@ -74,9 +78,13 @@ export const AcquisitionContainer: React.FunctionComponent<
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
     var retrieved = await retrieveAcquisitionFile(acquisitionFileId);
+    var acquisitionProperties = await retrieveAcquisitionFileProperties(acquisitionFileId);
+    retrieved?.fileProperties?.forEach(async fp => {
+      fp.property = acquisitionProperties?.find(ap => fp.id === ap.id)?.property;
+    });
     setAcquisitionFile(retrieved);
     setFile({ ...retrieved, fileType: FileTypes.Acquisition });
-  }, [acquisitionFileId, retrieveAcquisitionFile, setFile]);
+  }, [acquisitionFileId, retrieveAcquisitionFileProperties, retrieveAcquisitionFile, setFile]);
 
   useEffect(() => {
     if (acquisitionFile === undefined) {
@@ -84,7 +92,10 @@ export const AcquisitionContainer: React.FunctionComponent<
     }
   }, [acquisitionFile, fetchAcquisitionFile]);
 
-  useEffect(() => setFileLoading(loadingAcquisitionFile), [loadingAcquisitionFile, setFileLoading]);
+  useEffect(
+    () => setFileLoading(loadingAcquisitionFile || loadingAcquisitionFileProperties),
+    [loadingAcquisitionFile, setFileLoading, loadingAcquisitionFileProperties],
+  );
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
@@ -148,7 +159,7 @@ export const AcquisitionContainer: React.FunctionComponent<
   const menuItems = acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
-  if (loadingAcquisitionFile) {
+  if (loadingAcquisitionFile || loadingAcquisitionFileProperties) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 

@@ -6,14 +6,51 @@ import {
   Api_DocumentUploadRequest,
 } from 'models/api/Document';
 import {
+  Api_Storage_DocumentDetail,
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
 } from 'models/api/DocumentStorage';
+import Api_TypeCode from 'models/api/TypeCode';
 
 export interface ComposedDocument {
   mayanMetadata?: Api_Storage_DocumentMetadata[];
   pimsDocument?: Api_Document;
+  documentDetail?: Api_Storage_DocumentDetail;
   mayanFileId?: number;
+}
+
+export class DocumentRow {
+  id?: number;
+  mayanDocumentId?: number;
+  documentType?: Api_DocumentType;
+  statusTypeCode?: Api_TypeCode<string>;
+  fileName?: string;
+  isFileAvailable?: boolean;
+  appCreateTimestamp?: string;
+  appCreateUserid?: string;
+
+  public static fromApi(document: Api_Document): DocumentRow {
+    const row: DocumentRow = new DocumentRow();
+    row.id = document.id;
+    row.documentType = document.documentType;
+    row.mayanDocumentId = document.mayanDocumentId;
+    row.statusTypeCode = document.statusTypeCode;
+    row.fileName = document.fileName;
+    row.appCreateTimestamp = document.appCreateTimestamp;
+    row.appCreateUserid = document.appCreateUserid;
+
+    return row;
+  }
+
+  public static toApi(document: DocumentRow): Api_Document {
+    return {
+      id: document.id,
+      mayanDocumentId: document.mayanDocumentId,
+      documentType: document.documentType,
+      statusTypeCode: document.statusTypeCode,
+      fileName: document.fileName,
+    };
+  }
 }
 
 export class DocumentUploadFormData {

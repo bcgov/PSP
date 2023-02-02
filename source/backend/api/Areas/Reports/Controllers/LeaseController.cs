@@ -140,8 +140,8 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             IEnumerable<PimsLease> leasesForFiscal = _leaseReportService.GetAggregatedLeaseReport(fiscalYearStart);
-            var programs = _lookupRepository.GetLeaseProgramTypes();
-            var regions = _lookupRepository.GetRegions();
+            var programs = _lookupRepository.GetAllLeaseProgramTypes();
+            var regions = _lookupRepository.GetAllRegions();
 
             AggregatedLeasesModel model = new AggregatedLeasesModel(leasesForFiscal, fiscalYearStart, programs, regions);
 

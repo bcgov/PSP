@@ -302,7 +302,7 @@ exports[`Document Results Table matches snapshot 1`] = `
                 >
                   <span
                     class="tooltip-icon"
-                    data-testid="tooltip-icon"
+                    data-testid="tooltip-icon-initiator-tooltip"
                     id="initiator-tooltip"
                   >
                     <svg
@@ -387,7 +387,7 @@ exports[`Document Results Table matches snapshot 1`] = `
                 >
                   <span
                     class="tooltip-icon"
-                    data-testid="tooltip-icon"
+                    data-testid="tooltip-icon-initiator-tooltip"
                     id="initiator-tooltip"
                   >
                     <svg

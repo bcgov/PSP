@@ -1042,7 +1042,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
           Provide a descriptive name for this land
           <span
             class="tooltip-icon"
-            data-testid="tooltip-icon"
+            data-testid="tooltip-icon-property-selector-tooltip"
             id="property-selector-tooltip"
           >
             <svg

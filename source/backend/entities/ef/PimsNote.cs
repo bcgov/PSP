@@ -65,6 +65,8 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [InverseProperty("Note")]
+        public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
         [InverseProperty(nameof(PimsActivityInstanceNote.Note))]
         public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
     }

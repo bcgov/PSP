@@ -35,7 +35,7 @@ namespace Pims.Dal.Repositories
         /// Get all of provinces from the datasource.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PimsProvinceState> Get()
+        public IEnumerable<PimsProvinceState> GetAll()
         {
             var query = this.Context.PimsProvinceStates.AsNoTracking();
             return query.OrderBy(p => p.DisplayOrder).OrderBy(p => p.ProvinceStateId).ToArray();

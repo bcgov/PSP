@@ -35,7 +35,7 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Getting supported file Types");
 
             this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
-            ExternalResult<FileTypes> result = await documentGenerationRepository.GetFileTypesAsync();
+            ExternalResult<FileTypes> result = await documentGenerationRepository.TryGetFileTypesAsync();
             return result;
         }
 
@@ -45,7 +45,7 @@ namespace Pims.Api.Services
 
             this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
             await this.avService.ScanAsync(fileRaw);
-            ExternalResult<string> result = await documentGenerationRepository.UploadTemplateAsync(fileRaw);
+            ExternalResult<string> result = await documentGenerationRepository.TryUploadTemplateAsync(fileRaw);
             return result;
         }
     }

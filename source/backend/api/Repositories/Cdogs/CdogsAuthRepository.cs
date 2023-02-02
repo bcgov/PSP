@@ -38,7 +38,7 @@ namespace Pims.Api.Repositories.Cdogs
         {
             if (!IsValidToken())
             {
-                ExternalResult<JwtResponse> tokenResult = await RequestToken();
+                ExternalResult<JwtResponse> tokenResult = await TryRequestToken();
 
                 if (tokenResult.Status == ExternalResultStatus.Error)
                 {
@@ -71,7 +71,7 @@ namespace Pims.Api.Repositories.Cdogs
             return false;
         }
 
-        private async Task<ExternalResult<JwtResponse>> RequestToken()
+        private async Task<ExternalResult<JwtResponse>> TryRequestToken()
         {
             _logger.LogDebug("Getting authentication token...");
 

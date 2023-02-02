@@ -123,6 +123,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Search for a property
             searchProperties.SearchPropertyByPINPID(PID4Search);
 
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
             //Close Property Information Modal
             propertyInformation.ClosePropertyInfoModal();
 
@@ -153,6 +156,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an acquisition file
             searchProperties.SearchPropertyByPINPID(PID4Search);
+
+            //Select foound pin on map
+            searchProperties.SelectFoundPin();
 
 
         }

@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Pims.Dal.Repositories
 {
@@ -31,7 +31,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all organizations sorted by Name.
         /// </summary>
-        public IEnumerable<PimsOrganization> GetOrganizations()
+        public IEnumerable<PimsOrganization> GetAllOrganizations()
         {
             return this.Context.PimsOrganizations.AsNoTracking().OrderBy(a => a.OrganizationName).ToArray();
         }
@@ -39,7 +39,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all organization types sorted by DisplayOrder and Id.
         /// </summary>
-        public IEnumerable<PimsOrganizationType> GetOrganizationTypes()
+        public IEnumerable<PimsOrganizationType> GetAllOrganizationTypes()
         {
             return this.Context.PimsOrganizationTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.OrganizationTypeCode).ToArray();
         }
@@ -47,7 +47,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all countries sorted by DisplayOrder and Code.
         /// </summary>
-        public IEnumerable<PimsCountry> GetCountries()
+        public IEnumerable<PimsCountry> GetAllCountries()
         {
             return this.Context.PimsCountries.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.CountryCode).ToArray();
         }
@@ -55,7 +55,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all provinces sorted by DisplayOrder and Code.
         /// </summary>
-        public IEnumerable<PimsProvinceState> GetProvinces()
+        public IEnumerable<PimsProvinceState> GetAllProvinces()
         {
             return this.Context.PimsProvinceStates.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
         }
@@ -63,7 +63,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all regions sorted by DisplayOrder and Name.
         /// </summary>
-        public IEnumerable<PimsRegion> GetRegions()
+        public IEnumerable<PimsRegion> GetAllRegions()
         {
             return this.Context.PimsRegions.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.RegionCode).ToArray();
         }
@@ -71,7 +71,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all districts sorted by DisplayOrder and Name.
         /// </summary>
-        public IEnumerable<PimsDistrict> GetDistricts()
+        public IEnumerable<PimsDistrict> GetAllDistricts()
         {
             return this.Context.PimsDistricts.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.DistrictCode).ToArray();
         }
@@ -79,7 +79,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all property classification types sorted by DisplayOrder and Id.
         /// </summary>
-        public IEnumerable<PimsPropertyClassificationType> GetPropertyClassificationTypes()
+        public IEnumerable<PimsPropertyClassificationType> GetAllPropertyClassificationTypes()
         {
             return this.Context.PimsPropertyClassificationTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.PropertyClassificationTypeCode).ToArray();
         }
@@ -87,7 +87,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all property types sorted by DisplayOrder and Id.
         /// </summary>
-        public IEnumerable<PimsPropertyType> GetPropertyTypes()
+        public IEnumerable<PimsPropertyType> GetAllPropertyTypes()
         {
             return this.Context.PimsPropertyTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.PropertyTypeCode).ToArray();
         }
@@ -95,7 +95,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all property tenure types sorted by DisplayOrder and Id.
         /// </summary>
-        public IEnumerable<PimsPropertyTenureType> GetPropertyTenureTypes()
+        public IEnumerable<PimsPropertyTenureType> GetAllPropertyTenureTypes()
         {
             return this.Context.PimsPropertyTenureTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).OrderBy(a => a.PropertyTenureTypeCode).ToArray();
         }
@@ -103,7 +103,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all property area unit types sorted by DisplayOrder and Id.
         /// </summary>
-        public IEnumerable<PimsAreaUnitType> GetPropertyAreaUnitTypes()
+        public IEnumerable<PimsAreaUnitType> GetAllPropertyAreaUnitTypes()
         {
             return this.Context.PimsAreaUnitTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).OrderBy(a => a.AreaUnitTypeCode).ToArray();
         }
@@ -111,7 +111,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all property volume unit types sorted by DisplayOrder and Id.
         /// </summary>
-        public IEnumerable<PimsVolumeUnitType> GetPropertyVolumeUnitTypes()
+        public IEnumerable<PimsVolumeUnitType> GetAllPropertyVolumeUnitTypes()
         {
             return this.Context.PimsVolumeUnitTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.VolumeUnitTypeCode).ToArray();
         }
@@ -119,182 +119,190 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all roles sorted by Name.
         /// </summary>
-        public IEnumerable<PimsRole> GetRoles()
+        public IEnumerable<PimsRole> GetAllRoles()
         {
             return this.Context.PimsRoles.AsNoTracking().OrderBy(a => a.Name).ToArray();
         }
 
-        public IEnumerable<PimsLeasePayRvblType> GetPaymentReceivableTypes()
+        public IEnumerable<PimsLeasePayRvblType> GetAllPaymentReceivableTypes()
         {
             return this.Context.PimsLeasePayRvblTypes.AsNoTracking().OrderBy(a => a.LeasePayRvblTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseProgramType> GetLeaseProgramTypes()
+        public IEnumerable<PimsLeaseProgramType> GetAllLeaseProgramTypes()
         {
             return this.Context.PimsLeaseProgramTypes.AsNoTracking().OrderBy(a => a.LeaseProgramTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseStatusType> GetLeaseStatusTypes()
+        public IEnumerable<PimsLeaseStatusType> GetAllLeaseStatusTypes()
         {
             return this.Context.PimsLeaseStatusTypes.AsNoTracking().OrderBy(a => a.LeaseStatusTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseLicenseType> GetLeaseTypes()
+        public IEnumerable<PimsLeaseLicenseType> GetAllLeaseTypes()
         {
             return this.Context.PimsLeaseLicenseTypes.AsNoTracking().OrderBy(a => a.LeaseLicenseTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseCategoryType> GetLeaseCategoryTypes()
+        public IEnumerable<PimsLeaseCategoryType> GetAllLeaseCategoryTypes()
         {
             return this.Context.PimsLeaseCategoryTypes.AsNoTracking().OrderBy(a => a.LeaseCategoryTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeasePurposeType> GetLeasePurposeTypes()
+        public IEnumerable<PimsLeasePurposeType> GetAllLeasePurposeTypes()
         {
             return this.Context.PimsLeasePurposeTypes.AsNoTracking().OrderBy(a => a.LeasePurposeTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseResponsibilityType> GetLeaseResponsibilityTypes()
+        public IEnumerable<PimsLeaseResponsibilityType> GetAllLeaseResponsibilityTypes()
         {
             return this.Context.PimsLeaseResponsibilityTypes.AsNoTracking().OrderBy(a => a.LeaseResponsibilityTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes()
+        public IEnumerable<PimsLeaseInitiatorType> GetAllLeaseInitiatorTypes()
         {
             return this.Context.PimsLeaseInitiatorTypes.AsNoTracking().OrderBy(a => a.LeaseInitiatorTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseTermStatusType> GetLeaseTermStatusTypes()
+        public IEnumerable<PimsLeaseTermStatusType> GetAllLeaseTermStatusTypes()
         {
             return this.Context.PimsLeaseTermStatusTypes.AsNoTracking().OrderBy(a => a.LeaseTermStatusTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeasePmtFreqType> GetLeasePmtFreqTypes()
+        public IEnumerable<PimsLeasePmtFreqType> GetAllLeasePmtFreqTypes()
         {
             return this.Context.PimsLeasePmtFreqTypes.AsNoTracking().OrderBy(a => a.LeasePmtFreqTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsInsuranceType> GetInsuranceTypes()
+        public IEnumerable<PimsInsuranceType> GetAllInsuranceTypes()
         {
             return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsContactMethodType> GetContactMethodTypes()
+        public IEnumerable<PimsContactMethodType> GetAllContactMethodTypes()
         {
             return this.Context.PimsContactMethodTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes()
+        public IEnumerable<PimsPropertyImprovementType> GetAllPropertyImprovementTypes()
         {
             return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsSecurityDepositType> GetSecurityDepositTypes()
+        public IEnumerable<PimsSecurityDepositType> GetAllSecurityDepositTypes()
         {
             return this.Context.PimsSecurityDepositTypes.AsNoTracking().OrderBy(d => d.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsLeasePaymentStatusType> GetLeasePaymentStatusTypes()
+        public IEnumerable<PimsLeasePaymentStatusType> GetAllLeasePaymentStatusTypes()
         {
             return this.Context.PimsLeasePaymentStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsLeasePaymentMethodType> GetLeasePaymentMethodTypes()
+        public IEnumerable<PimsLeasePaymentMethodType> GetAllLeasePaymentMethodTypes()
         {
             return this.Context.PimsLeasePaymentMethodTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsResearchFileStatusType> GetResearchFileStatusTypes()
+        public IEnumerable<PimsResearchFileStatusType> GetAllResearchFileStatusTypes()
         {
             return this.Context.PimsResearchFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsRequestSourceType> GeRequestSourceTypes()
+        public IEnumerable<PimsRequestSourceType> GetAllRequestSourceTypes()
         {
             return this.Context.PimsRequestSourceTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsResearchPurposeType> GetResearchPurposeTypes()
+        public IEnumerable<PimsResearchPurposeType> GetAllResearchPurposeTypes()
         {
             return this.Context.PimsResearchPurposeTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsPropResearchPurposeType> GetPropertyResearchPurposeTypes()
+        public IEnumerable<PimsPropResearchPurposeType> GetAllPropertyResearchPurposeTypes()
         {
             return this.Context.PimsPropResearchPurposeTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsPropertyAnomalyType> GetPropertyAnomalyTypes()
+        public IEnumerable<PimsPropertyAnomalyType> GetAllPropertyAnomalyTypes()
         {
             return this.Context.PimsPropertyAnomalyTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsPropertyRoadType> GetPropertyRoadTypes()
+        public IEnumerable<PimsPropertyRoadType> GetAllPropertyRoadTypes()
         {
             return this.Context.PimsPropertyRoadTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsPropertyAdjacentLandType> GetPropertyAdjacentLandTypes()
+        public IEnumerable<PimsPropertyAdjacentLandType> GetAllPropertyAdjacentLandTypes()
         {
             return this.Context.PimsPropertyAdjacentLandTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsVolumetricType> GetPropertyVolumetricTypes()
+        public IEnumerable<PimsVolumetricType> GetAllPropertyVolumetricTypes()
         {
             return this.Context.PimsVolumetricTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsPphStatusType> GetPPHStatusType()
+        public IEnumerable<PimsPphStatusType> GetAllPPHStatusType()
         {
             return this.Context.PimsPphStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsDocumentStatusType> GetDocumentStatusTypes()
+        public IEnumerable<PimsDocumentStatusType> GetAllDocumentStatusTypes()
         {
             return this.Context.PimsDocumentStatusTypes.AsNoTracking().OrderBy(d => d.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsDocumentTyp> GetDocumentTypes()
+        public IEnumerable<PimsDocumentTyp> GetAllDocumentTypes()
         {
             return this.Context.PimsDocumentTyps.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsAcquisitionFileStatusType> GetAcquisitionFileStatusTypes()
+        public IEnumerable<PimsAcquisitionFileStatusType> GetAllAcquisitionFileStatusTypes()
         {
             return this.Context.PimsAcquisitionFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsAcqPhysFileStatusType> GetAcquisitionPhysFileStatusTypes()
+        public IEnumerable<PimsAcqPhysFileStatusType> GetAllAcquisitionPhysFileStatusTypes()
         {
             return this.Context.PimsAcqPhysFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsAcquisitionType> GetAcquisitionTypes()
+        public IEnumerable<PimsAcquisitionType> GetAllAcquisitionTypes()
         {
             return this.Context.PimsAcquisitionTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsActivityTemplateType> GetActivityTemplateTypes()
+        public IEnumerable<PimsActivityTemplateType> GetAllActivityTemplateTypes()
         {
             return this.Context.PimsActivityTemplateTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsActivityInstanceStatusType> GetActivityStatusTypes()
+        public IEnumerable<PimsActivityInstanceStatusType> GetAllActivityStatusTypes()
         {
             return this.Context.PimsActivityInstanceStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsAcqFlPersonProfileType> GetAcqFilePersonProfileTypes()
+        public IEnumerable<PimsAcqFlPersonProfileType> GetAllAcqFilePersonProfileTypes()
         {
             return this.Context.PimsAcqFlPersonProfileTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsTenantType> GetTenantTypes()
+        public IEnumerable<PimsTenantType> GetAllTenantTypes()
         {
             return this.Context.PimsTenantTypes.AsNoTracking().ToArray();
-
         }
-        
+
+        public IEnumerable<PimsAcquisitionFundingType> GetAllAcquisitionFundingTypes()
+        {
+            return this.Context.PimsAcquisitionFundingTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsProjectStatusType> GetAllProjectStatusTypes()
+        {
+            return this.Context.PimsProjectStatusTypes.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }

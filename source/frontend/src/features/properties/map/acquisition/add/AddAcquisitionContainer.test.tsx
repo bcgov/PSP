@@ -63,6 +63,12 @@ describe('AddAcquisitionContainer component', () => {
         utils.container.querySelector(`select[name="region"]`) as HTMLSelectElement,
       getAcquisitionTypeDropdown: () =>
         utils.container.querySelector(`select[name="acquisitionType"]`) as HTMLSelectElement,
+      getFundingTypeDropdown: () =>
+        utils.container.querySelector(`select[name="fundingTypeCode"]`) as HTMLSelectElement,
+      getFundingOtherTextbox: () =>
+        utils.container.querySelector(
+          `input[name="fundingTypeOtherDescription"]`,
+        ) as HTMLInputElement,
     };
   };
 
@@ -131,13 +137,26 @@ describe('AddAcquisitionContainer component', () => {
     formValues.fileName = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
     formValues.acquisitionType = 'CONSEN';
     formValues.region = '1';
+    formValues.project = { id: 0, text: 'Test Project' };
+    formValues.fundingTypeCode = 'OTHER';
+    formValues.fundingTypeOtherDescription = 'A different type of funding';
 
-    const { getSaveButton, getNameTextbox, getAcquisitionTypeDropdown, getRegionDropdown } =
-      setup(DEFAULT_PROPS);
+    const {
+      getSaveButton,
+      getNameTextbox,
+      getAcquisitionTypeDropdown,
+      getRegionDropdown,
+      getFundingTypeDropdown,
+      getFundingOtherTextbox,
+    } = setup(DEFAULT_PROPS);
 
     await waitFor(() => userEvent.paste(getNameTextbox(), formValues.fileName as string));
     await userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType);
     await userEvent.selectOptions(getRegionDropdown(), formValues.region);
+    await userEvent.selectOptions(getFundingTypeDropdown(), formValues.fundingTypeCode);
+    await waitFor(() =>
+      userEvent.paste(getFundingOtherTextbox(), formValues.fundingTypeOtherDescription),
+    );
 
     mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.fileName));
     userEvent.click(getSaveButton());

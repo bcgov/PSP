@@ -74,7 +74,7 @@ namespace Pims.Api.Areas.Admin.Controllers
                 quantity = 50;
             }
 
-            var paged = _claimRepository.Get(page, quantity, name);
+            var paged = _claimRepository.GetPage(page, quantity, name);
             var result = _mapper.Map<Api.Models.PageModel<Model.ClaimModel>>(paged);
             return new JsonResult(result);
         }
@@ -91,7 +91,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-claim" })]
         public IActionResult GetClaim(Guid key)
         {
-            var entity = _claimRepository.Get(key);
+            var entity = _claimRepository.GetByKey(key);
             var claim = _mapper.Map<Model.ClaimModel>(entity);
             return new JsonResult(claim);
         }

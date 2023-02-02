@@ -36,11 +36,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
 
-            config.NewConfig<Entity.PimsRegion, CodeTypeModel>()
-                .Map(dest => dest.Code, src => src.RegionCode)
-                .Map(dest => dest.Description, src => src.RegionName)
-                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
-
             config.NewConfig<Entity.PimsDistrict, CodeTypeModel>()
                 .Map(dest => dest.Code, src => src.DistrictCode)
                 .Map(dest => dest.Description, src => src.DistrictName)

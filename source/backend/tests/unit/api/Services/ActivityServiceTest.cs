@@ -56,13 +56,10 @@ namespace Pims.Api.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
             var service = helper.Create<ActivityService>(user);
-
-            var mapper = helper.GetService<IMapper>();
+            
             var activity = EntityHelper.CreateActivity();
-            var activityModel = mapper.Map<EntityNoteModel>(activity);
 
             var repository = helper.GetService<Mock<IActivityRepository>>();
-            repository.Setup(x => x.Add(It.IsAny<PimsActivityInstance>())).Returns(activity);
 
             // Act
             Action act = () => service.Add(activity);

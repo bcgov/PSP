@@ -41,6 +41,6 @@ describe('LtsaLandSubForm component', () => {
     } = setup({
       ltsaData: mockLtsaResponse,
     });
-    expect(getByText('this title has no land')).toBeVisible();
+    expect(getByText('None')).toBeVisible();
   });
 });

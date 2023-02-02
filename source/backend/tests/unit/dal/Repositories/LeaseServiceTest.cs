@@ -85,7 +85,7 @@ namespace Pims.Dal.Test.Services
             var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
-            var result = service.Get(filter);
+            var result = service.GetAllByFilter(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -105,7 +105,7 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.Get(null));
+                service.GetAllByFilter(null));
         }
 
         [Theory]

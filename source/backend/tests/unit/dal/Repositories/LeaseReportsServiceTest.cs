@@ -59,7 +59,7 @@ namespace Pims.Dal.Test.Repositories
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseRepository.Setup(x => x.Get(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
+            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
 
             // Act
             // Assert
@@ -78,7 +78,7 @@ namespace Pims.Dal.Test.Repositories
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseRepository.Setup(x => x.Get(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
+            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
 
             // Act
             var leases = this.leaseReportsService.GetAggregatedLeaseReport(2022);
@@ -86,7 +86,7 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             leases.Should().HaveCount(1);
             leases.FirstOrDefault().Should().Be(lease);
-            this.leaseRepository.Verify(x => x.Get(It.IsAny<LeaseFilter>(), true));
+            this.leaseRepository.Verify(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true));
         }
         #endregion
         #endregion

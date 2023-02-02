@@ -117,7 +117,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyRepository>(user);
 
             // Act
-            var result = repository.Get(1);
+            var result = repository.GetById(1);
 
             // Assert
             result.Should().NotBeNull();

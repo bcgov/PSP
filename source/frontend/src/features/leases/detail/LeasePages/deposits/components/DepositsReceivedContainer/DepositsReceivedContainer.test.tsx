@@ -155,7 +155,7 @@ describe('DepositsReceivedContainer component', () => {
     });
     const dataRow = findFirstRow() as HTMLElement;
 
-    const tooltip = getByTestId('tooltip-icon');
+    const tooltip = getByTestId('tooltip-icon-no-delete-tooltip-1');
     expect(dataRow).not.toBeNull();
     expect(queryByTitle('delete deposit')).toBeNull();
     expect(tooltip).toBeVisible();

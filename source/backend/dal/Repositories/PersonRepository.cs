@@ -58,7 +58,7 @@ namespace Pims.Dal.Repositories
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">Person does not exists for the specified 'id'.</exception>
         /// <returns></returns>
-        public PimsPerson Get(long id)
+        public PimsPerson GetById(long id)
         {
             return this.Context.PimsPeople
                 .Include(p => p.PimsPersonAddresses)
