@@ -10,7 +10,6 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Core.Extensions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -30,7 +29,6 @@ namespace Pims.Api.Areas.Projects.Controllers
         #region fields
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
         #endregion
 
         /// <summary>
@@ -39,11 +37,10 @@ namespace Pims.Api.Areas.Projects.Controllers
         /// <param name="projectService"></param>
         /// <param name="mapper"></param>
         ///
-        public ProjectController(IProjectService projectService, IMapper mapper, ILogger<AcquisitionFileController> logger)
+        public ProjectController(IProjectService projectService, IMapper mapper)
         {
             _projectService = projectService;
             _mapper = mapper;
-            _logger = logger;
         }
 
         /// <summary>
@@ -115,16 +112,9 @@ namespace Pims.Api.Areas.Projects.Controllers
         [SwaggerOperation(Tags = new[] { "project" })]
         public IActionResult UpdateProject([FromRoute]long id, [FromBody] ProjectModel model)
         {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(ProjectController),
-                nameof(UpdateProject),
-                User.GetUsername(),
-                DateTime.Now);
-
             var updatedProject = _projectService.Update(id, _mapper.Map<Dal.Entities.PimsProject>(model));
 
-            return Ok(updatedProject);
+            return new JsonResult(updatedProject);
         }
 
         /// <summary>
