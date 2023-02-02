@@ -58,6 +58,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By activityDetailsRelatedPropsBttn = By.XPath("//div[contains(text(),'Related properties')]/parent::button");
         private By activityDescriptionLabel = By.XPath("//h2/div/div[contains(text(),'Description')]");
         private By activityDescriptionTextArea = By.Id("input-description");
+        private By activityStatusSelect = By.Id("input-activityStatusTypeCode.id");
         private By activityDetailsEditBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[3]/div/button");
 
         //Related Properties Pop-up
@@ -82,10 +83,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(activitiesTab).Click();
         }
 
-        public void CreateNewActivity()
+        public void CreateNewActivity(string activityType)
         {
             Wait();
-            ChooseSpecificSelectOption("input-activityTypeId", "General");
+            ChooseSpecificSelectOption(activityTypeSelect, activityType);
             webDriver.FindElement(activityAddBttn).Click();
 
             Wait();
@@ -166,7 +167,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void FilterActivities()
         {
             Wait();
-            ChooseSpecificSelectOption("input-status", "In Progress");
+            ChooseSpecificSelectOption(activityStatusFilterSelect, "In Progress");
             webDriver.FindElement(activityFilterSearchBttn).Click();
 
             Wait();
@@ -174,17 +175,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(activityFilterResetBttn).Click();
 
-            //webDriver.FindElement(activityDetailsEditBttn).Click();
-
-            //ChooseSpecificSelectOption("input-activityStatusTypeCode.id", "In Progress");
-            //ButtonElement("Save");
-
-            //Wait();
-            //notes.VerifyAutomaticNotes("Not Started", "In Progress");
-
             ChangeStatus("In Progress");
 
-            ChooseSpecificSelectOption("input-status", "In Progress");
+            ChooseSpecificSelectOption(activityStatusFilterSelect, "In Progress");
             webDriver.FindElement(activityFilterSearchBttn).Click();
 
             Wait();
@@ -236,6 +229,12 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.ModalClickOKBttn(); 
         }
 
+        public void EditActivity()
+        {
+            Wait();
+            webDriver.FindElement(activityDetailsEditBttn).Click();
+        }
+
         public void ChangeStatus(string toStatus)
         {
             Wait();
@@ -243,11 +242,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(activityDetailsEditBttn).Click();
 
-            ChooseSpecificSelectOption("input-activityStatusTypeCode.id", toStatus);
+            ChooseSpecificSelectOption(activityStatusSelect, toStatus);
             ButtonElement("Save");
 
             Wait();
             notes.VerifyAutomaticNotes(previousStatus, toStatus);
+        }
+
+        public void InsertDescription(string description)
+        {
+            Wait();
+            webDriver.FindElement(activityDetailsEditBttn).Click();
+
+            webDriver.FindElement(activityDescriptionTextArea).SendKeys(description);
+
         }
 
         public void DeleteActivity()
@@ -257,6 +265,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntil(activityPropertiesModal);
             sharedModals.ModalClickOKBttn();
+        }
+
+        public void SaveActivityChanges()
+        {
+            Wait();
+            ButtonElement("Save");
         }
 
         public void CancelActivityChanges()
@@ -269,7 +283,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(activityDetailsEditBttn).Click();
-            return webDriver.FindElements(activityDescriptionTextArea).Count() > 0;
+            return webDriver.FindElements(activityDescriptionTextArea).Count() == 0;
         }
 
         public int totalActivities()

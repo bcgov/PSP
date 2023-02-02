@@ -44,6 +44,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string propertyResearchNotes = "Automation test - Testing Property Research adding information";
         private readonly string propertyResearchEditNotes = "Automation test - Testing Property Research adding information - Automation Edit";
 
+        private readonly string propertyDetailsAddressLine1 = "8989 Main St.";
+        private readonly string propertyDetailsAddressLine2 = "Office 2305-09";
+        private readonly string propertyDetailsCity = "Richmond";
+        private readonly string propertyDetailsPostalCode = "V1H 9K0";
         private readonly string propertyDetailsMunicipalZoning = "Automated Test zone";
         private readonly string propertyDetailsAreaSqMts = "50";
         private readonly string propertyDetailsAreaCubeMts = "100";
@@ -129,7 +133,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFile.CreateMinimumResearchFile(researchFileName);
 
             //Fill name to selected property
-            //sharedSearchProperties.AddNameSelectedProperty("Automated Property from Pin");
+            sharedSearchProperties.AddNameSelectedProperty("Automated Property from Pin");
 
             //Save Research File
             researchFile.SaveResearchFile();
@@ -409,11 +413,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.EditPropertyInfoResearchBttn();
 
             //Insert some changes
-            propertyInformation.UpdateMaxPropertyDetails(propertyDetailsMunicipalZoning, propertyDetailsAreaSqMts, propertyDetailsAreaCubeMts, propertyDetailsNotes);
+            propertyInformation.UpdateMaxPropertyDetails(propertyDetailsAddressLine1, propertyDetailsAddressLine2, propertyDetailsCity, propertyDetailsPostalCode, propertyDetailsMunicipalZoning,
+                propertyDetailsAreaSqMts, propertyDetailsAreaCubeMts, propertyDetailsNotes);
 
             //Save changes
             propertyInformation.SavePropertyDetails();
-
         }
 
         [StepDefinition(@"I cancel changes on a Property Details from a Research File")]
@@ -500,7 +504,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(researchFile.HeaderIsDisplayed().Equals(0));
         }
 
-        [StepDefinition(@"Expected Content is displayed on Research File Table")]
+        [StepDefinition(@"Expected Research Files Content is displayed on Research File Table")]
         public void VerifyResearchFileTableContent()
         {
             /* TEST COVERAGE: PSP-3294  */
