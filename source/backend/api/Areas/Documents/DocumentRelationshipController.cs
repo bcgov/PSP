@@ -26,6 +26,7 @@ namespace Pims.Api.Controllers
     {
         #region Variables
         private readonly IDocumentActivityService _documentActivityService;
+        private readonly IDocumentFileService _documentFileService;
         private readonly IDocumentLeaseService _documentLeaseService;
         private readonly IMapper _mapper;
         #endregion
@@ -41,10 +42,12 @@ namespace Pims.Api.Controllers
         public DocumentRelationshipController(
             IDocumentActivityService documentActivityService,
             IDocumentLeaseService documentLeaseService,
+            IDocumentFileService documentFileService,
             IMapper mapper)
         {
             _documentActivityService = documentActivityService;
             _documentLeaseService = documentLeaseService;
+            _documentFileService = documentFileService;
             _mapper = mapper;
         }
         #endregion
@@ -66,14 +69,22 @@ namespace Pims.Api.Controllers
         {
             switch (relationshipType)
             {
-                case DocumentRelationType.ResearchFiles:
-                    var researchActivityDocuments = _documentActivityService.GetFileDocuments(FileType.Research, parentId);
+                case DocumentRelationType.ResearchFileActivities:
+                    var researchActivityDocuments = _documentActivityService.GetFileActivityDocuments(FileType.Research, parentId);
                     var mappedResearchFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(researchActivityDocuments);
                     return new JsonResult(mappedResearchFileActivityDocuments);
-                case DocumentRelationType.AcquisitionFiles:
-                    var aquistionFileActivityDocuments = _documentActivityService.GetFileDocuments(FileType.Acquisition, parentId);
+                case DocumentRelationType.AcquisitionFileActivities:
+                    var aquistionFileActivityDocuments = _documentActivityService.GetFileActivityDocuments(FileType.Acquisition, parentId);
                     var mappedAquisitionFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(aquistionFileActivityDocuments);
                     return new JsonResult(mappedAquisitionFileActivityDocuments);
+                case DocumentRelationType.ResearchFiles:
+                    var researchFileDocuments = _documentFileService.GetFileDocuments<PimsResearchFileDocument>(FileType.Research, parentId);
+                    var mappedResearchFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(researchFileDocuments);
+                    return new JsonResult(mappedResearchFileDocuments);
+                case DocumentRelationType.AcquisitionFiles:
+                    var acquistionFileDocuments = _documentFileService.GetFileDocuments<PimsAcquisitionFileDocument>(FileType.Acquisition, parentId);
+                    var mappedAquisitionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(acquistionFileDocuments);
+                    return new JsonResult(mappedAquisitionFileDocuments);
                 case DocumentRelationType.Activities:
                     var activityDocuments = _documentActivityService.GetActivityDocuments(parentId);
                     var mappedActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(activityDocuments);
@@ -113,6 +124,12 @@ namespace Pims.Api.Controllers
                 case DocumentRelationType.Activities:
                     var activityResponse = await _documentActivityService.UploadActivityDocumentAsync(parentId, uploadRequest);
                     return new JsonResult(activityResponse);
+                case DocumentRelationType.AcquisitionFiles:
+                    var acquisitionResponse = await _documentFileService.UploadAcquisitionDocumentAsync(parentId, uploadRequest);
+                    return new JsonResult(acquisitionResponse);
+                case DocumentRelationType.ResearchFiles:
+                    var researchResponse = await _documentFileService.UploadResearchDocumentAsync(parentId, uploadRequest);
+                    return new JsonResult(researchResponse);
                 case DocumentRelationType.Templates:
                     var templateReponse = await _documentActivityService.UploadActivityTemplateDocumentAsync(parentId, uploadRequest);
                     return new JsonResult(templateReponse);
@@ -143,6 +160,14 @@ namespace Pims.Api.Controllers
                     var activityRelationship = _mapper.Map<PimsActivityInstanceDocument>(model);
                     var activityResult = await _documentActivityService.DeleteActivityDocumentAsync(activityRelationship);
                     return new JsonResult(activityResult);
+                case DocumentRelationType.AcquisitionFiles:
+                    var acquisitionRelationship = _mapper.Map<PimsAcquisitionFileDocument>(model);
+                    var acquisitionResult = await _documentFileService.DeleteAcquisitionDocumentAsync(acquisitionRelationship);
+                    return new JsonResult(acquisitionResult);
+                case DocumentRelationType.ResearchFiles:
+                    var researchRelationship = _mapper.Map<PimsResearchFileDocument>(model);
+                    var researchResult = await _documentFileService.DeleteResearchDocumentAsync(researchRelationship);
+                    return new JsonResult(researchResult);
                 case DocumentRelationType.Templates:
                     var templateRelationship = _mapper.Map<PimsActivityTemplateDocument>(model);
                     var templateResult = await _documentActivityService.DeleteActivityTemplateDocumentAsync(templateRelationship);

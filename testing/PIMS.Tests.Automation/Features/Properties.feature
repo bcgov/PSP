@@ -16,3 +16,6 @@ Scenario: Property Information Tab Details
 	When I make some changes on the selected property information
 	Then A Property Information is saved successfully
 	
+Scenario: Non-Inventory Property Information
+	Given I search for a non MOTI property
+	Then Non-Inventory property renders correctly

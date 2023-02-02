@@ -401,6 +401,7 @@ namespace Pims.Api
             services.AddScoped<IDocumentGenerationService, DocumentGenerationService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IFinancialCodeService, FinancialCodeService>();
+            services.AddScoped<IDocumentFileService, DocumentFileService>();
         }
         #endregion
     }

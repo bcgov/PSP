@@ -7,6 +7,14 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsCostTypeCode> GetAllCostTypeCodes();
 
+        PimsCostTypeCode GetById(long id);
+
         PimsCostTypeCode Add(PimsCostTypeCode pimsCode);
+
+        PimsCostTypeCode Update(PimsCostTypeCode pimsCode);
+
+        long GetRowVersion(long id);
+
+        bool IsDuplicate(PimsCostTypeCode pimsCode);
     }
 }

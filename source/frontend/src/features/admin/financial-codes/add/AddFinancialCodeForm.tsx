@@ -10,8 +10,8 @@ import { ButtonToolbar, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { formatAsSelectOptions } from '../financialCodeUtils';
+import { FinancialCodeForm } from '../models';
 import { IAddFinancialCodeFormProps } from './AddFinancialCodeContainer';
-import { FinancialCodeForm } from './models';
 
 export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
   validationSchema,

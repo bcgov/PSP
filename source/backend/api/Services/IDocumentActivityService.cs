@@ -12,7 +12,7 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentActivityService
     {
-        IList<PimsActivityInstanceDocument> GetFileDocuments(FileType fileType, long fileId);
+        IList<PimsActivityInstanceDocument> GetFileActivityDocuments(FileType fileType, long fileId);
 
         IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId);
 

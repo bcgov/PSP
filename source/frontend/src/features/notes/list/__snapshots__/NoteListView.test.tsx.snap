@@ -6,7 +6,7 @@ exports[`Note List View renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c6 {
+  .c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -25,17 +25,33 @@ exports[`Note List View renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
+.c9 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 .c8 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c7 {
-  width: 1.6rem;
-  height: 1.6rem;
+.c5 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
 }
 
-.c5 {
+.c5 .btn {
+  margin: 0;
+}
+
+.c6 {
   float: right;
   cursor: pointer;
 }
@@ -102,7 +118,7 @@ exports[`Note List View renders as expected 1`] = `
               class="col"
             >
               <div
-                class="no-gutters justify-content-between row"
+                class="c5 no-gutters row"
               >
                 <div
                   class="px-2 my-1 col-auto"
@@ -118,7 +134,7 @@ exports[`Note List View renders as expected 1`] = `
               class="col-1"
             >
               <svg
-                class="c5"
+                class="c6"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -180,11 +196,11 @@ exports[`Note List View renders as expected 1`] = `
                   >
                     Created date
                     <div
-                      class="c6"
+                      class="c7"
                       data-testid="sort-column-appCreateTimestamp"
                     >
                       <svg
-                        class="c7"
+                        class="c8"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -199,7 +215,7 @@ exports[`Note List View renders as expected 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c8"
+                        class="c9"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -226,11 +242,11 @@ exports[`Note List View renders as expected 1`] = `
                   >
                     Last updated by
                     <div
-                      class="c6"
+                      class="c7"
                       data-testid="sort-column-appLastUpdateUserid"
                     >
                       <svg
-                        class="c7"
+                        class="c8"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -245,7 +261,7 @@ exports[`Note List View renders as expected 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c8"
+                        class="c9"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"

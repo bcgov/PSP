@@ -63,14 +63,14 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(endDate);
             webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(Keys.Enter);
 
-            ChooseRandomSelectOption(licensePaymentFrequencySelect, "input-leasePmtFreqTypeCode.id", 2);
+            ChooseRandomSelectOption(licensePaymentFrequencySelect, 2);
 
             webDriver.FindElement(licensePaymentAgreedPaymentInput).Click();
             webDriver.FindElement(licensePaymentAgreedPaymentInput).SendKeys(agreedPayment);
             webDriver.FindElement(licensePaymentDueInput).SendKeys(paymentDue);
 
             ChooseSpecificRadioButton("isGstEligible", gst);
-            ChooseSpecificSelectOption("input-statusTypeCode.id", termStatus); 
+            ChooseSpecificSelectOption(licensePaymentTermSelect, termStatus); 
             ButtonElement("Save term");
         }
 
@@ -98,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licensePaymentSendDateInput).SendKeys(Keys.Enter);
             webDriver.FindElement(licensePaymentsModal).Click();
 
-            ChooseRandomSelectOption(licensePaymentMethodSelect, "input-leasePaymentMethodType.id", 1);
+            ChooseRandomSelectOption(licensePaymentMethodSelect, 1);
 
             webDriver.FindElement(licensePaymentAmountReceivedInput).SendKeys(totalReceived);
 
