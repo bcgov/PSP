@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
 
         long GetRowVersion(long id);
 
-        PimsPerson Get(long id);
+        PimsPerson GetById(long id);
 
         PimsPerson Add(PimsPerson person, bool userOverride);
 

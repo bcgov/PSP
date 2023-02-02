@@ -54,7 +54,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             // Limit search results to user's assigned region(s)
-            var pimsUser = _userRepository.GetUserInfo(_user.GetUserKey());
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
 
             return _acqFileRepository.GetPage(filter, userRegions);
@@ -66,8 +66,18 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var acqFile = _acqFileRepository.GetById(id);
-            ReprojectPropertyLocationsToWgs84(acqFile);
             return acqFile;
+        }
+
+        public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)
+        {
+            _logger.LogInformation("Getting acquisition file with id {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            var properties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(id);
+            ReprojectPropertyLocationsToWgs84(properties);
+            return properties;
         }
 
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
@@ -114,7 +124,7 @@ namespace Pims.Api.Services
             MatchProperties(acquisitionFile);
 
             // Get the current properties in the research file
-            var currentProperties = _acquisitionFilePropertyRepository.GetByAcquisitionFileId(acquisitionFile.Id);
+            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -143,7 +153,7 @@ namespace Pims.Api.Services
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
                 {
-                    PimsProperty propertyWithAssociations = _propertyRepository.GetAssociations(deletedProperty.PropertyId);
+                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
                     var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
                     var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
@@ -216,12 +226,12 @@ namespace Pims.Api.Services
 
             if (property.Address != null)
             {
-                var provinceId = _lookupRepository.GetProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
                 if (provinceId.HasValue)
                 {
                     property.Address.ProvinceStateId = provinceId.Value;
                 }
-                property.Address.CountryId = _lookupRepository.GetCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
             }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
@@ -241,6 +251,19 @@ namespace Pims.Api.Services
             }
 
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                if (acquisitionProperty.Property.Location != null)
+                {
+                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
+                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                }
+            }
+        }
+
+        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyAcquisitionFile> propertyAcquisitionFiles)
+        {
+            foreach (var acquisitionProperty in propertyAcquisitionFiles)
             {
                 if (acquisitionProperty.Property.Location != null)
                 {

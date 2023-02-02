@@ -47,9 +47,20 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
 
             var researchFile = _researchFileRepository.GetById(id);
-            ReprojectPropertyLocationsToWgs84(researchFile);
 
             return researchFile;
+        }
+
+        public IEnumerable<PimsPropertyResearchFile> GetProperties(long researchFileId)
+        {
+            _logger.LogInformation("Getting research file properties for file with id {id}", researchFileId);
+            _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            var propertyResearchFiles = _researchFilePropertyRepository.GetAllByResearchFileId(researchFileId);
+            ReprojectPropertyLocationsToWgs84(propertyResearchFiles);
+
+            return propertyResearchFiles;
         }
 
         public PimsResearchFile Add(PimsResearchFile researchFile)
@@ -85,7 +96,7 @@ namespace Pims.Api.Services
             MatchProperties(researchFile);
 
             // Get the current properties in the research file
-            var currentProperties = _researchFilePropertyRepository.GetByResearchFileId(researchFile.Id);
+            var currentProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incommingResearchProperty in researchFile.PimsPropertyResearchFiles)
@@ -114,7 +125,7 @@ namespace Pims.Api.Services
                 _researchFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
                 {
-                    PimsProperty propertyWithAssociations = _propertyRepository.GetAssociations(deletedProperty.PropertyId);
+                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
                     var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
                     var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
@@ -208,12 +219,12 @@ namespace Pims.Api.Services
 
             if(property.Address != null)
             {
-                var provinceId = _lookupRepository.GetProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
+                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
                 if(provinceId.HasValue)
                 {
                     property.Address.ProvinceStateId = provinceId.Value;
                 }
-                property.Address.CountryId = _lookupRepository.GetCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
+                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
             }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
@@ -242,6 +253,19 @@ namespace Pims.Api.Services
             }
 
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
+            {
+                if (researchProperty.Property.Location != null)
+                {
+                    var oldCoords = researchProperty.Property.Location.Coordinate;
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
+                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                }
+            }
+        }
+
+        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyResearchFile> propertyResearchFiles)
+        {
+            foreach (var researchProperty in propertyResearchFiles)
             {
                 if (researchProperty.Property.Location != null)
                 {

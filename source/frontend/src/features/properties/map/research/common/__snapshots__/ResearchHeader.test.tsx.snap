@@ -143,7 +143,7 @@ exports[`ResearchHeader component renders as expected when provided no research 
              by 
             <span
               class="tooltip-icon"
-              data-testid="tooltip-icon"
+              data-testid="tooltip-icon-userNameTooltip"
               id="userNameTooltip"
             >
               <span
@@ -169,7 +169,7 @@ exports[`ResearchHeader component renders as expected when provided no research 
              by 
             <span
               class="tooltip-icon"
-              data-testid="tooltip-icon"
+              data-testid="tooltip-icon-userNameTooltip"
               id="userNameTooltip"
             >
               <span

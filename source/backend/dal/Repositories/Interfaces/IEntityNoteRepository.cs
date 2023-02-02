@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
@@ -10,5 +11,13 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<T> GetAll<T>(Func<T, bool> predicate)
             where T : class;
+
+        IEnumerable<PimsNote> GetAllActivityNotesById(long entityId);
+
+        IEnumerable<PimsNote> GetAllAcquisitionNotesById(long entityId);
+
+        bool DeleteActivityNotes(long entityId);
+
+        bool DeleteAcquisitionFileNotes(long entityId);
     }
 }

@@ -65,6 +65,14 @@ namespace Pims.Api.Services
 
                     result = _mapper.Map<EntityNoteModel>(createdEntity);
                     break;
+                case NoteType.Acquisition_File:
+                    var pimsAcqEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
+
+                    var createdAcqEntity = _entityNoteRepository.Add<PimsAcquisitionFileNote>(pimsAcqEntity);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdAcqEntity);
+                    break;
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }
@@ -95,26 +103,32 @@ namespace Pims.Api.Services
         /// <param name="type">Note type to determine the type of note to delete.</param>
         /// <param name="noteId">Note id to identify the note to delete.</param>
         /// <param name="commitTransaction">Whether or not this transaction should be commited as part of this function.</param>
-        public void DeleteNote(NoteType type, long noteId, bool commitTransaction = true)
+        public bool DeleteNote(NoteType type, long noteId, bool commitTransaction = true)
         {
             this.Logger.LogInformation("Deleting note with type {type} and id {noteId}", type, noteId);
             this.User.ThrowIfNotAuthorized(Permissions.NoteDelete);
+            bool deleted = false;
 
             switch (type)
             {
                 case NoteType.Activity:
-                    _noteRepository.DeleteActivityNotes(noteId);
+                    deleted = _entityNoteRepository.DeleteActivityNotes(noteId);
                     if (commitTransaction)
                     {
                         _entityNoteRepository.CommitTransaction();
                     }
                     break;
-                case NoteType.File:
-                    // Write code to delete the note from FileNotes table
+                case NoteType.Acquisition_File:
+                    deleted = _entityNoteRepository.DeleteAcquisitionFileNotes(noteId);
+                    if (commitTransaction)
+                    {
+                        _entityNoteRepository.CommitTransaction();
+                    }
                     break;
                 default:
                     break;
             }
+            return deleted;
         }
 
         /// <summary>
@@ -131,8 +145,9 @@ namespace Pims.Api.Services
             switch (type)
             {
                 case NoteType.Activity:
-                    return _noteRepository.GetActivityNotes(entityId);
-                case NoteType.File:
+                    return _entityNoteRepository.GetAllActivityNotesById(entityId);
+                case NoteType.Acquisition_File:
+                    return _entityNoteRepository.GetAllAcquisitionNotesById(entityId);
                 default:
                     return new List<PimsNote>();
             }

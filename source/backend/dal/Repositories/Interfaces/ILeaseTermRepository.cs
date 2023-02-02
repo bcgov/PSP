@@ -11,7 +11,7 @@ namespace Pims.Dal.Repositories
 
         PimsLeaseTerm Add(PimsLeaseTerm pimsLeaseTerm);
 
-        IEnumerable<PimsLeaseTerm> GetByLeaseId(long leaseId);
+        IEnumerable<PimsLeaseTerm> GetAllByLeaseId(long leaseId);
 
         PimsLeaseTerm GetById(long leaseTermId, bool loadPayments = false);
     }

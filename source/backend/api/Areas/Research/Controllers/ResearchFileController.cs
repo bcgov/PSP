@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -61,6 +63,23 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
             var researchFile = _researchFileService.GetById(id);
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
+
+        /// <summary>
+        /// Get the research file properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/properties")]
+        [HasPermission(Permissions.ResearchFileView, Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<ResearchFilePropertyModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult GetResearchFileProperties(long id)
+        {
+            var researchFileProperties = _researchFileService.GetProperties(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<ResearchFilePropertyModel>>(researchFileProperties));
+        }
+
 
         /// <summary>
         /// Gets the activities for specified research file.

@@ -1,5 +1,6 @@
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using System.Collections.Generic;
 
 namespace Pims.Api.Services
 {
@@ -14,5 +15,7 @@ namespace Pims.Api.Services
         PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool userOverride);
 
         PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile);
+
+        IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id);
     }
 }

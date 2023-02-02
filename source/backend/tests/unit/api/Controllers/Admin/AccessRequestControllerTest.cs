@@ -44,7 +44,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var accessRequests = new[] { accessRequest1, accessRequest2 };
             var paged = new Entity.Models.Paged<Entity.PimsAccessRequest>(accessRequests);
 
-            repository.Setup(m => m.Get(It.IsAny<AccessRequestFilter>())).Returns(paged);
+            repository.Setup(m => m.GetAll(It.IsAny<AccessRequestFilter>())).Returns(paged);
 
             // Act
             var result = controller.GetPage(1, 10);
@@ -53,7 +53,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
-            repository.Verify(m => m.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
+            repository.Verify(m => m.GetAll(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var accessRequest2 = EntityHelper.CreateAccessRequest(2);
             var accessRequests = new[] { accessRequest1, accessRequest2 };
             var paged = new Entity.Models.Paged<Entity.PimsAccessRequest>(accessRequests);
-            repository.Setup(m => m.Get(It.IsAny<AccessRequestFilter>())).Returns(paged);
+            repository.Setup(m => m.GetAll(It.IsAny<AccessRequestFilter>())).Returns(paged);
 
             // Act
             var result = controller.GetPage(-1, -10);
@@ -78,7 +78,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
-            repository.Verify(m => m.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
+            repository.Verify(m => m.GetAll(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var accessRequest2 = EntityHelper.CreateAccessRequest(2);
             var accessRequests = new[] { accessRequest1, accessRequest2 };
             var paged = new Entity.Models.Paged<Entity.PimsAccessRequest>(accessRequests);
-            repository.Setup(m => m.Get(It.IsAny<AccessRequestFilter>())).Returns(paged);
+            repository.Setup(m => m.GetAll(It.IsAny<AccessRequestFilter>())).Returns(paged);
 
             // Act
             var result = controller.GetPage(2, 100);
@@ -103,7 +103,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Pims.Api.Models.Concepts.AccessRequestModel>>(actionResult.Value);
-            repository.Verify(m => m.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
+            repository.Verify(m => m.GetAll(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var repository = helper.GetService<Mock<IAccessRequestRepository>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
-            repository.Setup(m => m.Get(It.IsAny<long>())).Returns(accessRequest1);
+            repository.Setup(m => m.GetById(It.IsAny<long>())).Returns(accessRequest1);
 
             // Act
             var result = controller.GetAccessRequest(accessRequest1.AccessRequestId);
@@ -125,7 +125,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.Concepts.AccessRequestModel>(actionResult.Value);
-            repository.Verify(m => m.Get(It.IsAny<long>()), Times.Once());
+            repository.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
 
         [Fact]

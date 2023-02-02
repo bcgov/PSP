@@ -38,7 +38,7 @@ namespace Pims.Api.Repositories.Mayan
         {
             if (string.IsNullOrEmpty(_currentToken))
             {
-                ExternalResult<TokenResult> tokenResult = await RequestToken();
+                ExternalResult<TokenResult> tokenResult = await TryRequestToken();
 
                 if (tokenResult.Status == ExternalResultStatus.Error)
                 {
@@ -50,7 +50,7 @@ namespace Pims.Api.Repositories.Mayan
             return _currentToken;
         }
 
-        private async Task<ExternalResult<TokenResult>> RequestToken()
+        private async Task<ExternalResult<TokenResult>> TryRequestToken()
         {
             _logger.LogDebug("Getting authentication token...");
             Uri endpoint = new Uri($"{_config.BaseUri}/auth/token/obtain/");

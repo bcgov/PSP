@@ -55,7 +55,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "tenants" })]
         public IActionResult Settings()
         {
-            var tenant = _tenantRepository.GetTenant(_pimsOptions.Tenant);
+            var tenant = _tenantRepository.TryGetTenantByCode(_pimsOptions.Tenant);
 
             if (tenant == null)
             {

@@ -48,7 +48,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> Get(LeaseFilter filter, bool loadPayments = false)
+        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, bool loadPayments = false)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -262,6 +262,7 @@ namespace Pims.Dal.Repositories
         /// update the tenants on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
+        /// <param name="rowVersion"></param>
         /// <param name="pimsLeaseTenants"></param>
         /// <returns></returns>
         public PimsLease UpdateLeaseTenants(long leaseId, long rowVersion, ICollection<PimsLeaseTenant> pimsLeaseTenants)

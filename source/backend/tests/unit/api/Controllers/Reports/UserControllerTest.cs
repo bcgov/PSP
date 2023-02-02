@@ -67,7 +67,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers(filter);
@@ -76,7 +76,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers();
@@ -106,7 +106,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers(filter);
@@ -138,7 +138,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers();
@@ -170,7 +170,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers(filter);
@@ -202,7 +202,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
-            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers();
@@ -234,7 +234,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportUsers());
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportUsers(null));
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportUsers(filter));
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportUsers(filter));
-            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
+            repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
         }
         #endregion
         #endregion

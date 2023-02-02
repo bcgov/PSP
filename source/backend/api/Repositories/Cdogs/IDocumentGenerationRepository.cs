@@ -10,8 +10,8 @@ namespace Pims.Api.Repositories.Cdogs
     /// </summary>
     public interface IDocumentGenerationRepository
     {
-        Task<ExternalResult<string>> UploadTemplateAsync(IFormFile file);
+        Task<ExternalResult<string>> TryUploadTemplateAsync(IFormFile file);
 
-        Task<ExternalResult<FileTypes>> GetFileTypesAsync();
+        Task<ExternalResult<FileTypes>> TryGetFileTypesAsync();
     }
 }

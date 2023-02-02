@@ -12,6 +12,11 @@ namespace Pims.Dal.Entities
     [Index(nameof(Code), Name = "COSTYP_CODE_IDX")]
     public partial class PimsCostTypeCode
     {
+        public PimsCostTypeCode()
+        {
+            PimsProjects = new HashSet<PimsProject>();
+        }
+
         [Key]
         [Column("ID")]
         public long Id { get; set; }
@@ -67,5 +72,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [InverseProperty(nameof(PimsProject.CostTypeCode))]
+        public virtual ICollection<PimsProject> PimsProjects { get; set; }
     }
 }

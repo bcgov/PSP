@@ -377,7 +377,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             Interest paid ($): 
             <span
               class="tooltip-icon"
-              data-testid="tooltip-icon"
+              data-testid="tooltip-icon-interestPaid-tooltip"
               id="interestPaid-tooltip"
             >
               <svg
@@ -957,7 +957,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             Interest paid ($): 
             <span
               class="tooltip-icon"
-              data-testid="tooltip-icon"
+              data-testid="tooltip-icon-interestPaid-tooltip"
               id="interestPaid-tooltip"
             >
               <svg

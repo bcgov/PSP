@@ -27,7 +27,7 @@ namespace Pims.Dal.Repositories
 
         #endregion
 
-        public IEnumerable<PimsSecurityDeposit> GetByLeaseId(long leaseId)
+        public IEnumerable<PimsSecurityDeposit> GetAllByLeaseId(long leaseId)
         {
             return this.Context.PimsSecurityDeposits.AsNoTracking().Where(t => t.LeaseId == leaseId).ToArray();
         }

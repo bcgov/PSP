@@ -14,7 +14,7 @@ describe('Note List View', () => {
   const mockAxios = new MockAdapter(axios);
   const setup = (renderOptions?: RenderOptions & INoteListViewProps) => {
     // render component under test
-    const component = render(<NoteListView type={NoteTypes.File} entityId={0} />, {
+    const component = render(<NoteListView type={NoteTypes.Acquisition_File} entityId={0} />, {
       ...renderOptions,
     });
 
@@ -29,27 +29,27 @@ describe('Note List View', () => {
   });
 
   it('renders as expected', async () => {
-    mockAxios.onGet(new RegExp(`notes/${NoteTypes.File}/*`)).reply(200, {});
+    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/*`)).reply(200, {});
     const { asFragment } = setup();
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });
 
   it('should call the API Endpoint with given type', async () => {
-    mockAxios.onGet(new RegExp(`notes/${NoteTypes.File}/owner/*`)).reply(200, {});
+    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/owner/*`)).reply(200, {});
     setup({
-      type: NoteTypes.File,
+      type: NoteTypes.Acquisition_File,
       entityId: 0,
     });
     await waitFor(() => {
       expect(mockAxios.history.get).toHaveLength(1);
-      expect(mockAxios.history.get[0].url).toBe(`/notes/${NoteTypes.File}/owner/0`);
+      expect(mockAxios.history.get[0].url).toBe(`/notes/${NoteTypes.Acquisition_File}/owner/0`);
     });
   });
 
   it('should have the Notes header in the component', async () => {
-    mockAxios.onGet(new RegExp(`notes/${NoteTypes.File}/owner/*`)).reply(200, {});
-    setup({ type: NoteTypes.File, entityId: 0 });
+    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/owner/*`)).reply(200, {});
+    setup({ type: NoteTypes.Acquisition_File, entityId: 0 });
     expect(await screen.findByText(`Notes`)).toBeInTheDocument();
   });
 });

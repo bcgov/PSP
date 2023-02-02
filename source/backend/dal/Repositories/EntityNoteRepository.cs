@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
@@ -55,6 +56,48 @@ namespace Pims.Dal.Repositories
         {
             predicate.ThrowIfNull(nameof(predicate));
             return this.Context.Set<T>().AsNoTracking().Where(predicate).ToArray();
+        }
+
+        public IEnumerable<PimsNote> GetAllActivityNotesById(long entityId)
+        {
+            return this.Context.PimsActivityInstanceNotes
+                .Where(x => x.ActivityInstanceId == entityId).Select(x => x.Note).ToList();
+        }
+
+        public IEnumerable<PimsNote> GetAllAcquisitionNotesById(long entityId)
+        {
+            return this.Context.PimsAcquisitionFileNotes
+                .Where(x => x.AcquisitionFileId == entityId).Select(x => x.Note).ToList();
+        }
+
+        public bool DeleteActivityNotes(long entityId)
+        {
+            var activityNotes = this.Context.PimsActivityInstanceNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
+            if (activityNotes.Any())
+            {
+                foreach (var activityNote in activityNotes)
+                {
+                    this.Context.PimsActivityInstanceNotes.Remove(activityNote);
+                    this.Context.PimsNotes.Remove(activityNote.Note);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteAcquisitionFileNotes(long entityId)
+        {
+            var acquisitionFileNotes = this.Context.PimsAcquisitionFileNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
+            if (acquisitionFileNotes.Any())
+            {
+                foreach (var acquisitionFileNote in acquisitionFileNotes)
+                {
+                    this.Context.PimsAcquisitionFileNotes.Remove(acquisitionFileNote);
+                    this.Context.PimsNotes.Remove(acquisitionFileNote.Note);
+                }
+                return true;
+            }
+            return false;
         }
 
         #endregion

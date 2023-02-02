@@ -46,7 +46,7 @@ namespace Pims.Dal.Repositories
         /// <param name="quantity"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Paged<PimsClaim> Get(int page, int quantity, string name = null)
+        public Paged<PimsClaim> GetPage(int page, int quantity, string name = null)
         {
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminRoles, _keycloakOptions);
 
@@ -67,7 +67,7 @@ namespace Pims.Dal.Repositories
         /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public PimsClaim Get(Guid key)
+        public PimsClaim GetByKey(Guid key)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 

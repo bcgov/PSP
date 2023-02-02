@@ -38,6 +38,33 @@ namespace Pims.Core.Test
         }
 
         /// <summary>
+        /// Create a new instance of AcquisitionFileNote.
+        /// </summary>
+        /// <param name="acquisitionFile"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public static Entity.PimsAcquisitionFileNote CreateAcquisitionFileNote(Entity.PimsAcquisitionFile acquisitionFile = null, Entity.PimsNote note = null)
+        {
+            note ??= EntityHelper.CreateNote("Test Note");
+            acquisitionFile ??= EntityHelper.CreateAcquisitionFile(1);
+
+            return new Entity.PimsAcquisitionFileNote()
+            {
+                Note = note,
+                AcquisitionFile = acquisitionFile,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = "admin",
+                AppCreateUserDirectory = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                IsDisabled = false,
+                ConcurrencyControlNumber = 1,
+            };
+        }
+
+        /// <summary>
         /// Create a new instance of a Note.
         /// </summary>
         /// <param name="id"></param>

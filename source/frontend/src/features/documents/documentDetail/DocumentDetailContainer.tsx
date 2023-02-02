@@ -4,27 +4,30 @@ import { ModalContext } from 'contexts/modalContext';
 import { FormikProps } from 'formik';
 import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import useIsMounted from 'hooks/useIsMounted';
 import { getCancelModalProps } from 'hooks/useModalContext';
-import { Api_Document, Api_DocumentUpdateRequest } from 'models/api/Document';
+import { Api_DocumentUpdateRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
+import { ComposedDocument, DocumentRow, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { DocumentDetailForm } from './DocumentDetailForm';
 import { DocumentDetailView } from './DocumentDetailView';
 
 export interface IDocumentDetailContainerProps {
   relationshipType: DocumentRelationshipType;
-  pimsDocument: Api_Document;
+  pimsDocument: DocumentRow;
   onUpdateSuccess: () => void;
 }
 
 export const DocumentDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailContainerProps>
 > = props => {
-  const [document, setDocument] = useState<ComposedDocument>({ pimsDocument: props.pimsDocument });
+  const [document, setDocument] = useState<ComposedDocument>({
+    pimsDocument: DocumentRow.toApi(props.pimsDocument),
+  });
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
     Api_Storage_DocumentTypeMetadataType[]
   >([]);
@@ -35,6 +38,8 @@ export const DocumentDetailContainer: React.FunctionComponent<
     retrieveDocumentMetadataLoading,
     updateDocument,
     updateDocumentLoading,
+    retrieveDocumentDetail,
+    retrieveDocumentDetailLoading,
   } = useDocumentProvider();
   const { getDocumentTypeMetadata } = useApiDocuments();
 
@@ -43,6 +48,8 @@ export const DocumentDetailContainer: React.FunctionComponent<
   const deleteModalProps = getCancelModalProps();
 
   const { setDisplayModal, setModalContent } = useContext(ModalContext);
+
+  const isMounted = useIsMounted();
 
   const confirmCancel = useCallback(() => {
     setDisplayModal(false);
@@ -73,9 +80,18 @@ export const DocumentDetailContainer: React.FunctionComponent<
   useEffect(() => {
     const fetch = async () => {
       if (props.pimsDocument.mayanDocumentId !== undefined) {
-        const axiosResponse = await retrieveDocumentMetadata(props.pimsDocument.mayanDocumentId);
-        if (axiosResponse?.status === ExternalResultStatus.Success) {
-          let mayanMetadataResult = axiosResponse.payload.results;
+        const metadataPromise = retrieveDocumentMetadata(props.pimsDocument.mayanDocumentId);
+        const detailPromise = retrieveDocumentDetail(props.pimsDocument.mayanDocumentId);
+        const [metadataResponse, detailResponse] = await Promise.all([
+          metadataPromise,
+          detailPromise,
+        ]);
+        if (
+          metadataResponse?.status === ExternalResultStatus.Success &&
+          detailResponse?.status === ExternalResultStatus.Success &&
+          isMounted()
+        ) {
+          let mayanMetadataResult = metadataResponse.payload.results;
 
           let mayanFileId: number | undefined = undefined;
           if (mayanMetadataResult !== undefined && mayanMetadataResult?.length > 0) {
@@ -87,13 +103,19 @@ export const DocumentDetailContainer: React.FunctionComponent<
             ...document,
             mayanMetadata: mayanMetadataResult,
             mayanFileId: mayanFileId,
+            documentDetail: detailResponse.payload,
           }));
         }
       }
     };
 
     fetch();
-  }, [props.pimsDocument.mayanDocumentId, retrieveDocumentMetadata]);
+  }, [
+    props.pimsDocument.mayanDocumentId,
+    retrieveDocumentMetadata,
+    isMounted,
+    retrieveDocumentDetail,
+  ]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -101,7 +123,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
         const mayanDocumentTypeId = props.pimsDocument.documentType?.mayanId;
         if (mayanDocumentTypeId) {
           const axiosResponse = await getDocumentTypeMetadata(mayanDocumentTypeId);
-          if (axiosResponse?.data.status === ExternalResultStatus.Success) {
+          if (axiosResponse?.data.status === ExternalResultStatus.Success && isMounted()) {
             let results = axiosResponse?.data.payload.results;
             setDocumentTypeMetadataTypes(results);
           }
@@ -113,6 +135,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
     props.pimsDocument.mayanDocumentId,
     props.pimsDocument.documentType?.mayanId,
     getDocumentTypeMetadata,
+    isMounted,
   ]);
 
   const onUpdateDocument = async (updateRequest: Api_DocumentUpdateRequest) => {
@@ -126,7 +149,9 @@ export const DocumentDetailContainer: React.FunctionComponent<
     return (
       <DocumentDetailView
         document={document}
-        isLoading={retrieveDocumentMetadataLoading || updateDocumentLoading}
+        isLoading={
+          retrieveDocumentMetadataLoading || updateDocumentLoading || retrieveDocumentDetailLoading
+        }
         setIsEditable={setIsEditable}
       />
     );
@@ -135,7 +160,9 @@ export const DocumentDetailContainer: React.FunctionComponent<
       <DocumentDetailForm
         formikRef={formikRef}
         document={document}
-        isLoading={retrieveDocumentMetadataLoading || updateDocumentLoading}
+        isLoading={
+          retrieveDocumentMetadataLoading || updateDocumentLoading || retrieveDocumentDetailLoading
+        }
         onUpdate={onUpdateDocument}
         onCancel={onCancelClick}
         mayanMetadataTypes={documentTypeMetadataTypes}

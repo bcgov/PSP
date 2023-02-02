@@ -88,14 +88,14 @@ namespace Pims.Api.Test.Services
             researchRepository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
             var researchFilePropertyRepository = helper.GetService<Mock<IResearchFilePropertyRepository>>();
             researchFilePropertyRepository.Setup(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()));
-            researchFilePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            researchFilePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
             researchFile.PimsPropertyResearchFiles.Clear();
             var updatedLease = service.UpdateProperties(researchFile);
 
             // Assert
-            researchFilePropertyRepository.Verify(x => x.GetByResearchFileId(It.IsAny<long>()), Times.Once);
+            researchFilePropertyRepository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Once);
             researchFilePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
         }
         #endregion

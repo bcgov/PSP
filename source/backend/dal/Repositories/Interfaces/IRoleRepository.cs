@@ -9,9 +9,9 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IRoleRepository : IRepository<PimsRole>
     {
-        Paged<PimsRole> Get(int page, int quantity, string name = null);
+        Paged<PimsRole> GetPage(int page, int quantity, string name = null);
 
-        PimsRole Get(Guid key);
+        PimsRole GetByKey(Guid key);
 
         PimsRole GetByName(string name);
 

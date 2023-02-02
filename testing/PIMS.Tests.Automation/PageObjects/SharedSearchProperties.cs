@@ -34,7 +34,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
 
         //Selected Properties Elements
-        private By searchPropertiesSelectedPropertiesTotal = By.XPath("//h3[contains(text(),'Selected properties')]/following-sibling::div");
+        private By searchPropertiesSelectedPropertiesTotal = By.XPath("//div[contains(text(), 'Identifier')]/parent::div/parent::div/div");
+        private By searchPropertiesName1stPropInput = By.Id("input-properties.0.name");
         private By searchPropertiesDelete1stPropBttn = By.XPath("(//span[contains(text(),'Remove')]/parent::div/parent::button)[1]");
 
         //Toast Element
@@ -131,6 +132,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchByButton).Click();
         }
 
+        public void AddNameSelectedProperty(string name)
+        {
+            Wait();
+            webDriver.FindElement(searchPropertiesName1stPropInput).SendKeys(name);
+        }
+
         public void DeleteProperty()
         {
             var PropertiesTotal = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count() -1;
@@ -139,6 +146,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var PropertiesLeft = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count() -1;
 
+            Wait();
             Assert.True(PropertiesTotal - PropertiesLeft == 1);
         }
 

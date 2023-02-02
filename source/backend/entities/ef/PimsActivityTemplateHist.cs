@@ -25,6 +25,8 @@ namespace Pims.Dal.Entities
         [Column("ACTIVITY_TEMPLATE_TYPE_CODE")]
         [StringLength(20)]
         public string ActivityTemplateTypeCode { get; set; }
+        [Column("IS_DISABLED")]
+        public bool IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
