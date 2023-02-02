@@ -87,7 +87,7 @@ namespace Pims.Dal.Repositories
 
         public bool DeleteAcquisitionFileNotes(long entityId)
         {
-            var acquisitionFileNotes = this.Context.PimsAcquisitionFileNotes.Include(ai => ai.Note).Where(x => x.AcquisitionFileId == entityId).ToList();
+            var acquisitionFileNotes = this.Context.PimsAcquisitionFileNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
             if (acquisitionFileNotes.Any())
             {
                 foreach (var acquisitionFileNote in acquisitionFileNotes)

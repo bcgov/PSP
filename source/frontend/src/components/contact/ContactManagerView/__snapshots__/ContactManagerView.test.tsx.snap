@@ -158,7 +158,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
   flex-shrink: 0;
 }
 
-.c8 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -177,12 +177,12 @@ exports[`ContactManagerView matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c10 {
+.c11 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c9 {
+.c10 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -197,7 +197,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c11 {
+.c12 {
   font-size: 1.4rem;
 }
 
@@ -266,6 +266,10 @@ exports[`ContactManagerView matches snapshot 1`] = `
 
 .c5 {
   max-width: 20rem;
+}
+
+.c8 {
+  overflow: scroll;
 }
 
 <div>
@@ -568,7 +572,9 @@ exports[`ContactManagerView matches snapshot 1`] = `
         </form>
       </div>
     </div>
-    <div>
+    <div
+      class="c8"
+    >
       <div
         class="table"
         data-testid="contactsTable"
@@ -633,11 +639,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 Summary
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-summary"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -652,7 +658,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -679,11 +685,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 First name
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-firstName"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -698,7 +704,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -725,11 +731,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 Last name
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-surname"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -744,7 +750,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -771,11 +777,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 Organization
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-organizationName"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -790,7 +796,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -841,11 +847,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 City
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-municipalityName"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -860,7 +866,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -922,7 +928,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
           class="ml-auto align-self-center col-auto"
         >
           <p
-            class="c11"
+            class="c12"
           >
             0 selected
           </p>

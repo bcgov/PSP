@@ -1,4 +1,5 @@
-export const getMockContactOrganizationWithOnePerson = () => ({
+import { IContactSearchResult } from 'interfaces/IContactSearchResult';
+export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult => ({
   id: 'O3',
   organizationId: 3,
   organization: {
@@ -17,12 +18,11 @@ export const getMockContactOrganizationWithOnePerson = () => ({
     contactMethods: [],
     rowVersion: 1,
   },
-  rowVersion: 0,
   summary: 'Dairy Queen Forever! Property Management',
   organizationName: 'Dairy Queen Forever! Property Management',
   isDisabled: false,
 });
-export const getMockContactOrganizationWithMultiplePeople = () => ({
+export const getMockContactOrganizationWithMultiplePeople = (): IContactSearchResult => ({
   id: 'O2',
   organizationId: 2,
   organization: {
@@ -47,10 +47,15 @@ export const getMockContactOrganizationWithMultiplePeople = () => ({
     contactMethods: [],
     rowVersion: 1,
   },
-  rowVersion: 0,
   summary: 'French Mouse Property Management',
   organizationName: 'French Mouse Property Management',
   isDisabled: false,
+});
+
+export const getMockContactPerson = () => ({
+  id: 'P1',
+  personId: 1,
+  person: { firstName: 'test', surname: 'person' },
 });
 
 export const getMockPerson = ({
