@@ -133,7 +133,6 @@ describe('AddProjectContainer component', () => {
         201,
         mockProjectPostResponse(
           1,
-          1,
           formValues.projectName,
           formValues.projectNumber,
           formValues.region,
