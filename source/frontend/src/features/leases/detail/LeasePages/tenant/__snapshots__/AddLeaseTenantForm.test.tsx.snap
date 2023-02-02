@@ -171,9 +171,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
 }
 
 .c3 .table .tr .td:first-of-type,
-.c3 .table .tr .td:nth-of-type(2),
-.c3 .table .tr .th:first-of-type,
-.c3 .table .tr .th:nth-of-type(2) {
+.c3 .table .tr .td:nth-of-type(2),.c3 .table .tr .th:first-of-type,.c3 .table .tr .th:nth-of-type(2) {
   border-left: 0;
   border-right: 0;
   padding: 0;

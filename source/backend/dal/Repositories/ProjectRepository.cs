@@ -74,16 +74,18 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<PimsProject> Get(long id)
+
+        public PimsProject Get(long id)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
 
-            return await Context.PimsProjects
+            return Context.PimsProjects
                     .AsNoTracking()
+                    .Include(x => x.PimsProducts)
                     .Include(x => x.ProjectStatusTypeCodeNavigation)
                     .Include(x => x.RegionCodeNavigation)
                     .Where(x => x.Id == id)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefault();
         }
 
         /// <summary>
@@ -91,11 +93,16 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public async Task<PimsProject> Add(PimsProject project)
+        public PimsProject Add(PimsProject project)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectAdd);
 
-            await Context.PimsProjects.AddAsync(project);
+            foreach (var product in project.PimsProducts)
+            {
+                product.ParentProject = project;
+            }
+
+            Context.PimsProjects.Add(project);
             return project;
         }
 

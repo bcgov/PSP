@@ -58,7 +58,7 @@ const AcquisitionSummaryView: React.FunctionComponent<
           {prettyFormatDate(detail.deliveryDate)}
         </SectionField>
       </Section>
-      <Section header="Acquisition details">
+      <Section header="Acquisition Details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>
         <SectionField label="Physical file status">
           {detail.acquisitionPhysFileStatusTypeDescription}
@@ -66,7 +66,7 @@ const AcquisitionSummaryView: React.FunctionComponent<
         <SectionField label="Acquisition type">{detail.acquisitionTypeDescription}</SectionField>
         <SectionField label="Ministry region">{detail.regionDescription}</SectionField>
       </Section>
-      <Section header="Acquisition team">
+      <Section header="Acquisition Team">
         {detail.acquisitionTeam.map((person, index) => (
           <SectionField key={index} label={person.personProfileTypeCodeDescription || ''}>
             <StyledLink

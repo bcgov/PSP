@@ -1,14 +1,17 @@
-import { Input, Select, SelectOption, TextArea } from 'components/common/form';
+import { Form, Input, Select, SelectOption, TextArea } from 'components/common/form';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ProjectForm } from './models';
+import ProductsArrayForm from './ProductsArrayForm';
 
 export interface IAddProjectFormProps {
+  formikRef: React.RefObject<FormikProps<ProjectForm>>;
   /** Initial values of the form */
   initialValues: ProjectForm;
   projectStatusOptions: SelectOption[];
@@ -19,7 +22,7 @@ export interface IAddProjectFormProps {
   onSubmit: (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => void | Promise<any>;
 }
 
-export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
+const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
   (props, formikRef) => {
     const {
       initialValues,
@@ -29,44 +32,54 @@ export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddPro
       onSubmit,
     } = props;
 
-    const handleSubmit = (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
-      onSubmit(values, formikHelpers);
+    const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
+      await onSubmit(values, formikHelpers);
+      formikHelpers.setSubmitting(false);
     };
 
     return (
       <Formik<ProjectForm>
         enableReinitialize
-        innerRef={formikRef}
+        innerRef={props.formikRef}
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {formikProps => (
-          <>
-            <Container>
+          <StyledFormWrapper>
+            <Form>
               <Section>
-                <SectionField label="Project name" required={true}>
+                <StyledRow className="no-gutters py-4 mb-5">
+                  <Col>
+                    <p>
+                      Before creating a project, <Link to={'/project/list'}>do a search</Link> to
+                      ensure the the project you're creating doesn't already exist.
+                    </p>
+                  </Col>
+                </StyledRow>
+                <SectionField label="Project name" required labelWidth="2">
                   <Input field="projectName" />
                 </SectionField>
-                <SectionField label="Project number">
+                <SectionField label="Project number" labelWidth="2">
                   <Input field="projectNumber" placeholder="if known" />
                 </SectionField>
-                <SectionField label="Status">
+                <SectionField label="Status" labelWidth="2">
                   <Select
                     field="projectStatusType"
                     options={projectStatusOptions}
                     placeholder="Select..."
                   />
                 </SectionField>
-                <SectionField label="MoTI region" required={true}>
+                <SectionField label="MoTI region" required labelWidth="2">
                   <Select field="region" options={projectRegionOptions} placeholder="Select..." />
                 </SectionField>
-                <SectionField label="Project summary">
+                <SectionField label="Project summary" labelWidth="12">
                   <MediumTextArea field="summary" />
                 </SectionField>
               </Section>
-            </Container>
-          </>
+              <ProductsArrayForm formikProps={formikProps} field="products" />
+            </Form>
+          </StyledFormWrapper>
         )}
       </Formik>
     );
@@ -74,6 +87,19 @@ export const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddPro
 );
 
 export default AddProjectForm;
+
+const StyledFormWrapper = styled.div`
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+`;
+
+const StyledRow = styled(Row)`
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+  text-align: left;
+`;
 
 export const MediumTextArea = styled(TextArea)`
   textarea.form-control {

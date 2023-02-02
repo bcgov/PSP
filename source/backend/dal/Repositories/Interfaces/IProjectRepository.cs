@@ -16,12 +16,11 @@ namespace Pims.Dal.Repositories
 
         IList<PimsProject> SearchProjects(string filter, int maxResult);
 
-        Task<PimsProject> Add(PimsProject project);
+        PimsProject Add(PimsProject project);
 
-        PimsProject Update(PimsProject project);
+        PimsProject Get(long id);
+		PimsProject Update(PimsProject project);
 
-        Task<PimsProject> Get(long id);
-
-        long GetRowVersion(long id);
+		long GetRowVersion(long id);
     }
 }

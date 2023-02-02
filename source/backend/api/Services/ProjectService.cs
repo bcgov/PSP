@@ -18,6 +18,7 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IProjectRepository _projectRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IAcquisitionFileRepository _acquisitionFileRepository;
         private readonly ClaimsPrincipal _user;
 
         /// <summary>
@@ -27,16 +28,19 @@ namespace Pims.Api.Services
         /// <param name="logger"></param>
         /// <param name="projectRepository"></param>
         /// <param name="productRepository"></param>
+        /// <param name="acquisitionFileRepository"></param>
         public ProjectService(
             ClaimsPrincipal user,
             ILogger<ProjectService> logger,
             IProjectRepository projectRepository,
-            IProductRepository productRepository)
+            IProductRepository productRepository,
+            IAcquisitionFileRepository acquisitionFileRepository)
             : base(user, logger)
         {
             _logger = logger;
             _projectRepository = projectRepository;
             _productRepository = productRepository;
+            _acquisitionFileRepository = acquisitionFileRepository;
             _user = user;
         }
 
@@ -66,7 +70,15 @@ namespace Pims.Api.Services
             return GetPageAsync(filter);
         }
 
-        public IList<PimsProduct> GetProducts(int projectId)
+        public PimsProject GetById(long projectId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+            _logger.LogInformation("Getting Project by Id ...");
+
+            return _projectRepository.Get(projectId);
+        }
+
+        public IList<PimsProduct> GetProducts(long projectId)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
@@ -74,7 +86,15 @@ namespace Pims.Api.Services
             return _productRepository.GetByProject(projectId);
         }
 
-        public Task<PimsProject> Add(PimsProject project)
+        public List<PimsAcquisitionFile> GetProductFiles(long productId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            _logger.LogInformation("Geting files for product ...");
+            return _acquisitionFileRepository.GetByProductId(productId);
+        }
+
+        public PimsProject Add(PimsProject project)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectAdd);
             _logger.LogInformation("Adding new project...");
@@ -83,37 +103,10 @@ namespace Pims.Api.Services
                 throw new ArgumentNullException(nameof(project), "Project cannot be null.");
             }
 
-            return AddInternalAsync(project);
-        }
-
-        public async Task<PimsProject> GetById(long projectId)
-        {
-            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
-            _logger.LogInformation("Getting Project by Id ...");
-
-            return await _projectRepository.Get(projectId);
-        }
-
-        public PimsProject Update(long id, PimsProject project)
-        {
-            _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
-            project.ThrowIfNull(nameof(project));
-            _logger.LogInformation($"Updating project with id ${project.Id}");
-
-            ValidateVersion(id, project);
-
-            var updatedProject = _projectRepository.Update(project);
+            var newProject = _projectRepository.Add(project);
             _projectRepository.CommitTransaction();
 
-            return updatedProject;
-        }
-
-        private async Task<PimsProject> AddInternalAsync(PimsProject project)
-        {
-            var newProject = await _projectRepository.Add(project);
-            _projectRepository.CommitTransaction();
-
-            return await _projectRepository.Get(newProject.Id);
+            return _projectRepository.Get(newProject.Id);
         }
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
@@ -128,6 +121,20 @@ namespace Pims.Api.Services
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this project file, please refresh the application and retry.");
             }
+        }
+        
+        public PimsProject Update(long id, PimsProject project)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
+            project.ThrowIfNull(nameof(project));
+            _logger.LogInformation($"Updating project with id ${project.Id}");
+
+            ValidateVersion(id, project);
+
+            var updatedProject = _projectRepository.Update(project);
+            _projectRepository.CommitTransaction();
+
+            return updatedProject;
         }
     }
 }
