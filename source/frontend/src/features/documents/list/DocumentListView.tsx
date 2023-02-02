@@ -30,6 +30,7 @@ export interface IDocumentListViewProps {
   onPageChange: (props: { pageIndex?: number; pageSize: number }) => void;
   disableAdd?: boolean;
   pageProps: { pageIndex?: number; pageSize: number };
+  title?: string;
 }
 /**
  * Page that displays document information as a list.
@@ -37,8 +38,15 @@ export interface IDocumentListViewProps {
 export const DocumentListView: React.FunctionComponent<
   React.PropsWithChildren<IDocumentListViewProps>
 > = (props: IDocumentListViewProps) => {
-  const { documentResults, isLoading, defaultFilters, hideFilters, onPageChange, pageProps } =
-    props;
+  const {
+    documentResults,
+    isLoading,
+    defaultFilters,
+    hideFilters,
+    onPageChange,
+    pageProps,
+    title,
+  } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
 
@@ -132,10 +140,10 @@ export const DocumentListView: React.FunctionComponent<
 
   const onDeleteConfirm = async () => {
     if (selectedDocument) {
-      const documentRelationship = documentResults.find(x => x?.id === selectedDocument.id);
+      const documentToDelete = documentResults.find(x => x?.id === selectedDocument.id);
 
-      if (documentRelationship !== undefined) {
-        let result = await props.onDelete(documentRelationship);
+      if (documentToDelete !== undefined) {
+        let result = await props.onDelete(DocumentRow.toApi(documentToDelete));
         if (result) {
           setShowDeleteConfirmModal(false);
           setSelectedDocument(undefined);
@@ -156,12 +164,12 @@ export const DocumentListView: React.FunctionComponent<
 
   const getHeader = () => {
     if (props.disableAdd === true) {
-      return 'Documents';
+      return title ?? 'Documents';
     }
     return (
       <SectionListHeader
         claims={[Claims.DOCUMENT_ADD]}
-        title="Documents"
+        title={title ?? 'Documents'}
         addButtonText={props.addButtonText || 'Add a Document'}
         onAdd={() => setIsUploadVisible(true)}
       />
