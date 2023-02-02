@@ -146,7 +146,7 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.ADDRESSES)
           ? getAddresses(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+              { timeout: 40000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -154,7 +154,7 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
           ? getValues(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+              { timeout: 40000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -162,7 +162,7 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
           ? getCharges(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+              { timeout: 40000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -171,7 +171,7 @@ export const useBcAssessmentLayer = (
         !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION)
           ? getFolioDescriptions(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+              { timeout: 40000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -179,7 +179,7 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
           ? getSales(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+              { timeout: 40000, forceExactMatch: true },
             )
           : Promise.resolve();
 
