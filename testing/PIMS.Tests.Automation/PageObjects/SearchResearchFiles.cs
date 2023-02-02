@@ -68,9 +68,9 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SearchResearchFileByRFile(string RFile)
         {
             Wait();
-            ChooseSpecificSelectOption("input-researchSearchBy", "Research file #");
+            ChooseSpecificSelectOption(searchResearchBySelect, "Research file #");
             webDriver.FindElement(searchResearchFileNbrInput).SendKeys(RFile);
-            ChooseSpecificSelectOption("input-researchFileStatusTypeCode", "All Status");
+            ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
 
             Wait(5000);
             webDriver.FindElement(searchResearchFileButton).Click();
@@ -142,11 +142,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Assert.True(webDriver.FindElement(searchResearchFile1stResultLink).Displayed);
             Assert.True(webDriver.FindElement(searchResearchFile1stResultFileName).Text.Equals(name));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultRegion).Text != null);
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreator).Text.Equals("tranpsp1"));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreateDate).Text != null);
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdatedBy).Text.Equals("tranpsp1"));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdateDate).Text != null);
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultRegion).Text != "");
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreator).Text.Equals("TRANPSP1"));
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreateDate).Text != "");
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdatedBy).Text.Equals("TRANPSP1"));
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdateDate).Text != "");
             Assert.True(webDriver.FindElement(searchResearchFile1stResultStatus).Text.Equals("Active"));
 
         }
@@ -157,11 +157,11 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchResearchFileResetButton).Click();
 
             Wait();
-            ChooseSpecificSelectOption("input-regionCode", region);
+            ChooseSpecificSelectOption(searchResearchRegionInput, region);
             webDriver.FindElement(searchResearchNameInput).SendKeys(name);
-            ChooseSpecificSelectOption("input-researchFileStatusTypeCode", status);
+            ChooseSpecificSelectOption(searchResearchStatusSelect, status);
             webDriver.FindElement(searchResearchRoadInput).SendKeys(roadName);
-            ChooseSpecificSelectOption("input-createOrUpdateBy", "Created by");
+            ChooseSpecificSelectOption(searchResearchCreateUpdateBySelect, "Created by");
             webDriver.FindElement(searchResearchFileUserCreatedIdirInput).SendKeys(idir);
 
             webDriver.FindElement(searchResearchFileButton).Click();

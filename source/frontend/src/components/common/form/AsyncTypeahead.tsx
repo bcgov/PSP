@@ -100,8 +100,12 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
       } else {
         setFieldValue(field, selected);
       }
+
+      if (onChange !== undefined) {
+        onChange(selected);
+      }
     },
-    [field, multiple, setFieldValue],
+    [field, multiple, setFieldValue, onChange],
   );
 
   return (
@@ -127,7 +131,7 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
           selected={value ? [].concat(value) : []} // always set an array here - works for multiple and single selections
           isInvalid={touch && error}
           onSearch={onSearch}
-          onChange={onChange ? onChange : handleChange}
+          onChange={handleChange}
           {...rest}
         >
           {/* hide the search icon when user is interacting with typeahead control */}

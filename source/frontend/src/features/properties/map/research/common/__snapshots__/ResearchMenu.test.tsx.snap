@@ -24,7 +24,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
   cursor: default;
 }
 
-.c2 {
+.c4 {
   font-size: 1.5rem;
   border-radius: 50%;
   width: 2.5rem;
@@ -42,6 +42,28 @@ exports[`ResearchMenu component renders as expected when provided no research fi
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  border-bottom: 1px solid;
+}
+
+.c3 {
+  font-size: 1.4rem;
+  line-height: 2.2rem;
 }
 
 <div
@@ -73,6 +95,27 @@ exports[`ResearchMenu component renders as expected when provided no research fi
       >
         First label
       </div>
+      <div
+        class="c2"
+      >
+        <span
+          class="c3"
+        >
+          Properties
+        </span>
+        <button
+          class="btn btn-link"
+          title="Change properties"
+          type="button"
+        >
+          <svg
+            height="2.4rem"
+            width="2.4rem"
+          >
+            edit-map-marker.svg
+          </svg>
+        </button>
+      </div>
     </div>
     <div
       class="c1 no-gutters  row"
@@ -85,7 +128,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
         class="pr-2 col-auto"
       >
         <div
-          class="c2"
+          class="c4"
         >
           1
         </div>
@@ -107,7 +150,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
         class="pr-2 col-auto"
       >
         <div
-          class="c2"
+          class="c4"
         >
           2
         </div>

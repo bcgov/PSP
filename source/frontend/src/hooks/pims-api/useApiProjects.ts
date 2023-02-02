@@ -1,6 +1,6 @@
 import { IProjectFilter } from 'features/projects';
 import { IPagedItems } from 'interfaces';
-import { Api_Project } from 'models/api/Project';
+import { Api_Product, Api_Project } from 'models/api/Project';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -15,6 +15,7 @@ export const useApiProjects = () => {
 
   return React.useMemo(
     () => ({
+      postProject: (project: Api_Project) => api.post<Api_Project>(`/projects`, project),
       searchProject: (query: string, top: number = 5) =>
         api.get<Api_Project[]>(`/projects/search=${query}&top=${top}`),
       searchProjects: (params: IPaginateProjects | null) =>
@@ -22,6 +23,7 @@ export const useApiProjects = () => {
           `/projects/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getProject: (id: number) => api.get<Api_Project>(`/projects/${id}`),
+      getProjectProducts: (id: number) => api.get<Api_Product[]>(`/projects/${id}/products`),
     }),
     [api],
   );

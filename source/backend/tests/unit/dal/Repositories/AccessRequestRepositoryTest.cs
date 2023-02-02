@@ -135,8 +135,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
+            Action actionFn = () => service.GetById(1);
+
             // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.GetById(1));
+            actionFn.Should().Throw<NotAuthorizedException>();
         }
 
         [Fact]
@@ -150,8 +152,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
+            Action actionFn = () => service.GetById(1);
+
             // Assert
-            var result = Assert.Throws<KeyNotFoundException>(() => service.GetById(1));
+            actionFn.Should().Throw<KeyNotFoundException>();
         }
         #endregion
 
@@ -166,8 +170,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
+            Action actionFn = () => service.Add(null);
+
             // Assert
-            var result = Assert.Throws<ArgumentNullException>(() => service.Add(null));
+            actionFn.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -208,8 +214,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
+            Action actionFn = () => service.Delete(accessRequest);
+
             // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.Delete(accessRequest));
+            actionFn.Should().Throw<NotAuthorizedException>();
         }
 
         [Fact]
@@ -225,8 +233,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
+            Action actionFn = () => service.Delete(accessRequest);
+
             // Assert
-            var result = Assert.Throws<KeyNotFoundException>(() => service.Delete(accessRequest));
+            actionFn.Should().Throw<KeyNotFoundException>();
         }
 
         [Fact]
@@ -263,8 +273,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
+            Action actionFn = () => service.Update(null);
+
             // Assert
-            var result = Assert.Throws<ArgumentNullException>(() => service.Update(null));
+            actionFn.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -280,8 +292,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
+            Action actionFn = () => service.Update(accessRequest);
+
             // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.Update(accessRequest));
+            actionFn.Should().Throw<NotAuthorizedException>();
         }
 
         [Fact]
@@ -297,8 +311,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<AccessRequestRepository>(user);
 
             // Act
+            Action actionFn = () => service.Update(accessRequest);
+
             // Assert
-            var result = Assert.Throws<KeyNotFoundException>(() => service.Update(accessRequest));
+            actionFn.Should().Throw<KeyNotFoundException>();
         }
 
         [Fact]

@@ -1,9 +1,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Services;
 using Pims.Core.Test;
+using Pims.Dal.Repositories;
 using Pims.Dal.Services;
 using Xunit;
 
@@ -15,18 +17,25 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class CoordinateTransformServiceTest
     {
+        private TestHelper _helper;
+        private CoordinateTransformService _service;
+
+        public CoordinateTransformServiceTest()
+        {
+            _helper = new TestHelper();
+            _service = _helper.Create<CoordinateTransformService>();
+        }
+
         #region Tests
         [Fact]
         public void Transform_Wgs84_BcAlbers()
         {
             // Arrange
-            var helper = new TestHelper();
-            var service = helper.Create<CoordinateTransformService>();
             var expected = new Coordinate(924303.6196359333, 1088419.4036716279);
 
             // Act
             var location = new Coordinate(-127.18, 54.79);
-            var actual = service.TransformCoordinates(4326, 3005, location);
+            var actual = _service.TransformCoordinates(4326, 3005, location);
 
             // Assert
             actual.Should().Be(expected);
@@ -36,13 +45,11 @@ namespace Pims.Api.Test.Services
         public void Transform_BcAlbers_Wgs84()
         {
             // Arrange
-            var helper = new TestHelper();
-            var service = helper.Create<CoordinateTransformService>();
             var expected = new Coordinate(-127.18432267731438, 54.793830114524795);
 
             // Act
             var location = new Coordinate(924033.50, 1088851.50);
-            var actual = service.TransformCoordinates(3005, 4326, location);
+            var actual = _service.TransformCoordinates(3005, 4326, location);
 
             // Assert
             actual.Should().Be(expected);
@@ -52,14 +59,12 @@ namespace Pims.Api.Test.Services
         public void Transform_Not_Supported()
         {
             // Arrange
-            var helper = new TestHelper();
-            var service = helper.Create<CoordinateTransformService>();
+            var location = new Coordinate(924033.50, 1088851.50);
 
             // Act
             // Assert
-            var location = new Coordinate(924033.50, 1088851.50);
-            service.IsCoordinateSystemSupported(900913).Should().BeFalse();
-            Assert.Throws<InvalidOperationException>(() => service.TransformCoordinates(900913, 4326, location));
+            _service.IsCoordinateSystemSupported(900913).Should().BeFalse();
+            Assert.Throws<InvalidOperationException>(() => _service.TransformCoordinates(900913, 4326, location));
         }
         #endregion
     }

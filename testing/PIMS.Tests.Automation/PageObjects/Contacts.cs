@@ -97,18 +97,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Inserting individual contact info
             webDriver.FindElement(contactEmailInput1).SendKeys(email);
-            ChooseRandomSelectOption(contactEmailSelect1, "input-emailContactMethods.0.contactMethodTypeCode", 2);
+            ChooseRandomSelectOption(contactEmailSelect1, 2);
 
             //Inserting contact mail address
             webDriver.FindElement(contactMailAddressLine1Input).SendKeys(addressLine1);
 
             var countryElement = webDriver.FindElement(contactMailCountrySelect);
-            ChooseSpecificSelectOption("input-mailingAddress.countryId", country);
+            ChooseSpecificSelectOption(contactMailCountrySelect, country);
 
             webDriver.FindElement(contactMailCityInput).SendKeys(city);
 
             var provinceElement = webDriver.FindElement(contactMailProvinceSelect);
-            ChooseSpecificSelectOption("input-mailingAddress.provinceId",province);
+            ChooseSpecificSelectOption(contactMailProvinceSelect, province);
 
             webDriver.FindElement(contactMailPostalCodeInput).SendKeys(postalCode);
         }
@@ -137,42 +137,37 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Inserting individual contact info
             webDriver.FindElement(contactEmailInput1).SendKeys(email);
-            ChooseRandomSelectOption(contactEmailSelect1, "input-emailContactMethods.0.contactMethodTypeCode", 2);
+            ChooseRandomSelectOption(contactEmailSelect1, 2);
 
             webDriver.FindElement(contactPhoneInput1).SendKeys(phone);
-            ChooseRandomSelectOption(contactPhoneSelect1, "input-phoneContactMethods.0.contactMethodTypeCode", 2);
+            ChooseRandomSelectOption(contactPhoneSelect1, 2);
 
             //Inserting contact mail address
             webDriver.FindElement(contactMailAddressLine1Input).SendKeys(mailAddressLine1);
 
-            var countryMailElement = webDriver.FindElement(contactMailCountrySelect);
-            ChooseSpecificSelectOption("input-mailingAddress.countryId", mailCountry);
+            ChooseSpecificSelectOption(contactMailCountrySelect, mailCountry);
 
             webDriver.FindElement(contactMailCityInput).SendKeys(mailCity);
 
-            var provinceMailElement = webDriver.FindElement(contactMailProvinceSelect);
-            ChooseSpecificSelectOption("input-mailingAddress.provinceId", mailProvince);
+            ChooseSpecificSelectOption(contactMailProvinceSelect, mailProvince);
 
             webDriver.FindElement(contactMailPostalCodeInput).SendKeys(mailPostalCode);
 
             //Inserting contact property address
             webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(propertyAddressLine1);
 
-            var countryPropertyElement = webDriver.FindElement(contactPropertyCountrySelect);
-            ChooseSpecificSelectOption("input-propertyAddress.countryId", propertyCountry);
+            ChooseSpecificSelectOption(contactPropertyCountrySelect, propertyCountry);
 
             webDriver.FindElement(contactPropertyCityInput).SendKeys(propertyCity);
 
-            var provincePropertyElement = webDriver.FindElement(contactPropertyProvinceSelect);
-            ChooseSpecificSelectOption("input-propertyAddress.provinceId", propertyProvince);
+            ChooseSpecificSelectOption(contactPropertyProvinceSelect, propertyProvince);
 
             webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(propertyPostalCode);
 
             //Inserting contact billing address
             webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(billingAddressLine1);
 
-            var countryBillingElement = webDriver.FindElement(contactBillingCountrySelect);
-            ChooseSpecificSelectOption("input-billingAddress.countryId", billingCountry);
+            ChooseSpecificSelectOption(contactBillingCountrySelect, billingCountry);
 
             webDriver.FindElement(contactBillingCityInput).SendKeys(billingCity);
             webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(specifyCountry);
@@ -194,18 +189,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Inserting organization contact info
             webDriver.FindElement(contactPhoneInput1).SendKeys(phone);
-            ChooseRandomSelectOption(contactPhoneSelect1, "input-phoneContactMethods.0.contactMethodTypeCode", 2);
+            ChooseRandomSelectOption(contactPhoneSelect1, 2);
 
             //Inserting contact property address
             webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(addressLine1);
 
-            var countryElement = webDriver.FindElement(contactPropertyCountrySelect);
-            ChooseSpecificSelectOption("input-propertyAddress.countryId", country);
+            ChooseSpecificSelectOption(contactPropertyCountrySelect, country);
 
             webDriver.FindElement(contactPropertyCityInput).SendKeys(city);
 
-            var provinceElement = webDriver.FindElement(contactPropertyProvinceSelect);
-            ChooseSpecificSelectOption("input-propertyAddress.provinceId", province);
+            ChooseSpecificSelectOption(contactPropertyProvinceSelect, province);
 
             webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(postalCode);
         }
@@ -228,42 +221,36 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Inserting individual contact info
             webDriver.FindElement(contactEmailInput1).SendKeys(email);
-            ChooseRandomSelectOption(contactEmailSelect1, "input-emailContactMethods.0.contactMethodTypeCode", 2);
+            ChooseRandomSelectOption(contactEmailSelect1, 2);
 
             webDriver.FindElement(contactPhoneInput1).SendKeys(phone);
-            ChooseRandomSelectOption(contactPhoneSelect1, "input-phoneContactMethods.0.contactMethodTypeCode", 2);
+            ChooseRandomSelectOption(contactPhoneSelect1, 2);
 
             //Inserting contact mail address
             webDriver.FindElement(contactMailAddressLine1Input).SendKeys(mailAddressLine1);
 
-            var countryMailElement = webDriver.FindElement(contactMailCountrySelect);
-            ChooseSpecificSelectOption("input-mailingAddress.countryId", mailCountry);
+            ChooseSpecificSelectOption(contactMailCountrySelect, mailCountry);
 
             webDriver.FindElement(contactMailCityInput).SendKeys(mailCity);
 
-            var provinceMailElement = webDriver.FindElement(contactMailProvinceSelect);
-            ChooseSpecificSelectOption("input-mailingAddress.provinceId", mailProvince);
+            ChooseSpecificSelectOption(contactMailProvinceSelect, mailProvince);
 
             webDriver.FindElement(contactMailPostalCodeInput).SendKeys(mailPostalCode);
 
             //Inserting property mail address
             webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(propertyAddressLine1);
 
-            var countryPropertyElement = webDriver.FindElement(contactPropertyCountrySelect);
-            ChooseSpecificSelectOption("input-propertyAddress.countryId", propertyCountry);
+            ChooseSpecificSelectOption(contactPropertyCountrySelect, propertyCountry);
 
             webDriver.FindElement(contactPropertyCityInput).SendKeys(propertyCity);
-
-            var provincePropertyElement = webDriver.FindElement(contactPropertyProvinceSelect);
-            ChooseSpecificSelectOption("input-propertyAddress.provinceId", propertyProvince);
+            
+            ChooseSpecificSelectOption(contactPropertyProvinceSelect, propertyProvince);
 
             webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(propertyPostalCode);
 
             //Inserting billing mail address
             webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(billingAddressLine1);
-
-            var countryBillingElement = webDriver.FindElement(contactBillingCountrySelect);
-            ChooseSpecificSelectOption("input-billingAddress.countryId", billingCountry);
+            ChooseSpecificSelectOption(contactBillingCountrySelect, billingCountry);
 
             webDriver.FindElement(contactBillingCityInput).SendKeys(billingCity);
             webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(billingSpecifyCountry);
@@ -284,12 +271,12 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(contactEmailAddBttn);
             ClearInput(contactEmailInput2);
             webDriver.FindElement(contactEmailInput2).SendKeys(email);
-            ChooseRandomSelectOption(contactEmailSelect2, "input-emailContactMethods.1.contactMethodTypeCode", 2);
+            ChooseRandomSelectOption(contactEmailSelect2, 2);
 
             FocusAndClick(contactPhoneAddBttn);
             ClearInput(contactPhoneInput2);
             webDriver.FindElement(contactPhoneInput2).SendKeys(phone);
-            ChooseRandomSelectOption(contactPhoneSelect2, "input-phoneContactMethods.1.contactMethodTypeCode", 2);
+            ChooseRandomSelectOption(contactPhoneSelect2, 2);
 
         }
 

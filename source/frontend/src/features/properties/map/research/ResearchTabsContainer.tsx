@@ -1,13 +1,12 @@
 import { Claims } from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { FileTypes } from 'constants/fileTypes';
-import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
 
 import { ActivityListView } from '../activity/list/ActivityListView';
+import ResearchDocumentsTab from './detail/ResearchDocumentsTab';
 import ResearchSummaryView from './detail/ResearchSummaryView';
 import { FormKeys } from './FormKeys';
 
@@ -42,7 +41,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
       />
     ),
     key: FileTabNames.fileDetails,
-    name: 'Research Details',
+    name: 'File Details',
   });
 
   if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
@@ -57,13 +56,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
 
   if (researchFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
-      content: (
-        <DocumentListContainer
-          parentId={researchFile?.id}
-          relationshipType={DocumentRelationshipType.RESEARCH_FILES}
-          disableAdd
-        />
-      ),
+      content: <ResearchDocumentsTab researchFileId={researchFile.id} />,
       key: FileTabNames.documents,
       name: 'Documents',
     });
