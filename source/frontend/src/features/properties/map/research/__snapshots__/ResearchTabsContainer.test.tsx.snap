@@ -282,7 +282,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
         href="#"
         role="tab"
       >
-        Research Details
+        File Details
       </a>
       <a
         aria-selected="false"
