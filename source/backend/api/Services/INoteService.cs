@@ -13,7 +13,7 @@ namespace Pims.Api.Services
 
         NoteModel Update(NoteModel model);
 
-        void DeleteNote(NoteType type, long noteId, bool commitTransaction = true);
+        bool DeleteNote(NoteType type, long noteId, bool commitTransaction = true);
 
         IEnumerable<PimsNote> GetNotes(NoteType type, long entityId);
     }
