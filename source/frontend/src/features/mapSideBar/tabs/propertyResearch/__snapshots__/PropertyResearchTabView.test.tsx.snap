@@ -66,7 +66,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -180,7 +180,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"

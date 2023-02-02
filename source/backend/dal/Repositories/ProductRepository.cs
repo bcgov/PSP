@@ -28,11 +28,12 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        public IList<PimsProduct> GetByProject(int projectId)
+        public IList<PimsProduct> GetByProject(long projectId)
         {
             return this.Context.PimsProducts.AsNoTracking()
-                .Where(o => o.ParentProjectId == projectId)
-                .OrderBy(a => a.Code)
+                .Where(p => p.ParentProjectId == projectId)
+                .Include(p => p.PimsAcquisitionFiles)
+                .OrderBy(p => p.Code)
                 .ToArray();
         }
     }

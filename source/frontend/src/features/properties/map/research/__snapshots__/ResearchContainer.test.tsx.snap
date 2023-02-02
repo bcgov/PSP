@@ -607,7 +607,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                           class="c22"
                         >
                           <div
-                            class="row"
+                            class="no-gutters row"
                           >
                             <div
                               class="col"
@@ -665,7 +665,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                           class="c22"
                         >
                           <div
-                            class="row"
+                            class="no-gutters row"
                           >
                             <div
                               class="col"
@@ -776,7 +776,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                           class="c22"
                         >
                           <div
-                            class="row"
+                            class="no-gutters row"
                           >
                             <div
                               class="col"
@@ -836,7 +836,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                           class="c22"
                         >
                           <div
-                            class="row"
+                            class="no-gutters row"
                           >
                             <div
                               class="col"

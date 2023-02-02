@@ -42,20 +42,20 @@ const UpdateProjectContainer = React.forwardRef<FormikProps<any>, IUpdateProject
           <>
             <Container>
               <Section>
-                <SectionField label="Project name" required={true}>
+                <SectionField label="Project name" required>
                   <Input field="projectName" />
                 </SectionField>
                 <SectionField label="Project number">
                   <Input field="projectNumber" placeholder="if known" />
                 </SectionField>
-                <SectionField label="Status" required={true}>
+                <SectionField label="Status">
                   <Select
                     field="projectStatusType"
                     options={projectStatusOptions}
                     placeholder="Select..."
                   />
                 </SectionField>
-                <SectionField label="MoTI region" required={true}>
+                <SectionField label="MoTI region" required>
                   <Select field="region" options={projectRegionOptions} placeholder="Select..." />
                 </SectionField>
                 <SectionField label="Project summary">

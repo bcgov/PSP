@@ -51,15 +51,11 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(ProjectModel), 404)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public async Task<IActionResult> GetById([FromRoute] long id)
+        public IActionResult GetById([FromRoute] long id)
         {
-            var project = await _projectService.GetById(id);
-            if (project is null)
-            {
-                return NotFound();
-            }
+            var project = _projectService.GetById(id);
 
-            return Ok(_mapper.Map<ProjectModel>(project));
+            return new JsonResult(_mapper.Map<ProjectModel>(project));
         }
 
         /// <summary>
@@ -96,15 +92,10 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public async Task<IActionResult> AddProject(ProjectModel projectModel)
+        public IActionResult AddProject(ProjectModel projectModel)
         {
-            var newProject = await _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
-            if(newProject is null)
-            {
-                return BadRequest();
-            }
-
-            return Ok(newProject);
+            var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+            return new JsonResult(_mapper.Map<ProjectModel>(newProject));
         }
 
         /// <summary>
@@ -118,11 +109,11 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(List<ProductModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GetProducts(int projectId)
+        public IActionResult GetProducts(long projectId)
         {
-            var predictions = _projectService.GetProducts(projectId);
+            var products = _projectService.GetProducts(projectId);
 
-            return new JsonResult(_mapper.Map<IList<ProductModel>>(predictions));
+            return new JsonResult(_mapper.Map<IList<ProductModel>>(products));
         }
     }
 }

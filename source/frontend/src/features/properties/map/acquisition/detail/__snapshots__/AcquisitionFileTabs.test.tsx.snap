@@ -326,7 +326,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
               class="c4"
             >
               <div
-                class="row"
+                class="no-gutters row"
               >
                 <div
                   class="col"
@@ -398,7 +398,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
               class="c4"
             >
               <div
-                class="row"
+                class="no-gutters row"
               >
                 <div
                   class="col"
@@ -482,7 +482,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
               class="c4"
             >
               <div
-                class="row"
+                class="no-gutters row"
               >
                 <div
                   class="col"
@@ -576,7 +576,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
               class="c4"
             >
               <div
-                class="row"
+                class="no-gutters row"
               >
                 <div
                   class="col"
@@ -689,7 +689,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
             class="c4"
           >
             <div
-              class="row"
+              class="no-gutters row"
             >
               <div
                 class="col"
@@ -1130,7 +1130,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
             class="c4"
           >
             <div
-              class="row"
+              class="no-gutters row"
             >
               <div
                 class="col"

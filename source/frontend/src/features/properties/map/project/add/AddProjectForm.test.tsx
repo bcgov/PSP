@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
 import AddProjectForm, { IAddProjectFormProps } from './AddProjectForm';
@@ -22,7 +22,7 @@ describe('AddProjectForm component', () => {
     const ref = createRef<FormikProps<ProjectForm>>();
     const utils = render(
       <AddProjectForm
-        ref={ref}
+        formikRef={ref}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -52,6 +52,8 @@ describe('AddProjectForm component', () => {
         utils.container.querySelector(`select[name="projectStatusType"]`) as HTMLSelectElement,
       getSummaryTextbox: () =>
         utils.container.querySelector(`textarea[name="summary"]`) as HTMLInputElement,
+      getProductCodeTextBox: (index: number) =>
+        utils.container.querySelector(`input[name="products.${index}.code"]`) as HTMLInputElement,
     };
   };
 
@@ -120,5 +122,19 @@ describe('AddProjectForm component', () => {
     expect(await findByText(/Project name must be at most 200 characters/i)).toBeVisible();
     expect(await findByText(/Project number must be at most 20 characters/i)).toBeVisible();
     expect(await findByText(/Project summary must be at most 2000 characters/i)).toBeVisible();
+  });
+
+  it('should add a product', async () => {
+    const { getByText, getProductCodeTextBox } = setup({
+      initialValues,
+    });
+
+    const addProductButton = getByText('+ Add another product');
+    act(() => {
+      userEvent.click(addProductButton);
+    });
+
+    const productCodeTextBox = getProductCodeTextBox(0);
+    expect(productCodeTextBox).toBeVisible();
   });
 });

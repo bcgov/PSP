@@ -176,6 +176,12 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
+        public List<PimsAcquisitionFile> GetByProductId(long productId)
+        {
+            return this.Context.PimsAcquisitionFiles.AsNoTracking()
+                .Where(a => a.ProductId == productId).ToList();
+        }
+
         /// <summary>
         /// Generates a new Acquisition Number in the following format.
         /// </summary>

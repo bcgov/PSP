@@ -577,7 +577,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                         class="c15"
                       >
                         <div
-                          class="row"
+                          class="no-gutters row"
                         >
                           <div
                             class="col"
@@ -649,7 +649,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                         class="c15"
                       >
                         <div
-                          class="row"
+                          class="no-gutters row"
                         >
                           <div
                             class="col"
@@ -733,7 +733,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                         class="c15"
                       >
                         <div
-                          class="row"
+                          class="no-gutters row"
                         >
                           <div
                             class="col"
@@ -827,7 +827,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                         class="c15"
                       >
                         <div
-                          class="row"
+                          class="no-gutters row"
                         >
                           <div
                             class="col"

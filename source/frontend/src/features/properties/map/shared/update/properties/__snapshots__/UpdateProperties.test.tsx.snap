@@ -927,7 +927,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
             class="c19"
           >
             <div
-              class="row"
+              class="no-gutters row"
             >
               <div
                 class="col"

@@ -1013,7 +1013,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
       class="c1"
     >
       <div
-        class="row"
+        class="no-gutters row"
       >
         <div
           class="col"

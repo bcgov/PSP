@@ -27,7 +27,7 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class ProjectServiceTest
     {
-        private TestHelper _helper;
+        readonly TestHelper _helper;
 
         public ProjectServiceTest()
         {
@@ -178,7 +178,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void Add_Project_Success()
+        public void Add_Project_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -186,11 +186,11 @@ namespace Pims.Api.Test.Services
             var service = helper.Create<ProjectService>(user);
 
             var repository = helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.Add(It.IsAny<PimsProject>())).ReturnsAsync(new PimsProject());
-            repository.Setup(x => x.Get(It.IsAny<long>())).ReturnsAsync(new PimsProject());
+            repository.Setup(x => x.Add(It.IsAny<PimsProject>())).Returns(new PimsProject());
+            repository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsProject());
 
             // Act
-            var result = await service.Add(new PimsProject());
+            var result = service.Add(new PimsProject());
 
             // Assert
             result.Should().NotBeNull();
@@ -208,15 +208,15 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Func<Task> act = async () => await service.GetById(It.IsAny<long>());
+            Action actionFn = () => service.GetById(1);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            actionFn.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.Get(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
-        public async void Get_ProjectById_Success()
+        public void Get_ProjectById_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -224,14 +224,51 @@ namespace Pims.Api.Test.Services
             var service = helper.Create<ProjectService>(user);
 
             var repository = helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.Get(It.IsAny <long>())).ReturnsAsync(new PimsProject());
+            repository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsProject());
 
             // Act
-            var result = await service.GetById(1);
+            var result = service.GetById(1);
 
             // Assert
             result.Should().NotBeNull();
             repository.Verify(x => x.Get(It.IsAny<long>()), Times.Once);
         }
+
+        [Fact]
+        public void Get_Products_ShouldFail_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProductRepository>>();
+
+            // Act
+            Action actionFn = () => service.GetProducts(1);
+
+            // Assert
+            actionFn.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetByProject(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Get_ProductFile_ShouldFail_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            // Act
+            Action actionFn = () => service.GetProductFiles(1);
+
+            // Assert
+            actionFn.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetByProductId(It.IsAny<long>()), Times.Never);
+        }
+
     }
 }
