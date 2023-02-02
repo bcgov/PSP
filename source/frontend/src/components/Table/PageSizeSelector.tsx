@@ -1,5 +1,4 @@
 import { IMenuItemProps, Menu } from 'components/menu/Menu';
-import { noop } from 'lodash';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
@@ -40,12 +39,13 @@ export const TablePageSizeSelector: React.FC<React.PropsWithChildren<IProps>> = 
     <Menu options={pageSizeOptions} alignTop={alignTop}>
       <div style={{ display: 'flex' }}>
         <StyledText>Show</StyledText>
+        {/*the selector appears to capture the click event which prevents the page change from being registered*/}
         <Form.Control
           size="sm"
           value={`${selected}`}
           type="number"
-          style={{ width: 50, marginLeft: 10, marginRight: 10 }}
-          onChange={noop}
+          style={{ width: 50, marginLeft: 10, marginRight: 10, backgroundColor: 'white' }}
+          disabled
         />
         <StyledText>Entries</StyledText>
       </div>

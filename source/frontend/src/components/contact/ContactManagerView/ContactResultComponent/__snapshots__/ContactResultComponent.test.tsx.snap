@@ -638,7 +638,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             organizationName
           </div>
           <div
-            class="td"
+            class="td text-break"
             role="cell"
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
@@ -804,7 +804,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             organizationName
           </div>
           <div
-            class="td"
+            class="td text-break"
             role="cell"
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
@@ -970,7 +970,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             organizationName
           </div>
           <div
-            class="td"
+            class="td text-break"
             role="cell"
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
@@ -1093,7 +1093,8 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             </span>
             <input
               class="form-control form-control-sm"
-              style="width: 50px; margin-left: 10px; margin-right: 10px;"
+              disabled=""
+              style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
               type="number"
               value="10"
             />

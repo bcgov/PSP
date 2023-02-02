@@ -34,25 +34,25 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
   const primaryContactName = formatApiPersonNames(primaryContact);
   return (
     <StyledSectionWrapper>
-      <SectionField labelWidth="2" contentWidth="4" label="Organization">
+      <SectionField labelWidth="2" contentWidth="10" label="Organization">
         {getIn(values, withNameSpace(nameSpace, 'summary')) && (
           <>
-            <StyledLink to={`/contact/${tenant?.id}`}>
-              {getIn(values, withNameSpace(nameSpace, 'summary'))}
+            <StyledLink to={`/contact/${tenant?.id}`} target="_blank" rel="noopener noreferrer">
+              {getIn(values, withNameSpace(nameSpace, 'summary'))} <FaExternalLinkAlt />
             </StyledLink>
-            <Link to={`/contact/${tenant?.id}`} target="_blank" rel="noopener noreferrer">
-              <FaExternalLinkAlt />
-            </Link>
           </>
         )}
       </SectionField>
-      <SectionField labelWidth="2" contentWidth="4" label="Primary Contact">
+      <SectionField labelWidth="2" contentWidth="10" label="Primary Contact">
         {primaryContact && (
           <>
-            <StyledLink to={`/contact/P${primaryContact?.id}`}>{primaryContactName}</StyledLink>
-            <Link to={`/contact/P${primaryContact?.id}`} target="_blank" rel="noopener noreferrer">
-              <FaExternalLinkAlt />
-            </Link>
+            <StyledLink
+              to={`/contact/P${primaryContact?.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {primaryContactName} <FaExternalLinkAlt />
+            </StyledLink>
           </>
         )}
       </SectionField>
