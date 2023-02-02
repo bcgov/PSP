@@ -265,7 +265,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -284,12 +284,12 @@ exports[`ActivityForm test Renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c9 {
+.c10 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c8 {
+.c9 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -312,7 +312,23 @@ exports[`ActivityForm test Renders as expected 1`] = `
   text-align: left;
 }
 
-.c11 {
+.c5 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c5 .btn {
+  margin: 0;
+}
+
+.c12 {
   width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -321,15 +337,15 @@ exports[`ActivityForm test Renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c5 {
+.c6 {
   border-radius: 0.5rem 0.5rem 0rem 0rem;
 }
 
-.c6 {
+.c7 {
   border-left: 0.2rem solid white;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -346,7 +362,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
   padding: 0;
 }
 
-.c12 {
+.c13 {
   width: 100%;
 }
 
@@ -364,7 +380,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -406,7 +422,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -455,13 +471,13 @@ exports[`ActivityForm test Renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
           >
             <div
-              class="no-gutters justify-content-between row"
+              class="c5 no-gutters row"
             >
               <div
                 class="px-2 my-1 col-auto"
@@ -504,7 +520,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
         class="collapse show"
       >
         <form
-          class="c5 p-3"
+          class="c6 p-3"
           novalidate=""
         >
           <div
@@ -646,7 +662,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
               class="col-lg-auto"
             >
               <div
-                class="c6 no-gutters pl-2 row"
+                class="c7 no-gutters pl-2 row"
               >
                 <div
                   class="col"
@@ -734,11 +750,11 @@ exports[`ActivityForm test Renders as expected 1`] = `
                 >
                   Document type
                   <div
-                    class="c7"
+                    class="c8"
                     data-testid="sort-column-documentType"
                   >
                     <svg
-                      class="c8"
+                      class="c9"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -753,7 +769,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                       />
                     </svg>
                     <svg
-                      class="c9"
+                      class="c10"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -780,11 +796,11 @@ exports[`ActivityForm test Renders as expected 1`] = `
                 >
                   File name
                   <div
-                    class="c7"
+                    class="c8"
                     data-testid="sort-column-fileName"
                   >
                     <svg
-                      class="c8"
+                      class="c9"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -799,7 +815,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                       />
                     </svg>
                     <svg
-                      class="c9"
+                      class="c10"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -826,11 +842,11 @@ exports[`ActivityForm test Renders as expected 1`] = `
                 >
                   Uploaded
                   <div
-                    class="c7"
+                    class="c8"
                     data-testid="sort-column-appCreateTimestamp"
                   >
                     <svg
-                      class="c8"
+                      class="c9"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -845,7 +861,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                       />
                     </svg>
                     <svg
-                      class="c9"
+                      class="c10"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -872,11 +888,11 @@ exports[`ActivityForm test Renders as expected 1`] = `
                 >
                   Status
                   <div
-                    class="c7"
+                    class="c8"
                     data-testid="sort-column-statusTypeCode"
                   >
                     <svg
-                      class="c8"
+                      class="c9"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -891,7 +907,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                       />
                     </svg>
                     <svg
-                      class="c9"
+                      class="c10"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -946,10 +962,10 @@ exports[`ActivityForm test Renders as expected 1`] = `
     <div />
     <div />
     <div
-      class="c10"
+      class="c11"
     >
       <div
-        class="c11 c12"
+        class="c12 c13"
       >
         <div
           class="c1 form-section"
@@ -958,13 +974,13 @@ exports[`ActivityForm test Renders as expected 1`] = `
             class="c2"
           >
             <div
-              class="row"
+              class="no-gutters row"
             >
               <div
                 class="col"
               >
                 <div
-                  class="no-gutters justify-content-between row"
+                  class="c5 no-gutters row"
                 >
                   <div
                     class="px-2 my-1 col-auto"
@@ -1042,11 +1058,11 @@ exports[`ActivityForm test Renders as expected 1`] = `
                     >
                       Created date
                       <div
-                        class="c7"
+                        class="c8"
                         data-testid="sort-column-appCreateTimestamp"
                       >
                         <svg
-                          class="c8"
+                          class="c9"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1061,7 +1077,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c9"
+                          class="c10"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1088,11 +1104,11 @@ exports[`ActivityForm test Renders as expected 1`] = `
                     >
                       Last updated by
                       <div
-                        class="c7"
+                        class="c8"
                         data-testid="sort-column-appLastUpdateUserid"
                       >
                         <svg
-                          class="c8"
+                          class="c9"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1107,7 +1123,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c9"
+                          class="c10"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"

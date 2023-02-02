@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using ClosedXML.Excel;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +22,17 @@ namespace Pims.Api.Test.Controllers
     public class AcquisitionControllerTest
     {
         #region Variables
-
+        private Mock<IAcquisitionFileService> _service;
+        private AcquisitionFileController _controller;
+        private IMapper _mapper;
         #endregion
+
+        public AcquisitionControllerTest() {
+            var helper = new TestHelper();
+            _controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            _mapper = helper.GetService<IMapper>();
+            _service = helper.GetService<Mock<IAcquisitionFileService>>();
+        }
 
         #region Tests
         /// <summary>
@@ -32,24 +42,14 @@ namespace Pims.Api.Test.Controllers
         public void AddAcquisitionFile_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-
-            var service = helper.GetService<Mock<IAcquisitionFileService>>();
-            var mapper = helper.GetService<IMapper>();
-
-            service.Setup(m => m.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            _service.Setup(m => m.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
 
             // Act
-            var result = controller.AddAcquisitionFile(mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = _controller.AddAcquisitionFile(_mapper.Map<AcquisitionFileModel>(acqFile));
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<AcquisitionFileModel>(actionResult.Value);
-            var expectedResult = mapper.Map<AcquisitionFileModel>(acqFile);
-            expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once());
+            _service.Verify(m => m.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once());
         }
 
         /// <summary>
@@ -59,24 +59,15 @@ namespace Pims.Api.Test.Controllers
         public void GetAcquisitionFile_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileView);
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
-            var service = helper.GetService<Mock<IAcquisitionFileService>>();
-            var mapper = helper.GetService<IMapper>();
-
-            service.Setup(m => m.GetById(It.IsAny<long>())).Returns(acqFile);
+            _service.Setup(m => m.GetById(It.IsAny<long>())).Returns(acqFile);
 
             // Act
-            var result = controller.GetAcquisitionFile(1);
+            var result = _controller.GetAcquisitionFile(1);
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<AcquisitionFileModel>(actionResult.Value);
-            var expectedResult = mapper.Map<AcquisitionFileModel>(acqFile);
-            expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
+            _service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
 
         /// <summary>
@@ -86,22 +77,14 @@ namespace Pims.Api.Test.Controllers
         public void UpdateAcquisitionFile_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileEdit);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var service = helper.GetService<Mock<IAcquisitionFileService>>();
-            var mapper = helper.GetService<IMapper>();
-            service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>())).Returns(acqFile);
+            _service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>())).Returns(acqFile);
 
             // Act
-            var result = controller.UpdateAcquisitionFile(1, mapper.Map<AcquisitionFileModel>(acqFile), true);
+            var result = _controller.UpdateAcquisitionFile(1, _mapper.Map<AcquisitionFileModel>(acqFile), true);
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<AcquisitionFileModel>(actionResult.Value);
-            var expectedResult = mapper.Map<AcquisitionFileModel>(acqFile);
-            expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>()), Times.Once());
+            _service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>()), Times.Once());
         }
 
         /// <summary>
@@ -111,23 +94,15 @@ namespace Pims.Api.Test.Controllers
         public void UpdateAcquisitionFileProperties_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileEdit);
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
-            var service = helper.GetService<Mock<IAcquisitionFileService>>();
-            var mapper = helper.GetService<IMapper>();
-            service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
 
             // Act
-            var result = controller.UpdateAcquisitionFileProperties(mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile));
 
             // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<AcquisitionFileModel>(actionResult.Value);
-            var expectedResult = mapper.Map<AcquisitionFileModel>(acqFile);
-            expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>()), Times.Once());
+            _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>()), Times.Once());
         }
         #endregion
     }

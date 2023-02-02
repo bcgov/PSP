@@ -118,14 +118,14 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                 class="pr-0 text-left col-3"
               >
                 <label>
-                  File #:
+                  File:
                 </label>
               </div>
               <div
                 class="pl-1 text-left col-9"
               >
                 <strong>
-                  1-12345-01
+                  1-12345-01 - Test ACQ File
                 </strong>
               </div>
             </div>
@@ -389,8 +389,11 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
   width: 100%;
-  margin-top: 1rem;
   border-bottom: 1px solid;
 }
 
@@ -574,7 +577,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                         class="c15"
                       >
                         <div
-                          class="row"
+                          class="no-gutters row"
                         >
                           <div
                             class="col"
@@ -614,6 +617,22 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                             <label
                               class="c16"
                             >
+                              Product:
+                            </label>
+                          </div>
+                          <div
+                            class="c17 text-left col"
+                          />
+                        </div>
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-4"
+                          >
+                            <label
+                              class="c16"
+                            >
                               Funding:
                             </label>
                           </div>
@@ -630,7 +649,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                         class="c15"
                       >
                         <div
-                          class="row"
+                          class="no-gutters row"
                         >
                           <div
                             class="col"
@@ -714,12 +733,12 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                         class="c15"
                       >
                         <div
-                          class="row"
+                          class="no-gutters row"
                         >
                           <div
                             class="col"
                           >
-                            Acquisition details
+                            Acquisition Details
                           </div>
                           <div
                             class="col-1"
@@ -808,12 +827,12 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
                         class="c15"
                       >
                         <div
-                          class="row"
+                          class="no-gutters row"
                         >
                           <div
                             class="col"
                           >
-                            Acquisition team
+                            Acquisition Team
                           </div>
                           <div
                             class="col-1"

@@ -1,7 +1,6 @@
 import { useApiProperties } from 'hooks/pims-api';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { useCallback } from 'react';
-import { toast } from 'react-toastify';
 import { useAxiosErrorHandler } from 'utils';
 
 /**
@@ -16,7 +15,6 @@ export const useGetProperty = () => {
       [getPropertyConceptWithId],
     ),
     requestName: 'getPropertyApiById',
-    onSuccess: useCallback(() => toast.success('Property information retrieved'), []),
     onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
   });
 

@@ -85,7 +85,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           <Select
             field="statusTypeCode"
             data-testid="researchFileStatus"
-            required={true}
+            required
             options={researchStatusOptions}
             placeholder={values.statusTypeCode ? undefined : 'Please Select'}
           />
@@ -144,7 +144,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           <Select
             field="requestSourceTypeCode"
             data-testid="requestSource"
-            required={true}
+            required
             options={requestSourceTypeOptions}
             placeholder={values.requestSourceTypeCode ? undefined : 'Please Select'}
           />
@@ -165,7 +165,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           </SectionField>
         )}
         <SectionField label="Description of request" />
-        <TextArea field="requestDescription" required={true} />
+        <TextArea field="requestDescription" required />
       </Section>
 
       <Section header="Result">
@@ -173,7 +173,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           <InlineFastDatePicker formikProps={props.formikProps} field="researchCompletionDate" />
         </SectionField>
         <SectionField label="Result of request" />
-        <TextArea field="researchResult" required={true} />
+        <TextArea field="researchResult" required />
       </Section>
 
       <Section header="Expropriation">
@@ -194,7 +194,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           />
         </SectionField>
         <SectionField label="Expropriation notes" />
-        <TextArea field="expropriationNotes" required={true} />
+        <TextArea field="expropriationNotes" required />
       </Section>
       <ContactManagerModal
         display={showContactManager}

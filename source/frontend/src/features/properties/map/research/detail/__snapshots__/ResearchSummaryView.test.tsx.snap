@@ -47,7 +47,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -107,7 +107,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -218,7 +218,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -277,7 +277,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"

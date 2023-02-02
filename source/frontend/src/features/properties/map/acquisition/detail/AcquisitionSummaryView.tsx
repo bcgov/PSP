@@ -28,6 +28,11 @@ const AcquisitionSummaryView: React.FunctionComponent<
       ? acquisitionFile?.project?.code + ' - ' + acquisitionFile?.project?.description
       : '';
 
+  const productName =
+    acquisitionFile?.product !== undefined
+      ? acquisitionFile?.product?.code + ' ' + acquisitionFile?.product?.description
+      : '';
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
@@ -37,6 +42,7 @@ const AcquisitionSummaryView: React.FunctionComponent<
       </StyledEditWrapper>
       <Section header="Project">
         <SectionField label="Ministry project">{projectName}</SectionField>
+        <SectionField label="Product">{productName}</SectionField>
         <SectionField label="Funding">{acquisitionFile?.fundingTypeCode?.description}</SectionField>
 
         {acquisitionFile?.fundingTypeCode?.id === 'OTHER' && (
@@ -52,7 +58,7 @@ const AcquisitionSummaryView: React.FunctionComponent<
           {prettyFormatDate(detail.deliveryDate)}
         </SectionField>
       </Section>
-      <Section header="Acquisition details">
+      <Section header="Acquisition Details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>
         <SectionField label="Physical file status">
           {detail.acquisitionPhysFileStatusTypeDescription}
@@ -60,7 +66,7 @@ const AcquisitionSummaryView: React.FunctionComponent<
         <SectionField label="Acquisition type">{detail.acquisitionTypeDescription}</SectionField>
         <SectionField label="Ministry region">{detail.regionDescription}</SectionField>
       </Section>
-      <Section header="Acquisition team">
+      <Section header="Acquisition Team">
         {detail.acquisitionTeam.map((person, index) => (
           <SectionField key={index} label={person.personProfileTypeCodeDescription || ''}>
             <StyledLink

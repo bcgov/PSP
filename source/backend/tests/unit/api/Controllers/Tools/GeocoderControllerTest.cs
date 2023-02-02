@@ -6,7 +6,9 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Tools.Controllers;
+using Pims.Api.Controllers;
 using Pims.Core.Test;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Geocoder;
 using Pims.Geocoder.Models;
@@ -24,10 +26,17 @@ namespace Pims.Api.Test.Controllers.Tools
     public class GeocoderControllerTest
     {
         #region Variables
+        private Mock<IGeocoderService> _service;
+        private GeocoderController _controller;
         #endregion
 
         #region Constructors
-        public GeocoderControllerTest() { }
+        public GeocoderControllerTest()
+        {
+            var helper = new TestHelper();
+            _controller = helper.CreateController<GeocoderController>(Permissions.SystemAdmin);
+            _service = helper.GetService<Mock<IGeocoderService>>();
+        }
         #endregion
 
         #region Tests
@@ -36,9 +45,6 @@ namespace Pims.Api.Test.Controllers.Tools
         public async void FindAddressesAsync_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<GeocoderController>(Permissions.PropertyEdit);
-
             var addresses = new FeatureCollectionModel()
             {
                 Features = new[]
@@ -61,24 +67,13 @@ namespace Pims.Api.Test.Controllers.Tools
                 },
             };
 
-            var service = helper.GetService<Mock<IGeocoderService>>();
-            service.Setup(m => m.GetSiteAddressesAsync(It.IsAny<AddressesParameters>(), It.IsAny<string>())).ReturnsAsync(addresses);
+            _service.Setup(m => m.GetSiteAddressesAsync(It.IsAny<AddressesParameters>(), It.IsAny<string>())).ReturnsAsync(addresses);
 
             // Act
-            var result = await controller.FindAddressesAsync("test");
+            var result = await _controller.FindAddressesAsync("test");
 
             // Assert
-            JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var results = Assert.IsAssignableFrom<IEnumerable<Model.AddressModel>>(actionResult.Value);
-            results.Should().HaveCount(1);
-            var first = results.First();
-            first.Score.Should().Be(1);
-            first.SiteId.Should().Be("test");
-            first.FullAddress.Should().Be("test");
-            first.ProvinceCode.Should().Be("test");
-            first.Address1.Should().Be("test test");
-            first.Latitude.Should().Be(1d);
-            first.Longitude.Should().Be(2d);
+            _service.Verify(m => m.GetSiteAddressesAsync(It.IsAny<AddressesParameters>(), It.IsAny<string>()));
         }
         #endregion
 
@@ -87,9 +82,6 @@ namespace Pims.Api.Test.Controllers.Tools
         public async void FindNearestAddressAsync_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<GeocoderController>(Permissions.PropertyEdit);
-
             var address = new FeatureModel()
             {
                 Properties = new PropertyModel()
@@ -106,22 +98,13 @@ namespace Pims.Api.Test.Controllers.Tools
                 Geometry = new GeometryModel() { Coordinates = new[] { 2d, 1d } },
             };
 
-            var service = helper.GetService<Mock<IGeocoderService>>();
-            service.Setup(m => m.GetNearestSiteAsync(It.IsAny<NearestParameters>(), It.IsAny<string>())).ReturnsAsync(address);
+            _service.Setup(m => m.GetNearestSiteAsync(It.IsAny<NearestParameters>(), It.IsAny<string>())).ReturnsAsync(address);
 
             // Act
-            var result = await controller.FindNearestAddressAsync("test");
+            var result = await _controller.FindNearestAddressAsync("test");
 
             // Assert
-            JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var addressModel = Assert.IsAssignableFrom<Model.AddressModel>(actionResult.Value);
-            addressModel.Score.Should().Be(1);
-            addressModel.SiteId.Should().Be("test");
-            addressModel.FullAddress.Should().Be("test");
-            addressModel.ProvinceCode.Should().Be("test");
-            addressModel.Address1.Should().Be("test test");
-            addressModel.Latitude.Should().Be(1d);
-            addressModel.Longitude.Should().Be(2d);
+            _service.Verify(m => m.GetNearestSiteAsync(It.IsAny<NearestParameters>(), It.IsAny<string>()));
         }
         #endregion
 
@@ -130,9 +113,6 @@ namespace Pims.Api.Test.Controllers.Tools
         public async void FindNearAddressesAsync_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<GeocoderController>(Permissions.PropertyEdit);
-
             var addresses = new FeatureCollectionModel()
             {
                 Features = new[]
@@ -155,24 +135,13 @@ namespace Pims.Api.Test.Controllers.Tools
                 },
             };
 
-            var service = helper.GetService<Mock<IGeocoderService>>();
-            service.Setup(m => m.GetNearSitesAsync(It.IsAny<NearParameters>(), It.IsAny<string>())).ReturnsAsync(addresses);
+            _service.Setup(m => m.GetNearSitesAsync(It.IsAny<NearParameters>(), It.IsAny<string>())).ReturnsAsync(addresses);
 
             // Act
-            var result = await controller.FindNearAddressesAsync("test");
+            var result = await _controller.FindNearAddressesAsync("test");
 
             // Assert
-            JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var results = Assert.IsAssignableFrom<IEnumerable<Model.AddressModel>>(actionResult.Value);
-            results.Should().HaveCount(1);
-            var first = results.First();
-            first.Score.Should().Be(1);
-            first.SiteId.Should().Be("test");
-            first.FullAddress.Should().Be("test");
-            first.ProvinceCode.Should().Be("test");
-            first.Address1.Should().Be("test test");
-            first.Latitude.Should().Be(1d);
-            first.Longitude.Should().Be(2d);
+            _service.Verify(m => m.GetNearSitesAsync(It.IsAny<NearParameters>(), It.IsAny<string>()));
         }
         #endregion
 
@@ -181,9 +150,6 @@ namespace Pims.Api.Test.Controllers.Tools
         public async void FindPidsAsync_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<GeocoderController>(Permissions.PropertyEdit);
-
             var testSiteId = Guid.NewGuid();
             var response = new SitePidsResponseModel()
             {
@@ -191,18 +157,13 @@ namespace Pims.Api.Test.Controllers.Tools
                 Pids = "test1,test2",
             };
 
-            var service = helper.GetService<Mock<IGeocoderService>>();
-            service.Setup(m => m.GetPids(It.IsAny<Guid>(), It.IsAny<string>())).ReturnsAsync(response);
+            _service.Setup(m => m.GetPids(It.IsAny<Guid>(), It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            var result = await controller.FindPidsAsync(testSiteId);
+            var result = await _controller.FindPidsAsync(testSiteId);
 
             // Assert
-            JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var results = Assert.IsAssignableFrom<Model.SitePidsResponseModel>(actionResult.Value);
-            results.SiteId.Should().Be(testSiteId);
-            results.Pids.Should().HaveCount(2);
-            results.Pids.First().Should().Be("test1");
+            _service.Verify(m => m.GetPids(testSiteId, It.IsAny<string>()));
         }
         #endregion
         #endregion

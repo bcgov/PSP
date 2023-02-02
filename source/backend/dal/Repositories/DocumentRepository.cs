@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MoreLinq;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -103,9 +104,21 @@ namespace Pims.Dal.Repositories
             var documentToDelete = this.Context.PimsDocuments.AsNoTracking()
                 .Include(d => d.PimsActivityInstanceDocuments)
                 .Include(d => d.PimsActivityTemplateDocuments)
+                .Include(d => d.PimsResearchFileDocuments)
+                .Include(d => d.PimsAcquisitionFileDocuments)
                 .Where(d => d.DocumentId == document.Id)
                 .AsNoTracking()
                 .FirstOrDefault();
+
+            foreach (var pimsResearchFileDocument in documentToDelete.PimsResearchFileDocuments)
+            {
+                this.Context.PimsResearchFileDocuments.Remove(new PimsResearchFileDocument() { Id = pimsResearchFileDocument.Id });
+            }
+
+            foreach (var pimsAcquisitionFileDocument in documentToDelete.PimsAcquisitionFileDocuments)
+            {
+                this.Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { Id = pimsAcquisitionFileDocument.Id });
+            }
 
             foreach (var pimsActivityInstanceDocument in documentToDelete.PimsActivityInstanceDocuments)
             {
@@ -116,6 +129,8 @@ namespace Pims.Dal.Repositories
             {
                 this.Context.PimsActivityTemplateDocuments.Remove(new PimsActivityTemplateDocument() { Id = pimsTemplateDocument.Id });
             }
+
+            this.Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
 
             this.Context.PimsDocuments.Remove(new PimsDocument() { Id = document.Id });
             return true;

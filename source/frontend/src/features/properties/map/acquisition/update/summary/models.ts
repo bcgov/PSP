@@ -21,6 +21,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   team: AcquisitionTeamFormModel[] = [];
 
   project?: IAutocompletePrediction;
+  product?: number;
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
 
@@ -41,6 +42,8 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
         this.project?.id !== undefined && this.project?.id !== 0
           ? { id: this.project?.id }
           : undefined,
+      product:
+        this.product !== undefined && this.product !== 0 ? { id: Number(this.product) } : undefined,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       acquisitionTeam: this.team
@@ -69,6 +72,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
       model.project !== undefined
         ? { id: model.project?.id || 0, text: model.project?.description || '' }
         : undefined;
+    newForm.product = model.product?.id;
 
     return newForm;
   }

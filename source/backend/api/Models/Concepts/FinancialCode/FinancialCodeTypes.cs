@@ -13,7 +13,7 @@ namespace Pims.Api.Models.Concepts
         BusinessFunction,
 
         [EnumMember(Value = "cost-types")]
-        CostTypes,
+        CostType,
 
         [EnumMember(Value = "work-activity")]
         WorkActivity,

@@ -1,8 +1,13 @@
+import { StyledAddButton } from 'components/common/styles';
+import { Claims } from 'constants/claims';
 import { useApiProjects } from 'hooks/pims-api/useApiProjects';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
 import { Api_Project } from 'models/api/Project';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { FaPlus } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 
 import { IProjectFilter } from '../interfaces';
 import { defaultFilter, ProjectFilter } from './ProjectFilter/ProjectFilter';
@@ -15,6 +20,8 @@ import * as Styled from './styles';
  */
 export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { searchProjects } = useApiProjects();
+  const { hasClaim } = useKeycloakWrapper();
+  const history = useHistory();
 
   const {
     results,
@@ -59,6 +66,12 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
             </Col>
           </Row>
         </Styled.PageToolbar>
+        {hasClaim(Claims.PROJECT_ADD) && (
+          <StyledAddButton onClick={() => history.push('/mapview/sidebar/project/new')}>
+            <FaPlus />
+            &nbsp;Create Project
+          </StyledAddButton>
+        )}
         <ProjectSearchResults
           results={results.map(x => ProjectSearchResultModel.fromApi(x))}
           totalItems={totalItems}
