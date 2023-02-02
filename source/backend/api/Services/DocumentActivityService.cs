@@ -28,6 +28,7 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<DocumentActivityService> logger,
             IDocumentActivityRepository documentActivityRepository,
+            IAcquisitionFileDocumentRepository documentFileRepository,
             IDocumentActivityTemplateRepository documentActivityTemplateRepository,
             IDocumentService documentService,
             IMapper mapper)
@@ -39,7 +40,7 @@ namespace Pims.Api.Services
             this.mapper = mapper;
         }
 
-        public IList<PimsActivityInstanceDocument> GetFileDocuments(FileType fileType, long fileId)
+        public IList<PimsActivityInstanceDocument> GetFileActivityDocuments(FileType fileType, long fileId)
         {
             this.Logger.LogInformation("Retrieving PIMS document for activities related to the file of type $fileType", fileType);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
@@ -47,9 +48,9 @@ namespace Pims.Api.Services
             switch (fileType)
             {
                 case FileType.Research:
-                    return documentActivityRepository.GetAllByResearchFile(fileId);
+                    return documentActivityRepository.GetAllByResearchFileActivities(fileId);
                 case FileType.Acquisition:
-                    return documentActivityRepository.GetAllByAcquisitionFile(fileId);
+                    return documentActivityRepository.GetAllByAcquisitionFileActivities(fileId);
                 default:
                     throw new BadRequestException("FileT type not valid to get documents.");
             }
