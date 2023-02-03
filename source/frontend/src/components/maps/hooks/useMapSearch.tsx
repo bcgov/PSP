@@ -30,6 +30,7 @@ export const useMapSearch = () => {
     //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
     let tileData;
     try {
+      setPropertiesLoading(true);
       setProperties([]);
       const filter = filters?.length && filters.length > 1 ? filters[0] : undefined;
       if (filter?.latitude && filter.longitude) {
