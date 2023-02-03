@@ -29,6 +29,7 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.AddAcquisition(acquisitionFileDocument);
 
             // Assert
+            result.Id.Should().Be(1);
         }
 
         [Fact]
@@ -46,6 +47,8 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.DeleteAcquisition(acquisitionFileDocument);
 
             // Assert
+            result.Should().BeTrue();
+
         }
 
         [Fact]
