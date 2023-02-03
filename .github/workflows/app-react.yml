@@ -52,7 +52,7 @@ jobs:
       - run: npm run build --if-present
         working-directory: ${{env.working-directory}}
 
-      - run: npm run coverage
+      - run: npm run coverage -- --maxWorkers=2
         working-directory: ${{env.working-directory}}
 
       - name: Codecov

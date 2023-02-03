@@ -29,6 +29,7 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.AddResearch(ResearchFileDocument);
 
             // Assert
+            result.Id.Should().Be(1);
         }
 
         [Fact]
@@ -46,6 +47,7 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.DeleteResearch(ResearchFileDocument);
 
             // Assert
+            result.Should().BeTrue();
         }
 
         [Fact]
