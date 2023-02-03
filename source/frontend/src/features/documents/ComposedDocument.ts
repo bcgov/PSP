@@ -41,8 +41,6 @@ export class DocumentRow {
     row.mayanDocumentId = relationship.document?.mayanDocumentId;
     row.statusTypeCode = relationship.document?.statusTypeCode;
     row.fileName = relationship.document?.fileName;
-    row.fileName = relationship.document?.fileName;
-    row.fileName = relationship.document?.fileName;
     row.appCreateTimestamp = relationship.document?.appCreateTimestamp;
     row.appCreateUserid = relationship.document?.appCreateUserid;
 

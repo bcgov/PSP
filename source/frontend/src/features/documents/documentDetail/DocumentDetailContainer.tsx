@@ -26,7 +26,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailContainerProps>
 > = props => {
   const [document, setDocument] = useState<ComposedDocument>({
-    pimsDocument: DocumentRow.toApi(props.pimsDocument),
+    pimsDocument: DocumentRow.toApi(props.pimsDocument).document,
   });
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
     Api_Storage_DocumentTypeMetadataType[]
