@@ -1,6 +1,6 @@
 import Claims from 'constants/claims';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
-import { getByText, render, RenderOptions, userEvent } from 'utils/test-utils';
+import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
 
