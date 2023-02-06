@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_RESEARCH_FILE_DOCUMENT")]
-    [Index(nameof(DocumentId), Name = "RFLDOC_DOCUMENT_ID_IDX")]
-    [Index(nameof(DocumentId), nameof(ResearchFileId), Name = "RFLDOC_RESEARCH_FILE_DOCUMENT_TUC", IsUnique = true)]
-    [Index(nameof(ResearchFileId), Name = "RFLDOC_RESEARCH_FILE_ID_IDX")]
-    public partial class PimsResearchFileDocument
+    [Table("PIMS_LEASE_NOTE")]
+    [Index(nameof(LeaseId), Name = "LESNOT_LEASE_ID_IDX")]
+    [Index(nameof(NoteId), nameof(LeaseId), Name = "LESNOT_LEASE_NOTE_TUC", IsUnique = true)]
+    [Index(nameof(NoteId), Name = "LESNOT_NOTE_ID_IDX")]
+    public partial class PimsLeaseNote
     {
         [Key]
-        [Column("RESEARCH_FILE_DOCUMENT_ID")]
-        public long ResearchFileDocumentId { get; set; }
-        [Column("RESEARCH_FILE_ID")]
-        public long ResearchFileId { get; set; }
-        [Column("DOCUMENT_ID")]
-        public long DocumentId { get; set; }
+        [Column("LEASE_NOTE_ID")]
+        public long LeaseNoteId { get; set; }
+        [Column("LEASE_ID")]
+        public long LeaseId { get; set; }
+        [Column("NOTE_ID")]
+        public long NoteId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -61,11 +61,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(DocumentId))]
-        [InverseProperty(nameof(PimsDocument.PimsResearchFileDocuments))]
-        public virtual PimsDocument Document { get; set; }
-        [ForeignKey(nameof(ResearchFileId))]
-        [InverseProperty(nameof(PimsResearchFile.PimsResearchFileDocuments))]
-        public virtual PimsResearchFile ResearchFile { get; set; }
+        [ForeignKey(nameof(LeaseId))]
+        [InverseProperty(nameof(PimsLease.PimsLeaseNotes))]
+        public virtual PimsLease Lease { get; set; }
+        [ForeignKey(nameof(NoteId))]
+        [InverseProperty(nameof(PimsNote.PimsLeaseNotes))]
+        public virtual PimsNote Note { get; set; }
     }
 }

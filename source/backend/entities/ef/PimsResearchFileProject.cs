@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_RESEARCH_FILE_DOCUMENT")]
-    [Index(nameof(DocumentId), Name = "RFLDOC_DOCUMENT_ID_IDX")]
-    [Index(nameof(DocumentId), nameof(ResearchFileId), Name = "RFLDOC_RESEARCH_FILE_DOCUMENT_TUC", IsUnique = true)]
-    [Index(nameof(ResearchFileId), Name = "RFLDOC_RESEARCH_FILE_ID_IDX")]
-    public partial class PimsResearchFileDocument
+    [Table("PIMS_RESEARCH_FILE_PROJECT")]
+    [Index(nameof(ProjectId), Name = "RFLPRJ_PROJECT_ID_IDX")]
+    [Index(nameof(ResearchFileId), Name = "RFLPRJ_RESEARCH_FILE_ID_IDX")]
+    [Index(nameof(ProjectId), nameof(ResearchFileId), Name = "RFLPRJ_RESEARCH_FILE_PROJECT_TUC", IsUnique = true)]
+    public partial class PimsResearchFileProject
     {
         [Key]
-        [Column("RESEARCH_FILE_DOCUMENT_ID")]
-        public long ResearchFileDocumentId { get; set; }
+        [Column("RESEARCH_FILE_PROJECT_ID")]
+        public long ResearchFileProjectId { get; set; }
         [Column("RESEARCH_FILE_ID")]
         public long ResearchFileId { get; set; }
-        [Column("DOCUMENT_ID")]
-        public long DocumentId { get; set; }
+        [Column("PROJECT_ID")]
+        public long ProjectId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -61,11 +61,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(DocumentId))]
-        [InverseProperty(nameof(PimsDocument.PimsResearchFileDocuments))]
-        public virtual PimsDocument Document { get; set; }
+        [ForeignKey(nameof(ProjectId))]
+        [InverseProperty(nameof(PimsProject.PimsResearchFileProjects))]
+        public virtual PimsProject Project { get; set; }
         [ForeignKey(nameof(ResearchFileId))]
-        [InverseProperty(nameof(PimsResearchFile.PimsResearchFileDocuments))]
+        [InverseProperty(nameof(PimsResearchFile.PimsResearchFileProjects))]
         public virtual PimsResearchFile ResearchFile { get; set; }
     }
 }
