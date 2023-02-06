@@ -32,6 +32,7 @@ export const mockProjects = (): Api_Project[] => [
 ];
 
 export const mockProjectPostResponse = (
+  id: number = 1,
   rowVersion: number = 1,
   description: string = 'TRANS-CANADA HWY - 10',
   code: string,
@@ -39,7 +40,7 @@ export const mockProjectPostResponse = (
   statusCode: string = 'AC',
   summary: string = 'NEW PROJECT',
 ): Api_Project => ({
-  id: 1,
+  id: id,
   rowVersion: rowVersion,
   code: code,
   description: description,
@@ -70,7 +71,7 @@ export const mockProjectGetResponse = (): Api_Project => ({
     isDisabled: false,
   },
   regionCode: {
-    id: 0,
+    id: 1,
     code: '1',
     description: 'South Coast Region',
   },
@@ -104,7 +105,7 @@ export const mockProjectGetResponse = (): Api_Project => ({
     },
   ],
   appCreateTimestamp: '2023-02-01T00:48:16.987',
-  appLastUpdateTimestamp: '2023-02-01T00:48:16.987',
+  appLastUpdateTimestamp: '2023-02-02T00:48:16.987',
   appLastUpdateUserid: 'USER_A',
   appCreateUserid: 'USER_B',
   appLastUpdateUserGuid: '77777777-7777-7777-7777-777777777777',

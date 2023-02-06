@@ -9,8 +9,8 @@ import { Api_Project } from 'models/api/Project';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
+import { ProjectForm } from '../models';
 import AddProjectContainer, { IAddProjectContainerProps } from './AddProjectContainer';
-import { ProjectForm } from './models';
 
 jest.mock('@react-keycloak/web');
 
@@ -132,6 +132,7 @@ describe('AddProjectContainer component', () => {
       .reply(
         201,
         mockProjectPostResponse(
+          1,
           1,
           formValues.projectName,
           formValues.projectNumber,

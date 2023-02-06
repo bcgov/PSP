@@ -6,7 +6,7 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
-import { ProjectForm } from './models';
+import { ProjectForm } from '../models';
 
 export interface IProductSubFormProps {
   index: number;

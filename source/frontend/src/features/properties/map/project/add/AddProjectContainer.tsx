@@ -11,8 +11,8 @@ import { mapLookupCode } from 'utils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddProjectForm } from '../hooks/useAddProjectFormManagement';
+import { ProjectForm } from '../models';
 import AddProjectForm from './AddProjectForm';
-import { ProjectForm } from './models';
 
 export interface IAddProjectContainerProps {
   onClose?: () => void;

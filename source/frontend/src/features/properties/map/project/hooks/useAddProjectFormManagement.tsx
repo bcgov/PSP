@@ -4,7 +4,7 @@ import { Api_Project } from 'models/api/Project';
 import { useCallback } from 'react';
 
 import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
-import { ProjectForm } from '../add/models';
+import { ProjectForm } from '../models';
 
 export interface IUseAddProjectFormProps {
   onSuccess?: (project: Api_Project) => void;

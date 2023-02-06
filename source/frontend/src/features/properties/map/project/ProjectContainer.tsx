@@ -6,7 +6,7 @@ import { useCallback, useContext, useEffect, useReducer, useState } from 'react'
 import * as Yup from 'yup';
 
 import { SideBarContext } from '../context/sidebarContext';
-import { ProjectForm } from './add/models';
+import { ProjectForm } from './models';
 import { ProjectTabNames } from './ProjectTabs';
 
 export interface IProjectContainerViewProps {
@@ -46,22 +46,6 @@ export interface IProjectPage {
 export enum ProjectPageNames {
   DETAILS = 'details',
 }
-
-// export const projectPages: Map<ProjectPageNames, IProjectPage> = new Map<
-//   ProjectPageNames,
-//   IProjectPage
-// >([
-//   [
-//     ProjectPageNames.DETAILS,
-//     {
-//       component: UpdateProjectContainer,
-//       title: 'Project details',
-//       validation: AddProjectYupSchema,
-//       claims: '',
-//       editable: true,
-//     },
-//   ],
-// ]);
 
 // Interface for our internal state
 export interface ProjectContainerState {
@@ -111,8 +95,8 @@ const ProjectContainer: React.FunctionComponent<
 
   useEffect(() => setProjectLoading(loadingProject), [loadingProject, setProjectLoading]);
 
-  const onSuccess = () => {
-    fetchProject();
+  const onSuccess = async () => {
+    await fetchProject();
     setContainerState({ activeEditForm: undefined, isEditing: false });
   };
 

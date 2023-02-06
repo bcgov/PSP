@@ -52,19 +52,17 @@ export const useProjectProvider = () => {
       [getProject],
     ),
     requestName: 'RetrieveProject',
-    onSuccess: useAxiosSuccessHandler('Project retrieved'),
     onError: useAxiosErrorHandler('Failed to load Project'),
   });
 
   const updateProject = useApiRequestWrapper<
-    (...args: any[]) => Promise<AxiosResponse<Api_Project, any>>
+    (project: Api_Project) => Promise<AxiosResponse<Api_Project, any>>
   >({
     requestFunction: useCallback(
       async (project: Api_Project) => await putProject(project),
       [putProject],
     ),
     requestName: 'UpdateProject',
-    onSuccess: useAxiosSuccessHandler('Project updated'),
     throwError: true,
   });
 

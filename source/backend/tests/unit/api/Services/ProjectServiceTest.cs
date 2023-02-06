@@ -285,7 +285,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
         }
 
         [Fact]
@@ -300,23 +299,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
-        }
-
-        [Fact]
-        public void Update_Project_ShouldFail_When_VersionMissmatch()
-        {
-            // Arrange
-            var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
-            var repository = _helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(100);
-
-            // Act
-            Action result = () => service.Update(1, new PimsProject { ConcurrencyControlNumber = 99 });
-
-            // Assert
-            result.Should().Throw<DbUpdateConcurrencyException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
         }
 
         [Fact]

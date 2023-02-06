@@ -7,7 +7,7 @@ import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ProjectForm } from './models';
+import { ProjectForm } from '../models';
 import ProductsArrayForm from './ProductsArrayForm';
 
 export interface IAddProjectFormProps {

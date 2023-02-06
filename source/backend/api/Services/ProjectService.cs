@@ -109,18 +109,11 @@ namespace Pims.Api.Services
             return _projectRepository.Get(newProject.Id);
         }
 
-        private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
-        {
-            return await _projectRepository.GetPageAsync(filter);
-        }
-
         public PimsProject Update(long id, PimsProject project)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
             project.ThrowIfNull(nameof(project));
             _logger.LogInformation($"Updating project with id ${project.Id}");
-
-            ValidateVersion(id, project);
 
             var updatedProject = _projectRepository.Update(project);
             _projectRepository.CommitTransaction();
@@ -128,13 +121,9 @@ namespace Pims.Api.Services
             return updatedProject;
         }
 
-        private void ValidateVersion(long id, PimsProject project)
+        private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
         {
-            long currentRowVersion = _projectRepository.GetRowVersion(id);
-            if (currentRowVersion != project.ConcurrencyControlNumber)
-            {
-                throw new DbUpdateConcurrencyException("You are working with an older version of this project file, please refresh the application and retry.");
-            }
+            return await _projectRepository.GetPageAsync(filter);
         }
     }
 }
