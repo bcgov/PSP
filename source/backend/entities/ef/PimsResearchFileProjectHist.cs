@@ -8,19 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_RESEARCH_FILE_DOCUMENT")]
-    [Index(nameof(DocumentId), Name = "RFLDOC_DOCUMENT_ID_IDX")]
-    [Index(nameof(DocumentId), nameof(ResearchFileId), Name = "RFLDOC_RESEARCH_FILE_DOCUMENT_TUC", IsUnique = true)]
-    [Index(nameof(ResearchFileId), Name = "RFLDOC_RESEARCH_FILE_ID_IDX")]
-    public partial class PimsResearchFileDocument
+    [Table("PIMS_RESEARCH_FILE_PROJECT_HIST")]
+    [Index(nameof(ResearchFileProjectHistId), nameof(EndDateHist), Name = "PIMS_RFLPRJ_H_UK", IsUnique = true)]
+    public partial class PimsResearchFileProjectHist
     {
         [Key]
-        [Column("RESEARCH_FILE_DOCUMENT_ID")]
-        public long ResearchFileDocumentId { get; set; }
+        [Column("_RESEARCH_FILE_PROJECT_HIST_ID")]
+        public long ResearchFileProjectHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("RESEARCH_FILE_PROJECT_ID")]
+        public long ResearchFileProjectId { get; set; }
         [Column("RESEARCH_FILE_ID")]
         public long ResearchFileId { get; set; }
-        [Column("DOCUMENT_ID")]
-        public long DocumentId { get; set; }
+        [Column("PROJECT_ID")]
+        public long ProjectId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -60,12 +64,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(DocumentId))]
-        [InverseProperty(nameof(PimsDocument.PimsResearchFileDocuments))]
-        public virtual PimsDocument Document { get; set; }
-        [ForeignKey(nameof(ResearchFileId))]
-        [InverseProperty(nameof(PimsResearchFile.PimsResearchFileDocuments))]
-        public virtual PimsResearchFile ResearchFile { get; set; }
     }
 }
