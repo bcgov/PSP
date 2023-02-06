@@ -9,6 +9,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   fileNo?: number;
   fileNumber?: string;
   fileName?: string = '';
+  legacyFileNumber?: string = '';
   assignedDate?: string;
   deliveryDate?: string;
   rowVersion?: number;
@@ -30,6 +31,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
       id: this.id,
       fileNo: this.fileNo,
       fileNumber: this.fileNumber,
+      legacyFileNumber: this.legacyFileNumber,
       fileName: this.fileName,
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
@@ -57,6 +59,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
     newForm.id = model.id;
     newForm.fileNo = model.fileNo;
     newForm.fileNumber = model.fileNumber;
+    newForm.legacyFileNumber = model.legacyFileNumber;
     newForm.fileName = model.fileName || '';
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;

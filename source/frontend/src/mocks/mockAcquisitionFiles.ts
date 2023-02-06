@@ -13,6 +13,7 @@ export const mockAcquisitionFileResponse = (
     code: '001',
     description: `Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to`,
   },
+  legacyFileNumber: 'legacy file number',
   assignedDate: '2022-06-27T00:00:00',
   deliveryDate: '2022-07-29T00:00:00',
   fileStatusTypeCode: {

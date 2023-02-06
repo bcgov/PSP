@@ -1,5 +1,5 @@
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { render, RenderOptions } from 'utils/test-utils';
+import { render, RenderOptions, waitForElementToBeRemoved } from 'utils/test-utils';
 
 import {
   AcquisitionSearchResults,
@@ -47,5 +47,12 @@ describe('Acquisition Search Results Table', () => {
 
     expect(tableRows.length).toBe(0);
     expect(toasts[0]).toBeVisible();
+  });
+
+  it('displays historical file #', async () => {
+    const { getByText, findAllByText } = setup({ results: [] });
+
+    await findAllByText('No matching results can be found. Try widening your search criteria.');
+    expect(getByText('Historical file #')).toBeVisible();
   });
 });

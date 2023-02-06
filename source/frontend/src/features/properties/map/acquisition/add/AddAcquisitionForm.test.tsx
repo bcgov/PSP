@@ -104,4 +104,10 @@ describe('AddAcquisitionForm component', () => {
     expect(validationSchema).toBeCalled();
     expect(await findByText(/Acquisition file name must be at most 500 characters/i)).toBeVisible();
   });
+
+  it('should display historical field input', async () => {
+    const { getByText } = setup({ initialValues });
+
+    expect(getByText(/Historical file number/g)).toBeVisible();
+  });
 });

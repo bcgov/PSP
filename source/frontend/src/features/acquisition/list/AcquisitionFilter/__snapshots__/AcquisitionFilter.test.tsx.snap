@@ -340,7 +340,7 @@ exports[`Acquisition Filter matches snapshot 1`] = `
                 class="form-control"
                 id="input-acquisitionFileNameOrNumber"
                 name="acquisitionFileNameOrNumber"
-                placeholder="Acquisition file name or number"
+                placeholder="Acquisition file number or name or historical file number"
                 title=""
                 value=""
               />
