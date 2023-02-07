@@ -49,10 +49,12 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(o => o.Organization)
                 .Include(r => r.RequestorOrganizationNavigation)
                 .Include(r => r.PimsPropertyResearchFiles)
-                .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTypes)
-                .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
+                    .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTypes)
+                    .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
                 .Include(r => r.PimsResearchFilePurposes)
                     .ThenInclude(rp => rp.ResearchPurposeTypeCodeNavigation)
+                .Include(r => r.PimsResearchFileProjects)
+                    .ThenInclude(rp => rp.Project)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
@@ -127,7 +129,8 @@ namespace Pims.Dal.Repositories
 
             researchFile.PimsResearchFilePurposes = purposes;
 
-            this.Context.PimsResearchFiles.Update(researchFile);
+            Context.PimsResearchFiles.Update(researchFile);
+            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject>(p => p.PimsResearchFileProjects, researchFile.Id, researchFile.PimsResearchFileProjects.ToArray());
             return researchFile;
         }
 

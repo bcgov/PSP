@@ -27,6 +27,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.RequestorPerson, src => src.RequestorNameNavigation)
                 .Map(dest => dest.RequestorOrganization, src => src.RequestorOrganizationNavigation)
                 .Map(dest => dest.ResearchFilePurposes, src => src.PimsResearchFilePurposes)
+                .Map(dest => dest.ResearchFileProjects, src => src.PimsResearchFileProjects)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<ResearchFileModel, Entity.PimsResearchFile>()
@@ -48,6 +49,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.RequestorName, src => src.RequestorPerson.Id)
                 .Map(dest => dest.RequestorOrganization, src => src.RequestorOrganization.Id)
                 .Map(dest => dest.PimsResearchFilePurposes, src => src.ResearchFilePurposes)
+                .Map(dest => dest.PimsResearchFileProjects, src => src.ResearchFileProjects)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

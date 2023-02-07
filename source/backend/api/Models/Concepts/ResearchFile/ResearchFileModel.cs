@@ -37,6 +37,8 @@ namespace Pims.Api.Models.Concepts
         public OrganizationModel RequestorOrganization { get; set; }
 
         public IList<ResearchFilePurposeModel> ResearchFilePurposes { get; set; }
+
+        public IList<ResearchFileProjectModel> ResearchFileProjects { get; set; }
         #endregion
     }
 }
