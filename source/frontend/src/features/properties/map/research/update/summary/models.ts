@@ -1,11 +1,16 @@
 import {
   fromApiOrganization,
   fromApiPerson,
+  IAutocompletePrediction,
   IContactSearchResult,
   toOrganization,
   toPerson,
 } from 'interfaces';
-import { Api_ResearchFile, Api_ResearchFilePurpose } from 'models/api/ResearchFile';
+import {
+  Api_ResearchFile,
+  Api_ResearchFileProject,
+  Api_ResearchFilePurpose,
+} from 'models/api/ResearchFile';
 
 export class ResearchFilePurposeFormModel {
   public id?: string;
@@ -31,6 +36,34 @@ export class ResearchFilePurposeFormModel {
   }
 }
 
+export class ResearchFileProjectFormModel {
+  public id?: number;
+  public fileId?: number;
+  public project?: IAutocompletePrediction;
+
+  public static fromApi(base: Api_ResearchFileProject): ResearchFileProjectFormModel {
+    const newModel = new ResearchFileProjectFormModel();
+    newModel.id = base.id;
+    newModel.fileId = base.fileId;
+    newModel.project =
+      base.project !== undefined
+        ? { id: base.project.id!, text: base.project.description || '' }
+        : undefined;
+    return newModel;
+  }
+
+  public toApi(): Api_ResearchFileProject {
+    return {
+      id: this.id,
+      fileId: this.fileId,
+      project:
+        this.project?.id !== undefined && this.project?.id !== 0
+          ? { id: this.project?.id }
+          : undefined,
+    };
+  }
+}
+
 export class UpdateResearchSummaryFormModel {
   public id?: number;
   public name?: string;
@@ -50,6 +83,7 @@ export class UpdateResearchSummaryFormModel {
   public requestSourceTypeDescription?: string;
   public requestor?: IContactSearchResult;
   public researchFilePurposes?: ResearchFilePurposeFormModel[];
+  public researchFileProjects: ResearchFileProjectFormModel[] = [];
   public rowVersion?: number;
 
   public static fromApi(base: Api_ResearchFile): UpdateResearchSummaryFormModel {
@@ -79,6 +113,8 @@ export class UpdateResearchSummaryFormModel {
     model.researchFilePurposes = base.researchFilePurposes?.map(x =>
       ResearchFilePurposeFormModel.fromApi(x),
     );
+    model.researchFileProjects =
+      base.researchFileProjects?.map(x => ResearchFileProjectFormModel.fromApi(x)) || [];
     model.rowVersion = base.rowVersion;
     return model;
   }
@@ -108,6 +144,9 @@ export class UpdateResearchSummaryFormModel {
       requestorPerson: toPerson(this.requestor),
       requestorOrganization: toOrganization(this.requestor),
       researchFilePurposes: this.researchFilePurposes?.map(x => x.toApi()),
+      researchFileProjects: this.researchFileProjects
+        .map(x => x.toApi())
+        .filter(rp => rp?.project !== undefined),
     };
   }
 }

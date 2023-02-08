@@ -6,6 +6,7 @@ import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
+import { Api_Project } from './Project';
 
 export interface Api_ResearchFilePropertyPurposeType extends Api_ConcurrentVersion {
   id?: number;
@@ -36,9 +37,16 @@ export interface Api_ResearchFile extends Api_File, Api_AuditFields {
   requestorPerson?: Api_Person;
   requestorOrganization?: Api_Organization;
   researchFilePurposes?: Api_ResearchFilePurpose[];
+  researchFileProjects?: Api_ResearchFileProject[];
 }
 
 export interface Api_ResearchFilePurpose extends Api_ConcurrentVersion, Api_AuditFields {
   id?: string;
   researchPurposeTypeCode?: Api_TypeCode<string>;
+}
+
+export interface Api_ResearchFileProject extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  fileId?: number;
+  project?: Api_Project;
 }

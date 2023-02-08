@@ -1,4 +1,4 @@
-import { Input, Select, TextArea } from 'components/common/form';
+import { AsyncTypeahead, Input, Select, TextArea } from 'components/common/form';
 import { ContactInput } from 'components/common/form/ContactInput';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { InlineFastDatePicker } from 'components/common/form/styles';
@@ -8,6 +8,7 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { IContactSearchResult } from 'interfaces';
 import Multiselect from 'multiselect-react-dropdown';
 import * as React from 'react';
@@ -26,9 +27,7 @@ export interface IUpdateSummaryFormProps {
   formikProps: FormikProps<UpdateResearchSummaryFormModel>;
 }
 
-const UpdateSummaryForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdateSummaryFormProps>
-> = props => {
+const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = props => {
   const { values } = useFormikContext<UpdateResearchSummaryFormModel>();
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
   const requestSourceTypeOptions = getOptionsByType(API.REQUEST_SOURCE_TYPES);
@@ -78,6 +77,8 @@ const UpdateSummaryForm: React.FunctionComponent<
     setShowContactManager(false);
   }
 
+  const { handleTypeaheadSearch, isTypeaheadLoading, matchedProjects } = useProjectTypeahead();
+
   return (
     <StyledSummarySection>
       <Section header="Research File Information">
@@ -94,6 +95,17 @@ const UpdateSummaryForm: React.FunctionComponent<
           <Input field="name" />
         </SectionField>
         <ResearchFileNameGuide />
+      </Section>
+      <Section header="Project">
+        <SectionField label="Ministry project">
+          <AsyncTypeahead
+            field="project"
+            labelKey="text"
+            isLoading={isTypeaheadLoading}
+            options={matchedProjects}
+            onSearch={handleTypeaheadSearch}
+          />
+        </SectionField>
       </Section>
       <Section header="Roads">
         <SectionField label="Road name">
