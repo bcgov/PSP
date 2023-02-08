@@ -16,6 +16,7 @@ export interface IProjectContainerViewProps {
   activeTab?: ProjectTabNames;
   isEditing: boolean;
   showConfirmModal: boolean;
+  isSubmitting: boolean;
   onSetContainerState: (value: Partial<ProjectContainerState>) => void;
   onClose: () => void;
   onSetProject: (project: Api_Project) => void;
@@ -53,6 +54,7 @@ export interface ProjectContainerState {
   activeEditForm?: ProjectPageNames;
   activeTab?: ProjectTabNames;
   showConfirmModal: boolean;
+  isSubmitting: boolean;
 }
 
 const initialState: ProjectContainerState = {
@@ -60,6 +62,7 @@ const initialState: ProjectContainerState = {
   activeEditForm: undefined,
   activeTab: undefined,
   showConfirmModal: false,
+  isSubmitting: false,
 };
 
 const ProjectContainer: React.FunctionComponent<
@@ -97,7 +100,7 @@ const ProjectContainer: React.FunctionComponent<
 
   const onSuccess = async () => {
     await fetchProject();
-    setContainerState({ activeEditForm: undefined, isEditing: false });
+    setContainerState({ activeEditForm: undefined, isEditing: false, isSubmitting: false });
   };
 
   const title = containerState.isEditing ? 'Update Project' : 'Project';
@@ -109,6 +112,7 @@ const ProjectContainer: React.FunctionComponent<
       loadingProject={loadingProject}
       isEditing={containerState.isEditing}
       showConfirmModal={containerState.showConfirmModal}
+      isSubmitting={containerState.isSubmitting}
       onSetContainerState={setContainerState}
       onSetProject={setProject}
       onClose={onClose}

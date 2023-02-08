@@ -15,6 +15,7 @@ const mockProps: IProjectContainerViewProps = {
   activeTab: ProjectTabNames.projectDetails,
   isEditing: false,
   showConfirmModal: false,
+  isSubmitting: false,
   onClose: jest.fn(),
   onSetProject: jest.fn(),
   onSetContainerState: jest.fn(),
@@ -40,10 +41,4 @@ describe('ProjectSummaryView component', () => {
     const { asFragment } = setup({ ...mockProps });
     expect(asFragment()).toMatchSnapshot();
   });
-
-  // it('displays modal when form is dirty and cancel is clicked', async () => {
-  //   setup({ ...mockProps, showConfirmModal: true });
-
-  //   expect(screen.getByText('Confirm changes')).toBeVisible();
-  // });
 });

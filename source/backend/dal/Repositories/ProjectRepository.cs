@@ -111,10 +111,10 @@ namespace Pims.Dal.Repositories
             using var queryScope = Logger.QueryScope();
             project.ThrowIfNull(nameof(project));
 
-            var existingAcqFile = Context.PimsProjects
+            var existingProject = Context.PimsProjects
                 .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
 
-            Context.Entry(existingAcqFile).CurrentValues.SetValues(project);
+            Context.Entry(existingProject).CurrentValues.SetValues(project);
 
             return project;
         }
