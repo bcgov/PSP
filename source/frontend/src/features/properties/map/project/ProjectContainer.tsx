@@ -6,7 +6,7 @@ import { useCallback, useContext, useEffect, useReducer, useState } from 'react'
 import * as Yup from 'yup';
 
 import { SideBarContext } from '../context/sidebarContext';
-import { ProjectForm } from './add/models';
+import { ProjectForm } from './models';
 import { ProjectTabNames } from './ProjectTabs';
 
 export interface IProjectContainerViewProps {
@@ -15,9 +15,11 @@ export interface IProjectContainerViewProps {
   loadingProject?: boolean;
   activeTab?: ProjectTabNames;
   isEditing: boolean;
+  showConfirmModal: boolean;
   onSetContainerState: (value: Partial<ProjectContainerState>) => void;
   onClose: () => void;
   onSetProject: (project: Api_Project) => void;
+  onSuccess: () => void;
 }
 
 export interface IProjectContainerProps {
@@ -44,20 +46,6 @@ export interface IProjectPage {
 export enum ProjectPageNames {
   DETAILS = 'details',
 }
-
-export const projectPages: Map<ProjectPageNames, IProjectPage> = new Map<
-  ProjectPageNames,
-  IProjectPage
->([
-  // [
-  //   ProjectPageNames.DETAILS,
-  //   {
-  //     component: UpdateProjectContainer,
-  //     title: 'Project details',
-  //     validation: AddProjectYupSchema,
-  //   },
-  // ],
-]);
 
 // Interface for our internal state
 export interface ProjectContainerState {
@@ -107,6 +95,11 @@ const ProjectContainer: React.FunctionComponent<
 
   useEffect(() => setProjectLoading(loadingProject), [loadingProject, setProjectLoading]);
 
+  const onSuccess = async () => {
+    await fetchProject();
+    setContainerState({ activeEditForm: undefined, isEditing: false });
+  };
+
   const title = containerState.isEditing ? 'Update Project' : 'Project';
   return (
     <View
@@ -115,9 +108,11 @@ const ProjectContainer: React.FunctionComponent<
       activeTab={containerState.activeTab}
       loadingProject={loadingProject}
       isEditing={containerState.isEditing}
+      showConfirmModal={containerState.showConfirmModal}
       onSetContainerState={setContainerState}
       onSetProject={setProject}
       onClose={onClose}
+      onSuccess={onSuccess}
     />
   );
 };

@@ -1,81 +1,68 @@
-import { Input, Select, SelectOption, TextArea } from 'components/common/form';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { Formik, FormikHelpers, FormikProps } from 'formik';
-import React from 'react';
-import { Container } from 'react-bootstrap';
-import styled from 'styled-components';
+import { SelectOption } from 'components/common/form';
+import * as API from 'constants/API';
+import { FormikHelpers, FormikProps } from 'formik';
+import { useProjectProvider } from 'hooks/providers/useProjectProvider';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { Api_Project } from 'models/api/Project';
+import React, { ForwardedRef } from 'react';
+import { mapLookupCode } from 'utils/mapLookupCode';
 
-import { ProjectForm } from '../add/models';
+import { ProjectForm } from '../models';
 
 export interface IUpdateProjectContainerProps {
+  project: Api_Project;
+  View: React.FC<IUpdateProjectContainerViewProps>;
+  onSuccess: () => void;
+}
+
+export interface IUpdateProjectContainerViewProps {
   initialValues: ProjectForm;
   projectStatusOptions: SelectOption[];
   projectRegionOptions: SelectOption[];
-  validationSchema?: any | (() => any);
+  formikRef: ForwardedRef<FormikProps<ProjectForm>>;
   onSubmit: (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => void | Promise<any>;
 }
 
-const UpdateProjectContainer = React.forwardRef<FormikProps<any>, IUpdateProjectContainerProps>(
-  (props, formikRef) => {
-    const {
-      initialValues,
-      projectStatusOptions,
-      projectRegionOptions,
-      validationSchema,
-      onSubmit,
-    } = props;
+const UpdateProjectContainer = React.forwardRef<
+  FormikProps<ProjectForm>,
+  IUpdateProjectContainerProps
+>((props, formikRef) => {
+  const { project, View, onSuccess } = props;
 
-    const handleSubmit = (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
-      onSubmit(values, formikHelpers);
-    };
+  const {
+    updateProject: { execute: updateProject },
+  } = useProjectProvider();
+  const { getOptionsByType, getByType } = useLookupCodeHelpers();
 
-    return (
-      <Formik<ProjectForm>
-        enableReinitialize
-        innerRef={formikRef}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {formikProps => (
-          <>
-            <Container>
-              <Section>
-                <SectionField label="Project name" required>
-                  <Input field="projectName" />
-                </SectionField>
-                <SectionField label="Project number">
-                  <Input field="projectNumber" placeholder="if known" />
-                </SectionField>
-                <SectionField label="Status">
-                  <Select
-                    field="projectStatusType"
-                    options={projectStatusOptions}
-                    placeholder="Select..."
-                  />
-                </SectionField>
-                <SectionField label="MoTI region" required>
-                  <Select field="region" options={projectRegionOptions} placeholder="Select..." />
-                </SectionField>
-                <SectionField label="Project summary">
-                  <MediumTextArea field="summary" />
-                </SectionField>
-              </Section>
-            </Container>
-          </>
-        )}
-      </Formik>
-    );
-  },
-);
+  const intialValues = ProjectForm.fromApi(project);
+  const projectStatusTypeCodes = getOptionsByType(API.PROJECT_STATUS_TYPES);
+  const regionTypeCodes = getByType(API.REGION_TYPES).map(c => mapLookupCode(c));
+
+  const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
+    try {
+      const updatedProject = values.toApi();
+      const response = await updateProject(updatedProject);
+
+      if (!!response?.id) {
+        formikHelpers?.resetForm();
+        if (typeof onSuccess === 'function') {
+          onSuccess();
+        }
+      }
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
+  };
+
+  return (
+    <View
+      formikRef={formikRef}
+      projectRegionOptions={regionTypeCodes}
+      projectStatusOptions={projectStatusTypeCodes}
+      initialValues={intialValues}
+      onSubmit={handleSubmit}
+    />
+  );
+});
 
 export default UpdateProjectContainer;
-
-export const MediumTextArea = styled(TextArea)`
-  textarea.form-control {
-    min-width: 80rem;
-    height: 7rem;
-    resize: none;
-  }
-`;

@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
@@ -96,6 +99,22 @@ namespace Pims.Api.Areas.Projects.Controllers
         {
             var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
             return new JsonResult(_mapper.Map<ProjectModel>(newProject));
+        }
+
+        /// <summary>
+        /// Updates the project.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
+        [HasPermission(Permissions.ProjectEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public IActionResult UpdateProject([FromRoute]long id, [FromBody] ProjectModel model)
+        {
+            var updatedProject = _projectService.Update(id, _mapper.Map<Dal.Entities.PimsProject>(model));
+
+            return new JsonResult(updatedProject);
         }
 
         /// <summary>

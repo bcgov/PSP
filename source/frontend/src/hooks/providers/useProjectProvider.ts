@@ -12,7 +12,7 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
  * hook that retrieves Project information.
  */
 export const useProjectProvider = () => {
-  const { getProjectProducts, postProject, getProject } = useApiProjects();
+  const { getProjectProducts, postProject, getProject, putProject } = useApiProjects();
   const { project, setProject } = useContext(ProjectStateContext);
 
   const { execute: retrieveProjectProducts, loading: retrieveProjectProductsLoading } =
@@ -52,8 +52,18 @@ export const useProjectProvider = () => {
       [getProject],
     ),
     requestName: 'RetrieveProject',
-    onSuccess: useAxiosSuccessHandler('Project retrieved'),
     onError: useAxiosErrorHandler('Failed to load Project'),
+  });
+
+  const updateProject = useApiRequestWrapper<
+    (project: Api_Project) => Promise<AxiosResponse<Api_Project, any>>
+  >({
+    requestFunction: useCallback(
+      async (project: Api_Project) => await putProject(project),
+      [putProject],
+    ),
+    requestName: 'UpdateProject',
+    throwError: true,
   });
 
   return useMemo(
@@ -64,6 +74,7 @@ export const useProjectProvider = () => {
       retrieveProjectProductsLoading,
       addProject: addProjectApi,
       getProject: getProjectApi,
+      updateProject: updateProject,
     }),
     [
       project,
@@ -72,6 +83,7 @@ export const useProjectProvider = () => {
       retrieveProjectProductsLoading,
       addProjectApi,
       getProjectApi,
+      updateProject,
     ],
   );
 };
