@@ -1,6 +1,7 @@
 import { Api_File } from 'models/api/File';
 import Api_TypeCode from 'models/api/TypeCode';
 
+import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Person } from './Person';
@@ -20,6 +21,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   // MOTI region
   regionCode?: Api_TypeCode<number>;
   acquisitionTeam?: Api_AcquisitionFilePerson[];
+  acquisitionFileOwners?: Api_AcquistionFileOwner[];
 
   project?: Api_Project;
   product?: Api_Product;
@@ -39,4 +41,15 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
   personProfileTypeCode?: string;
   personProfileType?: Api_TypeCode<string>;
   isDisabled?: boolean;
+}
+
+export interface Api_AcquistionFileOwner extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  rowVersion?: number;
+  acquisitionFileId?: number;
+  lastNameOrCorp1?: string;
+  lastNameOrCorp2?: string;
+  givenName?: string;
+  incorporationNumber?: string;
+  address?: Api_Address;
 }

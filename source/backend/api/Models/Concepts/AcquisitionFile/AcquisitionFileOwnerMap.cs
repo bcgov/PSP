@@ -1,0 +1,21 @@
+using Mapster;
+using Entity = Pims.Dal.Entities;
+
+namespace Pims.Api.Models.Concepts
+{
+    public class AcquisitionFileOwnerMap : IRegister
+    {
+        public void Register(TypeAdapterConfig config)
+        {
+            config.NewConfig<Entity.PimsAcquisitionOwner, AcquisitionFileOwnerModel>()
+                .Map(dest => dest.Id, src => src.AcquisitionOwnerId)
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
+                .Map(dest => dest.LastNameOrCorp1, src => src.LastNameOrCorpName1)
+                .Map(dest => dest.LastNameOrCorp2, src => src.LastNameOrCorpName2)
+                .Map(dest => dest.GivenName, src => src.GivenName)
+                .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
+                .Map(dest => dest.Address, src => src.Address)
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId);
+        }
+    }
+}
