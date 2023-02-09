@@ -9,8 +9,6 @@ import AcquisitionOwnersSummaryContainer, {
   IAcquisitionOwnersSummaryViewProps,
 } from './AcquistionOwnersSummaryContainer';
 
-let viewProps: IAcquisitionOwnersSummaryViewProps | undefined;
-
 const mockApi = {
   error: undefined,
   response: mockAcquisitionFileOwnersResponse(1),
@@ -32,8 +30,7 @@ const history = createMemoryHistory();
 
 // mock auth library
 jest.mock('@react-keycloak/web');
-const TestView: React.FC<IAcquisitionOwnersSummaryViewProps> = props => {
-  viewProps = props;
+const TestView: React.FC<IAcquisitionOwnersSummaryViewProps> = () => {
   return <span>Content Rendered</span>;
 };
 
@@ -50,7 +47,6 @@ describe('Acquistion Owners Summary container', () => {
   };
 
   beforeEach(() => {
-    viewProps = undefined;
     jest.resetAllMocks();
   });
 
