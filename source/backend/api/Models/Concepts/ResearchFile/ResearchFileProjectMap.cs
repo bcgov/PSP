@@ -19,7 +19,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ResearchFileProjectId, src => src.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.ProjectId, src => src.Project.Id)
-                .Map(dest => dest.ResearchFileId, src => src.File.Id)
+                .Map(dest => dest.ResearchFileId, src => src.FileId)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }
