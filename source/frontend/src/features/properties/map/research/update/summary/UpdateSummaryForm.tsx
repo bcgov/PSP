@@ -1,4 +1,4 @@
-import { AsyncTypeahead, Input, Select, TextArea } from 'components/common/form';
+import { Input, Select, TextArea } from 'components/common/form';
 import { ContactInput } from 'components/common/form/ContactInput';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { InlineFastDatePicker } from 'components/common/form/styles';
@@ -8,7 +8,6 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { IContactSearchResult } from 'interfaces';
 import Multiselect from 'multiselect-react-dropdown';
 import * as React from 'react';
@@ -16,6 +15,7 @@ import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { ResearchFileNameGuide } from '../../common/ResearchFileNameGuide';
+import { UpdateProjectsSubForm } from '../../common/updateProjects/UpdateProjectsSubForm';
 import { ResearchFilePurposeFormModel, UpdateResearchSummaryFormModel } from './models';
 
 interface MultiSelectOption {
@@ -77,8 +77,6 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
     setShowContactManager(false);
   }
 
-  const { handleTypeaheadSearch, isTypeaheadLoading, matchedProjects } = useProjectTypeahead();
-
   return (
     <StyledSummarySection>
       <Section header="Research File Information">
@@ -97,15 +95,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
         <ResearchFileNameGuide />
       </Section>
       <Section header="Project">
-        <SectionField label="Ministry project">
-          <AsyncTypeahead
-            field="project"
-            labelKey="text"
-            isLoading={isTypeaheadLoading}
-            options={matchedProjects}
-            onSearch={handleTypeaheadSearch}
-          />
-        </SectionField>
+        <UpdateProjectsSubForm field="researchFileProjects" fileId={values.id} />
       </Section>
       <Section header="Roads">
         <SectionField label="Road name">

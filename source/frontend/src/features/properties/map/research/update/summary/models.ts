@@ -1,16 +1,13 @@
 import {
   fromApiOrganization,
   fromApiPerson,
-  IAutocompletePrediction,
   IContactSearchResult,
   toOrganization,
   toPerson,
 } from 'interfaces';
-import {
-  Api_ResearchFile,
-  Api_ResearchFileProject,
-  Api_ResearchFilePurpose,
-} from 'models/api/ResearchFile';
+import { Api_ResearchFile, Api_ResearchFilePurpose } from 'models/api/ResearchFile';
+
+import { ResearchFileProjectFormModel } from '../../common/models';
 
 export class ResearchFilePurposeFormModel {
   public id?: string;
@@ -32,34 +29,6 @@ export class ResearchFilePurposeFormModel {
         id: this.researchPurposeTypeCode,
         description: this.researchPurposeTypeDescription,
       },
-    };
-  }
-}
-
-export class ResearchFileProjectFormModel {
-  public id?: number;
-  public fileId?: number;
-  public project?: IAutocompletePrediction;
-
-  public static fromApi(base: Api_ResearchFileProject): ResearchFileProjectFormModel {
-    const newModel = new ResearchFileProjectFormModel();
-    newModel.id = base.id;
-    newModel.fileId = base.fileId;
-    newModel.project =
-      base.project !== undefined
-        ? { id: base.project.id!, text: base.project.description || '' }
-        : undefined;
-    return newModel;
-  }
-
-  public toApi(): Api_ResearchFileProject {
-    return {
-      id: this.id,
-      fileId: this.fileId,
-      project:
-        this.project?.id !== undefined && this.project?.id !== 0
-          ? { id: this.project?.id }
-          : undefined,
     };
   }
 }
