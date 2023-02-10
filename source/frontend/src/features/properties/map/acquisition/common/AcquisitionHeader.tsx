@@ -15,6 +15,7 @@ export const AcquisitionHeader: React.FunctionComponent<
 > = ({ acquisitionFile }) => {
   const leftColumnWidth = '7';
   const leftColumnLabel = '3';
+  console.log(acquisitionFile);
 
   return (
     <StyledRow className="no-gutters">
@@ -30,8 +31,8 @@ export const AcquisitionHeader: React.FunctionComponent<
           <Col>
             <HeaderField label="Ministry project:" labelWidth={leftColumnLabel} contentWidth="9">
               {formatMinistryProject(
-                acquisitionFile?.ministryProjectNumber,
-                acquisitionFile?.ministryProjectName,
+                acquisitionFile?.project?.code,
+                acquisitionFile?.project?.description,
               )}
             </HeaderField>
           </Col>

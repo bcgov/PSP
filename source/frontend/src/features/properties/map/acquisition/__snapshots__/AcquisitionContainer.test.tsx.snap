@@ -150,9 +150,7 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
               <div
                 class="pl-1 text-left col-9"
               >
-                <strong>
-                  001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
-                </strong>
+                <strong />
               </div>
             </div>
           </div>
