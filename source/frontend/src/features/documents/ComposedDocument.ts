@@ -16,7 +16,7 @@ import Api_TypeCode from 'models/api/TypeCode';
 
 export interface ComposedDocument {
   mayanMetadata?: Api_Storage_DocumentMetadata[];
-  pimsDocument?: Api_Document;
+  pimsDocument?: Api_DocumentRelationship;
   documentDetail?: Api_Storage_DocumentDetail;
   mayanFileId?: number;
 }
@@ -118,8 +118,9 @@ export class DocumentUpdateFormData {
   ): DocumentUpdateFormData {
     var model = new DocumentUpdateFormData();
     model.documentId = composedDocument.pimsDocument?.id || 0;
-    model.mayanDocumentId = composedDocument.pimsDocument?.mayanDocumentId || 0;
-    model.documentStatusCode = composedDocument.pimsDocument?.statusTypeCode?.id?.toString() || '';
+    model.mayanDocumentId = composedDocument.pimsDocument?.document?.mayanDocumentId || 0;
+    model.documentStatusCode =
+      composedDocument.pimsDocument?.document?.statusTypeCode?.id?.toString() || '';
     model.documentMetadata = {};
     metadataTypes.forEach(metaType => {
       var foundMetadata = composedDocument.mayanMetadata?.find(
