@@ -1,15 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
-using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
 using Moq;
-using Pims.Api.Constants;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -52,13 +45,19 @@ namespace Pims.Api.Test.Services
             var projectList = new List<PimsProject>() { project };
 
             var repository = _helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>())).Returns(projectList);
+            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>())).Returns(projectList);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>());
 
             // Act
             var result = service.SearchProjects("query string", 1);
 
             // Assert
-            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Once);
+            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
