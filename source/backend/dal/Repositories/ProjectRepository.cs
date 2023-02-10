@@ -161,7 +161,19 @@ namespace Pims.Dal.Repositories
 
             if (filter.Sort?.Any() == true)
             {
-                query = query.OrderByProperty(filter.Sort);
+                var direction = filter.Sort[0].Split(" ").LastOrDefault();
+                if (filter.Sort[0].StartsWith("LastUpdatedBy"))
+                {
+                    query = direction == "asc" ? query.OrderBy(x => x.AppLastUpdateUserid) : query.OrderByDescending(x => x.AppLastUpdateUserid);
+                }
+                else if (filter.Sort[0].StartsWith("LastUpdatedDate"))
+                {
+                    query = direction == "asc" ? query.OrderBy(x => x.AppLastUpdateTimestamp) : query.OrderByDescending(x => x.AppLastUpdateTimestamp);
+                }
+                else
+                {
+                    query = query.OrderByProperty(filter.Sort);
+                }
             }
             else
             {
