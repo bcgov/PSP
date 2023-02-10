@@ -3,8 +3,8 @@ import { useApiAcquisitionFile } from 'hooks/pims-api/useApiAcquisitionFile';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import {
   Api_AcquisitionFile,
+  Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
-  Api_AcquistionFileOwner,
 } from 'models/api/AcquisitionFile';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
@@ -85,7 +85,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionOwnersApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_AcquistionFileOwner[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileOwner[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileOwners(acqFileId),

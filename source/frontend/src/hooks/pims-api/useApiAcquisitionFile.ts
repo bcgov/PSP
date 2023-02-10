@@ -2,8 +2,8 @@ import { IAcquisitionFilter } from 'features/acquisition/list/interfaces';
 import { IPagedItems } from 'interfaces';
 import {
   Api_AcquisitionFile,
+  Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
-  Api_AcquistionFileOwner,
 } from 'models/api/AcquisitionFile';
 import queryString from 'query-string';
 import React from 'react';
@@ -37,7 +37,7 @@ export const useApiAcquisitionFile = () => {
       getAcquisitionFileProperties: (acqFileId: number) =>
         api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
       getAcquisitionFileOwners: (acqFileId: number) =>
-        api.get<Api_AcquistionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
+        api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
     }),
     [api],
   );

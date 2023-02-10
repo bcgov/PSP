@@ -1,7 +1,7 @@
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFilePerson,
-  Api_AcquistionFileOwner,
+  Api_AcquisitionFileOwner,
 } from 'models/api/AcquisitionFile';
 import { formatApiPersonNames } from 'utils/personUtils';
 
@@ -13,7 +13,7 @@ export class DetailAcquisitionFile {
   acquisitionTypeDescription?: string;
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFilePerson[] = [];
-  acquisitionOwners: Api_AcquistionFileOwner[] = [];
+  acquisitionOwners: Api_AcquisitionFileOwner[] = [];
 
   static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();

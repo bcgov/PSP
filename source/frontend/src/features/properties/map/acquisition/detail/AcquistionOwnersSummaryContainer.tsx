@@ -1,4 +1,4 @@
-import { Api_AcquisitionFile, Api_AcquistionFileOwner } from 'models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 import { Api_Address } from 'models/api/Address';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -51,7 +51,7 @@ const AcquisitionOwnersSummaryContainer: React.FunctionComponent<
 
 export default AcquisitionOwnersSummaryContainer;
 
-export const getOwnerDisplayName = (owner: Api_AcquistionFileOwner): string => {
+export const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
   let nameDisplay = concatValues([owner.givenName, owner.lastNameOrCorp1]);
   if (owner.incorporationNumber && owner.incorporationNumber.trim() !== '') {
     nameDisplay = nameDisplay.concat(` (${owner.incorporationNumber})`);

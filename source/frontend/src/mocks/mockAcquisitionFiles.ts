@@ -1,4 +1,4 @@
-import { Api_AcquisitionFile, Api_AcquistionFileOwner } from 'models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 
 export const mockAcquisitionFileResponse = (
   id = 1,
@@ -160,7 +160,7 @@ export const mockAcquisitionFileResponse = (
 
 export const mockAcquisitionFileOwnersResponse = (
   acquistionFileId: number = 1,
-): Api_AcquistionFileOwner[] => [
+): Api_AcquisitionFileOwner[] => [
   {
     id: 1,
     acquisitionFileId: acquistionFileId,

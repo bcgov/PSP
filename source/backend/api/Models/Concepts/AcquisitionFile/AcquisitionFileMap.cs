@@ -49,6 +49,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
                 .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties)
                 .Map(dest => dest.PimsAcquisitionFilePeople, src => src.AcquisitionTeam)
+                .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
