@@ -15,7 +15,6 @@ export const AcquisitionHeader: React.FunctionComponent<
 > = ({ acquisitionFile }) => {
   const leftColumnWidth = '7';
   const leftColumnLabel = '3';
-  console.log(acquisitionFile);
 
   return (
     <StyledRow className="no-gutters">
