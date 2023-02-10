@@ -263,18 +263,21 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-OTHER"
               value="OTHER"
             >
               Other deposit
             </option>
             <option
               class="option"
+              data-testid="select-option-PET"
               value="PET"
             >
               Pet deposit
             </option>
             <option
               class="option"
+              data-testid="select-option-SECURITY"
               value="SECURITY"
             >
               Security deposit
@@ -738,18 +741,21 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-OTHER"
               value="OTHER"
             >
               Other deposit
             </option>
             <option
               class="option"
+              data-testid="select-option-PET"
               value="PET"
             >
               Pet deposit
             </option>
             <option
               class="option"
+              data-testid="select-option-SECURITY"
               value="SECURITY"
             >
               Security deposit

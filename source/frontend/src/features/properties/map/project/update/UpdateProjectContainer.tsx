@@ -1,7 +1,7 @@
 import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import { FormikHelpers, FormikProps } from 'formik';
-import { useProjectProvider } from 'hooks/providers/useProjectProvider';
+import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_Project } from 'models/api/Project';
 import React, { ForwardedRef } from 'react';

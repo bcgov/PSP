@@ -14,7 +14,7 @@ const mockApi = {
   loading: false,
 };
 
-jest.mock('hooks/providers/useProjectProvider', () => ({
+jest.mock('hooks/repositories/useProjectProvider', () => ({
   useProjectProvider: () => {
     return {
       updateProject: mockApi,
