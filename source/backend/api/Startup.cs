@@ -119,7 +119,7 @@ namespace Pims.Api
                 options.Converters.Add(new Int32ToStringJsonConverter());
             });
             services.Configure<Core.Http.Configuration.AuthClientOptions>(this.Configuration.GetSection("Keycloak"));
-            services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("Keycloak:OpenIdConnect"));
+            services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
             services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<Pims.Dal.PimsOptions>(this.Configuration.GetSection("Pims"));
             services.AddOptions();
