@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import {
   Api_DocumentRelationship,

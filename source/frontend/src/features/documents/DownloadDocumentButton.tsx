@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { LinkButton } from 'components/common/buttons';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
