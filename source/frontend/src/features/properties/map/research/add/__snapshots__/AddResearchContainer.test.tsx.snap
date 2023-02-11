@@ -87,7 +87,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c23.btn {
+  .c11.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -117,49 +117,49 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c23.btn:hover {
+.c11.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c23.btn:focus {
+.c11.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c23.btn.btn-primary {
+.c11.btn.btn-primary {
   border: none;
 }
 
-.c23.btn.btn-secondary {
+.c11.btn.btn-secondary {
   background: none;
 }
 
-.c23.btn.btn-info {
+.c11.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c23.btn.btn-info:hover,
-.c23.btn.btn-info:active,
-.c23.btn.btn-info:focus {
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
   background: none;
 }
 
-.c23.btn.btn-light {
+.c11.btn.btn-light {
   border: none;
 }
 
-.c23.btn.btn-dark {
+.c11.btn.btn-dark {
   border: none;
 }
 
-.c23.btn.btn-link {
+.c11.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -180,9 +180,9 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c23.btn.btn-link:hover,
-.c23.btn.btn-link:active,
-.c23.btn.btn-link:focus {
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -191,14 +191,14 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c23.btn.btn-link:disabled,
-.c23.btn.btn-link.disabled {
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c23.btn:disabled,
-.c23.btn:disabled:hover {
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -209,65 +209,65 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c23.Button .Button__icon {
+.c11.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c23.Button--icon-only:focus {
+.c11.Button--icon-only:focus {
   outline: none;
 }
 
-.c23.Button--icon-only .Button__icon {
+.c11.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c21 {
+.c23 {
   padding-right: 0;
 }
 
-.c21 .form-control {
+.c23 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c22:not(:first-child) {
+.c24:not(:first-child) {
   padding-left: 0;
 }
 
-.c22:not(:first-child) .form-control {
+.c24:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c24 {
+.c25 {
   font-size: 1.4rem;
 }
 
-.c12 {
+.c15 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c12 .nav-tabs {
+.c15 .nav-tabs {
   height: 2.4rem;
 }
 
-.c12 .nav-item {
+.c15 .nav-item {
   min-width: 7rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c12 .nav-item:hover {
+.c15 .nav-item:hover {
   border-color: transparent;
 }
 
-.c12 .nav-item.active {
+.c15 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c14 {
+.c16 {
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   border-bottom: solid 0.2rem;
@@ -288,6 +288,19 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 .c1 {
   height: 100%;
   width: 100%;
+}
+
+.c10 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c9 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 .c4 {
@@ -328,37 +341,24 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c25 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c13 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
-.c16:hover {
-  cursor: pointer;
-}
-
-.c19.required::before {
+.c21.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c18 {
+.c20 {
   font-weight: bold;
 }
 
-.c15.c15.c15 input,
-.c15.c15.c15 select,
-.c15.c15.c15 textarea {
+.c18:hover {
+  cursor: pointer;
+}
+
+.c17.c17.c17 input,
+.c17.c17.c17 select,
+.c17.c17.c17 textarea {
   background: none;
   border: none;
   resize: none;
@@ -368,50 +368,50 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c15.c15.c15 .form-label {
+.c17.c17.c17 .form-label {
   font-weight: bold;
 }
 
-.c17 {
+.c19 {
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c10 {
+.c13 {
   height: 100%;
 }
 
-.c10 .nav-tabs {
+.c13 .nav-tabs {
   height: 2.4rem;
 }
 
-.c10 .tab-content {
+.c13 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.4rem);
   overflow-y: auto;
 }
 
-.c10 .tab-content .tab-pane {
+.c13 .tab-content .tab-pane {
   position: relative;
 }
 
-.c11 {
+.c14 {
   height: auto;
 }
 
-.c11.tab-content {
+.c14.tab-content {
   height: auto;
 }
 
-.c20 {
+.c22 {
   border-radius: 0.5rem;
 }
 
-.c20 .idir-input-group .input-group-prepend select {
+.c22 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c20 .idir-input-group input {
+.c22 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
@@ -424,7 +424,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c9 {
+.c12 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
 }
@@ -576,8 +576,43 @@ exports[`AddResearchContainer component renders as expected 1`] = `
              This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
           </p>
         </div>
+        <div
+          class="c9 form-section"
+        >
+          <h2
+            class="c10"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Project
+              </div>
+              <div
+                class="col-1"
+              />
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <button
+              class="c11 Button btn btn-link"
+              data-testid="add-project"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                + Add another project
+              </div>
+            </button>
+          </div>
+        </div>
         <h2
-          class="c9"
+          class="c12"
         >
           Properties to include in this file:
         </h2>
@@ -593,10 +628,10 @@ exports[`AddResearchContainer component renders as expected 1`] = `
             class="col"
           >
             <div
-              class="c10 c11"
+              class="c13 c14"
             >
               <nav
-                class="c12 nav nav-tabs"
+                class="c15 nav nav-tabs"
                 role="tablist"
               >
                 <a
@@ -627,18 +662,18 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                   role="tabpanel"
                 >
                   <div
-                    class="c13 form-section"
+                    class="c9 form-section"
                   >
                     <div
                       class="collapse show"
                     >
                       <h3
-                        class="c14"
+                        class="c16"
                       >
                         Select a property
                       </h3>
                       <div
-                        class="c15 row"
+                        class="c17 row"
                       >
                         <div
                           class="col-md-4"
@@ -647,7 +682,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                             class="d-flex flex-column align-items-center"
                           >
                             <svg
-                              class="c16"
+                              class="c18"
                               height="97"
                               title="select properties on the map"
                               width="97"
@@ -671,7 +706,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                             class="row"
                           >
                             <div
-                              class="c17 col"
+                              class="c19 col"
                             >
                               Selected property attributes
                             </div>
@@ -683,13 +718,13 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c18"
+                                class="c20"
                               >
                                 PID:
                               </label>
                             </div>
                             <div
-                              class="c19 text-left col"
+                              class="c21 text-left col"
                             />
                           </div>
                           <div
@@ -699,13 +734,13 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c18"
+                                class="c20"
                               >
                                 Plan #:
                               </label>
                             </div>
                             <div
-                              class="c19 text-left col"
+                              class="c21 text-left col"
                             />
                           </div>
                           <div
@@ -715,13 +750,13 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c18"
+                                class="c20"
                               >
                                 Address:
                               </label>
                             </div>
                             <div
-                              class="c19 text-left col"
+                              class="c21 text-left col"
                             />
                           </div>
                           <div
@@ -731,13 +766,13 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c18"
+                                class="c20"
                               >
                                 Region:
                               </label>
                             </div>
                             <div
-                              class="c19 text-left col"
+                              class="c21 text-left col"
                             />
                           </div>
                           <div
@@ -747,13 +782,13 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c18"
+                                class="c20"
                               >
                                 District:
                               </label>
                             </div>
                             <div
-                              class="c19 text-left col"
+                              class="c21 text-left col"
                             />
                           </div>
                           <div
@@ -783,18 +818,18 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                   role="tabpanel"
                 >
                   <div
-                    class="c13 form-section"
+                    class="c9 form-section"
                   >
                     <div
                       class="collapse show"
                     >
                       <h3
-                        class="c14"
+                        class="c16"
                       >
                         Search for a property
                       </h3>
                       <form
-                        class="c20 p-3"
+                        class="c22 p-3"
                         novalidate=""
                       >
                         <div
@@ -807,7 +842,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               class="flex-nowrap input-group row"
                             >
                               <div
-                                class="c21 col-auto"
+                                class="c23 col-auto"
                               >
                                 <div
                                   class="input-group-prepend"
@@ -855,7 +890,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="c22 col"
+                                class="c24 col"
                               >
                                 <div
                                   class="input form-group"
@@ -882,7 +917,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                                 class="pr-0 col"
                               >
                                 <button
-                                  class="c23 Button Button--icon-only primary btn btn-primary"
+                                  class="c11 Button Button--icon-only primary btn btn-primary"
                                   data-testid="search"
                                   id="search-button"
                                   title="search"
@@ -911,7 +946,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                                 class="pl-0 col"
                               >
                                 <button
-                                  class="c23 Button Button--icon-only btn btn-info"
+                                  class="c11 Button Button--icon-only btn btn-info"
                                   data-testid="reset-button"
                                   id="reset-button"
                                   title="reset-button"
@@ -943,7 +978,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="c13 form-section"
+                    class="c9 form-section"
                   >
                     <div
                       class="collapse show"
@@ -1059,7 +1094,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                           class="ml-auto align-self-center col-auto"
                         >
                           <p
-                            class="c24"
+                            class="c25"
                           >
                             0 selected
                           </p>
@@ -1076,10 +1111,10 @@ exports[`AddResearchContainer component renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c13 form-section"
+          class="c9 form-section"
         >
           <h2
-            class="c25"
+            class="c10"
           >
             <div
               class="no-gutters row"

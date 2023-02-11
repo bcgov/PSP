@@ -320,6 +320,46 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 <div
                   class="col"
                 >
+                  Project
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Ministry project:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="c3 form-section"
+          >
+            <h2
+              class="c4"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
                   Roads
                 </div>
                 <div
