@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using AutoMapper;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
@@ -13,7 +12,6 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -24,7 +22,7 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class ResearchFileServiceTest
     {
-        private TestHelper _helper;
+        private readonly TestHelper _helper;
 
         public ResearchFileServiceTest()
         {
@@ -37,7 +35,6 @@ namespace Pims.Api.Test.Services
             _helper.CreatePimsContext(user, true);
             return _helper.Create<ResearchFileService>();
         }
-
 
         #region Tests
         #region GetPage
