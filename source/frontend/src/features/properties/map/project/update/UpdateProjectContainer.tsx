@@ -32,6 +32,7 @@ const UpdateProjectContainer = React.forwardRef<
   const {
     updateProject: { execute: updateProject },
   } = useProjectProvider();
+
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
 
   const intialValues = ProjectForm.fromApi(project);
@@ -40,6 +41,7 @@ const UpdateProjectContainer = React.forwardRef<
 
   const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
     try {
+      formikHelpers?.setSubmitting(true);
       const updatedProject = values.toApi();
       const response = await updateProject(updatedProject);
 

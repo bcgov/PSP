@@ -25,31 +25,29 @@ const UpdateProjectContainerView = React.forwardRef<
       onSubmit={onSubmit}
     >
       {formikProps => (
-        <>
-          <Container>
-            <Section>
-              <SectionField label="Project name" required={true}>
-                <Input field="projectName" />
-              </SectionField>
-              <SectionField label="Project number">
-                <Input field="projectNumber" placeholder="if known" />
-              </SectionField>
-              <SectionField label="Status">
-                <Select
-                  field="projectStatusType"
-                  options={projectStatusOptions}
-                  placeholder="Select..."
-                />
-              </SectionField>
-              <SectionField label="MoTI region" required={true}>
-                <Select field="region" options={projectRegionOptions} placeholder="Select..." />
-              </SectionField>
-              <SectionField label="Project summary">
-                <MediumTextArea field="summary" />
-              </SectionField>
-            </Section>
-          </Container>
-        </>
+        <Container>
+          <Section>
+            <SectionField label="Project name" required={true}>
+              <Input field="projectName" />
+            </SectionField>
+            <SectionField label="Project number">
+              <Input field="projectNumber" placeholder="if known" />
+            </SectionField>
+            <SectionField label="Status">
+              <Select
+                field="projectStatusType"
+                options={projectStatusOptions}
+                placeholder="Select..."
+              />
+            </SectionField>
+            <SectionField label="MoTI region" required={true}>
+              <Select field="region" options={projectRegionOptions} placeholder="Select..." />
+            </SectionField>
+            <SectionField label="Project summary">
+              <MediumTextArea field="summary" />
+            </SectionField>
+          </Section>
+        </Container>
       )}
     </Formik>
   );
