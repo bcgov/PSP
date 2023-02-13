@@ -112,6 +112,11 @@ namespace Pims.Api.Areas.Projects.Controllers
         [SwaggerOperation(Tags = new[] { "project" })]
         public IActionResult UpdateProject([FromRoute]long id, [FromBody] ProjectModel model)
         {
+            if (id != model.Id)
+            {
+                return BadRequest();
+            }
+
             var updatedProject = _projectService.Update(id, _mapper.Map<Dal.Entities.PimsProject>(model));
 
             return new JsonResult(updatedProject);
