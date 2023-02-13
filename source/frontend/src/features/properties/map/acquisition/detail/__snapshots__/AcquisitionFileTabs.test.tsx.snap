@@ -355,7 +355,9 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
-                />
+                >
+                  001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
+                </div>
               </div>
               <div
                 class="pb-2 row"
