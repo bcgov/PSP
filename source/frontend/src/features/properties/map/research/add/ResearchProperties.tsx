@@ -38,7 +38,6 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
                           formProperty.address = bcaSummary?.address
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
-                          formProperty.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
                         }
                         push(formProperty);
                       });

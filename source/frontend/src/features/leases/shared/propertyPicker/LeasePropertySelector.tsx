@@ -104,7 +104,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
           formProperty.property.address = bcaSummary?.address
             ? AddressForm.fromBcaAddress(bcaSummary?.address)
             : undefined;
-          formProperty.property.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
+
           const result = await searchProperty(property);
           if (result !== undefined && result.length > 0) {
             formProperty.property.apiId = result[0].id;

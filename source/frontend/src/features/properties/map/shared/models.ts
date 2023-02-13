@@ -71,23 +71,24 @@ export class PropertyForm {
   public displayOrder?: number;
   public isOwned?: boolean;
 
-  private constructor() {}
+  private constructor(baseModel?: Partial<PropertyForm>) {
+    Object.assign(this, baseModel);
+  }
 
   public static fromMapProperty(model: IMapProperty): PropertyForm {
-    const newForm = new PropertyForm();
-    newForm.pid = model.pid;
-    newForm.pin = model.pin;
-    newForm.latitude = model.latitude;
-    newForm.longitude = model.longitude;
-    newForm.planNumber = model.planNumber;
-    newForm.region = model.region;
-    newForm.regionName = model.regionName;
-    newForm.district = model.district;
-    newForm.districtName = model.districtName;
-    newForm.legalDescription = model.legalDescription;
-    newForm.formattedAddress = model.address;
-
-    return newForm;
+    return new PropertyForm({
+      pid: model.pid,
+      pin: model.pin,
+      latitude: model.latitude,
+      longitude: model.longitude,
+      planNumber: model.planNumber,
+      region: model.region,
+      regionName: model.regionName,
+      district: model.district,
+      districtName: model.districtName,
+      legalDescription: model.legalDescription,
+      formattedAddress: model.address,
+    });
   }
 
   public toMapProperty(): IMapProperty {
