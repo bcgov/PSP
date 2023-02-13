@@ -1,5 +1,8 @@
 import { fromApiPerson, IContactSearchResult } from 'interfaces';
+import { isEmpty } from 'lodash';
 import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
+import { Api_Address } from 'models/api/Address';
+import { Api_CodeType } from 'models/api/CodeType';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
 export interface WithAcquisitionTeam {
@@ -45,6 +48,7 @@ export class AcquisitionOwnerFormModel {
   lastNameOrCorp2?: string;
   givenName?: string;
   incorporationNumber?: string;
+  address?: OwnerAddressFormModel;
 
   toApi(): Api_AcquisitionFileOwner {
     return {
@@ -55,6 +59,7 @@ export class AcquisitionOwnerFormModel {
       lastNameOrCorp2: this.lastNameOrCorp2,
       givenName: this.givenName,
       incorporationNumber: this.incorporationNumber,
+      address: OwnerAddressFormModel.toApi(this.address),
     };
   }
 
@@ -67,7 +72,59 @@ export class AcquisitionOwnerFormModel {
     newForm.lastNameOrCorp2 = model.lastNameOrCorp2;
     newForm.givenName = model.givenName;
     newForm.incorporationNumber = model.incorporationNumber;
+    newForm.address = model.address ? OwnerAddressFormModel.fromApi(model.address!) : undefined;
 
     return newForm;
+  }
+}
+
+export class OwnerAddressFormModel {
+  id?: number;
+  rowVersion?: number;
+  streetAddress1?: string;
+  streetAddress2?: string;
+  streetAddress3?: string;
+  municipality?: string;
+  postal?: string;
+  provinceId?: Api_CodeType;
+  countryId?: Api_CodeType;
+
+  static fromApi(apiAddress: Api_Address): OwnerAddressFormModel {
+    const model = new OwnerAddressFormModel();
+    model.id = apiAddress.id;
+    model.rowVersion = apiAddress.rowVersion;
+    model.streetAddress1 = apiAddress.streetAddress1;
+    model.streetAddress2 = apiAddress.streetAddress2;
+    model.streetAddress3 = apiAddress.streetAddress3;
+    model.municipality = apiAddress.municipality;
+    model.postal = apiAddress.postal;
+    model.provinceId = apiAddress.province;
+    model.countryId = apiAddress.country;
+
+    return model;
+  }
+
+  static toApi(model: OwnerAddressFormModel | undefined): Api_Address | undefined {
+    if (
+      !model ||
+      (isEmpty(model.streetAddress1) &&
+        isEmpty(model.municipality) &&
+        isEmpty(model.postal) &&
+        isEmpty(model.provinceId))
+    ) {
+      return undefined;
+    }
+
+    return {
+      id: model.id,
+      rowVersion: model.rowVersion,
+      streetAddress1: model.streetAddress1,
+      streetAddress2: model.streetAddress2,
+      streetAddress3: model.streetAddress3,
+      municipality: model.municipality,
+      postal: model.postal,
+      province: toTypeCode(Number(model.provinceId)),
+      country: toTypeCode(Number(model.countryId)),
+    };
   }
 }

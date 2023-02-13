@@ -1,9 +1,10 @@
-import { LinkButton } from 'components/common/buttons';
+import { LinkButton, RemoveButton } from 'components/common/buttons';
 import { Input } from 'components/common/form';
+import Address from 'features/contacts/contact/create/components/address/Address';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArray, useFormikContext } from 'formik';
 import { useState } from 'react';
-import { Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { AcquisitionFormModal } from '../../../modals/AcquisitionFormModal';
@@ -16,7 +17,7 @@ export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
 > = () => {
   const { values } = useFormikContext<WithAcquisitionOwners>();
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
-  const [showRemoveOwnerModal, setShowRemoveOwnerModal] = useState<boolean>(false);
+  const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);
 
   return (
     <>
@@ -26,18 +27,35 @@ export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
           <>
             {values.owners.map((owner, index) => (
               <Row key={`onwer-parent-${index}`} className="py-3">
-                <SectionField label="Given names">
-                  <LargeInput field={`owners[${index}].givenName`} />
-                </SectionField>
-                <SectionField label="Last name/Corporation name">
-                  <LargeInput field={`owners[${index}].lastNameOrCorp1`} />
-                </SectionField>
-                <SectionField label="Other name">
-                  <LargeInput field={`owners[${index}].lastNameOrCorp2`} />
-                </SectionField>
-                <SectionField label="Incorporation number">
-                  <LargeInput field={`owners[${index}].incorporationNumber`} />
-                </SectionField>
+                <Container>
+                  <ButtonDiv>
+                    <RemoveButton
+                      onRemove={() => {
+                        setRemoveIndex(index);
+                        setShowRemoveModal(true);
+                      }}
+                    >
+                      Remove Owner
+                    </RemoveButton>
+                  </ButtonDiv>
+                  <H3>Name</H3>
+                  <SectionField label="Given names">
+                    <Input field={`owners[${index}].givenName`} />
+                  </SectionField>
+                  <SectionField label="Last name/Corporation name">
+                    <Input field={`owners[${index}].lastNameOrCorp1`} />
+                  </SectionField>
+                  <SectionField label="Other name">
+                    <Input field={`owners[${index}].lastNameOrCorp2`} />
+                  </SectionField>
+                  <SectionField label="Incorporation number">
+                    <Input field={`owners[${index}].incorporationNumber`} />
+                  </SectionField>
+                  <StyledDiv>
+                    <H3>Mailing Address</H3>
+                    <Address namespace={`owners[${index}].address`} />
+                  </StyledDiv>
+                </Container>
               </Row>
             ))}
             <LinkButton
@@ -53,14 +71,14 @@ export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
             <AcquisitionFormModal
               message="Are you sure you want to remove this row?"
               title="Remove Owner"
-              display={showRemoveOwnerModal}
+              display={showRemoveModal}
               handleOk={() => {
-                setShowRemoveOwnerModal(false);
+                setShowRemoveModal(false);
                 arrayHelpers.remove(removeIndex);
                 setRemoveIndex(-1);
               }}
               handleCancel={() => {
-                setShowRemoveOwnerModal(false);
+                setShowRemoveModal(false);
                 setRemoveIndex(-1);
               }}
             ></AcquisitionFormModal>
@@ -73,9 +91,20 @@ export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
 
 export default UpdateAcquisitionOwnersSubForm;
 
-const LargeInput = styled(Input)`
-  input.form-control {
-    min-width: 50rem;
-    max-width: 100%;
-  }
+export const StyledDiv = styled.div`
+  background-color: none;
+`;
+
+export const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+`;
+
+export const H3 = styled.h3`
+  font-size: 2rem;
+  font-weight: 700;
+  text-decoration: none solid rgb(33, 37, 41);
+  line-height: 2rem;
+  margin-bottom: 1rem;
 `;

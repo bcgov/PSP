@@ -50,5 +50,5 @@ export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_Aud
   lastNameOrCorp2?: string;
   givenName?: string;
   incorporationNumber?: string;
-  address?: Api_Address;
+  address: Api_Address | undefined;
 }
