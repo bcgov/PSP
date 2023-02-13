@@ -1,3 +1,5 @@
+import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
+
 export const getMockLegalDescriptions = () => ({
   type: 'FeatureCollection',
   features: [
@@ -33,7 +35,7 @@ export const getMockLegalDescriptions = () => ({
         LAND_BRANCH_FILE_NUMBER: undefined,
         LAND_DISTRICT: '21',
         LAND_DISTRICT_DESCRIPTION: 'Esquimalt',
-        LEGAL_TEXT: 'SOME EXAMPLE LEGAL TEXT',
+        LEGAL_TEXT: 'MOCK - SOME EXAMPLE LEGAL TEXT',
         LOT: '1',
         PID_NUMBER: 5868530,
         PID: '005868530',
@@ -303,3 +305,12 @@ export const getMockDescription = () => ({
   crs: { type: 'name', properties: { name: 'urn:ogc:def:crs:EPSG::4326' } },
   bbox: [-123.43521, 48.46278, -123.4349, 48.46286],
 });
+
+export const mockBcAssessmentSummary: IBcAssessmentSummary = {
+  LEGAL_DESCRIPTION: getMockLegalDescriptions()?.features[0].properties ?? {},
+  ADDRESSES: getMockAddresses()?.features.map(f => f.properties ?? {}) ?? [],
+  VALUES: getMockValues()?.features.map(f => f.properties ?? {}) ?? [],
+  CHARGES: [],
+  FOLIO_DESCRIPTION: (getMockDescription()?.features[0].properties as any) ?? {},
+  SALES: getMockSales()?.features.map(f => f.properties ?? {}) ?? [],
+};
