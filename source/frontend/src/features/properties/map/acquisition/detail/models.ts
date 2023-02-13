@@ -1,7 +1,7 @@
 import {
   Api_AcquisitionFile,
-  Api_AcquisitionFilePerson,
   Api_AcquisitionFileOwner,
+  Api_AcquisitionFilePerson,
 } from 'models/api/AcquisitionFile';
 import { formatApiPersonNames } from 'utils/personUtils';
 

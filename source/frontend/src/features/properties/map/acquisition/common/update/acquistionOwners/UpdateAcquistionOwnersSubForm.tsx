@@ -14,7 +14,7 @@ interface IUpdateAcquisitionOwnersSubFormProps {}
 export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
   React.PropsWithChildren<IUpdateAcquisitionOwnersSubFormProps>
 > = () => {
-  const { values, setFieldValue } = useFormikContext<WithAcquisitionOwners>();
+  const { values } = useFormikContext<WithAcquisitionOwners>();
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [showRemoveOwnerModal, setShowRemoveOwnerModal] = useState<boolean>(false);
 

@@ -1,4 +1,3 @@
-import { ContactResultComponent } from 'components/contact/ContactManagerView/ContactResultComponent/ContactResultComponent';
 import { IAutocompletePrediction } from 'interfaces';
 import {
   Api_AcquisitionFile,
