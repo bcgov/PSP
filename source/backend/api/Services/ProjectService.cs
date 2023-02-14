@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -109,7 +110,7 @@ namespace Pims.Api.Services
             return _projectRepository.Get(newProject.Id);
         }
 
-        public PimsProject Update(long id, PimsProject project)
+        public PimsProject Update(PimsProject project)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
             project.ThrowIfNull(nameof(project));

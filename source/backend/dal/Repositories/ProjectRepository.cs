@@ -114,6 +114,8 @@ namespace Pims.Dal.Repositories
             var existingProject = Context.PimsProjects
                 .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
 
+            this.Context.UpdateChild<PimsProject, long, PimsProduct>(p => p.PimsProducts, project.Id, project.PimsProducts.ToArray(), true);
+
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 
             return project;

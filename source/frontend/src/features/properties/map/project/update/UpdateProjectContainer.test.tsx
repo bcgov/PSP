@@ -1,11 +1,13 @@
 import { FormikProps } from 'formik';
 import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/mockProjects';
-import { createRef } from 'react';
+import React from 'react';
+
 import { act, render, RenderOptions } from 'utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
+import { IAddProjectFormProps } from '../add/AddProjectForm';
 import { ProjectForm } from '../models';
-import UpdateProjectContainer, { IUpdateProjectContainerViewProps } from './UpdateProjectContainer';
+import UpdateProjectContainer from './UpdateProjectContainer';
 
 const mockApi = {
   error: undefined,
@@ -22,11 +24,13 @@ jest.mock('hooks/providers/useProjectProvider', () => ({
   },
 }));
 
-let viewProps: IUpdateProjectContainerViewProps | undefined;
-const TestView: React.FC<IUpdateProjectContainerViewProps> = props => {
-  viewProps = props;
-  return <span>Content Rendered</span>;
-};
+let viewProps: IAddProjectFormProps | undefined;
+const TestView = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
+  (props, formikRef) => {
+    viewProps = props;
+    return <span>Content Rendered</span>;
+  },
+);
 
 const mockProject = mockProjectGetResponse();
 const formValues: ProjectForm = ProjectForm.fromApi(mockProject);
@@ -47,10 +51,9 @@ describe('UpdateProjectContainer', () => {
   };
 
   beforeEach(() => {
-    const ref = createRef<FormikProps<ProjectForm>>();
+    //const ref = createRef<FormikProps<ProjectForm>>();
     viewProps = {
       initialValues: formValues,
-      formikRef: ref,
       projectRegionOptions: [],
       projectStatusOptions: [],
       onSubmit: jest.fn(),

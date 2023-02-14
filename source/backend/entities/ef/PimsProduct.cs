@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
 
         [Key]
         [Column("ID")]
-        public long Id { get; set; }
+        public override long Id { get; set; }
         [Column("PARENT_PROJECT_ID")]
         public long ParentProjectId { get; set; }
         [Required]

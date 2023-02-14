@@ -52,12 +52,13 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
       footer={<SidebarFooter onSave={handleSave} onCancel={close} />}
     >
       <AddProjectForm
-        formikRef={formikRef}
+        ref={formikRef}
         initialValues={helper.initialValues}
         projectStatusOptions={projectStatusTypeCodes}
         projectRegionOptions={regionTypeCodes}
         onSubmit={helper.handleSubmit}
         validationSchema={helper.validationSchema}
+        isCreating
       />
     </MapSideBarLayout>
   );

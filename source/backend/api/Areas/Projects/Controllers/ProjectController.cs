@@ -110,14 +110,14 @@ namespace Pims.Api.Areas.Projects.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult UpdateProject([FromRoute]long id, [FromBody] ProjectModel model)
+        public IActionResult UpdateProject([FromRoute] long id, [FromBody] ProjectModel model)
         {
             if (id != model.Id)
             {
                 return BadRequest();
             }
 
-            var updatedProject = _projectService.Update(id, _mapper.Map<Dal.Entities.PimsProject>(model));
+            var updatedProject = _projectService.Update(_mapper.Map<Dal.Entities.PimsProject>(model));
 
             return new JsonResult(updatedProject);
         }
