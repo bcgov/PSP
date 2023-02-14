@@ -282,8 +282,8 @@ namespace Pims.Api.Test.Services
         public void Update_Success()
         {
             // Arrange
-            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit, Permissions.ResearchFileEdit);
 
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
             var researchFile = EntityHelper.CreateResearchFile(1);
 
             var repository = _helper.GetService<Mock<IResearchFileRepository>>();
@@ -311,6 +311,19 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_ThrowIf_Null()
+        {
+            // Arrange
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+
+            // Act
+            Action act = () => service.Update(null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
         }
         #endregion
 
