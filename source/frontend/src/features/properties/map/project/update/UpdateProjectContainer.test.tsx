@@ -1,7 +1,6 @@
 import { FormikProps } from 'formik';
 import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/mockProjects';
 import React from 'react';
-
 import { act, render, RenderOptions } from 'utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
@@ -51,7 +50,6 @@ describe('UpdateProjectContainer', () => {
   };
 
   beforeEach(() => {
-    //const ref = createRef<FormikProps<ProjectForm>>();
     viewProps = {
       initialValues: formValues,
       projectRegionOptions: [],

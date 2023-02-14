@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { GetMockLookUpsByType, mockLookups } from 'mocks/mockLookups';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fakeText, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
