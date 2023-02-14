@@ -13,7 +13,7 @@ namespace Pims.Api.Areas.Autocomplete.Mapping
 
             config.ForType<Entity.PimsOrganization, Models.AutocompletePrediction>()
                 .Map(dest => dest.Text, src => src.Name)
-                .Map(dest => dest.Id, src => src.Id);
+                .Map(dest => dest.Id, src => src.Internal_Id);
         }
     }
 }

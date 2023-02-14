@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify of the property purpose.
         /// </summary>
         [NotMapped]
-        public override long Id { get => PrfPropResearchPurposeId; set => PrfPropResearchPurposeId = value; }
+        public override long Internal_Id { get => PrfPropResearchPurposeId; set => PrfPropResearchPurposeId = value; }
         #endregion
     }
 }

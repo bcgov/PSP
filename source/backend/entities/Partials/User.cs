@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities
         /// get/set - The primary key IDENTITY.
         /// </summary>
         [NotMapped]
-        public override long Id { get => UserId; set => UserId = value; }
+        public override long Internal_Id { get => UserId; set => UserId = value; }
 
         /// <summary>
         /// get - A collection of organizations this user belongs to.

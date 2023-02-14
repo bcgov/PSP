@@ -7,11 +7,7 @@ namespace Pims.Dal.Entities
     /// </summary>
     public partial class PimsProject : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
-        /*#region Properties
         [NotMapped]
-        public override long Id { get => this.Id2; set => this.Id2 = value; }
-        #endregion*/
-        //public override long Id { get => this.Id; set => throw new System.NotImplementedException(); }
-
+        public override long Internal_Id { get => this.Id; set => this.Id = value; }
     }
 }

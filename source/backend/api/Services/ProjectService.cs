@@ -107,14 +107,14 @@ namespace Pims.Api.Services
             var newProject = _projectRepository.Add(project);
             _projectRepository.CommitTransaction();
 
-            return _projectRepository.Get(newProject.Id);
+            return _projectRepository.Get(newProject.Internal_Id);
         }
 
         public PimsProject Update(PimsProject project)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
             project.ThrowIfNull(nameof(project));
-            _logger.LogInformation($"Updating project with id ${project.Id}");
+            _logger.LogInformation($"Updating project with id ${project.Internal_Id}");
 
             var updatedProject = _projectRepository.Update(project);
             _projectRepository.CommitTransaction();

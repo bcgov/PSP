@@ -39,7 +39,7 @@ namespace Pims.Dal.Repositories
         public T_Entity GetById(long id)
         {
             return Context.Set<T_Entity>().AsNoTracking()
-                .FirstOrDefault(x => x.Id == id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.Internal_Id == id) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Pims.Dal.Repositories
         public long GetRowVersion(long id)
         {
             return Context.Set<T_Entity>().AsNoTracking()
-                .Where(p => p.Id == id)?
+                .Where(p => p.Internal_Id == id)?
                 .Select(p => p.ConcurrencyControlNumber)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }

@@ -308,7 +308,7 @@ namespace Pims.Api.Test.Services
             var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
             var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(100);
-            repository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(new PimsProject { Id = 1 });
+            repository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(new PimsProject { Internal_Id = 1 });
 
             // Act
             var result = service.Update(1, new PimsProject { ConcurrencyControlNumber = 100 });

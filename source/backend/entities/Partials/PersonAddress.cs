@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.PersonAddressId; set => this.PersonAddressId = value; }
+        public override long Internal_Id { get => this.PersonAddressId; set => this.PersonAddressId = value; }
         #endregion
 
         #region Constructors

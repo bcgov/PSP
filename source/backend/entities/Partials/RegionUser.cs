@@ -11,6 +11,6 @@ namespace Pims.Dal.Entities
         /// get/set - The primary key IDENTITY.
         /// </summary>
         [NotMapped]
-        public override long Id { get => RegionUserId; set => RegionUserId = value; }
+        public override long Internal_Id { get => RegionUserId; set => RegionUserId = value; }
     }
 }

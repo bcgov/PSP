@@ -80,7 +80,7 @@ namespace Pims.Api.Services
                 genericActivity = activityService.Add(activity);
             }
 
-            return documentActivityService.UploadActivityDocumentAsync(genericActivity.Id, uploadRequest);
+            return documentActivityService.UploadActivityDocumentAsync(genericActivity.Internal_Id, uploadRequest);
         }
 
         public Task<ExternalResult<string>> DeleteLeaseDocumentAsync(PimsActivityInstanceDocument leaseDocument)

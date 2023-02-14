@@ -73,7 +73,7 @@ namespace Pims.Dal.Keycloak
         public async Task<Entity.PimsUser> UpdateUserAsync(Entity.PimsUser user)
         {
             var kuser = await _keycloakService.GetUserAsync(user.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
-            var euser = _userRepository.GetTrackingById(user.Id);
+            var euser = _userRepository.GetTrackingById(user.Internal_Id);
 
             return await SaveUserChanges(user, euser, kuser, true);
         }
@@ -87,7 +87,7 @@ namespace Pims.Dal.Keycloak
         public async Task<Entity.PimsUser> AppendToUserAsync(Entity.PimsUser update)
         {
             var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
-            var euser = _userRepository.GetTrackingById(update.Id);
+            var euser = _userRepository.GetTrackingById(update.Internal_Id);
 
             return await SaveUserChanges(update, euser, kuser, true);
         }
@@ -111,7 +111,7 @@ namespace Pims.Dal.Keycloak
 
                 user.PimsUserRoles.Clear();
                 user.IsDisabled = false;
-                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Id, RoleId = update.RoleId.Value });
+                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Internal_Id, RoleId = update.RoleId.Value });
                 await AppendToUserAsync(user);
             }
             update.User = user;
@@ -132,7 +132,7 @@ namespace Pims.Dal.Keycloak
             if (resetRoles)
             {
                 euser.PimsUserRoles.ForEach(role => _userRepository.RemoveRole(euser, role.RoleId));
-                euser.PimsRegionUsers.ForEach(region => _userRepository.RemoveRegion(euser, region.Id));
+                euser.PimsRegionUsers.ForEach(region => _userRepository.RemoveRegion(euser, region.Internal_Id));
             }
 
             // Update PIMS
@@ -180,7 +180,7 @@ namespace Pims.Dal.Keycloak
             await _keycloakService.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
             _userRepository.CommitTransaction();
 
-            return _userRepository.GetById(euser.Id);
+            return _userRepository.GetById(euser.Internal_Id);
         }
     }
     #endregion

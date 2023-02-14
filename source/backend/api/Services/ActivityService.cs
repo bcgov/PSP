@@ -171,7 +171,7 @@ namespace Pims.Api.Services
             var notes = _noteService.GetNotes(Constants.NoteType.Activity, activityId);
             foreach (PimsNote note in notes)
             {
-                _noteService.DeleteNote(Constants.NoteType.Activity, note.Id, false);
+                _noteService.DeleteNote(Constants.NoteType.Activity, note.Internal_Id, false);
             }
 
             _activityRepository.Delete(activityId);
@@ -199,7 +199,7 @@ namespace Pims.Api.Services
 
         private void AddNoteIfActivityStatusChanged(PimsActivityInstance instance)
         {
-            var currentActivity = _activityRepository.GetById(instance.Id);
+            var currentActivity = _activityRepository.GetById(instance.Internal_Id);
             if (currentActivity.ActivityInstanceStatusTypeCode != instance.ActivityInstanceStatusTypeCode)
             {
                 PimsActivityInstanceNote note = new PimsActivityInstanceNote()

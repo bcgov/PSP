@@ -218,7 +218,7 @@ namespace Pims.Api.Test.Services
 
             PimsResearchFileDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 DocumentId = 2,
             };
 
@@ -247,7 +247,7 @@ namespace Pims.Api.Test.Services
 
             PimsResearchFileDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 DocumentId = 2,
             };
 
@@ -275,7 +275,7 @@ namespace Pims.Api.Test.Services
 
             PimsResearchFileDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 DocumentId = 2,
             };
 
@@ -303,7 +303,7 @@ namespace Pims.Api.Test.Services
 
             PimsResearchFileDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 DocumentId = 2,
             };
 
@@ -323,7 +323,7 @@ namespace Pims.Api.Test.Services
 
             PimsAcquisitionFileDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 DocumentId = 2,
             };
 
@@ -352,7 +352,7 @@ namespace Pims.Api.Test.Services
 
             PimsAcquisitionFileDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 DocumentId = 2,
             };
 
@@ -380,7 +380,7 @@ namespace Pims.Api.Test.Services
 
             PimsAcquisitionFileDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 DocumentId = 2,
             };
 
@@ -408,7 +408,7 @@ namespace Pims.Api.Test.Services
 
             PimsAcquisitionFileDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 DocumentId = 2,
             };
 

@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The primary key of the record.
         /// </summary>
-        T Id { get; set; }
+        T Internal_Id { get; set; }
         #endregion
     }
 }

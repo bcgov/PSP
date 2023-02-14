@@ -9,7 +9,7 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.PropPropAnomalyTypeId; set => this.PropPropAnomalyTypeId = value; }
+        public override long Internal_Id { get => this.PropPropAnomalyTypeId; set => this.PropPropAnomalyTypeId = value; }
         #endregion
     }
 }

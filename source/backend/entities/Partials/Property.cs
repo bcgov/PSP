@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.PropertyId; set => this.PropertyId = value; }
+        public override long Internal_Id { get => this.PropertyId; set => this.PropertyId = value; }
 
         /// <summary>
         /// get - The friendly formated Parcel Id.

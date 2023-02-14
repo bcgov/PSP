@@ -9,7 +9,7 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.PimsActivityInstanceNoteId; set => this.PimsActivityInstanceNoteId = value; }
+        public override long Internal_Id { get => this.PimsActivityInstanceNoteId; set => this.PimsActivityInstanceNoteId = value; }
         #endregion
     }
 }

@@ -126,11 +126,11 @@ namespace Pims.Dal.Helpers.Extensions
 
             dbItemsEntry.Load();
             var dbItemsMap = dbItemsEntry.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>()
-                .ToDictionary(e => e.Id);
+                .ToDictionary(e => e.Internal_Id);
 
             foreach (var item in children)
             {
-                if (!dbItemsMap.TryGetValue(item.Id, out var oldItem))
+                if (!dbItemsMap.TryGetValue(item.Internal_Id, out var oldItem))
                 {
                     accessor.Add(dbEntity, item, false);
                 }
@@ -139,7 +139,7 @@ namespace Pims.Dal.Helpers.Extensions
                     if (updateChildValues)
                     {
                         context.Entry(oldItem).CurrentValues.SetValues(item);
-                        dbItemsMap.Remove(item.Id);
+                        dbItemsMap.Remove(item.Internal_Id);
                     }
                 }
             }
@@ -212,7 +212,7 @@ namespace Pims.Dal.Helpers.Extensions
             var childAccessor = childCollection.Metadata.GetCollectionAccessor();
 
             childCollection.Load();
-            var existingChildren = childCollection.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>().ToDictionary(e => e.Id);
+            var existingChildren = childCollection.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>().ToDictionary(e => e.Internal_Id);
 
             // Compile the grandchildNavigation lambda expression so we can extract the value from the passed in array of children
             var grandchildPropertyName = grandchildNavigation.GetPropertyAccess().Name;
@@ -220,7 +220,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             foreach (var child in childrenWithGrandchildren)
             {
-                if (!existingChildren.TryGetValue(child.Id, out var existingChild))
+                if (!existingChildren.TryGetValue(child.Internal_Id, out var existingChild))
                 {
                     childAccessor.Add(dbEntity, child, false);
                 }
@@ -240,7 +240,7 @@ namespace Pims.Dal.Helpers.Extensions
                         grandchildReference.TargetEntry.CurrentValues.SetValues(grandchildValue);
                     }
 
-                    existingChildren.Remove(child.Id);
+                    existingChildren.Remove(child.Internal_Id);
                 }
             }
 

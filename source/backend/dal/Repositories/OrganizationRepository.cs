@@ -118,7 +118,7 @@ namespace Pims.Dal.Repositories
             organization.ThrowIfNull(nameof(organization));
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
 
-            var orgId = organization.Id;
+            var orgId = organization.Internal_Id;
             var existingOrganization = this.Context.PimsOrganizations.Where(o => o.OrganizationId == orgId).FirstOrDefault()
                  ?? throw new KeyNotFoundException();
 

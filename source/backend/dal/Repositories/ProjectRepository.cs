@@ -84,7 +84,7 @@ namespace Pims.Dal.Repositories
                     .Include(x => x.PimsProducts)
                     .Include(x => x.ProjectStatusTypeCodeNavigation)
                     .Include(x => x.RegionCodeNavigation)
-                    .Where(x => x.Id == id)
+                    .Where(x => x.Internal_Id == id)
                     .FirstOrDefault();
         }
 
@@ -112,9 +112,9 @@ namespace Pims.Dal.Repositories
             project.ThrowIfNull(nameof(project));
 
             var existingProject = Context.PimsProjects
-                .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.Internal_Id == project.Internal_Id) ?? throw new KeyNotFoundException();
 
-            this.Context.UpdateChild<PimsProject, long, PimsProduct>(p => p.PimsProducts, project.Id, project.PimsProducts.ToArray(), true);
+            this.Context.UpdateChild<PimsProject, long, PimsProduct>(p => p.PimsProducts, project.Internal_Id, project.PimsProducts.ToArray(), true);
 
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 
@@ -131,7 +131,7 @@ namespace Pims.Dal.Repositories
             using var log = Logger.QueryScope();
 
             return this.Context.PimsProjects.AsNoTracking()
-                .Where(p => p.Id == id)?
+                .Where(p => p.Internal_Id == id)?
                 .Select(p => p.ConcurrencyControlNumber)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }

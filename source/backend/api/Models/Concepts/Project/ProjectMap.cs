@@ -9,7 +9,7 @@ namespace Pims.Api.Models.Concepts
         {
             config.NewConfig<Entity.PimsProject, ProjectModel>()
                 .PreserveReference(true)
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ProjectStatusTypeCode, src => src.ProjectStatusTypeCodeNavigation)
                 .Map(dest => dest.BusinessFunctionCode, src => src.BusinessFunctionCode)
                 .Map(dest => dest.CostTypeCode, src => src.CostTypeCode)
@@ -24,7 +24,7 @@ namespace Pims.Api.Models.Concepts
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<ProjectModel, Entity.PimsProject>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.ProjectStatusTypeCode, src => src.ProjectStatusTypeCode.Id)
                 .Map(dest => dest.BusinessFunctionCodeId, src => src.BusinessFunctionCode.Id)
                 .Map(dest => dest.CostTypeCodeId, src => src.CostTypeCode.Id)

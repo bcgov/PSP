@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify organization.
         /// </summary>
         [NotMapped]
-        public override long Id { get => OrganizationId; set => OrganizationId = value; }
+        public override long Internal_Id { get => OrganizationId; set => OrganizationId = value; }
 
         [NotMapped]
         public string Name { get => OrganizationName; set => OrganizationName = value; }

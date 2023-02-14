@@ -10,14 +10,14 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
         {
             config.NewConfig<Entity.PimsOrganization, Model.OrganizationModel>()
                 .IgnoreNonMapped(true)
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.Name, src => src.OrganizationName)
                 .Map(dest => dest.ParentId, src => src.PrntOrganizationId)
                 .Inherits<Entity.IDisableBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.OrganizationModel, Entity.PimsOrganization>()
                 .IgnoreNonMapped(true)
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.OrganizationName, src => src.Name)
                 .Map(dest => dest.PrntOrganizationId, src => src.ParentId)
                 .Inherits<Api.Models.BaseAppModel, Entity.IDisableBaseAppEntity>();

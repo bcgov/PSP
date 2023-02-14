@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify volumetric type.
         /// </summary>
         [NotMapped]
-        public override long Id { get => ActivityTemplateId; set => ActivityTemplateId = value; }
+        public override long Internal_Id { get => ActivityTemplateId; set => ActivityTemplateId = value; }
         #endregion
 
         #region Constructors
@@ -25,7 +25,7 @@ namespace Pims.Dal.Entities
         public PimsActivityTemplate(long id, string activityTemplateTypeCode, PimsActivityTemplateType pimsActivityTemplateType)
             : this()
         {
-            Id = id;
+            Internal_Id = id;
             this.ActivityTemplateTypeCode = activityTemplateTypeCode;
             this.ActivityTemplateTypeCodeNavigation = pimsActivityTemplateType;
         }

@@ -11,7 +11,7 @@ namespace Pims.Api.Mapping.User
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsUser, Model.UserModel>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.KeycloakUserId, src => src.GuidIdentifierValue)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.BusinessIdentifier, src => src.BusinessIdentifierValue)
@@ -23,7 +23,7 @@ namespace Pims.Api.Mapping.User
                 .Inherits<Entity.IDisableBaseAppEntity, Models.BaseAppModel>();
 
             config.NewConfig<Model.UserModel, Entity.PimsUser>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.GuidIdentifierValue, src => src.KeycloakUserId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.BusinessIdentifierValue, src => src.BusinessIdentifier)

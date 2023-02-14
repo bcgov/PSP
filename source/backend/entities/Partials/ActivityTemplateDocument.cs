@@ -9,7 +9,7 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.ActivityTemplateDocumentId; set => this.ActivityTemplateDocumentId = value; }
+        public override long Internal_Id { get => this.ActivityTemplateDocumentId; set => this.ActivityTemplateDocumentId = value; }
         #endregion
     }
 }

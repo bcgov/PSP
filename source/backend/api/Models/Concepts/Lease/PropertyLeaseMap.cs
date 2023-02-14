@@ -15,7 +15,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.LeaseArea, src => src.LeaseArea)
                 .Map(dest => dest.PropertyName, src => src.Name)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .PreserveReference(true);
 
             config.NewConfig<Model.PropertyLeaseModel, Entity.PimsPropertyLease>()
@@ -25,7 +25,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.LeaseArea, src => src.LeaseArea)
                 .Map(dest => dest.Name, src => src.PropertyName)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Internal_Id, src => src.Id)
                 .PreserveReference(true);
         }
     }

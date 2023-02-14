@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify person.
         /// </summary>
         [NotMapped]
-        public override long Id { get => PersonId; set => PersonId = value; }
+        public override long Internal_Id { get => PersonId; set => PersonId = value; }
 
         public long? GetPersonOrganizationId() => PimsPersonOrganizations?.FirstOrDefault(t => t != null)?.PersonOrganizationId;
 

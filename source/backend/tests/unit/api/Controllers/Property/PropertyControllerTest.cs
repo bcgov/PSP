@@ -46,7 +46,7 @@ namespace Pims.Api.Test.Controllers.Property
             _service.Setup(m => m.GetById(It.IsAny<long>())).Returns(property);
 
             // Act
-            var result = _controller.GetConceptPropertyWithId(property.Id);
+            var result = _controller.GetConceptPropertyWithId(property.Internal_Id);
 
             // Assert
             _service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());

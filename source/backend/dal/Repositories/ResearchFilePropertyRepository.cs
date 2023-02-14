@@ -68,17 +68,17 @@ namespace Pims.Dal.Repositories
         public void Delete(PimsPropertyResearchFile propertyResearchFile)
         {
             var existingPropertyResearchFile = Context.PimsPropertyResearchFiles.AsNoTracking()
-                .Where(x => x.PropertyResearchFileId == propertyResearchFile.Id)
+                .Where(x => x.PropertyResearchFileId == propertyResearchFile.Internal_Id)
                 .Include(rp => rp.Property)
                 .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
                 .Include(rp => rp.PimsActInstPropRsrchFiles)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 
             // Delete any Property research purpose type associations
-            existingPropertyResearchFile.PimsPrfPropResearchPurposeTypes.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTypes.Remove(new PimsPrfPropResearchPurposeType() { Id = purposeType.Id }));
-            existingPropertyResearchFile.PimsActInstPropRsrchFiles.ForEach(s => Context.PimsActInstPropRsrchFiles.Remove(new PimsActInstPropRsrchFile() { Id = s.Id }));
+            existingPropertyResearchFile.PimsPrfPropResearchPurposeTypes.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTypes.Remove(new PimsPrfPropResearchPurposeType() { Internal_Id = purposeType.Internal_Id }));
+            existingPropertyResearchFile.PimsActInstPropRsrchFiles.ForEach(s => Context.PimsActInstPropRsrchFiles.Remove(new PimsActInstPropRsrchFile() { Internal_Id = s.Internal_Id }));
 
-            Context.Remove(new PimsPropertyResearchFile() { PropertyResearchFileId = propertyResearchFile.Id });
+            Context.Remove(new PimsPropertyResearchFile() { PropertyResearchFileId = propertyResearchFile.Internal_Id });
         }
 
         public PimsPropertyResearchFile Update(PimsPropertyResearchFile propertyResearchFile)
@@ -93,7 +93,7 @@ namespace Pims.Dal.Repositories
             // Note: This is needed given the research file properties purpose types may not have the corresponging id, but corresponding code.
             var currentTypes = Context.PimsPropertyResearchFiles
                 .SelectMany(x => x.PimsPrfPropResearchPurposeTypes)
-                .Where(x => x.PropertyResearchFileId == propertyResearchFile.Id)
+                .Where(x => x.PropertyResearchFileId == propertyResearchFile.Internal_Id)
                 .AsNoTracking()
                 .ToList();
 

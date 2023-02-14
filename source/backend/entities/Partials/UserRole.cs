@@ -12,7 +12,7 @@ namespace Pims.Dal.Entities
         /// get/set - The primary key IDENTITY.
         /// </summary>
         [NotMapped]
-        public override long Id { get => UserRoleId; set => UserRoleId = value; }
+        public override long Internal_Id { get => UserRoleId; set => UserRoleId = value; }
 
         #region Constructors
         public PimsUserRole()
@@ -38,7 +38,7 @@ namespace Pims.Dal.Entities
         public PimsUserRole(PimsUser user, PimsRole role)
         {
             this.User = user;
-            this.UserId = user?.Id ??
+            this.UserId = user?.Internal_Id ??
                 throw new ArgumentNullException(nameof(user));
             this.Role = role;
             this.RoleId = role?.RoleId ??
