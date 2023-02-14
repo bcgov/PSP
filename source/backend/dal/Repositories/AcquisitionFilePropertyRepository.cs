@@ -72,7 +72,7 @@ namespace Pims.Dal.Repositories
             propertyAcquisitionFile.ThrowIfNull(nameof(propertyAcquisitionFile));
 
             var propertyAcquisitionFileToDelete = Context.PimsPropertyAcquisitionFiles
-                .Where(x => x.PropertyAcquisitionFileId == propertyAcquisitionFile.Internal_Id)
+                .Where(x => x.PropertyAcquisitionFileId == propertyAcquisitionFile.PropertyAcquisitionFileId)
                 .Include(rp => rp.PimsActInstPropAcqFiles)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 

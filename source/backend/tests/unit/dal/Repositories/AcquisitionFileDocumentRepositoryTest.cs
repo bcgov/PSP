@@ -29,7 +29,7 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.AddAcquisition(acquisitionFileDocument);
 
             // Assert
-            result.Internal_Id.Should().Be(1);
+            result.AcquisitionFileDocumentId.Should().Be(1);
         }
 
         [Fact]

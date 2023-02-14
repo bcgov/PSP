@@ -68,7 +68,7 @@ namespace Pims.Dal.Repositories
             // Existing properties should not be added.
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
             {
-                if (researchProperty.Property.Internal_Id != 0)
+                if (researchProperty.Property.PropertyId != 0)
                 {
                     Context.Entry(researchProperty.Property).State = EntityState.Unchanged;
                 }
@@ -94,7 +94,7 @@ namespace Pims.Dal.Repositories
 
             var currentPurposes = Context.PimsResearchFiles
                 .SelectMany(x => x.PimsResearchFilePurposes)
-                .Where(x => x.ResearchFileId == researchFile.Internal_Id)
+                .Where(x => x.ResearchFileId == researchFile.ResearchFileId)
                 .AsNoTracking()
                 .ToList();
 

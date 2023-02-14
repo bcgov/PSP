@@ -274,7 +274,7 @@ namespace Pims.Dal.Repositories
         {
             property.ThrowIfNull(nameof(property));
 
-            var propertyId = property.Internal_Id;
+            var propertyId = property.PropertyId;
             var existingProperty = this.Context.PimsProperties
                 .Include(p => p.Address)
                 .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();

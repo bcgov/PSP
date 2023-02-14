@@ -44,7 +44,7 @@ namespace Pims.Dal.Test.Repositories
             repository.Delete(pimsPropertyResearchFile);
 
             // Assert
-            var result = repository.GetAllByResearchFileId(pimsPropertyResearchFile.Internal_Id);
+            var result = repository.GetAllByResearchFileId(pimsPropertyResearchFile.PropertyResearchFileId);
             result.Should().BeEmpty();
         }
 

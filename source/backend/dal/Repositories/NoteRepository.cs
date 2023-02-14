@@ -62,7 +62,7 @@ namespace Pims.Dal.Repositories
             note.ThrowIfNull(nameof(note));
 
             var existingNote = this.Context.PimsNotes
-                .FirstOrDefault(x => x.NoteId == note.Internal_Id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.NoteId == note.NoteId) ?? throw new KeyNotFoundException();
 
             // update main entity - PimsNote
             this.Context.Entry(existingNote).CurrentValues.SetValues(note);

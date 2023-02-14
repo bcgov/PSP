@@ -127,7 +127,7 @@ namespace Pims.Dal.Repositories
             person.ThrowIfNull(nameof(person));
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
 
-            var personId = person.Internal_Id;
+            var personId = person.PersonId;
             var existingPerson = this.Context.PimsPeople.FirstOrDefault(p => p.PersonId == personId)
                  ?? throw new KeyNotFoundException();
 
