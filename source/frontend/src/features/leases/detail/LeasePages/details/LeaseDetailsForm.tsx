@@ -21,7 +21,7 @@ export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<I
 }) => {
   const { lease } = React.useContext(LeaseStateContext);
   return (
-    <Formik initialValues={{ ...defaultLease, ...lease }} enableRenitialize={true} onSubmit={noop}>
+    <Formik initialValues={{ ...defaultLease, ...lease }} enableReinitialize={true} onSubmit={noop}>
       <StyledDetails>
         <DetailTermInformation />
         <PropertiesInformation disabled={!isEditing} />

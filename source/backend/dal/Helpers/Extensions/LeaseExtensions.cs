@@ -134,6 +134,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static DateTime? GetExpiryDate(this Pims.Dal.Entities.PimsLease lease)
         {
+            if (lease.PimsLeaseTerms != null && lease.PimsLeaseTerms.Any(t => t.TermExpiryDate == null))
+            {
+                return null;
+            }
             if (lease.OrigExpiryDate != null)
             {
                 if (lease.PimsLeaseTerms != null && lease.PimsLeaseTerms.Any(t => t.TermExpiryDate > lease.OrigExpiryDate))
@@ -270,6 +274,7 @@ namespace Pims.Dal.Helpers.Extensions
                     .ThenInclude(t => t.Organization)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(l => l.PimsLeaseTerms);
+                
 
             if (loadPayments)
             {
