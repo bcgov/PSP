@@ -30,6 +30,7 @@ export interface IResearchContainerProps {
 export const ResearchContainer: React.FunctionComponent<
   React.PropsWithChildren<IResearchContainerProps>
 > = props => {
+  const researchFileId = props.researchFileId;
   const {
     retrieveResearchFile: { execute: getResearchFile, loading: loadingResearchFile },
     retrieveResearchFileProperties: {
@@ -73,10 +74,10 @@ export const ResearchContainer: React.FunctionComponent<
   }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
 
   React.useEffect(() => {
-    if (researchFile === undefined) {
+    if (researchFile === undefined || researchFileId !== researchFile?.id) {
       fetchResearchFile();
     }
-  }, [fetchResearchFile, researchFile]);
+  }, [fetchResearchFile, researchFile, researchFileId]);
 
   if (researchFile === undefined && (loadingResearchFile || loadingResearchFileProperties)) {
     return (
