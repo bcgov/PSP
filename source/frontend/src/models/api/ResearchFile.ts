@@ -46,7 +46,8 @@ export interface Api_ResearchFilePurpose extends Api_ConcurrentVersion, Api_Audi
 }
 
 export interface Api_ResearchFileProject extends Api_ConcurrentVersion, Api_AuditFields {
-  id?: number;
-  fileId?: number;
-  project?: Api_Project;
+  id: number | undefined;
+  fileId: number | undefined;
+  project: Api_Project | undefined;
+  isDisabled: boolean | undefined;
 }

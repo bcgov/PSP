@@ -1,5 +1,5 @@
 import { LinkButton, RemoveButton } from 'components/common/buttons';
-import { ProjectSelector } from 'components/projectSelector/ProjectSelector';
+import { ProjectSelector } from 'components/common/form';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArray, useFormikContext } from 'formik';
 import React from 'react';
@@ -7,7 +7,7 @@ import { Col, Row } from 'react-bootstrap';
 
 import { ResearchFileProjectFormModel } from '../models';
 
-type ProjectValues = {
+export type WithProjectValues = {
   [key: string]: ResearchFileProjectFormModel[];
 };
 
@@ -17,7 +17,7 @@ export interface IUpdateProjectsSubFormProps {
 }
 
 export const UpdateProjectsSubForm: React.FC<IUpdateProjectsSubFormProps> = ({ field, fileId }) => {
-  const formik = useFormikContext<ProjectValues>();
+  const formik = useFormikContext<WithProjectValues>();
   const projects = formik.values[field];
 
   return (
