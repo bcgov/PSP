@@ -217,10 +217,10 @@ namespace Pims.Api.Services
 
             property.IsPropertyOfInterest = true;
 
-            if(property.Address != null)
+            if (property.Address != null)
             {
                 var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
-                if(provinceId.HasValue)
+                if (provinceId.HasValue)
                 {
                     property.Address.ProvinceStateId = provinceId.Value;
                 }

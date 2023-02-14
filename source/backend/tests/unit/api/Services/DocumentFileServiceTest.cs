@@ -399,7 +399,7 @@ namespace Pims.Api.Test.Services
             var documentService = _helper.GetService<Mock<IDocumentService>>();
             var acquisitionDocumentRepository = _helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
 
-            acquisitionDocumentRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsAcquisitionFileDocument>() {  new PimsAcquisitionFileDocument() });
+            acquisitionDocumentRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsAcquisitionFileDocument>() { new PimsAcquisitionFileDocument() });
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
                 .ReturnsAsync(new ExternalResult<string>()
                 {

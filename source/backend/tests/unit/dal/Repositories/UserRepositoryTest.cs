@@ -300,7 +300,7 @@ namespace Pims.Dal.Test.Repositories
             euser.IsDisabled = false;
 
             var disabledEUser = EntityHelper.CreateUser(2, Guid.NewGuid(), "Tester2", organization: organization, role: role);
-            disabledEUser.Id = 2;
+            disabledEUser.Internal_Id = 2;
             disabledEUser.Person.FirstName = "disabled";
             disabledEUser.Person.Surname = "Other";
             disabledEUser.BusinessIdentifierValue = "oDisabled";
@@ -319,7 +319,7 @@ namespace Pims.Dal.Test.Repositories
             Assert.NotNull(result);
             Assert.IsAssignableFrom<Paged<Entity.PimsUser>>(result);
             Assert.Equal(expectedCount, result.Items.Count);
-            result.First().Id.Should().Be(euser.Id);
+            result.First().Internal_Id.Should().Be(euser.Internal_Id);
         }
 
         [Fact]
@@ -372,7 +372,7 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<UserRepository>(user);
 
             // Act
-            var result = service.GetTrackingById(euser.Id);
+            var result = service.GetTrackingById(euser.Internal_Id);
 
             // Assert
             Assert.NotNull(result);
@@ -393,7 +393,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             // Assert
-            var result = Assert.Throws<NotAuthorizedException>(() => service.GetTrackingById(euser.Id));
+            var result = Assert.Throws<NotAuthorizedException>(() => service.GetTrackingById(euser.Internal_Id));
         }
 
         [Fact]

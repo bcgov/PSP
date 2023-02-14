@@ -3,7 +3,6 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MoreLinq;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;

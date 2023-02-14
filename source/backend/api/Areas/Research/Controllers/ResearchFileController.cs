@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +6,6 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -79,7 +77,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
 
             return new JsonResult(_mapper.Map<IEnumerable<ResearchFilePropertyModel>>(researchFileProperties));
         }
-
 
         /// <summary>
         /// Gets the activities for specified research file.

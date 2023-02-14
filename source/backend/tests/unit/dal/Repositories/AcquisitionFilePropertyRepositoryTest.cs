@@ -5,12 +5,9 @@ using System.Linq;
 using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
-using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -34,7 +31,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Id, Property = EntityHelper.CreateProperty(1) };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Internal_Id, Property = EntityHelper.CreateProperty(1) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyAcquisitionFile);
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
@@ -46,7 +43,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<List<PimsPropertyAcquisitionFile>>();
             result.Should().HaveCount(1);
-            result.FirstOrDefault().PropertyAcquisitionFileId.Should().Be(pimsPropertyAcquisitionFile.Id);
+            result.FirstOrDefault().PropertyAcquisitionFileId.Should().Be(pimsPropertyAcquisitionFile.Internal_Id);
         }
 
         [Fact]
@@ -77,8 +74,8 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Id, Property = new PimsProperty() { RegionCode = 1, Id = 1 } };
-            var pimsPropertyAcquisitionFile2 = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Id, Property = new PimsProperty() { RegionCode = 1, Id = 2 } };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Internal_Id, Property = new PimsProperty() { RegionCode = 1, Internal_Id = 1 } };
+            var pimsPropertyAcquisitionFile2 = new PimsPropertyAcquisitionFile() { AcquisitionFileId = acqFile.Internal_Id, Property = new PimsProperty() { RegionCode = 1, Internal_Id = 2 } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyAcquisitionFile);
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
@@ -118,7 +115,7 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
 
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = 1, PropertyId = 1, Property = new PimsProperty() { RegionCode = 1, Id = 1 } };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = 1, PropertyId = 1, Property = new PimsProperty() { RegionCode = 1, Internal_Id = 1 } };
 
             // Act
             var result = repository.Add(pimsPropertyAcquisitionFile);
@@ -153,14 +150,14 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
 
-            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = 1, Property = new PimsProperty() { RegionCode = 1, Id = 1 } };
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { AcquisitionFileId = 1, Property = new PimsProperty() { RegionCode = 1, Internal_Id = 1 } };
 
             var context = helper.CreatePimsContext(user, true);
             var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
             context.AddAndSaveChanges(pimsPropertyAcquisitionFile);
 
             // Act
-            var result = repository.Update(new PimsPropertyAcquisitionFile() { AcquisitionFileId = 1, PropertyName = "updated", PropertyId = 1, Property = new PimsProperty() { RegionCode = 1, Id = 2 } });
+            var result = repository.Update(new PimsPropertyAcquisitionFile() { AcquisitionFileId = 1, PropertyName = "updated", PropertyId = 1, Property = new PimsProperty() { RegionCode = 1, Internal_Id = 2 } });
 
             // Assert
             result.Should().NotBeNull();
@@ -203,7 +200,7 @@ namespace Pims.Dal.Test.Repositories
             repository.Delete(pimsPropertyAcquisitionFile);
 
             // Assert
-            var result = repository.GetPropertiesByAcquisitionFileId(pimsPropertyAcquisitionFile.Id);
+            var result = repository.GetPropertiesByAcquisitionFileId(pimsPropertyAcquisitionFile.Internal_Id);
             result.Should().BeEmpty();
         }
 

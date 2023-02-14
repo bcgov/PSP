@@ -57,13 +57,14 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// execute all passed operations
+        /// execute all passed operations.
         /// </summary>
         /// <param name="operations"></param>
         /// <returns></returns>
         public async Task ModifyUserRoleMappings(IEnumerable<UserRoleOperation> operations)
         {
-            foreach (UserRoleOperation operation in operations) {
+            foreach (UserRoleOperation operation in operations)
+            {
                 var json = operation.Serialize();
                 using var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _client.PostAsync($"{this.Options.ServiceAccount.Api}/integrations/{this.Options.ServiceAccount.Integration}/{this.Options.ServiceAccount.Environment}/user-role-mappings", content);

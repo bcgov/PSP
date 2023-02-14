@@ -74,7 +74,6 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         public PimsProject Get(long id)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
@@ -122,7 +121,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Retrieves the version of project
+        /// Retrieves the version of project.
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The project row version.</returns>

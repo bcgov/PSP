@@ -23,11 +23,11 @@ namespace Pims.Dal.Test.Entities
             var organization = EntityHelper.CreateOrganization(2, "ORG");
 
             // Act
-            var accessRequestOrganization = new PimsAccessRequestOrganization(accessRequest.AccessRequestId, organization.Id);
+            var accessRequestOrganization = new PimsAccessRequestOrganization(accessRequest.AccessRequestId, organization.Internal_Id);
 
             // Assert
             accessRequestOrganization.AccessRequestId.Should().Be(accessRequest.AccessRequestId);
-            accessRequestOrganization.OrganizationId.Should().Be(organization.Id);
+            accessRequestOrganization.OrganizationId.Should().Be(organization.Internal_Id);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace Pims.Dal.Test.Entities
             // Assert
             accessRequestOrganization.AccessRequestId.Should().Be(accessRequest.AccessRequestId);
             accessRequestOrganization.AccessRequest.Should().Be(accessRequest);
-            accessRequestOrganization.OrganizationId.Should().Be(organization.Id);
+            accessRequestOrganization.OrganizationId.Should().Be(organization.Internal_Id);
             accessRequestOrganization.Organization.Should().Be(organization);
         }
 

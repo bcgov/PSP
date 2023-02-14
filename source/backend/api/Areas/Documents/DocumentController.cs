@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -86,7 +85,6 @@ namespace Pims.Api.Controllers
 
             var response = await _documentService.UpdateDocumentAsync(updateRequest);
             return new JsonResult(response);
-
         }
 
         /// <summary>
@@ -165,7 +163,7 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> DownloadFile(long mayanDocumentId)
         {
             var result = await _documentService.DownloadFileLatestAsync(mayanDocumentId);
-            if(result?.Payload == null)
+            if (result?.Payload == null)
             {
                 return new NotFoundResult();
             }

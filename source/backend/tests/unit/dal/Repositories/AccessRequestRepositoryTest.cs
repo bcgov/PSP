@@ -48,7 +48,7 @@ namespace Pims.Dal.Test.Repositories
             eAccessRequest.User.BusinessIdentifierValue = "value";
 
             var secondAccessRequest = EntityHelper.CreateAccessRequest(2, organization: organization, role: role, user: eSecondUser, region: region);
-            secondAccessRequest.User.Id = 2;
+            secondAccessRequest.User.Internal_Id = 2;
             secondAccessRequest.User.Person.Surname = "Other";
             secondAccessRequest.User.BusinessIdentifierValue = "oDisabled";
             secondAccessRequest.AccessRequestStatusTypeCodeNavigation = new PimsAccessRequestStatusType() { Id = "fake" };
@@ -195,7 +195,7 @@ namespace Pims.Dal.Test.Repositories
             Assert.NotNull(result);
             Assert.IsAssignableFrom<PimsAccessRequest>(result);
             result.User.Position.Should().Be(eUser.Position);
-            result.User.Id.Should().Be(eUser.Id);
+            result.User.Internal_Id.Should().Be(eUser.Internal_Id);
             result.AccessRequestStatusTypeCode.Should().Be("Received");
         }
         #endregion
