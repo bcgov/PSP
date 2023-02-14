@@ -9,7 +9,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { ProductForm, ProjectForm } from './models';
+import { ProductForm, ProjectForm } from '../models';
 import ProductSubForm from './ProductSubForm';
 
 export interface IProductsArrayFormProps {

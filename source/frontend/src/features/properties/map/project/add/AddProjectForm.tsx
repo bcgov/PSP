@@ -7,7 +7,7 @@ import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ProjectForm } from './models';
+import { ProjectForm } from '../models';
 import ProductsArrayForm from './ProductsArrayForm';
 
 export interface IAddProjectFormProps {
@@ -22,62 +22,69 @@ export interface IAddProjectFormProps {
   onSubmit: (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => void | Promise<any>;
 }
 
-export const AddProjectForm: React.FC<IAddProjectFormProps> = props => {
-  const { initialValues, projectStatusOptions, projectRegionOptions, validationSchema, onSubmit } =
-    props;
+const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
+  (props, formikRef) => {
+    const {
+      initialValues,
+      projectStatusOptions,
+      projectRegionOptions,
+      validationSchema,
+      onSubmit,
+    } = props;
 
-  const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
-    await onSubmit(values, formikHelpers);
-    formikHelpers.setSubmitting(false);
-  };
+    const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
+      await onSubmit(values, formikHelpers);
+      formikHelpers.setSubmitting(false);
+    };
 
-  return (
-    <Formik<ProjectForm>
-      enableReinitialize
-      innerRef={props.formikRef}
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {formikProps => (
-        <StyledFormWrapper>
-          <Form>
-            <Section>
-              <StyledRow className="no-gutters py-4 mb-5">
-                <Col>
-                  <p>
-                    Before creating a project, <Link to={'/project/list'}>do a search</Link> to
-                    ensure the the project you're creating doesn't already exist.
-                  </p>
-                </Col>
-              </StyledRow>
-              <SectionField label="Project name" required labelWidth="2">
-                <Input field="projectName" />
-              </SectionField>
-              <SectionField label="Project number" labelWidth="2">
-                <Input field="projectNumber" placeholder="if known" />
-              </SectionField>
-              <SectionField label="Status" labelWidth="2">
-                <Select
-                  field="projectStatusType"
-                  options={projectStatusOptions}
-                  placeholder="Select..."
-                />
-              </SectionField>
-              <SectionField label="MoTI region" required labelWidth="2">
-                <Select field="region" options={projectRegionOptions} placeholder="Select..." />
-              </SectionField>
-              <SectionField label="Project summary" labelWidth="12">
-                <MediumTextArea field="summary" />
-              </SectionField>
-            </Section>
-            <ProductsArrayForm formikProps={formikProps} field="products" />
-          </Form>
-        </StyledFormWrapper>
-      )}
-    </Formik>
-  );
-};
+    return (
+      <Formik<ProjectForm>
+        enableReinitialize
+        innerRef={props.formikRef}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {formikProps => (
+          <StyledFormWrapper>
+            <Form>
+              <Section>
+                <StyledRow className="no-gutters py-4 mb-5">
+                  <Col>
+                    <p>
+                      Before creating a project, <Link to={'/project/list'}>do a search</Link> to
+                      ensure the the project you're creating doesn't already exist.
+                    </p>
+                  </Col>
+                </StyledRow>
+                <SectionField label="Project name" required labelWidth="2">
+                  <Input field="projectName" />
+                </SectionField>
+                <SectionField label="Project number" labelWidth="2">
+                  <Input field="projectNumber" placeholder="if known" />
+                </SectionField>
+                <SectionField label="Status" labelWidth="2">
+                  <Select
+                    field="projectStatusType"
+                    options={projectStatusOptions}
+                    placeholder="Select..."
+                  />
+                </SectionField>
+                <SectionField label="MoTI region" required labelWidth="2">
+                  <Select field="region" options={projectRegionOptions} placeholder="Select..." />
+                </SectionField>
+                <SectionField label="Project summary" labelWidth="12">
+                  <MediumTextArea field="summary" />
+                </SectionField>
+              </Section>
+              <ProductsArrayForm formikProps={formikProps} field="products" />
+            </Form>
+          </StyledFormWrapper>
+        )}
+      </Formik>
+    );
+  },
+);
 
 export default AddProjectForm;
 

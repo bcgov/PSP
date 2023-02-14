@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_RESEARCH_FILE_NOTE_HIST")]
-    [Index(nameof(ResearchFileNoteHistId), nameof(EndDateHist), Name = "PIMS_RSCNOT_H_UK", IsUnique = true)]
+    [Index(nameof(ResearchFileNoteHistId), nameof(EndDateHist), Name = "PIMS_RFLNOT_H_UK", IsUnique = true)]
     public partial class PimsResearchFileNoteHist
     {
         [Key]

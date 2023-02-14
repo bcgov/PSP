@@ -1,13 +1,15 @@
+import { SelectOption } from 'components/common/form';
+import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
+import { GetMockLookUpsByType, mockLookups } from 'mocks/mockLookups';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
+import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
 import AddProjectForm, { IAddProjectFormProps } from './AddProjectForm';
-import { ProjectForm } from './models';
 
 const history = createMemoryHistory();
 const validationSchema = jest.fn().mockReturnValue(AddProjectYupSchema);
@@ -15,6 +17,9 @@ const onSubmit = jest.fn();
 
 type TestProps = Pick<IAddProjectFormProps, 'initialValues'>;
 jest.mock('@react-keycloak/web');
+
+let mockRegionOptions: SelectOption[] = GetMockLookUpsByType(API.REGION_TYPES);
+let mockProjectStatuses: SelectOption[] = GetMockLookUpsByType(API.PROJECT_STATUS_TYPES);
 
 describe('AddProjectForm component', () => {
   // render component under test
@@ -26,8 +31,8 @@ describe('AddProjectForm component', () => {
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
-        projectStatusOptions={[]}
-        projectRegionOptions={[]}
+        projectStatusOptions={mockRegionOptions}
+        projectRegionOptions={mockProjectStatuses}
       />,
       {
         ...renderOptions,

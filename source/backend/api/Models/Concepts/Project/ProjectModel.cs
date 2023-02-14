@@ -34,7 +34,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The region code.
         /// </summary>
-        public CodeTypeModel RegionCode { get; set; }
+        public TypeModel<short> RegionCode { get; set; }
 
         /// <summary>
         /// get/set - The project code.

@@ -82,15 +82,16 @@ export const AcquisitionContainer: React.FunctionComponent<
     retrieved?.fileProperties?.forEach(async fp => {
       fp.property = acquisitionProperties?.find(ap => fp.id === ap.id)?.property;
     });
+
     setAcquisitionFile(retrieved);
     setFile({ ...retrieved, fileType: FileTypes.Acquisition });
   }, [acquisitionFileId, retrieveAcquisitionFileProperties, retrieveAcquisitionFile, setFile]);
 
   useEffect(() => {
-    if (acquisitionFile === undefined) {
+    if (acquisitionFile === undefined || acquisitionFileId !== acquisitionFile.id) {
       fetchAcquisitionFile();
     }
-  }, [acquisitionFile, fetchAcquisitionFile]);
+  }, [acquisitionFile, fetchAcquisitionFile, acquisitionFileId]);
 
   useEffect(
     () => setFileLoading(loadingAcquisitionFile || loadingAcquisitionFileProperties),

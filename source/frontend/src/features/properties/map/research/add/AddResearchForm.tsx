@@ -1,12 +1,14 @@
 import { Input } from 'components/common/form/';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
+import { UpdateProjectsSubForm } from '../common/updateProjects/UpdateProjectsSubForm';
 import ResearchProperties from './ResearchProperties';
 
-const AddResearchForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
+const AddResearchForm: React.FC = () => {
   return (
     <>
       <Row className="py-4 no-gutters">
@@ -19,6 +21,9 @@ const AddResearchForm: React.FunctionComponent<React.PropsWithChildren<unknown>>
         </Col>
       </Row>
       <ResearchFileNameGuide />
+      <Section header="Project">
+        <UpdateProjectsSubForm field="researchFileProjects" />
+      </Section>
       <ResearchProperties />
     </>
   );

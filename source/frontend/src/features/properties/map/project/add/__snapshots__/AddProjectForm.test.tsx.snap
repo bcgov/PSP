@@ -295,6 +295,30 @@ exports[`AddProjectForm component renders as expected 1`] = `
                   >
                     Select...
                   </option>
+                  <option
+                    class="option"
+                    value="1"
+                  >
+                    South Coast Region
+                  </option>
+                  <option
+                    class="option"
+                    value="2"
+                  >
+                    Southern Interior Region
+                  </option>
+                  <option
+                    class="option"
+                    value="3"
+                  >
+                    Northern Region
+                  </option>
+                  <option
+                    class="option"
+                    value="4"
+                  >
+                    Cannot determine
+                  </option>
                 </select>
               </div>
             </div>
@@ -326,6 +350,42 @@ exports[`AddProjectForm component renders as expected 1`] = `
                     value=""
                   >
                     Select...
+                  </option>
+                  <option
+                    class="option"
+                    value="AC"
+                  >
+                    Active (AC)
+                  </option>
+                  <option
+                    class="option"
+                    value="CA"
+                  >
+                    Cancelled (CA)
+                  </option>
+                  <option
+                    class="option"
+                    value="CNCN"
+                  >
+                    Consolidated (CNCN)
+                  </option>
+                  <option
+                    class="option"
+                    value="CO"
+                  >
+                    Completed (CO)
+                  </option>
+                  <option
+                    class="option"
+                    value="HO"
+                  >
+                    On Hold (HO)
+                  </option>
+                  <option
+                    class="option"
+                    value="PL"
+                  >
+                    Planning (PL)
                   </option>
                 </select>
               </div>
