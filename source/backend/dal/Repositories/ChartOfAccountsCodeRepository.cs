@@ -61,7 +61,7 @@ namespace Pims.Dal.Repositories
             pimsCode.ThrowIfNull(nameof(pimsCode));
 
             var currentCode = Context.PimsChartOfAccountsCodes
-                .FirstOrDefault(x => x.Internal_Id == pimsCode.Internal_Id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.Id == pimsCode.Id) ?? throw new KeyNotFoundException();
 
             if (IsDuplicate(pimsCode))
             {
@@ -80,9 +80,9 @@ namespace Pims.Dal.Repositories
                 .ToList();
 
             // Need to remove the entity from existing codes when updating it. We only want to compare against other entities.
-            if (pimsCode.Internal_Id > 0)
+            if (pimsCode.Id > 0)
             {
-                existingCodes.RemoveAll(c => c.Internal_Id == pimsCode.Internal_Id);
+                existingCodes.RemoveAll(c => c.Id == pimsCode.Id);
             }
 
             var now = DateTime.UtcNow;

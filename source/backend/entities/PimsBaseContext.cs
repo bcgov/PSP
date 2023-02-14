@@ -3007,7 +3007,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of the business function codes.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_BUSINESS_FUNCTION_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 
@@ -3062,7 +3062,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of the chart of accounts codes.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CHART_OF_ACCOUNTS_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 
@@ -3302,7 +3302,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of the cost type codes.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COST_TYPE_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 
@@ -3599,7 +3599,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of the financial activity codes.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FINANCIAL_ACTIVITY_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 
@@ -5126,7 +5126,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of a project.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PRODUCT_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 
@@ -5187,7 +5187,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of a project.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 
@@ -6969,7 +6969,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of the responsibility codes.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESPONSIBILITY_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 
@@ -7732,7 +7732,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of the work activity codes.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_WORK_ACTIVITY_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 
@@ -7787,7 +7787,7 @@ namespace Pims.Dal
             {
                 entity.HasComment("Code and description of the chart of accounts codes.");
 
-                entity.Property(e => e.Internal_Id)
+                entity.Property(e => e.Id)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_YEARLY_FINANCIAL_CODE_ID_SEQ])")
                     .HasComment("System-generated primary key.");
 

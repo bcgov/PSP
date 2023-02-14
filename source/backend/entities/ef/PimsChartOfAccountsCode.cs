@@ -14,7 +14,7 @@ namespace Pims.Dal.Entities
     {
         [Key]
         [Column("ID")]
-        public long Internal_Id { get; set; }
+        public long Id { get; set; }
         [Required]
         [Column("CODE")]
         [StringLength(20)]

@@ -75,7 +75,7 @@ namespace Pims.Api.Services
 
         private void ValidateDeletionRules(PimsLeaseTerm term)
         {
-            PimsLeaseTerm leaseTermToDelete = _leaseTermRepository.GetById(term.Internal_Id, true);
+            PimsLeaseTerm leaseTermToDelete = _leaseTermRepository.GetById(term.LeaseTermId, true);
             if (leaseTermToDelete.PimsLeasePayments.Count > 0)
             {
                 throw new InvalidOperationException("A term with payments attached can not be deleted. If you intend to delete this term, you must delete each of the corresponding payments first.");
@@ -85,7 +85,7 @@ namespace Pims.Api.Services
                 throw new InvalidOperationException("Exercised terms cannot be deleted. Remove all payments from this term and set this term to 'Not Exercised' to delete this term.");
             }
             IEnumerable<PimsLeaseTerm> termsForLease = _leaseTermRepository.GetAllByLeaseId(term.LeaseId).OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId);
-            if (term.Internal_Id == termsForLease.FirstOrDefault()?.Internal_Id && termsForLease.Count() > 1)
+            if (term.LeaseTermId == termsForLease.FirstOrDefault()?.LeaseTermId && termsForLease.Count() > 1)
             {
                 throw new InvalidOperationException("You must delete all renewals before deleting the initial term.");
             }

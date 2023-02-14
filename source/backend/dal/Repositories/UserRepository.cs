@@ -357,7 +357,7 @@ namespace Pims.Dal.Repositories
 
         public PimsUser RemoveRegion(PimsUser user, long regionId)
         {
-            var userRegion = user.PimsRegionUsers.FirstOrDefault(r => r.Internal_Id == regionId);
+            var userRegion = user.PimsRegionUsers.FirstOrDefault(r => r.RegionUserId == regionId);
             user.PimsRegionUsers.Remove(userRegion);
             this.Context.PimsRegionUsers.Remove(userRegion);
             return user;

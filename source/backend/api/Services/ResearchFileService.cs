@@ -91,20 +91,20 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating research file properties...");
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
-            ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
+            ValidateVersion(researchFile.ResearchFileId, researchFile.ConcurrencyControlNumber);
 
             MatchProperties(researchFile);
 
             // Get the current properties in the research file
-            var currentProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Internal_Id);
+            var currentProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.ResearchFileId);
 
             // Check if the property is new or if it is being updated
             foreach (var incommingResearchProperty in researchFile.PimsPropertyResearchFiles)
             {
                 // If the property is not new, check if the name has been updated.
-                if (incommingResearchProperty.Internal_Id != 0)
+                if (incommingResearchProperty.ResearchFileId != 0)
                 {
-                    PimsPropertyResearchFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incommingResearchProperty.Internal_Id);
+                    PimsPropertyResearchFile existingProperty = currentProperties.FirstOrDefault(x => x.PropertyResearchFileId == incommingResearchProperty.PropertyResearchFileId);
                     if (existingProperty.PropertyName != incommingResearchProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incommingResearchProperty.PropertyName;
@@ -119,7 +119,7 @@ namespace Pims.Api.Services
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyResearchFile> differenceSet = currentProperties.Where(x => !researchFile.PimsPropertyResearchFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsPropertyResearchFile> differenceSet = currentProperties.Where(x => !researchFile.PimsPropertyResearchFiles.Any(y => y.PropertyResearchFileId == x.PropertyResearchFileId)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 _researchFilePropertyRepository.Delete(deletedProperty);
