@@ -2,8 +2,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { SelectOption } from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
-import _ from 'lodash';
-import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
+import _, { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
 import moment, { Moment } from 'moment-timezone';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -51,6 +50,10 @@ export const isPositiveNumberOrZero = (input: string | number | undefined | null
   }
 
   return !isNaN(Number(input)) && Number(input) > -1;
+};
+
+export const isNullOrWhitespace = (value: string | null | undefined): boolean => {
+  return value === null || value === undefined || value.trim() === '';
 };
 
 /** used for filters that need to display the string value of a parent organization organization */

@@ -12,6 +12,7 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/providers/useProjectProvider';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { IAutocompletePrediction } from 'interfaces';
 import { Api_Product } from 'models/api/Project';
 import React from 'react';
@@ -19,7 +20,6 @@ import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
-import { useProjectTypeahead } from '../../hooks/useProjectTypeahead';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import StatusToolTip from './StatusToolTip';
 

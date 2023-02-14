@@ -320,6 +320,50 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 <div
                   class="col"
                 >
+                  Project
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Ministry project:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  <div>
+                    00048 CLAIMS
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c3 form-section"
+          >
+            <h2
+              class="c4"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
                   Roads
                 </div>
                 <div
@@ -344,7 +388,9 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
-                />
+                >
+                  Test road name
+                </div>
               </div>
               <div
                 class="pb-2 row"
@@ -360,7 +406,9 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
-                />
+                >
+                  Test road alias
+                </div>
               </div>
             </div>
           </div>
@@ -417,7 +465,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 <div
                   class="c6 text-left col"
                 >
-                   
+                   Apr 14, 2022
                 </div>
               </div>
               <div
@@ -434,7 +482,9 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
-                />
+                >
+                  Headquarters (HQ)
+                </div>
               </div>
               <div
                 class="pb-2 row"
@@ -450,7 +500,9 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
-                />
+                >
+                  Dairy Queen Forever! Property Management
+                </div>
               </div>
               <div
                 class="pb-2 row"
@@ -468,6 +520,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="c6 text-left col"
                 />
               </div>
+              a request description
             </div>
           </div>
           <div
@@ -507,7 +560,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 <div
                   class="c6 text-left col"
                 >
-                  not complete
+                  Mar 30, 2022
                 </div>
               </div>
               <div
@@ -526,6 +579,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="c6 text-left col"
                 />
               </div>
+              A research result
             </div>
           </div>
           <div
@@ -584,6 +638,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="c6 text-left col"
                 />
               </div>
+              An expropriation note
             </div>
           </div>
         </div>

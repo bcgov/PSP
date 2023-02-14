@@ -80,7 +80,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<ResearchFilePropertyModel>>(researchFileProperties));
         }
 
-
         /// <summary>
         /// Gets the activities for specified research file.
         /// </summary>

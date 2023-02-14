@@ -12,11 +12,8 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using SModel = Pims.Api.Areas.Research.Models.Search;
@@ -44,7 +41,7 @@ namespace Pims.Api.Test.Controllers.Research
             new object [] { new Uri("http://host/api/research/search?Name=rname") },
         };
 
-        private TestHelper _helper;
+        private readonly TestHelper _helper;
         #endregion
 
         public SearchControllerTest()
