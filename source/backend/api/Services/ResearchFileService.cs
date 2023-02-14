@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -78,7 +79,9 @@ namespace Pims.Api.Services
 
         public PimsResearchFile Update(PimsResearchFile researchFile)
         {
-            _logger.LogInformation("Updating research file...");
+            researchFile.ThrowIfNull(nameof(researchFile));
+
+            _logger.LogInformation("Updating research file with id {id}", researchFile.Id);
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 

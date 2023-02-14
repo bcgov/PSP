@@ -85,6 +85,22 @@ namespace Pims.Dal.Test.Core.Extensions
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }
+
+        [Fact]
+        public void GetExpiryDate_TermNoExpiry()
+        {
+            DateTime now = DateTime.Now;
+            DateTime later = now.AddDays(1);
+            DateTime before = now.AddDays(-1);
+            PimsLease lease = new PimsLease()
+            {
+                OrigExpiryDate = now,
+                PimsLeaseTerms =
+                new List<PimsLeaseTerm>() { new PimsLeaseTerm() { TermExpiryDate = null },
+                    new PimsLeaseTerm() { TermExpiryDate = before }, },
+            };
+            Assert.Equal(null, lease.GetExpiryDate());
+        }
         #endregion
     }
 }

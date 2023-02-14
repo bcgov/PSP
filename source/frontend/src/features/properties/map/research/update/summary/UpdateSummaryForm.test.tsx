@@ -1,11 +1,10 @@
-import { screen } from '@testing-library/react';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, fillInput, render, RenderOptions } from 'utils/test-utils';
+import { fakeText, fillInput, render, RenderOptions, screen } from 'utils/test-utils';
 
 import { UpdateResearchFileYupSchema } from '../UpdateResearchFileYupSchema';
 import { UpdateResearchSummaryFormModel } from './models';

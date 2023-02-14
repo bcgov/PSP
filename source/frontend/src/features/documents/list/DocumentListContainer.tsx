@@ -60,7 +60,11 @@ const DocumentListContainer: React.FunctionComponent<
 
   useDeepCompareEffect(() => {
     const getDetails = async () => {
-      const currentPage = getPage(pageProps.pageIndex ?? 0, pageProps.pageSize, documentResults);
+      const currentPage = getPage<DocumentRow>(
+        pageProps.pageIndex ?? 0,
+        pageProps.pageSize,
+        documentResults,
+      );
       const newDocumentResults = [...currentPage];
       let updated = false;
       await newDocumentResults.forEach(async (d, index) => {
@@ -74,7 +78,7 @@ const DocumentListContainer: React.FunctionComponent<
         }
       });
       if (updated) {
-        setDocumentResults(newDocumentResults);
+        setDocumentResults([...documentResults]);
       }
     };
     getDetails();
