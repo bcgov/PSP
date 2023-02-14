@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// ActInstPropRsrchFile class, provides an entity for the datamodel to manage reseach properties.
     /// </summary>
-    public partial class PimsActInstPropRsrchFile : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsActInstPropRsrchFile : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

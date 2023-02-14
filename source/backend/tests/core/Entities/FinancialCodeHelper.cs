@@ -21,13 +21,13 @@ namespace Pims.Core.Test
         {
             return type switch
             {
-                FinancialCodeTypes.BusinessFunction => new Entity.PimsBusinessFunctionCode() { Internal_Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
-                FinancialCodeTypes.ChartOfAccounts => new Entity.PimsChartOfAccountsCode() { Internal_Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
-                FinancialCodeTypes.YearlyFinancial => new Entity.PimsYearlyFinancialCode() { Internal_Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
-                FinancialCodeTypes.CostType => new Entity.PimsCostTypeCode() { Internal_Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
-                FinancialCodeTypes.FinancialActivity => new Entity.PimsFinancialActivityCode() { Internal_Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
-                FinancialCodeTypes.WorkActivity => new Entity.PimsWorkActivityCode() { Internal_Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
-                FinancialCodeTypes.Responsibility => new Entity.PimsResponsibilityCode() { Internal_Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
+                FinancialCodeTypes.BusinessFunction => new Entity.PimsBusinessFunctionCode() { Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
+                FinancialCodeTypes.ChartOfAccounts => new Entity.PimsChartOfAccountsCode() { Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
+                FinancialCodeTypes.YearlyFinancial => new Entity.PimsYearlyFinancialCode() { Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
+                FinancialCodeTypes.CostType => new Entity.PimsCostTypeCode() { Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
+                FinancialCodeTypes.FinancialActivity => new Entity.PimsFinancialActivityCode() { Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
+                FinancialCodeTypes.WorkActivity => new Entity.PimsWorkActivityCode() { Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
+                FinancialCodeTypes.Responsibility => new Entity.PimsResponsibilityCode() { Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 },
                 _ => throw new InvalidOperationException("Financial code type must be a known type"),
             };
         }

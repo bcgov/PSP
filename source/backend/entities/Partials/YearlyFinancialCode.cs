@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -7,7 +5,5 @@ namespace Pims.Dal.Entities
     /// </summary>
     public partial class PimsYearlyFinancialCode : IFinancialCodeEntity
     {
-        [NotMapped]
-        public long Internal_Id { get => this.Id; set => this.Id = value; }
     }
 }

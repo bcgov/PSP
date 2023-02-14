@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// LeaseTenant class, provides the many-to-many relationship between leases and tenants.
     /// </summary>
-    public partial class PimsLeaseTenant : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsLeaseTenant : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

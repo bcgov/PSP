@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsResearchFile class, provides an entity for the datamodel to manage research files.
     /// </summary>
-    public partial class PimsResearchFile : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsResearchFile : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

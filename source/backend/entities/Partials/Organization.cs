@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Organization class, provides an entity for the datamodel to manage property organizations.
     /// </summary>
-    public partial class PimsOrganization : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
+    public partial class PimsOrganization : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
 

@@ -113,8 +113,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="parentId"></param>
         /// <param name="children"></param>
         public static void UpdateChild<T_Entity, T_Id, T_ChildEntity>(this PimsContext context, Expression<Func<T_Entity, object>> childNavigation, T_Id parentId, T_ChildEntity[] children, bool updateChildValues = true)
-            where T_Entity : IdentityBaseAppEntity<T_Id>
-            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
+            where T_Entity : StandardIdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
         {
             var dbEntity = context.Find<T_Entity>(parentId);
 
@@ -125,7 +125,7 @@ namespace Pims.Dal.Helpers.Extensions
             var accessor = dbItemsEntry.Metadata.GetCollectionAccessor();
 
             dbItemsEntry.Load();
-            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>()
+            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<StandardIdentityBaseAppEntity<T_Id>>()
                 .ToDictionary(e => e.Internal_Id);
 
             foreach (var item in children)
@@ -172,8 +172,8 @@ namespace Pims.Dal.Helpers.Extensions
             T_Id parentId,
             T_ChildEntity[] childrenWithGrandchildren,
             bool updateGrandChildValues = true)
-            where T_Entity : IdentityBaseAppEntity<T_Id>
-            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
+            where T_Entity : StandardIdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
         {
             UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true, updateGrandChildValues);
         }
@@ -201,8 +201,8 @@ namespace Pims.Dal.Helpers.Extensions
             T_ChildEntity[] childrenWithGrandchildren,
             Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild,
             bool updateGrandChildValues = true)
-            where T_Entity : IdentityBaseAppEntity<T_Id>
-            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
+            where T_Entity : StandardIdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
         {
             var dbEntity = context.Find<T_Entity>(parentId);
             var dbEntry = context.Entry(dbEntity);
@@ -212,7 +212,7 @@ namespace Pims.Dal.Helpers.Extensions
             var childAccessor = childCollection.Metadata.GetCollectionAccessor();
 
             childCollection.Load();
-            var existingChildren = childCollection.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>().ToDictionary(e => e.Internal_Id);
+            var existingChildren = childCollection.CurrentValue.Cast<StandardIdentityBaseAppEntity<T_Id>>().ToDictionary(e => e.Internal_Id);
 
             // Compile the grandchildNavigation lambda expression so we can extract the value from the passed in array of children
             var grandchildPropertyName = grandchildNavigation.GetPropertyAccess().Name;

@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsLeasePayment class, provides an entity for the datamodel to manage lease payments.
     /// </summary>
-    public partial class PimsLeasePayment : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsLeasePayment : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

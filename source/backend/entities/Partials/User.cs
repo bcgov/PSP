@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// User class, provides an entity for the datamodel to manage users.
     /// </summary>
-    public partial class PimsUser : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
+    public partial class PimsUser : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
 

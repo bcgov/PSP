@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsActivityInstanceNote class, provides an entity for the datamodel to manage acquisition file notes.
     /// </summary>
-    public partial class PimsAcquisitionFileNote : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsAcquisitionFileNote : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

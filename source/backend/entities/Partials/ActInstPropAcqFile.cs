@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// ActInstPropAcqFile class, provides an entity for the datamodel to manage acquisition properties.
     /// </summary>
-    public partial class PimsActInstPropAcqFile : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsActInstPropAcqFile : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// UserRole class, provides an entity for the datamodel to manage user organizations.
     /// </summary>
-    public partial class PimsUserRole : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsUserRole : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         /// <summary>
         /// get/set - The primary key IDENTITY.

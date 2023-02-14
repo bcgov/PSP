@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PropertyImprovement class, provides the many-to-many relationship between leases and tenants.
     /// </summary>
-    public partial class PimsPropertyImprovement : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsPropertyImprovement : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

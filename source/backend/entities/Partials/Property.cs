@@ -9,7 +9,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Property class, provides an entity for the datamodel to manage properties.
     /// </summary>
-    public partial class PimsProperty : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsProperty : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

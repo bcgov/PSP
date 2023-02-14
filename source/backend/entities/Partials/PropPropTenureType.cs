@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsPropPropTenureType class, provides an entity for the datamodel to manage property tenure types.
     /// </summary>
-    public partial class PimsPropPropTenureType : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsPropPropTenureType : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsDocument class, provides an entity for the datamodel to manage notes.
     /// </summary>
-    public partial class PimsDocumentTyp : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsDocumentTyp : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

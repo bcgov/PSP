@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsActivityInstanceNote class, provides an entity for the datamodel to manage activity notes.
     /// </summary>
-    public partial class PimsActivityInstanceNote : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsActivityInstanceNote : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

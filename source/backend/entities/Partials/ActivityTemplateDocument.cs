@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsActivityTemplateDocument class, provides an entity for the datamodel to manage Activity template document entities.
     /// </summary>
-    public partial class PimsActivityTemplateDocument : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsActivityTemplateDocument : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

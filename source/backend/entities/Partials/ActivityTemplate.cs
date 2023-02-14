@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsActivityTemplate class, provides an entity for the datamodel to manage a list of activity template types.
     /// </summary>
-    public partial class PimsActivityTemplate : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsActivityTemplate : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
 

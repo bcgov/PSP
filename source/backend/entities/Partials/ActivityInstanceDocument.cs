@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsActivityInstanceDocument class, provides an entity for the datamodel to manage Activity document entities.
     /// </summary>
-    public partial class PimsActivityInstanceDocument : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsActivityInstanceDocument : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

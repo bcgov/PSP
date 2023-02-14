@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// ContactMethod class, provides an entity for the datamodel to manage personal contact method.
     /// </summary>
-    public partial class PimsContactMethod : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsContactMethod : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]
