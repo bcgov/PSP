@@ -15,7 +15,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - A historical reference number of this file in a legacy system (likely PAIMS).
         /// </summary>
-        public long LegacyFileNumber { get; set; }
+        public string LegacyFileNumber { get; set; }
 
         /// <summary>
         /// get/set - The ministry project number.
