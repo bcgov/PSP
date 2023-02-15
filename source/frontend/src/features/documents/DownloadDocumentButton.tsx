@@ -41,37 +41,6 @@ const DownloadDocumentButton: React.FunctionComponent<
     }
   }
 
-  const showFile = async (response?: Api_FileDownload) => {
-    if (response !== undefined && response.size > 0) {
-      if (response.encodingType === 'base64') {
-        const blob = b64toBlob(response.filePayload, response.mimetype);
-        fileDownload(blob, response.fileName);
-      } else {
-        throw new Error('Only base64 encoding is supported');
-      }
-    }
-  };
-
-  const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
-  };
-
   if (!props.isFileAvailable && !provider.downloadWrappedDocumentFileLoading) {
     return (
       <TooltipIcon
@@ -96,6 +65,37 @@ const DownloadDocumentButton: React.FunctionComponent<
       </LinkButton>
     </div>
   );
+};
+
+export const showFile = async (response?: Api_FileDownload) => {
+  if (response !== undefined && response.size > 0) {
+    if (response.encodingType === 'base64') {
+      const blob = b64toBlob(response.filePayload, response.mimetype);
+      fileDownload(blob, response.fileName);
+    } else {
+      throw new Error('Only base64 encoding is supported');
+    }
+  }
+};
+
+export const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, { type: contentType });
+  return blob;
 };
 
 export default DownloadDocumentButton;
