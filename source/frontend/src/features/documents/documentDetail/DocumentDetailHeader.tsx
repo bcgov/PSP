@@ -11,9 +11,9 @@ interface IDocumentDetailHeaderProps {
 const DocumentDetailHeader: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailHeaderProps>
 > = props => {
-  const documentTypeLabel = props.document.pimsDocument?.documentType?.documentType;
-  const documentFileName = props.document.pimsDocument?.fileName;
-  const mayanDocumentId = props.document.pimsDocument?.mayanDocumentId || -1;
+  const documentTypeLabel = props.document.pimsDocument?.document?.documentType?.documentType;
+  const documentFileName = props.document.pimsDocument?.document?.fileName;
+  const mayanDocumentId = props.document.pimsDocument?.document?.mayanDocumentId || -1;
 
   return (
     <>
