@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 import { IEditableOrganization } from 'interfaces/editable-contact';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import UpdateOrganizationForm from './UpdateOrganizationForm';
 
@@ -65,16 +65,16 @@ describe('UpdateOrganizationForm', () => {
   it('renders as expected', async () => {
     const { asFragment } = setup({ id: 1 });
     const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+    await act(async () => expect(fragment).toMatchSnapshot());
   });
 
   describe('when Cancel button is clicked', () => {
     it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup({ id: 1 });
       const cancel = getCancelButton();
-      userEvent.click(cancel);
+      act(() => userEvent.click(cancel));
 
-      await waitFor(() => expect(history.location.pathname).toBe('/contact/O1'));
+      await act(async () => expect(history.location.pathname).toBe('/contact/O1'));
     });
   });
 
@@ -82,7 +82,7 @@ describe('UpdateOrganizationForm', () => {
     it('should update the organization with minimal data', async () => {
       const { getSaveButton } = setup({ id: 1 });
       const save = getSaveButton();
-      userEvent.click(save);
+      act(() => userEvent.click(save));
 
       await waitFor(() => expect(updateOrganization).toBeCalledWith(mockOrganization));
     });
@@ -114,7 +114,7 @@ describe('UpdateOrganizationForm', () => {
       );
 
       const save = getSaveButton();
-      userEvent.click(save);
+      act(() => userEvent.click(save));
 
       await waitFor(() =>
         expect(updateOrganization).toBeCalledWith({ ...mockOrganization, ...newValues }),

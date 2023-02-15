@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import { Claims } from 'constants/claims';
 import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
 import { useUpdateLease } from 'features/leases/hooks/useUpdateLease';
@@ -189,7 +189,7 @@ describe('AddLeaseTenantContainer component', () => {
       expect(viewProps.saveCallback).not.toBeNull();
     });
     //act
-    viewProps.onCancel && viewProps.onCancel();
+    act(() => viewProps.onCancel && viewProps.onCancel());
     //assert
     await waitFor(() => {
       expect(viewProps.saveCallback).toBeUndefined();

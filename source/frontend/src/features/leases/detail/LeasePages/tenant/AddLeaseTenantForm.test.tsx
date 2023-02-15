@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
 import { defaultFormLease } from 'interfaces';
@@ -66,7 +66,7 @@ describe('AddLeaseTenantForm component', () => {
     } = await setup({});
 
     const tenantButton = getByText('Select Tenant(s)');
-    userEvent.click(tenantButton);
+    act(() => userEvent.click(tenantButton));
 
     expect(setShowContactManager).toHaveBeenCalledWith(true);
   });
@@ -86,7 +86,7 @@ describe('AddLeaseTenantForm component', () => {
     expect(modal).toBeVisible();
 
     const confirm = screen.getByText('Select');
-    userEvent.click(confirm);
+    act(() => userEvent.click(confirm));
 
     expect(setShowContactManager).toHaveBeenLastCalledWith(false);
     expect(setTenants).toHaveBeenCalledWith([]);
@@ -100,7 +100,7 @@ describe('AddLeaseTenantForm component', () => {
     expect(modal).toBeVisible();
 
     const cancel = screen.getByText('Cancel');
-    userEvent.click(cancel);
+    act(() => userEvent.click(cancel));
 
     expect(setShowContactManager).toHaveBeenLastCalledWith(false);
     expect(setSelectedContacts.mock.calls[0][0][0].id).toBe(tenants[0].id);
@@ -254,7 +254,7 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const deleteButton = getByTitle('Click to remove');
-    userEvent.click(deleteButton);
+    act(() => userEvent.click(deleteButton));
 
     expect(setTenants).toHaveBeenCalledWith([]);
     expect(setSelectedContacts).toHaveBeenCalledWith([]);

@@ -65,8 +65,9 @@ describe('Activity List View', () => {
     expect(fragment).toMatchSnapshot();
   });
 
-  it('should have the activity type in the component', () => {
-    const { getByTestId } = setup({ claims: [Claims.ACTIVITY_ADD] });
+  it('should have the activity type in the component', async () => {
+    const { getByTestId, getByTitle } = setup({ claims: [Claims.ACTIVITY_ADD] });
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     expect(getByTestId('add-activity-type')).toBeInTheDocument();
   });
 
@@ -85,7 +86,7 @@ describe('Activity List View', () => {
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const link = getAllByTitle('View Activity')[0];
-    userEvent.click(link);
+    act(() => userEvent.click(link));
 
     //note: extra '/' caused by the test path not containing an id.
     expect(history.location.pathname).toBe('//activity/1');
@@ -98,7 +99,7 @@ describe('Activity List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const link = getAllByText('Survey')[1];
 
-    userEvent.click(link);
+    act(() => userEvent.click(link));
 
     //note: extra '/' caused by the test path not containing an id.
     expect(history.location.pathname).toBe('//activity/1');
@@ -119,8 +120,8 @@ describe('Activity List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const deleteButton = getAllByTitle('Delete Activity')[0];
 
-    userEvent.click(deleteButton);
-    expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
+    act(() => userEvent.click(deleteButton));
+    expect(await screen.findByText(/You have chosen to delete this activity/)).toBeVisible();
   });
 
   it('should delete the activity if the delete modal is confirmed', async () => {
@@ -129,11 +130,11 @@ describe('Activity List View', () => {
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const deleteButton = getAllByTitle('Delete Activity')[0];
-    userEvent.click(deleteButton);
-    expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
+    act(() => userEvent.click(deleteButton));
+    expect(await screen.findByText(/You have chosen to delete this activity/)).toBeVisible();
     const continueButton = await screen.findByText('Continue');
 
-    userEvent.click(continueButton);
+    act(() => userEvent.click(continueButton));
     await waitFor(async () => {
       expect(mockAxios.history.delete[0].url).toBe('/activities/1');
     });
@@ -149,7 +150,7 @@ describe('Activity List View', () => {
     await act(() => userEvent.click(viewButton));
     const deleteButton = getAllByTitle('Delete Activity')[0];
     await act(() => userEvent.click(deleteButton));
-    expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
+    expect(await screen.findByText(/You have chosen to delete this activity/)).toBeVisible();
     const continueButton = await screen.findByText('Continue');
     await act(() => userEvent.click(continueButton));
 
@@ -163,14 +164,14 @@ describe('Activity List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
     const viewButton = getAllByTitle('View Activity')[1];
-    await act(() => userEvent.click(viewButton));
+    act(() => userEvent.click(viewButton));
     const deleteButton = getAllByTitle('Delete Activity')[0];
-    await act(() => userEvent.click(deleteButton));
-    expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
+    act(() => userEvent.click(deleteButton));
+    expect(await screen.findByText(/You have chosen to delete this activity/)).toBeVisible();
     const continueButton = await screen.findByText('Continue');
-    await act(() => userEvent.click(continueButton));
+    act(() => userEvent.click(continueButton));
 
-    //note, the extra '/' is an artifact of no research file id being present in the test logic.
+    // //note, the extra '/' is an artifact of no research file id being present in the test logic.
     expect(history.location.pathname).toBe('//activity/2');
   });
 
@@ -180,13 +181,13 @@ describe('Activity List View', () => {
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const deleteButton = getAllByTitle('Delete Activity')[0];
-    userEvent.click(deleteButton);
-    expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
+    act(() => userEvent.click(deleteButton));
+    expect(await screen.findByText(/You have chosen to delete this activity/)).toBeVisible();
     const cancelButton = await screen.findByText('Cancel');
 
-    userEvent.click(cancelButton);
+    act(() => userEvent.click(cancelButton));
     await waitFor(async () => {
-      expect(screen.queryByText(/You have chosen to delete this activity/g)).toBeNull();
+      expect(screen.queryByText(/You have chosen to delete this activity/)).toBeNull();
     });
   });
 });

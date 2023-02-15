@@ -12,7 +12,7 @@ import {
 } from 'mocks';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import {
   IPropertySelectorSearchContainerProps,
@@ -98,7 +98,9 @@ describe('PropertySelectorSearchContainer component', () => {
     await fillInput(container, 'pid', '123-456-789');
 
     const searchButton = getByTitle('search');
-    userEvent.click(searchButton);
+    act(() => {
+      userEvent.click(searchButton);
+    });
 
     await waitFor(() => {
       expect(mockAxios.history.get).toHaveLength(4);
@@ -124,7 +126,9 @@ describe('PropertySelectorSearchContainer component', () => {
     await fillInput(container, 'pin', '54321');
 
     const searchButton = getByTitle('search');
-    userEvent.click(searchButton);
+    act(() => {
+      userEvent.click(searchButton);
+    });
 
     await waitFor(() => {
       expect(mockAxios.history.get).toHaveLength(4);
@@ -149,7 +153,9 @@ describe('PropertySelectorSearchContainer component', () => {
     await fillInput(container, 'planNumber', 'PRP4520');
 
     const searchButton = getByTitle('search');
-    userEvent.click(searchButton);
+    act(() => {
+      userEvent.click(searchButton);
+    });
 
     await waitFor(() => {
       expect(mockAxios.history.get).toHaveLength(4);
@@ -179,7 +185,9 @@ describe('PropertySelectorSearchContainer component', () => {
     );
 
     const searchButton = getByTitle('search');
-    userEvent.click(searchButton);
+    act(() => {
+      userEvent.click(searchButton);
+    });
 
     await waitFor(() => {
       expect(mockAxios.history.get).toHaveLength(4);
@@ -204,8 +212,10 @@ describe('PropertySelectorSearchContainer component', () => {
   it('searches by address', async () => {
     const { container } = setup({});
 
-    await fillInput(container, 'searchBy', 'address', 'select');
-    await fillInput(container, 'address', '1234 Fake');
+    await act(async () => {
+      await fillInput(container, 'searchBy', 'address', 'select');
+      await fillInput(container, 'address', '1234 Fake');
+    });
 
     // typing on address search field should bring up address suggestions
     let addressSuggestions: HTMLElement;

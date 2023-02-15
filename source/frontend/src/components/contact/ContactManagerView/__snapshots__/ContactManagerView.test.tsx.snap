@@ -909,13 +909,9 @@ exports[`ContactManagerView matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="table-loading"
+          class="no-rows-message"
         >
-          <div
-            class="spinner-border"
-            role="status"
-            title="table-loading"
-          />
+          No Contacts match the search criteria
         </div>
       </div>
       <div

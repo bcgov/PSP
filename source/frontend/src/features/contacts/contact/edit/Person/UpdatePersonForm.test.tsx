@@ -7,7 +7,7 @@ import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import UpdatePersonForm from './UpdatePersonForm';
 
@@ -104,15 +104,15 @@ describe('UpdatePersonForm', () => {
   it('renders as expected', async () => {
     const { asFragment } = setup();
     const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+    await act(async () => expect(fragment).toMatchSnapshot());
   });
 
   describe('when Cancel button is clicked', () => {
     it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup();
       const cancel = getCancelButton();
-      userEvent.click(cancel);
-      await waitFor(() => expect(history.location.pathname).toBe(`/contact/P${mockPerson.id}`));
+      act(() => userEvent.click(cancel));
+      await act(async () => expect(history.location.pathname).toBe(`/contact/P${mockPerson.id}`));
     });
   });
 
@@ -120,7 +120,7 @@ describe('UpdatePersonForm', () => {
     it('should save the form with minimal data', async () => {
       const { getSaveButton } = setup();
       const save = getSaveButton();
-      userEvent.click(save);
+      act(() => userEvent.click(save));
 
       await waitFor(() => expect(updatePerson).toBeCalledWith(mockPerson));
     });
@@ -156,7 +156,7 @@ describe('UpdatePersonForm', () => {
       );
 
       const save = getSaveButton();
-      userEvent.click(save);
+      act(() => userEvent.click(save));
 
       await waitFor(() => expect(updatePerson).toBeCalledWith(newValues));
     });
