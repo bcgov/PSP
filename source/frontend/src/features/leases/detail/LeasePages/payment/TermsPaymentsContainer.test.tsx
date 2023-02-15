@@ -227,7 +227,9 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onPost().reply(200, { id: 1 });
 
       const addButton = await findByText('Record a Payment');
-      await userEvent.click(addButton);
+      act(() => {
+        userEvent.click(addButton);
+      });
 
       await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save payment');
@@ -246,7 +248,9 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onPut().reply(200, { id: 1 });
 
       const editButton = await findAllByTitle('edit actual');
-      await userEvent.click(editButton[0]);
+      act(() => {
+        userEvent.click(editButton[0]);
+      });
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save payment');

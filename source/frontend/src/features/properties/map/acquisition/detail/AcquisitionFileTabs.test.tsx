@@ -65,7 +65,7 @@ describe('AcquisitionFileTabs component', () => {
     );
 
     const editButton = getByText('Documents');
-    act(() => {
+    await act(async () => {
       userEvent.click(editButton);
     });
     await waitFor(() => {

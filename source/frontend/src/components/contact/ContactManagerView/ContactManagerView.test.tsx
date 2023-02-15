@@ -3,7 +3,15 @@ import { Claims } from 'constants/claims';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
-import { act, fillInput, mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
+import {
+  act,
+  fillInput,
+  mockKeycloak,
+  render,
+  RenderOptions,
+  waitFor,
+  waitForElementToBeRemoved,
+} from 'utils/test-utils';
 
 import { defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView';
@@ -77,7 +85,8 @@ describe('ContactManagerView', () => {
 
   it('matches snapshot', async () => {
     setupMockSearch();
-    const { asFragment } = setup();
+    const { asFragment, getByTitle } = setup();
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
@@ -131,7 +140,7 @@ describe('ContactManagerView', () => {
     setupMockSearch([defaultSearchResult]);
     const { container, searchButton } = setup({});
     const organizationsButton = container.querySelector(`#input-organizations`);
-    organizationsButton && userEvent.click(organizationsButton);
+    act(() => organizationsButton && userEvent.click(organizationsButton));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
@@ -145,7 +154,7 @@ describe('ContactManagerView', () => {
     setupMockSearch([defaultSearchResult]);
     const { container, searchButton } = setup({});
     const personButton = container.querySelector(`#input-persons`);
-    personButton && userEvent.click(personButton);
+    act(() => personButton && userEvent.click(personButton));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(

@@ -158,7 +158,7 @@ describe('AddAcquisitionContainer component', () => {
       getFundingOtherTextbox,
     } = testObj;
 
-    act(() => {
+    await act(async () => {
       userEvent.paste(getNameTextbox(), formValues.fileName as string);
       userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType as string);
       userEvent.selectOptions(getRegionDropdown(), formValues.region as string);

@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { GetMockLookUpsByType, mockLookups } from 'mocks/mockLookups';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fakeText, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
@@ -116,12 +116,12 @@ describe('AddProjectForm component', () => {
     const nameInput = getNameTextbox();
     const numberInput = getNumberTextbox();
     const summayInput = getSummaryTextbox();
-    await waitFor(() => userEvent.paste(nameInput, fakeText(201)));
-    await waitFor(() => userEvent.paste(numberInput, fakeText(21)));
-    await waitFor(() => userEvent.paste(summayInput, fakeText(2001)));
+    await act(async () => userEvent.paste(nameInput, fakeText(201)));
+    await act(async () => userEvent.paste(numberInput, fakeText(21)));
+    await act(async () => userEvent.paste(summayInput, fakeText(2001)));
 
     // submit form to trigger validation check
-    await waitFor(() => getFormikRef().current?.submitForm());
+    await act(() => getFormikRef().current?.submitForm());
 
     expect(validationSchema).toBeCalled();
     expect(await findByText(/Project name must be at most 200 characters/i)).toBeVisible();
