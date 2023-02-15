@@ -1,13 +1,12 @@
-import { Api_AcquisitionFile, Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
+import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 import { Api_Address } from 'models/api/Address';
-import React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAcquisitionProvider } from '../hooks/useAcquisitionProvider';
 import { DetailAcquistionFileOwner } from './models';
 
 export interface IAcquisitionOwnersContainerProps {
-  acquisitionFile?: Api_AcquisitionFile;
+  acquisitionFileId: number;
   View: React.FC<IAcquisitionOwnersSummaryViewProps>;
 }
 
@@ -18,7 +17,7 @@ export interface IAcquisitionOwnersSummaryViewProps {
 
 const AcquisitionOwnersSummaryContainer: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionOwnersContainerProps>
-> = ({ acquisitionFile, View }) => {
+> = ({ acquisitionFileId, View }) => {
   const [ownersDetails, setOwnersDetails] = useState<DetailAcquistionFileOwner[] | undefined>(
     undefined,
   );
@@ -31,28 +30,33 @@ const AcquisitionOwnersSummaryContainer: React.FunctionComponent<
   } = useAcquisitionProvider();
 
   const fetchOwnersApi = useCallback(async () => {
-    let acquisitionOwners = await retrieveAcquisitionFileOwners(acquisitionFile?.id!);
-    let ownerDetailList = acquisitionOwners?.map(o => ({
-      ownerName: getOwnerDisplayName(o),
-      ownerOtherName: o.lastNameOrCorp2?.trim(),
-      ownerDisplayAddress: getFormatedAddress(o.address),
-    }));
-
-    setOwnersDetails(ownerDetailList);
-  }, [acquisitionFile, retrieveAcquisitionFileOwners]);
+    if (acquisitionFileId) {
+      console.log(acquisitionFileId);
+      const acquisitionOwners = await retrieveAcquisitionFileOwners(acquisitionFileId);
+      console.log(acquisitionOwners);
+      if (acquisitionOwners !== undefined) {
+        const ownerDetailList = acquisitionOwners.map(o => {
+          return {
+            ownerName: getOwnerDisplayName(o),
+            ownerOtherName: o.lastNameOrCorp2?.trim(),
+            ownerDisplayAddress: getFormatedAddress(o.address),
+          } as DetailAcquistionFileOwner;
+        });
+        setOwnersDetails([...ownerDetailList]);
+      }
+    }
+  }, [acquisitionFileId, retrieveAcquisitionFileOwners]);
 
   useEffect(() => {
-    if (ownersDetails === undefined) {
-      fetchOwnersApi();
-    }
-  }, [ownersDetails, fetchOwnersApi]);
+    fetchOwnersApi();
+  }, [fetchOwnersApi]);
 
   return <View ownersList={ownersDetails} isLoading={loadingAcquisitionFileOwners} />;
 };
 
 export default AcquisitionOwnersSummaryContainer;
 
-export const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
+const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
   let nameDisplay = concatValues([owner.givenName, owner.lastNameOrCorp1]);
   if (owner.incorporationNumber && owner.incorporationNumber.trim() !== '') {
     nameDisplay = nameDisplay.concat(` (${owner.incorporationNumber})`);
@@ -60,7 +64,7 @@ export const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => 
   return nameDisplay;
 };
 
-export const getFormatedAddress = (address?: Api_Address): string => {
+const getFormatedAddress = (address?: Api_Address): string => {
   if (address === null || address === undefined) {
     return '';
   }

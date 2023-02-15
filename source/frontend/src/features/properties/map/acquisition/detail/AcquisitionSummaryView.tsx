@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 
+import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
-import AcquisitionOwnersSummaryContainer from './AcquistionOwnersSummaryContainer';
 import { DetailAcquisitionFile } from './models';
 
 export interface IAcquisitionSummaryViewProps {
@@ -60,12 +60,6 @@ const AcquisitionSummaryView: React.FunctionComponent<
           {prettyFormatDate(detail.deliveryDate)}
         </SectionField>
       </Section>
-      {acquisitionFile !== undefined && (
-        <AcquisitionOwnersSummaryContainer
-          acquisitionFile={acquisitionFile}
-          View={AcquisitionOwnersSummaryView}
-        ></AcquisitionOwnersSummaryContainer>
-      )}
       <Section header="Acquisition Details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>
         <SectionField label="Physical file status">
@@ -88,6 +82,12 @@ const AcquisitionSummaryView: React.FunctionComponent<
           </SectionField>
         ))}
       </Section>
+      {acquisitionFile !== undefined && (
+        <AcquisitionOwnersSummaryContainer
+          acquisitionFileId={acquisitionFile.id!}
+          View={AcquisitionOwnersSummaryView}
+        ></AcquisitionOwnersSummaryContainer>
+      )}
     </StyledSummarySection>
   );
 };

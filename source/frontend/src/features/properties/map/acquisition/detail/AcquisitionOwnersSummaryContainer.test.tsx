@@ -7,7 +7,7 @@ import { render, RenderOptions } from 'utils/test-utils';
 
 import AcquisitionOwnersSummaryContainer, {
   IAcquisitionOwnersSummaryViewProps,
-} from './AcquistionOwnersSummaryContainer';
+} from './AcquisitionOwnersSummaryContainer';
 
 const mockApi = {
   error: undefined,
@@ -37,7 +37,10 @@ const TestView: React.FC<IAcquisitionOwnersSummaryViewProps> = () => {
 describe('Acquistion Owners Summary container', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <AcquisitionOwnersSummaryContainer acquisitionFile={mockAcquisitionFile} View={TestView} />,
+      <AcquisitionOwnersSummaryContainer
+        acquisitionFileId={mockAcquisitionFile.id!}
+        View={TestView}
+      />,
       {
         ...renderOptions,
         history,

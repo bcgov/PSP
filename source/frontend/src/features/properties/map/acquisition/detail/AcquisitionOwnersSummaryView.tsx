@@ -3,7 +3,7 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import styled from 'styled-components';
 
-import { IAcquisitionOwnersSummaryViewProps } from './AcquistionOwnersSummaryContainer';
+import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
 
 const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps> = ({
   isLoading,
