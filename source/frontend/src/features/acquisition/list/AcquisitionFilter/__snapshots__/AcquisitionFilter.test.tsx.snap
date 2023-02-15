@@ -216,18 +216,21 @@ exports[`Acquisition Filter matches snapshot 1`] = `
                     >
                       <option
                         class="option"
+                        data-testid="select-option-address"
                         value="address"
                       >
                         Civic Address
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-pid"
                         value="pid"
                       >
                         PID
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-pin"
                         value="pin"
                       >
                         PIN
@@ -276,36 +279,42 @@ exports[`Acquisition Filter matches snapshot 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-ACTIVE"
                   value="ACTIVE"
                 >
                   Active
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-ARCHIV"
                   value="ARCHIV"
                 >
                   Archived
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-CANCEL"
                   value="CANCEL"
                 >
                   Cancelled
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-CLOSED"
                   value="CLOSED"
                 >
                   Closed
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-DRAFT"
                   value="DRAFT"
                 >
                   Draft
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-HOLD"
                   value="HOLD"
                 >
                   Hold

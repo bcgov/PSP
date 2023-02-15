@@ -5,12 +5,13 @@ import {
   Select,
   SelectOption,
 } from 'components/common/form';
+import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import TooltipIcon from 'components/common/TooltipIcon';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { useProjectProvider } from 'hooks/providers/useProjectProvider';
+import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { IAutocompletePrediction } from 'interfaces';
@@ -191,7 +192,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
                 />
               </SectionField>
               <SectionField label="Ministry region">
-                <Select
+                <UserRegionSelectContainer
                   field="region"
                   options={regionTypes}
                   placeholder="Select region..."

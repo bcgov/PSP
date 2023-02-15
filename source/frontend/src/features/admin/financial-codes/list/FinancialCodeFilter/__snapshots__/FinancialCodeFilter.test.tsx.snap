@@ -180,42 +180,49 @@ exports[`Financial Code Filter matches snapshot 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-BusinessFunction"
               value="BusinessFunction"
             >
               Business function
             </option>
             <option
               class="option"
+              data-testid="select-option-CostType"
               value="CostType"
             >
               Cost types
             </option>
             <option
               class="option"
+              data-testid="select-option-WorkActivity"
               value="WorkActivity"
             >
               Work activity
             </option>
             <option
               class="option"
+              data-testid="select-option-ChartOfAccounts"
               value="ChartOfAccounts"
             >
               Chart of accounts
             </option>
             <option
               class="option"
+              data-testid="select-option-FinancialActivity"
               value="FinancialActivity"
             >
               Financial activity
             </option>
             <option
               class="option"
+              data-testid="select-option-Responsibility"
               value="Responsibility"
             >
               Responsibility
             </option>
             <option
               class="option"
+              data-testid="select-option-YearlyFinancial"
               value="YearlyFinancial"
             >
               Yearly financial

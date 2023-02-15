@@ -3,6 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
+import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
@@ -30,6 +31,26 @@ jest.mock('react-visibility-sensor', () => {
     }
     return children;
   });
+});
+
+jest.mock('hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.Mock).mockReturnValue({
+  retrieveUserInfo: jest.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+      },
+    ],
+  },
 });
 
 describe('AddAcquisitionContainer component', () => {
