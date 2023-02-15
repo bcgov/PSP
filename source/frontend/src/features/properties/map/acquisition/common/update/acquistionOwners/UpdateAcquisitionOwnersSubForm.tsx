@@ -45,7 +45,10 @@ export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
                   <SectionField label="Last name/Corporation name">
                     <Input field={`owners[${index}].lastNameOrCorp1`} />
                   </SectionField>
-                  <SectionField label="Other name">
+                  <SectionField
+                    label="Other name"
+                    tooltip="Additional name for Individual (ex: alias or maiden name or space for long last name) Corporation (ex: Doing Business as) or placeholder for the Last name/Corporate name 2 field from Title"
+                  >
                     <Input field={`owners[${index}].lastNameOrCorp2`} />
                   </SectionField>
                   <SectionField label="Incorporation number">
