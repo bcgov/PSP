@@ -1,4 +1,5 @@
 import { Api_AcquisitionFile, Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
+import { Api_Project } from 'models/api/Project';
 import Api_TypeCode from 'models/api/TypeCode';
 
 export class AcquisitionSearchResultModel {
@@ -12,8 +13,7 @@ export class AcquisitionSearchResultModel {
   appLastUpdateTimestamp?: string;
   acquisitionFileStatusTypeCode?: Api_TypeCode<string>;
   fileProperties?: Api_AcquisitionFileProperty[];
-  ministryProjectNumber?: string;
-  ministryProjectName?: string;
+  project?: Api_Project;
 
   static fromApi(base: Api_AcquisitionFile): AcquisitionSearchResultModel {
     var newModel = new AcquisitionSearchResultModel();
@@ -27,8 +27,7 @@ export class AcquisitionSearchResultModel {
     newModel.appLastUpdateTimestamp = base.appLastUpdateTimestamp;
     newModel.acquisitionFileStatusTypeCode = base.fileStatusTypeCode;
     newModel.fileProperties = base.fileProperties;
-    newModel.ministryProjectName = base.ministryProjectName;
-    newModel.ministryProjectNumber = base.ministryProjectNumber;
+    newModel.project = base.project;
     return newModel;
   }
 }

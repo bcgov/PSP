@@ -50,14 +50,14 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
   },
   {
     Header: 'Ministry project',
-    accessor: 'ministryProjectNumber',
+    accessor: 'project',
     align: 'left',
     clickable: true,
     width: 20,
     maxWidth: 30,
-    Cell: (props: React.PropsWithChildren<CellProps<AcquisitionSearchResultModel>>) => {
-      const { ministryProjectNumber, ministryProjectName } = props.row.original;
-      const formattedValue = [ministryProjectNumber, ministryProjectName].filter(Boolean).join(' ');
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
+      const project = props.row.original.project;
+      const formattedValue = [project?.code, project?.description].filter(Boolean).join(' ');
       return stringToFragment(formattedValue);
     },
   },
