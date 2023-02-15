@@ -117,13 +117,15 @@ export const DocumentListView: React.FunctionComponent<
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<Api_Document | undefined>(undefined);
+  const [selectedDocument, setSelectedDocument] = useState<Api_DocumentRelationship | undefined>(
+    undefined,
+  );
 
   const handleModalUploadClose = () => {
     setIsUploadVisible(false);
   };
 
-  const handleViewDetails = (document: Api_Document) => {
+  const handleViewDetails = (document: Api_DocumentRelationship) => {
     setIsDetailsVisible(true);
     setSelectedDocument(document);
   };
@@ -133,7 +135,7 @@ export const DocumentListView: React.FunctionComponent<
     setSelectedDocument(undefined);
   };
 
-  const handleDeleteClick = (document: Api_Document) => {
+  const handleDeleteClick = (document: Api_DocumentRelationship) => {
     setShowDeleteConfirmModal(true);
     setSelectedDocument(document);
   };
@@ -200,7 +202,7 @@ export const DocumentListView: React.FunctionComponent<
         display={isDetailsVisible}
         relationshipType={props.relationshipType}
         setDisplay={setIsDetailsVisible}
-        pimsDocument={selectedDocument ? DocumentRow.fromApiDocument(selectedDocument) : undefined}
+        pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument) : undefined}
         onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
       />
