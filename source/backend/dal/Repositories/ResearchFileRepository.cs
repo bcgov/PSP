@@ -95,7 +95,7 @@ namespace Pims.Dal.Repositories
             researchFile.ThrowIfNull(nameof(researchFile));
 
             var existingResearchFile = Context.PimsResearchFiles
-                .FirstOrDefault(x => x.ResearchFileId == researchFile.Id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.ResearchFileId == researchFile.ResearchFileId) ?? throw new KeyNotFoundException();
 
             var currentPurposes = Context.PimsResearchFiles
                 .SelectMany(x => x.PimsResearchFilePurposes)
@@ -133,7 +133,7 @@ namespace Pims.Dal.Repositories
             existingResearchFile.PimsResearchFilePurposes = purposes;
 
             Context.Entry(existingResearchFile).CurrentValues.SetValues(researchFile);
-            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject>(p => p.PimsResearchFileProjects, researchFile.Id, researchFile.PimsResearchFileProjects.ToArray());
+            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject>(p => p.PimsResearchFileProjects, researchFile.ResearchFileId, researchFile.PimsResearchFileProjects.ToArray());
 
             return researchFile;
         }

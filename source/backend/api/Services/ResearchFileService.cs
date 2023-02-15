@@ -81,9 +81,9 @@ namespace Pims.Api.Services
         {
             researchFile.ThrowIfNull(nameof(researchFile));
 
-            _logger.LogInformation("Updating research file with id {id}", researchFile.Id);
+            _logger.LogInformation("Updating research file with id {id}", researchFile.ResearchFileId);
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
-            ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
+            ValidateVersion(researchFile.ResearchFileId, researchFile.ConcurrencyControlNumber);
 
             var newResearchFile = _researchFileRepository.Update(researchFile);
             _researchFileRepository.CommitTransaction();
@@ -105,7 +105,7 @@ namespace Pims.Api.Services
             foreach (var incommingResearchProperty in researchFile.PimsPropertyResearchFiles)
             {
                 // If the property is not new, check if the name has been updated.
-                if (incommingResearchProperty.ResearchFileId != 0)
+                if (incommingResearchProperty.PropertyResearchFileId != 0)
                 {
                     PimsPropertyResearchFile existingProperty = currentProperties.FirstOrDefault(x => x.PropertyResearchFileId == incommingResearchProperty.PropertyResearchFileId);
                     if (existingProperty.PropertyName != incommingResearchProperty.PropertyName)
