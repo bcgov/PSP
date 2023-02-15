@@ -22,16 +22,16 @@ export interface ComposedDocument {
 
 export class DocumentRow {
   id?: number;
-  mayanDocumentId?: number;
-  documentType?: Api_DocumentType;
-  statusTypeCode?: Api_TypeCode<string>;
-  fileName?: string;
-  isFileAvailable?: boolean;
+  mayanDocumentId: number | undefined;
+  documentType: Api_DocumentType | undefined;
+  statusTypeCode: Api_TypeCode<string> | undefined;
+  fileName: string | undefined;
+  isFileAvailable: boolean | undefined;
   appCreateTimestamp?: string;
   appCreateUserid?: string;
-  relationshipId?: number;
-  relationshipType?: DocumentRelationshipType;
-  parentId?: number;
+  relationshipId: number | undefined;
+  relationshipType: DocumentRelationshipType | undefined;
+  parentId: number | undefined;
 
   public static fromApi(relationship: Api_DocumentRelationship): DocumentRow {
     const row: DocumentRow = new DocumentRow();
@@ -46,6 +46,22 @@ export class DocumentRow {
     row.relationshipId = relationship.id;
     row.relationshipType = relationship.relationshipType;
     row.parentId = relationship.parentId;
+    return row;
+  }
+
+  public static fromApiDocument(document: Api_Document): DocumentRow {
+    const row: DocumentRow = new DocumentRow();
+    row.id = document?.id;
+    row.documentType = document?.documentType;
+    row.mayanDocumentId = document?.mayanDocumentId;
+    row.statusTypeCode = document?.statusTypeCode;
+    row.fileName = document?.fileName;
+    row.appCreateTimestamp = document?.appCreateTimestamp;
+    row.appCreateUserid = document?.appCreateUserid;
+
+    row.relationshipId = undefined;
+    row.relationshipType = undefined;
+    row.parentId = undefined;
     return row;
   }
 

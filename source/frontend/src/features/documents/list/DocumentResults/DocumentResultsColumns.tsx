@@ -6,7 +6,7 @@ import { Claims } from 'constants/index';
 import { DocumentRow } from 'features/documents/ComposedDocument';
 import DownloadDocumentButton from 'features/documents/DownloadDocumentButton';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Document, Api_DocumentType } from 'models/api/Document';
+import { Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
 import { Col, Row } from 'react-bootstrap';
 import { FaEye, FaTrash, FaUserAlt } from 'react-icons/fa';
 import { CellProps } from 'react-table';
@@ -14,8 +14,8 @@ import styled from 'styled-components';
 import { prettyFormatDate, stringToFragment } from 'utils';
 
 export interface IDocumentColumnProps {
-  onViewDetails: (values: Api_Document) => void;
-  onDelete: (values: Api_Document) => void;
+  onViewDetails: (values: Api_DocumentRelationship) => void;
+  onDelete: (values: Api_DocumentRelationship) => void;
 }
 
 export const getDocumentColumns = ({
@@ -60,7 +60,7 @@ function renderDocumentType({ value }: CellProps<DocumentRow, Api_DocumentType |
   return stringToFragment(value?.documentType ?? '');
 }
 
-const renderFileName = (onViewDetails: (values: DocumentRow) => void) => {
+const renderFileName = (onViewDetails: (values: Api_DocumentRelationship) => void) => {
   return function (cell: CellProps<DocumentRow, string | undefined>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
@@ -68,7 +68,9 @@ const renderFileName = (onViewDetails: (values: DocumentRow) => void) => {
         {hasClaim(Claims.DOCUMENT_VIEW) === true ? (
           <Button
             data-testid="document-view-filename-link"
-            onClick={() => cell.row.original?.id && onViewDetails(cell.row.original)}
+            onClick={() =>
+              cell.row.original?.id && onViewDetails(DocumentRow.toApi(cell.row.original))
+            }
             variant="link"
           >
             {cell.value}
@@ -99,8 +101,8 @@ function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
 }
 
 const renderActions = (
-  onViewDetails: (values: Api_Document) => void,
-  onDelete: (values: Api_Document) => void,
+  onViewDetails: (values: Api_DocumentRelationship) => void,
+  onDelete: (values: Api_DocumentRelationship) => void,
 ) => {
   return function ({ row: { original, index } }: CellProps<DocumentRow, string>) {
     const { hasClaim } = useKeycloakWrapper();
@@ -119,7 +121,7 @@ const renderActions = (
             <Button
               data-testid="document-view-button"
               icon={<FaEye size={24} id={`document-view-${index}`} title="document view details" />}
-              onClick={() => original?.id && onViewDetails(original)}
+              onClick={() => original?.id && onViewDetails(DocumentRow.toApi(original))}
             ></Button>
           </Col>
         )}
@@ -129,7 +131,7 @@ const renderActions = (
               title="document delete"
               data-testid="document-delete-button"
               icon={<FaTrash size={24} id={`document-delete-${index}`} title="document delete" />}
-              onClick={() => original?.id && onDelete(original)}
+              onClick={() => original?.id && onDelete(DocumentRow.toApi(original))}
             ></StyledRemoveLinkButton>
           </Col>
         )}
