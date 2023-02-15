@@ -7,7 +7,7 @@ import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, renderAsync, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import { AcquisitionForm } from './models';
@@ -34,12 +34,12 @@ jest.mock('react-visibility-sensor', () => {
 
 describe('AddAcquisitionContainer component', () => {
   // render component under test
-  const setup = (
+  const setup = async (
     props: IAddAcquisitionContainerProps = DEFAULT_PROPS,
     renderOptions: RenderOptions = {},
     selectedProperty: Feature<Geometry, GeoJsonProperties> | null = null,
   ) => {
-    const utils = render(
+    const utils = await renderAsync(
       <MapStateContextProvider values={{ selectedFileFeature: selectedProperty }}>
         <AddAcquisitionContainer {...props} />
       </MapStateContextProvider>,
@@ -80,13 +80,13 @@ describe('AddAcquisitionContainer component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', () => {
-    const { asFragment } = setup();
+  it('renders as expected', async () => {
+    const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders the underlying form', () => {
-    const { getByText, getNameTextbox, getRegionDropdown } = setup();
+  it('renders the underlying form', async () => {
+    const { getByText, getNameTextbox, getRegionDropdown } = await setup();
 
     const formTitle = getByText(/Create Acquisition File/i);
     const input = getNameTextbox();
@@ -99,8 +99,8 @@ describe('AddAcquisitionContainer component', () => {
     expect(select.tagName).toBe('SELECT');
   });
 
-  it('should close the form when Cancel button is clicked', () => {
-    const { getCancelButton, getByText } = setup();
+  it('should close the form when Cancel button is clicked', async () => {
+    const { getCancelButton, getByText } = await setup();
 
     expect(getByText(/Create Acquisition File/i)).toBeVisible();
     userEvent.click(getCancelButton());
@@ -109,26 +109,28 @@ describe('AddAcquisitionContainer component', () => {
   });
 
   it('should pre-populate the region if a property is selected', async () => {
-    const { findByDisplayValue } = setup(undefined, undefined, {
-      properties: { REGION_NUMBER: 1 },
-      geometry: {
-        type: 'Polygon',
-        coordinates: [
-          [
-            [-120.69195885, 50.25163372],
-            [-120.69176022, 50.2588544],
-            [-120.69725103, 50.25889407],
-            [-120.70326422, 50.25893724],
-            [-120.70352697, 50.25172245],
-            [-120.70287648, 50.25171749],
-            [-120.70200152, 50.25171082],
-            [-120.69622707, 50.2516666],
-            [-120.69195885, 50.25163372],
+    await act(async () => {
+      setup(undefined, undefined, {
+        properties: { REGION_NUMBER: 1 },
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [-120.69195885, 50.25163372],
+              [-120.69176022, 50.2588544],
+              [-120.69725103, 50.25889407],
+              [-120.70326422, 50.25893724],
+              [-120.70352697, 50.25172245],
+              [-120.70287648, 50.25171749],
+              [-120.70200152, 50.25171082],
+              [-120.69622707, 50.2516666],
+              [-120.69195885, 50.25163372],
+            ],
           ],
-        ],
-      },
-    } as any);
-    const text = await findByDisplayValue(/South Coast Region/i);
+        },
+      } as any);
+    });
+    const text = await screen.findByDisplayValue(/South Coast Region/i);
     expect(text).toBeVisible();
   });
 
@@ -141,6 +143,12 @@ describe('AddAcquisitionContainer component', () => {
     formValues.fundingTypeCode = 'OTHER';
     formValues.fundingTypeOtherDescription = 'A different type of funding';
 
+    let testObj: any = undefined;
+
+    await act(async () => {
+      testObj = await setup(DEFAULT_PROPS);
+    });
+
     const {
       getSaveButton,
       getNameTextbox,
@@ -148,19 +156,18 @@ describe('AddAcquisitionContainer component', () => {
       getRegionDropdown,
       getFundingTypeDropdown,
       getFundingOtherTextbox,
-    } = setup(DEFAULT_PROPS);
+    } = testObj;
 
-    await waitFor(() => userEvent.paste(getNameTextbox(), formValues.fileName as string));
-    await userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType);
-    await userEvent.selectOptions(getRegionDropdown(), formValues.region);
-    await userEvent.selectOptions(getFundingTypeDropdown(), formValues.fundingTypeCode);
-    await waitFor(() =>
-      userEvent.paste(getFundingOtherTextbox(), formValues.fundingTypeOtherDescription),
-    );
+    await act(async () => {
+      userEvent.paste(getNameTextbox(), formValues.fileName as string);
+      userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType as string);
+      userEvent.selectOptions(getRegionDropdown(), formValues.region as string);
+      userEvent.selectOptions(getFundingTypeDropdown(), formValues.fundingTypeCode as string);
+      userEvent.paste(getFundingOtherTextbox(), formValues.fundingTypeOtherDescription);
 
-    mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.fileName));
-    userEvent.click(getSaveButton());
-
+      mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.fileName));
+      userEvent.click(getSaveButton());
+    });
     await waitFor(() => {
       const axiosData: Api_AcquisitionFile = JSON.parse(mockAxios.history.post[0].data);
       const expectedValues = formValues.toApi();

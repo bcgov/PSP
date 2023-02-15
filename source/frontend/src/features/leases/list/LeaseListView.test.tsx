@@ -3,7 +3,14 @@ import { Claims } from 'constants/index';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { ILeaseSearchResult } from 'interfaces';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+import {
+  act,
+  fillInput,
+  render,
+  RenderOptions,
+  waitFor,
+  waitForElementToBeRemoved,
+} from 'utils/test-utils';
 
 import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
@@ -69,10 +76,13 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findByText, getByTitle } = setup();
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
 
-    fillInput(container, 'searchBy', 'pinOrPid', 'select');
-    fillInput(container, 'pinOrPid', '123');
+    act(() => {
+      fillInput(container, 'searchBy', 'pinOrPid', 'select');
+      fillInput(container, 'pinOrPid', '123');
+    });
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
