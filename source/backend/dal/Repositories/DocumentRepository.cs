@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MoreLinq;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -134,6 +134,15 @@ namespace Pims.Dal.Repositories
 
             this.Context.PimsDocuments.Remove(new PimsDocument() { Id = document.Id });
             return true;
+        }
+
+        public List<PimsDocument> GetAllByDocumentType(string documentType)
+        {
+            return this.Context.PimsDocuments
+                .Include(d => d.DocumentType)
+                .Where(d => d.DocumentType.DocumentType == documentType)
+                .AsNoTracking()
+                .ToList();
         }
 
         #endregion
