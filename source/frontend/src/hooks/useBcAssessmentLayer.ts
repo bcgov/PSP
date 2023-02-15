@@ -98,15 +98,6 @@ export const useBcAssessmentLayer = (
       if (parsedPid === undefined) {
         throw Error(`Unable to parse PID, invalid format: ${pid}`);
       }
-      if (process.env.NODE_ENV === 'development') {
-        return {
-          data: mockBcAssessmentSummary,
-          status: 200,
-          statusText: 'Success',
-          headers: {},
-          config: {},
-        };
-      }
       let legalDescriptionResponse;
       try {
         legalDescriptionResponse = await getLegalDescriptions(
