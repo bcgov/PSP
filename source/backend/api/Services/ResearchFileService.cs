@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -78,7 +79,9 @@ namespace Pims.Api.Services
 
         public PimsResearchFile Update(PimsResearchFile researchFile)
         {
-            _logger.LogInformation("Updating research file...");
+            researchFile.ThrowIfNull(nameof(researchFile));
+
+            _logger.LogInformation("Updating research file with id {id}", researchFile.Id);
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
             ValidateVersion(researchFile.Id, researchFile.ConcurrencyControlNumber);
 
@@ -217,10 +220,10 @@ namespace Pims.Api.Services
 
             property.IsPropertyOfInterest = true;
 
-            if(property.Address != null)
+            if (property.Address != null)
             {
                 var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
-                if(provinceId.HasValue)
+                if (provinceId.HasValue)
                 {
                     property.Address.ProvinceStateId = provinceId.Value;
                 }

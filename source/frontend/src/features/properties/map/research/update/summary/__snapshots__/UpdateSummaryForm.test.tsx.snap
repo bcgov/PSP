@@ -6,7 +6,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
     class="Toastify"
   />
   <div />
-  .c12.btn {
+  .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   cursor: pointer;
 }
 
-.c12.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c9.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c9.btn.btn-primary {
   border: none;
 }
 
-.c12.btn.btn-secondary {
+.c9.btn.btn-secondary {
   background: none;
 }
 
-.c12.btn.btn-info {
+.c9.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   background: none;
 }
 
-.c12.btn.btn-light {
+.c9.btn.btn-light {
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c9.btn.btn-dark {
   border: none;
 }
 
-.c12.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,27 +128,27 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c10.c10.form-control.is-valid {
+.c11.c11.form-control.is-valid {
   background-image: none;
 }
 
-.c10.c10.form-control.is-invalid {
+.c11.c11.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -159,7 +159,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   align-items: baseline;
 }
 
-.c9 .form-label {
+.c10 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -175,7 +175,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   flex-wrap: nowrap;
 }
 
-.c11 {
+.c12 {
   position: relative;
   border-radius: 0.3rem;
   padding: 0.6rem;
@@ -185,7 +185,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   border: solid 0.1rem;
 }
 
-.c11.is-invalid {
+.c12.is-invalid {
   border: solid 0.1rem;
 }
 
@@ -526,6 +526,41 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           <div
             class="col"
           >
+            Project
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <button
+          class="c9 Button btn btn-link"
+          data-testid="add-project"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add another project
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
             Roads
           </div>
           <div
@@ -704,7 +739,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="c3 text-left col"
           >
             <div
-              class="c9 form-group"
+              class="c10 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -714,7 +749,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 >
                   <input
                     autocomplete="off"
-                    class="c10 form-control date-picker"
+                    class="c11 form-control date-picker"
                     id="datepicker-requestDate"
                     name="requestDate"
                     placeholder="--/--/----"
@@ -840,11 +875,11 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   class="col"
                 >
                   <div
-                    class="c11"
+                    class="c12"
                   >
                     Dairy Queen Forever! Property Management
                     <button
-                      class="c12 Button c13 btn btn-link"
+                      class="c9 Button c13 btn btn-link"
                       type="button"
                     >
                       <div
@@ -890,7 +925,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c12 Button Button--icon-only px-2 btn btn-primary"
+                    class="c9 Button Button--icon-only px-2 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -984,7 +1019,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="c3 text-left col"
           >
             <div
-              class="c9 form-group"
+              class="c10 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -994,7 +1029,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 >
                   <input
                     autocomplete="off"
-                    class="c10 form-control date-picker"
+                    class="c11 form-control date-picker"
                     id="datepicker-researchCompletionDate"
                     name="researchCompletionDate"
                     placeholder="--/--/----"

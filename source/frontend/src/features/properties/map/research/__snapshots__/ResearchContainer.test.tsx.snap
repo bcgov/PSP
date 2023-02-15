@@ -612,6 +612,51 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             <div
                               class="col"
                             >
+                              Project
+                            </div>
+                            <div
+                              class="col-1"
+                            />
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c23"
+                              >
+                                Ministry project
+                                :
+                              </label>
+                            </div>
+                            <div
+                              class="c24 text-left col"
+                            >
+                              <div>
+                                00048 CLAIMS
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c21 form-section"
+                      >
+                        <h2
+                          class="c22"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="col"
+                            >
                               Roads
                             </div>
                             <div
@@ -637,7 +682,9 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             </div>
                             <div
                               class="c24 text-left col"
-                            />
+                            >
+                              Test road name
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"
@@ -654,7 +701,9 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             </div>
                             <div
                               class="c24 text-left col"
-                            />
+                            >
+                              Test road alias
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -714,6 +763,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="c24 text-left col"
                             >
                                
+                              Apr 14, 2022
                             </div>
                           </div>
                           <div
@@ -731,7 +781,9 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             </div>
                             <div
                               class="c24 text-left col"
-                            />
+                            >
+                              Headquarters (HQ)
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"
@@ -748,7 +800,9 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             </div>
                             <div
                               class="c24 text-left col"
-                            />
+                            >
+                              Dairy Queen Forever! Property Management
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"
@@ -767,6 +821,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="c24 text-left col"
                             />
                           </div>
+                          a request description
                         </div>
                       </div>
                       <div
@@ -807,7 +862,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             <div
                               class="c24 text-left col"
                             >
-                              not complete
+                              Mar 30, 2022
                             </div>
                           </div>
                           <div
@@ -827,6 +882,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="c24 text-left col"
                             />
                           </div>
+                          A research result
                         </div>
                       </div>
                       <div
@@ -887,6 +943,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="c24 text-left col"
                             />
                           </div>
+                          An expropriation note
                         </div>
                       </div>
                     </div>

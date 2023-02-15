@@ -7,6 +7,8 @@ import {
 } from 'interfaces';
 import { Api_ResearchFile, Api_ResearchFilePurpose } from 'models/api/ResearchFile';
 
+import { ResearchFileProjectFormModel } from '../../common/models';
+
 export class ResearchFilePurposeFormModel {
   public id?: string;
   public researchPurposeTypeCode?: string;
@@ -50,6 +52,7 @@ export class UpdateResearchSummaryFormModel {
   public requestSourceTypeDescription?: string;
   public requestor?: IContactSearchResult;
   public researchFilePurposes?: ResearchFilePurposeFormModel[];
+  public researchFileProjects: ResearchFileProjectFormModel[] = [];
   public rowVersion?: number;
 
   public static fromApi(base: Api_ResearchFile): UpdateResearchSummaryFormModel {
@@ -79,6 +82,8 @@ export class UpdateResearchSummaryFormModel {
     model.researchFilePurposes = base.researchFilePurposes?.map(x =>
       ResearchFilePurposeFormModel.fromApi(x),
     );
+    model.researchFileProjects =
+      base.researchFileProjects?.map(x => ResearchFileProjectFormModel.fromApi(x)) || [];
     model.rowVersion = base.rowVersion;
     return model;
   }
@@ -108,6 +113,9 @@ export class UpdateResearchSummaryFormModel {
       requestorPerson: toPerson(this.requestor),
       requestorOrganization: toOrganization(this.requestor),
       researchFilePurposes: this.researchFilePurposes?.map(x => x.toApi()),
+      researchFileProjects: this.researchFileProjects
+        .map(x => x.toApi())
+        .filter(rp => rp?.project !== undefined),
     };
   }
 }
