@@ -44,11 +44,14 @@ export interface Api_Storage_DocumentType {
   url?: string;
 }
 
-export interface FileDownload {
+export interface Api_FileDownload {
   filePayload: string;
   size: number;
   fileName: string;
+  fileNameExtension: string;
+  fileNameWithoutExtension: string;
   mimetype: string;
+  encodingType: BufferEncoding;
 }
 
 export interface Api_Storage_DocumentTypeMetadataType {
