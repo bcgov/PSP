@@ -7,7 +7,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { Api_Property } from 'models/api/Property';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
@@ -284,24 +284,27 @@ describe('UpdatePropertyDetailsContainer component', () => {
     const addressLine1 = document.querySelector(
       `input[name='address.streetAddress1']`,
     ) as HTMLElement;
-    await act(() => userEvent.clear(addressLine1));
-    await act(() => userEvent.paste(addressLine1, '123 Mock St'));
-    await act(() => formikRef.current?.submitForm() as Promise<void>);
-
-    const expectedValues = expect.objectContaining<Api_Property>({
-      address: expect.objectContaining({
-        streetAddress1: '123 Mock St',
-        streetAddress2: fakeProperty.address?.streetAddress2,
-        streetAddress3: fakeProperty.address?.streetAddress3,
-        municipality: fakeProperty.address?.municipality,
-        postal: fakeProperty.address?.postal,
-        country: { id: fakeProperty.address?.country?.id },
-        province: { id: fakeProperty.address?.province?.id },
-      }),
+    act(() => {
+      userEvent.clear(addressLine1);
+      userEvent.paste(addressLine1, '123 Mock St');
+      formikRef.current?.submitForm();
     });
 
-    expect(updateProperty).toBeCalledWith(expectedValues);
-    expect(onSuccess).toBeCalled();
+    await waitFor(() => {
+      const expectedValues = expect.objectContaining<Api_Property>({
+        address: expect.objectContaining({
+          streetAddress1: '123 Mock St',
+          streetAddress2: fakeProperty.address?.streetAddress2,
+          streetAddress3: fakeProperty.address?.streetAddress3,
+          municipality: fakeProperty.address?.municipality,
+          postal: fakeProperty.address?.postal,
+          country: { id: fakeProperty.address?.country?.id },
+          province: { id: fakeProperty.address?.province?.id },
+        }),
+      });
+      expect(updateProperty).toBeCalledWith(expectedValues);
+      expect(onSuccess).toBeCalled();
+    });
   });
 
   it('sends no address when all fields are cleared', async () => {
@@ -322,18 +325,22 @@ describe('UpdatePropertyDetailsContainer component', () => {
     ) as HTMLElement;
     const postal = document.querySelector(`input[name='address.postal']`) as HTMLElement;
 
-    await act(() => userEvent.clear(addressLine1));
-    await act(() => userEvent.clear(addressLine2));
-    await act(() => userEvent.clear(addressLine3));
-    await act(() => userEvent.clear(municipality));
-    await act(() => userEvent.clear(postal));
-    await act(() => formikRef.current?.submitForm() as Promise<void>);
-
-    const expectedValues = expect.objectContaining<Api_Property>({
-      address: undefined,
+    act(() => {
+      userEvent.clear(addressLine1);
+      userEvent.clear(addressLine2);
+      userEvent.clear(addressLine3);
+      userEvent.clear(municipality);
+      userEvent.clear(postal);
+      formikRef.current?.submitForm() as Promise<void>;
     });
 
-    expect(updateProperty).toBeCalledWith(expectedValues);
-    expect(onSuccess).toBeCalled();
+    await waitFor(() => {
+      const expectedValues = expect.objectContaining<Api_Property>({
+        address: undefined,
+      });
+
+      expect(updateProperty).toBeCalledWith(expectedValues);
+      expect(onSuccess).toBeCalled();
+    });
   });
 });

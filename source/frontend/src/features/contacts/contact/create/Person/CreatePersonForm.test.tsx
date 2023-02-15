@@ -6,7 +6,7 @@ import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import CreatePersonForm from './CreatePersonForm';
 
@@ -101,15 +101,14 @@ describe('CreatePersonForm', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup();
-    const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+    await act(async () => expect(asFragment()).toMatchSnapshot());
   });
 
   describe('when Cancel button is clicked', () => {
     it('should cancel the form and navigate to Contacts List view', async () => {
       const { getCancelButton } = setup();
       const cancel = getCancelButton();
-      userEvent.click(cancel);
+      await act(async () => userEvent.click(cancel));
       await waitFor(() => expect(history.location.pathname).toBe('/contact/list'));
     });
   });
@@ -120,18 +119,20 @@ describe('CreatePersonForm', () => {
       const { getSaveButton, container } = setup();
 
       // provide required fields
-      await fillInput(container, 'firstName', 'Chester');
-      await fillInput(container, 'surname', 'Tester');
-      await fillInput(container, 'emailContactMethods.0.value', 'test@test.com');
-      await fillInput(
-        container,
-        'emailContactMethods.0.contactMethodTypeCode',
-        ContactMethodTypes.WorkEmail,
-        'select',
-      );
+      await act(async () => {
+        await fillInput(container, 'firstName', 'Chester');
+        await fillInput(container, 'surname', 'Tester');
+        await fillInput(container, 'emailContactMethods.0.value', 'test@test.com');
+        await fillInput(
+          container,
+          'emailContactMethods.0.contactMethodTypeCode',
+          ContactMethodTypes.WorkEmail,
+          'select',
+        );
+      });
 
       const save = getSaveButton();
-      userEvent.click(save);
+      act(() => userEvent.click(save));
       await waitFor(() => expect(addPerson).toBeCalledWith(mockPerson, expect.anything(), false));
 
       await waitFor(() => {

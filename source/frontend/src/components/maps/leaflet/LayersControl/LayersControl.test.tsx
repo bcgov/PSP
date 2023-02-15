@@ -1,7 +1,7 @@
 import L from 'leaflet';
 import { noop } from 'lodash';
 import { useState } from 'react';
-import { cleanup, render, waitFor } from 'utils/test-utils';
+import { act, cleanup, render, waitFor } from 'utils/test-utils';
 import { createMapContainer, deferred, userEvent } from 'utils/test-utils';
 
 import LayersControl from './LayersControl';
@@ -66,7 +66,7 @@ describe('LayersControl View', () => {
     expect(layersContainer.className).toContain('closed');
     // clicking the button should open it...
     const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
+    act(() => userEvent.click(toggleBtn));
     await waitFor(() => expect(layersContainer.className).not.toContain('closed'));
   });
 
@@ -79,7 +79,7 @@ describe('LayersControl View', () => {
     expect(layersContainer.className).not.toContain('closed');
     // clicking the button should close it...
     const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
+    act(() => userEvent.click(toggleBtn));
     await waitFor(() => expect(layersContainer.className).toContain('closed'));
   });
 
