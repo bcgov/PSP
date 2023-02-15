@@ -7,15 +7,7 @@ import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import {
-  act,
-  render,
-  renderAsync,
-  RenderOptions,
-  screen,
-  userEvent,
-  waitFor,
-} from 'utils/test-utils';
+import { act, renderAsync, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import { AcquisitionForm } from './models';
