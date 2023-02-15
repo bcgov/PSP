@@ -55,7 +55,9 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
         this.product !== undefined && this.product !== 0 ? { id: Number(this.product) } : undefined,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
-      acquisitionFileOwners: this.owners.map<Api_AcquisitionFileOwner>(x => x.toApi()),
+      acquisitionFileOwners: this.owners
+        .filter(x => !x.isEmpty)
+        .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi()),

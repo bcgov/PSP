@@ -50,6 +50,15 @@ export class AcquisitionOwnerFormModel {
   incorporationNumber?: string;
   address?: OwnerAddressFormModel;
 
+  isEmpty(): boolean {
+    return (
+      this.lastNameOrCorp1?.trim() === '' &&
+      this.lastNameOrCorp2?.trim() === '' &&
+      this.givenName?.trim() === '' &&
+      this.incorporationNumber?.trim() === ''
+    );
+  }
+
   toApi(): Api_AcquisitionFileOwner {
     return {
       id: this.id,
