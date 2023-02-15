@@ -100,7 +100,7 @@ namespace Pims.Dal.Repositories
             // Existing properties should not be added.
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
-                if (acquisitionProperty.Property.PropertyId != 0)
+                if (acquisitionProperty.Property.Internal_Id != 0)
                 {
                     Context.Entry(acquisitionProperty.Property).State = EntityState.Unchanged;
                 }
@@ -125,7 +125,7 @@ namespace Pims.Dal.Repositories
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
             var existingAcqFile = this.Context.PimsAcquisitionFiles
-                .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.AcquisitionFileId) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.Internal_Id) ?? throw new KeyNotFoundException();
 
             // PSP-4413 Changing the MOTI region triggers an update to the ACQ File Number
             if (existingAcqFile.RegionCode != acquisitionFile.RegionCode)
@@ -141,7 +141,7 @@ namespace Pims.Dal.Repositories
             }
 
             this.Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
-            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson>(p => p.PimsAcquisitionFilePeople, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
+            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
 
             return acquisitionFile;
         }

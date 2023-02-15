@@ -105,33 +105,33 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsActivityTemplateDocuments)
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
-                .Where(d => d.DocumentId == document.DocumentId)
+                .Where(d => d.DocumentId == document.Internal_Id)
                 .AsNoTracking()
                 .FirstOrDefault();
 
             foreach (var pimsResearchFileDocument in documentToDelete.PimsResearchFileDocuments)
             {
-                this.Context.PimsResearchFileDocuments.Remove(new PimsResearchFileDocument() { ResearchFileDocumentId = pimsResearchFileDocument.ResearchFileDocumentId });
+                this.Context.PimsResearchFileDocuments.Remove(new PimsResearchFileDocument() { Internal_Id = pimsResearchFileDocument.Internal_Id });
             }
 
             foreach (var pimsAcquisitionFileDocument in documentToDelete.PimsAcquisitionFileDocuments)
             {
-                this.Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { AcquisitionFileDocumentId = pimsAcquisitionFileDocument.AcquisitionFileDocumentId });
+                this.Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { Internal_Id = pimsAcquisitionFileDocument.Internal_Id });
             }
 
             foreach (var pimsActivityInstanceDocument in documentToDelete.PimsActivityInstanceDocuments)
             {
-                this.Context.PimsActivityInstanceDocuments.Remove(new PimsActivityInstanceDocument() { ActivityInstanceDocumentId = pimsActivityInstanceDocument.ActivityInstanceDocumentId });
+                this.Context.PimsActivityInstanceDocuments.Remove(new PimsActivityInstanceDocument() { Internal_Id = pimsActivityInstanceDocument.Internal_Id });
             }
 
             foreach (var pimsTemplateDocument in documentToDelete.PimsActivityTemplateDocuments)
             {
-                this.Context.PimsActivityTemplateDocuments.Remove(new PimsActivityTemplateDocument() { ActivityTemplateDocumentId = pimsTemplateDocument.ActivityTemplateDocumentId });
+                this.Context.PimsActivityTemplateDocuments.Remove(new PimsActivityTemplateDocument() { Internal_Id = pimsTemplateDocument.Internal_Id });
             }
 
             this.Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
 
-            this.Context.PimsDocuments.Remove(new PimsDocument() { DocumentId = document.DocumentId });
+            this.Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
             return true;
         }
 

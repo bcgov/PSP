@@ -119,20 +119,20 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating acquisition file properties...");
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
-            ValidateVersion(acquisitionFile.AcquisitionFileId, acquisitionFile.ConcurrencyControlNumber);
+            ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             MatchProperties(acquisitionFile);
 
             // Get the current properties in the research file
-            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.AcquisitionFileId);
+            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
                 // If the property is not new, check if the name has been updated.
-                if (incomingAcquisitionProperty.PropertyAcquisitionFileId != 0)
+                if (incomingAcquisitionProperty.Internal_Id != 0)
                 {
-                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.PropertyAcquisitionFileId == incomingAcquisitionProperty.PropertyAcquisitionFileId);
+                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
                     if (existingProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
@@ -147,7 +147,7 @@ namespace Pims.Api.Services
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.PropertyAcquisitionFileId == x.PropertyAcquisitionFileId)).ToList();
+            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
