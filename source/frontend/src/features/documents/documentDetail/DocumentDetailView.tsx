@@ -33,8 +33,6 @@ export const DocumentDetailView: React.FunctionComponent<
 > = props => {
   const { hasClaim } = useKeycloakWrapper();
 
-  console.log(props.document);
-
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />

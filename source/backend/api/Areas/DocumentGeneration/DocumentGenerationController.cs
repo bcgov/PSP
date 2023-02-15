@@ -43,7 +43,7 @@ namespace Pims.Api.Controllers
         /// Get supported file types.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("supported_types")]
+        [HttpGet("types")]
         //[HasPermission(Permissions.GenerateDocuments)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExternalResult<Models.Cdogs.FileTypes>), 200)]
@@ -57,7 +57,7 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Uploads the passed document as a template.
         /// </summary>
-        [HttpPost("upload_template")]
+        [HttpPost("template")]
         //[HasPermission(Permissions.GenerateDocuments)]
         [ProducesResponseType(typeof(ExternalResult<string>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
@@ -70,11 +70,11 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Renders the given template with the request data and returns the result as wrapped encoded base64 file.
         /// </summary>
-        [HttpPost("render_template/download-wrapped")]
+        [HttpPost("template/generate/download-wrapped")]
         //[HasPermission(Permissions.GenerateDocuments)]
         [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
-        public async Task<IActionResult> UploadTemplateAndDownloadWrapepd([FromBody] DocumentGenerationRequest request)
+        public async Task<IActionResult> UploadTemplateAndDownloadWrapped([FromBody] DocumentGenerationRequest request)
         {
             var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData);
             return new JsonResult(result);
@@ -83,7 +83,7 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Renders the given template with the request data and returns the result as a file.
         /// </summary>
-        [HttpPost("render_template/download")]
+        [HttpPost("template/generate/download")]
         //[HasPermission(Permissions.GenerateDocuments)]
         [ProducesResponseType(typeof(FileContentResult), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
