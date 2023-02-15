@@ -12,7 +12,6 @@ import { ProjectForm } from '../models';
 
 export interface IUpdateProjectContainerProps {
   project: Api_Project;
-  //View: React.ForwardRefExoticComponent<IAddProjectFormProps>;
   View: React.ForwardRefExoticComponent<
     IAddProjectFormProps & React.RefAttributes<FormikProps<ProjectForm>>
   >;
