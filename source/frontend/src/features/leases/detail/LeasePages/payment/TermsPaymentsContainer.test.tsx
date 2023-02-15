@@ -97,7 +97,9 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onPost().reply(200, { id: 1 });
 
       const addButton = getAllByText('Add a Term')[0];
-      await userEvent.click(addButton);
+      act(() => {
+        userEvent.click(addButton);
+      });
 
       expect(getByDisplayValue('01/01/2020')).toBeVisible();
     });
@@ -108,7 +110,9 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onPost().reply(200, { id: 1 });
 
       const addButton = getAllByText('Add a Term')[0];
-      await userEvent.click(addButton);
+      act(() => {
+        userEvent.click(addButton);
+      });
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save term');
@@ -127,7 +131,9 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onPut().reply(200, { id: 1 });
 
       const editButton = getAllByTitle('edit term')[0];
-      await userEvent.click(editButton);
+      act(() => {
+        userEvent.click(editButton);
+      });
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save term');

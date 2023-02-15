@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { mockLookups } from 'mocks';
 import { mockProjectGetResponse } from 'mocks/mockProjects';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+import { render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
 import ProjectContainer, { IProjectContainerViewProps } from './ProjectContainer';
@@ -11,7 +11,9 @@ import ProjectContainer, { IProjectContainerViewProps } from './ProjectContainer
 const mockAxios = new MockAdapter(axios);
 // mock auth library
 jest.mock('@react-keycloak/web');
-const TestView: React.FC<IProjectContainerViewProps> = () => {
+let viewProps: IProjectContainerViewProps | undefined = undefined;
+const TestView: React.FC<IProjectContainerViewProps> = props => {
+  viewProps = props;
   return <span>Content Rendered</span>;
 };
 
@@ -69,6 +71,10 @@ describe('ProjectContainer component', () => {
 
   it('renders the underlying form', () => {
     const { getByText } = setup();
+    waitFor(() => {
+      expect(viewProps?.loadingProject).toBeFalsy();
+      expect(viewProps?.project).not.toBeNull();
+    });
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 });
