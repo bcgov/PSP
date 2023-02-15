@@ -48,7 +48,7 @@ describe('Document List View', () => {
         documentResults={
           renderOptions?.documentResults ||
           mockDocumentsResponse().map(x =>
-            x?.document ? DocumentRow.fromApi(x.document) : new DocumentRow(),
+            x?.document ? DocumentRow.fromApiDocument(x.document) : new DocumentRow(),
           )
         }
         onDelete={renderOptions?.onDelete || deleteMock}
