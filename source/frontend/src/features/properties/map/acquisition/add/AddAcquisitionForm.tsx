@@ -20,7 +20,6 @@ import styled from 'styled-components';
 
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { UpdateAcquisitionOwnersSubForm } from '../common/update/acquistionOwners/UpdateAcquistionOwnersSubForm';
-import { useProjectTypeahead } from '../hooks/useProjectTypeahead';
 import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
 import { AcquisitionProperties } from './AcquisitionProperties';
 import { AcquisitionForm } from './models';

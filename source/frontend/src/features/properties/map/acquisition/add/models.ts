@@ -11,7 +11,6 @@ import { PropertyForm } from '../../shared/models';
 import {
   AcquisitionOwnerFormModel,
   AcquisitionTeamFormModel,
-  OwnerAddressFormModel,
   WithAcquisitionOwners,
   WithAcquisitionTeam,
 } from '../common/models';
