@@ -26,10 +26,11 @@ export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
         render={arrayHelpers => (
           <>
             {values.owners.map((owner, index) => (
-              <Row key={`onwer-parent-${index}`} className="py-3">
+              <Row key={`owner-parent-${index}`} className="py-3">
                 <Container>
                   <ButtonDiv>
                     <RemoveButton
+                      label={'Remove Owner'}
                       onRemove={() => {
                         setRemoveIndex(index);
                         setShowRemoveModal(true);
@@ -72,7 +73,7 @@ export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
             </LinkButton>
 
             <AcquisitionFormModal
-              message="Are you sure you want to remove this row?"
+              message="Are you sure you want to remove this Owner?"
               title="Remove Owner"
               display={showRemoveModal}
               handleOk={() => {

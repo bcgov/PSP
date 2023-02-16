@@ -1,8 +1,4 @@
-import {
-  Api_AcquisitionFile,
-  Api_AcquisitionFileOwner,
-  Api_AcquisitionFilePerson,
-} from 'models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
 import { formatApiPersonNames } from 'utils/personUtils';
 
 export class DetailAcquisitionFile {
@@ -13,7 +9,6 @@ export class DetailAcquisitionFile {
   acquisitionTypeDescription?: string;
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFilePerson[] = [];
-  acquisitionOwners: Api_AcquisitionFileOwner[] = [];
 
   static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
@@ -26,7 +21,6 @@ export class DetailAcquisitionFile {
     detail.regionDescription = model?.regionCode?.description;
     detail.acquisitionTeam =
       model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
-    detail.acquisitionOwners = model?.acquisitionFileOwners || [];
 
     return detail;
   }
@@ -47,7 +41,7 @@ export class DetailAcquisitionFilePerson {
   }
 }
 
-export class DetailAcquistionFileOwner {
+export class DetailAcquisitionFileOwner {
   ownerName?: string;
   ownerOtherName?: string;
   ownerDisplayAddress?: string;

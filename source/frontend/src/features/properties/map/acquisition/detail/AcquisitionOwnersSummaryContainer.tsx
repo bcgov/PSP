@@ -3,7 +3,7 @@ import { Api_Address } from 'models/api/Address';
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAcquisitionProvider } from '../hooks/useAcquisitionProvider';
-import { DetailAcquistionFileOwner } from './models';
+import { DetailAcquisitionFileOwner } from './models';
 
 export interface IAcquisitionOwnersContainerProps {
   acquisitionFileId: number;
@@ -11,14 +11,14 @@ export interface IAcquisitionOwnersContainerProps {
 }
 
 export interface IAcquisitionOwnersSummaryViewProps {
-  ownersList?: DetailAcquistionFileOwner[];
+  ownersList?: DetailAcquisitionFileOwner[];
   isLoading: boolean;
 }
 
 const AcquisitionOwnersSummaryContainer: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionOwnersContainerProps>
 > = ({ acquisitionFileId, View }) => {
-  const [ownersDetails, setOwnersDetails] = useState<DetailAcquistionFileOwner[] | undefined>(
+  const [ownersDetails, setOwnersDetails] = useState<DetailAcquisitionFileOwner[] | undefined>(
     undefined,
   );
 
@@ -31,16 +31,14 @@ const AcquisitionOwnersSummaryContainer: React.FunctionComponent<
 
   const fetchOwnersApi = useCallback(async () => {
     if (acquisitionFileId) {
-      console.log(acquisitionFileId);
       const acquisitionOwners = await retrieveAcquisitionFileOwners(acquisitionFileId);
-      console.log(acquisitionOwners);
       if (acquisitionOwners !== undefined) {
         const ownerDetailList = acquisitionOwners.map(o => {
           return {
             ownerName: getOwnerDisplayName(o),
             ownerOtherName: o.lastNameOrCorp2?.trim(),
-            ownerDisplayAddress: getFormatedAddress(o.address),
-          } as DetailAcquistionFileOwner;
+            ownerDisplayAddress: getFormattedAddress(o.address),
+          };
         });
         setOwnersDetails([...ownerDetailList]);
       }
@@ -64,7 +62,7 @@ const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
   return nameDisplay;
 };
 
-const getFormatedAddress = (address?: Api_Address): string => {
+const getFormattedAddress = (address?: Api_Address): string => {
   if (address === null || address === undefined) {
     return '';
   }

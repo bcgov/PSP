@@ -2,11 +2,11 @@ import { render, RenderOptions } from 'utils/test-utils';
 
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
-import { DetailAcquistionFileOwner } from './models';
+import { DetailAcquisitionFileOwner } from './models';
 
 jest.mock('@react-keycloak/web');
 
-const ownerPerson: DetailAcquistionFileOwner = {
+const ownerPerson: DetailAcquisitionFileOwner = {
   ownerName: 'JOHN DOE',
   ownerOtherName: 'SR.',
   ownerDisplayAddress: `456 Souris Street \n
@@ -16,7 +16,7 @@ const ownerPerson: DetailAcquistionFileOwner = {
     Canada`,
 };
 
-const ownerOrganization: DetailAcquistionFileOwner = {
+const ownerOrganization: DetailAcquisitionFileOwner = {
   ownerName: 'FORTIS BC (9999)',
   ownerOtherName: 'LTD.',
   ownerDisplayAddress: `123 Main Street \n
