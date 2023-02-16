@@ -38,7 +38,8 @@ describe('useTenant hook', () => {
     process.env.REACT_APP_TENANT = undefined;
     const { findByTestId } = testRender();
     const title = await findByTestId('tenant');
-    expect({ ...JSON.parse(title.innerHTML), propertiesUrl: undefined }).toStrictEqual({
+    const tenant = title.innerHTML.replace(/&amp;/g, '&');
+    expect({ ...JSON.parse(tenant), propertiesUrl: undefined }).toStrictEqual({
       ...defaultTenant,
       propertiesUrl: undefined,
     });
@@ -48,7 +49,8 @@ describe('useTenant hook', () => {
     process.env.REACT_APP_TENANT = 'FAKE_I_DONT_EXIST';
     const { findByTestId } = testRender();
     const title = await findByTestId('tenant');
-    expect({ ...JSON.parse(title.innerHTML), propertiesUrl: undefined }).toStrictEqual({
+    const tenant = title.innerHTML.replace(/&amp;/g, '&');
+    expect({ ...JSON.parse(tenant), propertiesUrl: undefined }).toStrictEqual({
       ...defaultTenant,
       propertiesUrl: undefined,
     });
@@ -58,7 +60,8 @@ describe('useTenant hook', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     const { findByTestId } = testRender();
     const title = await findByTestId('tenant');
-    expect({ ...JSON.parse(title.innerHTML), propertiesUrl: undefined }).toStrictEqual({
+    const tenant = title.innerHTML.replace(/&amp;/g, '&');
+    expect({ ...JSON.parse(tenant), propertiesUrl: undefined }).toStrictEqual({
       ...defaultTenant,
       ...config['MOTI'],
       propertiesUrl: undefined,

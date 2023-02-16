@@ -2,7 +2,7 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { SideBarContext } from 'features/properties/map/context/sidebarContext';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useIsMounted from 'hooks/useIsMounted';
-import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
+import { Api_DocumentRelationship } from 'models/api/Document';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -18,6 +18,7 @@ interface IDocumentListContainerProps {
   relationshipType: DocumentRelationshipType;
   disableAdd?: boolean;
   addButtonText?: string;
+  title?: string;
 }
 
 const DocumentListContainer: React.FunctionComponent<
@@ -47,8 +48,7 @@ const DocumentListContainer: React.FunctionComponent<
     if (documents !== undefined && isMounted()) {
       setDocumentResults([
         ...documents
-          .map(x => x.document)
-          .filter((x): x is Api_Document => !!x)
+          .filter((x): x is Api_DocumentRelationship => !!x?.document)
           .map(x => DocumentRow.fromApi(x)),
       ]);
     }
@@ -74,7 +74,7 @@ const DocumentListContainer: React.FunctionComponent<
         }
       });
       if (updated) {
-        setDocumentResults(documentResults);
+        setDocumentResults(newDocumentResults);
       }
     };
     getDetails();
@@ -139,6 +139,7 @@ const DocumentListContainer: React.FunctionComponent<
       disableAdd={props.disableAdd}
       onPageChange={onPageChange}
       pageProps={pageProps}
+      title={props.title}
     />
   );
 };

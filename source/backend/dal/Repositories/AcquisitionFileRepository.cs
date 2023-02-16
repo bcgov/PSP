@@ -78,6 +78,7 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.RegionCodeNavigation)
                 .Include(r => r.AcquisitionFundingTypeCodeNavigation)
                 .Include(r => r.Project)
+                .Include(r => r.Product)
                 .Include(r => r.PimsPropertyAcquisitionFiles)
                 .Include(r => r.PimsAcquisitionFilePeople)
                     .ThenInclude(rp => rp.Person)
@@ -173,6 +174,12 @@ namespace Pims.Dal.Repositories
                 .Where(p => p.AcquisitionFileId == id)?
                 .Select(p => p.RegionCode)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        public List<PimsAcquisitionFile> GetByProductId(long productId)
+        {
+            return this.Context.PimsAcquisitionFiles.AsNoTracking()
+                .Where(a => a.ProductId == productId).ToList();
         }
 
         /// <summary>

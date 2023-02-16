@@ -58,7 +58,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -98,6 +98,22 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             <label
               class="c3"
             >
+              Product:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
               Funding:
             </label>
           </div>
@@ -114,7 +130,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -198,12 +214,12 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
           >
-            Acquisition details
+            Acquisition Details
           </div>
           <div
             class="col-1"
@@ -292,12 +308,12 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
           >
-            Acquisition team
+            Acquisition Team
           </div>
           <div
             class="col-1"

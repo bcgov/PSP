@@ -1,14 +1,8 @@
+import { Api_CodeType } from './CodeType';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import Api_TypeCode from './TypeCode';
-
-export interface Api_CodeType extends Api_ConcurrentVersion {
-  id?: number;
-  code?: string;
-  description?: string;
-  displayOrder?: number;
-}
 
 export interface Api_Address extends Api_ConcurrentVersion {
   id?: number;

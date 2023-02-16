@@ -330,7 +330,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
         class="c1"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -521,7 +521,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
         class="c1"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -601,7 +601,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
         class="c1"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -953,7 +953,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
         class="c1"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -1043,7 +1043,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
         class="c1"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"

@@ -9,14 +9,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private SearchProperties searchProperties;
         private PropertyInformation propertyInformation;
 
-        private readonly string userName = "TRANPSP1";
-        //private readonly string userName = "sutairak";
+        //private readonly string userName = "TRANPSP1";
+        private readonly string userName = "sutairak";
 
         private string motiPropertyPID = "004-537-360";
         private string motiPropertyPIN = "90054791";
         private string propertyAddress = "2889 E 12th Ave";
         private string invalidPID = "000-000-000";
 
+        private readonly string propertyDetailsAddressLine1 = "8989 Fake St.";
+        private readonly string propertyDetailsAddressLine2 = "Apt 2305";
+        private readonly string propertyDetailsCity = "Vancouver";
+        private readonly string propertyDetailsPostalCode = "V6Z 8H9";
         private string municipalZone = "The Automated Zone";
         private string sqMts = "65";
         private string cubeMts = "103.59";
@@ -74,7 +78,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I review a Property's Information")]
         public void ReviewPropertyInformation()
         {
-            /* TEST COVERAGE: PSP-1558, PSP-3589, PSP-3184 */
+            /* TEST COVERAGE: PSP-1558, PSP-3589, PSP-3184, PSP-5163,  */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -96,10 +100,28 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
+        [StepDefinition(@"I search for a non MOTI property")]
+        public void NonInventoryProperty()
+        {
+            /* TEST COVERAGE: PSP-3414 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Look for a non-inventory property
+            searchProperties.SearchPropertyByAddress(propertyAddress);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesFoundCount() == 1);
+
+            //Click on the founf property
+            searchProperties.SelectFoundPin();
+        }
+
         [StepDefinition(@"I make some changes on the selected property information")]
         public void EditPropertyInformationDetails()
         {
-            /* TEST COVERAGE: PSP-3591, PSP-3590,  */
+            /* TEST COVERAGE: PSP-3591, PSP-3590, PSP-5165, PSP-5163, PSP-5162, PSP-5164 */
 
             //Click on the Edit Property Information Button
             propertyInformation.EditPropertyInfoBttn();
@@ -117,12 +139,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.EditPropertyInfoBttn();
 
             //Apply changes on the Property Information Form
-            propertyInformation.UpdateMaxPropertyDetails(municipalZone, sqMts, cubeMts, PropertyInfoNotes);
+            propertyInformation.UpdateMaxPropertyDetails(propertyDetailsAddressLine1, propertyDetailsAddressLine2, propertyDetailsCity, propertyDetailsPostalCode, municipalZone, sqMts, cubeMts, PropertyInfoNotes);
 
             //Save changes
             propertyInformation.SavePropertyDetails();
 
-    }
+        }
 
         [StepDefinition(@"LTSA Pop-up Information validation is successful")]
         public void ValidateLTSAPopUp()
@@ -159,6 +181,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Validate Property Information View Form after changes
             propertyInformation.VerifyPropertyDetailsView("Property Information");
+        }
+
+        [StepDefinition(@"Non-Inventory property renders correctly")]
+        public void NonInventoryPropertySucess()
+        {
+            //Validate tabs counting
+            Assert.True(propertyInformation.PropertyTabs() == 2);
+
+            //Validate correct tabs are displayed
+            propertyInformation.VerifyNonInventoryPropertyTabs();
         }
     }
 }

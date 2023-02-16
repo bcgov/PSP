@@ -4,6 +4,7 @@ import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { ImFileText2 } from 'react-icons/im';
+import styled from 'styled-components';
 
 export interface ISectionListHeaderProps {
   title: string;
@@ -19,7 +20,7 @@ export const SectionListHeader: React.FunctionComponent<
   const onClick = () => props.onAdd && props.onAdd();
 
   return (
-    <Row className="no-gutters justify-content-between">
+    <StyledRow className="no-gutters">
       <Col xs="auto" className="px-2 my-1">
         {props.title}
       </Col>
@@ -31,6 +32,15 @@ export const SectionListHeader: React.FunctionComponent<
           </StyledSectionAddButton>
         )}
       </Col>
-    </Row>
+    </StyledRow>
   );
 };
+
+const StyledRow = styled(Row)`
+  justify-content: space-between;
+  align-items: end;
+  min-height: 4.5rem;
+  .btn {
+    margin: 0;
+  }
+`;

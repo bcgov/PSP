@@ -18,7 +18,7 @@ export function FinancialCodeResults(props: IFinancialCodeResultsProps) {
     <Table<Api_FinancialCode>
       name="FinancialCodeTable"
       manualSortBy={false}
-      lockPageSize={true}
+      lockPageSize={false}
       manualPagination={false}
       totalItems={results.length}
       columns={columns}

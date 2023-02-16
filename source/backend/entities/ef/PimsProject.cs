@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_PROJECT")]
     [Index(nameof(BusinessFunctionCodeId), Name = "PROJCT_BUSINESS_FUNCTION_CODE_ID_IDX")]
-    [Index(nameof(Code), Name = "PROJCT_CODE_IDX", IsUnique = true)]
+    [Index(nameof(Code), Name = "PROJCT_CODE_IDX")]
     [Index(nameof(CostTypeCodeId), Name = "PROJCT_COST_TYPE_CODE_ID_IDX")]
     [Index(nameof(ProjectStatusTypeCode), Name = "PROJCT_PROJECT_STATUS_CODE_IDX")]
     [Index(nameof(RegionCode), Name = "PROJCT_REGION_CODE_IDX")]
@@ -26,7 +26,6 @@ namespace Pims.Dal.Entities
         [Key]
         [Column("ID")]
         public long Id { get; set; }
-        [Required]
         [Column("PROJECT_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string ProjectStatusTypeCode { get; set; }
@@ -37,9 +36,10 @@ namespace Pims.Dal.Entities
         [Column("WORK_ACTIVITY_CODE_ID")]
         public long? WorkActivityCodeId { get; set; }
         [Column("REGION_CODE")]
-        public short? RegionCode { get; set; }
+        public short RegionCode { get; set; }
         [Column("CODE")]
-        public int Code { get; set; }
+        [StringLength(20)]
+        public string Code { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]

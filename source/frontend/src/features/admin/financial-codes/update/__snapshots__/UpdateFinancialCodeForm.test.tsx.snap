@@ -1,0 +1,442 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdateFinancialCode form renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  border: none;
+}
+
+.c4.btn.btn-secondary {
+  background: none;
+}
+
+.c4.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  background: none;
+}
+
+.c4.btn.btn-light {
+  border: none;
+}
+
+.c4.btn.btn-dark {
+  border: none;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
+}
+
+.c0 .form-section {
+  margin: 0;
+  padding-left: 0;
+}
+
+.c0 .tab-pane .form-section {
+  margin: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.c0 .react-datepicker-wrapper {
+  max-width: 14rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c1"
+        >
+          Code type:
+        </label>
+      </div>
+      <div
+        class="c2 text-left col"
+      >
+        <span>
+          Business function
+        </span>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c1"
+        >
+          Code value:
+        </label>
+      </div>
+      <div
+        class="c2 required text-left col"
+      >
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-code"
+            name="code"
+            placeholder="Code value"
+            title="CONSTRUC"
+            type="text"
+            value="CONSTRUC"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c1"
+        >
+          Code description:
+        </label>
+      </div>
+      <div
+        class="c2 required text-left col"
+      >
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-description"
+            name="description"
+            placeholder="Code description"
+            title="CONSTRUCTION"
+            type="text"
+            value="CONSTRUCTION"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c1"
+        >
+          Effective date:
+          <span
+            class="ml-2"
+          >
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-section-field-tooltip"
+              id="section-field-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </span>
+        </label>
+      </div>
+      <div
+        class="c2 required text-left col"
+      >
+        <div
+          class="form-group"
+        >
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-effectiveDate"
+                name="effectiveDate"
+                placeholder="--/--/----"
+                type="text"
+                value="11/22/1999"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c1"
+        >
+          Expiry date:
+          <span
+            class="ml-2"
+          >
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-section-field-tooltip"
+              id="section-field-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </span>
+        </label>
+      </div>
+      <div
+        class="c2 text-left col"
+      >
+        <div
+          class="form-group"
+        >
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-expiryDate"
+                name="expiryDate"
+                placeholder="--/--/----"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c1"
+        >
+          Display order:
+        </label>
+      </div>
+      <div
+        class="c2 text-left col"
+      >
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-displayOrder"
+            name="displayOrder"
+            type="number"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="justify-content-md-center row"
+    >
+      <div
+        class="cancelSave btn-toolbar"
+        role="toolbar"
+      >
+        <button
+          class="c4 Button mr-5 btn btn-secondary"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            Cancel
+          </div>
+        </button>
+        <button
+          class="c4 Button mr-5 btn btn-primary"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            Save
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
