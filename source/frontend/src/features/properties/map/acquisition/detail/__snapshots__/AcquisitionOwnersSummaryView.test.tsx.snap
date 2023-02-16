@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Acquistion File Onwers View component Renders Component as expected 1`] = `
+exports[`Acquistion File Owners View component Renders Component as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
