@@ -36,7 +36,7 @@ describe('UpdateAcquisitionForm component', () => {
     props: IUpdateAcquisitionFormProps = { ...DEFAULT_PROPS },
     renderOptions: RenderOptions = {},
   ) => {
-    const utils = render(<UpdateAcquisitionForm {...props} />);
+    const utils = render(<UpdateAcquisitionForm {...props} />, { claims: [] });
 
     return {
       ...utils,
