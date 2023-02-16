@@ -19,7 +19,6 @@ const DEFAULT_PROPS: IUpdateAcquisitionFormProps = {
   initialValues: UpdateAcquisitionSummaryFormModel.fromApi(mockAcquisitionFileResponse()),
   onSubmit,
 };
-jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
