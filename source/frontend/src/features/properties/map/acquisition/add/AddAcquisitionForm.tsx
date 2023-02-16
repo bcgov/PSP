@@ -164,6 +164,12 @@ export const AddAcquisitionForm = React.forwardRef<
               <SectionField label="Acquisition file name">
                 <LargeInput field="fileName" />
               </SectionField>
+              <SectionField
+                label="Historical file number"
+                tooltip="Older file that this file represents (ex: those from the legacy system or other non-digital files.)"
+              >
+                <LargeInput field="legacyFileNumber" />
+              </SectionField>
               <SectionField label="Physical file status">
                 <Select
                   field="acquisitionPhysFileStatusType"

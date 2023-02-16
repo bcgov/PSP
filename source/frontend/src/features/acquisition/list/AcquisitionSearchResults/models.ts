@@ -5,6 +5,7 @@ import Api_TypeCode from 'models/api/TypeCode';
 export class AcquisitionSearchResultModel {
   id?: number;
   fileNumber?: string;
+  legacyFileNumber?: string;
   fileName?: string;
   regionCode?: string;
   appLastUpdateUserid?: string;
@@ -20,6 +21,7 @@ export class AcquisitionSearchResultModel {
     newModel.id = base.id;
     newModel.fileName = base.fileName;
     newModel.fileNumber = base.fileNumber;
+    newModel.legacyFileNumber = base.legacyFileNumber;
     newModel.regionCode = base.regionCode?.description;
     newModel.appLastUpdateUserid = base.appLastUpdateUserid;
     newModel.appCreateTimestamp = base.appCreateTimestamp;

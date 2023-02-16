@@ -12,6 +12,7 @@ import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../common/models'
 export class AcquisitionForm implements WithAcquisitionTeam {
   id?: number;
   fileName?: string = '';
+  legacyFileNumber?: string = '';
   assignedDate?: string;
   deliveryDate?: string;
   rowVersion?: number;
@@ -36,6 +37,7 @@ export class AcquisitionForm implements WithAcquisitionTeam {
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
       deliveryDate: this.deliveryDate,
+      legacyFileNumber: this.legacyFileNumber,
       fileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
@@ -73,6 +75,7 @@ export class AcquisitionForm implements WithAcquisitionTeam {
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
+    newForm.legacyFileNumber = model.legacyFileNumber;
     newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);

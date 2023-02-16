@@ -60,6 +60,12 @@ const AcquisitionSummaryView: React.FunctionComponent<
       </Section>
       <Section header="Acquisition Details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>
+        <SectionField
+          label="Historical file number"
+          tooltip="Older file that this file represents (ex: those from the legacy system or other non-digital files.)"
+        >
+          {detail.legacyFileNumber}
+        </SectionField>
         <SectionField label="Physical file status">
           {detail.acquisitionPhysFileStatusTypeDescription}
         </SectionField>
