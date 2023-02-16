@@ -5,9 +5,9 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsAcquisitionOwner partial class.
     /// </summary>
-    public partial class PimsAcquisitionOwner : IdentityBaseAppEntity<long>
+    public partial class PimsAcquisitionOwner : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         [NotMapped]
-        public override long Id { get => this.AcquisitionOwnerId; set => this.AcquisitionOwnerId = value; }
+        public override long Internal_Id { get => this.AcquisitionOwnerId; set => this.AcquisitionOwnerId = value; }
     }
 }
