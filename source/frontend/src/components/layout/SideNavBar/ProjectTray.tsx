@@ -15,6 +15,11 @@ export const ProjectTray = ({ onLinkClick }: ISideTrayPageProps) => {
           Manage Projects
         </Link>
       )}
+      {hasClaim(Claims.PROJECT_ADD) && (
+        <Link onClick={onLinkClick} to="/mapview/sidebar/project/new">
+          Create Project
+        </Link>
+      )}
     </>
   );
 };

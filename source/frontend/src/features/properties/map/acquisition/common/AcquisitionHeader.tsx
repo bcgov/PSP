@@ -21,8 +21,8 @@ export const AcquisitionHeader: React.FunctionComponent<
       <Col xs={leftColumnWidth}>
         <Row className="no-gutters">
           <Col>
-            <HeaderField label="File #:" labelWidth={leftColumnLabel} contentWidth="9">
-              {acquisitionFile?.fileNumber}
+            <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
+              {acquisitionFile?.fileNumber} - {acquisitionFile?.fileName}
             </HeaderField>
           </Col>
         </Row>

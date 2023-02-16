@@ -1,10 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IApiError } from 'interfaces/IApiError';
-import { getMockAddresses, getMockLegalDescriptions } from 'mocks/bcAssessmentMock';
+import { mockBcAssessmentSummary } from 'mocks/bcAssessmentMock';
 import { useCallback, useEffect } from 'react';
-import { toast } from 'react-toastify';
 
-import { getMockDescription, getMockSales, getMockValues } from './../mocks/bcAssessmentMock';
 import { pidParser } from './../utils/propertyUtils';
 import { useWfsLayer } from './pims-api';
 import { IResponseWrapper, useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
@@ -113,7 +111,7 @@ export const useBcAssessmentLayer = (
       try {
         legalDescriptionResponse = await getLegalDescriptions(
           { PID_NUMBER: parsedPid.toString() },
-          { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
+          { timeout: 40000, forceExactMatch: true },
         );
       } catch (e: any) {
         if (axios.isAxiosError(e)) {
@@ -237,24 +235,6 @@ export const useBcAssessmentLayer = (
   };
 };
 
-export const LAYER_UNAVAILABLE = [
-  'Error returned from BC Assessment.',
-  'Please notify ',
-  'pims@gov.bc.ca',
-  ' if this problem persists.',
-];
-
-const bcAssessmentError = () =>
-  toast.error(LAYER_UNAVAILABLE.join('\n'), { toastId: 'LAYER_DATA_ERROR_ID' });
-
-export const mockBcAssessmentSummary: IBcAssessmentSummary = {
-  LEGAL_DESCRIPTION: getMockLegalDescriptions()?.features[0].properties ?? {},
-  ADDRESSES: getMockAddresses()?.features.map(f => f.properties ?? {}) ?? [],
-  VALUES: getMockValues()?.features.map(f => f.properties ?? {}) ?? [],
-  CHARGES: [],
-  FOLIO_DESCRIPTION: (getMockDescription()?.features[0].properties as any) ?? {},
-  SALES: getMockSales()?.features.map(f => f.properties ?? {}) ?? [],
-};
 export interface IBcAssessmentSummary {
   FOLIO_DESCRIPTION: Partial<{
     BCA_FD_SYSID: number;

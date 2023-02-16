@@ -271,6 +271,11 @@ exports[`Project Filter matches snapshot 1`] = `
                 name="projectStatusCode"
               >
                 <option
+                  value=""
+                >
+                  All Statuses
+                </option>
+                <option
                   class="option"
                   value="AC"
                 >

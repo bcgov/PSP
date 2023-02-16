@@ -46,7 +46,8 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
           <b>
             Failed to load data from BC Assessment.
             <br />
-            <br /> Refresh this page to try again, or select a different property.
+            <br /> Refresh this page to try again, or select a different property. If this error
+            persists, contact an administrator.
           </b>
         </FormSection>
       ) : (

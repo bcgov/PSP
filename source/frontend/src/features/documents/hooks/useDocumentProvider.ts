@@ -45,7 +45,6 @@ export const useDocumentProvider = () => {
         [getDocumentMetadata],
       ),
       requestName: 'retrieveDocumentMetadata',
-      onSuccess: useCallback(() => toast.success('Document Metadata retrieved'), []),
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
@@ -72,7 +71,6 @@ export const useDocumentProvider = () => {
         [getDocumentTypeMetadata],
       ),
       requestName: 'retrieveDocumentTypeMetadata',
-      onSuccess: useCallback(() => toast.success('Document Metadata retrieved'), []),
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
@@ -109,9 +107,6 @@ export const useDocumentProvider = () => {
       [updateDocumentMetadataApiCall],
     ),
     requestName: 'updateDocumentMetadataApiCall',
-    onSuccess: useCallback(() => {
-      toast.success('Updated document metadata');
-    }, []),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);

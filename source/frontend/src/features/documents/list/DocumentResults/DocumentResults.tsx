@@ -1,7 +1,7 @@
 import { Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
 import { DocumentRow } from 'features/documents/ComposedDocument';
-import { Api_Document } from 'models/api/Document';
+import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
 import { useMemo } from 'react';
 import { getPage } from 'utils';
 
@@ -12,8 +12,8 @@ export interface IDocumentResultProps {
   loading?: boolean;
   sort: TableSort<Api_Document>;
   setSort: (value: TableSort<Api_Document>) => void;
-  onViewDetails: (values: Api_Document) => void;
-  onDelete: (values: Api_Document) => void;
+  onViewDetails: (values: Api_DocumentRelationship) => void;
+  onDelete: (values: Api_DocumentRelationship) => void;
   onPageChange: (props: { pageIndex?: number; pageSize: number }) => void;
   pageProps: { pageIndex?: number; pageSize: number };
 }

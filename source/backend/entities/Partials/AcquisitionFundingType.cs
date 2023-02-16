@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsAcquisitionFundingType class, provides an entity for the datamodel to manage Aquisition funding types.
+    /// PimsAcquisitionFundingType class, provides an entity for the datamodel to manage Acquisition funding types.
     /// </summary>
     public partial class PimsAcquisitionFundingType : ITypeEntity<string>
     {

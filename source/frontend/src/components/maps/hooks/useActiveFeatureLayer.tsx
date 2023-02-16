@@ -7,15 +7,12 @@ import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leafl
 import { isEmpty, isNumber } from 'lodash';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useTenant } from 'tenants';
 
 import {
-  HWY_DISTRICT_LAYER_URL,
   LayerPopupInformation,
-  MOTI_REGION_LAYER_URL,
-  MUNICIPALITY_LAYER_URL,
   municipalityLayerPopupConfig,
   parcelLayerPopupConfig,
-  PARCELS_LAYER_URL,
   useLayerQuery,
 } from '../leaflet/LayerPopup';
 import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
@@ -42,11 +39,13 @@ const useActiveFeatureLayer = ({
   mapRef,
   setLayerPopup,
 }: IUseActiveParcelMapLayer) => {
+  const { parcelsLayerUrl, municipalLayerUrl, motiRegionLayerUrl, hwyDistrictLayerUrl } =
+    useTenant();
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
-  const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
-  const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
-  const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
-  const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
+  const parcelsService = useLayerQuery(parcelsLayerUrl);
+  const municipalitiesService = useLayerQuery(municipalLayerUrl);
+  const regionService = useLayerQuery(motiRegionLayerUrl);
+  const districtService = useLayerQuery(hwyDistrictLayerUrl);
 
   const {
     loadProperties: { execute: loadProperties },

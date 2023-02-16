@@ -1,0 +1,77 @@
+import { AxiosError, AxiosResponse } from 'axios';
+import { ProjectStateContext } from 'features/projects/context/ProjectContext';
+import { useApiProjects } from 'hooks/pims-api/useApiProjects';
+import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
+import { IApiError } from 'interfaces/IApiError';
+import { Api_Product, Api_Project } from 'models/api/Project';
+import { useCallback, useContext, useMemo } from 'react';
+import { toast } from 'react-toastify';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+
+/**
+ * hook that retrieves Project information.
+ */
+export const useProjectProvider = () => {
+  const { getProjectProducts, postProject, getProject } = useApiProjects();
+  const { project, setProject } = useContext(ProjectStateContext);
+
+  const { execute: retrieveProjectProducts, loading: retrieveProjectProductsLoading } =
+    useApiRequestWrapper<(projectId: number) => Promise<AxiosResponse<Api_Product[], any>>>({
+      requestFunction: useCallback(
+        async (projectId: number) => await getProjectProducts(projectId),
+        [getProjectProducts],
+      ),
+      requestName: 'retrieveProjectProducts',
+      onSuccess: useCallback(() => toast.success('Products for project retrieved'), []),
+      onError: useCallback((axiosError: AxiosError<IApiError>) => {
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response.data.error);
+        } else {
+          toast.error('Retrieve products for project error. Check responses and try again.');
+        }
+      }, []),
+    });
+
+  const addProjectApi = useApiRequestWrapper<
+    (project: Api_Project) => Promise<AxiosResponse<Api_Project, any>>
+  >({
+    requestFunction: useCallback(
+      async (project: Api_Project) => await postProject(project),
+      [postProject],
+    ),
+    requestName: 'AddProject',
+    onSuccess: useAxiosSuccessHandler('Project saved'),
+    onError: useAxiosErrorHandler('Failed to save Project'),
+  });
+
+  const getProjectApi = useApiRequestWrapper<
+    (projectId: number) => Promise<AxiosResponse<Api_Project, any>>
+  >({
+    requestFunction: useCallback(
+      async (projectId: number) => await getProject(projectId),
+      [getProject],
+    ),
+    requestName: 'RetrieveProject',
+    onSuccess: useAxiosSuccessHandler('Project retrieved'),
+    onError: useAxiosErrorHandler('Failed to load Project'),
+  });
+
+  return useMemo(
+    () => ({
+      project,
+      setProject,
+      retrieveProjectProducts,
+      retrieveProjectProductsLoading,
+      addProject: addProjectApi,
+      getProject: getProjectApi,
+    }),
+    [
+      project,
+      setProject,
+      retrieveProjectProducts,
+      retrieveProjectProductsLoading,
+      addProjectApi,
+      getProjectApi,
+    ],
+  );
+};

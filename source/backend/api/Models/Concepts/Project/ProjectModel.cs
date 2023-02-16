@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Api.Models.Concepts
 {
     public class ProjectModel : BaseAppModel
@@ -17,27 +19,27 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Bussiness function code.
         /// </summary>
-        public long BusinessFunctionCode { get; set; } // TODO: Use the correct type.
+        public CodeTypeModel BusinessFunctionCode { get; set; }
 
         /// <summary>
         /// get/set - Cost type code.
         /// </summary>
-        public long CostTypeCode { get; set; } // TODO: Use the correct type.
+        public CodeTypeModel CostTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Work activity code.
         /// </summary>
-        public long WorkActivityCode { get; set; } // TODO: Use the correct type.
+        public CodeTypeModel WorkActivityCode { get; set; }
 
         /// <summary>
         /// get/set - The region code.
         /// </summary>
-        public CodeTypeModel RegionCode { get; set; } // TODO: Use the correct type.
+        public CodeTypeModel RegionCode { get; set; }
 
         /// <summary>
         /// get/set - The project code.
         /// </summary>
-        public int Code { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// get/set - Project description.
@@ -48,6 +50,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Project notes.
         /// </summary>
         public string Note { get; set; }
+
+        /// <summary>
+        /// get/set - Project products.
+        /// </summary>
+        public List<ProductModel> Products { get; set; }
         #endregion
     }
 }

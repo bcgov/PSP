@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <param name="code">Project code.</param>
         /// <param name="description">Project description.</param>
         /// <returns>A entity project.</returns>
-        public static Entity.PimsProject CreateProject(short id, int code, string description)
+        public static Entity.PimsProject CreateProject(short id, string code, string description)
         {
             return new Entity.PimsProject() { Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 };
         }

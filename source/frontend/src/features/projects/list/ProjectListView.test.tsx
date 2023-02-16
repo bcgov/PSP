@@ -62,7 +62,7 @@ describe('Project List View', () => {
         region: 'NORTH',
         status: 'ACTIVE',
         lastUpdatedBy: 'USER',
-        lastUpdatedDate: new Date(2023, 1, 1),
+        lastUpdatedDate: '',
       },
     ]);
     const { container, searchButton, findByText } = setup();

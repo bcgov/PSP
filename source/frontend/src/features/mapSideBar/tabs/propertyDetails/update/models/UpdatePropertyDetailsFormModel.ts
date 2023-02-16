@@ -1,6 +1,7 @@
 import { GeoJsonProperties } from 'geojson';
 import isEmpty from 'lodash/isEmpty';
-import { Api_Address, Api_CodeType } from 'models/api/Address';
+import { Api_Address } from 'models/api/Address';
+import { Api_CodeType } from 'models/api/CodeType';
 import { Api_Property } from 'models/api/Property';
 import { booleanToString, fromTypeCode, stringToBoolean, toTypeCode } from 'utils/formUtils';
 

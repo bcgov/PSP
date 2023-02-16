@@ -113,7 +113,7 @@ describe('AcquisitionContainer component', () => {
 
     expect(getByText('Acquisition File')).toBeVisible();
 
-    expect(getByText(testAcquisitionFile.fileNumber as string)).toBeVisible();
+    expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
     expect(getByText(prettyFormatDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
     expect(getByText(prettyFormatDate(testAcquisitionFile.appLastUpdateTimestamp))).toBeVisible();
   });
@@ -136,7 +136,7 @@ describe('AcquisitionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(getByTitle(/Edit acquisition properties/g)).toBeVisible();
+    expect(getByTitle(/Change properties/g)).toBeVisible();
   });
 
   it('should not display the Edit Properties button if the user does not have permissions', async () => {
@@ -145,7 +145,7 @@ describe('AcquisitionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(queryByTitle('Edit acquisition properties')).toBeNull();
+    expect(queryByTitle('Change properties')).toBeNull();
   });
 
   it('should display the notes tab if the user has permissions', async () => {

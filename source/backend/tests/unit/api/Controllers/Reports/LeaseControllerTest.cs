@@ -47,7 +47,27 @@ namespace Pims.Api.Test.Controllers.Reports
             new object [] { new Uri("http://host/api/leases?PinOrPid=999999") },
             new object [] { new Uri("http://host/api/leases?TenantName=George") },
         };
+
+        private Mock<ILeaseReportsService> _service;
+        private Mock<ILeaseRepository> _repository;
+        private LeaseController _controller;
+        private IMapper _mapper;
+        private TestHelper _helper;
+        private Mock<ILookupRepository> _lookupRepository;
+        private Mock<IWebHostEnvironment> _webHost;
+        private Mock<Microsoft.AspNetCore.Http.IHeaderDictionary> _headers;
         #endregion
+        public LeaseControllerTest()
+        {
+            _helper = new TestHelper();
+            _controller = _helper.CreateController<LeaseController>(Permissions.LeaseView);
+            _mapper = _helper.GetService<IMapper>();
+            _service = _helper.GetService<Mock<ILeaseReportsService>>();
+            _lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            _webHost = _helper.GetService<Mock<IWebHostEnvironment>>();
+            _headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            _repository = _helper.GetService<Mock<ILeaseRepository>>();
+        }
 
         #region Tests
         #region ExportLeases
@@ -59,26 +79,21 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Csv_Success(LeaseFilterModel filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases, filter.Page, filter.Quantity);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportLeases(filter);
+            var result = _controller.ExportLeases(filter);
 
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -89,36 +104,25 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Csv_Query_Success(Uri uri)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView, uri);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportLeases();
+            var result = _controller.ExportLeases();
 
             // Assert
-            var actionResult = Assert.IsType<ContentResult>(result);
-            var actualResult = Assert.IsType<string>(actionResult.Content);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
         }
 
         [Fact]
         public void ExportLeases_Lease_Mapping()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var lease = EntityHelper.CreateLease(1);
             lease.RegionCodeNavigation = new PimsRegion() { RegionCode = 1, Description = "region" };
@@ -137,16 +141,14 @@ namespace Pims.Api.Test.Controllers.Reports
             lease.InspectionNotes = "inspection note";
             var leases = new[] { lease };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
+            var result = _controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
 
             // Assert
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
             result.MotiRegion.Should().Be("region");
             result.LFileNo.Should().Be("L-010-070");
             result.StartDate.Should().Be(new DateTime(2000, 1, 1));
@@ -164,9 +166,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_LeaseTerm_Mapping()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            var headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var lease = EntityHelper.CreateLease(1);
@@ -180,16 +180,14 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var leases = new[] { lease };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
+            var result = _controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
 
             // Assert
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
             result.CurrentTermStartDate.Should().Be(leaseTerm.TermStartDate);
             result.CurrentTermEndDate.Should().Be(leaseTerm.TermExpiryDate);
             result.TermStartDate.Should().Be(leaseTerm.TermStartDate);
@@ -204,10 +202,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_LeaseTenant_Mapping()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var lease = EntityHelper.CreateLease(1);
             var leaseOrgTenant = new PimsLeaseTenant();
@@ -220,16 +215,14 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var leases = new[] { lease };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.GetCrossJoinLeases(new LeaseFilterModel());
+            var result = _controller.GetCrossJoinLeases(new LeaseFilterModel());
 
             // Assert
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
             result.ToArray()[0].TenantName.Should().Be("org");
             result.ToArray()[1].TenantName.Should().Be("first middle last");
         }
@@ -238,10 +231,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_LeaseProperty_Mapping()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var lease = new PimsLease();
             var property = new PimsProperty();
@@ -253,16 +243,14 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var leases = new[] { lease };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
+            var result = _controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
 
             // Assert
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
             result.Pid.Should().Be(1);
             result.Pin.Should().Be(2);
             result.CivicAddress.Should().Be("1 2 3 m");
@@ -274,10 +262,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Cartesion()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
             var lease = new PimsLease();
             lease.PimsLeaseTerms.Add(new PimsLeaseTerm());
@@ -290,16 +275,14 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var leases = new[] { lease };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.GetCrossJoinLeases(new LeaseFilterModel());
+            var result = _controller.GetCrossJoinLeases(new LeaseFilterModel());
 
             // Assert
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
             result.Count().Should().Be(9);
         }
 
@@ -311,27 +294,23 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Excel_Success(LeaseFilterModel filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            var headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases, filter.Page, filter.Quantity);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportLeases(filter);
+            var result = _controller.ExportLeases(filter);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -342,20 +321,17 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Excel_Query_Success(Uri uri)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView, uri);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
+            var repository = _helper.GetService<Mock<ILeaseRepository>>();
+            var mapper = _helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases);
             repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportLeases();
+            var result = _controller.ExportLeases();
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
@@ -373,27 +349,22 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_ExcelX_Success(LeaseFilterModel filter)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases, filter.Page, filter.Quantity);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportLeases(filter);
+            var result = _controller.ExportLeases(filter);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -404,27 +375,22 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_ExcelX_Query_Success(Uri uri)
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView, uri);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
-            var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsLease>(leases);
-            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+            _repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
 
             // Act
-            var result = controller.ExportLeases();
+            var result = _controller.ExportLeases();
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -513,33 +479,27 @@ namespace Pims.Api.Test.Controllers.Reports
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
 
             var lease = EntityHelper.CreateLease(1, region: new PimsRegion() { Id = 1 });
             var leases = new[] { lease };
 
-            var leaseService = helper.GetService<Mock<ILeaseReportsService>>();
-            var lookupRepository = helper.GetService<Mock<ILookupRepository>>();
-            var mapper = helper.GetService<IMapper>();
-            var webHost = helper.GetService<Mock<IWebHostEnvironment>>();
             var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
-            webHost.SetupGet(m => m.ContentRootPath).Returns(path);
+            _webHost.SetupGet(m => m.ContentRootPath).Returns(path);
 
-            lookupRepository.Setup(m => m.GetAllRegions()).Returns(new List<PimsRegion>() { lease.RegionCodeNavigation });
-            lookupRepository.Setup(m => m.GetAllLeaseProgramTypes()).Returns(new List<PimsLeaseProgramType>() { lease.LeaseProgramTypeCodeNavigation });
-            leaseService.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
+            _lookupRepository.Setup(m => m.GetAllRegions()).Returns(new List<PimsRegion>() { lease.RegionCodeNavigation });
+            _lookupRepository.Setup(m => m.GetAllLeaseProgramTypes()).Returns(new List<PimsLeaseProgramType>() { lease.LeaseProgramTypeCodeNavigation });
+            _service.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
 
             // Act
-            var result = controller.ExportAggregatedLeases(2021);
+            var result = _controller.ExportAggregatedLeases(2021);
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            leaseService.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
+            _service.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
         }
 
         /// <summary>
@@ -549,24 +509,18 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportAggregatedLeases_ExcelX_InvalidFiscal()
         {
             // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var service = helper.GetService<Mock<ILeaseReportsService>>();
-            var mapper = helper.GetService<IMapper>();
-            var webHost = helper.GetService<Mock<IWebHostEnvironment>>();
             var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
-            webHost.SetupGet(m => m.ContentRootPath).Returns(path);
+            _webHost.SetupGet(m => m.ContentRootPath).Returns(path);
 
-            service.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
+            _service.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
 
             // Act
             // Assert
-            Assert.Throws<BadRequestException>(() => controller.ExportAggregatedLeases(1800));
+            Assert.Throws<BadRequestException>(() => _controller.ExportAggregatedLeases(1800));
         }
 
         #endregion

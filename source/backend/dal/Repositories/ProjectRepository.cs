@@ -33,14 +33,17 @@ namespace Pims.Dal.Repositories
         /// Retrieves the matching projects to the given filter.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="maxResult"></param>
+        /// <param name="regions"></param>
+        /// <param name="maxResults"></param>
         /// <returns></returns>
-        public IList<PimsProject> SearchProjects(string filter, int maxResult)
+        public IList<PimsProject> SearchProjects(string filter, HashSet<short> regions, int maxResults)
         {
+            // business requirement - limit search results to user's assigned region(s)
             return this.Context.PimsProjects.AsNoTracking()
-                .Where(o => EF.Functions.Like(o.Description, $"%{filter}%"))
+                .Where(p => EF.Functions.Like(p.Description, $"%{filter}%"))
+                .Where(p => regions.Contains(p.RegionCode))
                 .OrderBy(a => a.Code)
-                .Take(maxResult)
+                .Take(maxResults)
                 .ToArray();
         }
 
@@ -69,13 +72,50 @@ namespace Pims.Dal.Repositories
             return GetPage(filter);
         }
 
+        /// <summary>
+        /// Get by ID - Search Projects by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        public PimsProject Get(long id)
+        {
+            User.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            return Context.PimsProjects
+                    .AsNoTracking()
+                    .Include(x => x.PimsProducts)
+                    .Include(x => x.ProjectStatusTypeCodeNavigation)
+                    .Include(x => x.RegionCodeNavigation)
+                    .Where(x => x.Id == id)
+                    .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Add Project to Context.
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
+        public PimsProject Add(PimsProject project)
+        {
+            User.ThrowIfNotAuthorized(Permissions.ProjectAdd);
+
+            foreach (var product in project.PimsProducts)
+            {
+                product.ParentProject = project;
+            }
+
+            Context.PimsProjects.Add(project);
+            return project;
+        }
+
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter)
         {
             var query = Context.PimsProjects.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNumber))
             {
-                query = query.Where(x => EF.Functions.Like(x.Code.ToString(), $"%{filter.ProjectNumber}%"));
+                query = query.Where(x => EF.Functions.Like(x.Code, $"%{filter.ProjectNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectName))
@@ -95,7 +135,19 @@ namespace Pims.Dal.Repositories
 
             if (filter.Sort?.Any() == true)
             {
-                query = query.OrderByProperty(filter.Sort);
+                var direction = filter.Sort[0].Split(" ").LastOrDefault();
+                if (filter.Sort[0].StartsWith("LastUpdatedBy"))
+                {
+                    query = direction == "asc" ? query.OrderBy(x => x.AppLastUpdateUserid) : query.OrderByDescending(x => x.AppLastUpdateUserid);
+                }
+                else if (filter.Sort[0].StartsWith("LastUpdatedDate"))
+                {
+                    query = direction == "asc" ? query.OrderBy(x => x.AppLastUpdateTimestamp) : query.OrderByDescending(x => x.AppLastUpdateTimestamp);
+                }
+                else
+                {
+                    query = query.OrderByProperty(filter.Sort);
+                }
             }
             else
             {

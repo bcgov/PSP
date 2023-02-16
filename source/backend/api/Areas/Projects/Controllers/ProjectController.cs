@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,24 @@ namespace Pims.Api.Areas.Projects.Controllers
         }
 
         /// <summary>
+        /// Get the specified Project by Id.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{id}")]
+        [HasPermission(Permissions.ProjectView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [ProducesResponseType(typeof(ProjectModel), 404)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public IActionResult GetById([FromRoute] long id)
+        {
+            var project = _projectService.GetById(id);
+
+            return new JsonResult(_mapper.Map<ProjectModel>(project));
+        }
+
+        /// <summary>
         /// Retrieves a matching set of projects for the given input filter.
         /// </summary>
         /// <param name="input"></param>
@@ -61,6 +80,40 @@ namespace Pims.Api.Areas.Projects.Controllers
             var predictions = _projectService.SearchProjects(input, top);
 
             return new JsonResult(_mapper.Map<IList<ProjectModel>>(predictions));
+        }
+
+        /// <summary>
+        /// Add the specified Project.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [HasPermission(Permissions.ProjectAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public IActionResult AddProject(ProjectModel projectModel)
+        {
+            var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+            return new JsonResult(_mapper.Map<ProjectModel>(newProject));
+        }
+
+        /// <summary>
+        /// Retrieves a the products for the given project.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>An array of contacts matching the filter.</returns>
+        [HttpGet("{projectId}/products")]
+        [HasPermission(Permissions.ProjectView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ProductModel>), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public IActionResult GetProducts(long projectId)
+        {
+            var products = _projectService.GetProducts(projectId);
+
+            return new JsonResult(_mapper.Map<IList<ProductModel>>(products));
         }
     }
 }

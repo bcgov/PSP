@@ -3,10 +3,11 @@
 A short summary of the feature
 
 @Reseach-Files
-Scenario: Create a new research file with pins
+Scenario: Create a new research file with properties and activity
 	Given I create a new Research File
 	When I add additional information to an existing Research File
 	And I add several Properties to the research File
+	And I create a new activity
 	Then A new research file is created successfully
 
 Scenario: Create a new research file from Property pop-up
@@ -37,17 +38,11 @@ Scenario: Cancel the update of a research file
 
 Scenario: Verify List View and Results Content
 	Given I search for an existing Research File
-	Then Expected Content is displayed on Research File Table
+	Then Expected Research Files Content is displayed on Research File Table
 
 Scenario: Changes on Properties from Research File
 	Given I update an existing research file properties
 	Then Property Research Tab has been updated successfully
-	
-Scenario: Create an activity within a Research File
-	Given I create a new Research File
-	When I add several Properties to the research File
-	And I create a new activity
-	Then An activity is created successfully
 
 Scenario: Update a Property Information from Research File
 	Given I update Property Details from a Research File

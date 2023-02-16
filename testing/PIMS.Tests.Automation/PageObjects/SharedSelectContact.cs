@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectContact(string contactSearchName)
         {
-            WaitUntil(selectContactSearchInput);
+            Wait(5000);
 
             webDriver.FindElement(selectContactSearchInput).SendKeys(contactSearchName);
             webDriver.FindElement(selectContactSearchButton).Click();

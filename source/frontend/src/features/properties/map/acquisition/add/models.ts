@@ -25,6 +25,7 @@ export class AcquisitionForm implements WithAcquisitionTeam {
   team: AcquisitionTeamFormModel[] = [];
 
   project?: IAutocompletePrediction;
+  product?: number;
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
 
@@ -43,6 +44,8 @@ export class AcquisitionForm implements WithAcquisitionTeam {
         this.project?.id !== undefined && this.project?.id !== 0
           ? { id: this.project?.id }
           : undefined,
+      product:
+        this.product !== undefined && this.product !== 0 ? { id: Number(this.product) } : undefined,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       // ACQ file properties
@@ -76,6 +79,7 @@ export class AcquisitionForm implements WithAcquisitionTeam {
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     // ACQ file properties
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+    newForm.product = model.product?.id;
     newForm.fundingTypeCode = model.fundingTypeCode?.id;
     newForm.fundingTypeOtherDescription = model.fundingOther || '';
     newForm.project =

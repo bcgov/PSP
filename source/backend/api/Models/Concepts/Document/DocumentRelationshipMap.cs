@@ -41,6 +41,38 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocumentId, src => src.Document.Id)
                 .Map(dest => dest.Document, src => src.Document)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
+
+            config.NewConfig<Entity.PimsAcquisitionFileDocument, DocumentRelationshipModel>()
+                .PreserveReference(true)
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.Document, src => src.Document)
+                .Map(dest => dest.RelationshipType, src => DocumentRelationType.AcquisitionFiles)
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
+
+            config.NewConfig<DocumentRelationshipModel, Entity.PimsAcquisitionFileDocument>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.FileId, src => src.ParentId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DocumentId, src => src.Document.Id)
+                .Map(dest => dest.Document, src => src.Document);
+
+            config.NewConfig<Entity.PimsResearchFileDocument, DocumentRelationshipModel>()
+                .PreserveReference(true)
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.Document, src => src.Document)
+                .Map(dest => dest.RelationshipType, src => DocumentRelationType.ResearchFiles)
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
+
+            config.NewConfig<DocumentRelationshipModel, Entity.PimsResearchFileDocument>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.FileId, src => src.ParentId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DocumentId, src => src.Document.Id)
+                .Map(dest => dest.Document, src => src.Document);
         }
     }
 }

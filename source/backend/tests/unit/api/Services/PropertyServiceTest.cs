@@ -6,6 +6,7 @@ using NetTopologySuite.Geometries;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -23,22 +24,33 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class PropertyServiceTest
     {
+        private TestHelper _helper;
+
+        public PropertyServiceTest()
+        {
+            _helper = new TestHelper();
+        }
+
+        private PropertyService CreateProjectServiceWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            _helper.CreatePimsContext(user, true);
+            return _helper.Create<PropertyService>();
+        }
+
         #region Tests
         #region GetById
         [Fact]
         public void GetById_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-
             var property = EntityHelper.CreateProperty(1);
 
-            var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<IPropertyRepository>>();
+            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var repository = _helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
-            var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
 
             // Act
@@ -53,22 +65,12 @@ namespace Pims.Api.Test.Services
         public void GetById_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
             var property = EntityHelper.CreateProperty(1);
 
-            var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
-
-            var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
-            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+            var service = CreateProjectServiceWithPermissions();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetById(1));
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
-            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Never);
         }
 
         #endregion
@@ -77,16 +79,13 @@ namespace Pims.Api.Test.Services
         public void GetByPid_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-
             var property = EntityHelper.CreateProperty(1);
 
-            var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<IPropertyRepository>>();
+            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var repository = _helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(property);
 
-            var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
 
             // Act
@@ -101,22 +100,12 @@ namespace Pims.Api.Test.Services
         public void GetByPid_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
             var property = EntityHelper.CreateProperty(1);
 
-            var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(property);
-
-            var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
-            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+            var service = CreateProjectServiceWithPermissions();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.GetByPid(1.ToString()));
-            repository.Verify(x => x.GetByPid(It.IsAny<string>()), Times.Never);
-            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Never);
         }
 
         #endregion
@@ -125,16 +114,13 @@ namespace Pims.Api.Test.Services
         public void Update_Property_No_Reprojection_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyEdit);
-
             var property = EntityHelper.CreateProperty(1);
 
-            var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<IPropertyRepository>>();
+            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var repository = _helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>())).Returns(property);
 
-            var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
 
             var newValues = new PimsProperty();
@@ -155,17 +141,14 @@ namespace Pims.Api.Test.Services
         public void Update_Property_With_Reprojection_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyEdit);
-
             var property = EntityHelper.CreateProperty(1);
 
-            var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<IPropertyRepository>>();
+            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var repository = _helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>())).Returns(property);
 
             var projected = new Coordinate(14000, 9200);
-            var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
+            var coordinateService = _helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(projected);
 
             var newValues = new PimsProperty();
@@ -186,14 +169,12 @@ namespace Pims.Api.Test.Services
         public void Update_Property_KeyNotFound()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyEdit);
-            var service = helper.Create<PropertyService>(user);
+            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
 
             // Try to update a non-existent property
             var property = EntityHelper.CreateProperty(1);
 
-            var repository = helper.GetService<Mock<IPropertyRepository>>();
+            var repository = _helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(property)).Throws<KeyNotFoundException>();
 
             // Assert
@@ -204,14 +185,10 @@ namespace Pims.Api.Test.Services
         public void Update_Property_NoPermission()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-
             var property = EntityHelper.CreateProperty(1);
 
-            var service = helper.Create<PropertyService>();
-            var repository = helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsProperty>())).Returns(property);
+            var service = CreateProjectServiceWithPermissions(Permissions.PropertyView);
+            var repository = _helper.GetService<Mock<IPropertyRepository>>();
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.Update(property));

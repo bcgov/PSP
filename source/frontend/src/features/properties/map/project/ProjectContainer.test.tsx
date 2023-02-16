@@ -1,0 +1,74 @@
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { mockLookups } from 'mocks';
+import { mockProjectGetResponse } from 'mocks/mockProjects';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { render, RenderOptions } from 'utils/test-utils';
+
+import { SideBarContextProvider } from '../context/sidebarContext';
+import ProjectContainer, { IProjectContainerViewProps } from './ProjectContainer';
+
+const mockAxios = new MockAdapter(axios);
+// mock auth library
+jest.mock('@react-keycloak/web');
+const TestView: React.FC<IProjectContainerViewProps> = () => {
+  return <span>Content Rendered</span>;
+};
+
+jest.mock('@react-keycloak/web');
+
+// Need to mock this library for unit tests
+jest.mock('react-visibility-sensor', () => {
+  return jest.fn().mockImplementation(({ children }) => {
+    if (children instanceof Function) {
+      return children({ isVisible: true });
+    }
+    return children;
+  });
+});
+
+describe('ProjectContainer component', () => {
+  // render component under test
+  const setup = (renderOptions: RenderOptions = {}) => {
+    const utils = render(
+      <SideBarContextProvider
+        project={{
+          ...mockProjectGetResponse(),
+        }}
+      >
+        <ProjectContainer projectId={1} View={TestView} onClose={jest.fn()} />
+      </SideBarContextProvider>,
+      {
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
+        useMockAuthentication: true,
+        claims: renderOptions?.claims ?? [],
+        ...renderOptions,
+      },
+    );
+
+    return {
+      ...utils,
+      getCloseButton: () => utils.getByTitle('close'),
+      getCancelButton: () => utils.getByText(/Cancel/i),
+    };
+  };
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+
+    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
+    mockAxios.onGet(new RegExp('projects/*')).reply(200, mockProjectGetResponse());
+  });
+
+  afterEach(() => {
+    mockAxios.resetHistory();
+    jest.clearAllMocks();
+  });
+
+  it('renders the underlying form', () => {
+    const { getByText } = setup();
+    expect(getByText(/Content Rendered/)).toBeVisible();
+  });
+});

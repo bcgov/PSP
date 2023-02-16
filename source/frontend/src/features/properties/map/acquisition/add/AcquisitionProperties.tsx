@@ -42,7 +42,6 @@ export const AcquisitionProperties: React.FunctionComponent<
                           formProperty.address = bcaSummary?.address
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
-                          formProperty.legalDescription = bcaSummary?.legalDescription?.LEGAL_TEXT;
                         }
                         if (values.properties?.length === 0 && index === 0) {
                           formikProps.setFieldValue(`region`, formProperty.region);

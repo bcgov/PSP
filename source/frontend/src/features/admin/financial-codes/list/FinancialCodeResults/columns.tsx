@@ -1,11 +1,13 @@
 import { ColumnWithProps, DateCell } from 'components/Table';
-import { FinancialCodeTypes, formatFinancialCodeType } from 'constants/financialCodeTypes';
+import { FinancialCodeTypes } from 'constants/financialCodeTypes';
 import { Roles } from 'constants/roles';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import { stringToFragment } from 'utils';
+
+import { formatFinancialCodeType } from '../../financialCodeUtils';
 
 export const columns: ColumnWithProps<Api_FinancialCode>[] = [
   {
