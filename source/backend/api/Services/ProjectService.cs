@@ -20,7 +20,6 @@ namespace Pims.Api.Services
         private readonly IProductRepository _productRepository;
         private readonly IAcquisitionFileRepository _acquisitionFileRepository;
         private readonly IUserRepository _userRepository;
-        private readonly ILookupRepository _lookupRepository;
         private readonly ClaimsPrincipal _user;
 
         /// <summary>
@@ -32,15 +31,13 @@ namespace Pims.Api.Services
         /// <param name="productRepository"></param>
         /// <param name="acquisitionFileRepository"></param>
         /// <param name="userRepository"></param>
-        /// <param name="lookupRepository"></param>
         public ProjectService(
             ClaimsPrincipal user,
             ILogger<ProjectService> logger,
             IProjectRepository projectRepository,
             IProductRepository productRepository,
             IAcquisitionFileRepository acquisitionFileRepository,
-            IUserRepository userRepository,
-            ILookupRepository lookupRepository)
+            IUserRepository userRepository)
             : base(user, logger)
         {
             _logger = logger;
@@ -48,7 +45,6 @@ namespace Pims.Api.Services
             _productRepository = productRepository;
             _acquisitionFileRepository = acquisitionFileRepository;
             _userRepository = userRepository;
-            _lookupRepository = lookupRepository;
             _user = user;
         }
 
@@ -60,12 +56,6 @@ namespace Pims.Api.Services
             // Limit search results to user's assigned region(s), but always include "Cannot determine" region
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-
-            var noRegion = _lookupRepository.GetAllRegions().FirstOrDefault(r => r.RegionName == "Cannot determine")?.Code;
-            if (noRegion.HasValue)
-            {
-                userRegions.Add(noRegion.Value);
-            }
 
             return _projectRepository.SearchProjects(filter, userRegions, maxResult);
         }

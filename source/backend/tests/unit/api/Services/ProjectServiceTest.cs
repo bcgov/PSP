@@ -50,9 +50,6 @@ namespace Pims.Api.Test.Services
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
-            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>());
-
             // Act
             var result = service.SearchProjects("query string", 1);
 
