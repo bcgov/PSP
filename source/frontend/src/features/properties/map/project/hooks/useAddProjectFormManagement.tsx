@@ -1,5 +1,5 @@
 import { FormikHelpers } from 'formik';
-import { useProjectProvider } from 'hooks/providers/useProjectProvider';
+import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import { Api_Project } from 'models/api/Project';
 import { useCallback } from 'react';
 

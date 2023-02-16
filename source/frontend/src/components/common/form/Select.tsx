@@ -103,7 +103,12 @@ export const Select: React.FC<React.PropsWithChildren<SelectProps>> = ({
 
   const renderOptions = () => {
     return options.map(option => (
-      <option key={option.value} value={option.value} className="option">
+      <option
+        key={option.value}
+        value={option.value}
+        className="option"
+        data-testid={`select-option-${option.value}`}
+      >
         {option.label}
       </option>
     ));
@@ -116,10 +121,23 @@ export const Select: React.FC<React.PropsWithChildren<SelectProps>> = ({
     >
       {!!label && (
         <Form.Label>
-          {label} {!!tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
+          {label}{' '}
+          {!!tooltip && (
+            <TooltipIcon
+              data-testid={`${field}-tooltip`}
+              toolTipId={`${field}-tooltip`}
+              toolTip={tooltip}
+            />
+          )}
         </Form.Label>
       )}
-      {!!tooltip && !label && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
+      {!!tooltip && !label && (
+        <TooltipIcon
+          data-testid={`${field}-tooltip`}
+          toolTipId={`${field}-tooltip`}
+          toolTip={tooltip}
+        />
+      )}
       <Form.Control
         as={asElement}
         name={field}

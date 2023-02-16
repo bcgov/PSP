@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik';
-import { useProjectProvider } from 'hooks/providers/useProjectProvider';
+import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import { IProjectForm } from 'interfaces/IProject';
 import { Api_Project } from 'models/api/Project';
 import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
