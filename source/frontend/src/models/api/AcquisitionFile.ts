@@ -11,6 +11,7 @@ import { Api_PropertyFile } from './PropertyFile';
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
   fileNo?: number;
+  legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
   // Code Tables

@@ -3,6 +3,7 @@ import { formatApiPersonNames } from 'utils/personUtils';
 
 export class DetailAcquisitionFile {
   fileName?: string;
+  legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
   acquisitionPhysFileStatusTypeDescription?: string;
@@ -13,6 +14,7 @@ export class DetailAcquisitionFile {
   static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
     detail.fileName = model?.fileName;
+    detail.legacyFileNumber = model?.legacyFileNumber;
     detail.assignedDate = model?.assignedDate;
     detail.deliveryDate = model?.deliveryDate;
     detail.acquisitionPhysFileStatusTypeDescription =

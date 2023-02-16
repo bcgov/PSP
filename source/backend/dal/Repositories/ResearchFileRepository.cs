@@ -70,7 +70,7 @@ namespace Pims.Dal.Repositories
             // Existing properties should not be added.
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
             {
-                if (researchProperty.Property.Id != 0)
+                if (researchProperty.Property.PropertyId != 0)
                 {
                     Context.Entry(researchProperty.Property).State = EntityState.Unchanged;
                 }
@@ -95,11 +95,11 @@ namespace Pims.Dal.Repositories
             researchFile.ThrowIfNull(nameof(researchFile));
 
             var existingResearchFile = Context.PimsResearchFiles
-                .FirstOrDefault(x => x.ResearchFileId == researchFile.Id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.ResearchFileId == researchFile.Internal_Id) ?? throw new KeyNotFoundException();
 
             var currentPurposes = Context.PimsResearchFiles
                 .SelectMany(x => x.PimsResearchFilePurposes)
-                .Where(x => x.ResearchFileId == researchFile.Id)
+                .Where(x => x.ResearchFileId == researchFile.Internal_Id)
                 .AsNoTracking()
                 .ToList();
 
@@ -133,7 +133,7 @@ namespace Pims.Dal.Repositories
             existingResearchFile.PimsResearchFilePurposes = purposes;
 
             Context.Entry(existingResearchFile).CurrentValues.SetValues(researchFile);
-            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject>(p => p.PimsResearchFileProjects, researchFile.Id, researchFile.PimsResearchFileProjects.ToArray());
+            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject>(p => p.PimsResearchFileProjects, researchFile.Internal_Id, researchFile.PimsResearchFileProjects.ToArray());
 
             return researchFile;
         }

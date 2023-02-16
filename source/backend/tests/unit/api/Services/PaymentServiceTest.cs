@@ -72,11 +72,11 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
 
-            var updatedLease = this.paymentService.AddPayment(lease.Id, 1, payment);
+            var updatedLease = this.paymentService.AddPayment(lease.Internal_Id, 1, payment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Add(payment), Times.Once);
-            this.leaseService.Verify(x => x.GetById(lease.Id), Times.Once);
+            this.leaseService.Verify(x => x.GetById(lease.Internal_Id), Times.Once);
         }
 
         [Fact]
@@ -100,10 +100,10 @@ namespace Pims.Api.Test.Services
             var paidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 2 };
             var partialPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 1 };
 
-            this.paymentService.AddPayment(lease.Id, 1, unpaidPayment);
-            this.paymentService.AddPayment(lease.Id, 1, overpaidPayment);
-            this.paymentService.AddPayment(lease.Id, 1, paidPayment);
-            this.paymentService.AddPayment(lease.Id, 1, partialPayment);
+            this.paymentService.AddPayment(lease.Internal_Id, 1, unpaidPayment);
+            this.paymentService.AddPayment(lease.Internal_Id, 1, overpaidPayment);
+            this.paymentService.AddPayment(lease.Internal_Id, 1, paidPayment);
+            this.paymentService.AddPayment(lease.Internal_Id, 1, partialPayment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.UNPAID && x.PaymentAmountTotal == 0)));
@@ -125,7 +125,7 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
 
-            Assert.Throws<NotAuthorizedException>(() => this.paymentService.AddPayment(lease.Id, 1, payment));
+            Assert.Throws<NotAuthorizedException>(() => this.paymentService.AddPayment(lease.Internal_Id, 1, payment));
         }
 
         [Fact]
@@ -141,7 +141,7 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
 
-            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.AddPayment(lease.Id, 1, payment));
+            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.AddPayment(lease.Internal_Id, 1, payment));
         }
 
         [Fact]
@@ -162,7 +162,7 @@ namespace Pims.Api.Test.Services
             // Act
             var addPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.AddPayment(lease.Id, 1, addPayment));
+            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.AddPayment(lease.Internal_Id, 1, addPayment));
             ex.Message.Should().Be("Payment received date must be within the start and expiry date of the term.");
         }
         #endregion
@@ -187,11 +187,11 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now };
 
-            var updatedLease = this.paymentService.UpdatePayment(lease.Id, 1, 1, payment);
+            var updatedLease = this.paymentService.UpdatePayment(lease.Internal_Id, 1, 1, payment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Update(payment), Times.Once);
-            this.leaseService.Verify(x => x.GetById(lease.Id), Times.Once);
+            this.leaseService.Verify(x => x.GetById(lease.Internal_Id), Times.Once);
         }
 
         [Fact]
@@ -207,7 +207,7 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
 
-            Assert.Throws<NotAuthorizedException>(() => this.paymentService.UpdatePayment(lease.Id, 1, 1, payment));
+            Assert.Throws<NotAuthorizedException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, 1, payment));
         }
 
         [Fact]
@@ -223,7 +223,7 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
 
-            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.UpdatePayment(lease.Id, 1, 1, payment));
+            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, 1, payment));
         }
 
         [Fact]
@@ -244,7 +244,7 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.UpdatePayment(lease.Id, 1, 1, payment));
+            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, 1, payment));
             ex.Message.Should().Be("Payment received date must be within the start and expiry date of the term.");
         }
         #endregion
@@ -266,7 +266,7 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment();
 
-            this.paymentService.DeletePayment(lease.Id, 1, payment);
+            this.paymentService.DeletePayment(lease.Internal_Id, 1, payment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Delete(It.IsAny<long>()), Times.Once);
@@ -285,7 +285,7 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment();
 
-            Assert.Throws<NotAuthorizedException>(() => this.paymentService.DeletePayment(lease.Id, 1, payment));
+            Assert.Throws<NotAuthorizedException>(() => this.paymentService.DeletePayment(lease.Internal_Id, 1, payment));
         }
 
         [Fact]
@@ -301,7 +301,7 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment();
 
-            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.DeletePayment(lease.Id, 1, payment));
+            Assert.Throws<DbUpdateConcurrencyException>(() => this.paymentService.DeletePayment(lease.Internal_Id, 1, payment));
         }
         #endregion
         #endregion

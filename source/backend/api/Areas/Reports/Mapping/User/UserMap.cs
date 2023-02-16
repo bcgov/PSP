@@ -11,7 +11,7 @@ namespace Pims.Api.Areas.Reports.Mapping.User
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsUser, Model.UserModel>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.BusinessIdentifier, src => src.BusinessIdentifierValue)
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)

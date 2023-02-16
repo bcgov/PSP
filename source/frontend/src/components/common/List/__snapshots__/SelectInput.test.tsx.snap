@@ -39,12 +39,14 @@ exports[`SelectInput tests renders correctly... 1`] = `
           >
             <option
               class="option"
+              data-testid="select-option-pinOrPid"
               value="pinOrPid"
             >
               PID/PIN
             </option>
             <option
               class="option"
+              data-testid="select-option-address"
               value="address"
             >
               Address

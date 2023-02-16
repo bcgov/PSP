@@ -115,7 +115,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 <Col xl="12">
                   <Input
                     field="acquisitionFileNameOrNumber"
-                    placeholder="Acquisition file name or number"
+                    placeholder="Acquisition file number or name or historical file number"
                   />
                 </Col>
               </Row>

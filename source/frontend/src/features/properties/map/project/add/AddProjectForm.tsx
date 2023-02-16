@@ -11,7 +11,7 @@ import { ProjectForm } from '../models';
 import ProductsArrayForm from './ProductsArrayForm';
 
 export interface IAddProjectFormProps {
-  formikRef: React.RefObject<FormikProps<ProjectForm>>;
+  isCreating?: boolean;
   /** Initial values of the form */
   initialValues: ProjectForm;
   projectStatusOptions: SelectOption[];
@@ -40,7 +40,7 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
     return (
       <Formik<ProjectForm>
         enableReinitialize
-        innerRef={props.formikRef}
+        innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -49,14 +49,16 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
           <StyledFormWrapper>
             <Form>
               <Section>
-                <StyledRow className="no-gutters py-4 mb-5">
-                  <Col>
-                    <p>
-                      Before creating a project, <Link to={'/project/list'}>do a search</Link> to
-                      ensure the the project you're creating doesn't already exist.
-                    </p>
-                  </Col>
-                </StyledRow>
+                {props.isCreating === true && (
+                  <StyledRow className="no-gutters py-4 mb-5">
+                    <Col>
+                      <p>
+                        Before creating a project, <Link to={'/project/list'}>do a search</Link> to
+                        ensure the the project you're creating doesn't already exist.
+                      </p>
+                    </Col>
+                  </StyledRow>
+                )}
                 <SectionField label="Project name" required labelWidth="2">
                   <Input field="projectName" />
                 </SectionField>

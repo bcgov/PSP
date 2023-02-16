@@ -27,9 +27,8 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
   const handleSaveClick = () => {
-    onSetContainerState({ isSubmitting: true });
-
     if (formikRef !== undefined) {
+      onSetContainerState({ isSubmitting: true });
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
     }
@@ -74,7 +73,7 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
       footer={
         isEditing && (
           <SidebarFooter
-            isOkDisabled={isSubmitting}
+            isOkDisabled={false}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
           />

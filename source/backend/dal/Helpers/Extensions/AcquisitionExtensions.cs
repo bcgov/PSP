@@ -68,7 +68,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
             {
-                query = query.Where(acq => EF.Functions.Like(acq.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(acq.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+                query = query.Where(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))

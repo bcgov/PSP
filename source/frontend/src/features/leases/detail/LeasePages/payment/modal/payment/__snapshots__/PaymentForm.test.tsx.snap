@@ -151,42 +151,49 @@ exports[`PaymentForm component renders as expected 1`] = `
       >
         <option
           class="option"
+          data-testid="select-option-CASH"
           value="CASH"
         >
           Cash
         </option>
         <option
           class="option"
+          data-testid="select-option-CHEQ"
           value="CHEQ"
         >
           Cheque
         </option>
         <option
           class="option"
+          data-testid="select-option-CRDR"
           value="CRDR"
         >
           Credit / Debit
         </option>
         <option
           class="option"
+          data-testid="select-option-EFT"
           value="EFT"
         >
           EFT
         </option>
         <option
           class="option"
+          data-testid="select-option-H120"
           value="H120"
         >
           H120
         </option>
         <option
           class="option"
+          data-testid="select-option-OTHR"
           value="OTHR"
         >
           Other
         </option>
         <option
           class="option"
+          data-testid="select-option-POST"
           value="POST"
         >
           Post-dated cheque
@@ -449,42 +456,49 @@ exports[`PaymentForm component renders with data as expected 1`] = `
       >
         <option
           class="option"
+          data-testid="select-option-CASH"
           value="CASH"
         >
           Cash
         </option>
         <option
           class="option"
+          data-testid="select-option-CHEQ"
           value="CHEQ"
         >
           Cheque
         </option>
         <option
           class="option"
+          data-testid="select-option-CRDR"
           value="CRDR"
         >
           Credit / Debit
         </option>
         <option
           class="option"
+          data-testid="select-option-EFT"
           value="EFT"
         >
           EFT
         </option>
         <option
           class="option"
+          data-testid="select-option-H120"
           value="H120"
         >
           H120
         </option>
         <option
           class="option"
+          data-testid="select-option-OTHR"
           value="OTHR"
         >
           Other
         </option>
         <option
           class="option"
+          data-testid="select-option-POST"
           value="POST"
         >
           Post-dated cheque

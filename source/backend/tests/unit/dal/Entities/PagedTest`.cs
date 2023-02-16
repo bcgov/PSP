@@ -120,14 +120,14 @@ namespace Pims.Dal.Test.Entities
             var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
-            var result = paged.To((items) => items.Select(i => new { Key = $"{i.Id}" }));
+            var result = paged.To((items) => items.Select(i => new { Key = $"{i.Internal_Id}" }));
 
             // Assert
             result.Page.Should().Be(page);
             result.Quantity.Should().Be(quantity);
             result.Total.Should().Be(total);
             result.Items.Count().Should().Be(items.Length);
-            result.Items.First().Key.Should().Be(items.First().Id.ToString());
+            result.Items.First().Key.Should().Be(items.First().Internal_Id.ToString());
         }
 
         [Fact]

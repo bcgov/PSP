@@ -2,11 +2,11 @@ import { FormikProps } from 'formik';
 import { Api_Project } from 'models/api/Project';
 import React from 'react';
 
+import AddProjectForm from './add/AddProjectForm';
 import ProjectTabsContainer from './detail/ProjectTabsContainer';
 import { ProjectContainerState, ProjectPageNames } from './ProjectContainer';
 import { ProjectTabNames } from './ProjectTabs';
 import UpdateProjectContainer from './update/UpdateProjectContainer';
-import UpdateProjectContainerView from './update/UpdateProjectContainerView';
 
 export interface IViewSelectorProps {
   project?: Api_Project;
@@ -25,7 +25,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
         <UpdateProjectContainer
           ref={formikRef}
           project={props.project}
-          View={UpdateProjectContainerView}
+          View={AddProjectForm}
           onSuccess={props.onSuccess}
         />
       );

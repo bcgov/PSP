@@ -5,11 +5,12 @@ import {
   Select,
   SelectOption,
 } from 'components/common/form/';
+import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { useProjectProvider } from 'hooks/providers/useProjectProvider';
+import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { IAutocompletePrediction } from 'interfaces/IAutocomplete';
@@ -49,7 +50,6 @@ export const AddAcquisitionForm = React.forwardRef<
   const { retrieveProjectProducts } = useProjectProvider();
 
   const { getOptionsByType } = useLookupCodeHelpers();
-  const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
@@ -164,6 +164,12 @@ export const AddAcquisitionForm = React.forwardRef<
               <SectionField label="Acquisition file name">
                 <LargeInput field="fileName" />
               </SectionField>
+              <SectionField
+                label="Historical file number"
+                tooltip="Older file that this file represents (ex: those from the legacy system or other non-digital files.)"
+              >
+                <LargeInput field="legacyFileNumber" />
+              </SectionField>
               <SectionField label="Physical file status">
                 <Select
                   field="acquisitionPhysFileStatusType"
@@ -180,12 +186,7 @@ export const AddAcquisitionForm = React.forwardRef<
                 />
               </SectionField>
               <SectionField label="Ministry region">
-                <Select
-                  field="region"
-                  options={regionTypes}
-                  placeholder="Select region..."
-                  required
-                />
+                <UserRegionSelectContainer field="region" placeholder="Select region..." required />
               </SectionField>
             </Section>
 

@@ -329,24 +329,28 @@ exports[`Research List View matches snapshot 1`] = `
                               </option>
                               <option
                                 class="option"
+                                data-testid="select-option-1"
                                 value="1"
                               >
                                 South Coast Region
                               </option>
                               <option
                                 class="option"
+                                data-testid="select-option-2"
                                 value="2"
                               >
                                 Southern Interior Region
                               </option>
                               <option
                                 class="option"
+                                data-testid="select-option-3"
                                 value="3"
                               >
                                 Northern Region
                               </option>
                               <option
                                 class="option"
+                                data-testid="select-option-4"
                                 value="4"
                               >
                                 Cannot determine
@@ -376,12 +380,14 @@ exports[`Research List View matches snapshot 1`] = `
                                   >
                                     <option
                                       class="option"
+                                      data-testid="select-option-name"
                                       value="name"
                                     >
                                       Research file name
                                     </option>
                                     <option
                                       class="option"
+                                      data-testid="select-option-rfileNumber"
                                       value="rfileNumber"
                                     >
                                       Research file #
@@ -438,24 +444,28 @@ exports[`Research List View matches snapshot 1`] = `
                               </option>
                               <option
                                 class="option"
+                                data-testid="select-option-ACTIVE"
                                 value="ACTIVE"
                               >
                                 Active
                               </option>
                               <option
                                 class="option"
+                                data-testid="select-option-ARCHIVED"
                                 value="ARCHIVED"
                               >
                                 Archived
                               </option>
                               <option
                                 class="option"
+                                data-testid="select-option-CLOSED"
                                 value="CLOSED"
                               >
                                 Closed
                               </option>
                               <option
                                 class="option"
+                                data-testid="select-option-INACTIVE"
                                 value="INACTIVE"
                               >
                                 Inactive
@@ -517,12 +527,14 @@ exports[`Research List View matches snapshot 1`] = `
                                   >
                                     <option
                                       class="option"
+                                      data-testid="select-option-createdOnStartDate"
                                       value="createdOnStartDate"
                                     >
                                       Created date
                                     </option>
                                     <option
                                       class="option"
+                                      data-testid="select-option-updatedOnStartDate"
                                       value="updatedOnStartDate"
                                     >
                                       Updated date
@@ -611,12 +623,14 @@ exports[`Research List View matches snapshot 1`] = `
                               >
                                 <option
                                   class="option"
+                                  data-testid="select-option-appCreateUserid"
                                   value="appCreateUserid"
                                 >
                                   Created by
                                 </option>
                                 <option
                                   class="option"
+                                  data-testid="select-option-appLastUpdateUserid"
                                   value="appLastUpdateUserid"
                                 >
                                   Updated by

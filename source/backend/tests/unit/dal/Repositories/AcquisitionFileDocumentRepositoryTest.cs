@@ -1,13 +1,13 @@
-using FluentAssertions;
-using Pims.Core.Test;
-using Pims.Dal.Entities;
-using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Pims.Core.Test;
+using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
+using Pims.Dal.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -29,7 +29,7 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.AddAcquisition(acquisitionFileDocument);
 
             // Assert
-            result.Id.Should().Be(1);
+            result.AcquisitionFileDocumentId.Should().Be(1);
         }
 
         [Fact]

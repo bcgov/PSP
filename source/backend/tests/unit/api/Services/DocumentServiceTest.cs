@@ -415,7 +415,7 @@ namespace Pims.Api.Test.Services
 
             PimsDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 MayanId = 1,
             };
 
@@ -442,7 +442,7 @@ namespace Pims.Api.Test.Services
 
             PimsDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 MayanId = 1,
             };
 
@@ -468,7 +468,7 @@ namespace Pims.Api.Test.Services
 
             PimsDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 MayanId = 1,
             };
 

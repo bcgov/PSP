@@ -187,12 +187,14 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-1"
                   value="1"
                 >
                   BC Assessment Search
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-2"
                   value="2"
                 >
                   Privy Council
@@ -219,60 +221,70 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-AMENDD"
                   value="AMENDD"
                 >
                   Amended
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-APPROVD"
                   value="APPROVD"
                 >
                   Approved
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-CNCLD"
                   value="CNCLD"
                 >
                   Cancelled
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-DRAFT"
                   value="DRAFT"
                 >
                   Draft
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-FINAL"
                   value="FINAL"
                 >
                   Final
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-NONE"
                   value="NONE"
                 >
                   None
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-RGSTRD"
                   value="RGSTRD"
                 >
                   Registered
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-SENT"
                   value="SENT"
                 >
                   Sent
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-SIGND"
                   value="SIGND"
                 >
                   Signed
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-UNREGD"
                   value="UNREGD"
                 >
                   Unregistered
@@ -557,12 +569,14 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-1"
                   value="1"
                 >
                   BC Assessment Search
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-2"
                   value="2"
                 >
                   Privy Council
@@ -589,60 +603,70 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-AMENDD"
                   value="AMENDD"
                 >
                   Amended
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-APPROVD"
                   value="APPROVD"
                 >
                   Approved
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-CNCLD"
                   value="CNCLD"
                 >
                   Cancelled
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-DRAFT"
                   value="DRAFT"
                 >
                   Draft
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-FINAL"
                   value="FINAL"
                 >
                   Final
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-NONE"
                   value="NONE"
                 >
                   None
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-RGSTRD"
                   value="RGSTRD"
                 >
                   Registered
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-SENT"
                   value="SENT"
                 >
                   Sent
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-SIGND"
                   value="SIGND"
                 >
                   Signed
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-UNREGD"
                   value="UNREGD"
                 >
                   Unregistered

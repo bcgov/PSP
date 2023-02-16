@@ -372,24 +372,28 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
               >
                 <option
                   class="option"
+                  data-testid="select-option-ACTIVE"
                   value="ACTIVE"
                 >
                   Active
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-ARCHIVED"
                   value="ARCHIVED"
                 >
                   Archived
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-CLOSED"
                   value="CLOSED"
                 >
                   Closed
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-INACTIVE"
                   value="INACTIVE"
                 >
                   Inactive
@@ -788,60 +792,70 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
               >
                 <option
                   class="option"
+                  data-testid="select-option-DISTRICT"
                   value="DISTRICT"
                 >
                   District
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-EXTRQST"
                   value="EXTRQST"
                 >
                   External Request
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-FOI"
                   value="FOI"
                 >
                   Freedom Of Information (FOI)
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-HQ"
                   value="HQ"
                 >
                   Headquarters (HQ)
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-INTLGL"
                   value="INTLGL"
                 >
                   Legal Counsel (Internal)
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-NONFOI"
                   value="NONFOI"
                 >
                   Public Enquiry (non-FOI)
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-OTHERMIN"
                   value="OTHERMIN"
                 >
                   Other Ministry
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-PROJECT"
                   value="PROJECT"
                 >
                   Project
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-REGION"
                   value="REGION"
                 >
                   Region
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-SURVEYOR"
                   value="SURVEYOR"
                 >
                   Surveyor

@@ -127,7 +127,7 @@ namespace Pims.Api.Test.Controllers
             var result = (JsonResult)_controller.GetAll();
 
             // Assert
-            var lookups = (IEnumerable<object>) result.Value;
+            var lookups = (IEnumerable<object>)result.Value;
             _repository.Verify(m => m.GetAllPropertyAreaUnitTypes(), Times.Once());
             _repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
             _repository.Verify(m => m.GetAllCountries(), Times.Once());
@@ -137,7 +137,7 @@ namespace Pims.Api.Test.Controllers
             _repository.Verify(m => m.GetAllProvinces(), Times.Once());
             _repository.Verify(m => m.GetAllRegions(), Times.Once());
             _repository.Verify(m => m.GetAllPropertyTenureTypes(), Times.Once());
-            
+
         }
 
         [Fact]
@@ -150,7 +150,7 @@ namespace Pims.Api.Test.Controllers
             var mapper = helper.GetService<IMapper>();
             var repository = helper.GetService<Mock<ILookupRepository>>();
             var memoryCache = helper.GetService<Mock<IMemoryCache>>();
-            var cachedResult = (object) new JsonResult("");
+            var cachedResult = (object)new JsonResult("");
 
             memoryCache.Setup(m => m.TryGetValue(It.IsAny<object>(), out cachedResult)).Returns(true);
 

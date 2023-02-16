@@ -30,6 +30,15 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     },
   },
   {
+    Header: 'Historical file #',
+    accessor: 'legacyFileNumber',
+    align: 'right',
+    clickable: true,
+    sortable: true,
+    width: 10,
+    maxWidth: 20,
+  },
+  {
     Header: 'Acquisition file name',
     accessor: 'fileName',
     align: 'left',

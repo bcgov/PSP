@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Organization class, provides an entity for the datamodel to manage property organizations.
     /// </summary>
-    public partial class PimsOrganization : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
+    public partial class PimsOrganization : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
 
@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify organization.
         /// </summary>
         [NotMapped]
-        public override long Id { get => OrganizationId; set => OrganizationId = value; }
+        public override long Internal_Id { get => OrganizationId; set => OrganizationId = value; }
 
         [NotMapped]
         public string Name { get => OrganizationName; set => OrganizationName = value; }

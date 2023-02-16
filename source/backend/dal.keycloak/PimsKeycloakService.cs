@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using MapsterMapper;
-using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -26,9 +24,7 @@ namespace Pims.Dal.Keycloak
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IAccessRequestRepository _accessRequestRepository;
-        private readonly IMapper _mapper;
         private readonly ClaimsPrincipal _user;
-        private readonly ILogger<IPimsKeycloakService> _logger;
 
         #endregion
 
@@ -40,25 +36,20 @@ namespace Pims.Dal.Keycloak
         /// <param name="keycloakService"></param>
         /// <param name="userRepository"></param>
         /// <param name="roleRepository"></param>
+        /// <param name="accessRequestRepository"></param>
         /// <param name="user"></param>
-        /// <param name="mapper"></param>
-        /// <param name="logger"></param>
         public PimsKeycloakService(
             IKeycloakService keycloakService,
             IUserRepository userRepository,
             IRoleRepository roleRepository,
             IAccessRequestRepository accessRequestRepository,
-            ClaimsPrincipal user,
-            IMapper mapper,
-            ILogger<IPimsKeycloakService> logger)
+            ClaimsPrincipal user)
         {
             _keycloakService = keycloakService;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _accessRequestRepository = accessRequestRepository;
-            _mapper = mapper;
             _user = user;
-            _logger = logger;
         }
         #endregion
 
@@ -73,7 +64,7 @@ namespace Pims.Dal.Keycloak
         public async Task<Entity.PimsUser> UpdateUserAsync(Entity.PimsUser user)
         {
             var kuser = await _keycloakService.GetUserAsync(user.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
-            var euser = _userRepository.GetTrackingById(user.Id);
+            var euser = _userRepository.GetTrackingById(user.Internal_Id);
 
             return await SaveUserChanges(user, euser, kuser, true);
         }
@@ -87,7 +78,7 @@ namespace Pims.Dal.Keycloak
         public async Task<Entity.PimsUser> AppendToUserAsync(Entity.PimsUser update)
         {
             var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
-            var euser = _userRepository.GetTrackingById(update.Id);
+            var euser = _userRepository.GetTrackingById(update.Internal_Id);
 
             return await SaveUserChanges(update, euser, kuser, true);
         }
@@ -111,7 +102,7 @@ namespace Pims.Dal.Keycloak
 
                 user.PimsUserRoles.Clear();
                 user.IsDisabled = false;
-                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Id, RoleId = update.RoleId.Value });
+                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Internal_Id, RoleId = update.RoleId.Value });
                 await AppendToUserAsync(user);
             }
             update.User = user;
@@ -132,12 +123,12 @@ namespace Pims.Dal.Keycloak
             if (resetRoles)
             {
                 euser.PimsUserRoles.ForEach(role => _userRepository.RemoveRole(euser, role.RoleId));
-                euser.PimsRegionUsers.ForEach(region => _userRepository.RemoveRegion(euser, region.Id));
+                euser.PimsRegionUsers.ForEach(region => _userRepository.RemoveRegion(euser, region.Internal_Id));
             }
 
             // Update PIMS
             var idirUsername = kuser.Attributes?.FirstOrDefault(a => a.Key == "idir_username").Value.FirstOrDefault();
-            if(idirUsername == null)
+            if (idirUsername == null)
             {
                 throw new KeyNotFoundException("keycloak user missing required idir_username attribute");
             }
@@ -180,7 +171,7 @@ namespace Pims.Dal.Keycloak
             await _keycloakService.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
             _userRepository.CommitTransaction();
 
-            return _userRepository.GetById(euser.Id);
+            return _userRepository.GetById(euser.Internal_Id);
         }
     }
     #endregion

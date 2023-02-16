@@ -92,7 +92,7 @@ namespace Pims.Api.Services
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
-            _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Id);
+            _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
@@ -108,14 +108,14 @@ namespace Pims.Api.Services
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
-            _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Id);
+            _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
-            ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
+            ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             if (!userOverride)
             {
-                ValidateMinistryRegion(acquisitionFile.Id, acquisitionFile.RegionCode);
+                ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
 
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
@@ -127,20 +127,20 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating acquisition file properties...");
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
-            ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
+            ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             MatchProperties(acquisitionFile);
 
             // Get the current properties in the research file
-            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Id);
+            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
                 // If the property is not new, check if the name has been updated.
-                if (incomingAcquisitionProperty.Id != 0)
+                if (incomingAcquisitionProperty.Internal_Id != 0)
                 {
-                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Id == incomingAcquisitionProperty.Id);
+                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
                     if (existingProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
@@ -155,7 +155,7 @@ namespace Pims.Api.Services
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Id == x.Id)).ToList();
+            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
@@ -174,7 +174,7 @@ namespace Pims.Api.Services
             }
 
             _acqFileRepository.CommitTransaction();
-            return _acqFileRepository.GetById(acquisitionFile.Id);
+            return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
         private void MatchProperties(PimsAcquisitionFile acquisitionFile)
@@ -187,7 +187,7 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
-                        acquisitionProperty.PropertyId = foundProperty.Id;
+                        acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -202,7 +202,7 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
-                        acquisitionProperty.PropertyId = foundProperty.Id;
+                        acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)

@@ -19,15 +19,6 @@ namespace Pims.Core.Test
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
-                {
-                    Login = "/protocol/openid-connect/auth",
-                    Logout = "/protocol/openid-connect/logout",
-                    Register = "/protocol/openid-connect/registrations",
-                    Token = "/protocol/openid-connect/token",
-                    TokenIntrospect = "/protocol/openid-connect/token/introspect",
-                    UserInfo = "/protocol/openid-connect/userinfo",
-                },
                 ServiceAccount = new KeycloakServiceAccountOptions()
                 {
                     Audience = "pims-service-account",

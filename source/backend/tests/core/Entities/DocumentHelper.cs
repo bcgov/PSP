@@ -47,7 +47,7 @@ namespace Pims.Core.Test
         {
             return new Entity.PimsDocument()
             {
-                Id = id,
+                Internal_Id = id,
                 DocumentId = id,
                 FileName = fileName,
                 AppCreateTimestamp = DateTime.Now,
