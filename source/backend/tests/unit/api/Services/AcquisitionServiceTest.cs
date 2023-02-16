@@ -333,7 +333,7 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(12345);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Id = 1, Property = property } };
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Internal_Id = 1, Property = property } };
             acqFile.ConcurrencyControlNumber = 1;
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -341,7 +341,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = _helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Id = 1, Property = property, PropertyName = "updated" } });
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Internal_Id = 1, Property = property, PropertyName = "updated" } });
 
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();

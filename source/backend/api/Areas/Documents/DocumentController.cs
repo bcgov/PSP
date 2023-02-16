@@ -86,7 +86,6 @@ namespace Pims.Api.Controllers
 
             var response = await _documentService.UpdateDocumentAsync(updateRequest);
             return new JsonResult(response);
-
         }
 
         /// <summary>

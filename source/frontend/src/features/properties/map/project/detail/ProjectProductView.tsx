@@ -17,7 +17,10 @@ const ProjectProductView: React.FunctionComponent<
     <StyledSummarySection>
       <Section header="Associated Products" isCollapsable initiallyExpanded>
         {project?.products?.map((product: Api_Product, index: number) => (
-          <div className={index === productCount - 1 ? '' : 'pb-5'}>
+          <div
+            className={index === productCount - 1 ? '' : 'pb-5'}
+            key={`project-${project.id}-product-${product.id}`}
+          >
             <StyledProductDescription>{`${product.code} - ${product.description}`}</StyledProductDescription>
             <SectionField label="Start Date" labelWidth={'2'}>
               {prettyFormatDate(product.startDate)}

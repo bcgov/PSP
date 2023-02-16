@@ -86,7 +86,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
 
             _service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
-            
+
             // Act
             var result = _controller.UpdateLease(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
 

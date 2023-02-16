@@ -233,7 +233,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             repository.Verify(x => x.Get(It.IsAny<long>()), Times.Once);
         }
-        
+
         [Fact]
         public void Get_Products_ShouldFail_NotAuthorized()
         {
@@ -281,7 +281,7 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Update(1, new PimsProject());
+            Action result = () => service.Update(new PimsProject());
 
             // Assert
             result.Should().Throw<NotAuthorizedException>();
@@ -295,7 +295,7 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Update(1, null);
+            Action result = () => service.Update(null);
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
@@ -308,10 +308,10 @@ namespace Pims.Api.Test.Services
             var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
             var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(100);
-            repository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(new PimsProject { Id = 1 });
+            repository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(new PimsProject { Internal_Id = 1 });
 
             // Act
-            var result = service.Update(1, new PimsProject { ConcurrencyControlNumber = 100 });
+            var result = service.Update(new PimsProject { ConcurrencyControlNumber = 100 });
 
             // Assert
             result.Should().NotBeNull();

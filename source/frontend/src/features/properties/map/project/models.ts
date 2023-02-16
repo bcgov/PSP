@@ -11,6 +11,7 @@ export class ProductForm {
   costEstimateDate?: string;
   objective?: string;
   scope?: string;
+  rowVersion?: number;
 
   toApi(parentId?: number): Api_Product {
     return {
@@ -23,7 +24,23 @@ export class ProductForm {
       costEstimateDate: this.costEstimateDate,
       objective: this.objective,
       scope: this.scope,
+      rowVersion: this.rowVersion,
     };
+  }
+
+  static fromApi(model: Api_Product): ProductForm {
+    const newForm = new ProductForm();
+    newForm.id = model.id;
+    newForm.code = model.code || '';
+    newForm.description = model.description || '';
+    newForm.startDate = model.startDate;
+    newForm.costEstimate = model.costEstimate?.toString() || '';
+    newForm.costEstimateDate = model.costEstimateDate;
+    newForm.objective = model.objective;
+    newForm.scope = model.scope;
+    newForm.rowVersion = model.rowVersion;
+
+    return newForm;
   }
 }
 
@@ -45,8 +62,8 @@ export class ProjectForm {
       projectStatusTypeCode: toTypeCode<string>(this.projectStatusType),
       regionCode: this.region ? toTypeCode<number>(+this.region) : undefined,
       note: this.summary,
-      rowVersion: this.rowVersion,
       products: this.products?.map(x => x.toApi(this.id)),
+      rowVersion: this.rowVersion,
     };
   }
 
@@ -59,6 +76,7 @@ export class ProjectForm {
     newForm.region = model.regionCode?.id ? +model.regionCode?.id : undefined;
     newForm.summary = model.note;
     newForm.rowVersion = model.rowVersion;
+    newForm.products = model.products?.map(x => ProductForm.fromApi(x)) || [];
 
     return newForm;
   }

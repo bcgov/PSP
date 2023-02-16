@@ -28,7 +28,7 @@ namespace Pims.Api.Services
         {
             ValidatePaymentServiceCall(leaseId, leaseRowVersion);
 
-            _leasePaymentRepository.Delete(payment.Id);
+            _leasePaymentRepository.Delete(payment.Internal_Id);
             _leasePaymentRepository.CommitTransaction();
 
             return _leaseService.GetById(leaseId);

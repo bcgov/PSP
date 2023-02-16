@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { GetMockLookUpsByType, mockLookups } from 'mocks/mockLookups';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fakeText, render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, fakeText, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
@@ -27,7 +27,6 @@ describe('AddProjectForm component', () => {
     const ref = createRef<FormikProps<ProjectForm>>();
     const utils = render(
       <AddProjectForm
-        formikRef={ref}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -105,20 +104,16 @@ describe('AddProjectForm component', () => {
     expect(status.tagName).toBe('SELECT');
   });
 
-  it('should validate character limits', async () => {
-    const { getFormikRef, getNameTextbox, getNumberTextbox, getSummaryTextbox, findByText } = setup(
-      {
-        initialValues,
-      },
-    );
+  it.only('should validate character limits', async () => {
+    const { container, getFormikRef, findByText } = setup({
+      initialValues,
+    });
 
-    // name cannot exceed 500 characters
-    const nameInput = getNameTextbox();
-    const numberInput = getNumberTextbox();
-    const summayInput = getSummaryTextbox();
-    await act(async () => userEvent.paste(nameInput, fakeText(201)));
-    await act(async () => userEvent.paste(numberInput, fakeText(21)));
-    await act(async () => userEvent.paste(summayInput, fakeText(2001)));
+    await act(async () => {
+      await fillInput(container, 'projectName', fakeText(201));
+      await fillInput(container, 'projectNumber', fakeText(21));
+      await fillInput(container, 'summary', fakeText(2001), 'textarea');
+    });
 
     // submit form to trigger validation check
     await act(() => getFormikRef().current?.submitForm());

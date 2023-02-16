@@ -68,7 +68,7 @@ namespace Pims.Api.Controllers
                 return new CreatedResult($"{user.GuidIdentifierValue}", new Model.UserModel(user));
             }
 
-            return new JsonResult(new Model.UserModel(user.Id, user.GuidIdentifierValue.Value));
+            return new JsonResult(new Model.UserModel(user.Internal_Id, user.GuidIdentifierValue.Value));
         }
 
         /// <summary>

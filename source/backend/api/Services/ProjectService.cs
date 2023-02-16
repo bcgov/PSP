@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -106,14 +105,14 @@ namespace Pims.Api.Services
             var newProject = _projectRepository.Add(project);
             _projectRepository.CommitTransaction();
 
-            return _projectRepository.Get(newProject.Id);
+            return _projectRepository.Get(newProject.Internal_Id);
         }
 
-        public PimsProject Update(long id, PimsProject project)
+        public PimsProject Update(PimsProject project)
         {
             _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
             project.ThrowIfNull(nameof(project));
-            _logger.LogInformation($"Updating project with id ${project.Id}");
+            _logger.LogInformation($"Updating project with id ${project.Internal_Id}");
 
             var updatedProject = _projectRepository.Update(project);
             _projectRepository.CommitTransaction();

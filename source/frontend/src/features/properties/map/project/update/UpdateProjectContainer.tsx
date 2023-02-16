@@ -1,26 +1,21 @@
-import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import { FormikHelpers, FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_Project } from 'models/api/Project';
-import React, { ForwardedRef } from 'react';
+import React from 'react';
 import { mapLookupCode } from 'utils/mapLookupCode';
 
+import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
+import { IAddProjectFormProps } from '../add/AddProjectForm';
 import { ProjectForm } from '../models';
 
 export interface IUpdateProjectContainerProps {
   project: Api_Project;
-  View: React.FC<IUpdateProjectContainerViewProps>;
+  View: React.ForwardRefExoticComponent<
+    IAddProjectFormProps & React.RefAttributes<FormikProps<ProjectForm>>
+  >;
   onSuccess: () => void;
-}
-
-export interface IUpdateProjectContainerViewProps {
-  initialValues: ProjectForm;
-  projectStatusOptions: SelectOption[];
-  projectRegionOptions: SelectOption[];
-  formikRef: ForwardedRef<FormikProps<ProjectForm>>;
-  onSubmit: (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => void | Promise<any>;
 }
 
 const UpdateProjectContainer = React.forwardRef<
@@ -58,7 +53,8 @@ const UpdateProjectContainer = React.forwardRef<
 
   return (
     <View
-      formikRef={formikRef}
+      ref={formikRef}
+      validationSchema={AddProjectYupSchema}
       projectRegionOptions={regionTypeCodes}
       projectStatusOptions={projectStatusTypeCodes}
       initialValues={intialValues}

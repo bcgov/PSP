@@ -23,7 +23,7 @@ namespace Pims.Dal.Entities
             this.Property = property ?? throw new ArgumentNullException(nameof(property));
             this.PropertyId = property.PropertyId;
             this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));
-            this.OrganizationId = organization.Id;
+            this.OrganizationId = organization.Internal_Id;
         }
         #endregion
     }

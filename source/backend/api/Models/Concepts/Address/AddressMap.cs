@@ -57,7 +57,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Longitude, src => src.Longitude)
                 .Map(dest => dest.Comment, src => src.Comment)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
-
         }
     }
 }

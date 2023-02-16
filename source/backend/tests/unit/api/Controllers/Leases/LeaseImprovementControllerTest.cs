@@ -47,12 +47,12 @@ namespace Pims.Api.Test.Controllers.Lease
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
-            lease.PimsPropertyImprovements = new List<Pims.Dal.Entities.PimsPropertyImprovement>() { new Dal.Entities.PimsPropertyImprovement() { Id = 1 } };
+            lease.PimsPropertyImprovements = new List<Pims.Dal.Entities.PimsPropertyImprovement>() { new Dal.Entities.PimsPropertyImprovement() { Internal_Id = 1 } };
 
             _repository.Setup(m => m.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease);
 
             // Act
-            var result = _controller.UpdateImprovements(lease.Id, _mapper.Map<Model.LeaseModel>(lease));
+            var result = _controller.UpdateImprovements(lease.Internal_Id, _mapper.Map<Model.LeaseModel>(lease));
 
             // Assert
             _repository.Verify(m => m.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());

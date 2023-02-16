@@ -94,7 +94,7 @@ namespace Pims.Api.Services
             _noteRepository.CommitTransaction();
 
             this.Logger.LogInformation("Note with id {id} update successfully", model.Id);
-            return GetById(newNote.Id);
+            return GetById(newNote.Internal_Id);
         }
 
         /// <summary>

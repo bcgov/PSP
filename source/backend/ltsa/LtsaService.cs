@@ -84,7 +84,7 @@ namespace Pims.Ltsa
                     }
 
                     var response = await client.GetAsync(url);
-                    if(!response.IsSuccessStatusCode)
+                    if (!response.IsSuccessStatusCode)
                     {
                         throw new HttpClientRequestException(response);
                     }
@@ -133,7 +133,8 @@ namespace Pims.Ltsa
                 var stringContent = JsonSerializer.Serialize(data, _jsonSerializerOptions);
                 var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
 
-                var response = await _authPolicy.ExecuteAsync(async (context) => {
+                var response = await _authPolicy.ExecuteAsync(async (context) =>
+                {
                     var token = (TokenModel)context["access_token"];
                     if (token != null)
                     {

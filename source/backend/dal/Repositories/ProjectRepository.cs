@@ -74,7 +74,6 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         public PimsProject Get(long id)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
@@ -114,13 +113,15 @@ namespace Pims.Dal.Repositories
             var existingProject = Context.PimsProjects
                 .FirstOrDefault(x => x.Id == project.Id) ?? throw new KeyNotFoundException();
 
+            this.Context.UpdateChild<PimsProject, long, PimsProduct>(p => p.PimsProducts, project.Id, project.PimsProducts.ToArray(), true);
+
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 
             return project;
         }
 
         /// <summary>
-        /// Retrieves the version of project
+        /// Retrieves the version of project.
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The project row version.</returns>

@@ -24,7 +24,7 @@ namespace Pims.Dal.Entities
             : this()
         {
             this.User = user ?? throw new ArgumentNullException(nameof(user));
-            this.UserId = user.Id;
+            this.UserId = user.Internal_Id;
             this.Role = role ?? throw new ArgumentNullException(nameof(role));
             this.RoleId = role.RoleId;
             this.AccessRequestStatusTypeCodeNavigation = status ?? throw new ArgumentNullException(nameof(status));
