@@ -21,7 +21,6 @@ export class DetailAcquisitionFile {
       model?.acquisitionPhysFileStatusTypeCode?.description;
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description;
     detail.regionDescription = model?.regionCode?.description;
-    // acquisition team array
     detail.acquisitionTeam =
       model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
 
@@ -42,4 +41,10 @@ export class DetailAcquisitionFilePerson {
 
     return personDetail;
   }
+}
+
+export class DetailAcquisitionFileOwner {
+  ownerName?: string;
+  ownerOtherName?: string;
+  ownerDisplayAddress?: string;
 }

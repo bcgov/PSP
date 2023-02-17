@@ -45,6 +45,22 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
+        public List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId)
+        {
+            return Context.PimsAcquisitionOwners
+                .Where(x => x.AcquisitionFileId == acquisitionFileId)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.RegionCodeNavigation)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.Country)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.ProvinceState)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.DistrictCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+        }
+
         public int GetAcquisitionFilePropertyRelatedCount(long propertyId)
         {
             return Context.PimsPropertyAcquisitionFiles

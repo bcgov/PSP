@@ -6,7 +6,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c12.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   border: none;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   background: none;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   border: none;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,32 +128,32 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c16.c16.btn {
+.c17.c17.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c16.c16.btn .text {
+.c17.c17.btn .text {
   display: none;
 }
 
-.c16.c16.btn:hover,
-.c16.c16.btn:active,
-.c16.c16.btn:focus {
+.c17.c17.btn:hover,
+.c17.c17.btn:active,
+.c17.c17.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -167,14 +167,14 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   flex-direction: row;
 }
 
-.c16.c16.btn:hover .text,
-.c16.c16.btn:active .text,
-.c16.c16.btn:focus .text {
+.c17.c17.btn:hover .text,
+.c17.c17.btn:active .text,
+.c17.c17.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c13 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -193,12 +193,12 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c15 {
+.c16 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c14 {
+.c15 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -245,7 +245,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   position: relative;
 }
 
-.c8 {
+.c9 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -257,11 +257,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   min-height: 4.5rem;
 }
 
-.c8 .btn {
+.c9 .btn {
   margin: 0;
 }
 
-.c9 {
+.c10 {
   float: right;
   cursor: pointer;
 }
@@ -279,6 +279,32 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   text-align: left;
 }
 
+.c8 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
 .c6.required::before {
   content: '*';
   position: absolute;
@@ -290,7 +316,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c17 {
+.c18 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -299,11 +325,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   z-index: 10;
 }
 
-.c10 {
+.c11 {
   border-radius: 0.5rem 0.5rem 0rem 0rem;
 }
 
-.c11 {
+.c12 {
   border-left: 0.2rem solid white;
 }
 
@@ -771,6 +797,14 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
               </div>
             </div>
           </div>
+          <div
+            class="c8"
+          >
+            <div
+              class="spinner-border text-warning"
+              data-testid="filter-backdrop-loading"
+            />
+          </div>
         </div>
       </div>
       <div
@@ -791,7 +825,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                 class="col"
               >
                 <div
-                  class="c8 no-gutters row"
+                  class="c9 no-gutters row"
                 >
                   <div
                     class="px-2 my-1 col-auto"
@@ -807,7 +841,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -834,7 +868,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
             class="collapse show"
           >
             <form
-              class="c10 p-3"
+              class="c11 p-3"
               novalidate=""
             >
               <div
@@ -916,13 +950,13 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                   class="col-lg-auto"
                 >
                   <div
-                    class="c11 no-gutters pl-2 row"
+                    class="c12 no-gutters pl-2 row"
                   >
                     <div
                       class="col"
                     >
                       <button
-                        class="c12 Button Button--icon-only primary btn btn-primary"
+                        class="c13 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -951,7 +985,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                       class="col"
                     >
                       <button
-                        class="c12 Button Button--icon-only btn btn-info"
+                        class="c13 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -1004,11 +1038,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Document type
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-documentType"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1023,7 +1057,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1050,11 +1084,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       File name
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-fileName"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1069,7 +1103,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1096,11 +1130,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Uploaded
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-appCreateTimestamp"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1115,7 +1149,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1142,11 +1176,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Status
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-statusTypeCode"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1161,7 +1195,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1237,7 +1271,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1264,7 +1298,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
             class="collapse show"
           >
             <form
-              class="c10 p-3"
+              class="c11 p-3"
               novalidate=""
             >
               <div
@@ -1346,13 +1380,13 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                   class="col-lg-auto"
                 >
                   <div
-                    class="c11 no-gutters pl-2 row"
+                    class="c12 no-gutters pl-2 row"
                   >
                     <div
                       class="col"
                     >
                       <button
-                        class="c12 Button Button--icon-only primary btn btn-primary"
+                        class="c13 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -1381,7 +1415,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                       class="col"
                     >
                       <button
-                        class="c12 Button Button--icon-only btn btn-info"
+                        class="c13 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -1434,11 +1468,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Document type
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-documentType"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1453,7 +1487,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1480,11 +1514,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       File name
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-fileName"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1499,7 +1533,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1526,11 +1560,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Uploaded
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-appCreateTimestamp"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1545,7 +1579,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1572,11 +1606,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Status
                       <div
-                        class="c13"
+                        class="c14"
                         data-testid="sort-column-statusTypeCode"
                       >
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1591,7 +1625,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1932,7 +1966,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                         >
                           Owner #1
                           <button
-                            class="c12 Button c16 btn btn-link"
+                            class="c13 Button c17 btn btn-link"
                             type="button"
                           >
                             <div
@@ -2120,7 +2154,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                   </div>
                 </div>
                 <button
-                  class="c12 Button btn btn-link"
+                  class="c13 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -2170,7 +2204,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                         >
                           Agent #1
                           <button
-                            class="c12 Button c16 btn btn-link"
+                            class="c13 Button c17 btn btn-link"
                             type="button"
                           >
                             <div
@@ -2302,7 +2336,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                   </div>
                 </div>
                 <button
-                  class="c12 Button btn btn-link"
+                  class="c13 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -2406,7 +2440,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Property #1
                       <button
-                        class="c12 Button c16 btn btn-link"
+                        class="c13 Button c17 btn btn-link"
                         type="button"
                       >
                         <div
@@ -2510,7 +2544,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
               </div>
             </div>
             <button
-              class="c12 Button btn btn-link"
+              class="c13 Button btn btn-link"
               type="button"
             >
               <div
@@ -2522,13 +2556,13 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="c17 justify-content-end mt-auto no-gutters row"
+          class="c18 justify-content-end mt-auto no-gutters row"
         >
           <div
             class="col-auto"
           >
             <button
-              class="c12 Button btn btn-primary"
+              class="c13 Button btn btn-primary"
               type="button"
             >
               <div

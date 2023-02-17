@@ -20,6 +20,7 @@ import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
+import { UpdateAcquisitionOwnersSubForm } from '../common/update/acquistionOwners/UpdateAcquisitionOwnersSubForm';
 import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
 import { AcquisitionProperties } from './AcquisitionProperties';
 import { AcquisitionForm } from './models';
@@ -155,7 +156,6 @@ export const AddAcquisitionForm = React.forwardRef<
                 <FastDatePicker field="deliveryDate" formikProps={formikProps} />
               </SectionField>
             </Section>
-
             <Section header="Properties to include in this file:">
               <AcquisitionProperties formikProps={formikProps} />
             </Section>
@@ -192,6 +192,9 @@ export const AddAcquisitionForm = React.forwardRef<
 
             <Section header="Acquisition Team">
               <UpdateAcquisitionTeamSubForm />
+            </Section>
+            <Section header="Owners">
+              <UpdateAcquisitionOwnersSubForm />
             </Section>
           </Container>
 

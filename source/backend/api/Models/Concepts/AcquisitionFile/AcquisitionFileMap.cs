@@ -28,6 +28,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.RegionCode, src => src.RegionCodeNavigation)
                 .Map(dest => dest.FileProperties, src => src.PimsPropertyAcquisitionFiles)
                 .Map(dest => dest.AcquisitionTeam, src => src.PimsAcquisitionFilePeople)
+                .Map(dest => dest.AcquisitionFileOwners, src => src.PimsAcquisitionOwners)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<AcquisitionFileModel, Entity.PimsAcquisitionFile>()
@@ -50,6 +51,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
                 .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties)
                 .Map(dest => dest.PimsAcquisitionFilePeople, src => src.AcquisitionTeam)
+                .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

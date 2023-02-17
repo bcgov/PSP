@@ -1,15 +1,21 @@
 import { IAutocompletePrediction } from 'interfaces';
 import {
   Api_AcquisitionFile,
+  Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
-import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../common/models';
+import {
+  AcquisitionOwnerFormModel,
+  AcquisitionTeamFormModel,
+  WithAcquisitionOwners,
+  WithAcquisitionTeam,
+} from '../common/models';
 
-export class AcquisitionForm implements WithAcquisitionTeam {
+export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwners {
   id?: number;
   fileName?: string = '';
   legacyFileNumber?: string = '';
@@ -24,6 +30,7 @@ export class AcquisitionForm implements WithAcquisitionTeam {
   region?: string;
   properties: PropertyForm[] = [];
   team: AcquisitionTeamFormModel[] = [];
+  owners: AcquisitionOwnerFormModel[] = [];
 
   project?: IAutocompletePrediction;
   product?: number;
@@ -62,6 +69,7 @@ export class AcquisitionForm implements WithAcquisitionTeam {
           acquisitionFile: { id: this.id },
         };
       }),
+      acquisitionFileOwners: this.owners.map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi()),

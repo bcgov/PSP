@@ -168,6 +168,22 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFilePropertyModel>>(acquisitionFileProperties));
         }
 
+        /// <summary>
+        /// Get the acquisition file Owners.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/owners")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileOwners([FromRoute]long id)
+        {
+            var owners = _acquisitionService.GetOwners(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
+        }
+
         #endregion
     }
 }

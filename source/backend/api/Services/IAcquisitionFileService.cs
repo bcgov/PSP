@@ -17,5 +17,7 @@ namespace Pims.Api.Services
         PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile);
 
         IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id);
+
+        IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
     }
 }
