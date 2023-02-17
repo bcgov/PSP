@@ -7,7 +7,7 @@ import { DocumentTypeName } from 'constants/documentType';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
-import { Api_Document, Api_DocumentType } from 'models/api/Document';
+import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
 import React, { useEffect, useState } from 'react';
 
 import { DocumentRow } from '../ComposedDocument';
@@ -25,7 +25,7 @@ export interface IDocumentListViewProps {
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
   addButtonText?: string;
-  onDelete: (relationship: DocumentRow) => Promise<boolean | undefined>;
+  onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
   onSuccess: () => void;
   onPageChange: (props: { pageIndex?: number; pageSize: number }) => void;
   disableAdd?: boolean;
@@ -117,13 +117,15 @@ export const DocumentListView: React.FunctionComponent<
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<Api_Document | undefined>(undefined);
+  const [selectedDocument, setSelectedDocument] = useState<Api_DocumentRelationship | undefined>(
+    undefined,
+  );
 
   const handleModalUploadClose = () => {
     setIsUploadVisible(false);
   };
 
-  const handleViewDetails = (document: Api_Document) => {
+  const handleViewDetails = (document: Api_DocumentRelationship) => {
     setIsDetailsVisible(true);
     setSelectedDocument(document);
   };
@@ -133,7 +135,7 @@ export const DocumentListView: React.FunctionComponent<
     setSelectedDocument(undefined);
   };
 
-  const handleDeleteClick = (document: Api_Document) => {
+  const handleDeleteClick = (document: Api_DocumentRelationship) => {
     setShowDeleteConfirmModal(true);
     setSelectedDocument(document);
   };
@@ -200,7 +202,7 @@ export const DocumentListView: React.FunctionComponent<
         display={isDetailsVisible}
         relationshipType={props.relationshipType}
         setDisplay={setIsDetailsVisible}
-        pimsDocument={selectedDocument}
+        pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument) : undefined}
         onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
       />

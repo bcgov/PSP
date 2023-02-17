@@ -721,7 +721,9 @@ exports[`Document List View renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                Gazette
+              </div>
               <div
                 class="td"
                 role="cell"
@@ -730,7 +732,9 @@ exports[`Document List View renders as expected 1`] = `
               >
                 <span
                   data-testid="document-view-filename-text"
-                />
+                >
+                  DocTest.docx
+                </span>
               </div>
               <div
                 class="td"
@@ -743,7 +747,9 @@ exports[`Document List View renders as expected 1`] = `
                 >
                   <div
                     class="col"
-                  />
+                  >
+                    Jan 1, 0001
+                  </div>
                   <div
                     class="col-auto"
                   >
@@ -778,7 +784,9 @@ exports[`Document List View renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                Signed
+              </div>
               <div
                 class="td"
                 role="cell"
@@ -804,7 +812,9 @@ exports[`Document List View renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                MoTI Plan
+              </div>
               <div
                 class="td"
                 role="cell"
@@ -813,7 +823,9 @@ exports[`Document List View renders as expected 1`] = `
               >
                 <span
                   data-testid="document-view-filename-text"
-                />
+                >
+                  moti_plan.txt
+                </span>
               </div>
               <div
                 class="td"
@@ -826,7 +838,9 @@ exports[`Document List View renders as expected 1`] = `
                 >
                   <div
                     class="col"
-                  />
+                  >
+                    Sep 8, 2022
+                  </div>
                   <div
                     class="col-auto"
                   >
@@ -861,7 +875,9 @@ exports[`Document List View renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                Amended
+              </div>
               <div
                 class="td"
                 role="cell"

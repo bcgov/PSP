@@ -8,24 +8,24 @@ import Api_TypeCode from './TypeCode';
 
 export interface Api_Document extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
-  mayanDocumentId?: number;
-  documentType?: Api_DocumentType;
-  statusTypeCode?: Api_TypeCode<string>;
-  fileName?: string;
+  mayanDocumentId: number | undefined;
+  documentType: Api_DocumentType | undefined;
+  statusTypeCode: Api_TypeCode<string> | undefined;
+  fileName: string | undefined;
 }
 
 export interface Api_DocumentType extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
-  documentType?: string;
-  mayanId?: number;
+  documentType: string | undefined;
+  mayanId: number | undefined;
 }
 
 export interface Api_DocumentRelationship extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
-  parentId?: number;
+  parentId: number | undefined;
   isDisabled?: boolean;
-  document?: Api_Document;
-  relationshipType?: DocumentRelationshipType;
+  document: Api_Document | undefined;
+  relationshipType: DocumentRelationshipType | undefined;
 }
 
 export interface Api_DocumentMetadataUpdate {
@@ -41,14 +41,14 @@ export interface Api_DocumentUploadRequest {
 }
 
 export interface Api_DocumentUploadRelationshipResponse {
-  documentRelationship?: Api_DocumentRelationship;
-  uploadResponse?: Api_DocumentUploadResponse;
+  documentRelationship: Api_DocumentRelationship | undefined;
+  uploadResponse: Api_DocumentUploadResponse | undefined;
 }
 
 export interface Api_DocumentUploadResponse {
-  document?: Api_Document;
-  documentExternalResult?: ExternalResult<Api_Storage_DocumentDetail>;
-  metadataExternalResult?: ExternalResult<Api_Storage_DocumentMetadata>;
+  document: Api_Document | undefined;
+  documentExternalResult: ExternalResult<Api_Storage_DocumentDetail> | undefined;
+  metadataExternalResult: ExternalResult<Api_Storage_DocumentMetadata> | undefined;
 }
 
 export interface Api_DocumentUpdateRequest {
@@ -59,5 +59,5 @@ export interface Api_DocumentUpdateRequest {
 }
 
 export interface Api_DocumentUpdateResponse {
-  metadataExternalResult?: ExternalResult<Api_Storage_DocumentMetadata>;
+  metadataExternalResult: ExternalResult<Api_Storage_DocumentMetadata> | undefined;
 }

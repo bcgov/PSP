@@ -118,8 +118,6 @@ export const UpdateProperties: React.FunctionComponent<
                                 formProperty.address = bcaSummary?.address
                                   ? AddressForm.fromBcaAddress(bcaSummary?.address)
                                   : undefined;
-                                formProperty.legalDescription =
-                                  bcaSummary?.legalDescription?.LEGAL_TEXT;
                               }
                               push(formProperty);
                             });

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,7 @@ namespace Pims.Api.Services
         private readonly IProjectRepository _projectRepository;
         private readonly IProductRepository _productRepository;
         private readonly IAcquisitionFileRepository _acquisitionFileRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ClaimsPrincipal _user;
 
         /// <summary>
@@ -28,29 +30,34 @@ namespace Pims.Api.Services
         /// <param name="projectRepository"></param>
         /// <param name="productRepository"></param>
         /// <param name="acquisitionFileRepository"></param>
+        /// <param name="userRepository"></param>
         public ProjectService(
             ClaimsPrincipal user,
             ILogger<ProjectService> logger,
             IProjectRepository projectRepository,
             IProductRepository productRepository,
-            IAcquisitionFileRepository acquisitionFileRepository)
+            IAcquisitionFileRepository acquisitionFileRepository,
+            IUserRepository userRepository)
             : base(user, logger)
         {
             _logger = logger;
             _projectRepository = projectRepository;
             _productRepository = productRepository;
             _acquisitionFileRepository = acquisitionFileRepository;
+            _userRepository = userRepository;
             _user = user;
         }
 
         public IList<PimsProject> SearchProjects(string filter, int maxResult)
         {
-            _logger.LogInformation("Getting all projects");
+            _logger.LogInformation("Searching for projects that match {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
-            var projects = _projectRepository.SearchProjects(filter, maxResult);
+            // Limit search results to user's assigned region(s), but always include "Cannot determine" region
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
 
-            return projects;
+            return _projectRepository.SearchProjects(filter, userRegions, maxResult);
         }
 
         public Task<Paged<PimsProject>> GetPage(ProjectFilter filter)

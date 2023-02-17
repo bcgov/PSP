@@ -1,5 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { Claims } from 'constants/claims';
+import { DocumentRow } from 'features/documents/ComposedDocument';
 import { noop } from 'lodash';
 import { mockDocumentsResponse } from 'mocks/mockDocuments';
 import { cleanup, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
@@ -63,7 +64,9 @@ describe('Document Results Table', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup({ results: mockDocumentsResponse() });
+    const { asFragment } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -77,7 +80,9 @@ describe('Document Results Table', () => {
 
   it('displays document view button', async () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT] });
-    const { getAllByTestId } = setup({ results: mockDocumentsResponse() });
+    const { getAllByTestId } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+    });
 
     const viewButtons = await getAllByTestId('document-view-button');
     expect(viewButtons[0]).toBeVisible();
@@ -85,7 +90,9 @@ describe('Document Results Table', () => {
 
   it('displays document filename as link', async () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_VIEW] });
-    const { queryByTestId, getAllByTestId } = setup({ results: mockDocumentsResponse() });
+    const { queryByTestId, getAllByTestId } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+    });
 
     const filenameLink = await getAllByTestId('document-view-filename-link');
     expect(filenameLink[0]).toBeVisible();
@@ -95,7 +102,9 @@ describe('Document Results Table', () => {
 
   it('displays document filename as plain text', async () => {
     mockKeycloak({ claims: [] });
-    const { queryByTestId, getAllByTestId } = setup({ results: mockDocumentsResponse() });
+    const { queryByTestId, getAllByTestId } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+    });
 
     const filenameText = await getAllByTestId('document-view-filename-text');
     expect(filenameText[0]).toBeVisible();
@@ -105,7 +114,9 @@ describe('Document Results Table', () => {
 
   it('displays document delete button', async () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
-    const { getAllByTestId } = setup({ results: mockDocumentsResponse() });
+    const { getAllByTestId } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+    });
 
     const deleteButtons = await getAllByTestId('document-delete-button');
     expect(deleteButtons[0]).toBeVisible();
@@ -113,7 +124,9 @@ describe('Document Results Table', () => {
 
   it('displays document delete button', async () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
-    const { getAllByTestId } = setup({ results: mockDocumentsResponse() });
+    const { getAllByTestId } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+    });
 
     const deleteButtons = await getAllByTestId('document-delete-button');
     expect(deleteButtons[0]).toBeVisible();

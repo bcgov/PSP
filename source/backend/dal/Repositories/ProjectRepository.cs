@@ -33,14 +33,17 @@ namespace Pims.Dal.Repositories
         /// Retrieves the matching projects to the given filter.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="maxResult"></param>
+        /// <param name="regions"></param>
+        /// <param name="maxResults"></param>
         /// <returns></returns>
-        public IList<PimsProject> SearchProjects(string filter, int maxResult)
+        public IList<PimsProject> SearchProjects(string filter, HashSet<short> regions, int maxResults)
         {
+            // business requirement - limit search results to user's assigned region(s)
             return this.Context.PimsProjects.AsNoTracking()
-                .Where(o => EF.Functions.Like(o.Description, $"%{filter}%"))
+                .Where(p => EF.Functions.Like(p.Description, $"%{filter}%"))
+                .Where(p => regions.Contains(p.RegionCode))
                 .OrderBy(a => a.Code)
-                .Take(maxResult)
+                .Take(maxResults)
                 .ToArray();
         }
 
@@ -161,7 +164,19 @@ namespace Pims.Dal.Repositories
 
             if (filter.Sort?.Any() == true)
             {
-                query = query.OrderByProperty(filter.Sort);
+                var direction = filter.Sort[0].Split(" ").LastOrDefault();
+                if (filter.Sort[0].StartsWith("LastUpdatedBy"))
+                {
+                    query = direction == "asc" ? query.OrderBy(x => x.AppLastUpdateUserid) : query.OrderByDescending(x => x.AppLastUpdateUserid);
+                }
+                else if (filter.Sort[0].StartsWith("LastUpdatedDate"))
+                {
+                    query = direction == "asc" ? query.OrderBy(x => x.AppLastUpdateTimestamp) : query.OrderByDescending(x => x.AppLastUpdateTimestamp);
+                }
+                else
+                {
+                    query = query.OrderByProperty(filter.Sort);
+                }
             }
             else
             {
