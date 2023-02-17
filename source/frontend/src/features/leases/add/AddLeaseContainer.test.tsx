@@ -73,14 +73,16 @@ describe('AddLeaseContainer component', () => {
     const {
       component: { getByText, container },
     } = await setup({});
-    await fillInput(container, 'statusTypeCode', 'DRAFT', 'select');
-    await fillInput(container, 'paymentReceivableTypeCode', 'RCVBL', 'select');
-    await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
-    await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'regionId', '1', 'select');
-    await fillInput(container, 'programTypeCode', 'BCFERRIES', 'select');
-    await fillInput(container, 'leaseTypeCode', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
+    await act(async () => {
+      await fillInput(container, 'statusTypeCode', 'DRAFT', 'select');
+      await fillInput(container, 'paymentReceivableTypeCode', 'RCVBL', 'select');
+      await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
+      await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
+      await fillInput(container, 'regionId', '1', 'select');
+      await fillInput(container, 'programTypeCode', 'BCFERRIES', 'select');
+      await fillInput(container, 'leaseTypeCode', 'LICONSTRC', 'select');
+      await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
+    });
 
     /*
     await act(async () => {
@@ -103,17 +105,19 @@ describe('AddLeaseContainer component', () => {
     const {
       component: { getByText, findByText, container },
     } = await setup({});
-    await fillInput(container, 'statusTypeCode', 'DRAFT', 'select');
-    await fillInput(container, 'paymentReceivableTypeCode', 'RCVBL', 'select');
-    await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
-    await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'regionId', '1', 'select');
-    await fillInput(container, 'programTypeCode', 'BCFERRIES', 'select');
-    await fillInput(container, 'leaseTypeCode', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
+    await act(async () => {
+      await fillInput(container, 'statusTypeCode', 'DRAFT', 'select');
+      await fillInput(container, 'paymentReceivableTypeCode', 'RCVBL', 'select');
+      await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
+      await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
+      await fillInput(container, 'regionId', '1', 'select');
+      await fillInput(container, 'programTypeCode', 'BCFERRIES', 'select');
+      await fillInput(container, 'leaseTypeCode', 'LICONSTRC', 'select');
+      await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
+    });
 
     mockAxios.onPost().reply(409, { error: 'test message' });
-    userEvent.click(getByText(/Save/i));
+    act(() => userEvent.click(getByText(/Save/i)));
     expect(await findByText('test message')).toBeVisible();
   });
 
@@ -122,17 +126,19 @@ describe('AddLeaseContainer component', () => {
       component: { findByText, getByText, container },
     } = await setup({});
 
-    await fillInput(container, 'statusTypeCode', 'DRAFT', 'select');
-    await fillInput(container, 'paymentReceivableTypeCode', 'RCVBL', 'select');
-    await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
-    await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'regionId', '1', 'select');
-    await fillInput(container, 'programTypeCode', 'BCFERRIES', 'select');
-    await fillInput(container, 'leaseTypeCode', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
+    await act(async () => {
+      await fillInput(container, 'statusTypeCode', 'DRAFT', 'select');
+      await fillInput(container, 'paymentReceivableTypeCode', 'RCVBL', 'select');
+      await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
+      await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
+      await fillInput(container, 'regionId', '1', 'select');
+      await fillInput(container, 'programTypeCode', 'BCFERRIES', 'select');
+      await fillInput(container, 'leaseTypeCode', 'LICONSTRC', 'select');
+      await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
+    });
 
     mockAxios.onPost().reply(409, { error: 'test message' });
-    userEvent.click(getByText(/Save/i));
+    act(() => userEvent.click(getByText(/Save/i)));
     await waitFor(() => {
       expect(mockAxios.history.post[0].data).toEqual(expectedFormData);
     });

@@ -9,7 +9,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Contact
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsOrganization, Model.OrganizationModel>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Alias, src => src.OrganizationAlias)

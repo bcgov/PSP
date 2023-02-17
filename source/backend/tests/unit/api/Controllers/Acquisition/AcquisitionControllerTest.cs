@@ -27,7 +27,8 @@ namespace Pims.Api.Test.Controllers
         private IMapper _mapper;
         #endregion
 
-        public AcquisitionControllerTest() {
+        public AcquisitionControllerTest()
+        {
             var helper = new TestHelper();
             _controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
             _mapper = helper.GetService<IMapper>();

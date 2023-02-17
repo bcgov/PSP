@@ -28,6 +28,5 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public TypeModel<string> LessorType { get; set; }
 
         public TypeModel<string> TenantTypeCode { get; set; }
-
     }
 }

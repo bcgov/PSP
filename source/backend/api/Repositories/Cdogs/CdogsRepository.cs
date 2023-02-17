@@ -2,13 +2,17 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
 using Pims.Api.Models.Cdogs;
+using Pims.Api.Models.Download;
 
 namespace Pims.Api.Repositories.Cdogs
 {
@@ -80,6 +84,49 @@ namespace Pims.Api.Repositories.Cdogs
             }
 
             _logger.LogDebug($"Finished uploading template file");
+            return result;
+        }
+
+        public async Task<ExternalResult<FileDownload>> UploadAndGenerate(RenderRequest request)
+        {
+            _logger.LogDebug("Uploading template and generating report...");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
+            client.DefaultRequestHeaders.Accept.Clear();
+            AddAuthentication(client, authenticationToken);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+
+            ExternalResult<FileDownload> result = new ExternalResult<FileDownload>()
+            {
+                Status = ExternalResultStatus.Error,
+            };
+
+            try
+            {
+                Uri endpoint = new(this._config.CDogsHost, "/api/v2/template/render");
+
+                string jsonContent = JsonSerializer.Serialize(request, new JsonSerializerOptions()
+                {
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                });
+
+                using HttpContent content = new StringContent(jsonContent);
+
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                HttpResponseMessage response = await client.PostAsync(endpoint, content);
+                return await ProcessDownloadResponse(response);
+            }
+            catch (Exception e)
+            {
+                result.Status = ExternalResultStatus.Error;
+                result.Message = "Exception downloading file";
+                _logger.LogError("Unexpected exception downloading file {e}", e);
+            }
+
+            _logger.LogDebug($"Finished downloading file");
             return result;
         }
     }

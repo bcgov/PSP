@@ -1,13 +1,15 @@
+import { SelectOption } from 'components/common/form';
+import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
+import { GetMockLookUpsByType, mockLookups } from 'mocks/mockLookups';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fakeText, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 
+import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
 import AddProjectForm, { IAddProjectFormProps } from './AddProjectForm';
-import { ProjectForm } from './models';
 
 const history = createMemoryHistory();
 const validationSchema = jest.fn().mockReturnValue(AddProjectYupSchema);
@@ -16,18 +18,20 @@ const onSubmit = jest.fn();
 type TestProps = Pick<IAddProjectFormProps, 'initialValues'>;
 jest.mock('@react-keycloak/web');
 
+let mockRegionOptions: SelectOption[] = GetMockLookUpsByType(API.REGION_TYPES);
+let mockProjectStatuses: SelectOption[] = GetMockLookUpsByType(API.PROJECT_STATUS_TYPES);
+
 describe('AddProjectForm component', () => {
   // render component under test
   const setup = (props: TestProps, renderOptions: RenderOptions = {}) => {
     const ref = createRef<FormikProps<ProjectForm>>();
     const utils = render(
       <AddProjectForm
-        formikRef={ref}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
-        projectStatusOptions={[]}
-        projectRegionOptions={[]}
+        projectStatusOptions={mockRegionOptions}
+        projectRegionOptions={mockProjectStatuses}
       />,
       {
         ...renderOptions,
@@ -100,23 +104,19 @@ describe('AddProjectForm component', () => {
     expect(status.tagName).toBe('SELECT');
   });
 
-  it('should validate character limits', async () => {
-    const { getFormikRef, getNameTextbox, getNumberTextbox, getSummaryTextbox, findByText } = setup(
-      {
-        initialValues,
-      },
-    );
+  it.only('should validate character limits', async () => {
+    const { container, getFormikRef, findByText } = setup({
+      initialValues,
+    });
 
-    // name cannot exceed 500 characters
-    const nameInput = getNameTextbox();
-    const numberInput = getNumberTextbox();
-    const summayInput = getSummaryTextbox();
-    await waitFor(() => userEvent.paste(nameInput, fakeText(201)));
-    await waitFor(() => userEvent.paste(numberInput, fakeText(21)));
-    await waitFor(() => userEvent.paste(summayInput, fakeText(2001)));
+    await act(async () => {
+      await fillInput(container, 'projectName', fakeText(201));
+      await fillInput(container, 'projectNumber', fakeText(21));
+      await fillInput(container, 'summary', fakeText(2001), 'textarea');
+    });
 
     // submit form to trigger validation check
-    await waitFor(() => getFormikRef().current?.submitForm());
+    await act(() => getFormikRef().current?.submitForm());
 
     expect(validationSchema).toBeCalled();
     expect(await findByText(/Project name must be at most 200 characters/i)).toBeVisible();

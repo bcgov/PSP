@@ -465,30 +465,35 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-ACTIVE"
                         value="ACTIVE"
                       >
                         Active
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-DISCARD"
                         value="DISCARD"
                       >
                         Discarded
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-DRAFT"
                         value="DRAFT"
                       >
                         Draft
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-INACTIVE"
                         value="INACTIVE"
                       >
                         Inactive
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-TERMINATED"
                         value="TERMINATED"
                       >
                         Terminated
@@ -522,18 +527,21 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                     >
                       <option
                         class="option"
+                        data-testid="select-option-PYBLBCTFA"
                         value="PYBLBCTFA"
                       >
                         Payable (BCTFA as tenant)
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-PYBLMOTI"
                         value="PYBLMOTI"
                       >
                         Payable (MOTI as tenant)
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-RCVBL"
                         value="RCVBL"
                       >
                         Receivable
@@ -892,30 +900,35 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                         >
                                           <option
                                             class="option"
+                                            data-testid="select-option-pid"
                                             value="pid"
                                           >
                                             PID
                                           </option>
                                           <option
                                             class="option"
+                                            data-testid="select-option-pin"
                                             value="pin"
                                           >
                                             PIN
                                           </option>
                                           <option
                                             class="option"
+                                            data-testid="select-option-address"
                                             value="address"
                                           >
                                             Address
                                           </option>
                                           <option
                                             class="option"
+                                            data-testid="select-option-planNumber"
                                             value="planNumber"
                                           >
                                             Plan #
                                           </option>
                                           <option
                                             class="option"
+                                            data-testid="select-option-legalDescription"
                                             value="legalDescription"
                                           >
                                             Legal Description
@@ -1294,24 +1307,28 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                     </option>
                     <option
                       class="option"
+                      data-testid="select-option-1"
                       value="1"
                     >
                       South Coast Region
                     </option>
                     <option
                       class="option"
+                      data-testid="select-option-2"
                       value="2"
                     >
                       Southern Interior Region
                     </option>
                     <option
                       class="option"
+                      data-testid="select-option-3"
                       value="3"
                     >
                       Northern Region
                     </option>
                     <option
                       class="option"
+                      data-testid="select-option-4"
                       value="4"
                     >
                       Cannot determine
@@ -1357,66 +1374,77 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-BCFERRIES"
                           value="BCFERRIES"
                         >
                           BC Ferries
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-BCTRANSIT"
                           value="BCTRANSIT"
                         >
                           BC Transit
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-BELLETERM"
                           value="BELLETERM"
                         >
                           Belleville Terminal
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-COMMBLDG"
                           value="COMMBLDG"
                         >
                           Commercial Buildings
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LCLGOVT"
                           value="LCLGOVT"
                         >
                           Local Government/RCMP
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-OTHER"
                           value="OTHER"
                         >
                           Other Licencing
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-RAILTRAIL"
                           value="RAILTRAIL"
                         >
                           Rail Trails
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-RESRENTAL"
                           value="RESRENTAL"
                         >
                           Residential Rentals
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-TMEP"
                           value="TMEP"
                         >
                           TMEP
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-TRANSLINK"
                           value="TRANSLINK"
                         >
                           TransLink
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-UTILITY"
                           value="UTILITY"
                         >
                           Utilities
@@ -1467,84 +1495,98 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LICONSTRC"
                           value="LICONSTRC"
                         >
                           License to Construct
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LIMOTIPRJ"
                           value="LIMOTIPRJ"
                         >
                           MOTI Project Use License
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LIOCCACCS"
                           value="LIOCCACCS"
                         >
                           License of Occupation (access)
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LIOCCTTLD"
                           value="LIOCCTTLD"
                         >
                           License of Occupation (titled)
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LIOCCUSE"
                           value="LIOCCUSE"
                         >
                           License of Occupation (use)
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LIOCCUTIL"
                           value="LIOCCUTIL"
                         >
                           License of Occupation (utilities)
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LIPPUBHWY"
                           value="LIPPUBHWY"
                         >
                           License of Prov Public Highway
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LSGRND"
                           value="LSGRND"
                         >
                           Ground Lease
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LSREG"
                           value="LSREG"
                         >
                           Lease - Registered
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LSUNREG"
                           value="LSUNREG"
                         >
                           Lease - Unregistered
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-MANUFHOME"
                           value="MANUFHOME"
                         >
                           Manufactured Home Act
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-OTHER"
                           value="OTHER"
                         >
                           Other
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-RESLNDTEN"
                           value="RESLNDTEN"
                         >
                           Residential Tenancy Act
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-ROADXING"
                           value="ROADXING"
                         >
                           Road Crossing
@@ -1595,234 +1637,273 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-ACCCCOM"
                           value="ACCCCOM"
                         >
                           Access (Industrial/Commercial)
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-ACCRES"
                           value="ACCRES"
                         >
                           Access (Residential)
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-AGRIC"
                           value="AGRIC"
                         >
                           Agricultural
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-BCFERRIES"
                           value="BCFERRIES"
                         >
                           BC Ferries
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-CAMPING"
                           value="CAMPING"
                         >
                           Camping
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-COMMBLDG"
                           value="COMMBLDG"
                         >
                           Commercial Building
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-EMERGSVCS"
                           value="EMERGSVCS"
                         >
                           Emergency Services
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-ENCROACH"
                           value="ENCROACH"
                         >
                           Encroachment
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-FENCEGATE"
                           value="FENCEGATE"
                         >
                           Fencing/Gate
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-GARDENING"
                           value="GARDENING"
                         >
                           Gardening
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-GRAVEL"
                           value="GRAVEL"
                         >
                           Gravel
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-GRAZING"
                           value="GRAZING"
                         >
                           Grazing
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LOGGING"
                           value="LOGGING"
                         >
                           Logging/Timber Harvest
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-MARINEFAC"
                           value="MARINEFAC"
                         >
                           Marine Facility
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-MOBILEHM"
                           value="MOBILEHM"
                         >
                           Mobile Home Pad
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-MTCYARD"
                           value="MTCYARD"
                         >
                           Maintenance Yard
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-OTHER"
                           value="OTHER"
                         >
                           Other*
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-PARK"
                           value="PARK"
                         >
                           Park
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-PARKING"
                           value="PARKING"
                         >
                           Parking
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-PARKNRID"
                           value="PARKNRID"
                         >
                           Park and Ride
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-PIPELINE"
                           value="PIPELINE"
                         >
                           Pipeline
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-PRELOAD"
                           value="PRELOAD"
                         >
                           Preload
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-PRVTRANS"
                           value="PRVTRANS"
                         >
                           Private transportation
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-RAILWAY"
                           value="RAILWAY"
                         >
                           Railway
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-RESTAREA"
                           value="RESTAREA"
                         >
                           Rest Area/Pullout
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-SIDEWALK"
                           value="SIDEWALK"
                         >
                           Sidewalks/Landscaping
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-SIGNAGE"
                           value="SIGNAGE"
                         >
                           Signage
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-SPCLEVNT"
                           value="SPCLEVNT"
                         >
                           Special Event
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-STGNGAREA"
                           value="STGNGAREA"
                         >
                           Staging Area
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-STKPILING"
                           value="STKPILING"
                         >
                           Stockpiling
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-STORAGE"
                           value="STORAGE"
                         >
                           Storage
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-TOURINFO"
                           value="TOURINFO"
                         >
                           Tourist Info
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-TRAIL"
                           value="TRAIL"
                         >
                           Trail
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-UTILINFRA"
                           value="UTILINFRA"
                         >
                           Utilities-infrastructure
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-UTILOHDXG"
                           value="UTILOHDXG"
                         >
                           Utilities-overhead xing
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-UTILUGDXG"
                           value="UTILUGDXG"
                         >
                           Utilities-underground xing
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-WATERRES"
                           value="WATERRES"
                         >
                           Water Reservoir
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-WEIGHSCL"
                           value="WEIGHSCL"
                         >
                           Weigh Scale
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-XING"
                           value="XING"
                         >
                           Crossing
@@ -1890,18 +1971,21 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                     </option>
                     <option
                       class="option"
+                      data-testid="select-option-HQ"
                       value="HQ"
                     >
                       Headquarters
                     </option>
                     <option
                       class="option"
+                      data-testid="select-option-PROJECT"
                       value="PROJECT"
                     >
                       Project
                     </option>
                     <option
                       class="option"
+                      data-testid="select-option-REGION"
                       value="REGION"
                     >
                       Region
@@ -1970,18 +2054,21 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-HQ"
                           value="HQ"
                         >
                           Headquarters
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-PROJECT"
                           value="PROJECT"
                         >
                           Project
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-REGION"
                           value="REGION"
                         >
                           Region

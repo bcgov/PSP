@@ -2,7 +2,10 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/index';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import {
+  mockAcquisitionFileOwnersResponse,
+  mockAcquisitionFileResponse,
+} from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNotesResponse } from 'mocks/mockNoteResponses';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -77,6 +80,9 @@ describe('AcquisitionContainer component', () => {
     mockAxios
       .onGet(new RegExp('acquisitionfiles/1/properties'))
       .reply(200, mockAcquisitionFileResponse().fileProperties);
+    mockAxios
+      .onGet(new RegExp('acquisitionfiles/1/owners'))
+      .reply(200, mockAcquisitionFileOwnersResponse());
     mockAxios.onGet(new RegExp('acquisitionfiles/*')).reply(200, mockAcquisitionFileResponse());
     mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
   });

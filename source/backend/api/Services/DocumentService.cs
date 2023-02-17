@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Repositories.Mayan;

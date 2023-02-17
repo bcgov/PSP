@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { PropertyTenureFormModel } from './models';
 
 export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
-  municipalZoning: Yup.string().max(100),
+  municipalZoning: Yup.string().max(100, 'Zoning must be at most 100 characters'),
   tenures: Yup.array().of(
     Yup.object().shape({
       typeCode: Yup.string(),
@@ -34,4 +34,11 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
     otherwise: Yup.string().nullable(),
   }),
   notes: Yup.string().max(4000, 'Notes must be less than 4000 characters'),
+  address: Yup.object().shape({
+    streetAddress1: Yup.string().max(200, 'Address (line 1) must be at most 200 characters'),
+    streetAddress2: Yup.string().max(200, 'Address (line 2) must be at most 200 characters'),
+    streetAddress3: Yup.string().max(200, 'Address (line 3) must be at most 200 characters'),
+    municipality: Yup.string().max(200, 'City must be at most 200 characters'),
+    postal: Yup.string().max(20, 'Postal must be at most 20 characters'),
+  }),
 });

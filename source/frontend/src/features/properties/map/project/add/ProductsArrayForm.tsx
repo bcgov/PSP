@@ -3,13 +3,13 @@ import GenericModal from 'components/common/GenericModal';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, FieldArrayRenderProps, FormikProps, useFormikContext } from 'formik';
-import { useProductProvider } from 'hooks/providers/useProductProvider';
+import { useProductProvider } from 'hooks/repositories/useProductProvider';
 import React, { useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { ProductForm, ProjectForm } from './models';
+import { ProductForm, ProjectForm } from '../models';
 import ProductSubForm from './ProductSubForm';
 
 export interface IProductsArrayFormProps {

@@ -76,7 +76,7 @@ namespace Pims.Core.Test
         {
             return new Entity.PimsNote()
             {
-                Id = id,
+                Internal_Id = id,
                 NoteTxt = note,
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = "admin",

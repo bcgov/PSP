@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsProduct, ProductModel>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentProject, src => src.ParentProject)
                 .Map(dest => dest.AcquisitionFiles, src => src.PimsAcquisitionFiles)
                 .Map(dest => dest.Code, src => src.Code)
@@ -21,7 +21,7 @@ namespace Pims.Api.Models.Concepts
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<ProductModel, Entity.PimsProduct>()
-               .Map(dest => dest.Id, src => src.Id)
+               .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.ParentProjectId, src => src.ParentProject.Id)
                 .Map(dest => dest.PimsAcquisitionFiles, src => src.AcquisitionFiles)
                 .Map(dest => dest.Code, src => src.Code)

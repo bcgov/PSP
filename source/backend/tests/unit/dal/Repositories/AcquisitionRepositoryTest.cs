@@ -5,6 +5,7 @@ using FluentAssertions;
 using Moq;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
@@ -22,6 +23,71 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Tests
+
+        #region GetPage
+        [Fact]
+        public void GetPage_AcquisitionName()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.FileName = "fileName";
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileName" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPage_AcquisitionNumber()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.FileNumber = "fileNumber";
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileNumber" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPage_AcquisitionHistoricalNumber()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.LegacyFileNumber = "legacy";
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "legacy" };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPage(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+        #endregion
 
         #region Add
         [Fact]

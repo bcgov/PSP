@@ -47,7 +47,7 @@ namespace Pims.Api.Models.Auth
         /// <param name="user"></param>
         public UserModel(Entity.PimsUser user)
         {
-            this.Id = user.Id;
+            this.Id = user.Internal_Id;
             this.Key = user.GuidIdentifierValue.Value;
         }
         #endregion

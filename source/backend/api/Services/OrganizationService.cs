@@ -39,19 +39,19 @@ namespace Pims.Api.Services
             var createdOrganization = _organizationRepository.Add(organization, userOverride);
             _organizationRepository.CommitTransaction();
 
-            return GetOrganization(createdOrganization.Id);
+            return GetOrganization(createdOrganization.Internal_Id);
         }
 
         public PimsOrganization UpdateOrganization(PimsOrganization organization, long rowVersion)
         {
             organization.ThrowIfNull(nameof(organization));
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
-            ValidateRowVersion(organization.Id, rowVersion);
+            ValidateRowVersion(organization.Internal_Id, rowVersion);
 
             var updatedOrganization = _organizationRepository.Update(organization);
             _organizationRepository.CommitTransaction();
 
-            return GetOrganization(updatedOrganization.Id);
+            return GetOrganization(updatedOrganization.Internal_Id);
         }
 
         public void ValidateRowVersion(long organizationId, long rowVersion)

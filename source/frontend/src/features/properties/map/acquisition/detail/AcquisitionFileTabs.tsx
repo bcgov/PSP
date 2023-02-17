@@ -8,6 +8,8 @@ import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
 
 import { ActivityListView } from '../../activity/list/ActivityListView';
+import AgreementForm from '../../shared/detail/AgreementForm';
+import AgreementFormContainer from '../../shared/detail/AgreementFormContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
 import { EditFormNames } from '../EditFormNames';
 import AcquisitionDocumentsTab from './AcquisitionDocumentsTab';
@@ -68,6 +70,12 @@ export const AcquisitionFileTabs: React.FunctionComponent<
       name: 'Notes',
     });
   }
+
+  tabViews.push({
+    content: <AgreementFormContainer View={AgreementForm}></AgreementFormContainer>,
+    key: FileTabNames.forms,
+    name: 'Forms',
+  });
 
   var defaultTab = FileTabNames.fileDetails;
 

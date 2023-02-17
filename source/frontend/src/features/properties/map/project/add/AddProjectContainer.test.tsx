@@ -7,10 +7,10 @@ import { mockLookups } from 'mocks/mockLookups';
 import { mockProjectPostResponse } from 'mocks/mockProjects';
 import { Api_Project } from 'models/api/Project';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
+import { ProjectForm } from '../models';
 import AddProjectContainer, { IAddProjectContainerProps } from './AddProjectContainer';
-import { ProjectForm } from './models';
 
 jest.mock('@react-keycloak/web');
 
@@ -121,17 +121,22 @@ describe('AddProjectContainer component', () => {
       getSummaryTextbox,
     } = setup(DEFAULT_PROPS);
 
-    await waitFor(() => userEvent.paste(getNameTextbox(), formValues.projectName as string));
-    await waitFor(() => userEvent.paste(getNumberTextbox(), formValues.projectNumber as string));
-    userEvent.selectOptions(getRegionDropdown(), formValues.region.toString());
-    userEvent.selectOptions(getStatusDropdown(), formValues.projectStatusType as string);
-    await waitFor(() => userEvent.paste(getSummaryTextbox(), formValues.summary as string));
+    await act(async () => userEvent.paste(getNameTextbox(), formValues.projectName as string));
+    await act(async () => userEvent.paste(getNumberTextbox(), formValues.projectNumber as string));
+    await act(async () =>
+      userEvent.selectOptions(getRegionDropdown(), formValues.region?.toString() as string),
+    );
+    await act(async () =>
+      userEvent.selectOptions(getStatusDropdown(), formValues.projectStatusType as string),
+    );
+    await act(async () => userEvent.paste(getSummaryTextbox(), formValues.summary as string));
 
     mockAxios
       .onPost()
       .reply(
         201,
         mockProjectPostResponse(
+          1,
           1,
           formValues.projectName,
           formValues.projectNumber,
@@ -140,7 +145,7 @@ describe('AddProjectContainer component', () => {
           formValues.summary,
         ),
       );
-    userEvent.click(getSaveButton());
+    act(() => userEvent.click(getSaveButton()));
 
     await waitFor(() => {
       const axiosData: Api_Project = JSON.parse(mockAxios.history.post[0].data);

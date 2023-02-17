@@ -42,7 +42,7 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
                   <option>Select an Activity type</option>
                   {props.activityTypes?.map(types => {
                     return (
-                      <option value={types.id}>
+                      <option value={types.id} key={'activity-type-' + types.id}>
                         {types.activityTemplateTypeCode?.description}
                       </option>
                     );

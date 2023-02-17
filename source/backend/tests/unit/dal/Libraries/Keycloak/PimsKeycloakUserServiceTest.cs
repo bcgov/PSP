@@ -71,7 +71,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             });
             roleRepository.Setup(m => m.Find(removeRole.RoleId)).Returns(removeRole);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addUserRole = user.PimsUserRoles.First();
             addUserRole.RoleId = 2;
             addUserRole.Role.RoleId = 2;
@@ -83,7 +83,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var result = await service.UpdateUserAsync(user);
 
             // Assert
-            result.Id.Should().Be(user.Id);
+            result.Internal_Id.Should().Be(user.Internal_Id);
             result.BusinessIdentifierValue.Should().Be(user.BusinessIdentifierValue);
             result.Person.FirstName.Should().Be(user.Person.FirstName);
             result.Person.Surname.Should().Be(user.Person.Surname);
@@ -131,7 +131,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
             roleRepository.Setup(m => m.Find(removeRole.RoleId)).Returns(removeRole);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addUserRole = user.PimsUserRoles.First();
             addUserRole.RoleId = 2;
             addUserRole.Role.RoleId = 2;
@@ -142,7 +142,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var result = await service.UpdateUserAsync(user);
 
             // Assert
-            result.Id.Should().Be(user.Id);
+            result.Internal_Id.Should().Be(user.Internal_Id);
             result.BusinessIdentifierValue.Should().Be(user.BusinessIdentifierValue);
             result.Person.FirstName.Should().Be(user.Person.FirstName);
             result.Person.Surname.Should().Be(user.Person.Surname);
@@ -266,7 +266,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addRole = user.GetRoles().First();
             addRole.KeycloakGroupId = Guid.NewGuid();
             roleRepository.Setup(m => m.Find(addRole.RoleId)).Returns<Entity.PimsRole>(null);
@@ -312,7 +312,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
             roleRepository.Setup(m => m.Find(removeRole.RoleId)).Returns<Entity.PimsRole>(null);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addRole = user.GetRoles().First();
             addRole.RoleId = 2;
             addRole.KeycloakGroupId = Guid.NewGuid();
@@ -365,7 +365,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             });
             roleRepository.Setup(m => m.Find(existingRole.RoleId)).Returns(existingRole);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addUserRole = user.PimsUserRoles.First();
             addUserRole.RoleId = 2;
             addUserRole.Role.RoleId = 2;
@@ -398,7 +398,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
                 Username = euser.BusinessIdentifierValue,
-                Attributes = new Dictionary<string, string[]>() { {"idir_username", new string[1] {"serviceaccount"} } }
+                Attributes = new Dictionary<string, string[]>() { { "idir_username", new string[1] { "serviceaccount" } } }
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
@@ -415,7 +415,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             userRepository.Setup(m => m.UpdateOnly(Capture.In(values))).Returns(euser);
             roleRepository.Setup(m => m.Find(existingRole.RoleId)).Returns(existingRole);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             user.Person.PimsContactMethods.Clear();
             var updatedContactMethod = new Entity.PimsContactMethod() { ContactMethodValue = "update contact method", ContactMethodTypeCode = ContactMethodTypes.WorkEmail };
             user.Person.PimsContactMethods.Add(updatedContactMethod);
@@ -454,7 +454,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addRole = user.PimsUserRoles.First();
             addRole.RoleId = 2;
             addRole.Role.KeycloakGroupId = null;
@@ -490,7 +490,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addRole = user.PimsUserRoles.First();
             addRole.RoleId = 2;
             addRole.Role.KeycloakGroupId = Guid.NewGuid();

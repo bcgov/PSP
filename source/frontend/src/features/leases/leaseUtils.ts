@@ -45,7 +45,7 @@ export const formLeaseToApiLease = (formLease: IFormLease): ILease => {
       leaseId: formLease.id ?? 0,
       organizationId: !tenant.personId ? tenant.organizationId : undefined,
       personId: tenant.personId,
-      primaryContactId: tenant?.primaryContactId,
+      primaryContactId: stringToNull(tenant?.primaryContactId),
       note: tenant.note,
       tenantTypeCode: toTypeCode(tenant.tenantType),
     })),

@@ -5,7 +5,7 @@ import { ContactMethodTypes } from 'constants/contactMethodType';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import CreateOrganizationForm from './CreateOrganizationForm';
 
@@ -46,7 +46,7 @@ describe('CreateOrganizationForm', () => {
     it('should cancel the form and navigate to Contacts List view', async () => {
       const { getCancelButton } = setup();
       const cancel = getCancelButton();
-      userEvent.click(cancel);
+      await act(async () => userEvent.click(cancel));
       await waitFor(() => expect(history.location.pathname).toBe('/contact/list'));
     });
   });
@@ -66,7 +66,7 @@ describe('CreateOrganizationForm', () => {
       );
 
       const save = getSaveButton();
-      userEvent.click(save);
+      act(() => userEvent.click(save));
 
       await waitFor(() => {
         expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(expectedFormData));

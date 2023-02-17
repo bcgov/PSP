@@ -87,7 +87,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c23.btn {
+  .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -117,49 +117,49 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c23.btn:hover {
+.c12.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c23.btn:focus {
+.c12.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c23.btn.btn-primary {
+.c12.btn.btn-primary {
   border: none;
 }
 
-.c23.btn.btn-secondary {
+.c12.btn.btn-secondary {
   background: none;
 }
 
-.c23.btn.btn-info {
+.c12.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c23.btn.btn-info:hover,
-.c23.btn.btn-info:active,
-.c23.btn.btn-info:focus {
+.c12.btn.btn-info:hover,
+.c12.btn.btn-info:active,
+.c12.btn.btn-info:focus {
   background: none;
 }
 
-.c23.btn.btn-light {
+.c12.btn.btn-light {
   border: none;
 }
 
-.c23.btn.btn-dark {
+.c12.btn.btn-dark {
   border: none;
 }
 
-.c23.btn.btn-link {
+.c12.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -180,9 +180,9 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c23.btn.btn-link:hover,
-.c23.btn.btn-link:active,
-.c23.btn.btn-link:focus {
+.c12.btn.btn-link:hover,
+.c12.btn.btn-link:active,
+.c12.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -191,14 +191,14 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c23.btn.btn-link:disabled,
-.c23.btn.btn-link.disabled {
+.c12.btn.btn-link:disabled,
+.c12.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c23.btn:disabled,
-.c23.btn:disabled:hover {
+.c12.btn:disabled,
+.c12.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -209,65 +209,65 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c23.Button .Button__icon {
+.c12.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c23.Button--icon-only:focus {
+.c12.Button--icon-only:focus {
   outline: none;
 }
 
-.c23.Button--icon-only .Button__icon {
+.c12.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c21 {
+.c23 {
   padding-right: 0;
 }
 
-.c21 .form-control {
+.c23 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c22:not(:first-child) {
+.c24:not(:first-child) {
   padding-left: 0;
 }
 
-.c22:not(:first-child) .form-control {
+.c24:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c24 {
+.c25 {
   font-size: 1.4rem;
 }
 
-.c12 {
+.c15 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c12 .nav-tabs {
+.c15 .nav-tabs {
   height: 2.4rem;
 }
 
-.c12 .nav-item {
+.c15 .nav-item {
   min-width: 7rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c12 .nav-item:hover {
+.c15 .nav-item:hover {
   border-color: transparent;
 }
 
-.c12 .nav-item.active {
+.c15 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c14 {
+.c16 {
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   border-bottom: solid 0.2rem;
@@ -290,7 +290,20 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   width: 100%;
 }
 
+.c11 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
 .c4 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c6 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -301,7 +314,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   margin-bottom: 1rem;
 }
 
-.c8 {
+.c10 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -312,53 +325,40 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   line-height: 24px;
 }
 
-.c7 {
+.c9 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c6 {
+.c8 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c5 {
+.c7 {
   cursor: pointer;
 }
 
-.c25 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c13 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
-.c16:hover {
-  cursor: pointer;
-}
-
-.c19.required::before {
+.c21.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c18 {
+.c20 {
   font-weight: bold;
 }
 
-.c15.c15.c15 input,
-.c15.c15.c15 select,
-.c15.c15.c15 textarea {
+.c18:hover {
+  cursor: pointer;
+}
+
+.c17.c17.c17 input,
+.c17.c17.c17 select,
+.c17.c17.c17 textarea {
   background: none;
   border: none;
   resize: none;
@@ -368,50 +368,50 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c15.c15.c15 .form-label {
+.c17.c17.c17 .form-label {
   font-weight: bold;
 }
 
-.c17 {
+.c19 {
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c10 {
+.c13 {
   height: 100%;
 }
 
-.c10 .nav-tabs {
+.c13 .nav-tabs {
   height: 2.4rem;
 }
 
-.c10 .tab-content {
+.c13 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.4rem);
   overflow-y: auto;
 }
 
-.c10 .tab-content .tab-pane {
+.c13 .tab-content .tab-pane {
   position: relative;
 }
 
-.c11 {
+.c14 {
   height: auto;
 }
 
-.c11.tab-content {
+.c14.tab-content {
   height: auto;
 }
 
-.c20 {
+.c22 {
   border-radius: 0.5rem;
 }
 
-.c20 .idir-input-group .input-group-prepend select {
+.c22 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c20 .idir-input-group input {
+.c22 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
@@ -424,14 +424,14 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c9 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-}
-
-.c3 input.form-control {
+.c5 input.form-control {
   min-width: 50rem;
   max-width: 50rem;
+}
+
+.c3 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .c2 {
@@ -463,677 +463,748 @@ exports[`AddResearchContainer component renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="py-4 no-gutters row"
+          class="c3"
         >
           <div
-            class="pr-5 col-auto"
-          >
-            <strong>
-              Name this research file:
-            </strong>
-          </div>
-          <div
-            class="col-auto"
+            class="c4 form-section"
           >
             <div
-              class="c3 input form-group"
+              class="collapse show"
             >
-              <input
-                class="form-control"
-                id="input-name"
-                name="name"
-                placeholder="Road name - Descriptive text"
-                title=""
-                value=""
-              />
-            </div>
-            A unique file number will be generated for this research file on save.
-          </div>
-        </div>
-        <h2
-          class="c4"
-        >
-          <div
-            class="c5 no-gutters row"
-          >
-            <div
-              class="col"
-            >
-              <svg
-                class="c6"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                />
-              </svg>
-              Help with choosing a name
-            </div>
-            <div
-              class="col-1"
-            >
-              <svg
-                class="c7"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M7 10l5 5 5-5z"
-                />
-              </svg>
-            </div>
-          </div>
-        </h2>
-        <div
-          class="c8 collapse"
-        >
-          <p
-            class="mb-4"
-          >
-            Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
-          </p>
-          <ul>
-            <li>
-              Ministry project name
-            </li>
-            <li>
-              Name of the area
-            </li>
-            <li>
-              Name of the MoTI highway district
-            </li>
-            <li>
-              Name of the enquirer
-            </li>
-            <li>
-              Legal description
-            </li>
-          </ul>
-          <p
-            class="mb-4 mt-3"
-          >
-            If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
-          </p>
-          <p>
-            <b>
-              Note:
-            </b>
-             This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
-          </p>
-        </div>
-        <h2
-          class="c9"
-        >
-          Properties to include in this file:
-        </h2>
-        <div
-          class="py-2"
-        >
-          Select one or more properties that you want to include in this research file. You can choose a location from the map, or search by other criteria.
-        </div>
-        <div
-          class="py-3 no-gutters row"
-        >
-          <div
-            class="col"
-          >
-            <div
-              class="c10 c11"
-            >
-              <nav
-                class="c12 nav nav-tabs"
-                role="tablist"
-              >
-                <a
-                  aria-selected="true"
-                  class="nav-item nav-link active"
-                  data-rb-event-key="map"
-                  href="#"
-                  role="tab"
-                >
-                  Locate on Map
-                </a>
-                <a
-                  aria-selected="false"
-                  class="nav-item nav-link"
-                  data-rb-event-key="list"
-                  href="#"
-                  role="tab"
-                >
-                  Search
-                </a>
-              </nav>
               <div
-                class="tab-content"
+                class="py-4 no-gutters row"
               >
                 <div
-                  aria-hidden="false"
-                  class="fade tab-pane active show"
-                  role="tabpanel"
+                  class="pr-5 col-auto"
                 >
-                  <div
-                    class="c13 form-section"
-                  >
-                    <div
-                      class="collapse show"
-                    >
-                      <h3
-                        class="c14"
-                      >
-                        Select a property
-                      </h3>
-                      <div
-                        class="c15 row"
-                      >
-                        <div
-                          class="col-md-4"
-                        >
-                          <div
-                            class="d-flex flex-column align-items-center"
-                          >
-                            <svg
-                              class="c16"
-                              height="97"
-                              title="select properties on the map"
-                              width="97"
-                            >
-                              icon-draft.svg
-                            </svg>
-                            <ol>
-                              <li>
-                                Click pin above
-                              </li>
-                              <li>
-                                Position it on the map
-                              </li>
-                            </ol>
-                          </div>
-                        </div>
-                        <div
-                          class="col-md-8"
-                        >
-                          <div
-                            class="row"
-                          >
-                            <div
-                              class="c17 col"
-                            >
-                              Selected property attributes
-                            </div>
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c18"
-                              >
-                                PID:
-                              </label>
-                            </div>
-                            <div
-                              class="c19 text-left col"
-                            />
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c18"
-                              >
-                                Plan #:
-                              </label>
-                            </div>
-                            <div
-                              class="c19 text-left col"
-                            />
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c18"
-                              >
-                                Address:
-                              </label>
-                            </div>
-                            <div
-                              class="c19 text-left col"
-                            />
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c18"
-                              >
-                                Region:
-                              </label>
-                            </div>
-                            <div
-                              class="c19 text-left col"
-                            />
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c18"
-                              >
-                                District:
-                              </label>
-                            </div>
-                            <div
-                              class="c19 text-left col"
-                            />
-                          </div>
-                          <div
-                            class="row"
-                          >
-                            <div
-                              class="col-md-12"
-                            >
-                              <label
-                                class="form-label"
-                              >
-                                Legal Description:
-                              </label>
-                            </div>
-                            <div
-                              class="col-md-12"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <strong>
+                    Name this research file:
+                  </strong>
                 </div>
                 <div
-                  aria-hidden="true"
-                  class="fade tab-pane"
-                  role="tabpanel"
+                  class="col-auto"
                 >
                   <div
-                    class="c13 form-section"
+                    class="c5 input form-group"
                   >
-                    <div
-                      class="collapse show"
+                    <input
+                      class="form-control"
+                      id="input-name"
+                      name="name"
+                      placeholder="Road name - Descriptive text"
+                      title=""
+                      value=""
+                    />
+                  </div>
+                  A unique file number will be generated for this research file on save.
+                </div>
+              </div>
+              <h2
+                class="c6"
+              >
+                <div
+                  class="c7 no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <h3
-                        class="c14"
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                    Help with choosing a name
+                  </div>
+                  <div
+                    class="col-1"
+                  >
+                    <svg
+                      class="c9"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="c10 collapse"
+              >
+                <p
+                  class="mb-4"
+                >
+                  Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
+                </p>
+                <ul>
+                  <li>
+                    Ministry project name
+                  </li>
+                  <li>
+                    Name of the area
+                  </li>
+                  <li>
+                    Name of the MoTI highway district
+                  </li>
+                  <li>
+                    Name of the enquirer
+                  </li>
+                  <li>
+                    Legal description
+                  </li>
+                </ul>
+                <p
+                  class="mb-4 mt-3"
+                >
+                  If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
+                </p>
+                <p>
+                  <b>
+                    Note:
+                  </b>
+                   This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c11"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Project
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <button
+                class="c12 Button btn btn-link"
+                data-testid="add-project"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  + Add another project
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c11"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Properties to include in this file:
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="py-2"
+              >
+                Select one or more properties that you want to include in this research file. You can choose a location from the map, or search by other criteria.
+              </div>
+              <div
+                class="py-3 no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="c13 c14"
+                  >
+                    <nav
+                      class="c15 nav nav-tabs"
+                      role="tablist"
+                    >
+                      <a
+                        aria-selected="true"
+                        class="nav-item nav-link active"
+                        data-rb-event-key="map"
+                        href="#"
+                        role="tab"
                       >
-                        Search for a property
-                      </h3>
-                      <form
-                        class="c20 p-3"
-                        novalidate=""
+                        Locate on Map
+                      </a>
+                      <a
+                        aria-selected="false"
+                        class="nav-item nav-link"
+                        data-rb-event-key="list"
+                        href="#"
+                        role="tab"
+                      >
+                        Search
+                      </a>
+                    </nav>
+                    <div
+                      class="tab-content"
+                    >
+                      <div
+                        aria-hidden="false"
+                        class="fade tab-pane active show"
+                        role="tabpanel"
                       >
                         <div
-                          class="row"
+                          class="c4 form-section"
                         >
                           <div
-                            class="col-xl-6"
+                            class="collapse show"
                           >
+                            <h3
+                              class="c16"
+                            >
+                              Select a property
+                            </h3>
                             <div
-                              class="flex-nowrap input-group row"
+                              class="c17 row"
                             >
                               <div
-                                class="c21 col-auto"
+                                class="col-md-4"
                               >
                                 <div
-                                  class="input-group-prepend"
+                                  class="d-flex flex-column align-items-center"
                                 >
-                                  <div
-                                    class="form-group"
+                                  <svg
+                                    class="c18"
+                                    height="97"
+                                    title="select properties on the map"
+                                    width="97"
                                   >
-                                    <select
-                                      class="form-select form-control"
-                                      id="input-searchBy"
-                                      name="searchBy"
-                                    >
-                                      <option
-                                        class="option"
-                                        value="pid"
-                                      >
-                                        PID
-                                      </option>
-                                      <option
-                                        class="option"
-                                        value="pin"
-                                      >
-                                        PIN
-                                      </option>
-                                      <option
-                                        class="option"
-                                        value="address"
-                                      >
-                                        Address
-                                      </option>
-                                      <option
-                                        class="option"
-                                        value="planNumber"
-                                      >
-                                        Plan #
-                                      </option>
-                                      <option
-                                        class="option"
-                                        value="legalDescription"
-                                      >
-                                        Legal Description
-                                      </option>
-                                    </select>
-                                  </div>
+                                    icon-draft.svg
+                                  </svg>
+                                  <ol>
+                                    <li>
+                                      Click pin above
+                                    </li>
+                                    <li>
+                                      Position it on the map
+                                    </li>
+                                  </ol>
                                 </div>
                               </div>
                               <div
-                                class="c22 col"
+                                class="col-md-8"
                               >
                                 <div
-                                  class="input form-group"
+                                  class="row"
                                 >
-                                  <input
-                                    class="form-control"
-                                    id="input-pid"
-                                    name="pid"
-                                    placeholder="Enter a PID"
-                                    title=""
-                                    value=""
+                                  <div
+                                    class="c19 col"
+                                  >
+                                    Selected property attributes
+                                  </div>
+                                </div>
+                                <div
+                                  class="pb-2 row"
+                                >
+                                  <div
+                                    class="pr-0 text-left col-4"
+                                  >
+                                    <label
+                                      class="c20"
+                                    >
+                                      PID:
+                                    </label>
+                                  </div>
+                                  <div
+                                    class="c21 text-left col"
+                                  />
+                                </div>
+                                <div
+                                  class="pb-2 row"
+                                >
+                                  <div
+                                    class="pr-0 text-left col-4"
+                                  >
+                                    <label
+                                      class="c20"
+                                    >
+                                      Plan #:
+                                    </label>
+                                  </div>
+                                  <div
+                                    class="c21 text-left col"
+                                  />
+                                </div>
+                                <div
+                                  class="pb-2 row"
+                                >
+                                  <div
+                                    class="pr-0 text-left col-4"
+                                  >
+                                    <label
+                                      class="c20"
+                                    >
+                                      Address:
+                                    </label>
+                                  </div>
+                                  <div
+                                    class="c21 text-left col"
+                                  />
+                                </div>
+                                <div
+                                  class="pb-2 row"
+                                >
+                                  <div
+                                    class="pr-0 text-left col-4"
+                                  >
+                                    <label
+                                      class="c20"
+                                    >
+                                      Region:
+                                    </label>
+                                  </div>
+                                  <div
+                                    class="c21 text-left col"
+                                  />
+                                </div>
+                                <div
+                                  class="pb-2 row"
+                                >
+                                  <div
+                                    class="pr-0 text-left col-4"
+                                  >
+                                    <label
+                                      class="c20"
+                                    >
+                                      District:
+                                    </label>
+                                  </div>
+                                  <div
+                                    class="c21 text-left col"
+                                  />
+                                </div>
+                                <div
+                                  class="row"
+                                >
+                                  <div
+                                    class="col-md-12"
+                                  >
+                                    <label
+                                      class="form-label"
+                                    >
+                                      Legal Description:
+                                    </label>
+                                  </div>
+                                  <div
+                                    class="col-md-12"
                                   />
                                 </div>
                               </div>
                             </div>
                           </div>
+                        </div>
+                      </div>
+                      <div
+                        aria-hidden="true"
+                        class="fade tab-pane"
+                        role="tabpanel"
+                      >
+                        <div
+                          class="c4 form-section"
+                        >
                           <div
-                            class="pr-0 col-xl-2"
+                            class="collapse show"
                           >
+                            <h3
+                              class="c16"
+                            >
+                              Search for a property
+                            </h3>
+                            <form
+                              class="c22 p-3"
+                              novalidate=""
+                            >
+                              <div
+                                class="row"
+                              >
+                                <div
+                                  class="col-xl-6"
+                                >
+                                  <div
+                                    class="flex-nowrap input-group row"
+                                  >
+                                    <div
+                                      class="c23 col-auto"
+                                    >
+                                      <div
+                                        class="input-group-prepend"
+                                      >
+                                        <div
+                                          class="form-group"
+                                        >
+                                          <select
+                                            class="form-select form-control"
+                                            id="input-searchBy"
+                                            name="searchBy"
+                                          >
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-pid"
+                                              value="pid"
+                                            >
+                                              PID
+                                            </option>
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-pin"
+                                              value="pin"
+                                            >
+                                              PIN
+                                            </option>
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-address"
+                                              value="address"
+                                            >
+                                              Address
+                                            </option>
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-planNumber"
+                                              value="planNumber"
+                                            >
+                                              Plan #
+                                            </option>
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-legalDescription"
+                                              value="legalDescription"
+                                            >
+                                              Legal Description
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="c24 col"
+                                    >
+                                      <div
+                                        class="input form-group"
+                                      >
+                                        <input
+                                          class="form-control"
+                                          id="input-pid"
+                                          name="pid"
+                                          placeholder="Enter a PID"
+                                          title=""
+                                          value=""
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="pr-0 col-xl-2"
+                                >
+                                  <div
+                                    class="row"
+                                  >
+                                    <div
+                                      class="pr-0 col"
+                                    >
+                                      <button
+                                        class="c12 Button Button--icon-only primary btn btn-primary"
+                                        data-testid="search"
+                                        id="search-button"
+                                        title="search"
+                                        type="button"
+                                      >
+                                        <div
+                                          class="Button__icon"
+                                        >
+                                          <svg
+                                            fill="currentColor"
+                                            height="20"
+                                            stroke="currentColor"
+                                            stroke-width="0"
+                                            viewBox="0 0 512 512"
+                                            width="20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                                            />
+                                          </svg>
+                                        </div>
+                                      </button>
+                                    </div>
+                                    <div
+                                      class="pl-0 col"
+                                    >
+                                      <button
+                                        class="c12 Button Button--icon-only btn btn-info"
+                                        data-testid="reset-button"
+                                        id="reset-button"
+                                        title="reset-button"
+                                        type="reset"
+                                      >
+                                        <div
+                                          class="Button__icon"
+                                        >
+                                          <svg
+                                            fill="currentColor"
+                                            height="20"
+                                            stroke="currentColor"
+                                            stroke-width="0"
+                                            viewBox="0 0 512 512"
+                                            width="20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                                            />
+                                          </svg>
+                                        </div>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        <div
+                          class="c4 form-section"
+                        >
+                          <div
+                            class="collapse show"
+                          >
+                            <div
+                              class="table"
+                              data-testid="map-properties"
+                              role="table"
+                            >
+                              <div
+                                class="thead thead-light"
+                              >
+                                <div
+                                  class="tr"
+                                  role="row"
+                                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                                >
+                                  <div
+                                    class="th"
+                                    colspan="1"
+                                    role="columnheader"
+                                    style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                  >
+                                    <div
+                                      class="sortable-column"
+                                    >
+                                      <div>
+                                        <input
+                                          data-testid="selectrow-parent"
+                                          name=""
+                                          style="cursor: pointer;"
+                                          title="Click to deselect all."
+                                          type="checkbox"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="th"
+                                    colspan="1"
+                                    role="columnheader"
+                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                  >
+                                    <div
+                                      class="sortable-column"
+                                    >
+                                      PID
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="th"
+                                    colspan="1"
+                                    role="columnheader"
+                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                  >
+                                    <div
+                                      class="sortable-column"
+                                    >
+                                      PIN
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="th"
+                                    colspan="1"
+                                    role="columnheader"
+                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                  >
+                                    <div
+                                      class="sortable-column"
+                                    >
+                                      Plan #
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="th"
+                                    colspan="1"
+                                    role="columnheader"
+                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                  >
+                                    <div
+                                      class="sortable-column"
+                                    >
+                                      Address
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="th"
+                                    colspan="1"
+                                    role="columnheader"
+                                    style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                  >
+                                    <div
+                                      class="sortable-column"
+                                    >
+                                      Legal Description
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="no-rows-message"
+                              >
+                                No results found for your search criteria.
+                              </div>
+                            </div>
                             <div
                               class="row"
                             >
                               <div
-                                class="pr-0 col"
+                                class="align-self-center col-auto"
+                              />
+                              <div
+                                class="ml-auto align-self-center col-auto"
                               >
-                                <button
-                                  class="c23 Button Button--icon-only primary btn btn-primary"
-                                  data-testid="search"
-                                  id="search-button"
-                                  title="search"
-                                  type="button"
+                                <p
+                                  class="c25"
                                 >
-                                  <div
-                                    class="Button__icon"
-                                  >
-                                    <svg
-                                      fill="currentColor"
-                                      height="20"
-                                      stroke="currentColor"
-                                      stroke-width="0"
-                                      viewBox="0 0 512 512"
-                                      width="20"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                                      />
-                                    </svg>
-                                  </div>
-                                </button>
+                                  0 selected
+                                </p>
                               </div>
                               <div
-                                class="pl-0 col"
-                              >
-                                <button
-                                  class="c23 Button Button--icon-only btn btn-info"
-                                  data-testid="reset-button"
-                                  id="reset-button"
-                                  title="reset-button"
-                                  type="reset"
-                                >
-                                  <div
-                                    class="Button__icon"
-                                  >
-                                    <svg
-                                      fill="currentColor"
-                                      height="20"
-                                      stroke="currentColor"
-                                      stroke-width="0"
-                                      viewBox="0 0 512 512"
-                                      width="20"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
-                                      />
-                                    </svg>
-                                  </div>
-                                </button>
-                              </div>
+                                class="align-self-center col-auto"
+                              />
                             </div>
                           </div>
                         </div>
-                      </form>
-                    </div>
-                  </div>
-                  <div
-                    class="c13 form-section"
-                  >
-                    <div
-                      class="collapse show"
-                    >
-                      <div
-                        class="table"
-                        data-testid="map-properties"
-                        role="table"
-                      >
-                        <div
-                          class="thead thead-light"
-                        >
-                          <div
-                            class="tr"
-                            role="row"
-                            style="display: flex; flex: 1 0 auto; min-width: 150px;"
-                          >
-                            <div
-                              class="th"
-                              colspan="1"
-                              role="columnheader"
-                              style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                            >
-                              <div
-                                class="sortable-column"
-                              >
-                                <div>
-                                  <input
-                                    data-testid="selectrow-parent"
-                                    name=""
-                                    style="cursor: pointer;"
-                                    title="Click to deselect all."
-                                    type="checkbox"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="th"
-                              colspan="1"
-                              role="columnheader"
-                              style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                            >
-                              <div
-                                class="sortable-column"
-                              >
-                                PID
-                              </div>
-                            </div>
-                            <div
-                              class="th"
-                              colspan="1"
-                              role="columnheader"
-                              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                            >
-                              <div
-                                class="sortable-column"
-                              >
-                                PIN
-                              </div>
-                            </div>
-                            <div
-                              class="th"
-                              colspan="1"
-                              role="columnheader"
-                              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                            >
-                              <div
-                                class="sortable-column"
-                              >
-                                Plan #
-                              </div>
-                            </div>
-                            <div
-                              class="th"
-                              colspan="1"
-                              role="columnheader"
-                              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                            >
-                              <div
-                                class="sortable-column"
-                              >
-                                Address
-                              </div>
-                            </div>
-                            <div
-                              class="th"
-                              colspan="1"
-                              role="columnheader"
-                              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                            >
-                              <div
-                                class="sortable-column"
-                              >
-                                Legal Description
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="no-rows-message"
-                        >
-                          No results found for your search criteria.
-                        </div>
-                      </div>
-                      <div
-                        class="row"
-                      >
-                        <div
-                          class="align-self-center col-auto"
-                        />
-                        <div
-                          class="ml-auto align-self-center col-auto"
-                        >
-                          <p
-                            class="c24"
-                          >
-                            0 selected
-                          </p>
-                        </div>
-                        <div
-                          class="align-self-center col-auto"
-                        />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="c13 form-section"
-        >
-          <h2
-            class="c25"
-          >
-            <div
-              class="no-gutters row"
-            >
               <div
-                class="col"
+                class="c4 form-section"
               >
-                Selected properties
-              </div>
-              <div
-                class="col-1"
-              />
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
-            <div
-              class="c26 no-gutters row"
-            >
-              <div
-                class="col-md-3"
-              >
-                Identifier
-              </div>
-              <div
-                class="col-md-9"
-              >
-                Provide a descriptive name for this land
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-property-selector-tooltip"
-                  id="property-selector-tooltip"
+                <h2
+                  class="c11"
                 >
-                  <svg
-                    class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    class="no-gutters row"
                   >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    <div
+                      class="col"
+                    >
+                      Selected properties
+                    </div>
+                    <div
+                      class="col-1"
                     />
-                  </svg>
-                </span>
+                  </div>
+                </h2>
+                <div
+                  class="collapse show"
+                >
+                  <div
+                    class="c26 no-gutters row"
+                  >
+                    <div
+                      class="col-md-3"
+                    >
+                      Identifier
+                    </div>
+                    <div
+                      class="col-md-9"
+                    >
+                      Provide a descriptive name for this land
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-property-selector-tooltip"
+                        id="property-selector-tooltip"
+                      >
+                        <svg
+                          class="tooltip-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <span>
+                    No Properties selected
+                  </span>
+                </div>
               </div>
             </div>
-            <span>
-              No Properties selected
-            </span>
           </div>
         </div>
       </div>

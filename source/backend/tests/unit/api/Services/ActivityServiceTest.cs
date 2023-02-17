@@ -66,7 +66,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = CreateActivityServiceWithPermissions();
-            
+
             var activity = EntityHelper.CreateActivity();
 
             var repository = _helper.GetService<Mock<IActivityRepository>>();

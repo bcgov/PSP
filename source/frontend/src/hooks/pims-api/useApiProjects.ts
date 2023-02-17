@@ -23,6 +23,8 @@ export const useApiProjects = () => {
           `/projects/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getProject: (id: number) => api.get<Api_Project>(`/projects/${id}`),
+      putProject: (project: Api_Project) =>
+        api.put<Api_Project>(`/projects/${project.id}`, project),
       getProjectProducts: (id: number) => api.get<Api_Product[]>(`/projects/${id}/products`),
     }),
     [api],

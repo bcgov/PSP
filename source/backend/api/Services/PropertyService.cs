@@ -70,7 +70,7 @@ namespace Pims.Api.Services
             var newProperty = _propertyRepository.Update(property);
             _propertyRepository.CommitTransaction();
 
-            return GetById(newProperty.Id);
+            return GetById(newProperty.Internal_Id);
         }
     }
 }
