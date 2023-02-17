@@ -15,6 +15,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
       mayanDocumentId: 13,
       documentType: {
         id: 12,
+        mayanId: undefined,
         documentType: 'Gazette',
         appCreateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateTimestamp: '2022-07-27T16:06:42.42',

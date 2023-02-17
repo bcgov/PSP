@@ -65,6 +65,8 @@ const mockDocument: ComposedDocument = {
       statusTypeCode: { id: 'AMEND', description: 'Amended' },
       fileName: 'NewFile.doc',
     },
+    parentId: undefined,
+    relationshipType: undefined,
   },
   mayanFileId: 2,
 };

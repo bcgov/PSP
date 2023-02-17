@@ -11,7 +11,7 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     accessor: 'code',
     align: 'center',
     clickable: false,
-    sortable: false,
+    sortable: true,
     width: 5,
     maxWidth: 20,
     Cell: (props: CellProps<ProjectSearchResultModel>) => (
@@ -25,7 +25,7 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     accessor: 'description',
     align: 'left',
     clickable: false,
-    sortable: false,
+    sortable: true,
     width: 45,
     maxWidth: 45,
     Cell: (props: CellProps<ProjectSearchResultModel>) => (
@@ -57,7 +57,7 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     accessor: 'lastUpdatedBy',
     align: 'left',
     clickable: false,
-    sortable: false,
+    sortable: true,
     width: 10,
     maxWidth: 20,
   },
@@ -65,7 +65,7 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     Header: 'Updated date',
     accessor: 'lastUpdatedDate',
     align: 'left',
-    sortable: false,
+    sortable: true,
     width: 10,
     Cell: (props: CellProps<ProjectSearchResultModel>) => {
       const updateDate = props.row.original.lastUpdatedDate;
