@@ -5,7 +5,6 @@ import SelectedPropertyRow from 'components/propertySelector/selectedPropertyLis
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
 
 import { useBcaAddress } from '../../hooks/useBcaAddress';
 import { AddressForm, PropertyForm } from '../../shared/models';
@@ -16,8 +15,7 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
   const { getPrimaryAddressByPid } = useBcaAddress();
 
   return (
-    <>
-      <StyledSectionHeader>Properties to include in this file:</StyledSectionHeader>
+    <Section header="Properties to include in this file:">
       <div className="py-2">
         Select one or more properties that you want to include in this research file. You can choose
         a location from the map, or search by other criteria.
@@ -63,14 +61,8 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
           </>
         )}
       </FieldArray>
-    </>
+    </Section>
   );
 };
 
 export default ResearchProperties;
-
-const StyledSectionHeader = styled.h2`
-  font-weight: bold;
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: 0.2rem ${props => props.theme.css.primaryColor} solid;
-`;
