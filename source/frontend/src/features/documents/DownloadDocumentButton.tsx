@@ -1,8 +1,8 @@
-import { AxiosResponse } from 'axios';
 import { LinkButton } from 'components/common/buttons';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import fileDownload from 'js-file-download';
+import { Api_FileDownload } from 'models/api/DocumentStorage';
 import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
@@ -21,7 +21,7 @@ const DownloadDocumentButton: React.FunctionComponent<
 
   async function downloadFile(mayanDocumentId: number, mayanFileId?: number) {
     if (mayanFileId !== undefined) {
-      const data = await provider.downloadDocumentFile(mayanDocumentId, mayanFileId);
+      const data = await provider.downloadWrappedDocumentFile(mayanDocumentId, mayanFileId);
       if (data) {
         showFile(data);
       } else {
@@ -30,7 +30,7 @@ const DownloadDocumentButton: React.FunctionComponent<
         );
       }
     } else {
-      const data = await provider.downloadDocumentFileLatest(mayanDocumentId);
+      const data = await provider.downloadWrappedDocumentFileLatest(mayanDocumentId);
       if (data) {
         showFile(data);
       } else {
@@ -41,19 +41,7 @@ const DownloadDocumentButton: React.FunctionComponent<
     }
   }
 
-  const showFile = async (
-    response: AxiosResponse<string | ArrayBuffer | ArrayBufferView | Blob, any>,
-  ) => {
-    const groups = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/g.exec(
-      response.headers['content-disposition'],
-    );
-    if (groups?.length) {
-      const fileName = groups[1].replace(/['"]/g, '');
-      fileDownload(response.data, fileName);
-    }
-  };
-
-  if (!props.isFileAvailable && !provider.downloadDocumentFileLoading) {
+  if (!props.isFileAvailable && !provider.downloadWrappedDocumentFileLoading) {
     return (
       <TooltipIcon
         toolTipId="document-not-available-tooltip"
@@ -65,10 +53,10 @@ const DownloadDocumentButton: React.FunctionComponent<
 
   return (
     <div>
-      <LoadingBackdrop show={provider.downloadDocumentFileLoading} />
+      <LoadingBackdrop show={provider.downloadWrappedDocumentFileLoading} />
       <LinkButton
         data-testid="document-download-button"
-        disabled={provider.downloadDocumentFileLoading}
+        disabled={provider.downloadWrappedDocumentFileLoading}
         onClick={() => {
           downloadFile(props.mayanDocumentId, props.mayanFileId);
         }}
@@ -77,6 +65,37 @@ const DownloadDocumentButton: React.FunctionComponent<
       </LinkButton>
     </div>
   );
+};
+
+export const showFile = async (response?: Api_FileDownload) => {
+  if (response !== undefined && response.size > 0) {
+    if (response.encodingType === 'base64') {
+      const blob = b64toBlob(response.filePayload, response.mimetype);
+      fileDownload(blob, response.fileName);
+    } else {
+      throw new Error('Only base64 encoding is supported');
+    }
+  }
+};
+
+export const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, { type: contentType });
+  return blob;
 };
 
 export default DownloadDocumentButton;

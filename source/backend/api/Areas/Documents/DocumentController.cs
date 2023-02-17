@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Policies;
@@ -86,20 +86,39 @@ namespace Pims.Api.Controllers
 
             var response = await _documentService.UpdateDocumentAsync(updateRequest);
             return new JsonResult(response);
-
         }
 
         /// <summary>
-        /// Downloads the file for the corresponding file and document id.
+        /// Downloads the file for the corresponding file and document id wrapped and encoded base64.
+        /// </summary>
+        [HttpGet("storage/{mayanDocumentId}/files/{mayanFileId}/download-wrapped")]
+        [HasPermission(Permissions.DocumentView)]
+        [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
+        [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        public async Task<IActionResult> DownloadWrappedFile(long mayanDocumentId, long mayanFileId)
+        {
+            var result = await _documentService.DownloadFileAsync(mayanDocumentId, mayanFileId);
+            return new JsonResult(result.Payload);
+        }
+
+        /// <summary>
+        /// Downloads the file for the corresponding file and document id and returns a stream.
         /// </summary>
         [HttpGet("storage/{mayanDocumentId}/files/{mayanFileId}/download")]
         [HasPermission(Permissions.DocumentView)]
-        [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
+        [ProducesResponseType(typeof(FileContentResult), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public async Task<IActionResult> DownloadFile(long mayanDocumentId, long mayanFileId)
         {
             var result = await _documentService.DownloadFileAsync(mayanDocumentId, mayanFileId);
-            return new FileStreamResult(result.Payload.FilePayload, result.Payload.Mimetype) { FileDownloadName = result.Payload.FileName };
+
+            if (result?.Payload == null)
+            {
+                return new NotFoundResult();
+            }
+
+            byte[] fileBytes = System.Convert.FromBase64String(result.Payload.FilePayload);
+            return new FileContentResult(fileBytes, result.Payload.Mimetype) { FileDownloadName = result.Payload.FileName };
         }
 
         /// <summary>
@@ -156,20 +175,39 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
+        /// Downloads the latest file for the corresponding document id wrapped and encoded as base64.
+        /// </summary>
+        [HttpGet("storage/{mayanDocumentId}/download-wrapped")]
+        [HasPermission(Permissions.DocumentView)]
+        [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
+        [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        public async Task<IActionResult> DownloadWrappedFile(long mayanDocumentId)
+        {
+            var result = await _documentService.DownloadFileLatestAsync(mayanDocumentId);
+            if (result?.Payload == null)
+            {
+                return new NotFoundResult();
+            }
+            return new JsonResult(result.Payload);
+        }
+
+        /// <summary>
         /// Downloads the latest file for the corresponding document id.
         /// </summary>
         [HttpGet("storage/{mayanDocumentId}/download")]
         [HasPermission(Permissions.DocumentView)]
-        [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
+        [ProducesResponseType(typeof(FileContentResult), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public async Task<IActionResult> DownloadFile(long mayanDocumentId)
         {
             var result = await _documentService.DownloadFileLatestAsync(mayanDocumentId);
-            if(result?.Payload == null)
+            if (result?.Payload == null)
             {
                 return new NotFoundResult();
             }
-            return new FileStreamResult(result.Payload?.FilePayload, result.Payload?.Mimetype) { FileDownloadName = result.Payload?.FileName };
+
+            byte[] fileBytes = System.Convert.FromBase64String(result.Payload.FilePayload);
+            return new FileContentResult(fileBytes, result.Payload.Mimetype) { FileDownloadName = result.Payload.FileName };
         }
 
         /// <summary>

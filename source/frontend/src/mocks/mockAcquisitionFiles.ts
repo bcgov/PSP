@@ -1,4 +1,4 @@
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { Api_AcquisitionFile, Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 
 export const mockAcquisitionFileResponse = (
   id = 1,
@@ -9,8 +9,11 @@ export const mockAcquisitionFileResponse = (
   rowVersion,
   fileNumber: '1-12345-01',
   fileName: name,
-  ministryProjectNumber: '001',
-  ministryProjectName: `Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to`,
+  project: {
+    code: '001',
+    description: `Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to`,
+  },
+  legacyFileNumber: 'legacy file number',
   assignedDate: '2022-06-27T00:00:00',
   deliveryDate: '2022-07-29T00:00:00',
   fileStatusTypeCode: {
@@ -157,3 +160,54 @@ export const mockAcquisitionFileResponse = (
   appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
 });
+
+export const mockAcquisitionFileOwnersResponse = (
+  acquistionFileId: number = 1,
+): Api_AcquisitionFileOwner[] => [
+  {
+    id: 1,
+    acquisitionFileId: acquistionFileId,
+    address: {
+      id: 4,
+      streetAddress1: '456 Souris Street',
+      streetAddress2: 'PO Box 250',
+      streetAddress3: 'A Hoot and a holler from the A\u0026W',
+      municipality: 'North Podunk',
+      provinceStateId: 1,
+      province: { id: 1, code: 'BC', description: 'British Columbia', displayOrder: 10 },
+      countryId: 1,
+      country: { id: 1, code: 'CA', description: 'Canada', displayOrder: 1 },
+      postal: 'IH8 B0B',
+      rowVersion: 1,
+    },
+    lastNameOrCorp1: 'JOHH',
+    lastNameOrCorp2: 'DOE',
+    givenName: 'Sr.',
+    appCreateTimestamp: '0001-01-01T00:00:00',
+    appLastUpdateTimestamp: '0001-01-01T00:00:00',
+    rowVersion: 3,
+  },
+  {
+    id: 3,
+    acquisitionFileId: acquistionFileId,
+    address: {
+      id: 3,
+      streetAddress1: '123 Main Street',
+      streetAddress2: 'PO Box 123',
+      streetAddress3: 'Next to the Dairy Queen',
+      municipality: 'East Podunk',
+      provinceStateId: 1,
+      province: { id: 1, code: 'BC', description: 'British Columbia', displayOrder: 10 },
+      countryId: 1,
+      country: { id: 1, code: 'CA', description: 'Canada', displayOrder: 1 },
+      postal: 'I4M B0B',
+      rowVersion: 1,
+    },
+    lastNameOrCorp1: 'FORTIS BC',
+    lastNameOrCorp2: 'LTD',
+    incorporationNumber: '9999',
+    appCreateTimestamp: '0001-01-01T00:00:00',
+    appLastUpdateTimestamp: '0001-01-01T00:00:00',
+    rowVersion: 2,
+  },
+];

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
@@ -67,7 +66,7 @@ namespace Pims.Api.Services
         {
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverride);
-            var updatedLease = _leaseRepository.UpdatePropertyLeases(lease.Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
+            var updatedLease = _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
             _leaseRepository.CommitTransaction();
             return updatedLease;
         }
@@ -89,8 +88,8 @@ namespace Pims.Api.Services
             {
                 PimsProperty property = propertyLease.Property;
                 var existingPropertyLeases = _propertyLeaseRepository.GetAllByPropertyId(property.PropertyId);
-                var isPropertyOnOtherLease = existingPropertyLeases.Any(p => p.LeaseId != lease.Id);
-                var isPropertyOnThisLease = existingPropertyLeases.Any(p => p.LeaseId == lease.Id);
+                var isPropertyOnOtherLease = existingPropertyLeases.Any(p => p.LeaseId != lease.Internal_Id);
+                var isPropertyOnThisLease = existingPropertyLeases.Any(p => p.LeaseId == lease.Internal_Id);
                 if (isPropertyOnOtherLease && !isPropertyOnThisLease && !userOverride)
                 {
                     var genericOverrideErrorMsg = $"is attached to L-File # {existingPropertyLeases.FirstOrDefault().Lease.LFileNo}";
@@ -107,7 +106,7 @@ namespace Pims.Api.Services
                 }
 
                 // If the property exist dont update it, just refer to it by id.
-                if (property.Id != 0)
+                if (property.Internal_Id != 0)
                 {
                     propertyLease.PropertyId = property.PropertyId;
                     propertyLease.Property = null;
@@ -127,7 +126,7 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
-                        leaseProperty.PropertyId = foundProperty.Id;
+                        leaseProperty.PropertyId = foundProperty.Internal_Id;
                         leaseProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -142,7 +141,7 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
-                        leaseProperty.PropertyId = foundProperty.Id;
+                        leaseProperty.PropertyId = foundProperty.Internal_Id;
                         leaseProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)

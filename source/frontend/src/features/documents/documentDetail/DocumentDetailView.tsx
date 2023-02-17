@@ -65,7 +65,7 @@ export const DocumentDetailView: React.FunctionComponent<
               )}
             </Row>
             <SectionField label="Status" labelWidth="4">
-              {props.document.pimsDocument?.statusTypeCode?.description}
+              {props.document.pimsDocument?.document?.statusTypeCode?.description}
             </SectionField>
             <StyledH3>Details</StyledH3>
             <StyledScrollable>

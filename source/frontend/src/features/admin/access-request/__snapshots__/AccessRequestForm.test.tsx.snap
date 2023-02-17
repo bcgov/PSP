@@ -345,24 +345,28 @@ exports[`AccessRequestForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-6"
               value="6"
             >
               Finance
             </option>
             <option
               class="option"
+              data-testid="select-option-7"
               value="7"
             >
               Functional
             </option>
             <option
               class="option"
+              data-testid="select-option-8"
               value="8"
             >
               Functional (Restricted)
             </option>
             <option
               class="option"
+              data-testid="select-option-9"
               value="9"
             >
               Read Only
@@ -415,18 +419,21 @@ exports[`AccessRequestForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-1"
               value="1"
             >
               South Coast Region
             </option>
             <option
               class="option"
+              data-testid="select-option-2"
               value="2"
             >
               Southern Interior Region
             </option>
             <option
               class="option"
+              data-testid="select-option-3"
               value="3"
             >
               Northern Region

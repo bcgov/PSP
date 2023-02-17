@@ -10,7 +10,9 @@ export interface Api_Address extends Api_ConcurrentVersion {
   streetAddress2?: string;
   streetAddress3?: string;
   municipality?: string;
+  provinceStateId?: number;
   province?: Api_CodeType;
+  countryId?: number;
   country?: Api_CodeType;
   district?: Api_CodeType;
   region?: Api_CodeType;

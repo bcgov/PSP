@@ -7,7 +7,7 @@ import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-cont
 import { mockLookups } from 'mocks/mockLookups';
 import { Route } from 'react-router-dom';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import UpdateContactContainer from './UpdateContactContainer';
 
@@ -84,24 +84,24 @@ describe('UpdateContactContainer', () => {
   it('renders as expected', async () => {
     const { asFragment } = setup();
     const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+    await act(async () => expect(fragment).toMatchSnapshot());
   });
 
   it('should render the update person view when contact is a person', async () => {
     const { findByText } = setup();
-    expect(await findByText(/First Name/i)).toBeInTheDocument();
+    await act(async () => expect(await findByText(/First Name/i)).toBeInTheDocument());
   });
 
   it('should render the update organization view when contact is an organization', async () => {
     history.push('/contact/O1/edit');
     const { findByText } = setup();
-    expect(await findByText(/Organization Name/i)).toBeInTheDocument();
+    await act(async () => expect(await findByText(/Organization Name/i)).toBeInTheDocument());
   });
 
   describe('when Cancel button is clicked', () => {
     it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup();
-      userEvent.click(getCancelButton());
+      act(() => userEvent.click(getCancelButton()));
       await waitFor(() => expect(history.location.pathname).toBe('/contact/P1'));
     });
   });

@@ -321,12 +321,14 @@ exports[`Property list view matches snapshot 1`] = `
                 >
                   <option
                     class="option"
+                    data-testid="select-option-pinOrPid"
                     value="pinOrPid"
                   >
                     PID/PIN
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-address"
                     value="address"
                   >
                     Address

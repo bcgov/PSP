@@ -15,6 +15,7 @@ import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { ResearchFileNameGuide } from '../../common/ResearchFileNameGuide';
+import { UpdateProjectsSubForm } from '../../common/updateProjects/UpdateProjectsSubForm';
 import { ResearchFilePurposeFormModel, UpdateResearchSummaryFormModel } from './models';
 
 interface MultiSelectOption {
@@ -26,9 +27,7 @@ export interface IUpdateSummaryFormProps {
   formikProps: FormikProps<UpdateResearchSummaryFormModel>;
 }
 
-const UpdateSummaryForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdateSummaryFormProps>
-> = props => {
+const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = props => {
   const { values } = useFormikContext<UpdateResearchSummaryFormModel>();
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
   const requestSourceTypeOptions = getOptionsByType(API.REQUEST_SOURCE_TYPES);
@@ -94,6 +93,9 @@ const UpdateSummaryForm: React.FunctionComponent<
           <Input field="name" />
         </SectionField>
         <ResearchFileNameGuide />
+      </Section>
+      <Section header="Project">
+        <UpdateProjectsSubForm field="researchFileProjects" fileId={values.id} />
       </Section>
       <Section header="Roads">
         <SectionField label="Road name">

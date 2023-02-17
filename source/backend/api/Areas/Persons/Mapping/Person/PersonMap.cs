@@ -29,7 +29,7 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
                     var linkedOrganization = src.PimsPersonOrganizations?.FirstOrDefault(p => p != null && p.Organization != null)?.Organization;
                     if (linkedOrganization != null)
                     {
-                        dest.Organization = new Model.OrganizationLinkModel { Id = linkedOrganization.Id, Text = linkedOrganization.Name };
+                        dest.Organization = new Model.OrganizationLinkModel { Id = linkedOrganization.Internal_Id, Text = linkedOrganization.Name };
                     }
                 });
 

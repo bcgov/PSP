@@ -53,9 +53,9 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            var updatedLease = service.AddTerm(lease.Id, 1, term);
+            var updatedLease = service.AddTerm(lease.Internal_Id, 1, term);
 
             // Assert
             leaseTermRepository.Verify(x => x.Add(term), Times.Once);
@@ -70,9 +70,9 @@ namespace Pims.Api.Test.Services
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseView);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            Assert.Throws<NotAuthorizedException>(() => service.AddTerm(lease.Id, 1, term));
+            Assert.Throws<NotAuthorizedException>(() => service.AddTerm(lease.Internal_Id, 1, term));
         }
 
         [Fact]
@@ -84,9 +84,9 @@ namespace Pims.Api.Test.Services
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            Assert.Throws<DbUpdateConcurrencyException>(() => service.AddTerm(lease.Id, 1, term));
+            Assert.Throws<DbUpdateConcurrencyException>(() => service.AddTerm(lease.Internal_Id, 1, term));
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
-            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease, Id = 1 };
+            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, Internal_Id = 1 };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -104,9 +104,9 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Id, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Internal_Id, 1, term));
             ex.Message.Should().Be("A new term start and end date must not conflict with any existing terms.");
         }
 
@@ -116,7 +116,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
             var date = DateTime.Now;
-            var originalTerm = new PimsLeaseTerm() { TermStartDate = date, TermExpiryDate = date.AddDays(1), LeaseId = lease.Id, Lease = lease, Id = 1 };
+            var originalTerm = new PimsLeaseTerm() { TermStartDate = date, TermExpiryDate = date.AddDays(1), LeaseId = lease.Internal_Id, Lease = lease, Internal_Id = 1 };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -126,9 +126,9 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = date.AddDays(1), LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = date.AddDays(1), LeaseId = lease.Internal_Id, Lease = lease };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Id, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Internal_Id, 1, term));
             ex.Message.Should().Be("A new term start and end date must not conflict with any existing terms.");
         }
 
@@ -137,7 +137,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
-            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10), LeaseId = lease.Id, Lease = lease, Id = 1 };
+            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10), LeaseId = lease.Internal_Id, Lease = lease, Internal_Id = 1 };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -147,9 +147,9 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = originalTerm.TermStartDate, TermExpiryDate = originalTerm.TermExpiryDate = originalTerm.TermStartDate.AddDays(1), LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = originalTerm.TermStartDate, TermExpiryDate = originalTerm.TermExpiryDate = originalTerm.TermStartDate.AddDays(1), LeaseId = lease.Internal_Id, Lease = lease };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Id, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Internal_Id, 1, term));
             ex.Message.Should().Be("A new term start and end date must not conflict with any existing terms.");
         }
 
@@ -167,9 +167,9 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.MaxValue, LeaseId = lease.Id, Lease = lease, LeaseTermStatusTypeCode = "NEXER", PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.MaxValue, LeaseId = lease.Internal_Id, Lease = lease, LeaseTermStatusTypeCode = "NEXER", PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Id, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Internal_Id, 1, term));
             ex.Message.Should().Be("Term must be 'exercised' if payments have been made.");
         }
         #endregion
@@ -180,7 +180,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
-            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
@@ -192,13 +192,13 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            var updatedLease = service.UpdateTerm(lease.Id, 1, 1, term);
+            var updatedLease = service.UpdateTerm(lease.Internal_Id, 1, 1, term);
 
             // Assert
             leaseTermRepository.Verify(x => x.Update(term), Times.Once);
-            leaseRepository.Verify(x => x.Get(lease.Id), Times.Once);
+            leaseRepository.Verify(x => x.Get(lease.Internal_Id), Times.Once);
         }
 
         [Fact]
@@ -210,9 +210,9 @@ namespace Pims.Api.Test.Services
             var lease = EntityHelper.CreateLease(1);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            Assert.Throws<NotAuthorizedException>(() => service.UpdateTerm(lease.Id, 1, 1, term));
+            Assert.Throws<NotAuthorizedException>(() => service.UpdateTerm(lease.Internal_Id, 1, 1, term));
         }
 
         [Fact]
@@ -224,9 +224,9 @@ namespace Pims.Api.Test.Services
             var lease = EntityHelper.CreateLease(1);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            Assert.Throws<DbUpdateConcurrencyException>(() => service.UpdateTerm(lease.Id, 1, 1, term));
+            Assert.Throws<DbUpdateConcurrencyException>(() => service.UpdateTerm(lease.Internal_Id, 1, 1, term));
         }
 
         [Fact]
@@ -235,7 +235,7 @@ namespace Pims.Api.Test.Services
             // Arrange
 
             var lease = EntityHelper.CreateLease(1);
-            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease, Id = 1 };
+            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, Internal_Id = 1 };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -245,9 +245,9 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => service.UpdateTerm(lease.Id, 1, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.UpdateTerm(lease.Internal_Id, 1, 1, term));
             ex.Message.Should().Be("A new term start and end date must not conflict with any existing terms.");
         }
 
@@ -257,7 +257,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
             var payment = new PimsLeasePayment();
-            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now, LeaseId = lease.Id, Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
+            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -268,9 +268,9 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.MaxValue, LeaseId = lease.Id, Lease = lease, LeaseTermStatusTypeCode = "NEXER" };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.MaxValue, LeaseId = lease.Internal_Id, Lease = lease, LeaseTermStatusTypeCode = "NEXER" };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => service.UpdateTerm(lease.Id, 1, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.UpdateTerm(lease.Internal_Id, 1, 1, term));
             ex.Message.Should().Be("Term must be 'exercised' if payments have been made.");
         }
         #endregion
@@ -281,7 +281,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
-            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var originalTerm = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -293,9 +293,9 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            service.DeleteTerm(lease.Id, 1, term);
+            service.DeleteTerm(lease.Internal_Id, 1, term);
 
             // Assert
             leaseTermRepository.Verify(x => x.Delete(It.IsAny<long>()), Times.Once);
@@ -310,9 +310,9 @@ namespace Pims.Api.Test.Services
             var service = CreateLeaseServiceTermWithPermissions();
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            Assert.Throws<NotAuthorizedException>(() => service.DeleteTerm(lease.Id, 1, term));
+            Assert.Throws<NotAuthorizedException>(() => service.DeleteTerm(lease.Internal_Id, 1, term));
         }
 
         [Fact]
@@ -324,9 +324,9 @@ namespace Pims.Api.Test.Services
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
 
             // Act
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
-            Assert.Throws<DbUpdateConcurrencyException>(() => service.DeleteTerm(lease.Id, 1, term));
+            Assert.Throws<DbUpdateConcurrencyException>(() => service.DeleteTerm(lease.Internal_Id, 1, term));
         }
 
         [Fact]
@@ -335,7 +335,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
             var payment = new PimsLeasePayment();
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { term };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -346,7 +346,7 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
 
             // Act
-            var ex = Assert.Throws<InvalidOperationException>(() => service.DeleteTerm(lease.Id, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.DeleteTerm(lease.Internal_Id, 1, term));
             ex.Message.Should().Be("A term with payments attached can not be deleted. If you intend to delete this term, you must delete each of the corresponding payments first.");
         }
 
@@ -356,7 +356,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
             var payment = new PimsLeasePayment();
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease, LeaseTermStatusTypeCode = "EXER" };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease, LeaseTermStatusTypeCode = "EXER" };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { term };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -367,7 +367,7 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
 
             // Act
-            var ex = Assert.Throws<InvalidOperationException>(() => service.DeleteTerm(lease.Id, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.DeleteTerm(lease.Internal_Id, 1, term));
             ex.Message.Should().Be("Exercised terms cannot be deleted. Remove all payments from this term and set this term to 'Not Exercised' to delete this term.");
         }
 
@@ -377,8 +377,8 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
             var payment = new PimsLeasePayment();
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
-            var term2 = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
+            var term2 = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { term, term2 };
 
             var service = CreateLeaseServiceTermWithPermissions(Permissions.LeaseEdit);
@@ -389,7 +389,7 @@ namespace Pims.Api.Test.Services
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
 
             // Act
-            var ex = Assert.Throws<InvalidOperationException>(() => service.DeleteTerm(lease.Id, 1, term));
+            var ex = Assert.Throws<InvalidOperationException>(() => service.DeleteTerm(lease.Internal_Id, 1, term));
             ex.Message.Should().Be("You must delete all renewals before deleting the initial term.");
         }
         #endregion

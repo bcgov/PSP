@@ -6,11 +6,11 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// OrganizationAddress class, provides an entity for the datamodel to manage a list of addresses for an organization.
     /// </summary>
-    public partial class PimsOrganizationAddress : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
+    public partial class PimsOrganizationAddress : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.OrganizationAddressId; set => this.OrganizationAddressId = value; }
+        public override long Internal_Id { get => this.OrganizationAddressId; set => this.OrganizationAddressId = value; }
         #endregion
 
         #region Constructors
