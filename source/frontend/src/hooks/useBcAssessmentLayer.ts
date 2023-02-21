@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IApiError } from 'interfaces/IApiError';
-import { mockBcAssessmentSummary } from 'mocks/bcAssessmentMock';
 import { useCallback, useEffect } from 'react';
 
 import { pidParser } from './../utils/propertyUtils';
