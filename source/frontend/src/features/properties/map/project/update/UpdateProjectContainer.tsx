@@ -1,9 +1,12 @@
+import axios, { AxiosError } from 'axios';
 import * as API from 'constants/API';
 import { FormikHelpers, FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { IApiError } from 'interfaces/IApiError';
 import { Api_Project } from 'models/api/Project';
 import React from 'react';
+import { toast } from 'react-toastify';
 import { mapLookupCode } from 'utils/mapLookupCode';
 
 import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
@@ -45,6 +48,12 @@ const UpdateProjectContainer = React.forwardRef<
         if (typeof onSuccess === 'function') {
           onSuccess();
         }
+      }
+    } catch (e) {
+      if (axios.isAxiosError(e) && e.response?.status === 409) {
+        toast.error(e.response.data as any);
+      } else {
+        toast.error('Failed to update project.');
       }
     } finally {
       formikHelpers?.setSubmitting(false);
