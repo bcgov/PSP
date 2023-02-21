@@ -1,9 +1,8 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import * as API from 'constants/API';
 import { FormikHelpers, FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IApiError } from 'interfaces/IApiError';
 import { Api_Project } from 'models/api/Project';
 import React from 'react';
 import { toast } from 'react-toastify';
