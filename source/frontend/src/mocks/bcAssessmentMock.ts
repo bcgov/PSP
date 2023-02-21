@@ -1,3 +1,5 @@
+import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
+
 export const getMockLegalDescriptions = () => ({
   type: 'FeatureCollection',
   features: [
@@ -358,3 +360,12 @@ export const getMockLandChars = () => ({
   },
   bbox: [-125.30846, 52.46245, -125.30638, 52.46332],
 });
+
+export const mockBcAssessmentSummary: IBcAssessmentSummary = {
+  LEGAL_DESCRIPTION: getMockLegalDescriptions()?.features[0].properties ?? {},
+  ADDRESSES: getMockAddresses()?.features.map(f => f.properties ?? {}) ?? [],
+  VALUES: getMockValues()?.features.map(f => f.properties ?? {}) ?? [],
+  CHARGES: [],
+  FOLIO_DESCRIPTION: (getMockDescription()?.features[0].properties as any) ?? {},
+  SALES: getMockSales()?.features.map(f => f.properties ?? {}) ?? [],
+};
