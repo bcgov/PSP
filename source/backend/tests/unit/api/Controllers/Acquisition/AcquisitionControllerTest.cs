@@ -105,6 +105,24 @@ namespace Pims.Api.Test.Controllers
             // Assert
             _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>()), Times.Once());
         }
+
+        /// <summary>
+        /// Make a conflict request to update an acquisition file's properties.
+        /// </summary>
+        [Fact]
+        public void UpdateAcquisitionFileProperties_Conflict()
+        {
+            // Arrange
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Throws(new InvalidOperationException());
+
+            // Act
+            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile));
+
+            // Assert
+            result.Should().BeAssignableTo<ConflictResult>();
+        }
         #endregion
     }
 }

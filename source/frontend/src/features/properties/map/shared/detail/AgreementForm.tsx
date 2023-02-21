@@ -61,6 +61,7 @@ export const AgreementForm: React.FunctionComponent<IAgreementFormProps> = ({ on
                   <>
                     {values.owners.map((owner, index) => (
                       <Section
+                        key={`owner-${index}`}
                         header={
                           <div className="d-flex justify-content-between">
                             Owner #{index + 1}
@@ -70,7 +71,7 @@ export const AgreementForm: React.FunctionComponent<IAgreementFormProps> = ({ on
                           </div>
                         }
                       >
-                        <React.Fragment key={`owners-${index}`}>
+                        <React.Fragment>
                           <SectionField label="First name">
                             <Input field={`owners.${index}.firstname`} />
                           </SectionField>
@@ -113,6 +114,7 @@ export const AgreementForm: React.FunctionComponent<IAgreementFormProps> = ({ on
                   <>
                     {values.agents.map((owner, index) => (
                       <Section
+                        key={`agents-${index}`}
                         header={
                           <div className="d-flex justify-content-between">
                             Agent #{index + 1}
@@ -122,7 +124,7 @@ export const AgreementForm: React.FunctionComponent<IAgreementFormProps> = ({ on
                           </div>
                         }
                       >
-                        <React.Fragment key={`agents-${index}`}>
+                        <React.Fragment>
                           <SectionField label="Phone # (work landline)">
                             <Input field={`agents.${index}.workphone`} />
                           </SectionField>
@@ -164,7 +166,7 @@ export const AgreementForm: React.FunctionComponent<IAgreementFormProps> = ({ on
               render={arrayHelpers => (
                 <>
                   {values.properties.map((property, index) => (
-                    <>
+                    <React.Fragment key={`property-${index}`}>
                       <Section
                         header={
                           <div className="d-flex justify-content-between">
@@ -182,7 +184,7 @@ export const AgreementForm: React.FunctionComponent<IAgreementFormProps> = ({ on
                           <Input field={`properties.${index}.full_legal`} />
                         </SectionField>
                       </Section>
-                    </>
+                    </React.Fragment>
                   ))}
                   <LinkButton onClick={() => arrayHelpers.push({ pid: '', full_legal: '' })}>
                     + Add another property

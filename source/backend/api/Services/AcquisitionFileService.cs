@@ -177,6 +177,11 @@ namespace Pims.Api.Services
             List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
+                var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
+                if(acqFileProperties.PimsActInstPropAcqFiles.Any())
+                {
+                    throw new InvalidOperationException();
+                }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
                 {

@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { PropertyForm } from '../../shared/models';
-import { AcquisitionProperties } from './AcquisitionProperties';
+import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 
 const mockStore = configureMockStore([thunk]);
@@ -27,7 +27,7 @@ describe('AcquisitionProperties component', () => {
     const utils = render(
       <MapStateContextProvider values={{ setState: setDraftProperties }}>
         <Formik initialValues={props.initialForm} onSubmit={noop}>
-          {formikProps => <AcquisitionProperties formikProps={formikProps} />}
+          {formikProps => <AcquisitionPropertiesSubForm formikProps={formikProps} />}
         </Formik>
       </MapStateContextProvider>,
       {
