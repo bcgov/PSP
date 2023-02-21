@@ -18,6 +18,7 @@ export { useAddressHelpers };
 export interface IAddressProps {
   namespace?: string;
   disabled?: boolean;
+  addressLines?: number;
 }
 
 /**
@@ -27,6 +28,7 @@ export interface IAddressProps {
 export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressProps>> = ({
   namespace,
   disabled = false,
+  addressLines,
 }) => {
   const { countries, provinces, formLabels, selectedCountryCode, setSelectedCountryId } =
     useAddressHelpers();
@@ -48,7 +50,11 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
   );
 
   // this counter determines how many address lines we render in the form; e.g. street1, street2, etc
-  const { count, increment, decrement } = useCounter({ initial: 1, min: 1, max: 3 });
+  const { count, increment, decrement } = useCounter({
+    initial: addressLines ?? 1,
+    min: 1,
+    max: 3,
+  });
 
   // clear extra address fields when they get removed from address form...
   useEffect(() => {
