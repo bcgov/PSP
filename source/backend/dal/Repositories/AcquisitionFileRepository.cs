@@ -143,8 +143,7 @@ namespace Pims.Dal.Repositories
             }
 
             this.Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
-            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray(), true);
-            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(p => p.PimsAcquisitionOwners, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray(), true);
+            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
             this.Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
 
             return acquisitionFile;
