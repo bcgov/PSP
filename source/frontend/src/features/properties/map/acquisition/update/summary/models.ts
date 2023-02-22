@@ -1,10 +1,21 @@
 import { IAutocompletePrediction } from 'interfaces';
-import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
+import {
+  Api_AcquisitionFile,
+  Api_AcquisitionFileOwner,
+  Api_AcquisitionFilePerson,
+} from 'models/api/AcquisitionFile';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
-import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../common/models';
+import {
+  AcquisitionOwnerFormModel,
+  AcquisitionTeamFormModel,
+  WithAcquisitionOwners,
+  WithAcquisitionTeam,
+} from '../../common/models';
 
-export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
+export class UpdateAcquisitionSummaryFormModel
+  implements WithAcquisitionTeam, WithAcquisitionOwners
+{
   id?: number;
   fileNo?: number;
   fileNumber?: string;
@@ -20,6 +31,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   // MOTI region
   region?: string;
   team: AcquisitionTeamFormModel[] = [];
+  owners: AcquisitionOwnerFormModel[] = [];
 
   project?: IAutocompletePrediction;
   product?: number;
@@ -48,6 +60,9 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
         this.product !== undefined && this.product !== 0 ? { id: Number(this.product) } : undefined,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
+      acquisitionFileOwners: this.owners
+        .filter(x => !x.isEmpty())
+        .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi()),
@@ -69,6 +84,8 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     newForm.team = model.acquisitionTeam?.map(x => AcquisitionTeamFormModel.fromApi(x)) || [];
+    newForm.owners =
+      model.acquisitionFileOwners?.map(x => AcquisitionOwnerFormModel.fromApi(x)) || [];
     newForm.fundingTypeCode = model.fundingTypeCode?.id;
     newForm.fundingTypeOtherDescription = model.fundingOther || '';
     newForm.project =

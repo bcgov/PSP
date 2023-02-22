@@ -1,9 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IApiError } from 'interfaces/IApiError';
-import { getMockAddresses, getMockLegalDescriptions } from 'mocks/bcAssessmentMock';
 import { useCallback, useEffect } from 'react';
 
-import { getMockDescription, getMockSales, getMockValues } from './../mocks/bcAssessmentMock';
 import { pidParser } from './../utils/propertyUtils';
 import { useWfsLayer } from './pims-api';
 import { IResponseWrapper, useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
@@ -98,15 +96,6 @@ export const useBcAssessmentLayer = (
       const parsedPid = pidParser(pid);
       if (parsedPid === undefined) {
         throw Error(`Unable to parse PID, invalid format: ${pid}`);
-      }
-      if (process.env.NODE_ENV === 'development') {
-        return {
-          data: mockBcAssessmentSummary,
-          status: 200,
-          statusText: 'Success',
-          headers: {},
-          config: {},
-        };
       }
       let legalDescriptionResponse;
       try {
@@ -236,14 +225,6 @@ export const useBcAssessmentLayer = (
   };
 };
 
-export const mockBcAssessmentSummary: IBcAssessmentSummary = {
-  LEGAL_DESCRIPTION: getMockLegalDescriptions()?.features[0].properties ?? {},
-  ADDRESSES: getMockAddresses()?.features.map(f => f.properties ?? {}) ?? [],
-  VALUES: getMockValues()?.features.map(f => f.properties ?? {}) ?? [],
-  CHARGES: [],
-  FOLIO_DESCRIPTION: (getMockDescription()?.features[0].properties as any) ?? {},
-  SALES: getMockSales()?.features.map(f => f.properties ?? {}) ?? [],
-};
 export interface IBcAssessmentSummary {
   FOLIO_DESCRIPTION: Partial<{
     BCA_FD_SYSID: number;

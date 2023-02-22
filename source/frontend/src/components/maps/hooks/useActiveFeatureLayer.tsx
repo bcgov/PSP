@@ -39,11 +39,12 @@ const useActiveFeatureLayer = ({
   mapRef,
   setLayerPopup,
 }: IUseActiveParcelMapLayer) => {
-  const { parcelsLayerUrl, municipalLayerUrl, regionalLayerUrl, hwyDistrictLayerUrl } = useTenant();
+  const { parcelsLayerUrl, municipalLayerUrl, motiRegionLayerUrl, hwyDistrictLayerUrl } =
+    useTenant();
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(parcelsLayerUrl);
   const municipalitiesService = useLayerQuery(municipalLayerUrl);
-  const regionService = useLayerQuery(regionalLayerUrl);
+  const regionService = useLayerQuery(motiRegionLayerUrl);
   const districtService = useLayerQuery(hwyDistrictLayerUrl);
 
   const {

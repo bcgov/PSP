@@ -20,6 +20,7 @@ import React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
+import UpdateAcquisitionOwnersSubForm from '../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import StatusToolTip from './StatusToolTip';
@@ -209,6 +210,10 @@ export const UpdateAcquisitionForm = React.forwardRef<
 
             <Section header="Acquisition Team">
               <UpdateAcquisitionTeamSubForm />
+            </Section>
+
+            <Section header="Owners">
+              <UpdateAcquisitionOwnersSubForm />
             </Section>
           </Container>
 

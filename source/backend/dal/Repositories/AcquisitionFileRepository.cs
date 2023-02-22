@@ -84,6 +84,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(rp => rp.Person)
                 .Include(r => r.PimsAcquisitionFilePeople)
                     .ThenInclude(rp => rp.AcqFlPersonProfileTypeCodeNavigation)
+                .Include(r => r.PimsAcquisitionOwners)
+                    .ThenInclude(x => x.Address)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -142,6 +144,7 @@ namespace Pims.Dal.Repositories
 
             this.Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
             this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
+            this.Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
 
             return acquisitionFile;
         }

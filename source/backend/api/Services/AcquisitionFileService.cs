@@ -80,6 +80,14 @@ namespace Pims.Api.Services
             return properties;
         }
 
+        public IEnumerable<PimsAcquisitionOwner> GetOwners(long id)
+        {
+            _logger.LogInformation("Getting acquisition file owners with AcquistionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
+        }
+
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
