@@ -8,11 +8,15 @@ import { Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { AcquisitionFormModal } from '../../../modals/AcquisitionFormModal';
-import { AcquisitionOwnerFormModel, WithAcquisitionOwners } from '../../models';
+import {
+  AcquisitionOwnerFormModel,
+  OwnerAddressFormModel,
+  WithAcquisitionOwners,
+} from '../../models';
 
 interface IUpdateAcquisitionOwnersSubFormProps {}
 
-export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
+const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
   React.PropsWithChildren<IUpdateAcquisitionOwnersSubFormProps>
 > = () => {
   const { values } = useFormikContext<WithAcquisitionOwners>();
@@ -57,7 +61,10 @@ export const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
                   </SectionField>
                   <StyledDiv>
                     <H3>Mailing Address</H3>
-                    <Address namespace={`owners[${index}].address`} />
+                    <Address
+                      namespace={`owners[${index}].address`}
+                      addressLines={OwnerAddressFormModel.addressLines(owner.address)}
+                    />
                   </StyledDiv>
                 </Container>
               </Row>
