@@ -461,7 +461,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                       <option
                         value=""
                       >
-                        Select...
+                        Select region...
                       </option>
                       <option
                         class="option"
@@ -476,20 +476,6 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                         value="2"
                       >
                         Southern Interior Region
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-3"
-                        value="3"
-                      >
-                        Northern Region
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-4"
-                        value="4"
-                      >
-                        Cannot determine
                       </option>
                     </select>
                   </div>
