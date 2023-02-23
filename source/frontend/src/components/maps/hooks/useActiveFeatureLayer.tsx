@@ -5,7 +5,6 @@ import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
 import { isNumber } from 'lodash';
-import { features } from 'process';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useTenant } from 'tenants';
