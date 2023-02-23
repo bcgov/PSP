@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -139,18 +140,17 @@ namespace Pims.Api.Services
         /// <returns></returns>
         public IEnumerable<PimsNote> GetNotes(NoteType type, long entityId)
         {
-            this.Logger.LogInformation("Getting all notes with type {type} and parent id {entityId}", type, entityId);
+            this.Logger.LogInformation($"Getting all notes with type {type} and parent id {entityId}");
             this.User.ThrowIfNotAuthorized(Permissions.NoteView);
 
-            switch (type)
+            List<PimsNote> notes = type switch
             {
-                case NoteType.Activity:
-                    return _entityNoteRepository.GetAllActivityNotesById(entityId);
-                case NoteType.Acquisition_File:
-                    return _entityNoteRepository.GetAllAcquisitionNotesById(entityId);
-                default:
-                    return new List<PimsNote>();
-            }
+                NoteType.Activity => _entityNoteRepository.GetAllActivityNotesById(entityId).ToList(),
+                NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
+                _ => new List<PimsNote>()
+            };
+
+            return notes;
         }
 
         private void ValidateVersion(long noteId, long noteVersion)
