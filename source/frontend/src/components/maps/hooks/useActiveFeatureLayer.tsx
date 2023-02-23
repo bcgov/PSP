@@ -63,7 +63,7 @@ const useActiveFeatureLayer = ({
     let center: LatLng | undefined;
     let mapBounds: LatLngBounds | undefined;
     let displayConfig = {};
-    let title = 'Municipality Information';
+    let title = 'Location Information';
     let feature: Feature | undefined = undefined;
 
     // call these APIs in parallel - notice there is no "await"
@@ -90,6 +90,7 @@ const useActiveFeatureLayer = ({
       const municipality = await municipalitiesService.findOneWhereContains(latLng);
 
       if (municipality?.features?.length === 1) {
+        title = 'Municipality Information';
         properties = municipality.features[0].properties!;
         displayConfig = municipalityLayerPopupConfig;
         feature = municipality.features[0];
@@ -115,25 +116,25 @@ const useActiveFeatureLayer = ({
       };
     }
 
-    if ((!isEmpty(properties) || isSelecting) && feature) {
-      if (!isSelecting) {
-        if (pimsLocationProperties !== undefined && pimsLocationProperties?.features?.length > 1) {
-          toast.error(
-            'Unable to determine desired PIMS Property due to overlapping map boundaries. Click directly on a map marker to view that markers details.',
-          );
-        }
-        const pimsProperty = pimsLocationProperties?.features[0];
-        setLayerPopup({
-          title,
-          data: properties as any,
-          config: displayConfig as any,
-          latlng: latLng,
-          center,
-          bounds: mapBounds,
-          feature,
-          pimsProperty,
-        } as any);
+    if (!isSelecting) {
+      if (pimsLocationProperties !== undefined && pimsLocationProperties?.features?.length > 1) {
+        toast.error(
+          'Unable to determine desired PIMS Property due to overlapping map boundaries. Click directly on a map marker to view that markers details.',
+        );
       }
+      const pimsProperty = pimsLocationProperties?.features[0];
+      setLayerPopup({
+        title,
+        data: properties as any,
+        config: displayConfig as any,
+        latlng: latLng,
+        center,
+        bounds: mapBounds,
+        feature,
+        pimsProperty,
+      } as any);
+    }
+    if (!!feature) {
       feature.properties = {
         ...feature.properties,
         IS_SELECTED: isSelecting,
