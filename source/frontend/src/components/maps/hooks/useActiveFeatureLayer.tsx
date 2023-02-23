@@ -124,7 +124,9 @@ const useActiveFeatureLayer = ({
           'Unable to determine desired PIMS Property due to overlapping map boundaries. Click directly on a map marker to view that markers details.',
         );
       }
-      const pimsProperty = pimsLocationProperties?.features[0];
+      const pimsProperty = pimsLocationProperties?.features?.length
+        ? pimsLocationProperties?.features[0]
+        : undefined;
       setLayerPopup({
         title,
         data: properties as any,
