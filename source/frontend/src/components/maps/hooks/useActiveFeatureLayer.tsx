@@ -5,6 +5,7 @@ import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
 import { isNumber } from 'lodash';
+import { features } from 'process';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useTenant } from 'tenants';
@@ -108,7 +109,9 @@ const useActiveFeatureLayer = ({
       mapBounds = parcel.features[0]?.geometry
         ? geoJSON(parcel.features[0].geometry).getBounds()
         : undefined;
-    } else if (parcel?.features?.length === 0 && isSelecting) {
+    }
+
+    if (feature === undefined) {
       feature = {
         geometry: { coordinates: [latLng.lng, latLng.lat], type: 'Point' },
         type: 'Feature',
@@ -134,21 +137,20 @@ const useActiveFeatureLayer = ({
         pimsProperty,
       } as any);
     }
-    if (!!feature) {
-      feature.properties = {
-        ...feature.properties,
-        IS_SELECTED: isSelecting,
-        CLICK_LAT_LNG: latLng,
-        REGION_NUMBER: isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown,
-        REGION_NAME: region.REGION_NAME ?? 'Cannot determine',
-        DISTRICT_NUMBER: isNumber(district.DISTRICT_NUMBER)
-          ? district.DISTRICT_NUMBER
-          : DistrictCodes.Unknown,
-        DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
-      };
-      activeFeatureLayer?.addData(feature);
-      setState({ type: MapStateActionTypes.SELECTED_FEATURE, selectedFeature: feature });
-    }
+    const activeFeature = { ...feature };
+    activeFeature.properties = {
+      ...activeFeature.properties,
+      IS_SELECTED: isSelecting,
+      CLICK_LAT_LNG: latLng,
+      REGION_NUMBER: isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown,
+      REGION_NAME: region.REGION_NAME ?? 'Cannot determine',
+      DISTRICT_NUMBER: isNumber(district.DISTRICT_NUMBER)
+        ? district.DISTRICT_NUMBER
+        : DistrictCodes.Unknown,
+      DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
+    };
+    activeFeatureLayer?.addData(activeFeature);
+    setState({ type: MapStateActionTypes.SELECTED_FEATURE, selectedFeature: activeFeature });
   };
 
   /**
