@@ -156,11 +156,11 @@ export const getCurrentFiscalYear = (): number => {
   return now.month() >= 4 ? now.add(1, 'years').year() : now.year();
 };
 
-export const prettyFormatDate = (date?: string | Date | Moment) => {
+export const prettyFormatDate = (date?: string | Date | Moment | null) => {
   return !!date ? moment(date).format('MMM D, YYYY') : '';
 };
 
-export const prettyFormatDateTime = (date?: string | Date | Moment) => {
+export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
   return !!date ? moment.utc(date).local().format('MMM D, YYYY hh:mm a') : '';
 };
 
