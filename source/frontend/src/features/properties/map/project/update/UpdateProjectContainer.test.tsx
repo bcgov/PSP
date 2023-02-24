@@ -1,7 +1,8 @@
-import { FormikProps } from 'formik';
+import { AxiosError } from 'axios';
+import { FormikHelpers, FormikProps } from 'formik';
 import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/mockProjects';
 import React from 'react';
-import { act, render, RenderOptions } from 'utils/test-utils';
+import { act, render, RenderOptions, screen, waitFor } from 'utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
 import { IAddProjectFormProps } from '../add/AddProjectForm';
@@ -52,7 +53,6 @@ describe('UpdateProjectContainer', () => {
   beforeEach(() => {
     viewProps = {
       initialValues: formValues,
-      projectRegionOptions: [],
       projectStatusOptions: [],
       onSubmit: jest.fn(),
     };
@@ -76,7 +76,11 @@ describe('UpdateProjectContainer', () => {
 
   it('makes request to update the Project', async () => {
     setup();
-    const onSubmitForm = jest.fn();
+    const formikHelpers: Partial<FormikHelpers<ProjectForm>> = {
+      setSubmitting: jest.fn(),
+      resetForm: jest.fn(),
+    };
+
     mockApi.execute.mockResolvedValue(
       mockProjectPostResponse(
         1,
@@ -90,10 +94,37 @@ describe('UpdateProjectContainer', () => {
     );
 
     await act(async () => {
-      return viewProps?.onSubmit(viewProps.initialValues, onSubmitForm());
+      return viewProps?.onSubmit(
+        viewProps.initialValues,
+        formikHelpers as FormikHelpers<ProjectForm>,
+      );
     });
 
     expect(mockApi.execute).toHaveBeenCalled();
     expect(onSuccess).toHaveBeenCalled();
+    expect(formikHelpers.setSubmitting).toHaveBeenCalled();
+    expect(formikHelpers.resetForm).toHaveBeenCalled();
+  });
+
+  it('displays expected error toast when update fails', async () => {
+    setup();
+    const formikHelpers: Partial<FormikHelpers<ProjectForm>> = {
+      setSubmitting: jest.fn(),
+      resetForm: jest.fn(),
+    };
+    mockApi.execute.mockRejectedValue({
+      isAxiosError: true,
+      response: { status: 409, data: 'expected error' },
+    } as AxiosError);
+
+    await act(async () => {
+      return viewProps?.onSubmit(
+        viewProps.initialValues,
+        formikHelpers as FormikHelpers<ProjectForm>,
+      );
+    });
+
+    expect(mockApi.execute).toHaveBeenCalled();
+    await waitFor(async () => expect(screen.getByText('expected error')).toBeVisible());
   });
 });
