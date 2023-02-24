@@ -7,7 +7,6 @@ import { Api_Project } from 'models/api/Project';
 import { useCallback, useRef } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
-import { mapLookupCode } from 'utils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddProjectForm } from '../hooks/useAddProjectFormManagement';
@@ -23,9 +22,8 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
   const history = useHistory();
   const { search } = useMapSearch();
 
-  const { getOptionsByType, getByType } = useLookupCodeHelpers();
+  const { getOptionsByType } = useLookupCodeHelpers();
   const projectStatusTypeCodes = getOptionsByType(API.PROJECT_STATUS_TYPES);
-  const regionTypeCodes = getByType(API.REGION_TYPES).map(c => mapLookupCode(c));
 
   const formikRef = useRef<FormikProps<ProjectForm>>(null);
 
@@ -55,7 +53,6 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
         ref={formikRef}
         initialValues={helper.initialValues}
         projectStatusOptions={projectStatusTypeCodes}
-        projectRegionOptions={regionTypeCodes}
         onSubmit={helper.handleSubmit}
         validationSchema={helper.validationSchema}
         isCreating
