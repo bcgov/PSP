@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { FormikProps } from 'formik';
+import { FormikHelpers, FormikProps } from 'formik';
 import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/mockProjects';
 import React from 'react';
 import { act, render, RenderOptions, screen, waitFor } from 'utils/test-utils';
@@ -53,7 +53,6 @@ describe('UpdateProjectContainer', () => {
   beforeEach(() => {
     viewProps = {
       initialValues: formValues,
-      projectRegionOptions: [],
       projectStatusOptions: [],
       onSubmit: jest.fn(),
     };
@@ -77,7 +76,11 @@ describe('UpdateProjectContainer', () => {
 
   it('makes request to update the Project', async () => {
     setup();
-    const onSubmitForm = jest.fn();
+    const formikHelpers: Partial<FormikHelpers<ProjectForm>> = {
+      setSubmitting: jest.fn(),
+      resetForm: jest.fn(),
+    };
+
     mockApi.execute.mockResolvedValue(
       mockProjectPostResponse(
         1,
@@ -91,23 +94,34 @@ describe('UpdateProjectContainer', () => {
     );
 
     await act(async () => {
-      return viewProps?.onSubmit(viewProps.initialValues, onSubmitForm());
+      return viewProps?.onSubmit(
+        viewProps.initialValues,
+        formikHelpers as FormikHelpers<ProjectForm>,
+      );
     });
 
     expect(mockApi.execute).toHaveBeenCalled();
     expect(onSuccess).toHaveBeenCalled();
+    expect(formikHelpers.setSubmitting).toHaveBeenCalled();
+    expect(formikHelpers.resetForm).toHaveBeenCalled();
   });
 
   it('displays expected error toast when update fails', async () => {
     setup();
-    const onSubmitForm = jest.fn();
+    const formikHelpers: Partial<FormikHelpers<ProjectForm>> = {
+      setSubmitting: jest.fn(),
+      resetForm: jest.fn(),
+    };
     mockApi.execute.mockRejectedValue({
       isAxiosError: true,
       response: { status: 409, data: 'expected error' },
     } as AxiosError);
 
     await act(async () => {
-      return viewProps?.onSubmit(viewProps.initialValues, onSubmitForm());
+      return viewProps?.onSubmit(
+        viewProps.initialValues,
+        formikHelpers as FormikHelpers<ProjectForm>,
+      );
     });
 
     expect(mockApi.execute).toHaveBeenCalled();

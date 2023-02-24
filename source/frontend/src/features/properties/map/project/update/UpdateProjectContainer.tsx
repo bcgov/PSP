@@ -6,7 +6,6 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_Project } from 'models/api/Project';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { mapLookupCode } from 'utils/mapLookupCode';
 
 import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
 import { IAddProjectFormProps } from '../add/AddProjectForm';
@@ -30,11 +29,10 @@ const UpdateProjectContainer = React.forwardRef<
     updateProject: { execute: updateProject },
   } = useProjectProvider();
 
-  const { getOptionsByType, getByType } = useLookupCodeHelpers();
+  const { getOptionsByType } = useLookupCodeHelpers();
 
-  const intialValues = ProjectForm.fromApi(project);
+  const initialValues = ProjectForm.fromApi(project);
   const projectStatusTypeCodes = getOptionsByType(API.PROJECT_STATUS_TYPES);
-  const regionTypeCodes = getByType(API.REGION_TYPES).map(c => mapLookupCode(c));
 
   const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
     try {
@@ -63,9 +61,8 @@ const UpdateProjectContainer = React.forwardRef<
     <View
       ref={formikRef}
       validationSchema={AddProjectYupSchema}
-      projectRegionOptions={regionTypeCodes}
       projectStatusOptions={projectStatusTypeCodes}
-      initialValues={intialValues}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
     />
   );
