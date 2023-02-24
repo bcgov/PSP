@@ -265,7 +265,8 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFileNote>()), Times.Once);
+            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+                    && x.Note.NoteTxt == "Acquisition File status changed from Closed to Active")), Times.Once);
         }
 
         [Fact]

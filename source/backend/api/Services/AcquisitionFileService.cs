@@ -123,7 +123,7 @@ namespace Pims.Api.Services
             }
 
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
-            CheckAcquisitionFileStatusChanged(acquisitionFile);
+            AddNoteIfStatusChanged(acquisitionFile);
 
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
@@ -306,7 +306,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void CheckAcquisitionFileStatusChanged(PimsAcquisitionFile updateAcquisitionFile)
+        private void AddNoteIfStatusChanged(PimsAcquisitionFile updateAcquisitionFile)
         {
             var currentAcquisitionFile = _acqFileRepository.GetById(updateAcquisitionFile.Internal_Id);
             bool statusChanged = currentAcquisitionFile.AcquisitionFileStatusTypeCode != updateAcquisitionFile.AcquisitionFileStatusTypeCode;
