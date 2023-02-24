@@ -7,6 +7,7 @@ using MapsterMapper;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -51,6 +52,8 @@ namespace Pims.Api.Test.Services
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
             var result = service.Add(acqFile);
@@ -75,10 +78,10 @@ namespace Pims.Api.Test.Services
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
-            var result = service.Add(acqFile);
+            Action act = () => service.Add(acqFile);
 
             // Assert
-            result.RegionCode.Should().Be(1);
+            act.Should().Throw<BadRequestException>();
         }
 
         [Fact]
@@ -167,6 +170,8 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
             var result = service.Update(acqFile, true);
@@ -194,10 +199,10 @@ namespace Pims.Api.Test.Services
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
-            var result = service.Update(acqFile, true);
+            Action act = () => service.Update(acqFile, true);
 
             // Assert
-            result.RegionCode.Should().Be(1);
+            act.Should().Throw<BadRequestException>();
         }
 
         [Fact]
@@ -266,6 +271,8 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
             var result = service.Update(acqFile, userOverride: true);

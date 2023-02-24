@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
@@ -102,7 +103,7 @@ namespace Pims.Api.Services
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
             if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
             {
-                throw new InvalidOperationException("Cannot set an acquisition file's region to 'cannot determine'");
+                throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
@@ -128,7 +129,7 @@ namespace Pims.Api.Services
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
             if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
             {
-                throw new InvalidOperationException("Cannot set an acquisition file's region to 'cannot determine'");
+                throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
