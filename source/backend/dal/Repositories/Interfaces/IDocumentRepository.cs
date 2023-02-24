@@ -14,10 +14,10 @@ namespace Pims.Dal.Repositories
 
         PimsDocument TryGet(long documentId);
 
+        List<PimsDocument> GetAllByDocumentType(string documentType);
+
         PimsDocument Update(PimsDocument document, bool commitTransaction = true);
 
         bool Delete(PimsDocument document);
-
-        List<PimsDocument> GetAllByDocumentType(string documentType);
     }
 }

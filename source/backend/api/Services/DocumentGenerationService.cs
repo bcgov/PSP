@@ -78,7 +78,6 @@ namespace Pims.Api.Services
 
             PimsDocument document = _documentRepository.GetAllByDocumentType("CDOGS Template").LastOrDefault();
             ExternalResult<FileDownload> templateFileResult = await _documentService.DownloadFileLatestAsync(document.MayanId);
-
             if (templateFileResult.Status == ExternalResultStatus.Success)
             {
                 FileDownload templateFile = templateFileResult.Payload;
