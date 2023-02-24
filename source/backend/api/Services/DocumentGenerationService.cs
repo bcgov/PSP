@@ -73,10 +73,10 @@ namespace Pims.Api.Services
             //this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
 
             // TODO: This needs to retrieve by the passed template type. At this point that is not possible.
-            IList<PimsActivityTemplateDocument> templateDocumentsList = _documentActivityTemplateRepository.GetAllByActivityTemplate(3);
-            PimsActivityTemplateDocument templateDocument = templateDocumentsList.LastOrDefault();
+            /*IList<PimsActivityTemplateDocument> templateDocumentsList = _documentRepository.GetAllByDocumentType("CDOGS Template");
+            PimsActivityTemplateDocument templateDocument = templateDocumentsList.LastOrDefault();*/
 
-            PimsDocument document = _documentRepository.TryGet(templateDocument.DocumentId);
+            PimsDocument document = _documentRepository.GetAllByDocumentType("CDOGS Template").LastOrDefault();
             ExternalResult<FileDownload> templateFileResult = await _documentService.DownloadFileLatestAsync(document.MayanId);
 
             if (templateFileResult.Status == ExternalResultStatus.Success)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -16,5 +17,7 @@ namespace Pims.Dal.Repositories
         PimsDocument Update(PimsDocument document, bool commitTransaction = true);
 
         bool Delete(PimsDocument document);
+
+        List<PimsDocument> GetAllByDocumentType(string documentType);
     }
 }
