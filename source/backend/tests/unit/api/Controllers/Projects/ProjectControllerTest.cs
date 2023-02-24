@@ -80,10 +80,10 @@ namespace Pims.Api.Test.Controllers
         public void UpdateProject_BadRequest()
         {
             // Act
-            var result =  _controller.UpdateProject(1, new ProjectModel { Id=2 });
+            var result = _controller.UpdateProject(1, new ProjectModel { Id = 2 });
 
             // Assert
-            result.Should().BeOfType(typeof(BadRequestResult));
+            result.Should().BeOfType(typeof(BadRequestObjectResult));
         }
 
         #endregion

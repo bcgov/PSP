@@ -1,11 +1,11 @@
 import { NoteTypes } from 'constants/index';
 import { FormikHelpers } from 'formik';
+import { useNoteRepository } from 'hooks/repositories/useNoteRepository';
 import { Api_Note } from 'models/api/Note';
 import { useCallback } from 'react';
 
 import { NoteForm } from '../models';
 import { UpdateNoteYupSchema } from '../update/UpdateNoteYupSchema';
-import { useNoteRepository } from './useNoteRepository';
 
 export interface IUseUpdateNotesFormManagementProps {
   /** The parent entity type for adding notes - e.g. 'activity' */
@@ -21,13 +21,13 @@ export interface IUseUpdateNotesFormManagementProps {
  */
 export function useUpdateNotesFormManagement(props: IUseUpdateNotesFormManagementProps) {
   const { updateNote } = useNoteRepository();
-  const { type, note, onSuccess } = props;
+  const { note, onSuccess } = props;
 
   // save handler
   const handleSubmit = useCallback(
     async (values: NoteForm, formikHelpers: FormikHelpers<NoteForm>) => {
       const apiNote = values.toApi();
-      const response = await updateNote.execute(type, apiNote);
+      const response = await updateNote.execute(apiNote);
       formikHelpers?.setSubmitting(false);
 
       if (!!response?.id) {
@@ -37,7 +37,7 @@ export function useUpdateNotesFormManagement(props: IUseUpdateNotesFormManagemen
         }
       }
     },
-    [updateNote, type, onSuccess],
+    [updateNote, onSuccess],
   );
 
   return {

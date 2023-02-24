@@ -58,20 +58,28 @@ namespace Pims.Api.Services
             switch (type)
             {
                 case NoteType.Activity:
-                    var pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
+                    PimsActivityInstanceNote pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
 
-                    var createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
+                    PimsActivityInstanceNote createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
                     _entityNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdEntity);
                     break;
                 case NoteType.Acquisition_File:
-                    var pimsAcqEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
+                    PimsAcquisitionFileNote acqNoteEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
 
-                    var createdAcqEntity = _entityNoteRepository.Add<PimsAcquisitionFileNote>(pimsAcqEntity);
+                    PimsAcquisitionFileNote createdAcqEntity = _entityNoteRepository.Add<PimsAcquisitionFileNote>(acqNoteEntity);
                     _entityNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdAcqEntity);
+                    break;
+                case NoteType.Lease_File:
+                    PimsLeaseNote leaseNoteEntity = _mapper.Map<PimsLeaseNote>(model);
+
+                    PimsLeaseNote createdLeaseEntity = _entityNoteRepository.Add<PimsLeaseNote>(leaseNoteEntity);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdLeaseEntity);
                     break;
                 default:
                     throw new BadRequestException("Relationship type not valid.");
@@ -125,6 +133,14 @@ namespace Pims.Api.Services
                         _entityNoteRepository.CommitTransaction();
                     }
                     break;
+
+                case NoteType.Lease_File:
+                    deleted = _entityNoteRepository.DeleteLeaseFileNotes(noteId);
+                    if (commitTransaction)
+                    {
+                        _entityNoteRepository.CommitTransaction();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -148,6 +164,8 @@ namespace Pims.Api.Services
                     return _entityNoteRepository.GetAllActivityNotesById(entityId);
                 case NoteType.Acquisition_File:
                     return _entityNoteRepository.GetAllAcquisitionNotesById(entityId);
+                case NoteType.Lease_File:
+                    return _entityNoteRepository.GetAllLeaseNotesById(entityId);
                 default:
                     return new List<PimsNote>();
             }

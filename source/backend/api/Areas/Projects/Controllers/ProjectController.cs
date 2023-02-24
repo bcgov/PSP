@@ -110,7 +110,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         {
             if (id != model.Id)
             {
-                return BadRequest();
+                return BadRequest("Model and path id do not match.");
             }
 
             var updatedProject = _projectService.Update(_mapper.Map<Dal.Entities.PimsProject>(model));
