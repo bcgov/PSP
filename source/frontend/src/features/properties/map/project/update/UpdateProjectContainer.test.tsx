@@ -1,7 +1,8 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/mockProjects';
 import React from 'react';
-import { act, render, RenderOptions } from 'utils/test-utils';
+import { act, render, RenderOptions, screen, waitFor } from 'utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
 import { IAddProjectFormProps } from '../add/AddProjectForm';
@@ -95,5 +96,21 @@ describe('UpdateProjectContainer', () => {
 
     expect(mockApi.execute).toHaveBeenCalled();
     expect(onSuccess).toHaveBeenCalled();
+  });
+
+  it('displays expected error toast when update fails', async () => {
+    setup();
+    const onSubmitForm = jest.fn();
+    mockApi.execute.mockRejectedValue({
+      isAxiosError: true,
+      response: { status: 409, data: 'expected error' },
+    } as AxiosError);
+
+    await act(async () => {
+      return viewProps?.onSubmit(viewProps.initialValues, onSubmitForm());
+    });
+
+    expect(mockApi.execute).toHaveBeenCalled();
+    await waitFor(async () => expect(screen.getByText('expected error')).toBeVisible());
   });
 });

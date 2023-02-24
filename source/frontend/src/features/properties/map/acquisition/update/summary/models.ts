@@ -9,10 +9,13 @@ import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 import {
   AcquisitionOwnerFormModel,
   AcquisitionTeamFormModel,
+  WithAcquisitionOwners,
   WithAcquisitionTeam,
 } from '../../common/models';
 
-export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
+export class UpdateAcquisitionSummaryFormModel
+  implements WithAcquisitionTeam, WithAcquisitionOwners
+{
   id?: number;
   fileNo?: number;
   fileNumber?: string;
@@ -58,7 +61,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       acquisitionFileOwners: this.owners
-        .filter(x => !x.isEmpty)
+        .filter(x => !x.isEmpty())
         .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)

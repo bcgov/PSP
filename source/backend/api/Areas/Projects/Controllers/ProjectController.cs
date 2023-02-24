@@ -6,6 +6,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -93,9 +94,16 @@ namespace Pims.Api.Areas.Projects.Controllers
         [SwaggerOperation(Tags = new[] { "project" })]
         public IActionResult AddProject(ProjectModel projectModel)
         {
-            var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
-            return new JsonResult(_mapper.Map<ProjectModel>(newProject));
-        }
+            try
+            {
+                var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+                return new JsonResult(_mapper.Map<ProjectModel>(newProject));
+            }
+            catch(DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
+}
 
         /// <summary>
         /// Updates the project.
@@ -113,9 +121,15 @@ namespace Pims.Api.Areas.Projects.Controllers
                 return BadRequest("Model and path id do not match.");
             }
 
-            var updatedProject = _projectService.Update(_mapper.Map<Dal.Entities.PimsProject>(model));
-
-            return new JsonResult(updatedProject);
+            try
+            {
+                var updatedProject = _projectService.Update(_mapper.Map<Dal.Entities.PimsProject>(model));
+                return new JsonResult(updatedProject);
+            }
+            catch(DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
         }
 
         /// <summary>

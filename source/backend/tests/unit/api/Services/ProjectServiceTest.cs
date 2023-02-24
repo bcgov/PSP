@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -174,6 +175,48 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_Project_ShouldFail_IfDuplicateProduct()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var duplicateCode = new PimsProduct() { Code = "1" };
+
+            // Act
+            Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode, duplicateCode } });
+
+            // Assert
+            result.Should().Throw<DuplicateEntityException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Add_Project_ShouldFail_IfDuplicateProductInDb()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            var duplicateCode = new PimsProduct() { Code = "1" };
+
+            var productRepository = helper.GetService<Mock<IProductRepository>>();
+            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct>() { duplicateCode });
+            
+            // Act
+            Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
+
+            // Assert
+            result.Should().Throw<DuplicateEntityException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
         public void Add_Project_Success()
         {
             // Arrange
@@ -295,6 +338,48 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_IfDuplicateProduct()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectEdit);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var duplicateCode = new PimsProduct() { Code = "1" };
+
+            // Act
+            Action result = () => service.Update(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode, duplicateCode } });
+
+            // Assert
+            result.Should().Throw<DuplicateEntityException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_IfDuplicateProductInDb()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectEdit);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            var duplicateCode = new PimsProduct() { Code = "1" };
+
+            var productRepository = helper.GetService<Mock<IProductRepository>>();
+            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct>() { duplicateCode });
+
+            // Act
+            Action result = () => service.Update(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
+
+            // Assert
+            result.Should().Throw<DuplicateEntityException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
         }
 
         [Fact]

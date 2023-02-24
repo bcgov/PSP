@@ -1,8 +1,8 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
+import { UpdateAcquisitionOwnersYupSchema } from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersYupSchema';
 import { UpdateAcquisitionTeamYupSchema } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamYupSchema';
-import { UpdateAcquisitionOwnersYupSchema } from '../common/update/acquistionOwners/UpdateAcquisitionOwnersYupSchema';
 
 export const AddAcquisitionFileYupSchema = Yup.object()
   .shape({

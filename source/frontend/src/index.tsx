@@ -24,6 +24,14 @@ import getKeycloakEventHandler from 'utils/getKeycloakEventHandler';
 import App from './App';
 import * as serviceWorker from './serviceWorker.ignore';
 
+function prepare() {
+  if (process.env.NODE_ENV === 'development') {
+    const { worker } = require('./mocks/msw');
+    return worker.start({ onUnhandledRequest: 'bypass' });
+  }
+  return Promise.resolve();
+}
+
 //@ts-ignore
 const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
 const Index = () => {
@@ -59,8 +67,10 @@ const Index = () => {
   );
 };
 
-const root = createRoot(document.getElementById('root') as Element);
-root.render(<Index />);
+prepare().then(() => {
+  const root = createRoot(document.getElementById('root') as Element);
+  root.render(<Index />);
+});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
