@@ -183,7 +183,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     <MapSideBarLayout
       showCloseButton
       onClose={close}
-      title="Lease / License"
+      title={containerState.isEditing ? 'Update Lease / License' : 'Lease / License'}
       icon={
         <Fence
           title="Lease file icon"
