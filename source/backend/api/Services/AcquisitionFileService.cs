@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -25,6 +26,7 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -34,7 +36,8 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
             ICoordinateTransformService coordinateService,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            IEntityNoteRepository entityNoteRepository)
         {
             _user = user;
             _logger = logger;
@@ -44,6 +47,7 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -119,6 +123,8 @@ namespace Pims.Api.Services
             }
 
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
+            AddNoteIfStatusChanged(acquisitionFile);
+
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
         }
@@ -298,6 +304,35 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
             }
+        }
+
+        private void AddNoteIfStatusChanged(PimsAcquisitionFile updateAcquisitionFile)
+        {
+            var currentAcquisitionFile = _acqFileRepository.GetById(updateAcquisitionFile.Internal_Id);
+            bool statusChanged = currentAcquisitionFile.AcquisitionFileStatusTypeCode != updateAcquisitionFile.AcquisitionFileStatusTypeCode;
+            if (!statusChanged)
+            {
+                return;
+            }
+
+            var newStatus = _lookupRepository.GetAllAcquisitionFileStatusTypes()
+                .FirstOrDefault(x => x.AcquisitionFileStatusTypeCode == updateAcquisitionFile.AcquisitionFileStatusTypeCode);
+
+            PimsAcquisitionFileNote fileNoteInstance = new()
+            {
+                AcquisitionFileId = updateAcquisitionFile.Internal_Id,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Acquisition File status changed from {currentAcquisitionFile.AcquisitionFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
         }
     }
 }
