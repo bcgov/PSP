@@ -36,7 +36,8 @@ export const AddAcquisitionContainer: React.FC<
     if (!!selectedFileFeature) {
       const property = PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature));
       acquisitionForm.properties = [property];
-      acquisitionForm.region = property.region?.toString();
+      acquisitionForm.region =
+        property.regionName !== 'Cannot determine' ? property.region?.toString() : undefined;
     }
     return acquisitionForm;
   }, [selectedFileFeature]);

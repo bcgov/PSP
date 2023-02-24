@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -97,7 +98,12 @@ namespace Pims.Api.Services
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
 
-            MatchProperties(acquisitionFile);
+            // reset the region
+            var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+            if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
+            {
+                throw new InvalidOperationException("Cannot set an acquisition file's region to 'cannot determine'");
+            }
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
@@ -116,6 +122,13 @@ namespace Pims.Api.Services
             if (!userOverride)
             {
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
+            }
+
+            // reset the region
+            var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+            if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
+            {
+                throw new InvalidOperationException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
