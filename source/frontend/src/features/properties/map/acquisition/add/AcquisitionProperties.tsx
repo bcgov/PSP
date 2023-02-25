@@ -43,7 +43,11 @@ export const AcquisitionProperties: React.FunctionComponent<
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
                         }
-                        if (values.properties?.length === 0 && index === 0) {
+                        if (
+                          values.properties?.length === 0 &&
+                          index === 0 &&
+                          formProperty.regionName !== 'Cannot determine'
+                        ) {
                           formikProps.setFieldValue(`region`, formProperty.region);
                         }
                         push(formProperty);

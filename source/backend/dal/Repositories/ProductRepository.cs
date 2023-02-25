@@ -36,5 +36,17 @@ namespace Pims.Dal.Repositories
                 .OrderBy(p => p.Code)
                 .ToArray();
         }
+
+        /// <summary>
+        /// Using a list of products, find a matching set of products with the same code and description.
+        /// </summary>
+        /// <param name="incomingProducts"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts)
+        {
+            var incomingCodes = incomingProducts.Select(ip => ip.Code);
+            var matchingCodes = this.Context.PimsProducts.AsNoTracking().Where(databaseProduct => incomingCodes.Contains(databaseProduct.Code)).ToArray();
+            return matchingCodes.Where(mc => incomingProducts.Any(ip => ip.Id != mc.Id && ip.Description == mc.Description));
+        }
     }
 }
