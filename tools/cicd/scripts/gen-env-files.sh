@@ -92,8 +92,8 @@ Auth__Keycloak__Secret=
 Auth__Keycloak__ServiceAccount__Secret=" >> ./tools/keycloak/sync/.env
 fi
 
-if test -f "./geoserver/.env"; then
-    echo "./geoserver/.env already exists"
+if test -f "./tools/geoserver/.env"; then
+    echo "./tools/geoserver/.env already exists"
 else
 echo \
 "COMPOSE_PROJECT_NAME=kartozageoserver
@@ -177,11 +177,11 @@ RANDOMSTRING=23bd87cfa327d47e
 INSTANCE_STRING=ac3bcba2fa7d989678a01ef4facc4173010cd8b40d2e5f5a8d18d5f863ca976f
 TOGGLE_MASTER=true
 TOGGLE_SLAVE=true
-EMBEDDED_BROKER=enabled" >> ./geoserver/.env
+EMBEDDED_BROKER=enabled" >> ./tools/geoserver/.env
 fi
 
-if test -f "./geoserver/geoserver_data/psp/mssql/datastore.xml"; then
-    echo "./geoserver/geoserver_data/psp/mssql/datastore.xml already exists"
+if test -f "./tools/geoserver/geoserver_data/psp/mssql/datastore.xml"; then
+    echo "./tools/geoserver/geoserver_data/psp/mssql/datastore.xml already exists"
 else
 echo \
 "<dataStore>
@@ -220,11 +220,11 @@ echo \
   <__default>false</__default>
   <dateCreated>2021-09-26 06:35:16.373 UTC</dateCreated>
   <dateModified>2021-09-26 20:42:24.266 UTC</dateModified>
-</dataStore>" >> ./geoserver/geoserver_data/psp/mssql/datastore.xml
+</dataStore>" >> ./tools/geoserver/geoserver_data/psp/mssql/datastore.xml
 fi
 
-if test -f "./geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml"; then
-    echo "./geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml already exists"
+if test -f "./tools/geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml"; then
+    echo "./tools/geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml already exists"
 else
 echo \
 "<dataStore>
@@ -263,7 +263,7 @@ echo \
   </connectionParameters>
   <__default>false</__default>
   <dateCreated>2022-06-10 20:06:07.789 UTC</dateCreated>
-</dataStore>" >> ./geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml
+</dataStore>" >> ./tools/geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml
 fi
 
 echo 'Before running all the docker containers, update the .env files with the Keycloak Client Secret (pims-service-account).'
