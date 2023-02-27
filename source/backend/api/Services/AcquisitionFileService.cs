@@ -109,6 +109,8 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
+            ValidateStaff(acquisitionFile);
+
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
@@ -127,6 +129,8 @@ namespace Pims.Api.Services
             {
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
+
+            ValidateStaff(acquisitionFile);
 
             // reset the region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -199,6 +203,15 @@ namespace Pims.Api.Services
 
             _acqFileRepository.CommitTransaction();
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+        }
+
+        private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
+        {
+            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFilePeople.GroupBy(p => (p.AcqFlPersonProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
+            }
         }
 
         private void MatchProperties(PimsAcquisitionFile acquisitionFile)
