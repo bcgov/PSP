@@ -38,6 +38,7 @@ using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
+using Pims.Api.Models.Config;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
@@ -342,6 +343,10 @@ namespace Pims.Api
 
             app.UseRouting();
             app.UseCors();
+
+            // Set responses secure headers.
+            ConfigureSecureHeaders(app, Configuration);
+
             app.UseResponseCaching();
 
             app.UseAuthentication();
@@ -402,6 +407,34 @@ namespace Pims.Api
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IFinancialCodeService, FinancialCodeService>();
             services.AddScoped<IDocumentFileService, DocumentFileService>();
+        }
+
+        /// <summary>
+        /// Configures the app to to use content security policies.
+        /// </summary>
+        /// <param name="app">The application builder provider.</param>
+        /// <param name="configuration">The configuration to use.</param>
+        private static void ConfigureSecureHeaders(IApplicationBuilder app, IConfiguration configuration)
+        {
+            ContentSecurityPolicyConfig cspConfig = new();
+            configuration.GetSection("ContentSecurityPolicy").Bind(cspConfig);
+            string csp = cspConfig.GenerateCSPString();
+            app.Use(
+                async (context, next) =>
+                {
+                    context.Response.Headers.Add("Content-Security-Policy", csp);
+                    await next().ConfigureAwait(true);
+                });
+
+            app.Use(
+            async (context, next) =>
+            {
+                context.Response.Headers.Add("Strict-Transport-Security", "max-age=86400; includeSubDomains");
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                context.Response.Headers.Add("X-XSS-Protection", "1");
+                context.Response.Headers.Add("X-Frame-Options", " DENY");
+                await next().ConfigureAwait(true);
+            });
         }
         #endregion
     }
