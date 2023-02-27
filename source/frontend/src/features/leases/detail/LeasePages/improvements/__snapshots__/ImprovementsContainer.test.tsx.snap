@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Improvements Container component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <b
+    class="mr-5"
+  >
+    If this lease/license includes any commercial, residential or other improvements on the property, switch to edit mode to add details to this record.
+  </b>
+</DocumentFragment>
+`;
