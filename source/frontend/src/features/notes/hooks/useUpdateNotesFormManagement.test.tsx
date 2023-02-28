@@ -44,7 +44,7 @@ describe('useUpdateNotesFormManagement hook', () => {
 
   beforeEach(() => {
     mockAxios.reset();
-    mockAxios.onPut('/notes/activity/1').reply(200, mockNoteResponse(1));
+    mockAxios.onPut('/notes/1').reply(200, mockNoteResponse(1));
   });
 
   afterEach(() => {

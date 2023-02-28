@@ -107,7 +107,7 @@ describe('UpdateNoteContainer component', () => {
     const axiosData: Api_Note = JSON.parse(mockAxios.history.put[0].data);
     const expectedValues = formValues.toApi();
 
-    expect(mockAxios.history.put[0].url).toBe('/notes/activity/1');
+    expect(mockAxios.history.put[0].url).toBe('/notes/1');
     expect(axiosData).toEqual(expectedValues);
     expect(onSaveClick).toBeCalled();
     expect(onSuccess).toBeCalled();
@@ -132,7 +132,7 @@ describe('UpdateNoteContainer component', () => {
     await act(async () => userEvent.click(getSaveButton()));
 
     expect(onSaveClick).toBeCalled();
-    expect(mockAxios.history.put[0].url).toBe('/notes/acquisition_file/1');
+    expect(mockAxios.history.put[0].url).toBe('/notes/1');
     expect(onSuccess).toBeCalled();
   });
 });

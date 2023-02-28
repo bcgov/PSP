@@ -13,7 +13,7 @@ export const useNoteRepository = () => {
   const { getNote, postNote, putNote } = useApiNotes();
 
   const addNoteApi = useApiRequestWrapper<
-    (...args: any[]) => Promise<AxiosResponse<Api_EntityNote, any>>
+    (type: NoteTypes, note: Api_EntityNote) => Promise<AxiosResponse<Api_EntityNote, any>>
   >({
     requestFunction: useCallback(
       async (type: NoteTypes, note: Api_EntityNote) => await postNote(type, note),
@@ -25,24 +25,18 @@ export const useNoteRepository = () => {
   });
 
   const getNoteApi = useApiRequestWrapper<
-    (...args: any[]) => Promise<AxiosResponse<Api_Note, any>>
+    (noteId: number) => Promise<AxiosResponse<Api_Note, any>>
   >({
-    requestFunction: useCallback(
-      async (type: NoteTypes, noteId: number) => await getNote(type, noteId),
-      [getNote],
-    ),
+    requestFunction: useCallback(async (noteId: number) => await getNote(noteId), [getNote]),
     requestName: 'GetNote',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 
   const updateNoteApi = useApiRequestWrapper<
-    (...args: any[]) => Promise<AxiosResponse<Api_Note, any>>
+    (note: Api_Note) => Promise<AxiosResponse<Api_Note, any>>
   >({
-    requestFunction: useCallback(
-      async (type: NoteTypes, note: Api_Note) => await putNote(type, note),
-      [putNote],
-    ),
+    requestFunction: useCallback(async (note: Api_Note) => await putNote(note), [putNote]),
     requestName: 'UpdateNote',
     onSuccess: useAxiosSuccessHandler('Note saved'),
     onError: useAxiosErrorHandler(),

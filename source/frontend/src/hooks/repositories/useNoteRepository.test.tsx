@@ -87,7 +87,7 @@ describe('useNoteRepository hook', () => {
 
   describe('getNote', () => {
     beforeEach(() => {
-      url = `/notes/activity/1`;
+      url = `/notes/1`;
     });
 
     it('Dispatches success with correct response when request is successful', async () => {
@@ -95,7 +95,7 @@ describe('useNoteRepository hook', () => {
       const { getNote } = setup();
 
       await act(async () => {
-        const response = await getNote.execute(NoteTypes.Activity, 1);
+        const response = await getNote.execute(1);
         expect(response).toEqual(mockNoteResponse(1));
       });
 
@@ -108,7 +108,7 @@ describe('useNoteRepository hook', () => {
       const { getNote } = setup();
 
       await act(async () => {
-        await getNote.execute(NoteTypes.Activity, mockEntityNote());
+        await getNote.execute(mockEntityNote().id || -1);
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
@@ -118,7 +118,7 @@ describe('useNoteRepository hook', () => {
 
   describe('updateNote', () => {
     beforeEach(() => {
-      url = `/notes/activity/1`;
+      url = `/notes/1`;
     });
 
     it('Dispatches success with correct response when request is successful', async () => {
@@ -126,7 +126,7 @@ describe('useNoteRepository hook', () => {
       const { updateNote } = setup();
 
       await act(async () => {
-        const response = await updateNote.execute(NoteTypes.Activity, mockNoteResponse(1));
+        const response = await updateNote.execute(mockNoteResponse(1));
         expect(response).toEqual(mockNoteResponse(1));
       });
 
@@ -140,7 +140,7 @@ describe('useNoteRepository hook', () => {
       const { updateNote } = setup();
 
       await act(async () => {
-        await updateNote.execute(NoteTypes.Activity, mockNoteResponse(1));
+        await updateNote.execute(mockNoteResponse(1));
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
