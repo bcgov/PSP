@@ -1,8 +1,8 @@
 import { NoteTypes } from 'constants/index';
+import { useNoteRepository } from 'hooks/repositories/useNoteRepository';
 import { useEffect, useState } from 'react';
 
 import { NoteDetailsFormModal } from './detail/NoteDetailsFormModal';
-import { useNoteRepository } from './hooks/useNoteRepository';
 import { UpdateNoteContainer } from './update/UpdateNoteContainer';
 
 export interface INotesDetailContainerProps {
@@ -32,12 +32,12 @@ export const NoteContainer: React.FC<
   } = useNoteRepository();
 
   useEffect(() => {
-    execute(type, noteId);
+    execute(noteId);
   }, [execute, noteId, type]);
 
   // re-fetch note from API after update
   const onSuccessHandler = () => {
-    execute(type, noteId);
+    execute(noteId);
     onSuccess && onSuccess();
   };
 

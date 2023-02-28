@@ -60,20 +60,28 @@ namespace Pims.Api.Services
             switch (type)
             {
                 case NoteType.Activity:
-                    var pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
+                    PimsActivityInstanceNote pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
 
-                    var createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
+                    PimsActivityInstanceNote createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
                     _entityNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdEntity);
                     break;
                 case NoteType.Acquisition_File:
-                    var pimsAcqEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
+                    PimsAcquisitionFileNote acqNoteEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
 
-                    var createdAcqEntity = _entityNoteRepository.Add<PimsAcquisitionFileNote>(pimsAcqEntity);
+                    PimsAcquisitionFileNote createdAcqEntity = _entityNoteRepository.Add<PimsAcquisitionFileNote>(acqNoteEntity);
                     _entityNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdAcqEntity);
+                    break;
+                case NoteType.Lease_File:
+                    PimsLeaseNote leaseNoteEntity = _mapper.Map<PimsLeaseNote>(model);
+
+                    PimsLeaseNote createdLeaseEntity = _entityNoteRepository.Add<PimsLeaseNote>(leaseNoteEntity);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdLeaseEntity);
                     break;
                 case NoteType.Project:
                     var projectNote = _mapper.Map<PimsProjectNote>(model);
@@ -124,6 +132,7 @@ namespace Pims.Api.Services
                 NoteType.Activity => _entityNoteRepository.DeleteActivityNotes(noteId),
                 NoteType.Acquisition_File => _entityNoteRepository.DeleteAcquisitionFileNotes(noteId),
                 NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
+                NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
                 _ => deleted
             };
 
@@ -151,6 +160,7 @@ namespace Pims.Api.Services
                 NoteType.Activity => _entityNoteRepository.GetAllActivityNotesById(entityId).ToList(),
                 NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
                 NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
+                NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),
                 _ => new List<PimsNote>()
             };
 
