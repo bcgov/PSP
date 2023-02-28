@@ -34,6 +34,7 @@ using Pims.Api.Handlers;
 using Pims.Api.Helpers;
 using Pims.Api.Helpers.Authorization;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Helpers.Healthchecks;
 using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
@@ -240,6 +241,13 @@ namespace Pims.Api
             services.AddHealthChecks()
                 .AddCheck("liveliness", () => HealthCheckResult.Healthy())
                 .AddSqlServer(csBuilder.ConnectionString, tags: new[] { "services" });
+
+            services.AddHealthChecks()
+                .AddCheck(
+                    "PimsDBCollation",
+                    new PimsDatabaseHealtcheck(csBuilder.ConnectionString),
+                    HealthStatus.Unhealthy,
+                    new string[] { "services" });
 
             services.AddApiVersioning(options =>
             {
