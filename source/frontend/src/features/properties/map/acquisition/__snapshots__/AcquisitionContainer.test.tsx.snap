@@ -7,28 +7,5 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
   />
   <div />
   0
-                    <div
-                      class="c14 form-section"
-                    >
-                      <h2
-                        class="c15"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Owners
-                          </div>
-                          <div
-                            class="col-1"
-                          />
-                        </div>
-                      </h2>
-                      <div
-                        class="collapse show"
-                      />
-                    </div>
 </DocumentFragment>
 `;
