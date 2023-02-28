@@ -99,8 +99,15 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
         const bcaSummary = property?.pid ? await getPrimaryAddressByPid(property.pid) : undefined;
 
+        const hasPinOrPid =
+          formProperty.property?.pid !== undefined || formProperty.property?.pin !== undefined;
+
         // Retrieve the pims id of the property if it exists
-        if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
+        if (
+          formProperty.property !== undefined &&
+          hasPinOrPid &&
+          formProperty.property.apiId === undefined
+        ) {
           formProperty.property.address = bcaSummary?.address
             ? AddressForm.fromBcaAddress(bcaSummary?.address)
             : undefined;
