@@ -4,7 +4,7 @@ import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -85,13 +85,7 @@ export const AddAcquisitionContainer: React.FC<
         />
       }
       onClose={close}
-      footer={
-        <SidebarFooter
-          isOkDisabled={formikRef.current?.isSubmitting}
-          onSave={handleSave}
-          onCancel={close}
-        />
-      }
+      footer={<SidebarFooter isOkDisabled={helper.loading} onSave={handleSave} onCancel={close} />}
     >
       <StyledFormWrapper>
         <AddAcquisitionForm
