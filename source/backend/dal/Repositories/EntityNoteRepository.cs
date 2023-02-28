@@ -136,7 +136,10 @@ namespace Pims.Dal.Repositories
 
         public bool DeleteProjectNotes(long noteId)
         {
-            var projectNotes = Context.PimsProjectNotes.Include(x => x.Note).Where(x => x.NoteId == noteId).ToList();
+            var projectNotes = Context.PimsProjectNotes
+                .Include(x => x.Note)
+                .Where(x => x.NoteId == noteId).ToList();
+
             if (projectNotes.Any())
             {
                 foreach (var note in projectNotes)
