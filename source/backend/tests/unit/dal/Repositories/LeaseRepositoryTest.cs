@@ -331,8 +331,6 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
 
-
-
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             var propertyOne = EntityHelper.CreateProperty(1);
             var context = helper.CreatePimsContext(user, true);
@@ -348,6 +346,9 @@ namespace Pims.Dal.Test.Repositories
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
+
+            var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
 
             // Act
             var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, Lease = lease, PropertyId = propertyOne.PropertyId, Property = propertyOne };
@@ -381,6 +382,7 @@ namespace Pims.Dal.Test.Repositories
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
 
             var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
             leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>(), false));
 
@@ -416,6 +418,7 @@ namespace Pims.Dal.Test.Repositories
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
 
             var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
             leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>(), false));
 

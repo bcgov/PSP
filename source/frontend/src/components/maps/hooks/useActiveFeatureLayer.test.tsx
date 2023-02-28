@@ -138,6 +138,66 @@ describe('useActiveFeatureLayer hook tests', () => {
       expect(setLayerPopup).toHaveBeenCalledWith(
         expect.objectContaining({
           data: { pid: '123456789' },
+          title: 'LTSA ParcelMap data',
+        }),
+      );
+    });
+  });
+
+  it('sets the layer popup with the expected municipality data', async () => {
+    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+      features: [],
+    });
+    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+      features: [{ properties: { PROPERTY_ID: 200 } }],
+    });
+    //this will return data for the municipality layer.
+    renderHook(
+      () =>
+        useActiveFeatureLayer({
+          mapRef: mapRef as any,
+          selectedProperty: { latitude: 1, longitude: 1 } as any,
+          layerPopup: undefined,
+          setLayerPopup: setLayerPopup,
+        }),
+      {
+        wrapper: getWrapper(getStore()),
+      },
+    );
+    await waitFor(() => {
+      expect(setLayerPopup).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: { PROPERTY_ID: 200 },
+          title: 'Municipality Information',
+        }),
+      );
+    });
+  });
+
+  it('sets the layer popup with no data', async () => {
+    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+      features: [],
+    });
+    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+      features: [],
+    });
+    renderHook(
+      () =>
+        useActiveFeatureLayer({
+          mapRef: mapRef as any,
+          selectedProperty: { latitude: 1, longitude: 1 } as any,
+          layerPopup: undefined,
+          setLayerPopup: setLayerPopup,
+        }),
+      {
+        wrapper: getWrapper(getStore()),
+      },
+    );
+    await waitFor(() => {
+      expect(setLayerPopup).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: undefined,
+          title: 'Location Information',
         }),
       );
     });

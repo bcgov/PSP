@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using MoreLinq;
+using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -10,7 +12,7 @@ using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
 {
-    public class LeaseService : ILeaseService
+    public class LeaseService : BaseService, ILeaseService
     {
         private readonly ILogger _logger;
         private readonly ILeaseRepository _leaseRepository;
@@ -18,14 +20,18 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly ILookupRepository _lookupRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
         public LeaseService(
-            ILogger<LeaseService> logger,
+            ClaimsPrincipal user,
+            ILogger<ActivityService> logger,
             ILeaseRepository leaseRepository,
             ICoordinateTransformService coordinateTransformService,
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            IEntityNoteRepository entityNoteRepositoryrvice)
+            : base(user, logger)
         {
             _logger = logger;
             _leaseRepository = leaseRepository;
@@ -33,6 +39,7 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
             _lookupRepository = lookupRepository;
+            _entityNoteRepository = entityNoteRepositoryrvice;
         }
 
         public bool IsRowVersionEqual(long leaseId, long rowVersion)
@@ -64,6 +71,26 @@ namespace Pims.Api.Services
 
         public PimsLease Update(PimsLease lease, bool userOverride = false)
         {
+            var currentLease = _leaseRepository.Get(lease.LeaseId);
+
+            if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
+            {
+                _entityNoteRepository.Add<PimsLeaseNote>(
+                    new PimsLeaseNote()
+                    {
+                        LeaseId = currentLease.LeaseId,
+                        AppCreateTimestamp = System.DateTime.Now,
+                        AppCreateUserid = this.User.GetUsername(),
+                        Note = new PimsNote()
+                        {
+                            IsSystemGenerated = true,
+                            NoteTxt = $"Lease status changed from {currentLease.LeaseStatusTypeCode} to {lease.LeaseStatusTypeCode}",
+                            AppCreateTimestamp = System.DateTime.Now,
+                            AppCreateUserid = this.User.GetUsername(),
+                        },
+                    });
+            }
+
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverride);
             var updatedLease = _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
@@ -84,7 +111,7 @@ namespace Pims.Api.Services
         {
             MatchProperties(lease);
 
-            lease.PimsPropertyLeases.ForEach(propertyLease =>
+            foreach (var propertyLease in lease.PimsPropertyLeases)
             {
                 PimsProperty property = propertyLease.Property;
                 var existingPropertyLeases = _propertyLeaseRepository.GetAllByPropertyId(property.PropertyId);
@@ -111,7 +138,7 @@ namespace Pims.Api.Services
                     propertyLease.PropertyId = property.PropertyId;
                     propertyLease.Property = null;
                 }
-            });
+            }
 
             return lease;
         }

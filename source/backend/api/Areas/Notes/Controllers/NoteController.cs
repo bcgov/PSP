@@ -67,7 +67,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         /// <param name="type">Used to identify note type.</param>
         /// <param name="entityId">Used to identify note's parent entity.</param>
         /// <returns></returns>
-        [HttpGet("{type}/owner/{entityId:long}")]
+        [HttpGet("{type}/{entityId:long}")]
         [Produces("application/json")]
         [HasPermission(Permissions.NoteView)]
         [ProducesResponseType(typeof(IEnumerable<NoteModel>), 200)]
@@ -82,15 +82,14 @@ namespace Pims.Api.Areas.Notes.Controllers
         /// <summary>
         /// Retrieves the note with the specified id.
         /// </summary>
-        /// <param name="type">Used to identify note type.</param>
         /// <param name="noteId">Used to identify the note.</param>
         /// <returns></returns>
-        [HttpGet("{type}/{noteId:long}")]
+        [HttpGet("{noteId:long}")]
         [Produces("application/json")]
         [HasPermission(Permissions.NoteView)]
         [ProducesResponseType(typeof(NoteModel), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult GetNoteById(NoteType type, long noteId)
+        public IActionResult GetNoteById(long noteId)
         {
             var note = _noteService.GetById(noteId);
             return new JsonResult(note);
@@ -99,17 +98,20 @@ namespace Pims.Api.Areas.Notes.Controllers
         /// <summary>
         /// Updates the note with the specified id.
         /// </summary>
-        /// <param name="type">Used to identify note type.</param>
         /// <param name="noteId">Used to identify the note.</param>
         /// <param name="noteModel">The updated note values.</param>
         /// <returns></returns>
-        [HttpPut("{type}/{noteId:long}")]
+        [HttpPut("{noteId:long}")]
         [Produces("application/json")]
         [HasPermission(Permissions.NoteEdit)]
         [ProducesResponseType(typeof(NoteModel), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult UpdateNote(NoteType type, long noteId, [FromBody] NoteModel noteModel)
+        public IActionResult UpdateNote(long noteId, [FromBody] NoteModel noteModel)
         {
+            if (noteId != noteModel.Id)
+            {
+                return BadRequest("Model and path id do not match.");
+            }
             var updatedNote = _noteService.Update(noteModel);
             return new JsonResult(updatedNote);
         }
@@ -120,7 +122,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         /// <param name="type">Used to identify note type.</param>
         /// <param name="noteId">Used to identify the note and delete it.</param>
         /// <returns></returns>
-        [HttpDelete("{type}/{noteId:long}")]
+        [HttpDelete("{noteId:long}/{type}")]
         [Produces("application/json")]
         [HasPermission(Permissions.NoteDelete)]
         [ProducesResponseType(typeof(bool), 200)]
