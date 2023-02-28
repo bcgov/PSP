@@ -93,6 +93,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(l => l.RegionCodeNavigation)
 
+                .Include(l => l.Project)
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.LeasePayRvblTypeCodeNavigation)
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
