@@ -152,9 +152,9 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
                 return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
             }
-            catch(InvalidOperationException)
+            catch(BusinessRuleViolationException e)
             {
-                return new ConflictResult();
+                return Conflict(e.Message);
             }
         }
 
