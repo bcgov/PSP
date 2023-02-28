@@ -1,4 +1,5 @@
 import { Form, Input, Select, SelectOption, TextArea } from 'components/common/form';
+import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
@@ -15,7 +16,6 @@ export interface IAddProjectFormProps {
   /** Initial values of the form */
   initialValues: ProjectForm;
   projectStatusOptions: SelectOption[];
-  projectRegionOptions: SelectOption[];
   /** A Yup Schema or a function that returns a Yup schema */
   validationSchema?: any | (() => any);
   /** Submission handler */
@@ -24,13 +24,7 @@ export interface IAddProjectFormProps {
 
 const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
   (props, formikRef) => {
-    const {
-      initialValues,
-      projectStatusOptions,
-      projectRegionOptions,
-      validationSchema,
-      onSubmit,
-    } = props;
+    const { initialValues, projectStatusOptions, validationSchema, onSubmit } = props;
 
     const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
       await onSubmit(values, formikHelpers);
@@ -73,7 +67,7 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
                   />
                 </SectionField>
                 <SectionField label="MoTI region" required labelWidth="2">
-                  <Select field="region" options={projectRegionOptions} placeholder="Select..." />
+                  <UserRegionSelectContainer field="region" placeholder="Select region..." />
                 </SectionField>
                 <SectionField label="Project summary" labelWidth="12">
                   <MediumTextArea field="summary" />

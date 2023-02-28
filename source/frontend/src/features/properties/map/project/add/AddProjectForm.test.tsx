@@ -2,7 +2,9 @@ import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { GetMockLookUpsByType, mockLookups } from 'mocks/mockLookups';
+import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
+import { getMockLookUpsByType, mockLookups } from 'mocks/mockLookups';
+import { getUserMock } from 'mocks/userMock';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fakeText, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
@@ -18,8 +20,30 @@ const onSubmit = jest.fn();
 type TestProps = Pick<IAddProjectFormProps, 'initialValues'>;
 jest.mock('@react-keycloak/web');
 
-let mockRegionOptions: SelectOption[] = GetMockLookUpsByType(API.REGION_TYPES);
-let mockProjectStatuses: SelectOption[] = GetMockLookUpsByType(API.PROJECT_STATUS_TYPES);
+jest.mock('hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
+  retrieveUserInfo: jest.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    ...getUserMock(),
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+        region: { id: 1 },
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+        region: { id: 2 },
+      },
+    ],
+  },
+});
+
+const mockStatusOptions: SelectOption[] = getMockLookUpsByType(API.PROJECT_STATUS_TYPES);
 
 describe('AddProjectForm component', () => {
   // render component under test
@@ -27,11 +51,11 @@ describe('AddProjectForm component', () => {
     const ref = createRef<FormikProps<ProjectForm>>();
     const utils = render(
       <AddProjectForm
+        ref={ref}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
-        projectStatusOptions={mockRegionOptions}
-        projectRegionOptions={mockProjectStatuses}
+        projectStatusOptions={mockStatusOptions}
       />,
       {
         ...renderOptions,
@@ -104,7 +128,7 @@ describe('AddProjectForm component', () => {
     expect(status.tagName).toBe('SELECT');
   });
 
-  it.only('should validate character limits', async () => {
+  it('should validate character limits', async () => {
     const { container, getFormikRef, findByText } = setup({
       initialValues,
     });
@@ -124,13 +148,27 @@ describe('AddProjectForm component', () => {
     expect(await findByText(/Project summary must be at most 2000 characters/i)).toBeVisible();
   });
 
+  it('should call onSubmit and save form data as expected', async () => {
+    const { getFormikRef, getNameTextbox, getRegionDropdown } = setup({
+      initialValues,
+    });
+
+    await act(() => userEvent.selectOptions(getRegionDropdown(), '1'));
+    await act(() => userEvent.paste(getNameTextbox(), `TRANS-CANADA HWY - 10`));
+
+    // submit form to trigger validation check
+    await act(() => getFormikRef().current?.submitForm());
+
+    expect(onSubmit).toHaveBeenCalled();
+  });
+
   it('should add a product', async () => {
     const { getByText, getProductCodeTextBox } = setup({
       initialValues,
     });
 
     const addProductButton = getByText('+ Add another product');
-    act(() => {
+    await act(() => {
       userEvent.click(addProductButton);
     });
 
