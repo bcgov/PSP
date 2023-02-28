@@ -8,32 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_OWNER")]
-    [Index(nameof(AcquisitionFileId), Name = "ACQOWN_ACQUISITION_FILE_ID_IDX")]
-    [Index(nameof(AddressId), Name = "ACQOWN_ADDRESS_ID_IDX")]
-    [Index(nameof(LastNameOrCorpName1), Name = "ACQOWN_LAST_NAME_OR_CORP_NAME_1_IDX")]
-    public partial class PimsAcquisitionOwner
+    [Table("PIMS_PROJECT_NOTE_HIST")]
+    [Index(nameof(ProjectNoteHistId), nameof(EndDateHist), Name = "PIMS_PRJNOT_H_UK", IsUnique = true)]
+    public partial class PimsProjectNoteHist
     {
         [Key]
-        [Column("ACQUISITION_OWNER_ID")]
-        public long AcquisitionOwnerId { get; set; }
-        [Column("ACQUISITION_FILE_ID")]
-        public long? AcquisitionFileId { get; set; }
-        [Column("ADDRESS_ID")]
-        public long? AddressId { get; set; }
-        [Required]
-        [Column("LAST_NAME_OR_CORP_NAME_1")]
-        [StringLength(300)]
-        public string LastNameOrCorpName1 { get; set; }
-        [Column("LAST_NAME_OR_CORP_NAME_2")]
-        [StringLength(300)]
-        public string LastNameOrCorpName2 { get; set; }
-        [Column("GIVEN_NAME")]
-        [StringLength(300)]
-        public string GivenName { get; set; }
-        [Column("INCORPORATION_NUMBER")]
-        [StringLength(50)]
-        public string IncorporationNumber { get; set; }
+        [Column("_PROJECT_NOTE_HIST_ID")]
+        public long ProjectNoteHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("PROJECT_NOTE_ID")]
+        public long ProjectNoteId { get; set; }
+        [Column("PROJECT_ID")]
+        public long ProjectId { get; set; }
+        [Column("NOTE_ID")]
+        public long NoteId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -72,12 +65,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(AcquisitionFileId))]
-        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionOwners))]
-        public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
-        [ForeignKey(nameof(AddressId))]
-        [InverseProperty(nameof(PimsAddress.PimsAcquisitionOwners))]
-        public virtual PimsAddress Address { get; set; }
     }
 }
