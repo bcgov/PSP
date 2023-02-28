@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Drawing;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -74,6 +75,14 @@ namespace Pims.Api.Services
 
                     result = _mapper.Map<EntityNoteModel>(createdAcqEntity);
                     break;
+                case NoteType.Project:
+                    var projectNote = _mapper.Map<PimsProjectNote>(model);
+
+                    var createdNote = _entityNoteRepository.Add<PimsProjectNote>(projectNote);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdNote);
+                    break;
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }
@@ -110,25 +119,19 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.NoteDelete);
             bool deleted = false;
 
-            switch (type)
+            deleted = type switch
             {
-                case NoteType.Activity:
-                    deleted = _entityNoteRepository.DeleteActivityNotes(noteId);
-                    if (commitTransaction)
-                    {
-                        _entityNoteRepository.CommitTransaction();
-                    }
-                    break;
-                case NoteType.Acquisition_File:
-                    deleted = _entityNoteRepository.DeleteAcquisitionFileNotes(noteId);
-                    if (commitTransaction)
-                    {
-                        _entityNoteRepository.CommitTransaction();
-                    }
-                    break;
-                default:
-                    break;
+                NoteType.Activity => _entityNoteRepository.DeleteActivityNotes(noteId),
+                NoteType.Acquisition_File => _entityNoteRepository.DeleteAcquisitionFileNotes(noteId),
+                NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
+                _ => deleted
+            };
+
+            if (commitTransaction)
+            {
+                _entityNoteRepository.CommitTransaction();
             }
+
             return deleted;
         }
 
@@ -147,6 +150,7 @@ namespace Pims.Api.Services
             {
                 NoteType.Activity => _entityNoteRepository.GetAllActivityNotesById(entityId).ToList(),
                 NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
+                NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
                 _ => new List<PimsNote>()
             };
 
