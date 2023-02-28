@@ -17,7 +17,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
     <Section header="Owners">
       {ownersList?.map((owner, index) => {
         return (
-          <>
+          <span key={`owner-${index}-${owner.ownerName}`}>
             <SectionField label="Name">{owner.ownerName}</SectionField>
             <SectionField
               label="Other name"
@@ -29,7 +29,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
               <StyledAddressWrapper>{owner.ownerDisplayAddress}</StyledAddressWrapper>
             </SectionField>
             {index < ownersList.length - 1 && <hr></hr>}
-          </>
+          </span>
         );
       })}
     </Section>
