@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -81,6 +82,14 @@ namespace Pims.Api.Services
 
                     result = _mapper.Map<EntityNoteModel>(createdLeaseEntity);
                     break;
+                case NoteType.Project:
+                    var projectNote = _mapper.Map<PimsProjectNote>(model);
+
+                    var createdNote = _entityNoteRepository.Add<PimsProjectNote>(projectNote);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdNote);
+                    break;
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }
@@ -117,33 +126,20 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.NoteDelete);
             bool deleted = false;
 
-            switch (type)
+            deleted = type switch
             {
-                case NoteType.Activity:
-                    deleted = _entityNoteRepository.DeleteActivityNotes(noteId);
-                    if (commitTransaction)
-                    {
-                        _entityNoteRepository.CommitTransaction();
-                    }
-                    break;
-                case NoteType.Acquisition_File:
-                    deleted = _entityNoteRepository.DeleteAcquisitionFileNotes(noteId);
-                    if (commitTransaction)
-                    {
-                        _entityNoteRepository.CommitTransaction();
-                    }
-                    break;
+                NoteType.Activity => _entityNoteRepository.DeleteActivityNotes(noteId),
+                NoteType.Acquisition_File => _entityNoteRepository.DeleteAcquisitionFileNotes(noteId),
+                NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
+                NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
+                _ => deleted
+            };
 
-                case NoteType.Lease_File:
-                    deleted = _entityNoteRepository.DeleteLeaseFileNotes(noteId);
-                    if (commitTransaction)
-                    {
-                        _entityNoteRepository.CommitTransaction();
-                    }
-                    break;
-                default:
-                    break;
+            if (commitTransaction)
+            {
+                _entityNoteRepository.CommitTransaction();
             }
+
             return deleted;
         }
 
@@ -155,20 +151,19 @@ namespace Pims.Api.Services
         /// <returns></returns>
         public IEnumerable<PimsNote> GetNotes(NoteType type, long entityId)
         {
-            this.Logger.LogInformation("Getting all notes with type {type} and parent id {entityId}", type, entityId);
+            this.Logger.LogInformation($"Getting all notes with type {type} and parent id {entityId}");
             this.User.ThrowIfNotAuthorized(Permissions.NoteView);
 
-            switch (type)
+            List<PimsNote> notes = type switch
             {
-                case NoteType.Activity:
-                    return _entityNoteRepository.GetAllActivityNotesById(entityId);
-                case NoteType.Acquisition_File:
-                    return _entityNoteRepository.GetAllAcquisitionNotesById(entityId);
-                case NoteType.Lease_File:
-                    return _entityNoteRepository.GetAllLeaseNotesById(entityId);
-                default:
-                    return new List<PimsNote>();
-            }
+                NoteType.Activity => _entityNoteRepository.GetAllActivityNotesById(entityId).ToList(),
+                NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
+                NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
+                NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),
+                _ => new List<PimsNote>()
+            };
+
+            return notes;
         }
 
         private void ValidateVersion(long noteId, long noteVersion)

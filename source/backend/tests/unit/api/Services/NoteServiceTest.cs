@@ -79,6 +79,26 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_ProjectNote_Success()
+        {
+            // Arrange
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteAdd);
+
+            var mapper = _helper.GetService<IMapper>();
+            var projectNote = EntityHelper.CreateProjectNote();
+            var noteModel = mapper.Map<EntityNoteModel>(projectNote);
+
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsProjectNote>())).Returns(projectNote);
+
+            // Act
+            var result = service.Add(NoteType.Project, noteModel);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsProjectNote>()), Times.Once);
+        }
+
+        [Fact]
         public void Add_NoPermission()
         {
             // Arrange
@@ -151,6 +171,24 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.GetAllActivityNotesById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetNotes_Project_Success()
+        {
+            // Arrange
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteView);
+
+            var notes = new[] { EntityHelper.CreateNote("Test Note 1"), EntityHelper.CreateNote("Test Note 2") };
+
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.GetAllProjectNotesById(It.IsAny<long>())).Returns(notes);
+
+            // Act
+            var result = service.GetNotes(NoteType.Project, 1);
+
+            // Assert
+            repository.Verify(x => x.GetAllProjectNotesById(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -242,6 +280,20 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.DeleteAcquisitionFileNotes(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteNote_Project_Success()
+        {
+            // Arrange
+            var service = CreateNoteServiceWithPermissions(Permissions.NoteDelete);
+            var repository = _helper.GetService<Mock<IEntityNoteRepository>>();
+
+            // Act
+            service.DeleteNote(NoteType.Project, 1);
+
+            // Assert
+            repository.Verify(x => x.DeleteProjectNotes(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
