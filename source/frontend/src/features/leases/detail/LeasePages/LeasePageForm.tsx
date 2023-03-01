@@ -17,28 +17,17 @@ export const LeaseViewPageForm: React.FunctionComponent<
 > = ({ children, isEditing, onEdit }) => {
   return (
     <StyledLeasePage>
-      <StyledLeasePageHeader>
+      <StyledEditWrapper className="mr-3 my-1">
         <LeaseEditButton onEdit={onEdit} isEditing={isEditing} />
-      </StyledLeasePageHeader>
+      </StyledEditWrapper>
       <>{children}</>
     </StyledLeasePage>
   );
 };
 
-const StyledLeasePageHeader = styled.div`
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  line-height: 4.2rem;
-  text-align: left;
-  color: ${props => props.theme.css.textColor};
-  position: sticky;
-  top: 0;
-  left: 0;
-  height: 1rem;
-  padding-bottom: 1rem;
-  background-color: #f2f2f2;
-
-  z-index: 10;
+const StyledEditWrapper = styled.div`
+  color: ${props => props.theme.css.primary};
+  text-align: right;
 `;
 
 const StyledLeasePage = styled.div`
@@ -48,7 +37,7 @@ const StyledLeasePage = styled.div`
   flex-direction: column;
   display: flex;
   text-align: left;
-  background-color: #f2f2f2;
+  background-color: ${props => props.theme.css.filterBackgroundColor};
 `;
 
 export default LeaseViewPageForm;

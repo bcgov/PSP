@@ -33,7 +33,6 @@ export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<I
 };
 
 export const StyledDetails = styled.form`
-  margin-top: 4rem;
   text-align: left;
   input:disabled,
   select:disabled,

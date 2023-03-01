@@ -19,7 +19,7 @@ export const ImprovementsContainer: React.FunctionComponent<
 
   if (!lease?.improvements?.length) {
     return (
-      <b className="mr-5">
+      <b className="mx-4">
         If this lease/license includes any commercial, residential or other improvements on the
         property, switch to edit mode to add details to this record.
       </b>
