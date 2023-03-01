@@ -274,24 +274,6 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ReprojectPropertyLocationsToWgs84(PimsAcquisitionFile acquisitionFile)
-        {
-            if (acquisitionFile == null)
-            {
-                return;
-            }
-
-            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
-            {
-                if (acquisitionProperty.Property.Location != null)
-                {
-                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
-                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
-                }
-            }
-        }
-
         private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyAcquisitionFile> propertyAcquisitionFiles)
         {
             foreach (var acquisitionProperty in propertyAcquisitionFiles)
