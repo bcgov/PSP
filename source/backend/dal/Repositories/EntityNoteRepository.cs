@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MoreLinq;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
@@ -76,6 +77,12 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.LeaseId == leaseId).Select(x => x.Note).ToList();
         }
 
+        public IEnumerable<PimsNote> GetAllProjectNotesById(long entityId)
+        {
+            return this.Context.PimsProjectNotes
+                .Where(x => x.ProjectId == entityId).Select(x => x.Note).ToList();
+        }
+
         public bool DeleteActivityNotes(long entityId)
         {
             var activityNotes = this.Context.PimsActivityInstanceNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
@@ -121,6 +128,24 @@ namespace Pims.Dal.Repositories
                 {
                     this.Context.PimsLeaseNotes.Remove(leaseFileNote);
                     this.Context.PimsNotes.Remove(leaseFileNote.Note);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteProjectNotes(long noteId)
+        {
+            var projectNotes = Context.PimsProjectNotes
+                .Include(x => x.Note)
+                .Where(x => x.NoteId == noteId).ToList();
+
+            if (projectNotes.Any())
+            {
+                foreach (var note in projectNotes)
+                {
+                    this.Context.PimsProjectNotes.Remove(note);
+                    this.Context.PimsNotes.Remove(note.Note);
                 }
                 return true;
             }
