@@ -58,7 +58,7 @@ namespace Pims.Api.Test.Services
             };
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
 
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
@@ -88,7 +88,7 @@ namespace Pims.Api.Test.Services
             };
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
 
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
@@ -110,7 +110,7 @@ namespace Pims.Api.Test.Services
             var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
-            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             // Act
 
@@ -133,7 +133,7 @@ namespace Pims.Api.Test.Services
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
-            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             // Act
             updatedLease = service.Update(updatedLease);
@@ -159,7 +159,7 @@ namespace Pims.Api.Test.Services
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(deletedProperty);
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
-            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             // Act
             updatedLease = service.Update(updatedLease);

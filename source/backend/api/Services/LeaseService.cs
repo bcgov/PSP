@@ -95,7 +95,7 @@ namespace Pims.Api.Services
 
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverride);
-            var updatedLease = _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
+            _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
 
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
@@ -116,7 +116,7 @@ namespace Pims.Api.Services
 
 
             _leaseRepository.CommitTransaction();
-            return updatedLease;
+            return _leaseRepository.GetNoTracking(lease.LeaseId);
         }
 
         /// <summary>
