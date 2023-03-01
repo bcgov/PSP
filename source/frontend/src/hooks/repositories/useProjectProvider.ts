@@ -41,7 +41,13 @@ export const useProjectProvider = () => {
     ),
     requestName: 'AddProject',
     onSuccess: useAxiosSuccessHandler('Project saved'),
-    onError: useAxiosErrorHandler('Failed to save Project'),
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 409) {
+        toast.error(axiosError?.response.data as any);
+      } else {
+        toast.error('Failed to save project.');
+      }
+    }, []),
   });
 
   const getProjectApi = useApiRequestWrapper<
