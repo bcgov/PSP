@@ -72,7 +72,7 @@ namespace Pims.Api.Services
 
         public PimsLease Update(PimsLease lease, bool userOverride = false)
         {
-            var currentLease = _leaseRepository.Get(lease.LeaseId);
+            var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
             var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
