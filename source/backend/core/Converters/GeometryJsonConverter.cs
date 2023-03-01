@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -80,7 +81,7 @@ namespace Pims.Core.Converters
             {
                 case nameof(Point):
                     {
-                        var values = value.Split(',').Select(v => double.Parse(v)).ToArray();
+                        var values = value.Split(',').Select(v => double.Parse(v, CultureInfo.InvariantCulture)).ToArray();
                         return new Point(new Coordinate(values[0], values[1]));
                     }
                 default:

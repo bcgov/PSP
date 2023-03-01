@@ -183,7 +183,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult GetAcquisitionFileOwners([FromRoute]long id)
+        public IActionResult GetAcquisitionFileOwners([FromRoute] long id)
         {
             var owners = _acquisitionService.GetOwners(id);
 

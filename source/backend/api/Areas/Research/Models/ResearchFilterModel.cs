@@ -135,7 +135,7 @@ namespace Pims.Api.Areas.Research.Models.Search
         /// <returns>true if the filter is valid, false otherwise.</returns>
         public override bool IsValid()
         {
-            if (this.CreatedOnStartDate.HasValue && (this.CreatedOnEndDate.HasValue && this.CreatedOnStartDate > this.CreatedOnEndDate) ||
+            if ((this.CreatedOnStartDate.HasValue && (this.CreatedOnEndDate.HasValue && this.CreatedOnStartDate > this.CreatedOnEndDate)) ||
                 (this.UpdatedOnStartDate.HasValue && (this.UpdatedOnEndDate.HasValue && this.UpdatedOnStartDate > this.UpdatedOnEndDate)))
             {
                 return false;

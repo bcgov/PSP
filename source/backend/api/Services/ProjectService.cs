@@ -141,7 +141,7 @@ namespace Pims.Api.Services
 
         private void CheckForDuplicateProducts(IEnumerable<PimsProduct> products)
         {
-            
+
             var duplicateProductsInArray = products.GroupBy(p => (p.Code, p.Description)).Where(g => g.Count() > 1).Select(g => g.Key);
             if (duplicateProductsInArray.Any())
             {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,9 +13,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using HealthChecks.UI.Client;
 using Mapster;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -27,18 +26,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Pims.Api.Handlers;
 using Pims.Api.Helpers;
-using Pims.Api.Helpers.Authorization;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Healthchecks;
 using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
+using Pims.Api.Helpers.Swagger;
 using Pims.Api.Models.Config;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Api.Repositories.Mayan;
@@ -51,7 +49,6 @@ using Pims.Dal.Keycloak;
 using Pims.Geocoder;
 using Pims.Ltsa;
 using Prometheus;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Pims.Api
 {
@@ -199,11 +196,6 @@ namespace Pims.Api
                     };
                 });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Administrator", policy => policy.Requirements.Add(new RealmAccessRoleRequirement("administrator")));
-            });
-
             // Generate the database connection string.
             var csBuilder = new SqlConnectionStringBuilder(this.Configuration.GetConnectionString("PIMS"));
             var pwd = this.Configuration["DB_PASSWORD"];
@@ -220,18 +212,16 @@ namespace Pims.Api
             AddPimsApiRepositories(services);
             AddPimsApiServices(services);
             services.AddPimsKeycloakService();
-            services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: PSP-4415 Determine if a default value could be used instead.
+            services.AddGeocoderService(this.Configuration.GetSection("Geocoder"));
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
             services.AddClamAvService(this.Configuration.GetSection("Av"));
-            services.AddSingleton<IAuthorizationHandler, RealmAccessRoleHandler>();
-            services.AddTransient<IClaimsTransformation, KeycloakClaimTransformer>();
             services.AddHttpContextAccessor();
             services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddScoped<IProxyRequestClient, ProxyRequestClient>();
             services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
             services.AddResponseCaching();
             services.AddMemoryCache();
-            int maxFileSize = int.Parse(this.Configuration.GetSection("Av")?["MaxFileSize"]);
+            int maxFileSize = int.Parse(this.Configuration.GetSection("Av")?["MaxFileSize"], CultureInfo.InvariantCulture);
             services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = maxFileSize;
@@ -265,8 +255,9 @@ namespace Pims.Api
                 // can also be used to control the format of the API version in route templates
                 options.SubstituteApiVersionInUrl = true;
             });
-            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, Helpers.Swagger.ConfigureSwaggerOptions>();
 
+            services.Configure<OpenApiInfo>(Configuration.GetSection(nameof(OpenApiInfo)));
+            services.AddMultiVersionToSwagger();
             services.AddSwaggerGen(options =>
             {
                 options.EnableAnnotations(false, true);
@@ -334,12 +325,12 @@ namespace Pims.Api
             app.UseSwagger(options =>
             {
                 options.RouteTemplate = this.Configuration.GetValue<string>("Swagger:RouteTemplate");
-            });
+            }).ConfigureSwaggerUI(provider);
             app.UseSwaggerUI(options =>
             {
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    options.SwaggerEndpoint(string.Format(this.Configuration.GetValue<string>("Swagger:EndpointPath"), description.GroupName), description.GroupName);
+                    options.SwaggerEndpoint(string.Format(CultureInfo.InvariantCulture, this.Configuration.GetValue<string>("Swagger:EndpointPath"), description.GroupName), description.GroupName);
                 }
                 options.RoutePrefix = this.Configuration.GetValue<string>("Swagger:RoutePrefix");
             });

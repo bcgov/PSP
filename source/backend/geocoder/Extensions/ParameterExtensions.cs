@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
@@ -48,7 +49,7 @@ namespace Pims.Geocoder.Extensions
         /// <summary>
         /// Parses the dictionary and returns an object initialized with the specified parameters.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the parameters being parsed.</typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
         public static T ParseQueryString<T>(this Dictionary<string, StringValues> parameters)
@@ -62,11 +63,11 @@ namespace Pims.Geocoder.Extensions
                 {
                     if (props[key].PropertyType == typeof(int))
                     {
-                        props[key].SetValue(result, int.Parse(p.Value));
+                        props[key].SetValue(result, int.Parse(p.Value, CultureInfo.InvariantCulture));
                     }
                     else if (props[key].PropertyType == typeof(long))
                     {
-                        props[key].SetValue(result, long.Parse(p.Value));
+                        props[key].SetValue(result, long.Parse(p.Value, CultureInfo.InvariantCulture));
                     }
                     else if (props[key].PropertyType == typeof(bool))
                     {
@@ -74,7 +75,7 @@ namespace Pims.Geocoder.Extensions
                     }
                     else if (props[key].PropertyType == typeof(double) || props[key].PropertyType == typeof(double?))
                     {
-                        props[key].SetValue(result, double.Parse(p.Value));
+                        props[key].SetValue(result, double.Parse(p.Value, CultureInfo.InvariantCulture));
                     }
                     else
                     {
