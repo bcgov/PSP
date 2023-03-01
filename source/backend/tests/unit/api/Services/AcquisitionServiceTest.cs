@@ -309,6 +309,7 @@ namespace Pims.Api.Test.Services
                 AcquisitionFileStatusTypeCode = "CLOSED",
                 AcquisitionFileStatusTypeCodeNavigation = new PimsAcquisitionFileStatusType() { Description = "Closed" }
             });
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
             lookupRepository.Setup(x => x.GetAllAcquisitionFileStatusTypes()).Returns(new PimsAcquisitionFileStatusType[]{ new PimsAcquisitionFileStatusType() {
                 Id = acqFile.AcquisitionFileStatusTypeCodeNavigation.Id,
                 Description = acqFile.AcquisitionFileStatusTypeCodeNavigation.Description,
