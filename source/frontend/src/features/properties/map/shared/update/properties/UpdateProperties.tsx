@@ -22,7 +22,7 @@ export interface IUpdatePropertiesProps {
   setIsShowingPropertySelector: (isShowing: boolean) => void;
   onSuccess: () => void;
   updateFileProperties: (file: Api_File) => Promise<Api_File | undefined>;
-  canRemove?: (propertyId: number) => Promise<boolean>;
+  canRemove: (propertyId: number) => Promise<boolean>;
 }
 
 export const UpdateProperties: React.FunctionComponent<
@@ -143,10 +143,7 @@ export const UpdateProperties: React.FunctionComponent<
                       <SelectedPropertyRow
                         key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
                         onRemove={async () => {
-                          if (
-                            !property.apiId ||
-                            (props.canRemove && (await props.canRemove(property.apiId)))
-                          ) {
+                          if (!property.apiId || (await props.canRemove(property.apiId))) {
                             remove(index);
                           } else {
                             setShowAssociatedEntityWarning(true);

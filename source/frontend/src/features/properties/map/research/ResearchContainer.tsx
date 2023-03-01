@@ -151,6 +151,7 @@ export const ResearchContainer: React.FunctionComponent<
         setIsShowingPropertySelector={setIsShowingPropertySelector}
         onSuccess={onSuccess}
         updateFileProperties={updateResearchFileProperties}
+        canRemove={() => Promise.resolve(true)} //TODO: add this if we need this check for the research file.
       />
     );
   } else {
