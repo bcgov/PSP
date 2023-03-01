@@ -8,6 +8,7 @@ using Moq;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
@@ -115,13 +116,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
-            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Throws(new InvalidOperationException());
+            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Throws(new BusinessRuleViolationException());
 
             // Act
             var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile));
 
             // Assert
-            result.Should().BeAssignableTo<ConflictResult>();
+            result.Should().BeAssignableTo<ConflictObjectResult>();
         }
         #endregion
     }
