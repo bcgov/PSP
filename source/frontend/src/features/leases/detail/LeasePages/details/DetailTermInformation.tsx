@@ -1,4 +1,5 @@
 import { Section } from 'features/mapSideBar/tabs/Section';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import { ILeaseTerm } from 'interfaces/ILeaseTerm';
@@ -27,26 +28,37 @@ export const DetailTermInformation: React.FunctionComponent<
   const currentTerm = terms.find((term: ILeaseTerm) =>
     moment().isSameOrBefore(moment(term.expiryDate), 'day'),
   );
+  const projectName =
+    values?.project !== undefined
+      ? `${values?.project?.code} - ${values?.project?.description}`
+      : '';
+
   return (
-    <Section>
-      <StyledDiv>
-        <DetailTermInformationBox
-          title="Lease / License"
-          startDate={startDate}
-          expiryDate={expiryDate}
-        />
-        <DetailTermInformationBox
-          title="Current Term"
-          startDate={currentTerm?.startDate}
-          expiryDate={currentTerm?.expiryDate}
-          inverted
-        />
-      </StyledDiv>
-    </Section>
+    <>
+      <Section>
+        <StyledDiv>
+          <DetailTermInformationBox
+            title="Lease / License"
+            startDate={startDate}
+            expiryDate={expiryDate}
+          />
+          <DetailTermInformationBox
+            title="Current Term"
+            startDate={currentTerm?.startDate}
+            expiryDate={currentTerm?.expiryDate}
+            inverted
+          />
+        </StyledDiv>
+      </Section>
+      <Section header="Project">
+        <SectionField label="Ministry project">{projectName}</SectionField>
+      </Section>
+    </>
   );
 };
 
 export default DetailTermInformation;
+
 const StyledDiv = styled.div`
   display: flex;
   justify-content: space-between;
