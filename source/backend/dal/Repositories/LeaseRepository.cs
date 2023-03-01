@@ -188,11 +188,13 @@ namespace Pims.Dal.Repositories
             return lease;
         }
 
+        // TODO: original Get method should have AsNoTracking() but that breaks a number of existing workflows. Added this as a temporary fix until lease logic is refactored.
         public PimsLease GetNoTracking(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
 
             PimsLease lease = this.Context.PimsLeases.AsSplitQuery()
+                .AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
                 .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.Address)
