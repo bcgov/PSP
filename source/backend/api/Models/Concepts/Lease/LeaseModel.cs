@@ -219,6 +219,11 @@ namespace Pims.Api.Models.Concepts
         public bool? HasDigitalLicense { get; set; }
 
         public bool IsExpired { get; set; }
+
+        /// <summary>
+        /// get/set - The project associated with this lease.
+        /// </summary>
+        public ProjectModel Project { get; set; }
         #endregion
     }
 }

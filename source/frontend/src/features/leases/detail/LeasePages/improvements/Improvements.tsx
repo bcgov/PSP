@@ -9,9 +9,7 @@ export interface IImprovementsProps {
   disabled?: boolean;
 }
 
-export const Improvements: React.FunctionComponent<
-  React.PropsWithChildren<IImprovementsProps>
-> = props => {
+export const Improvements: React.FunctionComponent<IImprovementsProps> = props => {
   const { values } = useFormikContext<IFormLease>();
   const improvements: ILeaseImprovement[] = getIn(values, 'improvements') ?? [];
 
