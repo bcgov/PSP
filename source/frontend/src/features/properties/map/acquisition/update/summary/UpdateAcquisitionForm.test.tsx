@@ -1,7 +1,9 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import { mockLookups } from 'mocks/mockLookups';
 import { mockNotesResponse } from 'mocks/mockNoteResponses';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
@@ -36,7 +38,12 @@ describe('UpdateAcquisitionForm component', () => {
     props: IUpdateAcquisitionFormProps = { ...DEFAULT_PROPS },
     renderOptions: RenderOptions = {},
   ) => {
-    const utils = render(<UpdateAcquisitionForm {...props} />, { claims: [] });
+    const utils = render(<UpdateAcquisitionForm {...props} />, {
+      claims: [],
+      store: {
+        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+      },
+    });
 
     return {
       ...utils,
@@ -68,5 +75,14 @@ describe('UpdateAcquisitionForm component', () => {
     const { getByDisplayValue } = setup();
 
     expect(getByDisplayValue('legacy file number')).toBeVisible();
+  });
+
+  it('Displays owners', async () => {
+    const { getByDisplayValue } = setup();
+
+    expect(getByDisplayValue('FORTIS BC')).toBeVisible();
+    expect(getByDisplayValue('123 Main Street')).toBeVisible();
+    expect(getByDisplayValue('john')).toBeVisible();
+    expect(getByDisplayValue('456 Souris Street')).toBeVisible();
   });
 });

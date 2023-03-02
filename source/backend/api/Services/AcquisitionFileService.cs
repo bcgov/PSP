@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
@@ -101,7 +102,12 @@ namespace Pims.Api.Services
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
 
-            MatchProperties(acquisitionFile);
+            // reset the region
+            var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+            if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
+            {
+                throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
+            }
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
@@ -120,6 +126,13 @@ namespace Pims.Api.Services
             if (!userOverride)
             {
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
+            }
+
+            // reset the region
+            var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+            if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
+            {
+                throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
@@ -164,6 +177,11 @@ namespace Pims.Api.Services
             List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
+                var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
+                if(acqFileProperties.PimsActInstPropAcqFiles.Any() || acqFileProperties.PimsTakes.Any())
+                {
+                    throw new BusinessRuleViolationException();
+                }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
                 {

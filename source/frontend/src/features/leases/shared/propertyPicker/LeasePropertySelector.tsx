@@ -105,9 +105,13 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
             ? AddressForm.fromBcaAddress(bcaSummary?.address)
             : undefined;
 
-          const result = await searchProperty(property);
-          if (result !== undefined && result.length > 0) {
-            formProperty.property.apiId = result[0].id;
+          const hasPinOrPid =
+            formProperty.property?.pid !== undefined || formProperty.property?.pin !== undefined;
+          if (hasPinOrPid) {
+            const result = await searchProperty(property);
+            if (result !== undefined && result.length > 0) {
+              formProperty.property.apiId = result[0].id;
+            }
           }
         }
 

@@ -1,10 +1,10 @@
-import { Input, InputGroup } from 'components/common/form';
+import { Input } from 'components/common/form';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';
-import { pidFormatter } from 'utils';
+import { formatNumber, pidFormatter } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 
 import AddressSubForm from '../AddressSubForm';
@@ -23,6 +23,7 @@ export const PropertyInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled, hideAddress }) => {
   const formikProps = useFormikContext<IFormLease>();
+  const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'landArea'));
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
   const legalDescription = getIn(formikProps.values, withNameSpace(nameSpace, 'legalDescription'));
   const pid = getIn(formikProps.values, withNameSpace(nameSpace, 'pid'));
@@ -34,12 +35,8 @@ export const PropertyInformation: React.FunctionComponent<
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'propertyName')} />
       </SectionField>
       <SectionField label="Area included" labelWidth="3">
-        <InputGroup
-          disabled={disabled}
-          field={withNameSpace(nameSpace, 'landArea')}
-          postText={areaUnitType?.description ? `${areaUnitType?.description}.` : ''}
-          className="w-50"
-        />
+        {formatNumber(landArea, 2, 2)}{' '}
+        {areaUnitType?.description ? `${areaUnitType?.description}.` : ''}
       </SectionField>
       {!hideAddress ? (
         <SectionField label="Address" labelWidth="3">

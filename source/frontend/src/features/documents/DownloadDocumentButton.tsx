@@ -53,10 +53,18 @@ const DownloadDocumentButton: React.FunctionComponent<
 
   return (
     <div>
-      <LoadingBackdrop show={provider.downloadWrappedDocumentFileLoading} />
+      <LoadingBackdrop
+        show={
+          provider.downloadWrappedDocumentFileLoading ||
+          provider.downloadWrappedDocumentFileLatestLoading
+        }
+      />
       <LinkButton
         data-testid="document-download-button"
-        disabled={provider.downloadWrappedDocumentFileLoading}
+        disabled={
+          provider.downloadWrappedDocumentFileLoading ||
+          provider.downloadWrappedDocumentFileLatestLoading
+        }
         onClick={() => {
           downloadFile(props.mayanDocumentId, props.mayanFileId);
         }}

@@ -10,7 +10,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The primary key to identify the address.
         /// </summary>
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// get/set - The street address.
@@ -35,7 +35,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The address's Province Id.
         /// </summary>
-        public short ProvinceStateId { get; set; }
+        public short? ProvinceStateId { get; set; }
 
         /// <summary>
         /// get/set - The address's province.

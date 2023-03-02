@@ -15,14 +15,13 @@ export const useApiNotes = () => {
   return React.useMemo(
     () => ({
       getNotes: (type: NoteTypes, entityId: number) =>
-        api.get<Api_Note[]>(`/notes/${type}/owner/${entityId}`),
-      getNote: (type: NoteTypes, noteId: number) => api.get<Api_Note>(`/notes/${type}/${noteId}`),
+        api.get<Api_Note[]>(`/notes/${type}/${entityId}`),
+      getNote: (noteId: number) => api.get<Api_Note>(`/notes/${noteId}`),
       postNote: (type: NoteTypes, note: Api_EntityNote) =>
         api.post<Api_EntityNote>(`/notes/${type}`, note),
-      putNote: (type: NoteTypes, note: Api_Note) =>
-        api.put<Api_Note>(`/notes/${type}/${note.id ?? 0}`, note),
+      putNote: (note: Api_Note) => api.put<Api_Note>(`/notes/${note.id}`, note),
       deleteNote: (type: NoteTypes, noteId: number) =>
-        api.delete<boolean>(`/notes/${type}/${noteId}`),
+        api.delete<boolean>(`/notes/${noteId}/${type}`),
     }),
     [api],
   );

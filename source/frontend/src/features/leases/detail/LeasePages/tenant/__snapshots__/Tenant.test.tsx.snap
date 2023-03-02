@@ -34,6 +34,7 @@ exports[`Tenant component renders as expected 1`] = `
 }
 
 .c1 {
+  padding: 0;
   -webkit-column-count: 1;
   column-count: 1;
   -webkit-column-gap: 10rem;
@@ -51,6 +52,12 @@ exports[`Tenant component renders as expected 1`] = `
   list-style-type: none;
   padding: 2rem 0;
   margin: 0;
+}
+
+.c4 {
+  background-color: transparent;
+  padding-left: 0.5rem;
+  margin-bottom: 0;
 }
 
 @media only screen and (max-width:1500px) {
@@ -155,12 +162,20 @@ exports[`Tenant component renders as expected 1`] = `
         class="collapse show"
       />
     </div>
-    <p>
-      There are no tenants associated to this lease.
-    </p>
-    <p>
-      Click the edit icon to add tenants.
-    </p>
+    <div
+      class="c2 form-section c4"
+    >
+      <div
+        class="collapse show"
+      >
+        <p>
+          There are no tenants associated to this lease.
+        </p>
+        <p>
+          Click the edit icon to add tenants.
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

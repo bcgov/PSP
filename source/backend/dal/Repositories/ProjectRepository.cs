@@ -123,21 +123,6 @@ namespace Pims.Dal.Repositories
             return project;
         }
 
-        /// <summary>
-        /// Retrieves the version of project.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>The project row version.</returns>
-        public long GetRowVersion(long id)
-        {
-            using var log = Logger.QueryScope();
-
-            return this.Context.PimsProjects.AsNoTracking()
-                .Where(p => p.Id == id)?
-                .Select(p => p.ConcurrencyControlNumber)?
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
-        }
-
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter)
         {
             var query = Context.PimsProjects.AsNoTracking();

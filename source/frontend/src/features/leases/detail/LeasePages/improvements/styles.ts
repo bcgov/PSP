@@ -13,7 +13,6 @@ export const ImprovementsContainer = styled.div`
     grid-column: span 2;
     border-left: 0;
   }
-  margin-top: 2rem;
 `;
 
 export const ImprovementsListHeader = styled(FormDescriptionLabel)`
