@@ -145,13 +145,13 @@ namespace Pims.Api.Services
             var duplicateProductsInArray = products.GroupBy(p => (p.Code, p.Description)).Where(g => g.Count() > 1).Select(g => g.Key);
             if (duplicateProductsInArray.Any())
             {
-                throw new DuplicateEntityException($"Unable to add project with duplicated codes: {string.Join(", ", duplicateProductsInArray.Select(dp => dp.Code))}");
+                throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProductsInArray.Select(dp => dp.Code))}");
             }
 
             IEnumerable<PimsProduct> duplicateProducts = _productRepository.GetByProductBatch(products);
             if (duplicateProducts.Any())
             {
-                throw new DuplicateEntityException($"Unable to add project with duplicated codes: {string.Join(", ", duplicateProducts.Select(dp => dp.Code))}");
+                throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProducts.Select(dp => dp.Code))}");
             }
         }
 

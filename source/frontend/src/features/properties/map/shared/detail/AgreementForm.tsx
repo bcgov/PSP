@@ -71,7 +71,7 @@ export const AgreementForm: React.FunctionComponent<IAgreementFormProps> = ({ on
                           </div>
                         }
                       >
-                        <React.Fragment key={`owners-${index}`}>
+                        <React.Fragment>
                           <SectionField label="First name">
                             <Input field={`owners.${index}.firstname`} />
                           </SectionField>
@@ -124,7 +124,7 @@ export const AgreementForm: React.FunctionComponent<IAgreementFormProps> = ({ on
                           </div>
                         }
                       >
-                        <React.Fragment key={`agents-${index}`}>
+                        <React.Fragment>
                           <SectionField label="Phone # (work landline)">
                             <Input field={`agents.${index}.workphone`} />
                           </SectionField>
