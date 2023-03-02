@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_RESEARCH_FILE_NOTE")]
-    [Index(nameof(NoteId), Name = "RSCNOT_NOTE_ID_IDX")]
-    [Index(nameof(ResearchFileId), Name = "RSCNOT_RESEARCH_FILE_ID_IDX")]
-    [Index(nameof(NoteId), nameof(ResearchFileId), Name = "RSCNOT_RSRCH_FILE_NOTE_TUC", IsUnique = true)]
+    [Index(nameof(NoteId), Name = "RFLNOT_NOTE_ID_IDX")]
+    [Index(nameof(ResearchFileId), Name = "RFLNOT_RESEARCH_FILE_ID_IDX")]
+    [Index(nameof(NoteId), nameof(ResearchFileId), Name = "RFLNOT_RSRCH_FILE_NOTE_TUC", IsUnique = true)]
     public partial class PimsResearchFileNote
     {
         [Key]

@@ -14,7 +14,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.StreetAddress3, src => src.StreetAddress3)
                 .Map(dest => dest.Municipality, src => src.MunicipalityName)
                 .Map(dest => dest.Province, src => src.ProvinceState)
+                .Map(dest => dest.ProvinceStateId, src => src.ProvinceStateId)
                 .Map(dest => dest.Country, src => src.Country)
+                .Map(dest => dest.CountryId, src => src.CountryId)
                 .Map(dest => dest.Region, src => src.RegionCodeNavigation)
                 .Map(dest => dest.District, src => src.DistrictCodeNavigation)
                 .Map(dest => dest.CountryOther, src => src.OtherCountry)
@@ -57,7 +59,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Longitude, src => src.Longitude)
                 .Map(dest => dest.Comment, src => src.Comment)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
-
         }
     }
 }

@@ -8,7 +8,7 @@ import { mockLookups } from 'mocks';
 import { mockDocumentDetailResponse } from 'mocks/mockDocumentDetail';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, cleanup, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
@@ -82,7 +82,7 @@ describe('Document List View', () => {
   it('renders as expected', async () => {
     const { asFragment } = setup();
     const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+    await act(async () => expect(fragment).toMatchSnapshot());
   });
 
   it('should have the Documents type in the component', async () => {
@@ -98,7 +98,7 @@ describe('Document List View', () => {
       onPageChange,
       pageProps: { pageSize: 10, pageIndex: 0 },
     });
-    expect(getByTestId('document-type')).toBeInTheDocument();
+    await act(async () => expect(getByTestId('document-type')).toBeInTheDocument());
   });
 
   it('should have the Documents filename in the component', async () => {
@@ -114,7 +114,7 @@ describe('Document List View', () => {
       onPageChange,
       pageProps: { pageSize: 10, pageIndex: 0 },
     });
-    expect(getByTestId('document-filename')).toBeInTheDocument();
+    await act(async () => expect(getByTestId('document-filename')).toBeInTheDocument());
   });
 
   it('should have the Documents add button in the component', async () => {
@@ -130,7 +130,7 @@ describe('Document List View', () => {
       onPageChange,
       pageProps: { pageSize: 10, pageIndex: 0 },
     });
-    expect(getByText('Add a Document')).toBeInTheDocument();
+    await act(async () => expect(getByText('Add a Document')).toBeInTheDocument());
   });
 
   it('should display the warning tooltip instead of the download icon', async () => {
@@ -149,7 +149,7 @@ describe('Document List View', () => {
     const downloadButtonTooltip = await findAllByTestId(
       'tooltip-icon-document-not-available-tooltip',
     );
-    expect(downloadButtonTooltip[0]).toBeInTheDocument();
+    await act(async () => expect(downloadButtonTooltip[0]).toBeInTheDocument());
   });
 
   it('should display the download icon if download is available', async () => {
@@ -169,6 +169,31 @@ describe('Document List View', () => {
       pageProps: { pageSize: 10, pageIndex: 0 },
     });
     const downloadButtonTooltip = await findByTestId('document-download-button');
-    expect(downloadButtonTooltip).toBeInTheDocument();
+    await act(async () => expect(downloadButtonTooltip).toBeInTheDocument());
+  });
+
+  it('should call on delete for a document when the document id does not equal the document relationship id', async () => {
+    const documentRows = mockDocumentRowResponse();
+    documentRows[0].isFileAvailable = true;
+    const { findAllByTestId } = setup({
+      hideFilters: false,
+      isLoading: false,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      documentResults: documentRows,
+      onDelete: deleteMock,
+      onSuccess: noop,
+      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
+    });
+    const deleteButtonTooltip = await findAllByTestId('document-delete-button');
+    act(() => userEvent.click(deleteButtonTooltip[0]));
+
+    await waitFor(() => screen.getByText('Delete a document'));
+    const continueButton = screen.getByText('Continue');
+    act(() => userEvent.click(continueButton));
+
+    expect(deleteMock).toHaveBeenCalledWith(DocumentRow.toApi(documentRows[0]));
   });
 });

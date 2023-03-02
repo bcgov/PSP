@@ -34,9 +34,9 @@ namespace Pims.Dal.Entities
         public PimsUserOrganization(PimsUser user, PimsOrganization organization, PimsRole role)
         {
             this.User = user ?? throw new ArgumentNullException(nameof(user));
-            this.UserId = user.Id;
+            this.UserId = user.Internal_Id;
             this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));
-            this.OrganizationId = organization.Id;
+            this.OrganizationId = organization.Internal_Id;
             this.Role = role ?? throw new ArgumentNullException(nameof(role));
             this.RoleId = role.RoleId;
         }

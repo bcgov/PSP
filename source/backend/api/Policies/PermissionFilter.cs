@@ -1,5 +1,4 @@
 using System.Linq;
-using k8s.KubeConfigModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;

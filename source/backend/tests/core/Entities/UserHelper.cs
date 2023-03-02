@@ -39,12 +39,12 @@ namespace Pims.Core.Test
             person.PimsContactMethods = new List<Entity.PimsContactMethod>();
             var user = new Entity.PimsUser(keycloakUserId, username, person)
             {
-                Id = id,
+                Internal_Id = id,
                 IssueDate = DateTime.UtcNow,
                 ConcurrencyControlNumber = 1,
             };
-            user.PimsUserRoles.Add(new Entity.PimsUserRole() { Role = role, RoleId = role.Id, User = user, UserId = user.Id });
-            user.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { Organization = organization, OrganizationId = organization.Id, User = user, UserId = user.Id });
+            user.PimsUserRoles.Add(new Entity.PimsUserRole() { Role = role, RoleId = role.Id, User = user, UserId = user.Internal_Id });
+            user.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { Organization = organization, OrganizationId = organization.Internal_Id, User = user, UserId = user.Internal_Id });
 
             return user;
         }

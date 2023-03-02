@@ -53,7 +53,7 @@ namespace Pims.Core.Test
                         ActivityInstance = activity,
                         ActivityInstanceId = activity.ActivityInstanceId,
                         Document = d,
-                        DocumentId = d.Id,
+                        DocumentId = d.Internal_Id,
                         IsDisabled = false,
                     });
                 }

@@ -255,13 +255,14 @@ namespace Pims.Dal.Test.Repositories
             var newPurposes = new List<PimsResearchFilePurpose>();
             newPurposes.Add(newPimsResearchFilePurpose);
             eResearch.PimsResearchFilePurposes = newPurposes;
+            context.ChangeTracker.Clear();
             var result = repository.Update(eResearch);
 
             // Assert
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsResearchFile>();
             result.PimsResearchFilePurposes.Should().NotBeNull();
-            result.PimsResearchFilePurposes.Count.Should().Be(2);
+            result.PimsResearchFilePurposes.Count.Should().Be(1);
             result.PimsResearchFilePurposes.Where(x => x.ResearchPurposeTypeCode == "CODE2").Count().Should().Be(1);
             result.RoadAlias.Should().Be("a road name or alias updated");
         }

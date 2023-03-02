@@ -5,7 +5,14 @@ import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+import {
+  act,
+  fillInput,
+  render,
+  RenderOptions,
+  waitFor,
+  waitForElementToBeRemoved,
+} from 'utils/test-utils';
 
 import { ResearchListView } from './ResearchListView';
 
@@ -48,15 +55,17 @@ describe('Research List View', () => {
 
   it('matches snapshot', async () => {
     setupMockSearch();
-    const { asFragment } = setup();
+    const { asFragment, getByTitle } = setup();
 
     const fragment = await waitFor(() => asFragment());
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     expect(fragment).toMatchSnapshot();
   });
 
   it('searches by region', async () => {
     setupMockSearch([]);
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findByText, getByTitle } = setup();
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
 
     fillInput(container, 'regionCode', 'South Coast Region', 'select');
     await act(async () => userEvent.click(searchButton));

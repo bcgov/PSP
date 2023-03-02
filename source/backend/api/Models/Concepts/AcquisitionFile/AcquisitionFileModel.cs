@@ -13,6 +13,11 @@ namespace Pims.Api.Models.Concepts
         public long FileNo { get; set; }
 
         /// <summary>
+        /// get/set - A historical reference number of this file in a legacy system (likely PAIMS).
+        /// </summary>
+        public string LegacyFileNumber { get; set; }
+
+        /// <summary>
         /// get/set - The ministry project number.
         /// </summary>
         public string MinistryProjectNumber { get; set; }
@@ -76,6 +81,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - A list of acquisition file person relationships.
         /// </summary>
         public IList<AcquisitionFilePersonModel> AcquisitionTeam { get; set; }
+
+        /// <summary>
+        /// get/set - A list of acquisition file person relationships.
+        /// </summary>
+        public IList<AcquisitionFileOwnerModel> AcquisitionFileOwners { get; set; }
         #endregion
     }
 }

@@ -3,6 +3,7 @@ import { formatApiPersonNames } from 'utils/personUtils';
 
 export class DetailAcquisitionFile {
   fileName?: string;
+  legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
   acquisitionPhysFileStatusTypeDescription?: string;
@@ -13,13 +14,13 @@ export class DetailAcquisitionFile {
   static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
     detail.fileName = model?.fileName;
+    detail.legacyFileNumber = model?.legacyFileNumber;
     detail.assignedDate = model?.assignedDate;
     detail.deliveryDate = model?.deliveryDate;
     detail.acquisitionPhysFileStatusTypeDescription =
       model?.acquisitionPhysFileStatusTypeCode?.description;
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description;
     detail.regionDescription = model?.regionCode?.description;
-    // acquisition team array
     detail.acquisitionTeam =
       model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
 
@@ -40,4 +41,10 @@ export class DetailAcquisitionFilePerson {
 
     return personDetail;
   }
+}
+
+export class DetailAcquisitionFileOwner {
+  ownerName?: string;
+  ownerOtherName?: string;
+  ownerDisplayAddress?: string;
 }

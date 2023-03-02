@@ -34,11 +34,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "test",
                 Audience = "test",
                 Client = "test",
-                OpenIdConnect = new OpenIdConnectOptions
-                {
-                    Token = "test",
-                    UserInfo = "test",
-                },
                 ServiceAccount = new KeycloakServiceAccountOptions
                 {
                     Client = "test",
@@ -92,11 +87,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "test",
                 Audience = "test",
                 Client = "test",
-                OpenIdConnect = new OpenIdConnectOptions
-                {
-                    Token = "test",
-                    UserInfo = "test",
-                },
                 ServiceAccount = new KeycloakServiceAccountOptions
                 {
                     Client = "test",

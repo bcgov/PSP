@@ -6,7 +6,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`AddProjectForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c7.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c7.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c7.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c7.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c7.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c7.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`AddProjectForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`AddProjectForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,19 +128,19 @@ exports[`AddProjectForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c7.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6 {
+.c5 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -153,14 +153,14 @@ exports[`AddProjectForm component renders as expected 1`] = `
   text-align: left;
 }
 
-.c4.required::before {
+.c3.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c2 {
   font-weight: bold;
 }
 
@@ -169,14 +169,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
   padding-bottom: 0.5rem;
 }
 
-.c2 {
-  border-bottom-style: solid;
-  border-bottom-color: grey;
-  border-bottom-width: 0.1rem;
-  text-align: left;
-}
-
-.c5 textarea.form-control {
+.c4 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -196,36 +189,19 @@ exports[`AddProjectForm component renders as expected 1`] = `
           class="collapse show"
         >
           <div
-            class="c2 no-gutters py-4 mb-5 row"
-          >
-            <div
-              class="col"
-            >
-              <p>
-                Before creating a project, 
-                <a
-                  href="/project/list"
-                >
-                  do a search
-                </a>
-                 to ensure the the project you're creating doesn't already exist.
-              </p>
-            </div>
-          </div>
-          <div
             class="pb-2 row"
           >
             <div
               class="pr-0 text-left col-2"
             >
               <label
-                class="c3"
+                class="c2"
               >
                 Project name:
               </label>
             </div>
             <div
-              class="c4 required text-left col"
+              class="c3 required text-left col"
             >
               <div
                 class="input form-group"
@@ -246,13 +222,13 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c3"
+                class="c2"
               >
                 Project number:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c3 text-left col"
             >
               <div
                 class="input form-group"
@@ -274,13 +250,13 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c3"
+                class="c2"
               >
                 Status:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c3 text-left col"
             >
               <div
                 class="form-group"
@@ -295,6 +271,34 @@ exports[`AddProjectForm component renders as expected 1`] = `
                   >
                     Select...
                   </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-1"
+                    value="1"
+                  >
+                    South Coast Region
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-2"
+                    value="2"
+                  >
+                    Southern Interior Region
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-3"
+                    value="3"
+                  >
+                    Northern Region
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-4"
+                    value="4"
+                  >
+                    Cannot determine
+                  </option>
                 </select>
               </div>
             </div>
@@ -306,13 +310,13 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c3"
+                class="c2"
               >
                 MoTI region:
               </label>
             </div>
             <div
-              class="c4 required text-left col"
+              class="c3 required text-left col"
             >
               <div
                 class="form-group"
@@ -327,6 +331,48 @@ exports[`AddProjectForm component renders as expected 1`] = `
                   >
                     Select...
                   </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-AC"
+                    value="AC"
+                  >
+                    Active (AC)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-CA"
+                    value="CA"
+                  >
+                    Cancelled (CA)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-CNCN"
+                    value="CNCN"
+                  >
+                    Consolidated (CNCN)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-CO"
+                    value="CO"
+                  >
+                    Completed (CO)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-HO"
+                    value="HO"
+                  >
+                    On Hold (HO)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-PL"
+                    value="PL"
+                  >
+                    Planning (PL)
+                  </option>
                 </select>
               </div>
             </div>
@@ -338,16 +384,16 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-12"
             >
               <label
-                class="c3"
+                class="c2"
               >
                 Project summary:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c3 text-left col"
             >
               <div
-                class="c5 textarea input form-group"
+                class="c4 textarea input form-group"
               >
                 <textarea
                   class="form-control"
@@ -363,7 +409,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
         class="c1 form-section"
       >
         <h2
-          class="c6"
+          class="c5"
         >
           <div
             class="no-gutters row"
@@ -382,7 +428,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
           class="collapse show"
         >
           <button
-            class="c7 Button btn btn-link"
+            class="c6 Button btn btn-link"
             type="button"
           >
             <div

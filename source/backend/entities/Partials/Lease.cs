@@ -7,11 +7,11 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Lease class, provides an entity for the datamodel to manage leases.
     /// </summary>
-    public partial class PimsLease : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsLease : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.LeaseId; set => this.LeaseId = value; }
+        public override long Internal_Id { get => this.LeaseId; set => this.LeaseId = value; }
 
         /// <summary>
         /// get/set - A collection of properties.

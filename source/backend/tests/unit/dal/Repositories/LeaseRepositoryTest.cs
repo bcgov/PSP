@@ -75,7 +75,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
             var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant", addTenant: true);
-            elease.Id = 1;
+            elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
 
@@ -116,7 +116,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
             var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant", addTenant: true);
-            elease.Id = 1;
+            elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
 
@@ -391,7 +391,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.Id, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases, true), Times.Once);
+            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases, true), Times.Once);
         }
 
         [Fact]
@@ -430,7 +430,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.Id, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases, false), Times.Once);
+            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases, false), Times.Once);
         }
 
         [Fact]
@@ -597,7 +597,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
 
             var lease = EntityHelper.CreateLease(1);
-            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, Id = 1 });
+            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1 });
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease);
             var service = helper.CreateRepository<LeaseRepository>(user);
@@ -621,7 +621,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
 
             var lease = EntityHelper.CreateLease(1);
-            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, Id = 1 });
+            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1 });
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 

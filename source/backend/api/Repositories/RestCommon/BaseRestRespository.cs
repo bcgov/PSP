@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,6 +10,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
+using Pims.Api.Models.Download;
 
 namespace Pims.Api.Repositories.Rest
 {
@@ -157,6 +161,63 @@ namespace Pims.Api.Repositories.Rest
                 _logger.LogError("Unexpected exception during delete {e}", e);
             }
             return result;
+        }
+
+
+
+        protected async Task<ExternalResult<FileDownload>> ProcessDownloadResponse(HttpResponseMessage response)
+        {
+            ExternalResult<FileDownload> result = new ExternalResult<FileDownload>()
+            {
+                Status = ExternalResultStatus.Error,
+            };
+
+            byte[] responsePayload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
+            _logger.LogTrace("Response: {response}", response);
+            response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
+            long contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault()) : responsePayload.Length;
+            result.HttpStatusCode = response.StatusCode;
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    string contentDisposition = response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault();
+                    string fileName = GetFileNameFromContentDisposition(contentDisposition);
+
+                    result.Status = ExternalResultStatus.Success;
+                    result.Payload = new Models.Download.FileDownload()
+                    {
+                        FilePayload = Convert.ToBase64String(responsePayload),
+                        Size = contentLength,
+                        Mimetype = response.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
+                        FileName = fileName,
+                        FileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty),
+                        FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName),
+                    };
+
+                    break;
+                case HttpStatusCode.NoContent:
+                    result.Status = ExternalResultStatus.Success;
+                    result.Message = "No content found";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    result.Status = ExternalResultStatus.Error;
+                    result.Message = "Forbidden";
+                    break;
+                default:
+                    result.Status = ExternalResultStatus.Error;
+                    result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                    break;
+            }
+
+            return result;
+        }
+
+        private static string GetFileNameFromContentDisposition(string contentDisposition)
+        {
+            const string fileNameFlag = "filename";
+            string[] parts = contentDisposition.Split("; ");
+            string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
+            return fileNamePart[(fileNameFlag.Length + 1)..].Replace("\"", string.Empty);
         }
 
         private async Task<ExternalResult<T>> ProcessResponse<T>(HttpResponseMessage response)

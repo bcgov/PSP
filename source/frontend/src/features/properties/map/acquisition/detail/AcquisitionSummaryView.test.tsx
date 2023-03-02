@@ -62,4 +62,16 @@ describe('AcquisitionSummaryView component', () => {
     const editResearchFile = queryByTitle('Edit acquisition file');
     expect(editResearchFile).toBeNull();
   });
+
+  it('renders historical file number', () => {
+    const mockResponse = mockAcquisitionFileResponse();
+    const { getByText } = setup(
+      {
+        acquisitionFile: mockResponse,
+        onEdit,
+      },
+      { claims: [] },
+    );
+    expect(getByText('legacy file number')).toBeVisible();
+  });
 });

@@ -34,7 +34,7 @@ namespace Pims.Api.Test.Controllers
         public ProjectControllerTest()
         {
             var helper = new TestHelper();
-            _controller = helper.CreateController< ProjectController>(Permissions.ProjectAdd, Permissions.ProjectEdit, Permissions.ProjectView);
+            _controller = helper.CreateController<ProjectController>(Permissions.ProjectAdd, Permissions.ProjectEdit, Permissions.ProjectView);
             _mapper = helper.GetService<IMapper>();
             _service = helper.GetService<Mock<IProjectService>>();
         }
@@ -74,6 +74,16 @@ namespace Pims.Api.Test.Controllers
 
             // Assert
             act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void UpdateProject_BadRequest()
+        {
+            // Act
+            var result =  _controller.UpdateProject(1, new ProjectModel { Id=2 });
+
+            // Assert
+            result.Should().BeOfType(typeof(BadRequestResult));
         }
 
         #endregion

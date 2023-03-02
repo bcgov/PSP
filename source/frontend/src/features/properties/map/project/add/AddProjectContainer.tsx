@@ -11,8 +11,8 @@ import { mapLookupCode } from 'utils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddProjectForm } from '../hooks/useAddProjectFormManagement';
+import { ProjectForm } from '../models';
 import AddProjectForm from './AddProjectForm';
-import { ProjectForm } from './models';
 
 export interface IAddProjectContainerProps {
   onClose?: () => void;
@@ -52,12 +52,13 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
       footer={<SidebarFooter onSave={handleSave} onCancel={close} />}
     >
       <AddProjectForm
-        formikRef={formikRef}
+        ref={formikRef}
         initialValues={helper.initialValues}
         projectStatusOptions={projectStatusTypeCodes}
         projectRegionOptions={regionTypeCodes}
         onSubmit={helper.handleSubmit}
         validationSchema={helper.validationSchema}
+        isCreating
       />
     </MapSideBarLayout>
   );

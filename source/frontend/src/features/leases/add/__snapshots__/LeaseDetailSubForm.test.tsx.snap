@@ -69,30 +69,35 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
               </option>
               <option
                 class="option"
+                data-testid="select-option-ACTIVE"
                 value="ACTIVE"
               >
                 Active
               </option>
               <option
                 class="option"
+                data-testid="select-option-DISCARD"
                 value="DISCARD"
               >
                 Discarded
               </option>
               <option
                 class="option"
+                data-testid="select-option-DRAFT"
                 value="DRAFT"
               >
                 Draft
               </option>
               <option
                 class="option"
+                data-testid="select-option-INACTIVE"
                 value="INACTIVE"
               >
                 Inactive
               </option>
               <option
                 class="option"
+                data-testid="select-option-TERMINATED"
                 value="TERMINATED"
               >
                 Terminated
@@ -126,18 +131,21 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
             >
               <option
                 class="option"
+                data-testid="select-option-PYBLBCTFA"
                 value="PYBLBCTFA"
               >
                 Payable (BCTFA as tenant)
               </option>
               <option
                 class="option"
+                data-testid="select-option-PYBLMOTI"
                 value="PYBLMOTI"
               >
                 Payable (MOTI as tenant)
               </option>
               <option
                 class="option"
+                data-testid="select-option-RCVBL"
                 value="RCVBL"
               >
                 Receivable

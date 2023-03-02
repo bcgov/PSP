@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 
+import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
+import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
 import { DetailAcquisitionFile } from './models';
 
 export interface IAcquisitionSummaryViewProps {
@@ -60,6 +62,12 @@ const AcquisitionSummaryView: React.FunctionComponent<
       </Section>
       <Section header="Acquisition Details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>
+        <SectionField
+          label="Historical file number"
+          tooltip="Older file that this file represents (ex: those from the legacy system or other non-digital files.)"
+        >
+          {detail.legacyFileNumber}
+        </SectionField>
         <SectionField label="Physical file status">
           {detail.acquisitionPhysFileStatusTypeDescription}
         </SectionField>
@@ -80,6 +88,12 @@ const AcquisitionSummaryView: React.FunctionComponent<
           </SectionField>
         ))}
       </Section>
+      {acquisitionFile !== undefined && (
+        <AcquisitionOwnersSummaryContainer
+          acquisitionFileId={acquisitionFile.id!}
+          View={AcquisitionOwnersSummaryView}
+        ></AcquisitionOwnersSummaryContainer>
+      )}
     </StyledSummarySection>
   );
 };
