@@ -1,10 +1,11 @@
 import { Input } from 'components/common/form';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { useFormikContext } from 'formik';
+import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';
+import { prettyFormatDate } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 export interface IDetailAdministrationProps {
   nameSpace?: string;
@@ -19,6 +20,7 @@ export const DetailAdministration: React.FunctionComponent<
   React.PropsWithChildren<IDetailAdministrationProps>
 > = ({ nameSpace, disabled }) => {
   const { values } = useFormikContext<IFormLease>();
+  const responsibilityDate = getIn(values, withNameSpace(nameSpace, 'responsibilityEffectiveDate'));
   return (
     <>
       <Section initiallyExpanded={true} isCollapsable={true} header="Administration">
@@ -56,7 +58,10 @@ export const DetailAdministration: React.FunctionComponent<
           )}
         </SectionField>
         <SectionField label="Initiator" labelWidth="3">
-          <Input disabled={disabled} field={withNameSpace(nameSpace, 'initiatorType. ')} />
+          <Input
+            disabled={disabled}
+            field={withNameSpace(nameSpace, 'initiatorType.description')}
+          />
         </SectionField>
         <SectionField label="Responsibility" labelWidth="3">
           <Input
@@ -65,10 +70,7 @@ export const DetailAdministration: React.FunctionComponent<
           />
         </SectionField>
         <SectionField label="Effective date" labelWidth="3">
-          <Input
-            disabled={disabled}
-            field={withNameSpace(nameSpace, 'responsibilityEffectiveDate')}
-          />
+          {prettyFormatDate(responsibilityDate)}
         </SectionField>
         <SectionField label="MoTI contact" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'motiName')} />

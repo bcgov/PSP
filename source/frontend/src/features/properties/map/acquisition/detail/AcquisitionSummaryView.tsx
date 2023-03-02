@@ -76,7 +76,10 @@ const AcquisitionSummaryView: React.FunctionComponent<
       </Section>
       <Section header="Acquisition Team">
         {detail.acquisitionTeam.map((person, index) => (
-          <SectionField key={index} label={person.personProfileTypeCodeDescription || ''}>
+          <SectionField
+            key={`acq-team-${index}`}
+            label={person.personProfileTypeCodeDescription || ''}
+          >
             <StyledLink
               target="_blank"
               rel="noopener noreferrer"
