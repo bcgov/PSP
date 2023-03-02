@@ -84,7 +84,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsNote>();
             result.NoteTxt.Should().Be("Test Note");
-            result.Id.Should().Be(note.Id);
+            result.NoteId.Should().Be(note.NoteId);
         }
 
         [Fact]

@@ -6,7 +6,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+import { formatApiProjectName, prettyFormatDate } from 'utils';
 import { formatApiPersonNames } from 'utils/personUtils';
 
 interface DetailResearchFile {
@@ -27,6 +27,7 @@ interface DetailResearchFile {
   requestorName?: string;
   requestorOrganization?: string;
   researchFilePurposes?: string[];
+  researchFileProjects?: string[];
 }
 
 export interface IResearchSummaryViewProps {
@@ -34,9 +35,7 @@ export interface IResearchSummaryViewProps {
   setEditMode: (editable: boolean) => void;
 }
 
-const ResearchSummaryView: React.FunctionComponent<
-  React.PropsWithChildren<IResearchSummaryViewProps>
-> = props => {
+const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = props => {
   const keycloak = useKeycloakWrapper();
   const detail: DetailResearchFile = {
     id: props.researchFile?.id,
@@ -78,6 +77,13 @@ const ResearchSummaryView: React.FunctionComponent<
           .filter(isString)
       : [];
 
+  detail.researchFileProjects =
+    props.researchFile?.researchFileProjects !== undefined
+      ? props.researchFile.researchFileProjects
+          .filter(rp => rp?.project !== undefined)
+          .map(rp => formatApiProjectName(rp.project))
+      : [];
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
@@ -90,6 +96,13 @@ const ResearchSummaryView: React.FunctionComponent<
           />
         ) : null}
       </StyledEditWrapper>
+      <Section header="Project">
+        <SectionField label="Ministry project">
+          {detail.researchFileProjects.map(formattedName => (
+            <div>{formattedName}</div>
+          ))}
+        </SectionField>
+      </Section>
       <Section header="Roads">
         <SectionField label="Road name">{detail.roadName}</SectionField>
         <SectionField label="Road alias">{detail.roadAlias}</SectionField>

@@ -162,6 +162,7 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
           </option>
           <option
             class="option"
+            data-testid="select-option-1"
             value="1"
           >
             General
@@ -362,6 +363,7 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
           </option>
           <option
             class="option"
+            data-testid="select-option-1"
             value="1"
           >
             General

@@ -338,7 +338,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(accessTokenResponse)
                 });
-            
+
             var httpClient = new HttpClient(mockMessageHandler.Object);
             mockFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(httpClient);
 

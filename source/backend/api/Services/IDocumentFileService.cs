@@ -12,7 +12,8 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentFileService
     {
-        public IList<T> GetFileDocuments<T>(FileType fileType, long fileId) where T : PimsFileDocument;
+        public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
+            where T : PimsFileDocument;
 
         Task<DocumentUploadRelationshipResponse> UploadResearchDocumentAsync(long researchFileId, DocumentUploadRequest uploadRequest);
 

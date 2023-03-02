@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import {
   Api_DocumentRelationship,
@@ -9,6 +8,7 @@ import {
   Api_DocumentUploadResponse,
 } from 'models/api/Document';
 import {
+  Api_FileDownload,
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
   DocumentQueryResult,
@@ -54,19 +54,13 @@ export const useApiDocuments = () => {
           `/documents/storage/${mayanDocumentId}/detail`,
         ),
 
-      downloadDocumentFileApiCall: (mayanDocumentId: number, mayanFileId: number) =>
-        api.get<AxiosResponse<string | ArrayBuffer | ArrayBufferView | Blob, any>>(
-          `/documents/storage/${mayanDocumentId}/files/${mayanFileId}/download`,
-          { responseType: 'blob' },
+      downloadWrappedDocumentFileApiCall: (mayanDocumentId: number, mayanFileId: number) =>
+        api.get<Api_FileDownload>(
+          `/documents/storage/${mayanDocumentId}/files/${mayanFileId}/download-wrapped`,
         ),
 
-      downloadDocumentFileLatestApiCall: (mayanDocumentId: number) =>
-        api.get<AxiosResponse<string | ArrayBuffer | ArrayBufferView | Blob, any>>(
-          `/documents/storage/${mayanDocumentId}/download`,
-          {
-            responseType: 'blob',
-          },
-        ),
+      downloadWrappedDocumentFileLatestApiCall: (mayanDocumentId: number) =>
+        api.get<Api_FileDownload>(`/documents/storage/${mayanDocumentId}/download-wrapped`),
 
       uploadDocumentRelationshipApiCall: (
         relationshipType: DocumentRelationshipType,

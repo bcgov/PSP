@@ -19,5 +19,9 @@ namespace Pims.Dal.Repositories
         PimsProject Add(PimsProject project);
 
         PimsProject Get(long id);
+
+        PimsProject Update(PimsProject project);
+
+        long GetRowVersion(long id);
     }
 }

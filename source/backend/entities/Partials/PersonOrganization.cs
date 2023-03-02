@@ -6,11 +6,11 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PersonOrganization class, provides an entity for the datamodel to manage a list of addresses for a person.
     /// </summary>
-    public partial class PimsPersonOrganization : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
+    public partial class PimsPersonOrganization : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.PersonOrganizationId; set => this.PersonOrganizationId = value; }
+        public override long Internal_Id { get => this.PersonOrganizationId; set => this.PersonOrganizationId = value; }
         #endregion
 
         #region Constructors

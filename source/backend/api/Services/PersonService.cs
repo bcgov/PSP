@@ -39,19 +39,19 @@ namespace Pims.Api.Services
             var createdPerson = _personRepository.Add(person, userOverride);
             _personRepository.CommitTransaction();
 
-            return GetPerson(createdPerson.Id);
+            return GetPerson(createdPerson.Internal_Id);
         }
 
         public PimsPerson UpdatePerson(PimsPerson person, long rowVersion)
         {
             person.ThrowIfNull(nameof(person));
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
-            ValidateRowVersion(person.Id, rowVersion);
+            ValidateRowVersion(person.Internal_Id, rowVersion);
 
             var updatedPerson = _personRepository.Update(person);
             _personRepository.CommitTransaction();
 
-            return GetPerson(updatedPerson.Id);
+            return GetPerson(updatedPerson.Internal_Id);
         }
 
         public void ValidateRowVersion(long personId, long rowVersion)

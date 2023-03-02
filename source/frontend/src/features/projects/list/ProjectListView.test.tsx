@@ -2,7 +2,14 @@ import userEvent from '@testing-library/user-event';
 import { Claims } from 'constants/index';
 import { useApiProjects } from 'hooks/pims-api/useApiProjects';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+import {
+  act,
+  fillInput,
+  render,
+  RenderOptions,
+  waitFor,
+  waitForElementToBeRemoved,
+} from 'utils/test-utils';
 
 import { IProjectFilter } from '..';
 import { ProjectListView } from './ProjectListView';
@@ -47,9 +54,10 @@ describe('Project List View', () => {
 
   it('matches snapshot', async () => {
     setupMockSearch();
-    const { asFragment } = setup();
+    const { asFragment, getByTitle } = setup();
 
     const fragment = await waitFor(() => asFragment());
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     expect(fragment).toMatchSnapshot();
   });
 
@@ -65,8 +73,9 @@ describe('Project List View', () => {
         lastUpdatedDate: '',
       },
     ]);
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findByText, getByTitle } = setup();
 
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     fillInput(container, 'projectName', 'NAME');
     await act(async () => userEvent.click(searchButton));
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using MapsterMapper;
 using Moq;
@@ -142,9 +143,12 @@ namespace Pims.Api.Test.Services
             acqFile.ConcurrencyControlNumber = 1;
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                AcquisitionFileStatusTypeCode = acqFile.AcquisitionFileStatusTypeCode,
+            });
 
             // Act
             var result = service.Update(acqFile, true);
@@ -219,12 +223,50 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                AcquisitionFileStatusTypeCode = acqFile.AcquisitionFileStatusTypeCode,
+            });
             // Act
             var result = service.Update(acqFile, userOverride: true);
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Success_AddsNote()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+            acqFile.AppCreateUserid = "TESTER";
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
+            {
+                AcquisitionFileStatusTypeCode = "CLOSED",
+                AcquisitionFileStatusTypeCodeNavigation = new PimsAcquisitionFileStatusType() { Description = "Closed" }
+            });
+            lookupRepository.Setup(x => x.GetAllAcquisitionFileStatusTypes()).Returns(new PimsAcquisitionFileStatusType[]{ new PimsAcquisitionFileStatusType() {
+                Id = acqFile.AcquisitionFileStatusTypeCodeNavigation.Id,
+                Description = acqFile.AcquisitionFileStatusTypeCodeNavigation.Description,
+            }});
+
+            // Act
+            var result = service.Update(acqFile, true);
+
+            // Assert
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+                    && x.Note.NoteTxt == "Acquisition File status changed from Closed to Active")), Times.Once);
         }
 
         [Fact]
@@ -333,7 +375,7 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(12345);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Id = 1, Property = property } };
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Internal_Id = 1, Property = property } };
             acqFile.ConcurrencyControlNumber = 1;
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -341,7 +383,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = _helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Id = 1, Property = property, PropertyName = "updated" } });
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Internal_Id = 1, Property = property, PropertyName = "updated" } });
 
             var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();

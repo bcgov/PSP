@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -25,6 +26,7 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -34,7 +36,8 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
             ICoordinateTransformService coordinateService,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            IEntityNoteRepository entityNoteRepository)
         {
             _user = user;
             _logger = logger;
@@ -44,6 +47,7 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -80,11 +84,19 @@ namespace Pims.Api.Services
             return properties;
         }
 
+        public IEnumerable<PimsAcquisitionOwner> GetOwners(long id)
+        {
+            _logger.LogInformation("Getting acquisition file owners with AcquistionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
+        }
+
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
-            _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Id);
+            _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
@@ -100,17 +112,19 @@ namespace Pims.Api.Services
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
-            _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Id);
+            _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
-            ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
+            ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             if (!userOverride)
             {
-                ValidateMinistryRegion(acquisitionFile.Id, acquisitionFile.RegionCode);
+                ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
 
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
+            AddNoteIfStatusChanged(acquisitionFile);
+
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
         }
@@ -119,20 +133,20 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating acquisition file properties...");
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
-            ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
+            ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             MatchProperties(acquisitionFile);
 
             // Get the current properties in the research file
-            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Id);
+            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
                 // If the property is not new, check if the name has been updated.
-                if (incomingAcquisitionProperty.Id != 0)
+                if (incomingAcquisitionProperty.Internal_Id != 0)
                 {
-                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Id == incomingAcquisitionProperty.Id);
+                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
                     if (existingProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
@@ -147,7 +161,7 @@ namespace Pims.Api.Services
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Id == x.Id)).ToList();
+            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
@@ -166,7 +180,7 @@ namespace Pims.Api.Services
             }
 
             _acqFileRepository.CommitTransaction();
-            return _acqFileRepository.GetById(acquisitionFile.Id);
+            return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
         private void MatchProperties(PimsAcquisitionFile acquisitionFile)
@@ -179,7 +193,7 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
-                        acquisitionProperty.PropertyId = foundProperty.Id;
+                        acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -194,7 +208,7 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
-                        acquisitionProperty.PropertyId = foundProperty.Id;
+                        acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -290,6 +304,35 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
             }
+        }
+
+        private void AddNoteIfStatusChanged(PimsAcquisitionFile updateAcquisitionFile)
+        {
+            var currentAcquisitionFile = _acqFileRepository.GetById(updateAcquisitionFile.Internal_Id);
+            bool statusChanged = currentAcquisitionFile.AcquisitionFileStatusTypeCode != updateAcquisitionFile.AcquisitionFileStatusTypeCode;
+            if (!statusChanged)
+            {
+                return;
+            }
+
+            var newStatus = _lookupRepository.GetAllAcquisitionFileStatusTypes()
+                .FirstOrDefault(x => x.AcquisitionFileStatusTypeCode == updateAcquisitionFile.AcquisitionFileStatusTypeCode);
+
+            PimsAcquisitionFileNote fileNoteInstance = new()
+            {
+                AcquisitionFileId = updateAcquisitionFile.Internal_Id,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Acquisition File status changed from {currentAcquisitionFile.AcquisitionFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
         }
     }
 }

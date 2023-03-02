@@ -35,7 +35,7 @@ namespace Pims.Core.Test
             var accessRequest = new Entity.PimsAccessRequest()
             {
                 AccessRequestId = id,
-                UserId = user.Id,
+                UserId = user.Internal_Id,
                 User = user,
                 RoleId = role.Id,
                 Role = role,
@@ -49,7 +49,7 @@ namespace Pims.Core.Test
             {
                 AccessRequestId = id,
                 AccessRequest = accessRequest,
-                OrganizationId = organization.Id,
+                OrganizationId = organization.Internal_Id,
                 Organization = organization,
             });
 

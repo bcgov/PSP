@@ -6,11 +6,11 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsPropertyLease class, provides the many-to-many relationship between leases and properties.
     /// </summary>
-    public partial class PimsPropertyLease : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsPropertyLease : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.PropertyLeaseId; set => this.PropertyLeaseId = value; }
+        public override long Internal_Id { get => this.PropertyLeaseId; set => this.PropertyLeaseId = value; }
         #endregion
 
         #region Constructors
