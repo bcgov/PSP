@@ -17,7 +17,7 @@ export const useApiDocumentGeneration = () => {
     () => ({
       generateDocumentDownloadWrapped: (request: DocumentGenerationRequest) =>
         api.post<ExternalResult<Api_FileDownload>>(
-          `/documentGeneration/render_template/download-wrapped`,
+          `/documentGeneration/template/generate/download-wrapped`,
           request,
         ),
     }),
