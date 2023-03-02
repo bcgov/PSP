@@ -239,8 +239,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           >
             <input
               class="form-control"
-              id="input-initiatorType. "
-              name="initiatorType. "
+              id="input-initiatorType.description"
+              name="initiatorType.description"
               value=""
             />
           </div>
@@ -589,8 +589,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           >
             <input
               class="form-control"
-              id="input-initiatorType. "
-              name="initiatorType. "
+              id="input-initiatorType.description"
+              name="initiatorType.description"
               value=""
             />
           </div>
