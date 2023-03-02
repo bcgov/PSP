@@ -31,7 +31,6 @@ export const LeaseDetailsForm: React.FunctionComponent<
 };
 
 export const StyledDetails = styled.form`
-  margin-top: 4rem;
   text-align: left;
   input:disabled,
   select:disabled,

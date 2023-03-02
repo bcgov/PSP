@@ -139,8 +139,8 @@ export const DocumentDetailContainer: React.FunctionComponent<
   ]);
 
   const onUpdateDocument = async (updateRequest: Api_DocumentUpdateRequest) => {
-    if (props.pimsDocument.id) {
-      let result = await updateDocument(props.pimsDocument.id, updateRequest);
+    if (props.pimsDocument.parentId) {
+      let result = await updateDocument(props.pimsDocument.parentId, updateRequest);
       result && props.onUpdateSuccess();
     }
   };
