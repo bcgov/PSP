@@ -184,7 +184,7 @@ export const DepositsContainer: React.FunctionComponent<
   const initialValues = apiLeaseToFormLease(lease);
 
   return (
-    <Formik initialValues={{ ...defaultLease, initialValues }} onSubmit={noop}>
+    <Formik initialValues={{ ...defaultLease, ...initialValues }} onSubmit={noop}>
       {formikProps => (
         <Styled.DepositsContainer>
           <DepositsReceivedContainer

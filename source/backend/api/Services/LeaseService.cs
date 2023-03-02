@@ -6,6 +6,7 @@ using MoreLinq;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Repositories;
@@ -71,7 +72,8 @@ namespace Pims.Api.Services
 
         public PimsLease Update(PimsLease lease, bool userOverride = false)
         {
-            var currentLease = _leaseRepository.Get(lease.LeaseId);
+            var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+            var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
@@ -93,9 +95,28 @@ namespace Pims.Api.Services
 
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverride);
-            var updatedLease = _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
+            _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
+
+            List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            foreach (var deletedProperty in differenceSet)
+            {
+                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                {
+                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
+                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
+                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
+                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
+                    if (researchAssociationCount + acquisitionAssociationCount == 0 && leaseAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
+                    {
+                        _leaseRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                        _propertyRepository.Delete(deletedProperty.Property);
+                    }
+                }
+            }
+
+
             _leaseRepository.CommitTransaction();
-            return updatedLease;
+            return _leaseRepository.GetNoTracking(lease.LeaseId);
         }
 
         /// <summary>
