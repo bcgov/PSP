@@ -348,6 +348,68 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void UpdateProperties_Activities_Violation()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var property = EntityHelper.CreateProperty(12345);
+            var propertyAcqFile = new PimsPropertyAcquisitionFile() { Property = property };
+            propertyAcqFile.PimsActInstPropAcqFiles = new List<PimsActInstPropAcqFile>() { new PimsActInstPropAcqFile() };
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { propertyAcqFile };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
+
+            var filePropertyRepository = _helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            // Act
+            Action act = () => service.UpdateProperties(EntityHelper.CreateAcquisitionFile());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void UpdateProperties_Takes_Violation()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var property = EntityHelper.CreateProperty(12345);
+            var propertyAcqFile = new PimsPropertyAcquisitionFile() { Property = property };
+            propertyAcqFile.PimsTakes = new List<PimsTake>() { new PimsTake() };
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { propertyAcqFile };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
+
+            var filePropertyRepository = _helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            // Act
+            Action act = () => service.UpdateProperties(EntityHelper.CreateAcquisitionFile());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
         public void UpdateProperties_MatchProperties_Success()
         {
             // Arrange

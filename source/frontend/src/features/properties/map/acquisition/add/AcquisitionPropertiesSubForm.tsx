@@ -14,7 +14,7 @@ interface AcquisitionPropertiesProp {
   formikProps: FormikProps<AcquisitionForm>;
 }
 
-export const AcquisitionProperties: React.FunctionComponent<
+export const AcquisitionPropertiesSubForm: React.FunctionComponent<
   React.PropsWithChildren<AcquisitionPropertiesProp>
 > = ({ formikProps }) => {
   const { values } = formikProps;
@@ -78,4 +78,4 @@ export const AcquisitionProperties: React.FunctionComponent<
   );
 };
 
-export default AcquisitionProperties;
+export default AcquisitionPropertiesSubForm;

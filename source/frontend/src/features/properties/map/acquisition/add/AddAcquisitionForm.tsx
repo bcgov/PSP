@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import UpdateAcquisitionOwnersSubForm from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
-import { AcquisitionProperties } from './AcquisitionProperties';
+import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionFormProps {
@@ -148,7 +148,7 @@ export const AddAcquisitionForm = React.forwardRef<
               </SectionField>
             </Section>
             <Section header="Properties to include in this file:">
-              <AcquisitionProperties formikProps={formikProps} />
+              <AcquisitionPropertiesSubForm formikProps={formikProps} />
             </Section>
 
             <Section header="Acquisition Details">

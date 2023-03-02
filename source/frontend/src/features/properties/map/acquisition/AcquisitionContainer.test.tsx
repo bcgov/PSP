@@ -1,7 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/index';
+import { Formik } from 'formik';
+import { noop } from 'lodash';
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
@@ -9,17 +10,19 @@ import {
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNotesResponse } from 'mocks/mockNoteResponses';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { prettyFormatDate } from 'utils';
 import {
+  act,
   render,
   RenderOptions,
-  userEvent,
+  screen,
   waitFor,
   waitForElementToBeRemoved,
 } from 'utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { AcquisitionContainer, IAcquisitionContainerProps } from './AcquisitionContainer';
+import { IAcquisitionViewProps } from './AcquisitionView';
+import { EditFormNames } from './EditFormNames';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -27,12 +30,6 @@ const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 
 const onClose = jest.fn();
-
-const DEFAULT_PROPS: IAcquisitionContainerProps = {
-  acquisitionFileId: 1,
-  onClose,
-};
-jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -43,6 +40,21 @@ jest.mock('react-visibility-sensor', () => {
     return children;
   });
 });
+
+let viewProps: IAcquisitionViewProps = {} as any;
+const AcquisitionContainerView = (props: IAcquisitionViewProps) => {
+  viewProps = props;
+  return (
+    <Formik innerRef={props.formikRef} onSubmit={noop} initialValues={{ value: 0 }}>
+      {({ values }) => <>{values.value}</>}
+    </Formik>
+  );
+};
+const DEFAULT_PROPS: IAcquisitionContainerProps = {
+  acquisitionFileId: 1,
+  onClose,
+  View: AcquisitionContainerView,
+};
 
 describe('AcquisitionContainer component', () => {
   // render component under test
@@ -57,7 +69,7 @@ describe('AcquisitionContainer component', () => {
           fileType: FileTypes.Acquisition,
         }}
       >
-        <AcquisitionContainer {...props} />
+        <AcquisitionContainer {...props} View={AcquisitionContainerView} />
       </SideBarContextProvider>,
       {
         store: {
@@ -110,65 +122,137 @@ describe('AcquisitionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
   });
 
-  it('renders the underlying form', async () => {
-    const { getByText, getByTestId } = setup();
-    const testAcquisitionFile = mockAcquisitionFileResponse();
+  it('should not display the spinner when properties are loading and the property selector is being displayed', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(getByText('Acquisition File')).toBeVisible();
-
-    expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testAcquisitionFile.appLastUpdateTimestamp))).toBeVisible();
+    mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).timeout();
+    await act(async () => {
+      viewProps.setContainerState({ activeEditForm: EditFormNames.propertySelector });
+      viewProps.canRemove(1);
+      expect(spinner).not.toBeVisible();
+    });
   });
 
-  it('should close the form when Close button is clicked', async () => {
-    const { getCloseButton, getByText, getByTestId } = setup();
+  it('canRemove returns true if file property has no associated entities', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(getByText('Acquisition File')).toBeVisible();
-    await waitFor(() => userEvent.click(getCloseButton()));
-
-    expect(onClose).toBeCalled();
+    mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).reply(200, [
+      {
+        id: 1,
+        isDisabled: false,
+        property: {
+          id: 1,
+        },
+      },
+    ]);
+    await act(async () => {
+      viewProps.setContainerState({ activeEditForm: EditFormNames.propertySelector });
+    });
+    const canRemoveResponse = await viewProps.canRemove(1);
+    expect(canRemoveResponse).toBe(true);
   });
 
-  it('should display the Edit Properties button if the user has permissions', async () => {
-    const { getByTitle, getByTestId } = setup(undefined, { claims: [Claims.ACQUISITION_EDIT] });
+  it('canRemove returns false if file property has associated entities', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(getByTitle(/Change properties/g)).toBeVisible();
+    mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).reply(200, [
+      {
+        id: 1,
+        isDisabled: false,
+        property: {
+          id: 1,
+        },
+        activityInstanceProperties: [{}],
+      },
+    ]);
+    await act(async () => {
+      viewProps.setContainerState({ activeEditForm: EditFormNames.propertySelector });
+    });
+    expect(await viewProps.canRemove(1)).toBe(false);
   });
 
-  it('should not display the Edit Properties button if the user does not have permissions', async () => {
-    const { queryByTitle, getByTestId } = setup(undefined, { claims: [] });
+  it('should change menu index when not editing', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(queryByTitle('Change properties')).toBeNull();
+    await act(async () => viewProps.onMenuChange(1));
+    await waitFor(async () => expect(viewProps.containerState.selectedMenuIndex).toBe(1));
   });
 
-  it('should display the notes tab if the user has permissions', async () => {
-    const { getAllByText, getByTestId } = setup(undefined, { claims: [Claims.NOTE_VIEW] });
+  it('displays a warning if form is dirty and menu index changes', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(getAllByText(/Notes/g)[0]).toBeVisible();
+    await act(async () => viewProps.setContainerState({ isEditing: true }));
+    await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
+    await screen.findByText('1');
+    await act(async () => viewProps.onMenuChange(1));
+
+    await waitFor(async () => expect(viewProps.containerState.showConfirmModal).toBe(true));
+    await waitFor(async () => expect(viewProps.containerState.isEditing).toBe(true));
   });
 
-  it('should not display the notes tab if the user does not have permissions', async () => {
-    const { queryByText, getByTestId } = setup(undefined, { claims: [] });
+  it('cancels edit if form is not dirty and menu index changes', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(queryByText('Notes')).toBeNull();
+    await act(async () => viewProps.setContainerState({ isEditing: true }));
+    await act(async () => viewProps.onMenuChange(1));
+
+    await waitFor(async () => expect(viewProps.containerState.isEditing).toBe(false));
+  });
+
+  it('on success function refetches acq file', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    await act(async () => viewProps.onSuccess());
+
+    expect(mockAxios.history.get.filter(x => x.url === '/acquisitionfiles/1')).toHaveLength(2);
+  });
+
+  it('on success function cancels edit', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    await act(async () => viewProps.setContainerState({ isEditing: true }));
+    await act(async () => viewProps.onSuccess());
+
+    expect(viewProps.containerState.isEditing).toBe(false);
+  });
+
+  it('on save function submits the form', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    await act(async () => viewProps.onSave());
+
+    await waitFor(async () => viewProps.formikRef.current?.submitCount === 1);
   });
 });

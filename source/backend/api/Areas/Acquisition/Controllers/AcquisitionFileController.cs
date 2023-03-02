@@ -147,9 +147,15 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         public IActionResult UpdateAcquisitionFileProperties([FromBody] AcquisitionFileModel acquisitionFileModel)
         {
             var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
-            var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
-
-            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            try
+            {
+                var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
+                return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            }
+            catch(BusinessRuleViolationException e)
+            {
+                return Conflict(e.Message);
+            }
         }
 
         /// <summary>
