@@ -14,6 +14,7 @@ import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 import AppRoute from 'utils/AppRoute';
 
 import AcquisitionContainer from './acquisition/AcquisitionContainer';
+import AcquisitionView from './acquisition/AcquisitionView';
 import AddAcquisitionContainer from './acquisition/add/AddAcquisitionContainer';
 import LeaseContainer from './lease/LeaseContainer';
 import AddProjectContainer from './project/add/AddProjectContainer';
@@ -137,7 +138,11 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
       <AppRoute
         path={`/mapview/sidebar/acquisition/:id`}
         customRender={({ match }) => (
-          <AcquisitionContainer acquisitionFileId={Number(match.params.id)} onClose={onClose} />
+          <AcquisitionContainer
+            acquisitionFileId={Number(match.params.id)}
+            onClose={onClose}
+            View={AcquisitionView}
+          />
         )}
         claim={Claims.ACQUISITION_VIEW}
         key={'Acquisition'}

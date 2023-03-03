@@ -1,9 +1,10 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
+import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
@@ -13,6 +14,13 @@ const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+jest.mock('hooks/useProjectTypeahead');
+const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
+  typeof useProjectTypeahead
+>;
+
+const handleTypeaheadSearch = jest.fn();
 
 describe('LeaseDetailSubForm component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<ILeaseDetailsSubFormProps> = {}) => {
@@ -33,20 +41,58 @@ describe('LeaseDetailSubForm component', () => {
     );
 
     return {
-      component,
+      ...component,
+      // Finding elements
+      getProjectSelector: () => {
+        return document.querySelector(`input[name="typeahead-project"]`);
+      },
+      findProjectSelectorItems: async () => {
+        return document.querySelectorAll(`a[id^="typeahead-project-item"]`);
+      },
     };
   };
-  it('renders as expected', async () => {
-    const { component } = await setup({});
-    expect(component.asFragment()).toMatchSnapshot();
+
+  beforeEach(() => {
+    mockUseProjectTypeahead.mockReturnValue({
+      handleTypeaheadSearch,
+      isTypeaheadLoading: false,
+      matchedProjects: [
+        {
+          id: 1,
+          text: 'MOCK TEST PROJECT',
+        },
+        {
+          id: 2,
+          text: 'ANOTHER MOCK',
+        },
+      ],
+    });
   });
 
-  it('expiry date must be later then start date', async () => {
-    const {
-      component: { findByText, container },
-    } = await setup({});
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('renders as expected', async () => {
+    const { asFragment } = await setup({});
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('checks that expiry date must be later than start date', async () => {
+    const { findByText, container } = await setup({});
     await fillInput(container, 'startDate', '01/02/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/01/2020', 'datepicker');
     expect(await findByText('Expiry Date must be after Start Date')).toBeVisible();
+  });
+
+  it('shows matching projects based on user input', async () => {
+    const { getProjectSelector, findProjectSelectorItems } = await setup({});
+    await act(() => userEvent.type(getProjectSelector()!, 'test'));
+    await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
+
+    const items = await findProjectSelectorItems();
+    expect(items).toHaveLength(2);
+    expect(items[0]).toHaveTextContent(/MOCK TEST PROJECT/i);
+    expect(items[1]).toHaveTextContent(/ANOTHER MOCK/i);
   });
 });

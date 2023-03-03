@@ -118,7 +118,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         {
             if (id != model.Id)
             {
-                return BadRequest();
+                return BadRequest("Model and path id do not match.");
             }
 
             try

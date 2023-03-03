@@ -8,7 +8,7 @@ import { mockLookups } from 'mocks';
 import { mockDocumentDetailResponse } from 'mocks/mockDocumentDetail';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, cleanup, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
@@ -170,5 +170,30 @@ describe('Document List View', () => {
     });
     const downloadButtonTooltip = await findByTestId('document-download-button');
     await act(async () => expect(downloadButtonTooltip).toBeInTheDocument());
+  });
+
+  it('should call on delete for a document when the document id does not equal the document relationship id', async () => {
+    const documentRows = mockDocumentRowResponse();
+    documentRows[0].isFileAvailable = true;
+    const { findAllByTestId } = setup({
+      hideFilters: false,
+      isLoading: false,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
+      documentResults: documentRows,
+      onDelete: deleteMock,
+      onSuccess: noop,
+      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+      onPageChange,
+      pageProps: { pageSize: 10, pageIndex: 0 },
+    });
+    const deleteButtonTooltip = await findAllByTestId('document-delete-button');
+    act(() => userEvent.click(deleteButtonTooltip[0]));
+
+    await waitFor(() => screen.getByText('Delete a document'));
+    const continueButton = screen.getByText('Continue');
+    act(() => userEvent.click(continueButton));
+
+    expect(deleteMock).toHaveBeenCalledWith(DocumentRow.toApi(documentRows[0]));
   });
 });

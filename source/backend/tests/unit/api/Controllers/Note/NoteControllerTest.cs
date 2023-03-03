@@ -99,7 +99,7 @@ namespace Pims.Api.Test.Controllers.Note
             _service.Setup(m => m.GetById(It.IsAny<long>())).Returns(noteModel);
 
             // Act
-            var result = _controller.GetNoteById(Constants.NoteType.Activity, 1);
+            var result = _controller.GetNoteById(1);
 
             // Assert
             _service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
@@ -118,7 +118,7 @@ namespace Pims.Api.Test.Controllers.Note
             _service.Setup(m => m.Update(It.IsAny<NoteModel>())).Returns(noteModel);
 
             // Act
-            var result = _controller.UpdateNote(Constants.NoteType.Activity, 1, noteModel);
+            var result = _controller.UpdateNote(1, noteModel);
 
             // Assert
             _service.Verify(m => m.Update(It.IsAny<NoteModel>()), Times.Once());

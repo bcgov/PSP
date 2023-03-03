@@ -39,7 +39,7 @@ module.exports = {
           "base-uri 'self'; \
           default-src 'self'; \
           script-src 'self'; \
-          connect-src 'self' https://dev.loginproxy.gov.bc.ca/ https://dev-pims.th.gov.bc.ca/api/ https://openmaps.gov.bc.ca/ https://delivery.apps.gov.bc.ca/; \
+          connect-src 'self' https://maps.gov.bc.ca/arcgis/rest/ https://server.arcgisonline.com/ArcGIS/rest/ https://dev.loginproxy.gov.bc.ca/ https://dev-pims.th.gov.bc.ca/api/ https://openmaps.gov.bc.ca/ https://delivery.apps.gov.bc.ca/; \
           img-src 'self' data: blob: https://openmaps.gov.bc.ca/ https://maps.gov.bc.ca/ https://server.arcgisonline.com/; \
           style-src 'self' 'unsafe-inline'; \
           form-action 'self'; \

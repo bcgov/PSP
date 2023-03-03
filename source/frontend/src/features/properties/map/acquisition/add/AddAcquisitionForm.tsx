@@ -1,7 +1,7 @@
 import {
-  AsyncTypeahead,
   FastDatePicker,
   Input,
+  ProjectSelector,
   Select,
   SelectOption,
 } from 'components/common/form/';
@@ -12,7 +12,6 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { IAutocompletePrediction } from 'interfaces/IAutocomplete';
 import { Api_Product } from 'models/api/Project';
 import React from 'react';
@@ -22,7 +21,7 @@ import styled from 'styled-components';
 import UpdateAcquisitionOwnersSubForm from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
-import { AcquisitionProperties } from './AcquisitionProperties';
+import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionFormProps {
@@ -42,19 +41,17 @@ export const AddAcquisitionForm = React.forwardRef<
   IAddAcquisitionFormProps
 >((props, ref) => {
   const { initialValues, validationSchema, onSubmit } = props;
-
   const [projectProducts, setProjectProducts] = React.useState<Api_Product[] | undefined>(
     undefined,
   );
-
   const { retrieveProjectProducts } = useProjectProvider();
-
   const { getOptionsByType } = useLookupCodeHelpers();
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
   const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] =
     React.useState<boolean>(false);
+
   const isMinistryRegionDiff = (values: AcquisitionForm): boolean => {
     const selectedPropRegions = values.properties.map(x => x.region);
     return (
@@ -65,8 +62,6 @@ export const AddAcquisitionForm = React.forwardRef<
     );
   };
 
-  const { handleTypeaheadSearch, isTypeaheadLoading, matchedProjects } = useProjectTypeahead();
-
   const handleSubmit = (values: AcquisitionForm, formikHelpers: FormikHelpers<AcquisitionForm>) => {
     if (isMinistryRegionDiff(values)) {
       setShowDiffMinistryRegionModal(true);
@@ -75,7 +70,7 @@ export const AddAcquisitionForm = React.forwardRef<
     }
   };
 
-  const onMinistrySelected = async (param: IAutocompletePrediction[]) => {
+  const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
     if (param.length > 0) {
       if (param[0].id !== undefined) {
         const result = await retrieveProjectProducts(param[0].id);
@@ -101,14 +96,10 @@ export const AddAcquisitionForm = React.forwardRef<
           <Container>
             <Section header="Project">
               <SectionField label="Ministry project">
-                <AsyncTypeahead
+                <ProjectSelector
                   field="project"
-                  labelKey="text"
-                  isLoading={isTypeaheadLoading}
-                  options={matchedProjects}
-                  onSearch={handleTypeaheadSearch}
                   onChange={(vals: IAutocompletePrediction[]) => {
-                    onMinistrySelected(vals);
+                    onMinistryProjectSelected(vals);
                     if (vals.length === 0) {
                       formikProps.setFieldValue('product', 0);
                     }
@@ -157,7 +148,7 @@ export const AddAcquisitionForm = React.forwardRef<
               </SectionField>
             </Section>
             <Section header="Properties to include in this file:">
-              <AcquisitionProperties formikProps={formikProps} />
+              <AcquisitionPropertiesSubForm formikProps={formikProps} />
             </Section>
 
             <Section header="Acquisition Details">

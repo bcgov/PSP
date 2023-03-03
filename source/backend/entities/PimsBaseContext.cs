@@ -18,51 +18,6 @@ namespace Pims.Dal
         {
         }
 
-        public virtual DbSet<BcaAreaAmendment> BcaAreaAmendments { get; set; }
-        public virtual DbSet<BcaAreaBctransitValue> BcaAreaBctransitValues { get; set; }
-        public virtual DbSet<BcaAreaDelete> BcaAreaDeletes { get; set; }
-        public virtual DbSet<BcaAreaGeneralValue> BcaAreaGeneralValues { get; set; }
-        public virtual DbSet<BcaAreaSchoolValue> BcaAreaSchoolValues { get; set; }
-        public virtual DbSet<BcaAssessmentArea> BcaAssessmentAreas { get; set; }
-        public virtual DbSet<BcaDataAdvice> BcaDataAdvices { get; set; }
-        public virtual DbSet<BcaDataAdviceAmendment> BcaDataAdviceAmendments { get; set; }
-        public virtual DbSet<BcaDataAdviceBctransitValue> BcaDataAdviceBctransitValues { get; set; }
-        public virtual DbSet<BcaDataAdviceDelete> BcaDataAdviceDeletes { get; set; }
-        public virtual DbSet<BcaDataAdviceGeneralValue> BcaDataAdviceGeneralValues { get; set; }
-        public virtual DbSet<BcaDataAdviceSchoolValue> BcaDataAdviceSchoolValues { get; set; }
-        public virtual DbSet<BcaDefined> BcaDefineds { get; set; }
-        public virtual DbSet<BcaElectoralArea> BcaElectoralAreas { get; set; }
-        public virtual DbSet<BcaFolioAddress> BcaFolioAddresses { get; set; }
-        public virtual DbSet<BcaFolioAmendment> BcaFolioAmendments { get; set; }
-        public virtual DbSet<BcaFolioBctransitValue> BcaFolioBctransitValues { get; set; }
-        public virtual DbSet<BcaFolioDescription> BcaFolioDescriptions { get; set; }
-        public virtual DbSet<BcaFolioFarm> BcaFolioFarms { get; set; }
-        public virtual DbSet<BcaFolioGeneralValue> BcaFolioGeneralValues { get; set; }
-        public virtual DbSet<BcaFolioLandCharacteristic> BcaFolioLandCharacteristics { get; set; }
-        public virtual DbSet<BcaFolioLegalDescription> BcaFolioLegalDescriptions { get; set; }
-        public virtual DbSet<BcaFolioManagedForest> BcaFolioManagedForests { get; set; }
-        public virtual DbSet<BcaFolioManufacturedHome> BcaFolioManufacturedHomes { get; set; }
-        public virtual DbSet<BcaFolioOilAndGa> BcaFolioOilAndGas { get; set; }
-        public virtual DbSet<BcaFolioRecord> BcaFolioRecords { get; set; }
-        public virtual DbSet<BcaFolioSale> BcaFolioSales { get; set; }
-        public virtual DbSet<BcaFolioSchoolValue> BcaFolioSchoolValues { get; set; }
-        public virtual DbSet<BcaFolioValuation> BcaFolioValuations { get; set; }
-        public virtual DbSet<BcaGeneralService> BcaGeneralServices { get; set; }
-        public virtual DbSet<BcaImprovementDistrict> BcaImprovementDistricts { get; set; }
-        public virtual DbSet<BcaIslandsTrust> BcaIslandsTrusts { get; set; }
-        public virtual DbSet<BcaJurisdiction> BcaJurisdictions { get; set; }
-        public virtual DbSet<BcaJurisdictionAmendment> BcaJurisdictionAmendments { get; set; }
-        public virtual DbSet<BcaJurisdictionBctransitValue> BcaJurisdictionBctransitValues { get; set; }
-        public virtual DbSet<BcaJurisdictionDelete> BcaJurisdictionDeletes { get; set; }
-        public virtual DbSet<BcaJurisdictionGeneralValue> BcaJurisdictionGeneralValues { get; set; }
-        public virtual DbSet<BcaJurisdictionSchoolValue> BcaJurisdictionSchoolValues { get; set; }
-        public virtual DbSet<BcaLocalArea> BcaLocalAreas { get; set; }
-        public virtual DbSet<BcaMinorTaxing> BcaMinorTaxings { get; set; }
-        public virtual DbSet<BcaOwner> BcaOwners { get; set; }
-        public virtual DbSet<BcaOwnershipGroup> BcaOwnershipGroups { get; set; }
-        public virtual DbSet<BcaServiceArea> BcaServiceAreas { get; set; }
-        public virtual DbSet<BcaSpecifiedMunicipal> BcaSpecifiedMunicipals { get; set; }
-        public virtual DbSet<BcaSpecifiedRegional> BcaSpecifiedRegionals { get; set; }
         public virtual DbSet<PimsAccessRequest> PimsAccessRequests { get; set; }
         public virtual DbSet<PimsAccessRequestHist> PimsAccessRequestHists { get; set; }
         public virtual DbSet<PimsAccessRequestOrganization> PimsAccessRequestOrganizations { get; set; }
@@ -184,7 +139,11 @@ namespace Pims.Dal
         public virtual DbSet<PimsProduct> PimsProducts { get; set; }
         public virtual DbSet<PimsProductHist> PimsProductHists { get; set; }
         public virtual DbSet<PimsProject> PimsProjects { get; set; }
+        public virtual DbSet<PimsProjectDocument> PimsProjectDocuments { get; set; }
+        public virtual DbSet<PimsProjectDocumentHist> PimsProjectDocumentHists { get; set; }
         public virtual DbSet<PimsProjectHist> PimsProjectHists { get; set; }
+        public virtual DbSet<PimsProjectNote> PimsProjectNotes { get; set; }
+        public virtual DbSet<PimsProjectNoteHist> PimsProjectNoteHists { get; set; }
         public virtual DbSet<PimsProjectStatusType> PimsProjectStatusTypes { get; set; }
         public virtual DbSet<PimsPropPropAdjacentLandType> PimsPropPropAdjacentLandTypes { get; set; }
         public virtual DbSet<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
@@ -261,6 +220,11 @@ namespace Pims.Dal
         public virtual DbSet<PimsStaticVariableHist> PimsStaticVariableHists { get; set; }
         public virtual DbSet<PimsSurplusDeclarationType> PimsSurplusDeclarationTypes { get; set; }
         public virtual DbSet<PimsSurveyPlanType> PimsSurveyPlanTypes { get; set; }
+        public virtual DbSet<PimsTake> PimsTakes { get; set; }
+        public virtual DbSet<PimsTakeHist> PimsTakeHists { get; set; }
+        public virtual DbSet<PimsTakeSiteContamType> PimsTakeSiteContamTypes { get; set; }
+        public virtual DbSet<PimsTakeStatusType> PimsTakeStatusTypes { get; set; }
+        public virtual DbSet<PimsTakeType> PimsTakeTypes { get; set; }
         public virtual DbSet<PimsTenant> PimsTenants { get; set; }
         public virtual DbSet<PimsTenantType> PimsTenantTypes { get; set; }
         public virtual DbSet<PimsUser> PimsUsers { get; set; }
@@ -280,1499 +244,6 @@ namespace Pims.Dal
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-            modelBuilder.Entity<BcaAreaAmendment>(entity =>
-            {
-                entity.Property(e => e.AmendmentReasonCode).HasComment("A code indicating the amendment type.");
-
-                entity.Property(e => e.AmendmentReasonDescription).HasComment("A short description of the amendment reason.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FolioCount).HasComment("The folio count for the amendment type.");
-
-                entity.HasOne(d => d.AreaCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.AreaCode)
-                    .HasConstraintName("PIM_BCASAR_PIM_BCAAMD_FK");
-            });
-
-            modelBuilder.Entity<BcaAreaBctransitValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for BC Transit purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the area class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The area class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the area sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The area sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.AreaCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.AreaCode)
-                    .HasConstraintName("PIM_BCASAR_PIM_BCATRV_FK");
-            });
-
-            modelBuilder.Entity<BcaAreaDelete>(entity =>
-            {
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DeleteReasonCode)
-                    .HasDefaultValueSql("('UNKNOWN')")
-                    .HasComment("A code indicating the delete reason.");
-
-                entity.Property(e => e.DeleteReasonDescription).HasComment("A short description of the delete reason.");
-
-                entity.Property(e => e.FolioCount).HasComment("The folio count for the delete reason.");
-
-                entity.HasOne(d => d.AreaCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.AreaCode)
-                    .HasConstraintName("PIM_BCASAR_PIM_BCADEL_FK");
-            });
-
-            modelBuilder.Entity<BcaAreaGeneralValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for general purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the area class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The area class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the area sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The area sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.AreaCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.AreaCode)
-                    .HasConstraintName("PIM_BCASAR_PIM_BCAGNV_FK");
-            });
-
-            modelBuilder.Entity<BcaAreaSchoolValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for school purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the area class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The area class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the area sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The area sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.AreaCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.AreaCode)
-                    .HasConstraintName("PIM_BCASAR_PIM_BCASCV_FK");
-            });
-
-            modelBuilder.Entity<BcaAssessmentArea>(entity =>
-            {
-                entity.HasKey(e => e.AreaCode)
-                    .HasName("BCASAR_PK");
-
-                entity.HasComment("Represents a folio group for a single BCA assessment area.");
-
-                entity.Property(e => e.AreaCode).HasComment("The BCA code that identifies the assessment area.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("The full name/description of the BCA assessment area.");
-
-                entity.HasOne(d => d.DataAdvice)
-                    .WithMany(p => p.BcaAssessmentAreas)
-                    .HasForeignKey(d => d.DataAdviceId)
-                    .HasConstraintName("PIM_BCDADV_PIM_BCASAR_FK");
-            });
-
-            modelBuilder.Entity<BcaDataAdvice>(entity =>
-            {
-                entity.HasKey(e => e.DataAdviceId)
-                    .HasName("BCDADV_PK");
-
-                entity.HasComment("Represents an entire Data Advice XML delivery for a single order.");
-
-                entity.Property(e => e.DataAdviceId)
-                    .HasDefaultValueSql("(NEXT VALUE FOR [BCA_DATA_ADVICE_ID_SEQ])")
-                    .HasComment("Primary key");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.EndDate).HasComment("The end date of the reporting period for the Data Advice XML document.");
-
-                entity.Property(e => e.OrderId).HasComment("A unique identifier for the order that generated the Data Advice XML document.  The value is intended for BCA internal purposes only.");
-
-                entity.Property(e => e.OwnershipYear).HasComment("The ownership year parameter used to generate the Data Advice XML document.");
-
-                entity.Property(e => e.RequestId).HasComment("A unique identifier for the request that specified the order parameters.  The value is intended for BCA internal purposes only.");
-
-                entity.Property(e => e.RollYear).HasComment("The roll year parameter used to generate the Data Advice XML document.");
-
-                entity.Property(e => e.RunDate).HasComment("The date when the order was run to generate the Data Advice XML document.");
-
-                entity.Property(e => e.RunType).HasComment("Represents a code indicating the run type that generated the Data Advice XML document.");
-
-                entity.Property(e => e.StartDate).HasComment("The start date of the reporting period for the Data Advice XML document.");
-
-                entity.Property(e => e.TaxExemptFolioCount).HasComment("The number of exempt folios included in the Data Advice XML document.");
-
-                entity.Property(e => e.TaxableFolioCount).HasComment("The number of taxable folios included in the Data Advice XML document.");
-
-                entity.Property(e => e.TotalFolioCount).HasComment("The total number of folios included in the Data Advice XML document.");
-
-                entity.Property(e => e.TotalGrossImprovementValue).HasComment("The gross sum of all improvement(s) values reported for the folio group.");
-
-                entity.Property(e => e.TotalGrossLandValue).HasComment("The gross sum of all land values reported for the folio group.");
-
-                entity.Property(e => e.TotalNetImprovementValue).HasComment("The net sum of all improvement(s) values reported for the folio group.");
-
-                entity.Property(e => e.TotalNetLandValue).HasComment("The net sum of all land values reported for the folio group.");
-
-                entity.Property(e => e.TotalTaxExemptImprovementValue).HasComment("The tax exempt sum of all improvement(s) values reported for the folio group.");
-
-                entity.Property(e => e.TotalTaxExemptLandValue).HasComment("The tax exempt sum of all land values reported for the folio group.");
-
-                entity.Property(e => e.Version).HasComment("Represents a version number of one to four integers separated by periods (e.g. 1.0).  Version numbers are assumed to be ordered according to standard conventions.  If \"x\" and \"y\" are version numbers where \"x\" precedes \"y\" in sort order, then \"x\" shall ide");
-            });
-
-            modelBuilder.Entity<BcaDataAdviceAmendment>(entity =>
-            {
-                entity.Property(e => e.AmendmentReasonCode).HasComment("A code indicating the amendment type.");
-
-                entity.Property(e => e.AmendmentReasonDescription).HasComment("A short description of the amendment reason.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FolioCount).HasComment("The folio count for the amendment type.");
-
-                entity.HasOne(d => d.DataAdvice)
-                    .WithMany()
-                    .HasForeignKey(d => d.DataAdviceId)
-                    .HasConstraintName("PIM_BCDADV_PIM_BCDAMD_FK");
-            });
-
-            modelBuilder.Entity<BcaDataAdviceBctransitValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for BC Transit purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the property class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The property class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the property sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The property sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.DataAdvice)
-                    .WithMany()
-                    .HasForeignKey(d => d.DataAdviceId)
-                    .HasConstraintName("PIM_BCDADV_PIM_BCDTRV_FK");
-            });
-
-            modelBuilder.Entity<BcaDataAdviceDelete>(entity =>
-            {
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DeleteReasonCode)
-                    .HasDefaultValueSql("('UNKNOWN')")
-                    .HasComment("A code indicating the delete reason.");
-
-                entity.Property(e => e.DeleteReasonDescription).HasComment("A short description of the delete reason.");
-
-                entity.Property(e => e.FolioCount).HasComment("The folio count for the delete reason.");
-
-                entity.HasOne(d => d.DataAdvice)
-                    .WithMany()
-                    .HasForeignKey(d => d.DataAdviceId)
-                    .HasConstraintName("PIM_BCDADV_PIM_BCDDEL_FK");
-            });
-
-            modelBuilder.Entity<BcaDataAdviceGeneralValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for general purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the property class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The property class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the property sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The property sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.DataAdvice)
-                    .WithMany()
-                    .HasForeignKey(d => d.DataAdviceId)
-                    .HasConstraintName("PIM_BCDADV_PIM_BCDGNV_FK");
-            });
-
-            modelBuilder.Entity<BcaDataAdviceSchoolValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for school purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the property class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The property class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the property sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The property sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.DataAdvice)
-                    .WithMany()
-                    .HasForeignKey(d => d.DataAdviceId)
-                    .HasConstraintName("PIM_BCDADV_PIM_BCDSCV_FK");
-            });
-
-            modelBuilder.Entity<BcaDefined>(entity =>
-            {
-                entity.HasComment("The Defined minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCADFN_FK");
-            });
-
-            modelBuilder.Entity<BcaElectoralArea>(entity =>
-            {
-                entity.HasComment("The Electoral Areas minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCELCT_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioAddress>(entity =>
-            {
-                entity.Property(e => e.AddressId).HasComment("Unique address identifier provided by BC Assessment.");
-
-                entity.Property(e => e.City).HasComment("City name.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MapReferenceNumber).HasComment("Formerly National Topographic System (NTS) number. A geographic reference.");
-
-                entity.Property(e => e.PostalZip).HasComment("Postal or zip code.");
-
-                entity.Property(e => e.PrimaryFlag)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates whether the address is the primary address associated with the folio.");
-
-                entity.Property(e => e.ProvinceState).HasComment("Province or state.");
-
-                entity.Property(e => e.StreetDirectionPrefix).HasComment("Further refinement of the street name to facilitate location of the folio (pre-directional).");
-
-                entity.Property(e => e.StreetDirectionSuffix).HasComment("Further refinement of the street name to facilitate location of the folio (post-directional).");
-
-                entity.Property(e => e.StreetName).HasComment("Street identifier assigned by a local government (municipality).");
-
-                entity.Property(e => e.StreetNumber).HasComment("Street number assigned by a local government (municipality).");
-
-                entity.Property(e => e.StreetType).HasComment("Road, Street, Place, etc.");
-
-                entity.Property(e => e.UnitNumber).HasComment("Apartment or suite or unit number.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCFADR_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioAmendment>(entity =>
-            {
-                entity.Property(e => e.AmendmentReasonCode).HasComment("Describes the reason for the amendment.");
-
-                entity.Property(e => e.AmendmentReasonDescription).HasComment("A short description about the Amendment Reason.");
-
-                entity.Property(e => e.AmendmentType).HasComment("A code identifying the process that resulted in the amendment.");
-
-                entity.Property(e => e.AmendmentTypeDescription).HasComment("A short description about the Amendment Type.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.SuppOccupancyCode).HasComment("Specifies whether the SUPP occupancy date indicates a begin (B) or end (E) date.");
-
-                entity.Property(e => e.SuppOccupancyDate).HasComment("Specifies the date when a SUPP occupancy began or ended.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCAFAM_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioBctransitValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for BC Transit purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the jurisdiction class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The jurisdiction class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the jurisdiction sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The jurisdiction sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCFTRV_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioDescription>(entity =>
-            {
-                entity.HasComment("Describes general characteristics of the folio.");
-
-                entity.Property(e => e.ActualUseCode).HasComment("Represents the code for an entry in a lookup table.");
-
-                entity.Property(e => e.ActualUseDescription).HasComment("The full name/description of the Actual Use.");
-
-                entity.Property(e => e.AddSchoolTax3mTo4mFlag).HasComment("Indicates whether the folio is a subject to additional school tax (residential portion assessed between $3 and $4 million).");
-
-                entity.Property(e => e.AddSchoolTaxGreater4mFlag).HasComment("Indicates whether the folio is a subject to additional school tax (residential portion assessed over $4 million).");
-
-                entity.Property(e => e.AlrCode).HasComment("The Agricultural Land Reserve identifier for the folio.");
-
-                entity.Property(e => e.AlrDescription).HasComment("A short description about the ALR code.");
-
-                entity.Property(e => e.BctransitFlag).HasComment("Indicates whether the folio is subject to BC Transit taxation.");
-
-                entity.Property(e => e.CandidateForSpecTaxFlag).HasComment("Indicates whether the folio is a candidate for speculation tax.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.LandDepth).HasComment("Land depth measurement.");
-
-                entity.Property(e => e.LandDimension).HasComment("Freeform land measurement.");
-
-                entity.Property(e => e.LandDimensionType).HasComment("A code indicating the type of land measurements being used.");
-
-                entity.Property(e => e.LandDimensionTypeDescription).HasComment("A short description about the land dimension type.");
-
-                entity.Property(e => e.LandWidth).HasComment("Land width measurement.");
-
-                entity.Property(e => e.NeighbourhoodCode).HasComment("A code identifying the neighbourhood.");
-
-                entity.Property(e => e.NeighbourhoodDescription).HasComment("The full name/description of the neighbourhood.");
-
-                entity.Property(e => e.ParkingArea).HasComment("Identifies the total value of the parking area (TransLink values only for Roll Years 2005 to 2007).");
-
-                entity.Property(e => e.PoliceTaxFlag).HasComment("Indicates whether the folio is subject to exemption.");
-
-                entity.Property(e => e.PredominantManualClassCode).HasComment("A code identifying the state and condition of improvements and structural components.");
-
-                entity.Property(e => e.PredominantManualClassDescription).HasComment("A short description about the manual class code.");
-
-                entity.Property(e => e.PredominantPercentDeviation).HasComment("A percentage deviation from the manual class code.");
-
-                entity.Property(e => e.RegionalDistrictCode).HasComment("A code identifying the special district.");
-
-                entity.Property(e => e.RegionalDistrictDescription).HasComment("The full name/description of the special district.");
-
-                entity.Property(e => e.RegionalHospitalDistrictCode).HasComment("A code identifying the special district.");
-
-                entity.Property(e => e.RegionalHospitalDistrictDescription).HasComment("The full name/description of the special district.");
-
-                entity.Property(e => e.SchoolDistrictCode).HasComment("A code identifying the special district.");
-
-                entity.Property(e => e.SchoolDistrictDescription).HasComment("The full name/description of the special district.");
-
-                entity.Property(e => e.TenureCode).HasComment("Identifies the type of ownership or occupation on land.");
-
-                entity.Property(e => e.TenureDescription).HasComment("The short name/description of the tenure code.");
-
-                entity.Property(e => e.VacantFlag).HasComment("Indicates whether the folio is vacant or occupied.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCAFDE_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioFarm>(entity =>
-            {
-                entity.HasComment("Farm associated with this folio.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FarmNumber).HasComment("A BCA farm identification number");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCFARM_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioGeneralValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for general purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the jurisdiction class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The jurisdiction class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the jurisdiction sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The jurisdiction sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCFGNV_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioLandCharacteristic>(entity =>
-            {
-                entity.HasComment("Represents a land characteristic.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.LandCharacteristicCode).HasComment("A code indicating a characteristic of the land.");
-
-                entity.Property(e => e.LandCharacteristicDescription).HasComment("A description of the LandCharacteristicCode.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCLCHR_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioLegalDescription>(entity =>
-            {
-                entity.Property(e => e.AirSpaceParcelNumber).HasComment("A volumetric parcel identifier.");
-
-                entity.Property(e => e.BcaGroup).HasComment("The legal description group as defined by BCA.");
-
-                entity.Property(e => e.Block).HasComment("Block, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DistrictLot).HasComment("District lot, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.ExceptPlan).HasComment("Except plan, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.FirstNationReserveDescription).HasComment("The short name/description of the FirstNationReserveNumber.");
-
-                entity.Property(e => e.FirstNationReserveNumber).HasComment("Identifier assigned to FN reserve properties by BCA.");
-
-                entity.Property(e => e.FormattedLegalDescription).HasComment("A formatted string of all the legal description attributes with appropriate labels.");
-
-                entity.Property(e => e.LandBranchFileNumber).HasComment("Lands Branch File Number as defined by the Ministry of Forest, Lands, and Natural Resource Operations.");
-
-                entity.Property(e => e.LandDistrict).HasComment("Land district, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.LandDistrictDescription).HasComment("The short name/description of the LandDistrict.");
-
-                entity.Property(e => e.LeaseLicenseNumber).HasComment("Lease licence number as defined by the Ministry of Forest, Lands, and Natural Resource Operations and other valid sources of leases added to the assessment roll.");
-
-                entity.Property(e => e.LegalSubdivision).HasComment("Legal subdivision, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.LegalText).HasComment("Freeform legal text, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Lot).HasComment("Lot, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Meridian).HasComment("Meridian Code, identifies a line of longitude, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.MeridianShort).HasComment("Meridian Code, identifies a line of longitude, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.NtsLocation).HasComment("National Topographic System Reference Number.");
-
-                entity.Property(e => e.Parcel).HasComment("Parcel, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Part1).HasComment("Part 1, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Part2).HasComment("Part 2, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Part3).HasComment("Part 3, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Part4).HasComment("Part 4, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Pid).HasComment("The PID that uniquely identifies the legal description.");
-
-                entity.Property(e => e.PlanNumber).HasComment("Plan number, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Portion).HasComment("Portion, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Range).HasComment("Range, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Section).HasComment("Section, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.StrataLot).HasComment("Strata Lot, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.SubBlock).HasComment("Sub block, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.SubLot).HasComment("Suburban lot, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.Property(e => e.Township).HasComment("Township, part of the legal description of a parcel of land as provided by the Land Title and Survey Authority.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCAFLD_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioManagedForest>(entity =>
-            {
-                entity.HasComment("Managed forest information associated with this folio.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FarmNumber).HasComment("A BCA farm identification number");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCMFOR_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioManufacturedHome>(entity =>
-            {
-                entity.HasComment("Provides information for a single manufactured home.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MhBayNumber).HasComment("Bay number associated with the manufactured home.");
-
-                entity.Property(e => e.MhPark).HasComment("The name or other identification of the park associated with the manufactured home.");
-
-                entity.Property(e => e.MhParkRollNumber).HasComment("Park roll number associated with the manufactured home.");
-
-                entity.Property(e => e.MhRegistryNumber).HasComment("Registration number for a manufactured home (MH) by the Manufactured Home Registry.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCMANH_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioOilAndGa>(entity =>
-            {
-                entity.HasComment("Oil and gas information associated with this folio.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FarmNumber).HasComment("A BCA farm identification number");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCOILG_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioRecord>(entity =>
-            {
-                entity.HasKey(e => e.RollNumber)
-                    .HasName("BCAFOR_PK");
-
-                entity.HasComment("Represents a data record for a single folio and its associated attributes.");
-
-                entity.Property(e => e.RollNumber).HasComment("The unique identifier for the specific folio within its jurisdiction.");
-
-                entity.Property(e => e.Action).HasComment("Specifies the folio action: Add, Delete.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FolioStatus).HasComment("Indicates the status of the folio at the time the Data Advice XML document was generated.");
-
-                entity.Property(e => e.FolioStatusDescription).HasComment("The short name/description of the folio status.");
-
-                entity.HasOne(d => d.JurisdictionCodeNavigation)
-                    .WithMany(p => p.BcaFolioRecords)
-                    .HasForeignKey(d => d.JurisdictionCode)
-                    .HasConstraintName("PIM_BCAJUR_PIM_BCAFOR_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioSale>(entity =>
-            {
-                entity.Property(e => e.ConveyanceDate).HasComment("The date associated with this sale.");
-
-                entity.Property(e => e.ConveyancePrice).HasComment("The amount of money exchanged as part of this sale.");
-
-                entity.Property(e => e.ConveyanceType).HasComment("The conveyance type code identifying the characteristics of the sale.");
-
-                entity.Property(e => e.ConveyanceTypeDescription).HasComment("A short description about the conveyance type.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DocumentNumber).HasComment("The LTSA Document Number assigned in regard to an Indefeasible State of Title Certificate, which indicates ownership or title.");
-
-                entity.Property(e => e.RejectReasonCode).HasComment("The reject reason code identifying why a sale was rejected.");
-
-                entity.Property(e => e.RejectReasonDescription).HasComment("A short description about the reject reason code.");
-
-                entity.Property(e => e.SaleDate).HasComment("The date the LTSA document was received for registration at Land Title and Survey Authority, subject to adjustment by BCA.");
-
-                entity.Property(e => e.SalePrice).HasComment("The price provided on the LTSA document as received for registration at Land Title and Survey Authority, subject to adjustment by BCA.");
-
-                entity.Property(e => e.SaleStatusCode).HasComment("The code applied to the sale record by BCA property assessment staff to identify eligibility for inclusion into overall market analysis.");
-
-                entity.Property(e => e.SaleStatusDescription).HasComment("A short description about the sale status code.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCAFSA_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioSchoolValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for school purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the jurisdiction class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The jurisdiction class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the jurisdiction sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The jurisdiction sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCFSCV_FK");
-            });
-
-            modelBuilder.Entity<BcaFolioValuation>(entity =>
-            {
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ImprovementValue).HasComment("The improvement(s) value.");
-
-                entity.Property(e => e.LandValue).HasComment("The land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the property class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The code class description.");
-
-                entity.Property(e => e.TaxExemptCode).HasComment("The tax exemption code.");
-
-                entity.Property(e => e.TaxExemptDescription).HasComment("The tax exemption code description.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCAVAL_FK");
-            });
-
-            modelBuilder.Entity<BcaGeneralService>(entity =>
-            {
-                entity.HasComment("The General Services minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCGSVC_FK");
-            });
-
-            modelBuilder.Entity<BcaImprovementDistrict>(entity =>
-            {
-                entity.HasComment("The Improvement Districts minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCIMPD_FK");
-            });
-
-            modelBuilder.Entity<BcaIslandsTrust>(entity =>
-            {
-                entity.HasComment("The Islands Trusts minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCISLT_FK");
-            });
-
-            modelBuilder.Entity<BcaJurisdiction>(entity =>
-            {
-                entity.HasKey(e => e.JurisdictionCode)
-                    .HasName("BCAJUR_PK");
-
-                entity.Property(e => e.JurisdictionCode).HasComment("The BCA code that identifies the jurisdiction.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("The short name/description of the jurisdiction.");
-
-                entity.HasOne(d => d.AreaCodeNavigation)
-                    .WithMany(p => p.BcaJurisdictions)
-                    .HasForeignKey(d => d.AreaCode)
-                    .HasConstraintName("PIM_BCASAR_PIM_BCAJUR_FK");
-            });
-
-            modelBuilder.Entity<BcaJurisdictionAmendment>(entity =>
-            {
-                entity.Property(e => e.AmendmentReasonCode).HasComment("A code indicating the amendment type.");
-
-                entity.Property(e => e.AmendmentReasonDescription).HasComment("A short description of the amendment reason.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FolioCount).HasComment("The folio count for the amendment type.");
-
-                entity.HasOne(d => d.JurisdictionCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.JurisdictionCode)
-                    .HasConstraintName("PIM_BCAJUR_PIM_BCJAMD_FK");
-            });
-
-            modelBuilder.Entity<BcaJurisdictionBctransitValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for BC Transit purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the jurisdiction class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The jurisdiction class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the jurisdiction sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The jurisdiction sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.JurisdictionCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.JurisdictionCode)
-                    .HasConstraintName("PIM_BCAJUR_PIM_BCJTRV_FK");
-            });
-
-            modelBuilder.Entity<BcaJurisdictionDelete>(entity =>
-            {
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DeleteReasonCode)
-                    .HasDefaultValueSql("('UNKNOWN')")
-                    .HasComment("A code indicating the delete reason.");
-
-                entity.Property(e => e.DeleteReasonDescription).HasComment("A short description of the delete reason.");
-
-                entity.Property(e => e.FolioCount).HasComment("The folio count for the delete reason.");
-
-                entity.HasOne(d => d.JurisdictionCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.JurisdictionCode)
-                    .HasConstraintName("PIM_BCAJUR_PIM_BCJDEL_FK");
-            });
-
-            modelBuilder.Entity<BcaJurisdictionGeneralValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for general purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the jurisdiction class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The jurisdiction class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the jurisdiction sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The jurisdiction sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.JurisdictionCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.JurisdictionCode)
-                    .HasConstraintName("PIM_BCAJUR_PIM_BCJGNV_FK");
-            });
-
-            modelBuilder.Entity<BcaJurisdictionSchoolValue>(entity =>
-            {
-                entity.HasComment("Values summarized by property class and sub-class for school purposes.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GrossImprovementValue).HasComment("The gross improvement value.");
-
-                entity.Property(e => e.GrossLandValue).HasComment("The gross land value.");
-
-                entity.Property(e => e.NetImprovementValue).HasComment("The net improvement value.");
-
-                entity.Property(e => e.NetLandValue).HasComment("The net land value.");
-
-                entity.Property(e => e.PropertyClassCode).HasComment("A code indicating the jurisdiction class.");
-
-                entity.Property(e => e.PropertyClassDescription).HasComment("The jurisdiction class description.");
-
-                entity.Property(e => e.PropertySubclassCode).HasComment("A code indicating the jurisdiction sub-class.");
-
-                entity.Property(e => e.PropertySubclassDescription).HasComment("The jurisdiction sub-class description.");
-
-                entity.Property(e => e.TaxExemptImprovementValue).HasComment("The tax exempt improvement value.");
-
-                entity.Property(e => e.TaxExemptLandValue).HasComment("The tax exempt land value.");
-
-                entity.HasOne(d => d.JurisdictionCodeNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.JurisdictionCode)
-                    .HasConstraintName("PIM_BCAJUR_PIM_BCJSCV_FK");
-            });
-
-            modelBuilder.Entity<BcaLocalArea>(entity =>
-            {
-                entity.HasComment("The Local Areas minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCLCLA_FK");
-            });
-
-            modelBuilder.Entity<BcaMinorTaxing>(entity =>
-            {
-                entity.HasKey(e => e.MinorTaxingId)
-                    .HasName("BCMNTX_PK");
-
-                entity.Property(e => e.MinorTaxingId).HasDefaultValueSql("(NEXT VALUE FOR [BCA_MINOR_TAXING_ID_SEQ])");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany(p => p.BcaMinorTaxings)
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCMNTX_FK");
-            });
-
-            modelBuilder.Entity<BcaOwner>(entity =>
-            {
-                entity.HasKey(e => e.OwnerId)
-                    .HasName("BCAOWN_PK");
-
-                entity.Property(e => e.OwnerId).HasDefaultValueSql("(NEXT VALUE FOR [BCA_OWNER_ID_SEQ])");
-
-                entity.Property(e => e.CompanyOrLastName).HasComment("The company name or last name of an owner.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.EquityType).HasComment("Identifies the type of relationship an owner/lessee/occupier has to the folio.");
-
-                entity.Property(e => e.EquityTypeDescription).HasComment("The short name/description of the equity type.");
-
-                entity.Property(e => e.FirstName).HasComment("The first name of an owner.");
-
-                entity.Property(e => e.MiddleInitial).HasComment("The middle initial of an owner.");
-
-                entity.Property(e => e.MiddleName).HasComment("The middle name of an owner.");
-
-                entity.Property(e => e.OwnerSequenceId).HasComment("Identifies the sequence owners should be listed within an ownership group.");
-
-                entity.HasOne(d => d.OwnershipGroup)
-                    .WithMany(p => p.BcaOwners)
-                    .HasForeignKey(d => d.OwnershipGroupId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_BCAOWG_PIM_BCAOWN_FK");
-            });
-
-            modelBuilder.Entity<BcaOwnershipGroup>(entity =>
-            {
-                entity.HasKey(e => e.OwnershipGroupId)
-                    .HasName("BCAOWG_PK");
-
-                entity.HasComment("Represents a group of property owners with details in common.");
-
-                entity.Property(e => e.OwnershipGroupId).HasComment("Identifies the group of property owners.");
-
-                entity.Property(e => e.AssessmentNoticeReturned)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates whether the Assessment Notice for the current roll year was returned");
-
-                entity.Property(e => e.AssessmentNoticeSuppressed)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicates whether BCA has not sent out an Assessment Notice to this owner based");
-
-                entity.Property(e => e.ChangeDate).HasComment("The date of the most recent change to the ownership information.");
-
-                entity.Property(e => e.ChangeSource).HasComment("Identifies the source of the most recent change to the ownership information.");
-
-                entity.Property(e => e.ChangeSourceDescription).HasComment("The short name/description of the ChangeSource.");
-
-                entity.Property(e => e.ChangeType).HasComment("A code identifying the type of the most recent change to the ownership information.");
-
-                entity.Property(e => e.ChangeTypeDescription).HasComment("The short name/description of the ChangeType.");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FormattedMailingAddrLine1).HasComment("Formatted address line for mailing purposes: Line 1 consists of C/O label and value.");
-
-                entity.Property(e => e.FormattedMailingAddrLine2).HasComment("Formatted address line for mailing purposes: Line 2 consists of Attention label and value.");
-
-                entity.Property(e => e.FormattedMailingAddrLine3).HasComment("Formatted address line for mailing purposes: Line 3 consists of value of freeform address field.");
-
-                entity.Property(e => e.FormattedMailingAddrLine4).HasComment("Formatted address line for mailing purposes: Line 4 consists of Unit and Floor Number label and value if there is not enough room on Line 5.");
-
-                entity.Property(e => e.FormattedMailingAddrLine5).HasComment("Formatted address line for mailing purposes: Line 5 consists of street number, name, type and directional data.");
-
-                entity.Property(e => e.FormattedMailingAddrLine6).HasComment("Formatted address line for mailing purposes: Line 6 consists of Site and Compartment label and values");
-
-                entity.Property(e => e.MailingAddrAttention).HasComment("Attention, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrBulkMailCode).HasComment("Identifies when five or more properties are linked to a name record or when five or more name records with a single mailing address are linked to a folio.");
-
-                entity.Property(e => e.MailingAddrCareOf).HasComment("Care Of, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrCity).HasComment("City, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrCompartment).HasComment("Compartment, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrCountry).HasComment("Country, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrDeliveryInstallationType).HasComment("Delivery installation type, as required for mail to be sent to the owners mailing address.  E.g. Station, Post Office, Letter Carrier Depot, etc.");
-
-                entity.Property(e => e.MailingAddrFloor).HasComment("Floor, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrFreeForm).HasComment("Additional mailing address information not fitting in any of the predefined fields, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrModeOfDelivery).HasComment("Mode of Delivery, as required for mail to be sent to the owners mailing address.  e.g. Rural Route, Post Office Box, General Delivery, etc.");
-
-                entity.Property(e => e.MailingAddrModeOfDeliveryValue).HasComment("Mode of delivery value, as required for mail to be sent to the owners mailing address.  e.g. RR 876, PO Box 19, etc.");
-
-                entity.Property(e => e.MailingAddrPostalZip).HasComment("Postal or zip code, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrProvinceState).HasComment("Province or state, as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrSite).HasComment("Site value, as required for mail to be sent to the owners mailing address.  e.g. Site 10.");
-
-                entity.Property(e => e.MailingAddrStreetDirectionPrefix).HasComment("Further refinement of the street name to facilitate location of building (pre-directional), as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrStreetDirectionSuffix).HasComment("Further refinement of the street name to facilitate location of building (post-directional), as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrStreetName).HasComment("Road name assigned by a local government (municipality), as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrStreetNumber).HasComment("Street number assigned by a local government (municipality), as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrStreetType).HasComment("Street type assigned by a local government (municipality), as required for mail to be sent to the owners mailing address.");
-
-                entity.Property(e => e.MailingAddrUnitNumber).HasComment("Apartment or Suite or Unit Number, as required for mail to be sent to the owners mailing address.");
-
-                entity.HasOne(d => d.RollNumberNavigation)
-                    .WithMany(p => p.BcaOwnershipGroups)
-                    .HasForeignKey(d => d.RollNumber)
-                    .HasConstraintName("PIM_BCAFOR_PIM_BCAOWG_FK");
-            });
-
-            modelBuilder.Entity<BcaServiceArea>(entity =>
-            {
-                entity.HasComment("The Service Areas minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCSVCA_FK");
-            });
-
-            modelBuilder.Entity<BcaSpecifiedMunicipal>(entity =>
-            {
-                entity.HasComment("The Specified Municipal minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCSPMU_FK");
-            });
-
-            modelBuilder.Entity<BcaSpecifiedRegional>(entity =>
-            {
-                entity.HasComment("The Specified Regional minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.MinorTaxingCode).HasComment("A code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingCodeShort).HasComment("A one-character code identifying the minor taxing jurisdiction (MTXJ).");
-
-                entity.Property(e => e.MinorTaxingDescription).HasComment("The full name/description of the minor taxing jurisdiction (MTXJ).");
-
-                entity.HasOne(d => d.MinorTaxing)
-                    .WithMany()
-                    .HasForeignKey(d => d.MinorTaxingId)
-                    .HasConstraintName("PIM_BCMNTX_PIM_BCSPRG_FK");
-            });
 
             modelBuilder.Entity<PimsAccessRequest>(entity =>
             {
@@ -2938,7 +1409,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ProvinceState)
                     .WithMany(p => p.PimsAddresses)
                     .HasForeignKey(d => d.ProvinceStateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PROVNC_PIM_ADDRSS_FK");
 
                 entity.HasOne(d => d.RegionCodeNavigation)
@@ -3358,9 +1828,13 @@ namespace Pims.Dal
                 entity.HasKey(e => e.CountryId)
                     .HasName("CNTRY_PK");
 
+                entity.HasComment("Table containing the countries defined to the system.");
+
                 entity.Property(e => e.CountryId).ValueGeneratedNever();
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CountryCode).HasComment("Abbreviated country code.");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -3369,6 +1843,10 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Country name/description.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Defines the display order of the codes.");
             });
 
             modelBuilder.Entity<PimsDataSourceType>(entity =>
@@ -3847,6 +2325,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.OtherLeasePurposeType).HasComment("Description of a non-standard lease purpose type");
 
+                entity.Property(e => e.ProjectId).HasComment("Project associated with this lease.");
+
                 entity.Property(e => e.PsFileNo).HasComment("Sourced from t_fileSubOverrideData.PSFile_No");
 
                 entity.Property(e => e.RegionCode).HasComment("MoTI region associated with the lease");
@@ -3905,6 +2385,11 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSSTYP_PIM_LEASE_FK");
 
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.PimsLeases)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("PIM_PROJCT_PIM_LEASE_FK");
+
                 entity.HasOne(d => d.RegionCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.RegionCode)
@@ -3945,7 +2430,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ActivityInstance)
                     .WithMany(p => p.PimsLeaseActivityInstances)
                     .HasForeignKey(d => d.ActivityInstanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTINS_PIM_LSACIN_FK");
 
                 entity.HasOne(d => d.Lease)
@@ -5250,12 +3734,124 @@ namespace Pims.Dal
                     .HasConstraintName("PIM_WRKACT_PIM_PROJCT_FK");
             });
 
+            modelBuilder.Entity<PimsProjectDocument>(entity =>
+            {
+                entity.HasKey(e => e.ProjectDocumentId)
+                    .HasName("PRJDOC_PK");
+
+                entity.Property(e => e.ProjectDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_DOCUMENT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the relationship has been disabled.");
+
+                entity.HasOne(d => d.Document)
+                    .WithMany(p => p.PimsProjectDocuments)
+                    .HasForeignKey(d => d.DocumentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCMNT_PIM_PRJDOC_FK");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.PimsProjectDocuments)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PROJCT_PIM_PRJDOC_FK");
+            });
+
+            modelBuilder.Entity<PimsProjectDocumentHist>(entity =>
+            {
+                entity.HasKey(e => e.ProjectDocumentHistId)
+                    .HasName("PIMS_PRJDOC_H_PK");
+
+                entity.Property(e => e.ProjectDocumentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_DOCUMENT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsProjectHist>(entity =>
             {
                 entity.HasKey(e => e.ProjectHistId)
                     .HasName("PIMS_PROJCT_H_PK");
 
                 entity.Property(e => e.ProjectHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsProjectNote>(entity =>
+            {
+                entity.HasKey(e => e.ProjectNoteId)
+                    .HasName("PRJNOT_PK");
+
+                entity.Property(e => e.ProjectNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_NOTE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the relationship has been disabled.");
+
+                entity.HasOne(d => d.Note)
+                    .WithMany(p => p.PimsProjectNotes)
+                    .HasForeignKey(d => d.NoteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_NOTE_PIM_PRJNOT_FK");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.PimsProjectNotes)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PROJCT_PIM_PRJNOT_FK");
+            });
+
+            modelBuilder.Entity<PimsProjectNoteHist>(entity =>
+            {
+                entity.HasKey(e => e.ProjectNoteHistId)
+                    .HasName("PIMS_PRJNOT_H_PK");
+
+                entity.Property(e => e.ProjectNoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_NOTE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -6408,6 +5004,8 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProvinceStateId)
                     .HasName("PROVNC_PK");
 
+                entity.HasComment("Table containing the provinces and states that are defined for the system.");
+
                 entity.Property(e => e.ProvinceStateId).ValueGeneratedNever();
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
@@ -6420,7 +5018,15 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.Description).HasComment("Full name/description of the provbince/state.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Defines the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if this code is disabled or enabled.");
+
+                entity.Property(e => e.ProvinceStateCode).HasComment("Abbreviated province.state code.");
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.PimsProvinceStates)
@@ -7444,6 +6050,169 @@ namespace Pims.Dal
                     .HasComment("Indicates if the code value is inactive.");
             });
 
+            modelBuilder.Entity<PimsTake>(entity =>
+            {
+                entity.HasKey(e => e.TakeId)
+                    .HasName("TAKE_PK");
+
+                entity.HasComment("Table defining the take related to a specific acquisition file and property.");
+
+                entity.Property(e => e.TakeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TAKE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the property take.");
+
+                entity.Property(e => e.IsSurplusSeverance)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Is there Surplus/Severance?");
+
+                entity.Property(e => e.LicenseToConstructArea).HasComment("Area of the license to construct.");
+
+                entity.Property(e => e.LtcEndDt).HasComment("End date of the license to construct.");
+
+                entity.Property(e => e.NewRightOfWayArea).HasComment("Area of the new right-of-way.");
+
+                entity.Property(e => e.Section16Area).HasComment("Area of the Section 16 activity.");
+
+                entity.Property(e => e.Section16EndDt).HasComment("End date of the Section 16 activity.");
+
+                entity.Property(e => e.SrwEndDt).HasComment("End date of the statutory right-of-way.");
+
+                entity.Property(e => e.StatutoryRightOfWayArea).HasComment("Area of the statutory right-of-way.");
+
+                entity.Property(e => e.SurplusSeveranceArea).HasComment("Surplus/severance area.");
+
+                entity.Property(e => e.TakeSiteContamTypeCode).HasDefaultValueSql("('UNK')");
+
+                entity.Property(e => e.TakeStatusTypeCode).HasDefaultValueSql("('INPROGRESS')");
+
+                entity.HasOne(d => d.PropertyAcquisitionFile)
+                    .WithMany(p => p.PimsTakes)
+                    .HasForeignKey(d => d.PropertyAcquisitionFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRACQF_PIM_TAKE_FK");
+
+                entity.HasOne(d => d.TakeSiteContamTypeCodeNavigation)
+                    .WithMany(p => p.PimsTakes)
+                    .HasForeignKey(d => d.TakeSiteContamTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_TKCONT_PIM_TAKE_FK");
+
+                entity.HasOne(d => d.TakeStatusTypeCodeNavigation)
+                    .WithMany(p => p.PimsTakes)
+                    .HasForeignKey(d => d.TakeStatusTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_TKSTST_PIM_TAKE_FK");
+
+                entity.HasOne(d => d.TakeTypeCodeNavigation)
+                    .WithMany(p => p.PimsTakes)
+                    .HasForeignKey(d => d.TakeTypeCode)
+                    .HasConstraintName("PIM_TKTYPE_PIM_TAKE_FK");
+            });
+
+            modelBuilder.Entity<PimsTakeHist>(entity =>
+            {
+                entity.HasKey(e => e.TakeHistId)
+                    .HasName("PIMS_TAKE_H_PK");
+
+                entity.Property(e => e.TakeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TAKE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsTakeSiteContamType>(entity =>
+            {
+                entity.HasKey(e => e.TakeSiteContamTypeCode)
+                    .HasName("TKCONT_PK");
+
+                entity.HasComment("Tables that contains the codes and associated descriptions of the site contamination types.");
+
+                entity.Property(e => e.TakeSiteContamTypeCode).HasComment("Codified version of the site contamination type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the site contamination type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            });
+
+            modelBuilder.Entity<PimsTakeStatusType>(entity =>
+            {
+                entity.HasKey(e => e.TakeStatusTypeCode)
+                    .HasName("TKSTST_PK");
+
+                entity.HasComment("Tables that contains the codes and associated descriptions of the property take status types.");
+
+                entity.Property(e => e.TakeStatusTypeCode).HasComment("Codified version of the take status type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the take status type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            });
+
+            modelBuilder.Entity<PimsTakeType>(entity =>
+            {
+                entity.HasKey(e => e.TakeTypeCode)
+                    .HasName("TKTYPE_PK");
+
+                entity.HasComment("Tables that contains the codes and associated descriptions of the property take types.");
+
+                entity.Property(e => e.TakeTypeCode).HasComment("Codified version of the take type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the take type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            });
+
             modelBuilder.Entity<PimsTenant>(entity =>
             {
                 entity.HasKey(e => e.TenantId)
@@ -7936,10 +6705,6 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACTIVITY_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_DOCUMENT_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -7961,10 +6726,6 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_NOTE_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_ACTIVITY_MODEL_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8164,10 +6925,6 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_LEASE_PAYMENT_FORECAST_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_LEASE_PAYMENT_FORECAST_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -8177,10 +6934,6 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_LEASE_PAYMENT_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_LEASE_PAYMENT_PERIOD_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8276,6 +7029,14 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_PROJECT_DOCUMENT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROJECT_DOCUMENT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_PROJECT_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -8300,19 +7061,7 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_PROJECT_PROPERTY_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_PROJECT_PROPERTY_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_PROJECT_STATUS_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_PROJECT_WORKFLOW_MODEL_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8341,10 +7090,6 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_PROPERTY_ACQUISITION_FILE_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8561,7 +7306,11 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_TASK_H_ID_SEQ")
+            modelBuilder.HasSequence("PIMS_TAKE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_TAKE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8569,15 +7318,7 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_H_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_TASK_TEMPLATE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -8622,10 +7363,6 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_WORK_ACTIVITY_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_WORKFLOW_MODEL_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

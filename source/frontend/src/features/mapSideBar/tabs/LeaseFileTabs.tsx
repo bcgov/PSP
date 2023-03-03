@@ -24,6 +24,7 @@ export enum LeaseFileTabNames {
   payments = 'payments',
   surplusDeclaration = 'surplusDeclaration',
   documents = 'documents',
+  notes = 'notes',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.

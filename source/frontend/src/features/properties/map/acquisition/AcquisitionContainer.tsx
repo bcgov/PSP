@@ -1,28 +1,19 @@
-import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
-import { GenericModal } from 'components/common/GenericModal';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
-import FileLayout from 'features/mapSideBar/layout/FileLayout';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { getFilePropertyName } from 'utils/mapPropertyUtils';
+import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 
 import { SideBarContext } from '../context/sidebarContext';
-import SidebarFooter from '../shared/SidebarFooter';
-import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
-import { AcquisitionHeader } from './common/AcquisitionHeader';
-import AcquisitionMenu from './common/AcquisitionMenu';
+import { IAcquisitionViewProps } from './AcquisitionView';
 import { EditFormNames } from './EditFormNames';
 import { useAcquisitionProvider } from './hooks/useAcquisitionProvider';
-import ViewSelector from './ViewSelector';
 
 export interface IAcquisitionContainerProps {
   acquisitionFileId: number;
   onClose: () => void;
+  View: React.FunctionComponent<React.PropsWithChildren<IAcquisitionViewProps>>;
 }
 
 // Interface for our internal state
@@ -31,6 +22,7 @@ export interface AcquisitionContainerState {
   activeEditForm?: EditFormNames;
   selectedMenuIndex: number;
   showConfirmModal: boolean;
+  acquisitionFile: Api_AcquisitionFile | undefined;
 }
 
 const initialState: AcquisitionContainerState = {
@@ -38,16 +30,16 @@ const initialState: AcquisitionContainerState = {
   activeEditForm: undefined,
   selectedMenuIndex: 0,
   showConfirmModal: false,
+  acquisitionFile: undefined,
 };
 
 export const AcquisitionContainer: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionContainerProps>
 > = props => {
   // Load state from props and side-bar context
-  const { acquisitionFileId, onClose } = props;
+  const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading } = useContext(SideBarContext);
   const { search } = useMapSearch();
-  const { updateAcquisitionFile } = useAcquisitionProvider();
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
     updateAcquisitionProperties,
@@ -56,10 +48,6 @@ export const AcquisitionContainer: React.FunctionComponent<
       loading: loadingAcquisitionFileProperties,
     },
   } = useAcquisitionProvider();
-
-  const [acquisitionFile, setAcquisitionFile] = useState<Api_AcquisitionFile | undefined>(
-    undefined,
-  );
 
   const formikRef = useRef<FormikProps<any>>(null);
 
@@ -74,16 +62,17 @@ export const AcquisitionContainer: React.FunctionComponent<
     }),
     initialState,
   );
+  const acquisitionFile = containerState.acquisitionFile;
 
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
     var retrieved = await retrieveAcquisitionFile(acquisitionFileId);
     var acquisitionProperties = await retrieveAcquisitionFileProperties(acquisitionFileId);
-    retrieved?.fileProperties?.forEach(async fp => {
-      fp.property = acquisitionProperties?.find(ap => fp.id === ap.id)?.property;
-    });
+    if (retrieved) {
+      retrieved.fileProperties = acquisitionProperties;
+    }
 
-    setAcquisitionFile(retrieved);
+    setContainerState({ acquisitionFile: retrieved });
     setFile({ ...retrieved, fileType: FileTypes.Acquisition });
   }, [acquisitionFileId, retrieveAcquisitionFileProperties, retrieveAcquisitionFile, setFile]);
 
@@ -154,122 +143,40 @@ export const AcquisitionContainer: React.FunctionComponent<
     setContainerState({ activeEditForm: undefined, isEditing: false });
   };
 
+  const canRemove = async (propertyId: number) => {
+    const fileProperties = await retrieveAcquisitionFileProperties(acquisitionFileId);
+    const fp = fileProperties?.find(fp => fp.property?.id === propertyId);
+    return (
+      fp?.activityInstanceProperties?.length === undefined ||
+      fp?.activityInstanceProperties?.length === 0
+    );
+  };
+
   // UI components
-  const formTitle = containerState.isEditing ? 'Update Acquisition File' : 'Acquisition File';
 
-  const menuItems = acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
-  menuItems.unshift('File Summary');
-
-  if (loadingAcquisitionFile || loadingAcquisitionFileProperties) {
+  if (
+    loadingAcquisitionFile ||
+    (loadingAcquisitionFileProperties &&
+      containerState.activeEditForm !== EditFormNames.propertySelector)
+  ) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
-  if (containerState.activeEditForm === EditFormNames.propertySelector && acquisitionFile) {
-    return (
-      <UpdateProperties
-        file={acquisitionFile}
-        setIsShowingPropertySelector={() =>
-          setContainerState({ activeEditForm: undefined, isEditing: false })
-        }
-        onSuccess={onSuccess}
-        updateFileProperties={updateAcquisitionProperties.execute}
-      />
-    );
-  }
-
-  if (containerState.activeEditForm === EditFormNames.propertySelector && acquisitionFile) {
-    return (
-      <UpdateProperties
-        file={acquisitionFile}
-        setIsShowingPropertySelector={() =>
-          setContainerState({ activeEditForm: EditFormNames.acquisitionSummary })
-        }
-        onSuccess={onSuccess}
-        updateFileProperties={updateAcquisitionFile.execute}
-      />
-    );
-  }
-
   return (
-    <MapSideBarLayout
-      showCloseButton
+    <View
+      containerState={containerState}
+      setContainerState={setContainerState}
       onClose={close}
-      title={formTitle}
-      icon={
-        <RealEstateAgent
-          title="Acquisition file Icon"
-          width="2.6rem"
-          height="2.6rem"
-          fill="currentColor"
-          className="mr-2"
-        />
-      }
-      header={<AcquisitionHeader acquisitionFile={acquisitionFile} />}
-      footer={
-        containerState.isEditing && (
-          <SidebarFooter
-            isOkDisabled={formikRef?.current?.isSubmitting}
-            onSave={handleSaveClick}
-            onCancel={handleCancelClick}
-          />
-        )
-      }
-    >
-      <FileLayout
-        leftComponent={
-          <>
-            <AcquisitionMenu
-              items={menuItems}
-              selectedIndex={containerState.selectedMenuIndex}
-              onChange={onMenuChange}
-              setContainerState={setContainerState}
-            />
-          </>
-        }
-        bodyComponent={
-          <StyledFormWrapper>
-            <ViewSelector
-              ref={formikRef}
-              acquisitionFile={acquisitionFile}
-              isEditing={containerState.isEditing}
-              activeEditForm={containerState.activeEditForm}
-              selectedMenuIndex={containerState.selectedMenuIndex}
-              setContainerState={setContainerState}
-              onSuccess={onSuccess}
-            />
-
-            <GenericModal
-              display={containerState.showConfirmModal}
-              title={'Confirm changes'}
-              message={
-                <>
-                  <div>If you cancel now, this acquisition file will not be saved.</div>
-                  <br />
-                  <strong>Are you sure you want to Cancel?</strong>
-                </>
-              }
-              handleOk={handleCancelConfirm}
-              handleCancel={() => setContainerState({ showConfirmModal: false })}
-              okButtonText="Ok"
-              cancelButtonText="Resume editing"
-              show
-            />
-          </StyledFormWrapper>
-        }
-      ></FileLayout>
-    </MapSideBarLayout>
+      onCancel={handleCancelClick}
+      onSave={handleSaveClick}
+      onMenuChange={onMenuChange}
+      onCancelConfirm={handleCancelConfirm}
+      onUpdateProperties={updateAcquisitionProperties.execute}
+      onSuccess={onSuccess}
+      canRemove={canRemove}
+      formikRef={formikRef}
+    ></View>
   );
 };
 
 export default AcquisitionContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;
