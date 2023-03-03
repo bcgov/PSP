@@ -62,7 +62,7 @@ namespace Pims.Api.Test.Routes
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasGet("{type}/owner/{entityId:long}");
+            endpoint.HasGet("{type}/{entityId:long}");
             endpoint.HasPermissions(Permissions.NoteView);
         }
 
@@ -70,12 +70,12 @@ namespace Pims.Api.Test.Routes
         public void GetNoteById_Route()
         {
             // Arrange
-            var endpoint = typeof(NoteController).FindMethod(nameof(NoteController.GetNoteById), typeof(NoteType), typeof(long));
+            var endpoint = typeof(NoteController).FindMethod(nameof(NoteController.GetNoteById), typeof(long));
 
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasGet("{type}/{noteId:long}");
+            endpoint.HasGet("{noteId:long}");
             endpoint.HasPermissions(Permissions.NoteView);
         }
 
@@ -83,12 +83,12 @@ namespace Pims.Api.Test.Routes
         public void UpdateNote_Route()
         {
             // Arrange
-            var endpoint = typeof(NoteController).FindMethod(nameof(NoteController.UpdateNote), typeof(NoteType), typeof(long), typeof(NoteModel));
+            var endpoint = typeof(NoteController).FindMethod(nameof(NoteController.UpdateNote), typeof(long), typeof(NoteModel));
 
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasPut("{type}/{noteId:long}");
+            endpoint.HasPut("{noteId:long}");
             endpoint.HasPermissions(Permissions.NoteEdit);
         }
 
@@ -101,7 +101,7 @@ namespace Pims.Api.Test.Routes
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasDelete("{type}/{noteId:long}");
+            endpoint.HasDelete("{noteId:long}/{type}");
             endpoint.HasPermissions(Permissions.NoteDelete);
         }
         #endregion

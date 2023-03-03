@@ -261,9 +261,7 @@ exports[`NoteContainer component renders as expected 1`] = `
                 class="col"
               >
                 <span>
-                  <strong>
-                    Jul 20, 2022
-                  </strong>
+                  <strong />
                    by
                    
                   <span
@@ -274,7 +272,7 @@ exports[`NoteContainer component renders as expected 1`] = `
                     <span
                       class="c2"
                     >
-                      admin
+                      USER
                     </span>
                   </span>
                 </span>
@@ -292,9 +290,7 @@ exports[`NoteContainer component renders as expected 1`] = `
                 class="col"
               >
                 <span>
-                  <strong>
-                    Jul 20, 2022
-                  </strong>
+                  <strong />
                    by
                    
                   <span
@@ -305,7 +301,7 @@ exports[`NoteContainer component renders as expected 1`] = `
                     <span
                       class="c2"
                     >
-                      admin
+                      USER
                     </span>
                   </span>
                 </span>
@@ -349,9 +345,7 @@ exports[`NoteContainer component renders as expected 1`] = `
                   readonly=""
                   rows="15"
                   title="Note"
-                >
-                  Test Note
-                </textarea>
+                />
               </div>
             </div>
           </div>

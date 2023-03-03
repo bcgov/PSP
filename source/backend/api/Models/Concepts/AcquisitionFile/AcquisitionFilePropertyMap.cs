@@ -16,6 +16,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.File, src => src.AcquisitionFile)
                 .Map(dest => dest.FileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.ActivityInstanceProperties, src => src.PimsActInstPropAcqFiles)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<AcquisitionFilePropertyModel, Entity.PimsPropertyAcquisitionFile>()

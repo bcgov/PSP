@@ -1,9 +1,7 @@
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { IInsurance } from 'interfaces';
-import React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ILookupCode } from 'store/slices/lookupCodes';
-import styled from 'styled-components';
 
 import Policy from './Policy';
 import { InsuranceTypeList } from './styles';
@@ -29,7 +27,7 @@ const InsuranceDetailsView: React.FunctionComponent<
     [insuranceList, insuranceTypes],
   );
   return !!sortedInsuranceList.length ? (
-    <StyledDiv data-testid="insurance-section">
+    <div data-testid="insurance-section">
       <Section header="Required insurance">
         <InsuranceTypeList>
           {sortedInsuranceList.map((insurance: IInsurance, index: number) => (
@@ -46,17 +44,14 @@ const InsuranceDetailsView: React.FunctionComponent<
       {sortedInsuranceList.map((insurance: IInsurance, index: number) => (
         <div key={index + insurance.id} data-testid="insurance-section">
           <Policy insurance={insurance} />
-          <br />
         </div>
       ))}
-    </StyledDiv>
+    </div>
   ) : (
-    <p>There are no insurance policies indicated with this lease/license</p>
+    <Section>
+      <p>There are no insurance policies indicated with this lease/license</p>
+    </Section>
   );
 };
 
 export default InsuranceDetailsView;
-
-const StyledDiv = styled.div`
-  margin-top: 4rem;
-`;

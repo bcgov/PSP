@@ -71,6 +71,7 @@ export const useAcquisitionProvider = () => {
     requestName: 'UpdateAcquisitionFileProperties',
     onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
     onError: useAxiosErrorHandler('Failed to update Acquisition File Properties'),
+    throwError: true,
   });
 
   const getAcquisitionPropertiesApi = useApiRequestWrapper<

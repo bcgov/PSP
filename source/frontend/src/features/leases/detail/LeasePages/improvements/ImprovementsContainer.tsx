@@ -16,6 +16,16 @@ export const ImprovementsContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps>
 > = ({ isEditing, formikRef, onEdit }) => {
   const { lease } = useContext(LeaseStateContext);
+
+  if (!lease?.improvements?.length && !isEditing) {
+    return (
+      <b className="mx-4">
+        If this lease/license includes any commercial, residential or other improvements on the
+        property, switch to edit mode to add details to this record.
+      </b>
+    );
+  }
+
   return !!isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
       <AddImprovementsContainer

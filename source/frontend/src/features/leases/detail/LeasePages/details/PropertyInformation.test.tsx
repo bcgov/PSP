@@ -101,7 +101,7 @@ describe('PropertyInformation component', () => {
         startDate: '2020-01-01',
       },
     });
-    expect(component.getByDisplayValue('123')).toBeVisible();
+    expect(component.getByText('123.00')).toBeVisible();
     expect(component.queryByDisplayValue('undefined')).toBeNull();
   });
 });

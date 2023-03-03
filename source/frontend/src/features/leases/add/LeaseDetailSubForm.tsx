@@ -1,4 +1,4 @@
-import { FastDatePicker, Select } from 'components/common/form';
+import { FastDatePicker, ProjectSelector, Select } from 'components/common/form';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -21,6 +21,9 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   const paymentReceivableTypes = getOptionsByType(API.LEASE_PAYMENT_RECEIVABLE_TYPES);
   return (
     <Section>
+      <SectionField label="Ministry project" labelWidth="2">
+        <ProjectSelector field="project" />
+      </SectionField>
       <SectionField label="Status" labelWidth="2" contentWidth="4" required>
         <Select
           placeholder="Select Status"

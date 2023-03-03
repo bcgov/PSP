@@ -12,6 +12,7 @@ export interface ProjectTabView {
 
 export enum ProjectTabNames {
   projectDetails = 'projectDetails',
+  notes = 'notes',
 }
 
 /**

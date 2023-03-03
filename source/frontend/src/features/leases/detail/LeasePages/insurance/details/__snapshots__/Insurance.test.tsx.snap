@@ -6,57 +6,52 @@ exports[`Lease Insurance renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2 {
+  .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c0 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
   text-align: left;
 }
 
-.c5.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
+.c3 {
   font-weight: bold;
 }
 
-.c3 {
+.c2 {
   padding: 1rem;
   font-size: 1.4rem;
 }
 
-.c3 li {
+.c2 li {
   list-style-position: inside;
   padding: 0.5rem 0;
 }
 
-.c3 li::marker {
+.c2 li::marker {
   font-size: 1rem;
 }
 
-.c0 {
-  margin-top: 4rem;
-}
-
 <div
-    class="c0"
     data-testid="insurance-section"
   >
     <div
-      class="c1 form-section"
+      class="c0 form-section"
     >
       <h2
-        class="c2"
+        class="c1"
       >
         <div
           class="no-gutters row"
@@ -75,7 +70,7 @@ exports[`Lease Insurance renders as expected 1`] = `
         class="collapse show"
       >
         <ul
-          class="c3"
+          class="c2"
         >
           <li>
             Home Insurance
@@ -87,10 +82,10 @@ exports[`Lease Insurance renders as expected 1`] = `
       data-testid="insurance-section"
     >
       <div
-        class="c1 form-section"
+        class="c0 form-section"
       >
         <h2
-          class="c2"
+          class="c1"
         >
           <div
             class="no-gutters row"
@@ -115,13 +110,13 @@ exports[`Lease Insurance renders as expected 1`] = `
               class="pr-0 text-left col-3"
             >
               <label
-                class="c4"
+                class="c3"
               >
                 Insurance in place:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c4 text-left col"
             >
               Yes
             </div>
@@ -133,13 +128,13 @@ exports[`Lease Insurance renders as expected 1`] = `
               class="pr-0 text-left col-3"
             >
               <label
-                class="c4"
+                class="c3"
               >
                 Limit:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c4 text-left col"
             >
               $777.00
             </div>
@@ -151,13 +146,13 @@ exports[`Lease Insurance renders as expected 1`] = `
               class="pr-0 text-left col-3"
             >
               <label
-                class="c4"
+                class="c3"
               >
                 Policy expiry date:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c4 text-left col"
             >
               Jan 1, 2022
             </div>
@@ -169,18 +164,17 @@ exports[`Lease Insurance renders as expected 1`] = `
               class="pr-0 text-left col-3"
             >
               <label
-                class="c4"
+                class="c3"
               >
                 Description of Coverage:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c4 text-left col"
             />
           </div>
         </div>
       </div>
-      <br />
     </div>
   </div>
 </DocumentFragment>

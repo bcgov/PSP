@@ -27,7 +27,7 @@ jobs:
 
       - name: Check release version
         run: |
-          export VERSION=$(build/version.sh)
+          export VERSION=$(tools/cicd/build/version.sh)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Prepare git tag

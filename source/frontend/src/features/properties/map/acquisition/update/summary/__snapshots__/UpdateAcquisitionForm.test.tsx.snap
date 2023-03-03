@@ -210,6 +210,53 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c13 {
+  background-color: none;
+}
+
+.c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: end;
+  -ms-flex-pack: end;
+  justify-content: end;
+}
+
+.c12 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+  margin-bottom: 1rem;
+}
+
 .c7 {
   position: relative;
   border-radius: 0.3rem;
@@ -314,6 +361,48 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value=""
                 >
                   Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ACTIVE"
+                  value="ACTIVE"
+                >
+                  Active
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIV"
+                  value="ARCHIV"
+                >
+                  Archived
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CANCEL"
+                  value="CANCEL"
+                >
+                  Cancelled
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CLOSED"
+                  value="CLOSED"
+                >
+                  Closed
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DRAFT"
+                  value="DRAFT"
+                >
+                  Draft
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-HOLD"
+                  value="HOLD"
+                >
+                  Hold
                 </option>
               </select>
             </div>
@@ -441,6 +530,83 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value=""
                 >
                   Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-BCTFA"
+                  value="BCTFA"
+                >
+                  BCTFA
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CAPITAL"
+                  value="CAPITAL"
+                >
+                  Capital Program
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DFAA"
+                  value="DFAA"
+                >
+                  DFAA (Disaster Financial Assistance Arrangement)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EVERGRN"
+                  value="EVERGRN"
+                >
+                  Evergreen
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-FEDERAL"
+                  value="FEDERAL"
+                >
+                  Federal
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MAJORPR"
+                  value="MAJORPR"
+                >
+                  Major Projects
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTIDST"
+                  value="MOTIDST"
+                >
+                  MoTI District
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTIREG"
+                  value="MOTIREG"
+                >
+                  MoTI Region
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-OTHER"
+                  value="OTHER"
+                >
+                  Other
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-REHAB"
+                  value="REHAB"
+                >
+                  Rehab & Maintenance
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-TICORP"
+                  value="TICORP"
+                >
+                  TI Corp
                 </option>
               </select>
             </div>
@@ -702,6 +868,27 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   Select...
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ACTIVE"
+                  value="ACTIVE"
+                >
+                  Active
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIVE"
+                  value="ARCHIVE"
+                >
+                  Archive - Offsite
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PENDING"
+                  value="PENDING"
+                >
+                  Pending Litigation
+                </option>
               </select>
             </div>
           </div>
@@ -734,6 +921,27 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value=""
                 >
                   Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CONSEN"
+                  value="CONSEN"
+                >
+                  Consensual Agreement
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SECTN3"
+                  value="SECTN3"
+                >
+                  Section 3 Agreement
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SECTN6"
+                  value="SECTN6"
+                >
+                  Section 6 Expropriation
                 </option>
               </select>
             </div>
@@ -835,6 +1043,41 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value=""
                 >
                   Select profile...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EXPRAGENT"
+                  value="EXPRAGENT"
+                >
+                  Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NEGOTAGENT"
+                  value="NEGOTAGENT"
+                >
+                  Negotiation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPAGENT"
+                  value="PROPAGENT"
+                >
+                  Property agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPANLYS"
+                  value="PROPANLYS"
+                >
+                  Property analyst
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPCOORD"
+                  value="PROPCOORD"
+                >
+                  Property coordinator
                 </option>
               </select>
             </div>
@@ -988,6 +1231,41 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   Select profile...
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EXPRAGENT"
+                  value="EXPRAGENT"
+                >
+                  Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NEGOTAGENT"
+                  value="NEGOTAGENT"
+                >
+                  Negotiation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPAGENT"
+                  value="PROPAGENT"
+                >
+                  Property agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPANLYS"
+                  value="PROPANLYS"
+                >
+                  Property analyst
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPCOORD"
+                  value="PROPCOORD"
+                >
+                  Property coordinator
+                </option>
               </select>
             </div>
           </div>
@@ -1132,6 +1410,1098 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
         </button>
         <div />
+        <div />
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Owners
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="py-3 row"
+        >
+          <div
+            class="container"
+          >
+            <div
+              class="c11"
+            >
+              <button
+                class="c8 Button c10 btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    data-testid="remove-button"
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      remove
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="text"
+                  >
+                    Remove Owner
+                  </span>
+                </div>
+              </button>
+            </div>
+            <h3
+              class="c12"
+            >
+              Name
+            </h3>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Given names:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].givenName"
+                    name="owners[0].givenName"
+                    title="Sr."
+                    value="Sr."
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Last name/Corporation name:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].lastNameOrCorp1"
+                    name="owners[0].lastNameOrCorp1"
+                    title="john"
+                    value="john"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Other name:
+                  <span
+                    class="ml-2"
+                  >
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-section-field-tooltip"
+                      id="section-field-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].lastNameOrCorp2"
+                    name="owners[0].lastNameOrCorp2"
+                    title="Doe"
+                    value="Doe"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Incorporation number:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].incorporationNumber"
+                    name="owners[0].incorporationNumber"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="c13"
+            >
+              <h3
+                class="c12"
+              >
+                Mailing Address
+              </h3>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-8"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[0].address.streetAddress1"
+                    >
+                      Address (line 1) 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[0].address.streetAddress1"
+                      name="owners[0].address.streetAddress1"
+                      title="456 Souris Street"
+                      value="456 Souris Street"
+                    />
+                  </div>
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[0].address.streetAddress2"
+                    >
+                      Address (line 2) 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[0].address.streetAddress2"
+                      name="owners[0].address.streetAddress2"
+                      title="PO Box 250"
+                      value="PO Box 250"
+                    />
+                  </div>
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[0].address.streetAddress3"
+                    >
+                      Address (line 3) 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[0].address.streetAddress3"
+                      name="owners[0].address.streetAddress3"
+                      title="A Hoot and a holler from the A&W"
+                      value="A Hoot and a holler from the A&W"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="col"
+                  style="padding-left: 0px; padding-bottom: 2rem;"
+                >
+                  <div
+                    class="c14 h-100"
+                  >
+                    <button
+                      class="c8 Button c10 btn btn-link"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          data-testid="remove-button"
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            remove
+                          </title>
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                         
+                        <span
+                          class="text"
+                        >
+                          Remove
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[0].address.countryId"
+                    >
+                      Country 
+                    </label>
+                    <select
+                      class="form-select form-control"
+                      id="input-owners[0].address.countryId"
+                      name="owners[0].address.countryId"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1"
+                        value="1"
+                      >
+                        Canada
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-2"
+                        value="2"
+                      >
+                        United States of America
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-3"
+                        value="3"
+                      >
+                        Mexico
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-4"
+                        value="4"
+                      >
+                        Other
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[0].address.municipality"
+                    >
+                      City 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[0].address.municipality"
+                      name="owners[0].address.municipality"
+                      title="North Podunk"
+                      value="North Podunk"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[0].address.provinceId"
+                    >
+                      Province 
+                    </label>
+                    <select
+                      class="form-select form-control"
+                      id="input-owners[0].address.provinceId"
+                      name="owners[0].address.provinceId"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select province
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1"
+                        value="1"
+                      >
+                        British Columbia
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-2"
+                        value="2"
+                      >
+                        Alberta
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-3"
+                        value="3"
+                      >
+                        Manitoba
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-4"
+                        value="4"
+                      >
+                        Newfoundland
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-5"
+                        value="5"
+                      >
+                        New Brunswick
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-6"
+                        value="6"
+                      >
+                        Nova Scotia
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-7"
+                        value="7"
+                      >
+                        North West Territories
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-8"
+                        value="8"
+                      >
+                        Nunavut
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-9"
+                        value="9"
+                      >
+                        Ontario
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-10"
+                        value="10"
+                      >
+                        Prince Edward Island
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-11"
+                        value="11"
+                      >
+                        Quebec
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-12"
+                        value="12"
+                      >
+                        Saskatchewan
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-13"
+                        value="13"
+                      >
+                        Yukon Territory
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[0].address.postal"
+                    >
+                      Postal Code 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[0].address.postal"
+                      name="owners[0].address.postal"
+                      title="IH8 B0B"
+                      value="IH8 B0B"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="py-3 row"
+        >
+          <div
+            class="container"
+          >
+            <div
+              class="c11"
+            >
+              <button
+                class="c8 Button c10 btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    data-testid="remove-button"
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      remove
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="text"
+                  >
+                    Remove Owner
+                  </span>
+                </div>
+              </button>
+            </div>
+            <h3
+              class="c12"
+            >
+              Name
+            </h3>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Given names:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].givenName"
+                    name="owners[1].givenName"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Last name/Corporation name:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].lastNameOrCorp1"
+                    name="owners[1].lastNameOrCorp1"
+                    title="FORTIS BC"
+                    value="FORTIS BC"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Other name:
+                  <span
+                    class="ml-2"
+                  >
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-section-field-tooltip"
+                      id="section-field-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].lastNameOrCorp2"
+                    name="owners[1].lastNameOrCorp2"
+                    title="LTD"
+                    value="LTD"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Incorporation number:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].incorporationNumber"
+                    name="owners[1].incorporationNumber"
+                    title="9999"
+                    value="9999"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="c13"
+            >
+              <h3
+                class="c12"
+              >
+                Mailing Address
+              </h3>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-8"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[1].address.streetAddress1"
+                    >
+                      Address (line 1) 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[1].address.streetAddress1"
+                      name="owners[1].address.streetAddress1"
+                      title="123 Main Street"
+                      value="123 Main Street"
+                    />
+                  </div>
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[1].address.streetAddress2"
+                    >
+                      Address (line 2) 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[1].address.streetAddress2"
+                      name="owners[1].address.streetAddress2"
+                      title="PO Box 123"
+                      value="PO Box 123"
+                    />
+                  </div>
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[1].address.streetAddress3"
+                    >
+                      Address (line 3) 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[1].address.streetAddress3"
+                      name="owners[1].address.streetAddress3"
+                      title="Next to the Dairy Queen"
+                      value="Next to the Dairy Queen"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="col"
+                  style="padding-left: 0px; padding-bottom: 2rem;"
+                >
+                  <div
+                    class="c14 h-100"
+                  >
+                    <button
+                      class="c8 Button c10 btn btn-link"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          data-testid="remove-button"
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            remove
+                          </title>
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                         
+                        <span
+                          class="text"
+                        >
+                          Remove
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[1].address.countryId"
+                    >
+                      Country 
+                    </label>
+                    <select
+                      class="form-select form-control"
+                      id="input-owners[1].address.countryId"
+                      name="owners[1].address.countryId"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1"
+                        value="1"
+                      >
+                        Canada
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-2"
+                        value="2"
+                      >
+                        United States of America
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-3"
+                        value="3"
+                      >
+                        Mexico
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-4"
+                        value="4"
+                      >
+                        Other
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[1].address.municipality"
+                    >
+                      City 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[1].address.municipality"
+                      name="owners[1].address.municipality"
+                      title="East Podunk"
+                      value="East Podunk"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[1].address.provinceId"
+                    >
+                      Province 
+                    </label>
+                    <select
+                      class="form-select form-control"
+                      id="input-owners[1].address.provinceId"
+                      name="owners[1].address.provinceId"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select province
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1"
+                        value="1"
+                      >
+                        British Columbia
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-2"
+                        value="2"
+                      >
+                        Alberta
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-3"
+                        value="3"
+                      >
+                        Manitoba
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-4"
+                        value="4"
+                      >
+                        Newfoundland
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-5"
+                        value="5"
+                      >
+                        New Brunswick
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-6"
+                        value="6"
+                      >
+                        Nova Scotia
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-7"
+                        value="7"
+                      >
+                        North West Territories
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-8"
+                        value="8"
+                      >
+                        Nunavut
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-9"
+                        value="9"
+                      >
+                        Ontario
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-10"
+                        value="10"
+                      >
+                        Prince Edward Island
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-11"
+                        value="11"
+                      >
+                        Quebec
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-12"
+                        value="12"
+                      >
+                        Saskatchewan
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-13"
+                        value="13"
+                      >
+                        Yukon Territory
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <label
+                      class="form-label"
+                      for="input-owners[1].address.postal"
+                    >
+                      Postal Code 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="input-owners[1].address.postal"
+                      name="owners[1].address.postal"
+                      title="I4M B0B"
+                      value="I4M B0B"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="c8 Button btn btn-link"
+          data-testid="add-file-owner"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add owner
+          </div>
+        </button>
         <div />
       </div>
     </div>

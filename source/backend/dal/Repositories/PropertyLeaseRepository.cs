@@ -38,6 +38,25 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsPropertyLeases.AsNoTracking().Include(p => p.Property).Include(l => l.Lease).Where(p => p.PropertyId == propertyId);
         }
 
+        /// <summary>
+        /// Get the property lease for the specified lease id.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsPropertyLease> GetAllByLeaseId(long leaseId)
+        {
+            return this.Context.PimsPropertyLeases.AsNoTracking().Include(p => p.Property).Include(l => l.Lease).Where(p => p.LeaseId == leaseId);
+        }
+
+        /// <summary>
+        /// Delete a propertyLeaseFile. Note that this method will fail unless all dependencies are removed first.
+        /// </summary>
+        /// <param name="propertyLeaseFile"></param>
+        public void Delete(PimsPropertyLease propertyLeaseFile)
+        {
+            Context.Remove(new PimsPropertyResearchFile() { Internal_Id = propertyLeaseFile.Internal_Id });
+        }
+
         #endregion
     }
 }
