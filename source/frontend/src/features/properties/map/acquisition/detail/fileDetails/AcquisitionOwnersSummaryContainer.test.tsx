@@ -34,7 +34,7 @@ const TestView: React.FC<IAcquisitionOwnersSummaryViewProps> = () => {
   return <span>Content Rendered</span>;
 };
 
-describe('Acquistion Owners Summary container', () => {
+describe('Acquisition Owners Summary container', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <AcquisitionOwnersSummaryContainer

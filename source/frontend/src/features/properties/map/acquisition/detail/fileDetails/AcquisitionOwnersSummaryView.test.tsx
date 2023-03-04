@@ -1,8 +1,8 @@
 import { render, RenderOptions } from 'utils/test-utils';
 
+import { DetailAcquisitionFileOwner } from '../models';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
-import { DetailAcquisitionFileOwner } from './models';
 
 jest.mock('@react-keycloak/web');
 
