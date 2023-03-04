@@ -12,19 +12,37 @@ import AgreementForm from '../../shared/detail/AgreementForm';
 import AgreementFormContainer from '../../shared/detail/AgreementFormContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
 import { EditFormNames } from '../EditFormNames';
-import AcquisitionDocumentsTab from './AcquisitionDocumentsTab';
-import AcquisitionSummaryView from './AcquisitionSummaryView';
+import { AcquisitionChecklistView } from './checklist/AcquisitionChecklistView';
+import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
+import AcquisitionSummaryView from './fileDetails/AcquisitionSummaryView';
 
 export interface IAcquisitionFileTabsProps {
   acquisitionFile?: Api_AcquisitionFile;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
-export const AcquisitionFileTabs: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionFileTabsProps>
-> = ({ acquisitionFile, setContainerState }) => {
+export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
+  acquisitionFile,
+  setContainerState,
+}) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+
+  tabViews.push({
+    content: (
+      <AcquisitionChecklistView
+        acquisitionFile={acquisitionFile}
+        onEdit={() =>
+          setContainerState({
+            isEditing: true,
+            activeEditForm: EditFormNames.acquisitionChecklist,
+          })
+        }
+      />
+    ),
+    key: FileTabNames.checklist,
+    name: 'Checklist',
+  });
 
   tabViews.push({
     content: (
@@ -77,7 +95,7 @@ export const AcquisitionFileTabs: React.FunctionComponent<
     name: 'Forms',
   });
 
-  var defaultTab = FileTabNames.fileDetails;
+  var defaultTab = FileTabNames.checklist;
 
   const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
 

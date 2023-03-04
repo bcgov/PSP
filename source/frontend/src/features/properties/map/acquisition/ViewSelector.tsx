@@ -33,6 +33,17 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
         props.selectedMenuIndex,
       );
       switch (props.activeEditForm) {
+        case EditFormNames.acquisitionChecklist:
+          return (
+            <></>
+            // TODO:
+            // <UpdateAcquisitionContainer
+            //   ref={formikRef}
+            //   acquisitionFile={props.acquisitionFile}
+            //   onSuccess={props.onSuccess}
+            // />
+          );
+
         case EditFormNames.acquisitionSummary:
           return (
             <UpdateAcquisitionContainer
