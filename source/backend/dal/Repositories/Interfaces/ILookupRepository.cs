@@ -109,5 +109,11 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsTakeStatusType> GetAllTakeStatusTypes();
 
         IEnumerable<PimsTakeSiteContamType> GetAllTakeSiteContamTypes();
+
+        IEnumerable<Dictionary<string, object>> GetAllAcquisitionChecklistSectionTypes(); // TODO: Needs DB changes to use correct type here
+
+        IEnumerable<Dictionary<string, object>> GetAllAcquisitionChecklistItemTypes(); // TODO: Needs DB changes to use correct type here
+
+        IEnumerable<Dictionary<string, object>> GetAllAcquisitionChecklistItemStatusTypes(); // TODO: Needs DB changes to use correct type here
     }
 }

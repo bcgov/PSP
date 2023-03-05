@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -317,6 +318,212 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsTakeSiteContamType> GetAllTakeSiteContamTypes()
         {
             return this.Context.PimsTakeSiteContamTypes.AsNoTracking().ToArray();
+        }
+
+        // TODO: Needs DB changes to use correct type here
+        public IEnumerable<Dictionary<string, object>> GetAllAcquisitionChecklistSectionTypes()
+        {
+            return new Dictionary<string, object>[]
+            {
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["Code"] = "FILEINIT",
+                    ["Description"] = "File Initiation",
+                    ["Type"] = "PimsAcqChklstSectionType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["Code"] = "FILEMGMT",
+                    ["Description"] = "Active file management",
+                    ["Type"] = "PimsAcqChklstSectionType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["Code"] = "SCTN3AGR",
+                    ["Description"] = "Section 3 Agreement",
+                    ["Type"] = "PimsAcqChklstSectionType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["Code"] = "SCTN6XPRP",
+                    ["Description"] = "Section 6 Expropriation",
+                    ["Type"] = "PimsAcqChklstSectionType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["Code"] = "ACQCOMPAC",
+                    ["Description"] = "Acquisition Completion Activities",
+                    ["Type"] = "PimsAcqChklstSectionType",
+                },
+            };
+        }
+
+        public IEnumerable<Dictionary<string, object>> GetAllAcquisitionChecklistItemTypes()
+        {
+            return new Dictionary<string, object>[]
+            {
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "FILEINIT",
+                    ["Code"] = "PREACQTTL",
+                    ["Description"] = "Pre-acquisition title",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "FILEINIT",
+                    ["Code"] = "BCASSESS",
+                    ["Description"] = "BC Assessment",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "FILEINIT",
+                    ["Code"] = "COMPSRCH",
+                    ["Description"] = "Company search",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "FILEMGMT",
+                    ["Code"] = "PHOTOS",
+                    ["Description"] = "Photos",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "FILEMGMT",
+                    ["Code"] = "APPRAISE",
+                    ["Description"] = "Appraisals and reviews",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "FILEMGMT",
+                    ["Code"] = "OTHERRPTS",
+                    ["Description"] = "Other reports",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "FILEMGMT",
+                    ["Code"] = "RECNEGOT",
+                    ["Description"] = "Record of negotiation",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "SCTN3AGR",
+                    ["Code"] = "AVNCDPMTNTY",
+                    ["Description"] = "Notice of advanced payment (Form 8)",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "SCTN3AGR",
+                    ["Code"] = "CLAIMRELSS3",
+                    ["Description"] = "Release of claims",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "SCTN6XPRP",
+                    ["Code"] = "EXPROPAPPRV",
+                    ["Description"] = "Copy of expropriation approval packages",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "SCTN6XPRP",
+                    ["Code"] = "EXPROPFORM1",
+                    ["Description"] = "Notice of Expropriation (Form 1)",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "SCTN6XPRP",
+                    ["Code"] = "EXPROPFORM5",
+                    ["Description"] = "Approval of Expropriation (Form 5)",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "SCTN6XPRP",
+                    ["Code"] = "VESTNOTICE",
+                    ["Description"] = "Vesting notice (Form 9)",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "SCTN6XPRP",
+                    ["Code"] = "SVCAFFADAV",
+                    ["Description"] = "Copies of affidavits of service",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "SCTN6XPRP",
+                    ["Code"] = "CLAIMRELSS6",
+                    ["Description"] = "Release of claims",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["SectionCode"] = "ACQCOMPAC",
+                    ["Code"] = "PIMSUPDTFIL",
+                    ["Description"] = "File data entered into PIMS",
+                    ["Type"] = "PimsAcqChklstItemType",
+                },
+            };
+        }
+
+        public IEnumerable<Dictionary<string, object>> GetAllAcquisitionChecklistItemStatusTypes()
+        {
+            return new Dictionary<string, object>[]
+            {
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["Code"] = "INCOMP",
+                    ["Description"] = "Incomplete",
+                    ["Type"] = "PimsAcqChklstItemStatusType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["Code"] = "COMPLT",
+                    ["Description"] = "Complete",
+                    ["Type"] = "PimsAcqChklstItemStatusType",
+                },
+                new Dictionary<string, object>
+                {
+                    ["Id"] = Guid.NewGuid(),
+                    ["Code"] = "NOTAPP",
+                    ["Description"] = "Not applicable",
+                    ["Type"] = "PimsAcqChklstItemStatusType",
+                },
+            };
         }
         #endregion
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Lookup;
@@ -8,6 +9,13 @@ namespace Pims.Api.Mapping.Lookup
     {
         public void Register(TypeAdapterConfig config)
         {
+            // TODO: Temporary mapping until DB gets updated with proper lookup codes
+            config.NewConfig<Dictionary<string, object>, Model.LookupModel>()
+                 .Map(dest => dest.Id, src => src["Code"])
+                 .Map(dest => dest.ParentId, src => src.ContainsKey("SectionCode") ? src["SectionCode"] : null)
+                 .Map(dest => dest.Name, src => src["Description"])
+                 .Map(dest => dest.Type, src => src["Type"]);
+
             config.NewConfig<Entity.PimsProvinceState, Model.LookupModel>()
                  .Map(dest => dest.Id, src => src.Id)
                  .Map(dest => dest.ParentId, src => src.CountryId)
