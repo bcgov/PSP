@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -186,7 +187,7 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectRegionCode))
             {
-                query = query.Where(x => x.RegionCode.ToString() == filter.ProjectRegionCode);
+                query = query.Where(x => x.RegionCode.ToString(CultureInfo.InvariantCulture) == filter.ProjectRegionCode);
             }
 
             if (filter.Sort?.Any() == true)

@@ -34,7 +34,7 @@ TestResults/
 **/[Rr]eleases/
 **/x64/
 **/x86/
-**/build/
+**/keycloak/build/
 **/bld/
 **/[Bb]in/
 **/[Oo]bj/

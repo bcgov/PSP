@@ -74,7 +74,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <returns></returns>
         [HttpGet]
         [HasPermission(Permissions.LeaseView)]
-        [Produces(ContentTypes.CONTENT_TYPE_CSV, ContentTypes.CONTENT_TYPE_EXCELX)]
+        [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "lease", "report" })]
         public IActionResult ExportLeases(bool all = false)
@@ -94,7 +94,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <returns></returns>
         [HttpPost("filter")]
         [HasPermission(Permissions.LeaseView)]
-        [Produces(ContentTypes.CONTENT_TYPE_CSV, ContentTypes.CONTENT_TYPE_EXCELX)]
+        [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "lease", "report" })]
         public IActionResult ExportLeases([FromBody] Lease.Models.Search.LeaseFilterModel filter, bool all = false)
@@ -105,9 +105,9 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException("Lease filter must contain valid values.");
             }
 
-            var accept = (string)this.Request.Headers["Accept"] ?? throw new BadRequestException($"HTTP request header 'Accept' is required.");
+            var accept = (string)this.Request.Headers["Accept"];
 
-            if (accept != ContentTypes.CONTENT_TYPE_CSV && accept != ContentTypes.CONTENT_TYPE_EXCEL && accept != ContentTypes.CONTENT_TYPE_EXCELX)
+            if (accept != ContentTypes.CONTENTTYPECSV && accept != ContentTypes.CONTENTTYPEEXCEL && accept != ContentTypes.CONTENTTYPEEXCELX)
             {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
             }
@@ -116,7 +116,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             return accept.ToString() switch
             {
-                ContentTypes.CONTENT_TYPE_CSV => ReportHelper.GenerateCsv(flatLeases),
+                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(flatLeases),
                 _ => ReportHelper.GenerateExcel(flatLeases, "PIMS")
             };
         }
@@ -129,7 +129,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <returns></returns>
         [HttpGet("aggregated")]
         [HasPermission(Permissions.LeaseView)]
-        [Produces(ContentTypes.CONTENT_TYPE_EXCELX)]
+        [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "lease", "report" })]
         public IActionResult ExportAggregatedLeases(int fiscalYearStart)
@@ -153,7 +153,7 @@ namespace Pims.Api.Areas.Reports.Controllers
                 template.SaveAs(stream);
                 stream.Position = 0;
 
-                return new FileStreamResult(stream, ContentTypes.CONTENT_TYPE_EXCELX);
+                return new FileStreamResult(stream, ContentTypes.CONTENTTYPEEXCELX);
             }
         }
 

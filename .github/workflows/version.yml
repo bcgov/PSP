@@ -27,10 +27,10 @@ jobs:
       - name: Bump version number
         run: |
           # this just prints the new version number - will not update any files
-          NEW_VERSION=$(build/version-next.sh)
+          NEW_VERSION=$(tools/cicd/build/version-next.sh)
 
           # auto-increment version number upon merging pull requests
-          build/bump.sh --apply
+          tools/cicd/build/bump.sh --apply
 
           # create commit
           git add source/frontend/package.json source/backend/api/Pims.Api.csproj

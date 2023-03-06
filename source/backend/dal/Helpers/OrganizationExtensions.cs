@@ -68,7 +68,7 @@ namespace Pims.Dal.Entities.Helpers
         /// DEPRECATED, either get an address by type, or get all addresses for a person.
         /// Get a single address from this user's address list.
         /// </summary>
-        /// <param name="person"></param>
+        /// <param name="organization"></param>
         /// <returns></returns>
         public static PimsAddress GetSingleAddress(this PimsOrganization organization)
         {

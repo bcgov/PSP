@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using MapsterMapper;
 using Moq;
@@ -57,7 +58,7 @@ namespace Pims.Api.Test.Services
             };
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
 
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
@@ -87,7 +88,7 @@ namespace Pims.Api.Test.Services
             };
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
 
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
@@ -96,6 +97,75 @@ namespace Pims.Api.Test.Services
 
             // Assert
             noteRepository.Verify(x => x.Add(It.IsAny<PimsLeaseNote>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Properties_Success()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+
+            var service = CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            // Act
+
+            var updatedLease = service.Update(lease);
+
+            // Assert
+            leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Properties_Delete_Success()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            var updatedLease = EntityHelper.CreateLease(2, addProperty: false);
+
+            var service = CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            // Act
+            updatedLease = service.Update(updatedLease);
+
+            // Assert
+            propertyRepository.Verify(x => x.Delete(It.IsAny<PimsProperty>()), Times.Never());
+        }
+
+        [Fact]
+        public void Update_Properties_Delete_POI_Success()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            var deletedProperty = lease.PimsPropertyLeases.FirstOrDefault().Property;
+            deletedProperty.IsPropertyOfInterest = true;
+            var updatedLease = EntityHelper.CreateLease(2, addProperty: false);
+
+            var service = CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = _helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(deletedProperty);
+            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            // Act
+            updatedLease = service.Update(updatedLease);
+
+            // Assert
+            propertyRepository.Verify(x => x.Delete(deletedProperty), Times.Once);
         }
 
         #endregion

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -219,7 +217,7 @@ namespace Pims.Api.Repositories.Mayan
             multiContent.Add(fileBytes, "file", file.FileName);
 
             // Add the document id to the content
-            using HttpContent content = new StringContent(documentType.ToString());
+            using HttpContent content = new StringContent(documentType.ToString(CultureInfo.InvariantCulture));
             multiContent.Add(content, "document_type_id");
 
             Uri endpoint = new($"{this._config.BaseUri}/documents/upload/");

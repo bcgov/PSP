@@ -12,28 +12,25 @@ import styled from 'styled-components';
 
 import DetailDocumentation from './DetailDocumentation';
 
-export interface IDetailsProps {
-  isEditing?: boolean;
-}
+export interface IDetailsProps {}
 
-export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<IDetailsProps>> = ({
-  isEditing,
-}) => {
+export const LeaseDetailsForm: React.FunctionComponent<
+  React.PropsWithChildren<IDetailsProps>
+> = () => {
   const { lease } = React.useContext(LeaseStateContext);
   return (
     <Formik initialValues={{ ...defaultLease, ...lease }} enableReinitialize={true} onSubmit={noop}>
       <StyledDetails>
         <DetailTermInformation />
-        <PropertiesInformation disabled={!isEditing} />
-        <DetailAdministration disabled={!isEditing} />
-        <DetailDocumentation disabled={!isEditing} />
+        <PropertiesInformation disabled={true} />
+        <DetailAdministration disabled={true} />
+        <DetailDocumentation disabled={true} />
       </StyledDetails>
     </Formik>
   );
 };
 
 export const StyledDetails = styled.form`
-  margin-top: 4rem;
   text-align: left;
   input:disabled,
   select:disabled,

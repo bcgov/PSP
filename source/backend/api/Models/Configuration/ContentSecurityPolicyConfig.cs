@@ -17,6 +17,7 @@ namespace Pims.Api.Models.Config
 
         /// <summary>
         /// get/set - The 'script-src' attribute.
+        /// </summary>
         public string ScriptSource { get; set; } = string.Empty;
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Pims.Dal.Repositories
                     throw new ConfigurationException($"Configuration 'Pims:ServiceAccount:Email' is invalid or missing.");
                 var organization = this.User.GetOrganization(this.Context);
 
-                this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
+                this.Logger.LogInformation("User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}", key, email, username, givenName, surname);
 
                 var person = new PimsPerson() { Surname = surname, FirstName = givenName };
                 this.Context.PimsPeople.Add(person);
@@ -110,7 +110,7 @@ namespace Pims.Dal.Repositories
 
             if (!exists)
             {
-                this.Logger.LogInformation($"User Activated: '{username}' - '{key}'.");
+                this.Logger.LogInformation("User Activated: '{username}' - '{key}'.", username, key);
             }
 
             return user;

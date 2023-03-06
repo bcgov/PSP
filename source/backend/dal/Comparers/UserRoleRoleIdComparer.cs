@@ -13,7 +13,8 @@ namespace Pims.Dal.Entities.Comparers
 
         public int GetHashCode([DisallowNull] PimsUserRole obj)
         {
-            var hash = new HashCode();
+            HashCode hashCode = default(HashCode);
+            var hash = hashCode;
             hash.Add(obj.RoleId);
             return hash.ToHashCode();
         }

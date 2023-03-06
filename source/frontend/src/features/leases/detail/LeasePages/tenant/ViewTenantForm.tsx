@@ -264,10 +264,10 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                 )}
               </Section>
               {tenants.length === 0 && (
-                <>
+                <StyledSection>
                   <p>There are no tenants associated to this lease.</p>
                   <p>Click the edit icon to add tenants.</p>
-                </>
+                </StyledSection>
               )}
             </>
           )}
@@ -278,6 +278,7 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
 };
 
 export const FormSectionOne = styled(FormSection)`
+  padding: 0;
   column-count: 1;
   & > * {
     break-inside: avoid-column;
@@ -296,6 +297,12 @@ export const FormSectionOne = styled(FormSection)`
   .form-control {
     color: ${props => props.theme.css.formTextColor};
   }
+`;
+
+const StyledSection = styled(Section)`
+  background-color: transparent;
+  padding-left: 0.5rem;
+  margin-bottom: 0;
 `;
 
 export default ViewTenantForm;

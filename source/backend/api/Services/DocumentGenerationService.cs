@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
@@ -70,15 +71,11 @@ namespace Pims.Api.Services
         {
             this.Logger.LogInformation("Generating document");
 
-            //this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
+            // this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
 
             // TODO: This needs to retrieve by the passed template type. At this point that is not possible.
-            IList<PimsActivityTemplateDocument> templateDocumentsList = _documentActivityTemplateRepository.GetAllByActivityTemplate(3);
-            PimsActivityTemplateDocument templateDocument = templateDocumentsList.LastOrDefault();
-
-            PimsDocument document = _documentRepository.TryGet(templateDocument.DocumentId);
+            PimsDocument document = _documentRepository.GetAllByDocumentType("CDOGS Template").LastOrDefault();
             ExternalResult<FileDownload> templateFileResult = await _documentService.DownloadFileLatestAsync(document.MayanId);
-
             if (templateFileResult.Status == ExternalResultStatus.Success)
             {
                 FileDownload templateFile = templateFileResult.Payload;
@@ -92,7 +89,7 @@ namespace Pims.Api.Services
                     },
                     Options = new RenderOptions()
                     {
-                        ReportName = templateFile.FileNameWithoutExtension + '-' + DateTime.Now.ToString("yyyyMMdd-HHmmss"),
+                        ReportName = templateFile.FileNameWithoutExtension + '-' + DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture),
                         Overwrite = true,
                     },
                     Data = templateData,
@@ -107,6 +104,5 @@ namespace Pims.Api.Services
                 return templateFileResult;
             }
         }
-
     }
 }
