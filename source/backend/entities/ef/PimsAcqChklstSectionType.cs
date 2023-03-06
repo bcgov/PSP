@@ -8,29 +8,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_AREA_UNIT_TYPE")]
-    public partial class PimsAreaUnitType
+    [Table("PIMS_ACQ_CHKLST_SECTION_TYPE")]
+    public partial class PimsAcqChklstSectionType
     {
-        public PimsAreaUnitType()
+        public PimsAcqChklstSectionType()
         {
-            PimsProperties = new HashSet<PimsProperty>();
-            PimsPropertyLeases = new HashSet<PimsPropertyLease>();
-            PimsTakes = new HashSet<PimsTake>();
+            PimsAcqChklstItemTypes = new HashSet<PimsAcqChklstItemType>();
         }
 
         [Key]
-        [Column("AREA_UNIT_TYPE_CODE")]
+        [Column("ACQ_CHKLST_SECTION_TYPE_CODE")]
         [StringLength(20)]
-        public string AreaUnitTypeCode { get; set; }
+        public string AcqChklstSectionTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
         public string Description { get; set; }
-        [Required]
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
         [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
+        public short? DisplayOrder { get; set; }
+        [Column("EFFECTIVE_DATE", TypeName = "date")]
+        public DateTime EffectiveDate { get; set; }
+        [Column("EXPIRY_DATE", TypeName = "date")]
+        public DateTime? ExpiryDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -46,11 +45,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProperty.PropertyAreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
-        [InverseProperty(nameof(PimsPropertyLease.AreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
-        [InverseProperty(nameof(PimsTake.AreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsTake> PimsTakes { get; set; }
+        [InverseProperty(nameof(PimsAcqChklstItemType.AcqChklstSectionTypeCodeNavigation))]
+        public virtual ICollection<PimsAcqChklstItemType> PimsAcqChklstItemTypes { get; set; }
     }
 }
