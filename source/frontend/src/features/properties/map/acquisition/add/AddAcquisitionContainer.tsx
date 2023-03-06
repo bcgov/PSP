@@ -85,13 +85,7 @@ export const AddAcquisitionContainer: React.FC<
         />
       }
       onClose={close}
-      footer={
-        <SidebarFooter
-          isOkDisabled={formikRef.current?.isSubmitting}
-          onSave={handleSave}
-          onCancel={close}
-        />
-      }
+      footer={<SidebarFooter isOkDisabled={helper.loading} onSave={handleSave} onCancel={close} />}
     >
       <StyledFormWrapper>
         <AddAcquisitionForm
