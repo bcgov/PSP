@@ -23,6 +23,7 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFileDocumentRepository acquisitionFileDocumentRepository;
         private readonly IResearchFileDocumentRepository researchFileDocumentRepository;
         private readonly IDocumentService documentService;
+        private readonly IProjectRepository _projectRepository;
         private readonly IMapper mapper;
 
         public DocumentFileService(
@@ -31,13 +32,15 @@ namespace Pims.Api.Services
             IAcquisitionFileDocumentRepository acquisitionFileDocumentRepository,
             IResearchFileDocumentRepository researchFileDocumentRepository,
             IDocumentService documentService,
-            IMapper mapper)
+            IMapper mapper,
+            IProjectRepository projectRepository)
             : base(user, logger)
         {
             this.acquisitionFileDocumentRepository = acquisitionFileDocumentRepository;
             this.researchFileDocumentRepository = researchFileDocumentRepository;
             this.documentService = documentService;
             this.mapper = mapper;
+            _projectRepository = projectRepository;
         }
 
         public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
@@ -54,6 +57,9 @@ namespace Pims.Api.Services
                 case FileType.Acquisition:
                     this.User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
                     return acquisitionFileDocumentRepository.GetAllByAcquisitionFile(fileId).Select(f => f as T).ToArray();
+                case FileType.Project:
+                    this.User.ThrowIfNotAuthorized(Permissions.ProjectView);
+                    return _projectRepository.GetAllProjectDocuments(fileId).Select(f => f as T).ToArray();
                 default:
                     throw new BadRequestException("FileT type not valid to get documents.");
             }
@@ -112,6 +118,35 @@ namespace Pims.Api.Services
                 acquisitionFileDocumentRepository.CommitTransaction();
 
                 relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newAcquisitionDocument);
+            }
+
+            return relationshipResponse;
+        }
+
+        public async Task<DocumentUploadRelationshipResponse> UploadProjectDocumentAsync(long projectId, DocumentUploadRequest uploadRequest)
+        {
+            this.Logger.LogInformation("Uploading document for single project");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd, Permissions.ProjectEdit);
+
+            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
+
+            DocumentUploadRelationshipResponse relationshipResponse = new ()
+            {
+                UploadResponse = uploadResult,
+            };
+
+            if (uploadResult.Document.Id != 0)
+            {
+                // Create the pims document acquisition file relationship
+                PimsProjectDocument newProjectDocument = new ()
+                {
+                    ProjectId = projectId,
+                    DocumentId = uploadResult.Document.Id,
+                };
+                newProjectDocument = _projectRepository.AddProjectDocument(newProjectDocument);
+                _projectRepository.CommitTransaction();
+
+                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newProjectDocument);
             }
 
             return relationshipResponse;

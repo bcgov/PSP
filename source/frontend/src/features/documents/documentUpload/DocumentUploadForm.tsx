@@ -79,6 +79,8 @@ const DocumentUploadForm: React.FunctionComponent<
         validateOnMount={true}
         validationSchema={getDocumentMetadataYupSchema(props.mayanMetadataTypes)}
         onSubmit={async (values: DocumentUploadFormData, { setSubmitting }) => {
+          console.log(selectedFile);
+          console.log(values.documentTypeId);
           if (selectedFile !== null) {
             const selectedDocumentType = props.documentTypes.find(
               x => x.id === Number(values.documentTypeId),

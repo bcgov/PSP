@@ -1,5 +1,7 @@
 import Claims from 'constants/claims';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { NoteTypes } from 'constants/noteTypes';
+import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import NoteListView from 'features/notes/list/NoteListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Project } from 'models/api/Project';
@@ -48,6 +50,19 @@ const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
       ),
       key: ProjectTabNames.projectDetails,
       name: 'Project details',
+    });
+  }
+
+  if (project?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <DocumentListContainer
+          parentId={project?.id}
+          relationshipType={DocumentRelationshipType.PROJECTS}
+        />
+      ),
+      key: ProjectTabNames.documents,
+      name: 'Documents',
     });
   }
 

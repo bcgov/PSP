@@ -103,6 +103,7 @@ export const DocumentUploadContainer: React.FunctionComponent<
   }, [props.relationshipType, retrieveDocumentTypes, isMounted, updateDocumentType]);
 
   const onUploadDocument = async (uploadRequest: Api_DocumentUploadRequest) => {
+    debugger;
     await uploadDocument(props.relationshipType, props.parentId, uploadRequest);
     props.onUploadSuccess();
   };

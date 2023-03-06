@@ -21,5 +21,9 @@ namespace Pims.Dal.Repositories
         PimsProject Get(long id);
 
         PimsProject Update(PimsProject project);
+
+        PimsProjectDocument AddProjectDocument(PimsProjectDocument projectDocument);
+
+        IList<PimsProjectDocument> GetAllProjectDocuments(long projectId);
     }
 }
