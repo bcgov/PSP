@@ -50,9 +50,9 @@ namespace Pims.Core.Exceptions
         public HttpClientRequestException(string message, Exception innerException, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
             : base(message, innerException, statusCode)
         {
-            if (innerException is HttpClientRequestException)
+            if (innerException is HttpClientRequestException exception)
             {
-                this.Response = ((HttpClientRequestException)innerException).Response;
+                this.Response = exception.Response;
             }
         }
 

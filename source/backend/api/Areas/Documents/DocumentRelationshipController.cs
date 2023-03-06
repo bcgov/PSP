@@ -38,6 +38,7 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="documentActivityService"></param>
         /// <param name="documentLeaseService"></param>
+        /// <param name="documentFileService"></param>
         /// <param name="mapper"></param>
         public DocumentRelationshipController(
             IDocumentActivityService documentActivityService,
