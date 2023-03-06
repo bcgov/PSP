@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace Pims.Core.Extensions
 {
@@ -24,17 +23,6 @@ namespace Pims.Core.Extensions
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Creates a basic new instance of the specified type.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Argument is required for extension method.")]
-        public static T CreateInstance<T>(this Type type)
-        {
-            return Activator.CreateInstance<T>();
-        }
 
         /// <summary>
         /// Get the properties for the specified <typeparamref name="Type"/> and cache them in memory.
@@ -89,95 +77,6 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
-        /// Determine if the specified type is an IEnumerable.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static bool IsIEnumerable(this Type type)
-        {
-            return type.GetInterfaces().Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>));
-        }
-
-        /// <summary>
-        /// Determine if the specified type is a ICollection.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static bool IsICollection(this Type type)
-        {
-            return type.GetInterfaces().Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(ICollection<>));
-        }
-
-        /// <summary>
-        /// Determine if the type/object is a nullable type.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <returns>True if the type/object is nullable.</returns>
-        public static bool IsNullable<T>(this T obj)
-        {
-            if (obj == null)
-            {
-                return true;
-            }
-
-            var type = typeof(T);
-            if (!type.IsValueType)
-            {
-                return true;
-            }
-
-            if (Nullable.GetUnderlyingType(type) != null)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Determine if the type/object is a nullable type.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <returns>True if the type/object is nullable.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Argument is required for extension method.")]
-        public static bool IsNullableType<T>(this T obj)
-        {
-            var type = typeof(T);
-            return Nullable.GetUnderlyingType(type) != null;
-        }
-
-        /// <summary>
-        /// Determine if the type/object is of the specified type.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <param name="type"></param>
-        /// <returns>True if the type/object is of the specified type.</returns>
-        public static bool IsType<T>(this T obj, Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            return typeof(T) == type || obj?.GetType() == type;
-        }
-
-        /// <summary>
-        /// Determine if the type/object is one of the specified types.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <param name="type"></param>
-        /// <returns>True if the type/object is one of the specified types.</returns>
-        public static bool IsType<T>(this T obj, params Type[] type)
-        {
-            return type.Contains(typeof(T)) || type.Contains(obj?.GetType());
-        }
-
-        /// <summary>
         /// Get the generic item type of the enumerable type, otherwise just return the type.
         /// </summary>
         /// <param name="type"></param>
@@ -226,44 +125,10 @@ namespace Pims.Core.Extensions
         {
             if (!parameterTypes.Any())
             {
-                parameterTypes = new Type[0];
+                parameterTypes = Array.Empty<Type>();
             }
 
             return type.FindMethod(name, BindingFlags.Instance | BindingFlags.Public, parameterTypes);
-        }
-
-        /// <summary>
-        /// Determine if the specified type is an anonymous type.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static bool IsAnonymousType(this Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-
-            // HACK: The only way to detect anonymous types right now.
-            return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
-                && type.IsGenericType && type.Name.Contains("AnonymousType")
-                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
-                && type.Attributes.HasFlag(TypeAttributes.NotPublic);
-        }
-
-        /// <summary>
-        /// Create a default value for the specified 'type'.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static object GetDefault(this Type type)
-        {
-            if (type.IsValueType)
-            {
-                return Activator.CreateInstance(type);
-            }
-
-            return null;
         }
         #endregion
     }

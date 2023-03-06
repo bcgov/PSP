@@ -13,7 +13,7 @@ namespace Pims.Api.Helpers.Extensions
         /// </summary>
         /// <param name="item"></param>
         /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the passed item.</typeparam>
         /// <exception type="BadRequestException">The item cannot be null.</exception>
         public static T ThrowBadRequestIfNull<T>(this T item, string message)
             where T : class

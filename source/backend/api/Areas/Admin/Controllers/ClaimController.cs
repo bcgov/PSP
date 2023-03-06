@@ -3,11 +3,9 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
-using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Admin.Controllers
@@ -94,66 +92,6 @@ namespace Pims.Api.Areas.Admin.Controllers
             var entity = _claimRepository.GetByKey(key);
             var claim = _mapper.Map<Model.ClaimModel>(entity);
             return new JsonResult(claim);
-        }
-
-        /// <summary>
-        /// POST - Add a new claim to the datasource.
-        /// </summary>
-        /// <param name="model">The claim model.</param>
-        /// <returns>The claim added.</returns>
-        [HttpPost]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.ClaimModel), 201)]
-        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "admin-claim" })]
-        public IActionResult AddClaim([FromBody] Model.ClaimModel model)
-        {
-            var entity = _mapper.Map<Entity.PimsClaim>(model); // TODO: Return bad request.
-            _claimRepository.Add(entity);
-            var claim = _mapper.Map<Model.ClaimModel>(entity);
-
-            return CreatedAtAction(nameof(GetClaim), new { id = claim.Id }, claim);
-        }
-
-        /// <summary>
-        /// PUT - Update the claim in the datasource.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="model">The claim model.</param>
-        /// <returns>The claim updated.</returns>
-        [HttpPut("{key}")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.ClaimModel), 200)]
-        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "admin-claim" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
-        public IActionResult UpdateClaim(Guid key, [FromBody] Model.ClaimModel model)
-        {
-            var entity = _mapper.Map<PimsClaim>(model);
-            _claimRepository.Update(entity);
-
-            var claim = _mapper.Map<Model.ClaimModel>(entity);
-            return new JsonResult(claim);
-        }
-
-        /// <summary>
-        /// DELETE - Delete the claim from the datasource.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="model">The claim model.</param>
-        /// <returns>The claim who was deleted.</returns>
-        [HttpDelete("{key}")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.ClaimModel), 200)]
-        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "admin-claim" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
-        public IActionResult DeleteClaim(Guid key, [FromBody] Model.ClaimModel model)
-        {
-            var entity = _mapper.Map<PimsClaim>(model);
-            _claimRepository.Delete(entity);
-
-            return new JsonResult(model);
         }
         #endregion
     }

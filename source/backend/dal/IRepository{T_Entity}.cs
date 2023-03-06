@@ -1,4 +1,4 @@
-namespace Pims.Dal
+﻿namespace Pims.Dal
 {
     public interface IRepository<T_Entity> : IRepository
     {

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -23,7 +22,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="role"></param>
         /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The entity type.</typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
@@ -45,7 +44,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="permission"></param>
         /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The entity type.</typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
@@ -68,7 +67,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="permission"></param>
         /// <param name="requireAll"></param>
         /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The entity type.</typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
@@ -87,17 +86,6 @@ namespace Pims.Dal.Helpers.Extensions
             }
 
             return entity;
-        }
-
-        /// <summary>
-        /// When manipulating entities it is necessary to reset the original value for 'ConcurrencyControlNumber' so that concurrency checking can occur.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="context"></param>
-        public static void SetOriginalConcurrencyControlNumber<T>(this T source, DbContext context)
-            where T : class, IBaseEntity
-        {
-            context.SetOriginalConcurrencyControlNumber(source);
         }
 
         /// <summary>

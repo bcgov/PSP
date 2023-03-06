@@ -2,7 +2,7 @@ namespace Pims.Dal.Entities
 {
     /// <summary>
     /// Contact class, provides an entity for the datamodel to manage contacts (either persons or organizations).
-    ///</summary>
+    /// </summary>
     public partial class PimsContactMgrVw
     {
         #region Properties
