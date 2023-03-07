@@ -499,5 +499,112 @@ namespace Pims.Api.Test.Services
             // Assert
             documentService.Verify(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()), Times.Once);
         }
+
+        [Fact]
+        [Trait("DocumentFileService", "Delete")]
+        public void Delete_ProjectDocument_ShouldThrowException_NotAuthorized()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions();
+
+            PimsProjectDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            Func<Task> act = async () => await service.DeleteProjectDocumentAsync(doc);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        [Trait("DocumentFileService", "Delete")]
+        public async void Delete_ProjectDocument_Success_Status_Success()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
+            projectRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsProjectDocument>() { new PimsProjectDocument() });
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResult<string>()
+                {
+                    Status = ExternalResultStatus.Success,
+                });
+
+            PimsProjectDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteProjectDocumentAsync(doc);
+
+            // Assert
+            documentService.Verify(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()), Times.Once);
+        }
+
+        [Fact]
+        [Trait("DocumentFileService", "Delete")]
+        public async void Delete_ProjectDocument_Success_Status_NotFound()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
+            projectRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsProjectDocument>() { new PimsProjectDocument() });
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResult<string>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.NotFound,
+                });
+
+            PimsProjectDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteProjectDocumentAsync(doc);
+
+            // Assert
+            documentService.Verify(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()), Times.Once);
+        }
+
+        [Fact]
+        [Trait("DocumentFileService", "Delete")]
+        public async void Delete_ProjectDocument_Success_NoResults_Status_NotFound()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
+            projectRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsProjectDocument>());
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResult<string>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.NotFound,
+                });
+
+            PimsProjectDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteProjectDocumentAsync(doc);
+
+            // Assert
+            projectRepository.Verify(x => x.DeleteProjectDocument(It.Is<long>(x => x == 1)), Times.Once);
+        }
     }
 }

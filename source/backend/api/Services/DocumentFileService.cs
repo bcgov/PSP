@@ -170,6 +170,24 @@ namespace Pims.Api.Services
             }
         }
 
+        public async Task<ExternalResult<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument)
+        {
+            this.Logger.LogInformation("Deleting PIMS document for single Project");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+
+            IList<PimsProjectDocument> existingProjectDocuments = _projectRepository.GetAllByDocument(projectDocument.DocumentId);
+            if (existingProjectDocuments.Count == 1)
+            {
+                return await documentService.DeleteDocumentAsync(projectDocument.Document);
+            }
+            else
+            {
+                _projectRepository.DeleteProjectDocument(projectDocument.ProjectDocumentId);
+                _projectRepository.CommitTransaction();
+                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+            }
+        }
+
         public async Task<ExternalResult<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single acquisition file");

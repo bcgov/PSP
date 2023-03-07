@@ -166,6 +166,37 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
+        /// <summary>
+        /// Get a list of all the document file relationships for a a given research file.
+        /// </summary>
+        /// <returns></returns>
+        public IList<PimsProjectDocument> GetAllByDocument(long documentId)
+        {
+            return this.Context.PimsProjectDocuments
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentType)
+                .Where(ad => ad.DocumentId == documentId)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        /// <summary>
+        /// Deletes the passed Project Document in the database.
+        /// </summary>
+        /// <param name="projectDocumentId"></param>
+        public void DeleteProjectDocument(long projectDocumentId)
+        {
+            var entity = Context.PimsProjectDocuments.FirstOrDefault(d => d.ProjectDocumentId == projectDocumentId);
+            if(entity is not null)
+            {
+                Context.PimsProjectDocuments.Remove(entity);
+            }
+
+            return;
+        }
+
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter)
         {
             var query = Context.PimsProjects.AsNoTracking();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -194,18 +195,26 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResult<string>> DeleteDocumentAsync(PimsDocument document)
         {
-            this.Logger.LogInformation("Deleting document");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
-
-            // If the storage deletion was successful or the id was not found on the storage (already deleted) delete the pims reference.
-            ExternalResult<string> result = await documentStorageRepository.TryDeleteDocument(document.MayanId);
-            if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
+            try
             {
-                documentRepository.Delete(document);
-                documentRepository.CommitTransaction();
-            }
+                this.Logger.LogInformation("Deleting document");
+                this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            return result;
+                // If the storage deletion was successful or the id was not found on the storage (already deleted) delete the pims reference.
+                ExternalResult<string> result = await documentStorageRepository.TryDeleteDocument(document.MayanId);
+                if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
+                {
+                    documentRepository.Delete(document);
+                    documentRepository.CommitTransaction();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.Message, ex);
+                return null;
+            }
         }
 
         public async Task<ExternalResult<QueryResult<DocumentType>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null)

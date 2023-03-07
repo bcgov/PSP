@@ -106,6 +106,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsActivityTemplateDocuments)
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
+                .Include(d => d.PimsProjectDocuments)
                 .Where(d => d.DocumentId == document.Internal_Id)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -118,6 +119,11 @@ namespace Pims.Dal.Repositories
             foreach (var pimsAcquisitionFileDocument in documentToDelete.PimsAcquisitionFileDocuments)
             {
                 this.Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { Internal_Id = pimsAcquisitionFileDocument.Internal_Id });
+            }
+
+            foreach (var pimsProjectDocument in documentToDelete.PimsProjectDocuments)
+            {
+                this.Context.PimsProjectDocuments.Remove(new PimsProjectDocument() { Internal_Id = pimsProjectDocument.Internal_Id });
             }
 
             foreach (var pimsActivityInstanceDocument in documentToDelete.PimsActivityInstanceDocuments)

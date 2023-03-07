@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MapsterMapper;
@@ -130,8 +131,8 @@ namespace Pims.Api.Controllers
                 DocumentRelationType.ResearchFiles => await _documentFileService.UploadResearchDocumentAsync(parentId, uploadRequest),
                 DocumentRelationType.Activities => await _documentActivityService.UploadActivityDocumentAsync(parentId, uploadRequest),
                 DocumentRelationType.Templates => await _documentActivityService.UploadActivityTemplateDocumentAsync(parentId, uploadRequest),
-                DocumentRelationType.Leases => await _documentLeaseService.UploadLeaseDocumentAsync(parentId, uploadRequest),
                 DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(parentId, uploadRequest),
+                DocumentRelationType.Leases => await _documentLeaseService.UploadLeaseDocumentAsync(parentId, uploadRequest),
                 _ => throw new BadRequestException("Relationship type not valid for upload."),
             };
 
@@ -173,6 +174,10 @@ namespace Pims.Api.Controllers
                     var leaseRelationship = _mapper.Map<PimsActivityInstanceDocument>(model);
                     var leaseResult = await _documentLeaseService.DeleteLeaseDocumentAsync(leaseRelationship);
                     return new JsonResult(leaseResult);
+                case DocumentRelationType.Projects:
+                    var projectRelationship = _mapper.Map<PimsProjectDocument>(model);
+                    var projectResult = await _documentFileService.DeleteProjectDocumentAsync(projectRelationship);
+                    return new JsonResult(projectResult);
                 default:
                     throw new BadRequestException("Relationship type not valid for delete.");
             }
