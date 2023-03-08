@@ -38,7 +38,6 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
         setProject={props.setProject}
         setContainerState={props.setContainerState}
         activeTab={props.activeTab}
-        isEditing={props.isEditing}
       />
     );
   },

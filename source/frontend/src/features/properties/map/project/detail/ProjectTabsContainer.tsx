@@ -14,7 +14,6 @@ export interface IProjectTabsContainerProps {
   project?: Api_Project;
   setProject: (project: Api_Project) => void;
   setContainerState: (value: Partial<ProjectContainerState>) => void;
-  isEditing: boolean;
   onEdit?: () => {};
   activeTab?: ProjectTabNames;
 }
@@ -29,7 +28,6 @@ export interface IProjectTabsProps {
 const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
   project,
   setContainerState,
-  isEditing,
   activeTab,
 }) => {
   const tabViews: ProjectTabView[] = [];
