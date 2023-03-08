@@ -63,12 +63,15 @@ namespace Pims.Api.Controllers
             var exists = _userRepository.UserExists(key);
 
             var user = _userRepository.Activate();
+
             if (!exists)
             {
                 return new CreatedResult($"{user.GuidIdentifierValue}", new Model.UserModel(user));
             }
 
-            return new JsonResult(new Model.UserModel(user.Internal_Id, user.GuidIdentifierValue.Value));
+            bool hasValidClaims = _userRepository.ValidateClaims(user);
+
+            return new JsonResult(new Model.UserModel(user.Internal_Id, user.GuidIdentifierValue.Value, hasValidClaims));
         }
 
         /// <summary>

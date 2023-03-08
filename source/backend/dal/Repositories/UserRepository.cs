@@ -116,6 +116,50 @@ namespace Pims.Dal.Repositories
             return user;
         }
 
+        public bool ValidateClaims(PimsUser user)
+        {
+            var keycloakClaims = this.User.Claims.Where(c => c.Type == "client_roles").ToList();
+
+            var userRoles = this.Context.PimsUserRoles
+                .Include(ur => ur.Role)
+                    .ThenInclude(r => r.PimsRoleClaims)
+                    .ThenInclude(rc => rc.Claim)
+                .Where(ur => ur.UserId == user.UserId)
+                .ToList();
+
+            // Keycloak claims contain both the roles as well as the claims represented in pims.
+            HashSet<string> missmatched = new HashSet<string>();
+            foreach (var claim in keycloakClaims)
+            {
+                missmatched.Add(claim.Value);
+            }
+
+            HashSet<string> pimsClaimNames = new HashSet<string>();
+            foreach (PimsUserRole userRole in userRoles)
+            {
+                foreach (var roleClaim in userRole.Role.PimsRoleClaims)
+                {
+                    string claimName = roleClaim.Claim.Name;
+                    pimsClaimNames.Add(claimName);
+                }
+
+                // Add role names to the list as well
+                string roleName = userRole.Role.Name;
+                pimsClaimNames.Add(roleName);
+            }
+
+            foreach (var claim in pimsClaimNames)
+            {
+                bool found = missmatched.Remove(claim);
+                if (!found)
+                {
+                    missmatched.Add(claim);
+                }
+            }
+
+            return missmatched.Count == 0;
+        }
+
         /// <summary>
         /// Get the total number of user accounts.
         /// </summary>
