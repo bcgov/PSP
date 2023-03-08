@@ -32,6 +32,13 @@ namespace Pims.Api.Mapping.Lookup
                  .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                  .Map(dest => dest.Type, src => src.GetType().Name);
 
+            config.NewConfig<Entity.IBaseTypeEntity<string, short?>, Model.LookupModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Description != null ? src.Description : src.Id)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name);
+
             config.NewConfig<Entity.ITypeEntity<string>, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Description != null ? src.Description : src.Id)
