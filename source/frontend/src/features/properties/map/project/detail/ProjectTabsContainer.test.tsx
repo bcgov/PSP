@@ -1,7 +1,6 @@
 import Claims from 'constants/claims';
 import { mockProjectGetResponse } from 'mocks/mockProjects';
-import { act } from 'react-test-renderer';
-import { render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
+import { render, RenderOptions, screen } from 'utils/test-utils';
 
 import ProjectTabsContainer, { IProjectTabsContainerProps } from './ProjectTabsContainer';
 
@@ -50,7 +49,7 @@ describe('ResearchFileTabs component', () => {
   });
 
   it('has a documents tab', () => {
-    const { getByText } = setup(
+    setup(
       {
         project: mockProject,
         setProject: setProjectMock,
