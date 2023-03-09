@@ -42,11 +42,12 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="incomingProducts"></param>
         /// <returns></returns>
-        public IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts)
+        public IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts, long projectId)
         {
             var incomingCodes = incomingProducts.Select(ip => ip.Code);
-            var matchingCodes = this.Context.PimsProducts.AsNoTracking().Where(databaseProduct => incomingCodes.Contains(databaseProduct.Code)).ToArray();
-            return matchingCodes.Where(mc => incomingProducts.Any(ip => ip.Id != mc.Id && ip.Description == mc.Description));
+            var matchingProductCodes = this.Context.PimsProducts.AsNoTracking().Where(databaseProduct => incomingCodes.Contains(databaseProduct.Code)).ToArray();
+            var ignoreProductCodeIds = GetByProject(projectId).Where(p => !incomingProducts.Any(ip => p.Id == ip.Id)).Select(p => p.Id); // These codes are being removed, so should not be treated as duplicates.
+            return matchingProductCodes.Where(mc => incomingProducts.Any(ip => ip.Id != mc.Id && ip.Description == mc.Description && ip.Code == mc.Code) && !ignoreProductCodeIds.Contains(mc.Id));
         }
     }
 }
