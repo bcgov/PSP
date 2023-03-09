@@ -38,7 +38,8 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Using a list of products, find a matching set of products with the same code and description.
+        /// Using a list of products, find a matching list of products with the same code and description.
+        /// Ignore any products that are being "replaced" in the project referred to by the passed projectId, as those products will be removed and therefore cannot be matches to the incoming products.
         /// </summary>
         /// <param name="incomingProducts"></param>
         /// <returns></returns>
