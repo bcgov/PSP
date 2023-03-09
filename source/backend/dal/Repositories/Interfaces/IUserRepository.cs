@@ -15,6 +15,8 @@ namespace Pims.Dal.Repositories
 
         PimsUser Activate();
 
+        bool ValidateClaims(PimsUser user);
+
         Paged<PimsUser> GetPage(int page, int quantity);
 
         Paged<PimsUser> GetAllByFilter(UserFilter filter = null);
