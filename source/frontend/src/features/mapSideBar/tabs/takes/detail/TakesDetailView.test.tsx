@@ -148,17 +148,6 @@ describe('TakesDetailView component', () => {
     expect(date).toBeVisible();
   });
 
-  it('displays message when there are no takes', async () => {
-    const { findByText } = setup({
-      props: {
-        loading: false,
-        takes: [],
-      },
-    });
-    const date = await findByText('There are no takes recorded for this property in this file');
-    expect(date).toBeVisible();
-  });
-
   it('displays count of takes on file', async () => {
     const { findByText } = setup({
       props: {

@@ -1,4 +1,4 @@
-import { prettyDOM, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Claims from 'constants/claims';
@@ -6,7 +6,6 @@ import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks';
 import { mockActivitiesResponse } from 'mocks/mockActivities';
-import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   act,
