@@ -409,6 +409,13 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   max-width: 25rem;
 }
 
+.c24 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1644,6 +1651,11 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
             <div
               class="collapse show"
             >
+              <p
+                class="c24"
+              >
+                Each property in this file should be owned by the owner(s) in this section
+              </p>
               <button
                 class="c20 Button btn btn-link"
                 data-testid="add-file-owner"

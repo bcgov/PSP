@@ -326,6 +326,13 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
   max-width: 25rem;
 }
 
+.c21 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 <div
     class="c0"
   >
@@ -1539,6 +1546,11 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
       <div
         class="collapse show"
       >
+        <p
+          class="c21"
+        >
+          Each property in this file should be owned by the owner(s) in this section
+        </p>
         <button
           class="c17 Button btn btn-link"
           data-testid="add-file-owner"
