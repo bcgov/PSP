@@ -1,6 +1,5 @@
 import { H1 } from 'components/common/styles';
 import React from 'react';
-import { Alert } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router';
