@@ -36,6 +36,7 @@ namespace Pims.Api.Mapping.Lookup
             // TODO: Update this mapping once HINT column gets added for checklist items
             config.NewConfig<Entity.PimsAcqChklstItemType, Model.LookupModel>()
                 .Map(dest => dest.Hint, () => "TODO: needs tooltip mapping")
+                .Map(dest => dest.ParentId, src => src.AcqChklstSectionTypeCode)
                 .Inherits<Entity.IBaseTypeEntity<string, short?>, Model.LookupModel>();
 
             config.NewConfig<Entity.ITypeEntity<string>, Model.LookupModel>()
