@@ -109,6 +109,8 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
+            ValidateStaff(acquisitionFile);
+
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
@@ -127,6 +129,8 @@ namespace Pims.Api.Services
             {
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
+
+            ValidateStaff(acquisitionFile);
 
             // reset the region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -201,6 +205,15 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
+        private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
+        {
+            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFilePeople.GroupBy(p => (p.AcqFlPersonProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
+            }
+        }
+
         private void MatchProperties(PimsAcquisitionFile acquisitionFile)
         {
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -268,28 +281,10 @@ namespace Pims.Api.Services
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
-            if (geom.SRID != SpatialReference.BC_ALBERS)
+            if (geom.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
-            }
-        }
-
-        private void ReprojectPropertyLocationsToWgs84(PimsAcquisitionFile acquisitionFile)
-        {
-            if (acquisitionFile == null)
-            {
-                return;
-            }
-
-            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
-            {
-                if (acquisitionProperty.Property.Location != null)
-                {
-                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
-                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
-                }
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
         }
 
@@ -300,8 +295,8 @@ namespace Pims.Api.Services
                 if (acquisitionProperty.Property.Location != null)
                 {
                     var oldCoords = acquisitionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
-                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
+                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
         }

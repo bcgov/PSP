@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -19,8 +20,8 @@ namespace Pims.Api.Helpers.Logging
                 Log.Logger = new LoggerConfiguration()
                     .Enrich.FromLogContext()
                     .Enrich.WithMachineName()
-                    .WriteTo.Debug()
-                    .WriteTo.Console()
+                    .WriteTo.Debug(formatProvider: CultureInfo.CurrentCulture)
+                    .WriteTo.Console(formatProvider: CultureInfo.CurrentCulture)
                     .Enrich.WithProperty("Environment", environment)
                     .ReadFrom.Configuration(configuration)
                     .CreateLogger();

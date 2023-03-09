@@ -15,7 +15,7 @@ namespace Pims.Dal.Helpers
         /// <returns></returns>
         public static NetTopologySuite.Geometries.Point CreatePoint(double longitude, double latitude)
         {
-            return CreatePoint(longitude, latitude, SpatialReference.WGS_84);
+            return CreatePoint(longitude, latitude, SpatialReference.WGS84);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Pims.Dal.Helpers
         /// <returns></returns>
         public static NetTopologySuite.Geometries.Point CreatePoint(double longitude, double latitude, int srid)
         {
-            /// Spatial Reference Identifier (SRID) is a unique identifier associated with a specific coordinate system, tolerance, and resolution (default 4326).
+            // Spatial Reference Identifier (SRID) is a unique identifier associated with a specific coordinate system, tolerance, and resolution (default 4326).
             return new NetTopologySuite.Geometries.Point(longitude, latitude) { SRID = srid };
         }
 
@@ -38,7 +38,7 @@ namespace Pims.Dal.Helpers
         /// <returns></returns>
         public static NetTopologySuite.Geometries.Point CreatePoint(NetTopologySuite.Geometries.Coordinate coordinate)
         {
-            return CreatePoint(coordinate, SpatialReference.WGS_84);
+            return CreatePoint(coordinate, SpatialReference.WGS84);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Pims.Dal.Helpers
         /// <returns></returns>
         public static NetTopologySuite.Geometries.Point CreatePoint(NetTopologySuite.Geometries.Coordinate coordinate, int srid)
         {
-            /// Spatial Reference Identifier (SRID) is a unique identifier associated with a specific coordinate system, tolerance, and resolution (default 4326).
+            // Spatial Reference Identifier (SRID) is a unique identifier associated with a specific coordinate system, tolerance, and resolution (default 4326).
             return new NetTopologySuite.Geometries.Point(coordinate) { SRID = srid };
         }
     }

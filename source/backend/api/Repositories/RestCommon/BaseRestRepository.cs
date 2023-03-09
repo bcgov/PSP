@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -163,8 +164,6 @@ namespace Pims.Api.Repositories.Rest
             return result;
         }
 
-
-
         protected async Task<ExternalResult<FileDownload>> ProcessDownloadResponse(HttpResponseMessage response)
         {
             ExternalResult<FileDownload> result = new ExternalResult<FileDownload>()
@@ -175,7 +174,7 @@ namespace Pims.Api.Repositories.Rest
             byte[] responsePayload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
             _logger.LogTrace("Response: {response}", response);
             response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
-            long contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault()) : responsePayload.Length;
+            long contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault(), CultureInfo.InvariantCulture) : responsePayload.Length;
             result.HttpStatusCode = response.StatusCode;
             switch (response.StatusCode)
             {
@@ -217,7 +216,7 @@ namespace Pims.Api.Repositories.Rest
             const string fileNameFlag = "filename";
             string[] parts = contentDisposition.Split("; ");
             string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
-            return fileNamePart[(fileNameFlag.Length + 1)..].Replace("\"", string.Empty);
+            return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
         }
 
         private async Task<ExternalResult<T>> ProcessResponse<T>(HttpResponseMessage response)
@@ -240,7 +239,7 @@ namespace Pims.Api.Repositories.Rest
                     switch (Type.GetTypeCode(typeof(T)))
                     {
                         case TypeCode.String:
-                            result.Payload = (T)Convert.ChangeType(payload, typeof(T));
+                            result.Payload = (T)Convert.ChangeType(payload, typeof(T), CultureInfo.InvariantCulture);
                             break;
                         default:
                             T requestTokenResult = JsonSerializer.Deserialize<T>(payload);

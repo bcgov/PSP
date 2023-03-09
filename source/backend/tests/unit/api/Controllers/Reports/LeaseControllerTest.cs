@@ -79,7 +79,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Csv_Success(LeaseFilterModel filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
@@ -92,7 +92,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPECSV, actionResult.ContentType);
             _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
         }
 
@@ -104,7 +104,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Csv_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
@@ -122,7 +122,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Lease_Mapping()
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var lease = EntityHelper.CreateLease(1);
             lease.RegionCodeNavigation = new PimsRegion() { RegionCode = 1, Description = "region" };
@@ -167,7 +167,7 @@ namespace Pims.Api.Test.Controllers.Reports
         {
             // Arrange
             var headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var lease = EntityHelper.CreateLease(1);
             var leaseTerm = new PimsLeaseTerm();
@@ -202,7 +202,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_LeaseTenant_Mapping()
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var lease = EntityHelper.CreateLease(1);
             var leaseOrgTenant = new PimsLeaseTenant();
@@ -231,7 +231,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_LeaseProperty_Mapping()
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var lease = new PimsLease();
             var property = new PimsProperty();
@@ -262,7 +262,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Cartesion()
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var lease = new PimsLease();
             lease.PimsLeaseTerms.Add(new PimsLeaseTerm());
@@ -295,7 +295,7 @@ namespace Pims.Api.Test.Controllers.Reports
         {
             // Arrange
             var headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
+            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
@@ -307,7 +307,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
@@ -321,7 +321,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_Excel_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
@@ -335,7 +335,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
@@ -349,7 +349,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_ExcelX_Success(LeaseFilterModel filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
@@ -361,7 +361,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
@@ -375,7 +375,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportLeases_ExcelX_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
@@ -387,7 +387,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             _repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
@@ -479,7 +479,7 @@ namespace Pims.Api.Test.Controllers.Reports
         {
             // Arrange
             var helper = new TestHelper();
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var lease = EntityHelper.CreateLease(1, region: new PimsRegion() { Id = 1 });
             var leases = new[] { lease };
@@ -496,7 +496,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             _service.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
@@ -509,7 +509,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportAggregatedLeases_ExcelX_InvalidFiscal()
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 

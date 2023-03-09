@@ -1,4 +1,4 @@
-using Mapster;
+﻿using Mapster;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Contact.Models.Search;
 

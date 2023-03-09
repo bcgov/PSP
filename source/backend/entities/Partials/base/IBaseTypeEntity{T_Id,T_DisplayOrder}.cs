@@ -1,4 +1,4 @@
-namespace Pims.Dal.Entities
+﻿namespace Pims.Dal.Entities
 {
     public interface IBaseTypeEntity<T_Id, T_DisplayOrder>
     {
