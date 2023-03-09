@@ -15,6 +15,9 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
 
   return (
     <Section header="Owners">
+      <StyledParagraph>
+        Each property in this file should be owned by the owner(s) in this section
+      </StyledParagraph>
       {ownersList?.map((owner, index) => {
         return (
           <span key={`owner-${index}-${owner.ownerName}`}>
@@ -40,4 +43,10 @@ export default AcquisitionOwnersSummaryView;
 
 const StyledAddressWrapper = styled.div`
   white-space: pre-line;
+`;
+
+const StyledParagraph = styled.p`
+  color: #494949;
+  font-size: 1.6rem;
+  text-decoration: none;
 `;
