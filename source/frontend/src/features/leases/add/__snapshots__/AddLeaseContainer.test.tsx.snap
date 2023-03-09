@@ -331,6 +331,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c14:hover {
@@ -557,6 +558,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         value="DRAFT"
                       >
                         Draft
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-DUPLICATE"
+                        value="DUPLICATE"
+                      >
+                        Duplicate
                       </option>
                       <option
                         class="option"

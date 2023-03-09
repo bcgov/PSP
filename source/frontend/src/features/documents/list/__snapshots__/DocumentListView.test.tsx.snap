@@ -205,6 +205,7 @@ exports[`Document List View renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c4 {
@@ -335,24 +336,10 @@ exports[`Document List View renders as expected 1`] = `
                     </option>
                     <option
                       class="option"
-                      data-testid="select-option-AMENDD"
-                      value="AMENDD"
+                      data-testid="select-option-NONE"
+                      value="NONE"
                     >
-                      Amended
-                    </option>
-                    <option
-                      class="option"
-                      data-testid="select-option-APPROVD"
-                      value="APPROVD"
-                    >
-                      Approved
-                    </option>
-                    <option
-                      class="option"
-                      data-testid="select-option-CNCLD"
-                      value="CNCLD"
-                    >
-                      Cancelled
+                      None
                     </option>
                     <option
                       class="option"
@@ -363,31 +350,10 @@ exports[`Document List View renders as expected 1`] = `
                     </option>
                     <option
                       class="option"
-                      data-testid="select-option-FINAL"
-                      value="FINAL"
+                      data-testid="select-option-APPROVD"
+                      value="APPROVD"
                     >
-                      Final
-                    </option>
-                    <option
-                      class="option"
-                      data-testid="select-option-NONE"
-                      value="NONE"
-                    >
-                      None
-                    </option>
-                    <option
-                      class="option"
-                      data-testid="select-option-RGSTRD"
-                      value="RGSTRD"
-                    >
-                      Registered
-                    </option>
-                    <option
-                      class="option"
-                      data-testid="select-option-SENT"
-                      value="SENT"
-                    >
-                      Sent
+                      Approved
                     </option>
                     <option
                       class="option"
@@ -398,10 +364,24 @@ exports[`Document List View renders as expected 1`] = `
                     </option>
                     <option
                       class="option"
-                      data-testid="select-option-UNREGD"
-                      value="UNREGD"
+                      data-testid="select-option-FINAL"
+                      value="FINAL"
                     >
-                      Unregistered
+                      Final
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-AMENDD"
+                      value="AMENDD"
+                    >
+                      Amended
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-CNCLD"
+                      value="CNCLD"
+                    >
+                      Cancelled
                     </option>
                   </select>
                 </div>

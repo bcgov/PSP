@@ -43,7 +43,10 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   setContainerState,
   formikRef,
 }) => {
-  const formTitle = containerState.isEditing ? 'Update Acquisition File' : 'Acquisition File';
+  const formTitle =
+    containerState.isEditing && containerState.activeEditForm
+      ? getEditTitle(containerState.activeEditForm)
+      : 'Acquisition File';
 
   const menuItems =
     containerState.acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
@@ -110,6 +113,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               isEditing={containerState.isEditing}
               activeEditForm={containerState.activeEditForm}
               selectedMenuIndex={containerState.selectedMenuIndex}
+              defaultPropertyTab={containerState.defaultPropertyTab}
               setContainerState={setContainerState}
               onSuccess={onSuccess}
             />
@@ -119,7 +123,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               title={'Confirm changes'}
               message={
                 <>
-                  <div>If you cancel now, this acquisition file will not be saved.</div>
+                  <div>If you cancel now, this form will not be saved.</div>
                   <br />
                   <strong>Are you sure you want to Cancel?</strong>
                 </>
@@ -135,6 +139,21 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
       ></FileLayout>
     </MapSideBarLayout>
   );
+};
+
+const getEditTitle = (editFormName: EditFormNames) => {
+  switch (editFormName) {
+    case EditFormNames.acquisitionSummary:
+      return 'Update Acquisition File';
+    case EditFormNames.propertyDetails:
+      return 'Update Property File Data';
+    case EditFormNames.takes:
+      return 'Update Takes';
+    case EditFormNames.propertySelector:
+      return 'Updating Acquisition Properties';
+    default:
+      throw Error('Cannot edit this type of form');
+  }
 };
 
 const StyledFormWrapper = styled.div`

@@ -250,7 +250,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
         >
           <label
             class="form-label"
-            for="input-searchBy"
+            for="searchBy"
           >
             Search by:
           </label>
@@ -265,6 +265,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
               >
                 <input
                   class="form-check-input position-static"
+                  data-testid="radio-searchby-[object object]"
                   id="input-organizations"
                   name="searchBy"
                   type="radio"
@@ -273,7 +274,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
               </div>
               <label
                 class="form-check-label form-label"
-                for="input-searchBy"
+                for="searchBy"
               >
                 <svg
                   fill="currentColor"
@@ -301,6 +302,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
               >
                 <input
                   class="form-check-input position-static"
+                  data-testid="radio-searchby-[object object]"
                   id="input-persons"
                   name="searchBy"
                   type="radio"
@@ -309,7 +311,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
               </div>
               <label
                 class="form-check-label form-label"
-                for="input-searchBy"
+                for="searchBy"
               >
                 <svg
                   fill="currentColor"
@@ -338,6 +340,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
                 <input
                   checked=""
                   class="form-check-input position-static"
+                  data-testid="radio-searchby-[object object]"
                   id="input-all"
                   name="searchBy"
                   type="radio"
@@ -346,7 +349,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
               </div>
               <label
                 class="form-check-label form-label"
-                for="input-searchBy"
+                for="searchBy"
               >
                 <svg
                   fill="currentColor"

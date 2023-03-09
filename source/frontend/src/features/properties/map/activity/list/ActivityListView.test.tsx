@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { prettyDOM, screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Claims from 'constants/claims';
@@ -97,7 +97,7 @@ describe('Activity List View', () => {
       claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
-    const link = getAllByText('Survey')[1];
+    const link = getAllByText('Survey')[0];
 
     act(() => userEvent.click(link));
 

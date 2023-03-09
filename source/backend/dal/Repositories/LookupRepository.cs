@@ -303,6 +303,21 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsProjectStatusTypes.AsNoTracking().ToArray();
         }
+
+        public IEnumerable<PimsTakeType> GetAllTakeTypes()
+        {
+            return this.Context.PimsTakeTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsTakeStatusType> GetAllTakeStatusTypes()
+        {
+            return this.Context.PimsTakeStatusTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsTakeSiteContamType> GetAllTakeSiteContamTypes()
+        {
+            return this.Context.PimsTakeSiteContamTypes.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }
