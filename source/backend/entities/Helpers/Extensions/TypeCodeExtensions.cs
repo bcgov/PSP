@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities.Helpers.Extensions
         public static bool IsExpiredType(this IExpiringTypeEntity type, DateTime? currentDate = null)
         {
             DateTime now = currentDate.HasValue ? (DateTime)currentDate?.Date : DateTime.UtcNow.Date;
-            return (type.EffectiveDate.Date > now) || (type.ExpiryDate.HasValue && type.ExpiryDate?.Date < now);
+            return (type.EffectiveDate.Date > now) || (type.ExpiryDate.HasValue && type.ExpiryDate?.Date <= now);
         }
     }
 }
