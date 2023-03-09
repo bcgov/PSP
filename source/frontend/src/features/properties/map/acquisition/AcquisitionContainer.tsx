@@ -36,9 +36,7 @@ const initialState: AcquisitionContainerState = {
   defaultPropertyTab: InventoryTabNames.property,
 };
 
-export const AcquisitionContainer: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionContainerProps>
-> = props => {
+export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading } = useContext(SideBarContext);
