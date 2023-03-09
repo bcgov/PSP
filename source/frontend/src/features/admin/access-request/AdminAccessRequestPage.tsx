@@ -31,14 +31,10 @@ export const AdminAccessRequestPage: React.FunctionComponent<
       </Row>
       <Row>
         <Col md={7}>
-          <Alert variant="info">Modify this access request</Alert>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={7}>
           <AccessRequestContainer
             accessRequestId={props?.match?.params?.id}
             onSave={() => history.push('/admin/access/requests')}
+            asAdmin
           />
         </Col>
       </Row>
