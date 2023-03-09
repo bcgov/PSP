@@ -30,22 +30,6 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   tabViews.push({
     content: (
-      <AcquisitionChecklistView
-        acquisitionFile={acquisitionFile}
-        onEdit={() =>
-          setContainerState({
-            isEditing: true,
-            activeEditForm: EditFormNames.acquisitionChecklist,
-          })
-        }
-      />
-    ),
-    key: FileTabNames.checklist,
-    name: 'Checklist',
-  });
-
-  tabViews.push({
-    content: (
       <AcquisitionSummaryView
         acquisitionFile={acquisitionFile}
         onEdit={() =>
@@ -58,6 +42,22 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     ),
     key: FileTabNames.fileDetails,
     name: 'File details',
+  });
+
+  tabViews.push({
+    content: (
+      <AcquisitionChecklistView
+        acquisitionFile={acquisitionFile}
+        onEdit={() =>
+          setContainerState({
+            isEditing: true,
+            activeEditForm: EditFormNames.acquisitionChecklist,
+          })
+        }
+      />
+    ),
+    key: FileTabNames.checklist,
+    name: 'Checklist',
   });
 
   if (acquisitionFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
@@ -95,7 +95,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     name: 'Forms',
   });
 
-  var defaultTab = FileTabNames.checklist;
+  var defaultTab = FileTabNames.fileDetails;
 
   const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
 
