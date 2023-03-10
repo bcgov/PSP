@@ -6,6 +6,7 @@ import {
   SelectOption,
 } from 'components/common/form';
 import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { StyledSectionParagraph } from 'components/common/styles';
 import TooltipIcon from 'components/common/TooltipIcon';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
@@ -203,9 +204,9 @@ export const UpdateAcquisitionForm = React.forwardRef<
             </Section>
 
             <Section header="Owners">
-              <StyledParagraph>
+              <StyledSectionParagraph>
                 Each property in this file should be owned by the owner(s) in this section
-              </StyledParagraph>
+              </StyledSectionParagraph>
               <UpdateAcquisitionOwnersSubForm />
             </Section>
           </Container>
@@ -232,10 +233,4 @@ const Container = styled.div`
   [name='region'] {
     max-width: 25rem;
   }
-`;
-
-const StyledParagraph = styled.p`
-  color: #494949;
-  font-size: 1.6rem;
-  text-decoration: none;
 `;

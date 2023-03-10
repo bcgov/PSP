@@ -6,7 +6,13 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
     class="Toastify"
   />
   <div />
-  .c1 {
+  .c2 {
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -32,13 +38,6 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
 
 .c5 {
   white-space: pre-line;
-}
-
-.c2 {
-  color: #494949;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
 }
 
 <div

@@ -276,6 +276,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
+.c24 {
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c0 {
   width: 100%;
   position: relative;
@@ -407,13 +413,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
 
 .c3 [name='region'] {
   max-width: 25rem;
-}
-
-.c24 {
-  color: #494949;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
 }
 
 .c2 {

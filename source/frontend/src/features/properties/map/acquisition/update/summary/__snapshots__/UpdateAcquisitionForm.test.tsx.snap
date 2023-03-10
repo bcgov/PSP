@@ -186,6 +186,12 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c11 {
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -298,13 +304,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
 
 .c0 [name='region'] {
   max-width: 25rem;
-}
-
-.c11 {
-  color: #494949;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
 }
 
 <div
