@@ -16,16 +16,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private readonly string nonExistingContact = "A non existing contact";
         private readonly string legacyOrganizationName = "BC Hydro and Telus";
-        private readonly string organization1Name = "Automation Test Corp";
-
-        private readonly string organization2Name = "Automation Test Corp II";
-        private readonly string organization2Alias = "AutoCorpII";
-        private readonly string organization2CorpNbr = "BC78990";
-        private readonly string organization2Email1 = "info@testcorp.ca";
-        private readonly string organization2Phone1 = "(778) 323-0988";
-        private readonly string organization2Email2 = "contact@testcorp.ca";
-        private readonly string organization2Phone2 = "(778) 323-0989";
-
         private readonly string comments = "Automated Test for Contacts";
 
         public ContactsSteps(BrowserDriver driver)
@@ -142,17 +132,43 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts.NavigateToSearchContact();
 
             //Search for a contact
-            searchContacts.SearchOrganizationContact(organization2Name);
+            var contact = organizationContacts.SingleOrDefault(u => u.OrganizationName.Equals("Automation Test Corp II", StringComparison.OrdinalIgnoreCase));
+            searchContacts.SearchOrganizationContact(contact.OrganizationName);
 
             //Select the first option from search
             searchContacts.SelectFirstResultLink();
 
             //Update an Organization Contact
-            contacts.UpdateContact(organization2Email2, organization2Phone2);
+            contacts.UpdateContact(contact.Email2, contact.Phone2);
 
             //Save Contact
             contacts.SaveContact();
 
+        }
+
+        [StepDefinition(@"I update an existing Individual Contact")]
+        public void UpdateIndividualContact()
+        {
+            /* TEST COVERAGE: PSP-4207, PSP-4200, PSP-4559 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Search a Contact
+            searchContacts.NavigateToSearchContact();
+
+            //Search for a contact
+            var contact = individualContacts.SingleOrDefault(u => u.FirstName.Equals("Anne", StringComparison.OrdinalIgnoreCase));
+            searchContacts.SearchIndividualContact(contact.FirstName + " " +contact.MiddleName + " " + contact.LastName);
+
+            //Select the first option from search
+            searchContacts.SelectFirstResultLink();
+
+            //Update an Organization Contact
+            contacts.UpdateContact(contact.Email2, contact.Phone2);
+
+            //Save Contact
+            contacts.SaveContact();
         }
 
         [StepDefinition(@"I search for an existing contact (.*)")]
@@ -167,7 +183,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts.NavigateToSearchContact();
 
             //Search for an existing contact
-            searchContacts.VerifySearchLinks(organization2Name);
+            var contact = organizationContacts.SingleOrDefault(u => u.OrganizationName.Equals("Automation Test Corp II", StringComparison.OrdinalIgnoreCase));
+            searchContacts.VerifySearchLinks(contact.OrganizationName);
         }
 
         [StepDefinition(@"I search for an non-existing contact")]
@@ -271,7 +288,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 var contact = individualContacts.SingleOrDefault(u => u.LastName.Equals(searchCriteria, StringComparison.OrdinalIgnoreCase));
                 if (contact == null) throw new InvalidOperationException($"Contact {searchCriteria} not found in the test configuration");
                 searchContacts.SearchIndividualContact(contact.Summary);
-                searchContacts.VerifyContactTableContent(contact.Summary, contact.FirstName, contact.LastName, contact.Organization, contact.Email, contact.MailAddressLine1, contact.MailCity, contact.MailProvDisplay);
+                searchContacts.VerifyContactTableContent(contact.Summary, contact.FirstName, contact.LastName, contact.Organization, contact.Email2, contact.MailAddressLine1, contact.MailCity, contact.MailProvDisplay);
             }
             else
             {
@@ -292,7 +309,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             public string PreferableName { get; set; } = null!;
             public string Organization { get; set; } = null!;
             public string Email { get; set; } = null!;
+            public string Email2 { get; set; } = null!;
             public string Phone { get; set; } = null!;
+            public string Phone2 { get; set; } = null!;
             public string MailAddressLine1 { get; set; } = null!;
             public string MailCountry { get; set; } = null!;
             public string MailProvince { get; set; } = null!;
@@ -317,7 +336,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             public string Alias { get; set; } = null!;
             public string IncorporationNumber { get; set; } = null!;
             public string Email { get; set; } = null!;
+            public string Email2 { get; set; } = null!;
             public string Phone { get; set; } = null!;
+            public string Phone2 { get; set; } = null!;
             public string MailAddressLine1 { get; set; } = null!;
             public string MailCountry { get; set; } = null!;
             public string MailProvince { get; set; } = null!;
