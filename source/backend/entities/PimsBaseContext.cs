@@ -425,6 +425,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ExpiryDate).HasComment("Date the checklist item is removed from the input form.");
 
+                entity.Property(e => e.Hint).HasComment("Checklist item descriptive tooltip presented to the user.");
+
                 entity.Property(e => e.IsRequired)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the checklist item is a required field.");
