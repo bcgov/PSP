@@ -49,7 +49,6 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.PropertyView)]
         public Task ProxyCatchAll(string rest)
         {
-            // If you don't need the query string, then you can remove this.
             var queryString = this.Request.QueryString.Value;
             HttpProxyOptions httpOptions = AspNetCore.Proxy.Options.HttpProxyOptionsBuilder.Instance.WithBeforeSend((c, hrm) =>
             {
