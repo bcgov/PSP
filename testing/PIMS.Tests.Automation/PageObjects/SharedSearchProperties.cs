@@ -58,12 +58,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
         private By searchPropertiesSelectedDefault = By.XPath("//span[contains(text(),'No Properties selected')]");
         private By searchPropertiesSelectedPropertiesTotal = By.CssSelector("div[class='align-items-center mb-3 no-gutters row']");
-        //private By searchPropertiesSelectedPropertiesTotal = By.XPath("//div[contains(text(), 'Identifier')]/parent::div/parent::div/div");
         private By searchPropertiesName1stPropInput = By.Id("input-properties.0.name");
         private By searchPropertiesDelete1stPropBttn = By.XPath("(//span[contains(text(),'Remove')]/parent::div/parent::button)[1]");
 
         //Toast Element
         private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
+
+        //Warning Message Modal
+        private By searchPropertiesModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
 
@@ -168,6 +170,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(searchPropertiesDelete1stPropBttn).Click();
 
+            Wait(5000);
+            if (webDriver.FindElements(searchPropertiesModal).Count > 0)
+            {
+                Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
+                Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/license?");
+
+                sharedModals.ModalClickOKBttn();
+            }
+
             var PropertiesLeft = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
 
             Wait();
@@ -179,14 +190,25 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntil(searchProperties1stResultPropDiv);
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
-            Wait(3000);
+            Wait();
             ButtonElement("Add to selection");
 
+            Wait();
+            sharedModals.SiteMinderModal();
 
             //if (webDriver.FindElements(generalToastBody).Count() > 0)
             //{
             //    Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
             //}
+
+            Wait(5000);
+            if (webDriver.FindElements(searchPropertiesModal).Count > 0)
+            {
+                Assert.True(sharedModals.ModalHeader() == "Not inventory property");
+                Assert.True(sharedModals.ModalContent() == "You have selected a property not previously in the inventory. Do you want to add this property to the lease?");
+
+                sharedModals.ModalClickOKBttn();
+            }
         }
 
         public string noRowsResultsMessage()
