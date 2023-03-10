@@ -3,7 +3,12 @@ import { AddressTypes } from 'constants/index';
 import useAddContact from 'features/contacts/hooks/useAddContact';
 import { createMemoryHistory } from 'history';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
+import {
+  IEditableContactMethod,
+  IEditableOrganization,
+  IEditablePerson,
+  IEditablePersonAddress,
+} from 'interfaces/editable-contact';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
@@ -57,14 +62,26 @@ const mockPerson: IEditablePerson = {
   organization: null,
   useOrganizationAddress: false,
   addresses: [],
-  contactMethods: [
-    {
-      contactMethodTypeCode: {
-        id: 'WORKEMAIL',
-      },
-      value: 'test@test.com',
-    },
-  ],
+  contactMethods: [],
+};
+
+const mockContactMethod: IEditableContactMethod = {
+  contactMethodTypeCode: {
+    id: 'WORKEMAIL',
+  },
+  value: 'test@test.com',
+};
+
+const mockAddress: IEditablePersonAddress = {
+  streetAddress1: 'Test Street',
+  streetAddress2: '',
+  streetAddress3: '',
+  municipality: 'Amsterdam',
+  provinceId: undefined,
+  countryId: 4,
+  countryOther: 'Netherlands',
+  postal: '123456',
+  addressTypeId: { id: AddressTypes.Mailing },
 };
 
 // Mock API service calls
@@ -101,7 +118,7 @@ describe('CreatePersonForm', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup();
-    await act(async () => expect(asFragment()).toMatchSnapshot());
+    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('when Cancel button is clicked', () => {
@@ -115,7 +132,12 @@ describe('CreatePersonForm', () => {
 
   describe('when Save button is clicked', () => {
     it('should save the form with minimal data', async () => {
-      addPerson.mockResolvedValue({ ...mockPerson, id: 1 });
+      const expected: IEditablePerson = {
+        ...mockPerson,
+        contactMethods: [{ ...mockContactMethod }],
+      };
+
+      addPerson.mockResolvedValue({ ...expected, id: 1 });
       const { getSaveButton, container } = setup();
 
       // provide required fields
@@ -133,7 +155,38 @@ describe('CreatePersonForm', () => {
 
       const save = getSaveButton();
       act(() => userEvent.click(save));
-      await waitFor(() => expect(addPerson).toBeCalledWith(mockPerson, expect.anything(), false));
+      await waitFor(() => expect(addPerson).toBeCalledWith(expected, expect.anything(), false));
+
+      await waitFor(() => {
+        expect(history.location.pathname).toBe('/contact/P1');
+      });
+    });
+
+    it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
+      const expected: IEditablePerson = {
+        ...mockPerson,
+        addresses: [{ ...mockAddress }],
+      };
+
+      const { getSaveButton, container } = setup();
+
+      // provide required fields
+      await act(async () => {
+        await fillInput(container, 'firstName', 'Chester');
+        await fillInput(container, 'surname', 'Tester');
+        await fillInput(container, 'mailingAddress.streetAddress1', mockAddress.streetAddress1);
+        await fillInput(container, 'mailingAddress.municipality', mockAddress.municipality);
+        await fillInput(container, 'mailingAddress.countryId', 4, 'select');
+      });
+
+      await act(async () => {
+        await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
+        await fillInput(container, 'mailingAddress.postal', mockAddress.postal);
+      });
+
+      const save = getSaveButton();
+      act(() => userEvent.click(save));
+      await waitFor(() => expect(addPerson).toBeCalledWith(expected, expect.anything(), false));
 
       await waitFor(() => {
         expect(history.location.pathname).toBe('/contact/P1');

@@ -4,7 +4,12 @@ import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
 import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import { createMemoryHistory } from 'history';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
+import {
+  IEditableContactMethod,
+  IEditableOrganization,
+  IEditablePerson,
+  IEditablePersonAddress,
+} from 'interfaces/editable-contact';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
@@ -48,6 +53,13 @@ const mockOrganization: IEditableOrganization = {
   ],
 };
 
+const mockContactMethod: IEditableContactMethod = {
+  contactMethodTypeCode: {
+    id: 'WORKEMAIL',
+  },
+  value: 'test@test.com',
+};
+
 const mockPerson: IEditablePerson = {
   id: 1,
   isDisabled: false,
@@ -59,12 +71,19 @@ const mockPerson: IEditablePerson = {
   organization: { id: mockOrganization.id as number, text: mockOrganization.name },
   useOrganizationAddress: false,
   addresses: [],
-  contactMethods: [
-    {
-      contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail },
-      value: 'test@test.com',
-    },
-  ],
+  contactMethods: [mockContactMethod],
+};
+
+const mockAddress: IEditablePersonAddress = {
+  streetAddress1: 'Test Street',
+  streetAddress2: '',
+  streetAddress3: '',
+  municipality: 'Amsterdam',
+  provinceId: undefined,
+  countryId: 4,
+  countryOther: 'Netherlands',
+  postal: '123456',
+  addressTypeId: { id: AddressTypes.Mailing },
 };
 
 // Mock API service calls
@@ -75,7 +94,7 @@ jest.mock('features/contacts/hooks/useUpdateContact');
 const getOrganization = jest.fn(() => mockOrganization);
 (useApiContacts as jest.Mock).mockReturnValue({ getOrganization });
 
-(usePersonDetail as jest.Mock).mockReturnValue({ person: mockPerson });
+const mockUsePersonDetail = usePersonDetail as jest.MockedFunction<typeof usePersonDetail>;
 
 const updatePerson = jest.fn();
 (useUpdateContact as jest.Mock).mockReturnValue({ updatePerson });
@@ -97,14 +116,19 @@ describe('UpdatePersonForm', () => {
   };
 
   beforeEach(() => {
-    getOrganization.mockReset();
-    updatePerson.mockReset();
+    mockUsePersonDetail.mockReturnValue({ person: mockPerson });
+  });
+
+  afterEach(() => {
+    getOrganization.mockClear();
+    updatePerson.mockClear();
+    mockUsePersonDetail.mockClear();
   });
 
   it('renders as expected', async () => {
     const { asFragment } = setup();
     const fragment = await waitFor(() => asFragment());
-    await act(async () => expect(fragment).toMatchSnapshot());
+    expect(fragment).toMatchSnapshot();
   });
 
   describe('when Cancel button is clicked', () => {
@@ -141,19 +165,70 @@ describe('UpdatePersonForm', () => {
       };
 
       // provide required fields
-      await fillInput(container, 'firstName', newValues.firstName);
-      await fillInput(container, 'surname', newValues.surname);
-      await fillInput(
-        container,
-        'emailContactMethods.0.value',
-        newValues?.contactMethods?.[0].value,
-      );
-      await fillInput(
-        container,
-        'emailContactMethods.0.contactMethodTypeCode',
-        newValues?.contactMethods?.[0].contactMethodTypeCode?.id,
-        'select',
-      );
+      await act(async () => {
+        await fillInput(container, 'firstName', newValues.firstName);
+        await fillInput(container, 'surname', newValues.surname);
+        await fillInput(
+          container,
+          'emailContactMethods.0.value',
+          newValues?.contactMethods?.[0].value,
+        );
+        await fillInput(
+          container,
+          'emailContactMethods.0.contactMethodTypeCode',
+          newValues?.contactMethods?.[0].contactMethodTypeCode?.id,
+          'select',
+        );
+      });
+
+      const save = getSaveButton();
+      act(() => userEvent.click(save));
+
+      await waitFor(() => expect(updatePerson).toBeCalledWith(newValues));
+    });
+
+    it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
+      const { getSaveButton, container } = setup();
+
+      const newValues: IEditablePerson = {
+        ...mockPerson,
+        firstName: 'UpdatedName',
+        surname: 'UpdatedLastname',
+        contactMethods: [
+          {
+            contactMethodTypeCode: { id: ContactMethodTypes.PersonalEmail },
+            value: 'newaddress@test.com',
+          },
+        ],
+        addresses: [{ ...mockAddress }],
+      };
+
+      // provide required fields
+      await act(async () => {
+        await fillInput(container, 'firstName', newValues.firstName);
+        await fillInput(container, 'surname', newValues.surname);
+        await fillInput(
+          container,
+          'emailContactMethods.0.value',
+          newValues?.contactMethods?.[0].value,
+        );
+        await fillInput(
+          container,
+          'emailContactMethods.0.contactMethodTypeCode',
+          newValues?.contactMethods?.[0].contactMethodTypeCode?.id,
+          'select',
+        );
+        await fillInput(container, 'mailingAddress.streetAddress1', mockAddress.streetAddress1);
+        await fillInput(container, 'mailingAddress.municipality', mockAddress.municipality);
+      });
+
+      // wait for re-render upon changing country to OTHER
+      await act(async () => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
+
+      await act(async () => {
+        await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
+        await fillInput(container, 'mailingAddress.postal', mockAddress.postal);
+      });
 
       const save = getSaveButton();
       act(() => userEvent.click(save));

@@ -189,17 +189,15 @@ function hasContactMethod(formContactMethod?: IEditableContactMethodForm): boole
 function hasAddress(formAddress?: IEditablePersonAddressForm): boolean {
   if (!formAddress) return false;
 
-  let { streetAddress1, addressTypeId, countryId, provinceId, municipality, postal } = formAddress;
+  let { streetAddress1, addressTypeId, countryId, municipality, postal } = formAddress;
   countryId = parseInt(countryId.toString()) || 0;
-  provinceId = parseInt(provinceId.toString()) || 0;
 
   return (
     streetAddress1 !== '' &&
     addressTypeId !== '' &&
     municipality !== '' &&
     postal !== '' &&
-    countryId > 0 &&
-    provinceId > 0
+    countryId > 0
   );
 }
 
@@ -209,7 +207,8 @@ export function formAddressToApiAddress(
   return {
     ...formAddress,
     countryId: parseInt(formAddress?.countryId.toString()) || 0,
-    provinceId: parseInt(formAddress?.provinceId.toString()) || 0,
+    provinceId:
+      formAddress?.provinceId === '' ? undefined : parseInt(formAddress?.provinceId.toString()),
     addressTypeId: toTypeCode(formAddress?.addressTypeId),
   } as IEditablePersonAddress | IEditableOrganizationAddress;
 }
