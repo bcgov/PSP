@@ -186,6 +186,12 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c11 {
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -210,7 +216,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c14 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -230,11 +236,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: flex-end;
 }
 
-.c13 {
+.c14 {
   background-color: none;
 }
 
-.c11 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -248,7 +254,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: end;
 }
 
-.c12 {
+.c13 {
   font-size: 2rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -1435,6 +1441,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
       <div
         class="collapse show"
       >
+        <p
+          class="c11"
+        >
+          Each property in this file should be owned by the owner(s) in this section
+        </p>
         <div
           class="py-3 row"
         >
@@ -1442,7 +1453,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="container"
           >
             <div
-              class="c11"
+              class="c12"
             >
               <button
                 class="c8 Button c10 btn btn-link"
@@ -1482,7 +1493,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </button>
             </div>
             <h3
-              class="c12"
+              class="c13"
             >
               Name
             </h3>
@@ -1508,6 +1519,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[0].givenName"
                     name="owners[0].givenName"
+                    placeholder="First name Middle name (individuals only)"
                     title="Sr."
                     value="Sr."
                   />
@@ -1536,6 +1548,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[0].lastNameOrCorp1"
                     name="owners[0].lastNameOrCorp1"
+                    placeholder="Individual's Last name / Corporation's name"
                     title="john"
                     value="john"
                   />
@@ -1588,6 +1601,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[0].lastNameOrCorp2"
                     name="owners[0].lastNameOrCorp2"
+                    placeholder="Alias/Doing business as etc."
                     title="Doe"
                     value="Doe"
                   />
@@ -1616,16 +1630,17 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[0].incorporationNumber"
                     name="owners[0].incorporationNumber"
+                    placeholder="Incorporation number"
                     value=""
                   />
                 </div>
               </div>
             </div>
             <div
-              class="c13"
+              class="c14"
             >
               <h3
-                class="c12"
+                class="c13"
               >
                 Mailing Address
               </h3>
@@ -1692,7 +1707,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   style="padding-left: 0px; padding-bottom: 2rem;"
                 >
                   <div
-                    class="c14 h-100"
+                    class="c15 h-100"
                   >
                     <button
                       class="c8 Button c10 btn btn-link"
@@ -1970,7 +1985,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="container"
           >
             <div
-              class="c11"
+              class="c12"
             >
               <button
                 class="c8 Button c10 btn btn-link"
@@ -2010,7 +2025,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </button>
             </div>
             <h3
-              class="c12"
+              class="c13"
             >
               Name
             </h3>
@@ -2036,6 +2051,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[1].givenName"
                     name="owners[1].givenName"
+                    placeholder="First name Middle name (individuals only)"
                     value=""
                   />
                 </div>
@@ -2063,6 +2079,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[1].lastNameOrCorp1"
                     name="owners[1].lastNameOrCorp1"
+                    placeholder="Individual's Last name / Corporation's name"
                     title="FORTIS BC"
                     value="FORTIS BC"
                   />
@@ -2115,6 +2132,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[1].lastNameOrCorp2"
                     name="owners[1].lastNameOrCorp2"
+                    placeholder="Alias/Doing business as etc."
                     title="LTD"
                     value="LTD"
                   />
@@ -2143,6 +2161,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[1].incorporationNumber"
                     name="owners[1].incorporationNumber"
+                    placeholder="Incorporation number"
                     title="9999"
                     value="9999"
                   />
@@ -2150,10 +2169,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c13"
+              class="c14"
             >
               <h3
-                class="c12"
+                class="c13"
               >
                 Mailing Address
               </h3>
@@ -2220,7 +2239,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   style="padding-left: 0px; padding-bottom: 2rem;"
                 >
                   <div
-                    class="c14 h-100"
+                    class="c15 h-100"
                   >
                     <button
                       class="c8 Button c10 btn btn-link"

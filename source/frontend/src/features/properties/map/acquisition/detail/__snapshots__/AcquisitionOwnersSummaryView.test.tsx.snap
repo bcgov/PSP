@@ -6,7 +6,13 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
     class="Toastify"
   />
   <div />
-  .c1 {
+  .c2 {
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -19,18 +25,18 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
   text-align: left;
 }
 
-.c3.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
 }
 
-.c4 {
+.c5 {
   white-space: pre-line;
 }
 
@@ -56,6 +62,11 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
     <div
       class="collapse show"
     >
+      <p
+        class="c2"
+      >
+        Each property in this file should be owned by the owner(s) in this section
+      </p>
       <span>
         <div
           class="pb-2 row"
@@ -64,13 +75,13 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Name:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             JOHN DOE
           </div>
@@ -82,7 +93,7 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Other name:
               <span
@@ -112,7 +123,7 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             SR.
           </div>
@@ -124,16 +135,16 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Mailing address:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
-              class="c4"
+              class="c5"
             >
               456 Souris Street 
 
@@ -157,13 +168,13 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Name:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             FORTIS BC (9999)
           </div>
@@ -175,7 +186,7 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Other name:
               <span
@@ -205,7 +216,7 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             LTD.
           </div>
@@ -217,16 +228,16 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Mailing address:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
-              class="c4"
+              class="c5"
             >
               123 Main Street 
 
