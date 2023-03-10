@@ -68,7 +68,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create and delete an activity")]
         public void CreateDeleteActivity()
         {
-            /* TEST COVERAGE:  PSP-4477, PSP-4784, PSP-4785, PSP-4362, PSP-4275 */
+            /* TEST COVERAGE:  PSP-4275, PSP-4362, PSP-4477, PSP-4784, PSP-4785  */
 
             //Acess the activity tab
             activities.AccessActivitiesTab();
@@ -108,7 +108,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create an activity with notes and delete notes")]
         public void ActivityWithNotes()
         {
-            /* TEST COVERAGE:  PSP-4006, PSP-4010, PSP-4019, PSP-4012, PSP-4021, PSP-4008, PSP-4009, PSP-4013 */
+            /* TEST COVERAGE:  PSP-4006, PSP-4008, PSP-4009, PSP-4010, PSP-4012, PSP-4013, PSP-4019, PSP-4021 */
 
             //Acess the activity tab
             activities.AccessActivitiesTab();
@@ -162,8 +162,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create an Acquisition File with activity and a document attached")]
         public void ActivityWithDocuments()
         {
-            /* TEST COVERAGE:  PSP-4357, PSP-4356, PSP-4355, PSP-4354, PSP-4353, PSP-4352, PSP-4351, PSP-4350, PSP-4349, PSP-4348, PSP-4347, PSP-4346, PSP-4345, PSP-4344, PSP-4343, PSP-4342, PSP-4341
-             *                  PSP-4340, PSP-4339, PSP-4159 */
+            /* TEST COVERAGE: PSP-4159, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, PSP-4354, PSP-4355, PSP-4356, PSP-4357 */
 
             //Access the activity tab
             activities.AccessActivitiesTab();
@@ -213,7 +212,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create an Acquisition File with activity and edit attached document")]
         public void ActivityWithDocumentEdited()
         {
-            /* TEST COVERAGE:  PSP-4335, PSP-4336, PSP-4168, PSP-4030, PSP-4338 */
+            /* TEST COVERAGE:  PSP-4030, PSP-4168, PSP-4335, PSP-4336, PSP-4338 */
 
             //Access the activity tab
             activities.AccessActivitiesTab();
@@ -274,7 +273,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments.CloseDigitalDocumentViewDetails();
 
             //Delete digital document
-            digitalDocuments.Delete1stDocument();
+            digitalDocuments.Delete1stDocument("Activity");
         }
 
         [StepDefinition(@"An activity is created successfully")]
