@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 13.0.3                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S49.01.dez                                 */
+/* Project file:          PIMS S49.02.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-03-08 10:00                                */
+/* Created on:            2023-03-09 14:21                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -9756,6 +9756,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_TYP', 'COLUMN', N'DOCUMENT_TYPE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_TYP', 'COLUMN', N'DISPLAY_ORDER'
 GO
 
 

@@ -15,6 +15,14 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
+-- Set all hints to NULL
+UPDATE PIMS_ACQ_CHKLST_ITEM_TYPE
+SET    HINT = ''
+     , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 -- Alter the "LANDTTL" type
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'LANDTTL'
@@ -45,7 +53,8 @@ WHERE  ACQ_CHKLST_ITEM_TYPE_CODE = @CurrCd;
 IF @@ROWCOUNT = 1
   BEGIN
   UPDATE PIMS_ACQ_CHKLST_ITEM_TYPE 
-  SET    HINT                       = N'A signed copy of the PA Plan is required'
+  SET    DESCRIPTION                = N'Property Acquisition (PA) Plan'
+       , HINT                       = N'A signed copy of the PA Plan is required'
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  ACQ_CHKLST_ITEM_TYPE_CODE = @CurrCd;
   END
@@ -160,7 +169,8 @@ WHERE  ACQ_CHKLST_ITEM_TYPE_CODE = @CurrCd;
 IF @@ROWCOUNT = 1
   BEGIN
   UPDATE PIMS_ACQ_CHKLST_ITEM_TYPE
-  SET    HINT                       = N'Letter size (8.5" x 11")'
+  SET    DESCRIPTION                = N'Registered Plan'
+       , HINT                       = N'Letter size (8.5" x 11")'
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  ACQ_CHKLST_ITEM_TYPE_CODE = @CurrCd;
   END
@@ -245,14 +255,22 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Insert new checklist items
-INSERT INTO PIMS_ACQ_CHKLST_ITEM_TYPE (ACQ_CHKLST_SECTION_TYPE_CODE, ACQ_CHKLST_ITEM_TYPE_CODE, DESCRIPTION, DISPLAY_ORDER, EFFECTIVE_DATE, HINT)
-VALUES
-  (N'SCTN3AGR',  N'CONVEYLTR',   N'Conveyance Letter',                23, getutcdate(), ''),
-  (N'SCTN3AGR',  N'SGNDAGRMNT',  N'Signed Agreement',                 24, getutcdate(), ''),
-  (N'SCTN3AGR',  N'TTLCHRGS',    N'Title and charges',                25, getutcdate(), ''),
-  (N'SCTN3AGR',  N'ALCORDER',    N'ALC order',                        26, getutcdate(), 'If applicable'),
-  (N'SCTN3AGR',  N'CURRYRASSMN', N'Current year property assessment', 27, getutcdate(), '');
+-- Alter the "ALCORDER" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'ALCORDER'
+
+SELECT ACQ_CHKLST_ITEM_TYPE_CODE
+FROM   PIMS_ACQ_CHKLST_ITEM_TYPE
+WHERE  ACQ_CHKLST_ITEM_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_ACQ_CHKLST_ITEM_TYPE
+  SET    HINT                       = N'If applicable'
+       , DISPLAY_ORDER              = 28
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  ACQ_CHKLST_ITEM_TYPE_CODE = @CurrCd;
+  END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -300,7 +318,7 @@ GO
 
 -- Alter the "EXPROPFORM5" type
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'EXPROPFORM1'
+SET     @CurrCd = N'EXPROPFORM5'
 
 SELECT ACQ_CHKLST_ITEM_TYPE_CODE
 FROM   PIMS_ACQ_CHKLST_ITEM_TYPE
@@ -309,7 +327,7 @@ WHERE  ACQ_CHKLST_ITEM_TYPE_CODE = @CurrCd;
 IF @@ROWCOUNT = 1
   BEGIN
   UPDATE PIMS_ACQ_CHKLST_ITEM_TYPE
-  SET    DESCRIPTION                = N'Notice of Expropriation (Form 5)'
+  SET    DESCRIPTION                = N'Approval of Expropriation (Form 5)'
        , HINT                       = N'The signed Form 5 is required'
        , DISPLAY_ORDER              = 30
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
