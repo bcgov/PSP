@@ -27,7 +27,7 @@ export const useProjectTypeahead = (): IProjectTypeahead => {
       if (isMounted()) {
         setMatchedProjects(
           data.map<IAutocompletePrediction>(x => {
-            let projectText = `${x.code || ''}  ${x.description}`;
+            let projectText = `${x.code || ''}  ${x.description || ''}`;
             return { id: x.id || 0, text: projectText.trim() || '' };
           }),
         );
