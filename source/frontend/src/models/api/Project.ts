@@ -5,7 +5,7 @@ import { Api_ConcurrentVersion_Null } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Project extends Api_ConcurrentVersion_Null, Api_AuditFields {
-  id: number | null | undefined;
+  id: number | null;
   projectStatusTypeCode: Api_TypeCode<string> | null;
   businessFunctionCode: Api_CodeType | null;
   costTypeCode: Api_CodeType | null;
@@ -32,7 +32,7 @@ export const defaultProject: Api_Project = {
 };
 
 export interface Api_Product extends Api_ConcurrentVersion_Null, Api_AuditFields {
-  id?: number | null | undefined;
+  id?: number | null;
   parentProject: Api_Project | null;
   code: string | null;
   description: string | null;

@@ -3,14 +3,14 @@ import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { toTypeCode } from 'utils/formUtils';
 
 export class ProductForm {
-  id: number | undefined;
+  id: number | null = null;
   code: string = '';
   description: string = '';
-  startDate: string | null = null;
+  startDate: string | '' = '';
   costEstimate: string = '';
-  costEstimateDate: string | null = null;
-  objective: string | null = null;
-  scope: string | null = null;
+  costEstimateDate: string | '' = '';
+  objective: string | '' = '';
+  scope: string | '' = '';
   rowVersion: number | null = null;
 
   toApi(parentId?: number | null): Api_Product {
@@ -36,14 +36,14 @@ export class ProductForm {
 
   static fromApi(model: Api_Product): ProductForm {
     const newForm = new ProductForm();
-    newForm.id = model.id ?? undefined;
+    newForm.id = model.id ?? null;
     newForm.code = model.code || '';
     newForm.description = model.description || '';
-    newForm.startDate = model.startDate;
+    newForm.startDate = model.startDate || '';
     newForm.costEstimate = model.costEstimate?.toString() || '';
-    newForm.costEstimateDate = model.costEstimateDate;
-    newForm.objective = model.objective;
-    newForm.scope = model.scope;
+    newForm.costEstimateDate = model.costEstimateDate || '';
+    newForm.objective = model.objective || '';
+    newForm.scope = model.scope || '';
     newForm.rowVersion = model.rowVersion ?? null;
 
     return newForm;
@@ -51,13 +51,13 @@ export class ProductForm {
 }
 
 export class ProjectForm {
-  id: number | undefined;
-  projectName: string | undefined = undefined;
-  projectNumber: string | undefined = undefined;
-  projectStatusType: string | undefined = undefined;
-  region: NumberFieldValue | undefined = undefined;
-  summary: string | undefined = undefined;
-  rowVersion: number | undefined = undefined;
+  id: number | null = null;
+  projectName: string | '' = '';
+  projectNumber: string | '' = '';
+  projectStatusType: string | '' = '';
+  region: NumberFieldValue | '' = '';
+  summary: string | '' = '';
+  rowVersion: number | null = null;
   products: ProductForm[] = [];
 
   toApi(): Api_Project {
@@ -78,13 +78,13 @@ export class ProjectForm {
 
   static fromApi(model: Api_Project): ProjectForm {
     const newForm = new ProjectForm();
-    newForm.id = model.id ?? undefined;
-    newForm.projectName = model.description ?? undefined;
-    newForm.projectNumber = model.code ?? undefined;
-    newForm.projectStatusType = model.projectStatusTypeCode?.id ?? undefined;
-    newForm.region = model.regionCode?.id ? +model.regionCode?.id ?? undefined : undefined;
-    newForm.summary = model.note ?? undefined;
-    newForm.rowVersion = model.rowVersion ?? undefined;
+    newForm.id = model.id ?? null;
+    newForm.projectName = model.description ?? '';
+    newForm.projectNumber = model.code ?? '';
+    newForm.projectStatusType = model.projectStatusTypeCode?.id ?? '';
+    newForm.region = model.regionCode?.id ? +model.regionCode?.id ?? '' : '';
+    newForm.summary = model.note ?? '';
+    newForm.rowVersion = model.rowVersion ?? null;
     newForm.products = model.products?.map(x => ProductForm.fromApi(x)) || [];
 
     return newForm;

@@ -10,7 +10,6 @@
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="CsvHelper" Version="27.1.0" />
-    <PackageReference Include="Macross.Json.Extensions" Version="2.2.0" />
     <PackageReference Include="NetTopologySuite" Version="2.2.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
   </ItemGroup>
