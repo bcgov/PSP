@@ -1,3 +1,4 @@
+import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -55,10 +56,13 @@ describe('useProperties functions', () => {
       mockAxios.onGet(url).reply(200, mockResponse);
 
       const {
-        getProperties: { execute },
+        getProperties: { execute, loading },
       } = setup();
-      await execute(null);
+      await act(async () => {
+        await execute(null);
+      });
 
+      expect(loading).toBeFalsy();
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
     });
@@ -69,7 +73,9 @@ describe('useProperties functions', () => {
       const {
         getProperties: { execute },
       } = setup();
-      await expect(execute(null)).rejects.toThrow();
+      await act(async () => {
+        await expect(execute(null)).rejects.toThrow();
+      });
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();

@@ -200,30 +200,35 @@ exports[`LayerFilter component renders as expected - search by legal description
                 >
                   <option
                     class="option"
+                    data-testid="select-option-pid"
                     value="pid"
                   >
                     PID
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-pin"
                     value="pin"
                   >
                     PIN
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-address"
                     value="address"
                   >
                     Address
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-planNumber"
                     value="planNumber"
                   >
                     Plan #
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-legalDescription"
                     value="legalDescription"
                   >
                     Legal Description
@@ -527,30 +532,35 @@ exports[`LayerFilter component renders as expected 1`] = `
                 >
                   <option
                     class="option"
+                    data-testid="select-option-pid"
                     value="pid"
                   >
                     PID
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-pin"
                     value="pin"
                   >
                     PIN
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-address"
                     value="address"
                   >
                     Address
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-planNumber"
                     value="planNumber"
                   >
                     Plan #
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-legalDescription"
                     value="legalDescription"
                   >
                     Legal Description

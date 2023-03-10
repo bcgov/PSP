@@ -5,11 +5,13 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import AppRouter from 'AppRouter';
 import { ModalContainer } from 'components/common/ModalContainer';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { RoleMismatchModal } from 'components/modals/roleMismatch';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
 import { useUsers } from 'features/admin/users/hooks/useUsers';
 import { useFavicon } from 'hooks/useFavicon';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { IUser } from 'interfaces';
 import PublicLayout from 'layouts/PublicLayout';
 import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
@@ -26,11 +28,18 @@ const App = () => {
   const {
     activateUser: { execute: activate },
   } = useUsers();
+
+  const [showRoleModal, setShowRoleModal] = React.useState(false);
+
   useFavicon();
 
   useEffect(() => {
     if (keycloak?.authenticated) {
-      activate();
+      activate().then((user: IUser | undefined) => {
+        if (user !== undefined && !user.hasValidClaims) {
+          setShowRoleModal(true);
+        }
+      });
       fetchLookupCodes();
       fetchSystemConstants();
     }
@@ -63,6 +72,7 @@ const App = () => {
               draggable
               pauseOnHover
             />
+            <RoleMismatchModal display={showRoleModal} setDisplay={setShowRoleModal} />
             <ModalContainer />
           </>
         );

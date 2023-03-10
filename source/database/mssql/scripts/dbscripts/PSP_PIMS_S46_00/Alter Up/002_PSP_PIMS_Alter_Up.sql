@@ -120,10 +120,46 @@ ALTER TABLE [dbo].[PIMS_PROJECT] ADD CONSTRAINT [PROJCT_REGION_CODE_DEF] DEFAULT
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+
+-- Drop dynamically-named default constraints
+PRINT N'Drop dynamically-named default constraints'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_PROJECT' 
+                   AND col.NAME = 'CODE')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_PROJECT] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 ALTER TABLE [dbo].[PIMS_PROJECT] ALTER COLUMN [CODE] nvarchar(20) NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+
+-- Drop dynamically-named default constraints
+PRINT N'Drop dynamically-named default constraints'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_PROJECT' 
+                   AND col.NAME = 'DESCRIPTION')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_PROJECT] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 ALTER TABLE [dbo].[PIMS_PROJECT] ADD CONSTRAINT [PROJCT_DESCRIPTION_DEF] DEFAULT ('<Empty>') FOR [DESCRIPTION]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
@@ -461,10 +497,24 @@ ALTER TABLE [dbo].[PIMS_PROJECT_HIST] ALTER COLUMN [REGION_CODE] smallint NOT NU
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
---ALTER TABLE [dbo].[PIMS_PROJECT_HIST] ADD DEFAULT 4 FOR [REGION_CODE]
---GO
---IF @@ERROR <> 0 SET NOEXEC ON
---GO
+
+-- Drop dynamically-named default constraints
+PRINT N'Drop dynamically-named default constraints'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_PROJECT_HIST' 
+                   AND col.NAME = 'CODE')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_PROJECT_HIST] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 ALTER TABLE [dbo].[PIMS_PROJECT_HIST] ALTER COLUMN [CODE] nvarchar(20) NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON

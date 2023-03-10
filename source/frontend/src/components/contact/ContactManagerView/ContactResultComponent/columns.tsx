@@ -82,6 +82,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Header: 'E-mail',
     accessor: 'email',
     align: 'left',
+    className: 'text-break',
     minWidth: 80,
     width: 100,
   },

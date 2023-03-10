@@ -6,6 +6,7 @@ import {
   DetailAcquisitionFilePerson,
 } from 'features/properties/map/acquisition/detail/models';
 import { PropertyForm } from 'features/properties/map/shared/models';
+import { IAutocompletePrediction } from 'interfaces';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Lease } from 'models/api/Lease';
 import { Api_PropertyLease } from 'models/api/PropertyLease';
@@ -47,6 +48,7 @@ export class LeaseFormModel {
   documentationReference: string = '';
   hasPhysicalLicense?: boolean;
   hasDigitalLicense?: boolean;
+  project?: IAutocompletePrediction;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
   rowVersion: number = 0;
@@ -87,6 +89,10 @@ export class LeaseFormModel {
     leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType || '';
     leaseDetail.otherPurposeTypeDescription = apiModel?.otherPurposeType || '';
     leaseDetail.otherLeaseTypeDescription = apiModel?.otherType || '';
+    leaseDetail.project =
+      apiModel?.project !== undefined
+        ? { id: apiModel.project.id || 0, text: apiModel.project.description || '' }
+        : undefined;
 
     return leaseDetail;
   }
@@ -126,6 +132,10 @@ export class LeaseFormModel {
       otherProgramType: stringToNull(this.otherProgramTypeDescription),
       otherPurposeType: stringToNull(this.otherPurposeTypeDescription),
       otherType: stringToNull(this.otherLeaseTypeDescription),
+      project:
+        this.project?.id !== undefined && this.project?.id !== 0
+          ? { id: this.project?.id }
+          : undefined,
     };
   }
 

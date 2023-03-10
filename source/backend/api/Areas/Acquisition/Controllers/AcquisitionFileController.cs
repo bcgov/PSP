@@ -147,9 +147,15 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         public IActionResult UpdateAcquisitionFileProperties([FromBody] AcquisitionFileModel acquisitionFileModel)
         {
             var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
-            var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
-
-            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            try
+            {
+                var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
+                return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            }
+            catch(BusinessRuleViolationException e)
+            {
+                return Conflict(e.Message);
+            }
         }
 
         /// <summary>
@@ -166,6 +172,22 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var acquisitionFileProperties = _acquisitionService.GetProperties(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFilePropertyModel>>(acquisitionFileProperties));
+        }
+
+        /// <summary>
+        /// Get the acquisition file Owners.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/owners")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileOwners([FromRoute] long id)
+        {
+            var owners = _acquisitionService.GetOwners(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
         }
 
         #endregion

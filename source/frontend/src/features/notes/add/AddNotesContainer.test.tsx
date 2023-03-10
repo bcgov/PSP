@@ -91,7 +91,9 @@ describe('AddNotesContainer component', () => {
     const { getSaveButton, findByLabelText } = setup(BASIC_PROPS);
 
     const textarea = await findByLabelText(/Type a note/i);
-    userEvent.type(textarea, formValues.note.note);
+    act(() => {
+      userEvent.type(textarea, formValues.note.note as string);
+    });
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
     await act(() => {
@@ -122,7 +124,9 @@ describe('AddNotesContainer component', () => {
     });
 
     const textarea = await findByLabelText(/Type a note/i);
-    userEvent.type(textarea, formValues.note.note);
+    act(() => {
+      userEvent.type(textarea, formValues.note.note as string);
+    });
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
     await act(() => {

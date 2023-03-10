@@ -18,6 +18,8 @@ namespace Pims.Dal.Entities
             PimsAcquisitionFileDocuments = new HashSet<PimsAcquisitionFileDocument>();
             PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
             PimsActivityTemplateDocuments = new HashSet<PimsActivityTemplateDocument>();
+            PimsLeaseDocuments = new HashSet<PimsLeaseDocument>();
+            PimsProjectDocuments = new HashSet<PimsProjectDocument>();
             PimsResearchFileDocuments = new HashSet<PimsResearchFileDocument>();
         }
 
@@ -87,6 +89,10 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
         [InverseProperty(nameof(PimsActivityTemplateDocument.Document))]
         public virtual ICollection<PimsActivityTemplateDocument> PimsActivityTemplateDocuments { get; set; }
+        [InverseProperty(nameof(PimsLeaseDocument.Document))]
+        public virtual ICollection<PimsLeaseDocument> PimsLeaseDocuments { get; set; }
+        [InverseProperty(nameof(PimsProjectDocument.Document))]
+        public virtual ICollection<PimsProjectDocument> PimsProjectDocuments { get; set; }
         [InverseProperty(nameof(PimsResearchFileDocument.Document))]
         public virtual ICollection<PimsResearchFileDocument> PimsResearchFileDocuments { get; set; }
     }

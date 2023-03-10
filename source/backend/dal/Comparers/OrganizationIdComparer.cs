@@ -13,8 +13,8 @@ namespace Pims.Dal.Entities.Comparers
 
         public int GetHashCode([DisallowNull] PimsOrganization obj)
         {
-            var hash = new HashCode();
-            hash.Add(obj.Id);
+            var hash = default(HashCode);
+            hash.Add(obj.Internal_Id);
             return hash.ToHashCode();
         }
     }

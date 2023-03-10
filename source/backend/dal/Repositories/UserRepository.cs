@@ -81,7 +81,7 @@ namespace Pims.Dal.Repositories
                     throw new ConfigurationException($"Configuration 'Pims:ServiceAccount:Email' is invalid or missing.");
                 var organization = this.User.GetOrganization(this.Context);
 
-                this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
+                this.Logger.LogInformation("User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}", key, email, username, givenName, surname);
 
                 var person = new PimsPerson() { Surname = surname, FirstName = givenName };
                 this.Context.PimsPeople.Add(person);
@@ -110,10 +110,54 @@ namespace Pims.Dal.Repositories
 
             if (!exists)
             {
-                this.Logger.LogInformation($"User Activated: '{username}' - '{key}'.");
+                this.Logger.LogInformation("User Activated: '{username}' - '{key}'.", username, key);
             }
 
             return user;
+        }
+
+        public bool ValidateClaims(PimsUser user)
+        {
+            var keycloakClaims = this.User.Claims.Where(c => c.Type == "client_roles").ToList();
+
+            var userRoles = this.Context.PimsUserRoles
+                .Include(ur => ur.Role)
+                    .ThenInclude(r => r.PimsRoleClaims)
+                    .ThenInclude(rc => rc.Claim)
+                .Where(ur => ur.UserId == user.UserId)
+                .ToList();
+
+            // Keycloak claims contain both the roles as well as the claims represented in pims.
+            HashSet<string> missmatched = new HashSet<string>();
+            foreach (var claim in keycloakClaims)
+            {
+                missmatched.Add(claim.Value);
+            }
+
+            HashSet<string> pimsClaimNames = new HashSet<string>();
+            foreach (PimsUserRole userRole in userRoles)
+            {
+                foreach (var roleClaim in userRole.Role.PimsRoleClaims)
+                {
+                    string claimName = roleClaim.Claim.Name;
+                    pimsClaimNames.Add(claimName);
+                }
+
+                // Add role names to the list as well
+                string roleName = userRole.Role.Name;
+                pimsClaimNames.Add(roleName);
+            }
+
+            foreach (var claim in pimsClaimNames)
+            {
+                bool found = missmatched.Remove(claim);
+                if (!found)
+                {
+                    missmatched.Add(claim);
+                }
+            }
+
+            return missmatched.Count == 0;
         }
 
         /// <summary>
@@ -357,7 +401,7 @@ namespace Pims.Dal.Repositories
 
         public PimsUser RemoveRegion(PimsUser user, long regionId)
         {
-            var userRegion = user.PimsRegionUsers.FirstOrDefault(r => r.Id == regionId);
+            var userRegion = user.PimsRegionUsers.FirstOrDefault(r => r.Internal_Id == regionId);
             user.PimsRegionUsers.Remove(userRegion);
             this.Context.PimsRegionUsers.Remove(userRegion);
             return user;

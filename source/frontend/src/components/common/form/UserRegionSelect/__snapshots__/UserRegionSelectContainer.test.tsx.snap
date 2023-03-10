@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Region Select renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="form-group"
+  >
+    <select
+      class="form-select form-control"
+      id="input-region"
+      name="region"
+    >
+      <option
+        class="option"
+        data-testid="select-option-1"
+        value="1"
+      >
+        South Coast Region
+      </option>
+      <option
+        class="option"
+        data-testid="select-option-2"
+        value="2"
+      >
+        Southern Interior Region
+      </option>
+    </select>
+  </div>
+</DocumentFragment>
+`;

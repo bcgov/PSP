@@ -1,10 +1,10 @@
 import { FormikHelpers } from 'formik';
-import { useProjectProvider } from 'hooks/providers/useProjectProvider';
+import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import { Api_Project } from 'models/api/Project';
 import { useCallback } from 'react';
 
 import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
-import { ProjectForm } from '../add/models';
+import { ProjectForm } from '../models';
 
 export interface IUseAddProjectFormProps {
   onSuccess?: (project: Api_Project) => void;
@@ -20,10 +20,9 @@ export function useAddProjectForm(props: IUseAddProjectFormProps) {
     async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
       const project = values.toApi();
       const response = await addProject.execute(project);
-      formikHelpers?.setSubmitting(false);
 
       if (!!response?.id) {
-        formikHelpers?.resetForm();
+        formikHelpers.resetForm();
         if (typeof onSuccess === 'function') {
           onSuccess(response);
         }

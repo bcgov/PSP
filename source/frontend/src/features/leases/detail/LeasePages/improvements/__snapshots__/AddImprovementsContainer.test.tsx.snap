@@ -44,7 +44,6 @@ exports[`Add lease container component renders as expected 1`] = `
   flex-direction: column;
   width: 100%;
   gap: 2.5rem;
-  margin-top: 2rem;
 }
 
 .c1 .formgrid .textarea:not(.notes) {
@@ -107,7 +106,7 @@ exports[`Add lease container component renders as expected 1`] = `
           class="c3"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"
@@ -216,7 +215,7 @@ exports[`Add lease container component renders as expected 1`] = `
           class="c3"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"
@@ -325,7 +324,7 @@ exports[`Add lease container component renders as expected 1`] = `
           class="c3"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"

@@ -17,6 +17,7 @@ namespace Pims.Dal.Entities
         public PimsPropertyAcquisitionFile()
         {
             PimsActInstPropAcqFiles = new HashSet<PimsActInstPropAcqFile>();
+            PimsTakes = new HashSet<PimsTake>();
         }
 
         [Key]
@@ -80,5 +81,7 @@ namespace Pims.Dal.Entities
         public virtual PimsProperty Property { get; set; }
         [InverseProperty(nameof(PimsActInstPropAcqFile.PropertyAcquisitionFile))]
         public virtual ICollection<PimsActInstPropAcqFile> PimsActInstPropAcqFiles { get; set; }
+        [InverseProperty(nameof(PimsTake.PropertyAcquisitionFile))]
+        public virtual ICollection<PimsTake> PimsTakes { get; set; }
     }
 }

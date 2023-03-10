@@ -40,7 +40,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
         class="c1"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -303,18 +303,21 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
               >
                 <option
                   class="option"
+                  data-testid="select-option-unknown"
                   value="unknown"
                 >
                   Unknown
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-yes"
                   value="yes"
                 >
                   Yes
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-no"
                   value="no"
                 >
                   No
@@ -348,18 +351,21 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
               >
                 <option
                   class="option"
+                  data-testid="select-option-unknown"
                   value="unknown"
                 >
                   Unknown
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-yes"
                   value="yes"
                 >
                   Yes
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-no"
                   value="no"
                 >
                   No
@@ -404,7 +410,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
         class="c1"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"

@@ -1,3 +1,4 @@
+import axios, { AxiosError } from 'axios';
 import GenericModal from 'components/common/GenericModal';
 import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from 'components/propertySelector/models';
@@ -21,6 +22,7 @@ export interface IUpdatePropertiesProps {
   setIsShowingPropertySelector: (isShowing: boolean) => void;
   onSuccess: () => void;
   updateFileProperties: (file: Api_File) => Promise<Api_File | undefined>;
+  canRemove: (propertyId: number) => Promise<boolean>;
 }
 
 export const UpdateProperties: React.FunctionComponent<
@@ -31,6 +33,7 @@ export const UpdateProperties: React.FunctionComponent<
 
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
+  const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
 
   const { getPrimaryAddressByPid } = useBcaAddress();
 
@@ -65,19 +68,26 @@ export const UpdateProperties: React.FunctionComponent<
     props.setIsShowingPropertySelector(false);
   };
 
-  const saveFile = async (researchFile: Api_File) => {
-    const response = await props.updateFileProperties(researchFile);
-    formikRef.current?.setSubmitting(false);
-    if (!!response?.fileName) {
-      if (researchFile.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
-        toast.warn(
-          'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
-          { autoClose: 15000 },
-        );
+  const saveFile = async (file: Api_File) => {
+    try {
+      const response = await props.updateFileProperties(file);
+
+      formikRef.current?.setSubmitting(false);
+      if (!!response?.fileName) {
+        if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
+          toast.warn(
+            'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+            { autoClose: 15000 },
+          );
+        }
+        formikRef.current?.resetForm();
+        props.setIsShowingPropertySelector(false);
+        props.onSuccess();
       }
-      formikRef.current?.resetForm();
-      props.setIsShowingPropertySelector(false);
-      props.onSuccess();
+    } catch (e) {
+      if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
+        setShowAssociatedEntityWarning(true);
+      }
     }
   };
   return (
@@ -118,8 +128,6 @@ export const UpdateProperties: React.FunctionComponent<
                                 formProperty.address = bcaSummary?.address
                                   ? AddressForm.fromBcaAddress(bcaSummary?.address)
                                   : undefined;
-                                formProperty.legalDescription =
-                                  bcaSummary?.legalDescription?.LEGAL_TEXT;
                               }
                               push(formProperty);
                             });
@@ -134,7 +142,13 @@ export const UpdateProperties: React.FunctionComponent<
                     {formikProps.values.properties.map((property, index) => (
                       <SelectedPropertyRow
                         key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                        onRemove={() => remove(index)}
+                        onRemove={async () => {
+                          if (!property.apiId || (await props.canRemove(property.apiId))) {
+                            remove(index);
+                          } else {
+                            setShowAssociatedEntityWarning(true);
+                          }
+                        }}
                         nameSpace={`properties.${index}`}
                         index={index}
                         property={property.toMapProperty()}
@@ -164,6 +178,22 @@ export const UpdateProperties: React.FunctionComponent<
         handleCancel={() => setShowSaveConfirmModal(false)}
         okButtonText="Save"
         cancelButtonText="Cancel"
+        show
+      />
+      <GenericModal
+        display={showAssociatedEntityWarning}
+        title={'Property with associations'}
+        message={
+          <>
+            <div>
+              This property can not be removed from the file. This property is related to one or
+              more entities in the file, only properties that are not linked to any entities in the
+              file can be removed.
+            </div>
+          </>
+        }
+        handleOk={() => setShowAssociatedEntityWarning(false)}
+        okButtonText="Close"
         show
       />
 

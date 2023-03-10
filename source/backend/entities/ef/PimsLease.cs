@@ -28,6 +28,9 @@ namespace Pims.Dal.Entities
         {
             PimsInsurances = new HashSet<PimsInsurance>();
             PimsLeaseActivityInstances = new HashSet<PimsLeaseActivityInstance>();
+            PimsLeaseConsultations = new HashSet<PimsLeaseConsultation>();
+            PimsLeaseDocuments = new HashSet<PimsLeaseDocument>();
+            PimsLeaseNotes = new HashSet<PimsLeaseNote>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
             PimsLeaseTerms = new HashSet<PimsLeaseTerm>();
             PimsPropertyImprovements = new HashSet<PimsPropertyImprovement>();
@@ -70,6 +73,8 @@ namespace Pims.Dal.Entities
         public string LeaseStatusTypeCode { get; set; }
         [Column("REGION_CODE")]
         public short? RegionCode { get; set; }
+        [Column("PROJECT_ID")]
+        public long? ProjectId { get; set; }
         [Column("L_FILE_NO")]
         [StringLength(50)]
         public string LFileNo { get; set; }
@@ -200,6 +205,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(LeaseStatusTypeCode))]
         [InverseProperty(nameof(PimsLeaseStatusType.PimsLeases))]
         public virtual PimsLeaseStatusType LeaseStatusTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(ProjectId))]
+        [InverseProperty(nameof(PimsProject.PimsLeases))]
+        public virtual PimsProject Project { get; set; }
         [ForeignKey(nameof(RegionCode))]
         [InverseProperty(nameof(PimsRegion.PimsLeases))]
         public virtual PimsRegion RegionCodeNavigation { get; set; }
@@ -207,6 +215,12 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsInsurance> PimsInsurances { get; set; }
         [InverseProperty(nameof(PimsLeaseActivityInstance.Lease))]
         public virtual ICollection<PimsLeaseActivityInstance> PimsLeaseActivityInstances { get; set; }
+        [InverseProperty(nameof(PimsLeaseConsultation.Lease))]
+        public virtual ICollection<PimsLeaseConsultation> PimsLeaseConsultations { get; set; }
+        [InverseProperty(nameof(PimsLeaseDocument.Lease))]
+        public virtual ICollection<PimsLeaseDocument> PimsLeaseDocuments { get; set; }
+        [InverseProperty(nameof(PimsLeaseNote.Lease))]
+        public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; }
         [InverseProperty(nameof(PimsLeaseTenant.Lease))]
         public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; }
         [InverseProperty(nameof(PimsLeaseTerm.Lease))]

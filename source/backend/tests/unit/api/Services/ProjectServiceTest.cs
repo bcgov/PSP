@@ -1,16 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
-using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
 using Moq;
-using Pims.Api.Constants;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -27,7 +21,7 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class ProjectServiceTest
     {
-        private TestHelper _helper;
+        readonly TestHelper _helper;
 
         public ProjectServiceTest()
         {
@@ -52,13 +46,16 @@ namespace Pims.Api.Test.Services
             var projectList = new List<PimsProject>() { project };
 
             var repository = _helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>())).Returns(projectList);
+            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>())).Returns(projectList);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.SearchProjects("query string", 1);
 
             // Assert
-            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Once);
+            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
@@ -178,7 +175,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void Add_Project_Success()
+        public void Add_Project_ShouldFail_IfDuplicateProduct()
         {
             // Arrange
             var helper = new TestHelper();
@@ -186,11 +183,53 @@ namespace Pims.Api.Test.Services
             var service = helper.Create<ProjectService>(user);
 
             var repository = helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.Add(It.IsAny<PimsProject>())).ReturnsAsync(new PimsProject());
-            repository.Setup(x => x.Get(It.IsAny<long>())).ReturnsAsync(new PimsProject());
+            var duplicateCode = new PimsProduct() { Code = "1" };
 
             // Act
-            var result = await service.Add(new PimsProject());
+            Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode, duplicateCode } });
+
+            // Assert
+            result.Should().Throw<DuplicateEntityException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Add_Project_ShouldFail_IfDuplicateProductInDb()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            var duplicateCode = new PimsProduct() { Code = "1" };
+
+            var productRepository = helper.GetService<Mock<IProductRepository>>();
+            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct>() { duplicateCode });
+            
+            // Act
+            Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
+
+            // Assert
+            result.Should().Throw<DuplicateEntityException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Add_Project_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsProject>())).Returns(new PimsProject());
+            repository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsProject());
+
+            // Act
+            var result = service.Add(new PimsProject());
 
             // Assert
             result.Should().NotBeNull();
@@ -208,15 +247,15 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Func<Task> act = async () => await service.GetById(It.IsAny<long>());
+            Action actionFn = () => service.GetById(1);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            actionFn.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.Get(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
-        public async void Get_ProjectById_Success()
+        public void Get_ProjectById_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -224,14 +263,178 @@ namespace Pims.Api.Test.Services
             var service = helper.Create<ProjectService>(user);
 
             var repository = helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.Get(It.IsAny <long>())).ReturnsAsync(new PimsProject());
+            repository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsProject());
 
             // Act
-            var result = await service.GetById(1);
+            var result = service.GetById(1);
 
             // Assert
             result.Should().NotBeNull();
             repository.Verify(x => x.Get(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void Get_Products_ShouldFail_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProductRepository>>();
+
+            // Act
+            Action actionFn = () => service.GetProducts(1);
+
+            // Assert
+            actionFn.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetByProject(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Get_ProductFile_ShouldFail_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            // Act
+            Action actionFn = () => service.GetProductFiles(1);
+
+            // Assert
+            actionFn.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetByProductId(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action result = () => service.Update(new PimsProject());
+
+            // Assert
+            result.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_When_Null()
+        {
+            // Arrange
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action result = () => service.Update(null);
+
+            // Assert
+            result.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_IfDuplicateProduct()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectEdit);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var duplicateCode = new PimsProduct() { Code = "1" };
+
+            // Act
+            Action result = () => service.Update(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode, duplicateCode } });
+
+            // Assert
+            result.Should().Throw<DuplicateEntityException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_IfDuplicateProductInDb()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectEdit);
+            var service = helper.Create<ProjectService>(user);
+
+            var repository = helper.GetService<Mock<IProjectRepository>>();
+
+            var duplicateCode = new PimsProduct() { Code = "1" };
+
+            var productRepository = helper.GetService<Mock<IProductRepository>>();
+            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct>() { duplicateCode });
+
+            // Act
+            Action result = () => service.Update(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
+
+            // Assert
+            result.Should().Throw<DuplicateEntityException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Project_Success()
+        {
+            // Arrange
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(new PimsProject { Internal_Id = 1 });
+            repository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsProject()
+            {
+                ProjectStatusTypeCode = null,
+                ProjectStatusTypeCodeNavigation = null,
+            });
+
+            // Act
+            var result = service.Update(new PimsProject { Id = 1, ConcurrencyControlNumber = 100 });
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Project_Success_AddsNote()
+        {
+            // Arrange
+            var service = CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
+
+            var project = EntityHelper.CreateProject(1, "9999", "TEST PROJECT");
+            project.ConcurrencyControlNumber = 1;
+            project.AppCreateUserid = "TESTER";
+
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+
+            projectRepository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(project);
+            projectRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsProject()
+            {
+                ProjectStatusTypeCode = "ACTIVE",
+                ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Description = "Active" }
+            });
+            lookupRepository.Setup(x => x.GetAllProjectStatusTypes()).Returns(new PimsProjectStatusType[]{ new PimsProjectStatusType() {
+                Id = project.ProjectStatusTypeCodeNavigation.Id,
+                Description = project.ProjectStatusTypeCodeNavigation.Description,
+            }});
+
+            // Act
+            var result = service.Update(project);
+
+            // Assert
+            projectRepository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Once);
+            noteRepository.Verify(x => x.Add(It.Is<PimsProjectNote>(x => x.ProjectId == 1
+                    && x.Note.NoteTxt == "Project status changed from Active to 'No Status'")), Times.Once);
         }
     }
 }

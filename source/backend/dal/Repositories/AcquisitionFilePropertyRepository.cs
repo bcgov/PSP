@@ -36,11 +36,29 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)
                 .Include(rp => rp.PimsActInstPropAcqFiles)
                 .Include(rp => rp.Property)
+                .Include(rp => rp.PimsTakes)
+                .Include(rp => rp.Property)
                 .ThenInclude(rp => rp.RegionCodeNavigation)
                 .Include(rp => rp.Property)
                 .ThenInclude(rp => rp.DistrictCodeNavigation)
                 .Include(rp => rp.Property)
                 .ThenInclude(rp => rp.Address)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        public List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId)
+        {
+            return Context.PimsAcquisitionOwners
+                .Where(x => x.AcquisitionFileId == acquisitionFileId)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.RegionCodeNavigation)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.Country)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.ProvinceState)
+                .Include(x => x.Address)
+                    .ThenInclude(x => x.DistrictCodeNavigation)
                 .AsNoTracking()
                 .ToList();
         }
@@ -72,7 +90,7 @@ namespace Pims.Dal.Repositories
             propertyAcquisitionFile.ThrowIfNull(nameof(propertyAcquisitionFile));
 
             var propertyAcquisitionFileToDelete = Context.PimsPropertyAcquisitionFiles
-                .Where(x => x.PropertyAcquisitionFileId == propertyAcquisitionFile.Id)
+                .Where(x => x.PropertyAcquisitionFileId == propertyAcquisitionFile.Internal_Id)
                 .Include(rp => rp.PimsActInstPropAcqFiles)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 

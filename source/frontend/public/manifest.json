@@ -7,7 +7,7 @@
       "sizes": "17x17"
     },
     {
-      "src": "tenants/moti/PIMS-logo.png",
+      "src": "tenants/MOTI/PIMS-logo.png",
       "sizes": "161x140"
     },
     {
@@ -18,10 +18,6 @@
       "src": "tenants/moti/background-image.webp",
       "sizes": "1920x1186",
       "type": "image/webp"
-    },
-    {
-      "src": "tenants/moti/pims-logo.png",
-      "sizes": "512x512"
     }
   ],
   "start_url": ".",

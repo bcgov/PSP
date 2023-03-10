@@ -101,24 +101,24 @@ endif
 ##############################################################################
 .PHONY: version
 version: require-node ## Outputs the latest released version
-	@build/version.sh
+	@tools/cicd/build/version.sh
 
 .PHONY: version-next
 version-next: require-node ## Outputs the next unreleased version
-	@build/version-next.sh
+	@tools/cicd/build/version-next.sh
 
 .PHONY: bump
 bump: require-node ## Bumps the version number
 ifndef $(ARGS)
 	$(eval ARGS := --build)
 endif
-	@build/bump.sh $(ARGS) --apply
+	@tools/cicd/build/bump.sh $(ARGS) --apply
 
 branch = HEAD
 
 .PHONY: tag
 tag: require-node require-git require-gh ## Creates a pre-release tag
-	$(eval CURRENT_VERSION := $(shell build/version.sh))
+	$(eval CURRENT_VERSION := $(shell tools/cicd/build/version.sh))
 	$(eval tag := v$(CURRENT_VERSION))
 	$(eval owner := $(shell gh repo view --json owner --jq '.owner.login'))
 	$(eval repo := $(shell gh repo view --json name --jq '.name'))
@@ -130,7 +130,7 @@ tag: require-node require-git require-gh ## Creates a pre-release tag
 
 .PHONY: release
 release: github-auth require-node require-gh ## Creates a new github release
-	$(eval CURRENT_VERSION := $(shell build/version.sh))
+	$(eval CURRENT_VERSION := $(shell tools/cicd/build/version.sh))
 	$(eval CURRENT_DATE := $(shell date +'%b %d, %Y'))
 	$(eval tag := v$(CURRENT_VERSION))
 	$(eval owner := $(shell gh repo view --json owner --jq '.owner.login'))
@@ -167,7 +167,7 @@ devops-scan: | devops-install ## Scans the repo for accidental leaks of password
 	@trufflehog3 -R trufflehog_report.json --output trufflehog_report.html
 	@echo "$(P) HTML report saved to trufflehog_report.html"
 	@echo
-	@./build/secops_report.sh trufflehog_report.json
+	@./tools/cicd/build/secops_report.sh trufflehog_report.json
 
 ##############################################################################
 # Docker Development
@@ -306,7 +306,7 @@ frontend-coverage: ## Generate coverage report for frontend
 
 env: ## Generate env files
 	@echo "$(P) Generate/Regenerate env files required for application (generated passwords only match if database .env file does not already exist)"
-	@./scripts/gen-env-files.sh;
+	@./tools/cicd/scripts/gen-env-files.sh;
 
 mayan-up: ## Calls the docker compose up for the mayan images
 	@echo "$(P) Create or start mayan-edms system"

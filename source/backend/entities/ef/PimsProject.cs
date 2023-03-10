@@ -12,6 +12,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(BusinessFunctionCodeId), Name = "PROJCT_BUSINESS_FUNCTION_CODE_ID_IDX")]
     [Index(nameof(Code), Name = "PROJCT_CODE_IDX")]
     [Index(nameof(CostTypeCodeId), Name = "PROJCT_COST_TYPE_CODE_ID_IDX")]
+    [Index(nameof(Description), nameof(Code), Name = "PROJCT_DESCRIPTION_CODE_TUC", IsUnique = true)]
     [Index(nameof(ProjectStatusTypeCode), Name = "PROJCT_PROJECT_STATUS_CODE_IDX")]
     [Index(nameof(RegionCode), Name = "PROJCT_REGION_CODE_IDX")]
     [Index(nameof(WorkActivityCodeId), Name = "PROJCT_WORK_ACTIVITY_CODE_ID_IDX")]
@@ -20,7 +21,11 @@ namespace Pims.Dal.Entities
         public PimsProject()
         {
             PimsAcquisitionFiles = new HashSet<PimsAcquisitionFile>();
+            PimsLeases = new HashSet<PimsLease>();
             PimsProducts = new HashSet<PimsProduct>();
+            PimsProjectDocuments = new HashSet<PimsProjectDocument>();
+            PimsProjectNotes = new HashSet<PimsProjectNote>();
+            PimsResearchFileProjects = new HashSet<PimsResearchFileProject>();
         }
 
         [Key]
@@ -103,7 +108,15 @@ namespace Pims.Dal.Entities
         public virtual PimsWorkActivityCode WorkActivityCode { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFile.Project))]
         public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; }
+        [InverseProperty(nameof(PimsLease.Project))]
+        public virtual ICollection<PimsLease> PimsLeases { get; set; }
         [InverseProperty(nameof(PimsProduct.ParentProject))]
         public virtual ICollection<PimsProduct> PimsProducts { get; set; }
+        [InverseProperty(nameof(PimsProjectDocument.Project))]
+        public virtual ICollection<PimsProjectDocument> PimsProjectDocuments { get; set; }
+        [InverseProperty(nameof(PimsProjectNote.Project))]
+        public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; }
+        [InverseProperty(nameof(PimsResearchFileProject.Project))]
+        public virtual ICollection<PimsResearchFileProject> PimsResearchFileProjects { get; set; }
     }
 }

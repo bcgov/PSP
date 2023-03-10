@@ -1,5 +1,5 @@
-import { screen, waitFor } from '@testing-library/react';
-import axios from 'axios';
+import { act, screen, waitFor } from '@testing-library/react';
+import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { SideBarContextProvider } from 'features/properties/map/context/sidebarContext';
 import { mockLookups } from 'mocks/mockLookups';
@@ -36,6 +36,7 @@ describe('UpdateProperties component', () => {
           setIsShowingPropertySelector={setIsShowingPropertySelector}
           onSuccess={onSuccess}
           updateFileProperties={updateFileProperties}
+          canRemove={props.canRemove ?? jest.fn()}
         />
       </SideBarContextProvider>,
       {
@@ -113,16 +114,16 @@ describe('UpdateProperties component', () => {
         ],
       },
     });
-    expect(getByText(/Address: 45 - 904 Ho/g)).toBeVisible();
+    expect(getByText(/Address: 45 - 904 Ho/)).toBeVisible();
   });
 
   it('save button displays modal', async () => {
     const { getByText } = setup({});
     const saveButton = getByText('Save');
-    userEvent.click(saveButton);
+    act(() => userEvent.click(saveButton));
 
     expect(
-      await screen.findByText(/You have made changes to the properties in this file./g),
+      await screen.findByText(/You have made changes to the properties in this file./),
     ).toBeVisible();
   });
 
@@ -130,10 +131,10 @@ describe('UpdateProperties component', () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
     const { getByText } = setup({});
     const saveButton = getByText('Save');
-    userEvent.click(saveButton);
+    act(() => userEvent.click(saveButton));
 
     const saveConfirmButton = await screen.findByTitle('ok-modal');
-    userEvent.click(saveConfirmButton);
+    act(() => userEvent.click(saveConfirmButton));
 
     await waitFor(() => {
       expect(updateFileProperties).toHaveBeenCalled();
@@ -142,10 +143,28 @@ describe('UpdateProperties component', () => {
     });
   });
 
+  it('if the update fails with a 409 the associated entities modal is displayed', async () => {
+    updateFileProperties.mockRejectedValue({
+      isAxiosError: true,
+      code: '409',
+    } as Partial<AxiosError>);
+    const { getByText } = setup({});
+    const saveButton = getByText('Save');
+    act(() => userEvent.click(saveButton));
+
+    const saveConfirmButton = await screen.findByTitle('ok-modal');
+    act(() => userEvent.click(saveConfirmButton));
+
+    await waitFor(() => {
+      expect(updateFileProperties).toHaveBeenCalled();
+      expect(screen.getByText('Property with associations'));
+    });
+  });
+
   it('cancel button cancels component if no actions taken', async () => {
     const { getByText } = setup({});
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    act(() => userEvent.click(cancelButton));
 
     expect(setIsShowingPropertySelector).toHaveBeenCalledWith(false);
   });
@@ -156,10 +175,10 @@ describe('UpdateProperties component', () => {
     await fillInput(container, 'properties.0.name', 'test property name');
 
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    await act(async () => userEvent.click(cancelButton));
 
     expect(
-      await screen.findByText(/If you cancel now, this file will not be saved./g),
+      await screen.findByText(/If you cancel now, this file will not be saved./),
     ).toBeVisible();
   });
 
@@ -170,15 +189,43 @@ describe('UpdateProperties component', () => {
     await fillInput(container, 'properties.0.name', 'test property name');
 
     const saveButton = getByText('Save');
-    userEvent.click(saveButton);
+    await act(async () => userEvent.click(saveButton));
 
     const cancelConfirmButton = await screen.findByTitle('ok-modal');
-    userEvent.click(cancelConfirmButton);
+    await act(async () => userEvent.click(cancelConfirmButton));
 
     await waitFor(() => {
       expect(updateFileProperties).toHaveBeenCalled();
       expect(setIsShowingPropertySelector).toHaveBeenCalledWith(false);
       expect(onSuccess).toHaveBeenCalled();
+    });
+  });
+
+  it('removes property index if canRemove returns true', async () => {
+    updateFileProperties.mockResolvedValue(getMockResearchFile());
+    const canRemove = jest.fn().mockResolvedValue(true);
+    const { getByTestId, getByText } = setup({ canRemove });
+
+    const removeButton = getByTestId('remove-button');
+    await act(async () => userEvent.click(removeButton));
+
+    await waitFor(() => {
+      expect(canRemove).toHaveBeenCalled();
+      expect(getByText('No Properties selected'));
+    });
+  });
+
+  it('displays warning modal if canRemove returns false', async () => {
+    updateFileProperties.mockResolvedValue(getMockResearchFile());
+    const canRemove = jest.fn().mockResolvedValue(false);
+    const { getByTestId } = setup({ canRemove });
+
+    const removeButton = getByTestId('remove-button');
+    await act(async () => userEvent.click(removeButton));
+
+    await waitFor(() => {
+      expect(canRemove).toHaveBeenCalled();
+      expect(screen.getByText('Property with associations'));
     });
   });
 });

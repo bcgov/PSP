@@ -90,7 +90,7 @@ namespace Pims.Dal
         /// <summary>
         /// Deserialize the specified 'json' to the specified type of 'T'.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type to deserialize the object to.</typeparam>
         /// <param name="json"></param>
         /// <returns></returns>
         public T Deserialize<T>(string json)
@@ -101,7 +101,7 @@ namespace Pims.Dal
         /// <summary>
         /// Serialize the specified 'item'.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the object to serialize.</typeparam>
         /// <param name="item"></param>
         /// <returns></returns>
         public string Serialize<T>(T item)

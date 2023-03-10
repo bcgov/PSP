@@ -269,7 +269,9 @@ exports[`Document Results Table matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
-          />
+          >
+            Gazette
+          </div>
           <div
             class="td"
             role="cell"
@@ -278,7 +280,9 @@ exports[`Document Results Table matches snapshot 1`] = `
           >
             <span
               data-testid="document-view-filename-text"
-            />
+            >
+              DocTest.docx
+            </span>
           </div>
           <div
             class="td"
@@ -292,7 +296,7 @@ exports[`Document Results Table matches snapshot 1`] = `
               <div
                 class="col"
               >
-                Jul 27, 2022
+                Jan 1, 0001
               </div>
               <div
                 class="col-auto"
@@ -328,7 +332,9 @@ exports[`Document Results Table matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
-          />
+          >
+            Signed
+          </div>
           <div
             class="td"
             role="cell"
@@ -354,7 +360,9 @@ exports[`Document Results Table matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
-          />
+          >
+            MoTI Plan
+          </div>
           <div
             class="td"
             role="cell"
@@ -363,7 +371,9 @@ exports[`Document Results Table matches snapshot 1`] = `
           >
             <span
               data-testid="document-view-filename-text"
-            />
+            >
+              moti_plan.txt
+            </span>
           </div>
           <div
             class="td"
@@ -413,7 +423,9 @@ exports[`Document Results Table matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
-          />
+          >
+            Amended
+          </div>
           <div
             class="td"
             role="cell"
@@ -464,7 +476,8 @@ exports[`Document Results Table matches snapshot 1`] = `
             </span>
             <input
               class="form-control form-control-sm"
-              style="width: 50px; margin-left: 10px; margin-right: 10px;"
+              disabled=""
+              style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
               type="number"
               value="10"
             />

@@ -89,7 +89,7 @@ namespace Pims.Dal.Repositories
             {
 
                 List<PimsOrganization> existingOrgs = this.Context.PimsOrganizations
-                    .Where(o => EF.Functions.Collate(o.OrganizationName, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == organization.OrganizationName)
+                    .Where(o => EF.Functions.Collate(o.OrganizationName, SqlCollation.LATINGENERALCASEINSENSITIVE) == organization.OrganizationName)
                     .Include(o => o.PimsContactMethods).ToList();
 
                 var isDuplicate = existingOrgs.Any(
@@ -118,7 +118,7 @@ namespace Pims.Dal.Repositories
             organization.ThrowIfNull(nameof(organization));
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
 
-            var orgId = organization.Id;
+            var orgId = organization.OrganizationId;
             var existingOrganization = this.Context.PimsOrganizations.Where(o => o.OrganizationId == orgId).FirstOrDefault()
                  ?? throw new KeyNotFoundException();
 

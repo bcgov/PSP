@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -23,7 +22,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="role"></param>
         /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The entity type.</typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
@@ -45,7 +44,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="permission"></param>
         /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The entity type.</typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
@@ -68,7 +67,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="permission"></param>
         /// <param name="requireAll"></param>
         /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The entity type.</typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
@@ -90,17 +89,6 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// When manipulating entities it is necessary to reset the original value for 'ConcurrencyControlNumber' so that concurrency checking can occur.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="context"></param>
-        public static void SetOriginalConcurrencyControlNumber<T>(this T source, DbContext context)
-            where T : class, IBaseEntity
-        {
-            context.SetOriginalConcurrencyControlNumber(source);
-        }
-
-        /// <summary>
         /// Update a single child navigation property on a parent entity specified by T and parentId.
         /// Expects to be passed a complete list of child entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children passed to this method.
@@ -113,8 +101,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="parentId"></param>
         /// <param name="children"></param>
         public static void UpdateChild<T_Entity, T_Id, T_ChildEntity>(this PimsContext context, Expression<Func<T_Entity, object>> childNavigation, T_Id parentId, T_ChildEntity[] children, bool updateChildValues = true)
-            where T_Entity : IdentityBaseAppEntity<T_Id>
-            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
+            where T_Entity : StandardIdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
         {
             var dbEntity = context.Find<T_Entity>(parentId);
 
@@ -125,12 +113,12 @@ namespace Pims.Dal.Helpers.Extensions
             var accessor = dbItemsEntry.Metadata.GetCollectionAccessor();
 
             dbItemsEntry.Load();
-            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>()
-                .ToDictionary(e => e.Id);
+            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<StandardIdentityBaseAppEntity<T_Id>>()
+                .ToDictionary(e => e.Internal_Id);
 
             foreach (var item in children)
             {
-                if (!dbItemsMap.TryGetValue(item.Id, out var oldItem))
+                if (!dbItemsMap.TryGetValue(item.Internal_Id, out var oldItem))
                 {
                     accessor.Add(dbEntity, item, false);
                 }
@@ -139,7 +127,7 @@ namespace Pims.Dal.Helpers.Extensions
                     if (updateChildValues)
                     {
                         context.Entry(oldItem).CurrentValues.SetValues(item);
-                        dbItemsMap.Remove(item.Id);
+                        dbItemsMap.Remove(item.Internal_Id);
                     }
                 }
             }
@@ -172,8 +160,8 @@ namespace Pims.Dal.Helpers.Extensions
             T_Id parentId,
             T_ChildEntity[] childrenWithGrandchildren,
             bool updateGrandChildValues = true)
-            where T_Entity : IdentityBaseAppEntity<T_Id>
-            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
+            where T_Entity : StandardIdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
         {
             UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true, updateGrandChildValues);
         }
@@ -201,8 +189,8 @@ namespace Pims.Dal.Helpers.Extensions
             T_ChildEntity[] childrenWithGrandchildren,
             Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild,
             bool updateGrandChildValues = true)
-            where T_Entity : IdentityBaseAppEntity<T_Id>
-            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
+            where T_Entity : StandardIdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
         {
             var dbEntity = context.Find<T_Entity>(parentId);
             var dbEntry = context.Entry(dbEntity);
@@ -212,7 +200,7 @@ namespace Pims.Dal.Helpers.Extensions
             var childAccessor = childCollection.Metadata.GetCollectionAccessor();
 
             childCollection.Load();
-            var existingChildren = childCollection.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>().ToDictionary(e => e.Id);
+            var existingChildren = childCollection.CurrentValue.Cast<StandardIdentityBaseAppEntity<T_Id>>().ToDictionary(e => e.Internal_Id);
 
             // Compile the grandchildNavigation lambda expression so we can extract the value from the passed in array of children
             var grandchildPropertyName = grandchildNavigation.GetPropertyAccess().Name;
@@ -220,7 +208,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             foreach (var child in childrenWithGrandchildren)
             {
-                if (!existingChildren.TryGetValue(child.Id, out var existingChild))
+                if (!existingChildren.TryGetValue(child.Internal_Id, out var existingChild))
                 {
                     childAccessor.Add(dbEntity, child, false);
                 }
@@ -240,7 +228,7 @@ namespace Pims.Dal.Helpers.Extensions
                         grandchildReference.TargetEntry.CurrentValues.SetValues(grandchildValue);
                     }
 
-                    existingChildren.Remove(child.Id);
+                    existingChildren.Remove(child.Internal_Id);
                 }
             }
 

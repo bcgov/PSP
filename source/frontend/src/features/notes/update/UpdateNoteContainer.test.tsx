@@ -84,7 +84,7 @@ describe('UpdateNoteContainer component', () => {
     const { getCancelButton, getByText } = setup();
 
     expect(getByText(/Notes/i)).toBeVisible();
-    userEvent.click(getCancelButton());
+    act(() => userEvent.click(getCancelButton()));
 
     expect(onCancelClick).toBeCalled();
   });
@@ -96,16 +96,18 @@ describe('UpdateNoteContainer component', () => {
     const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS });
 
     const textarea = await findByLabelText(/Type a note/i);
-    userEvent.clear(textarea);
-    userEvent.type(textarea, formValues.note);
+    act(() => {
+      userEvent.clear(textarea);
+      userEvent.type(textarea, formValues.note as string);
+    });
 
     mockAxios.onPut().reply(200, mockNoteResponse(1));
-    await act(() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.click(getSaveButton()));
 
     const axiosData: Api_Note = JSON.parse(mockAxios.history.put[0].data);
     const expectedValues = formValues.toApi();
 
-    expect(mockAxios.history.put[0].url).toBe('/notes/activity/1');
+    expect(mockAxios.history.put[0].url).toBe('/notes/1');
     expect(axiosData).toEqual(expectedValues);
     expect(onSaveClick).toBeCalled();
     expect(onSuccess).toBeCalled();
@@ -121,14 +123,16 @@ describe('UpdateNoteContainer component', () => {
     });
 
     const textarea = await findByLabelText(/Type a note/i);
-    userEvent.clear(textarea);
-    userEvent.type(textarea, formValues.note);
+    act(() => {
+      userEvent.clear(textarea);
+      userEvent.type(textarea, formValues.note as string);
+    });
 
     mockAxios.onPut().reply(200, mockNoteResponse(1));
-    await act(() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.click(getSaveButton()));
 
     expect(onSaveClick).toBeCalled();
-    expect(mockAxios.history.put[0].url).toBe('/notes/acquisition_file/1');
+    expect(mockAxios.history.put[0].url).toBe('/notes/1');
     expect(onSuccess).toBeCalled();
   });
 });

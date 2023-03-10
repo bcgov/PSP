@@ -1,4 +1,6 @@
-export const getUserMock = () => ({
+import { Api_User } from 'models/api/User';
+
+export const getUserMock = (): Api_User => ({
   id: 30,
   guidIdentifierValue: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
   businessIdentifierValue: 'desmith@idir',

@@ -1,5 +1,6 @@
 using System;
 using System.Data.SqlTypes;
+using System.Globalization;
 
 namespace Pims.Core.Extensions
 {
@@ -43,7 +44,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string FiscalYear(this int fiscalYear)
         {
-            return $"{fiscalYear.ToString().Substring(2, 2)}/{(fiscalYear + 1).ToString().Substring(2, 2)}";
+            return $"{fiscalYear.ToString(CultureInfo.InvariantCulture).Substring(2, 2)}/{(fiscalYear + 1).ToString(CultureInfo.InvariantCulture).Substring(2, 2)}";
         }
 
         /// <summary>

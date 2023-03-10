@@ -19,6 +19,11 @@ namespace Pims.Api.Models.Auth
         /// get/set - Unique key to identify the claim.
         /// </summary>
         public Guid Key { get; set; }
+
+        /// <summary>
+        /// get/set - Flag to indicate that the user claims are not in a valid state.
+        /// </summary>
+        public bool HasValidClaims { get; set; }
         #endregion
 
         #region Constructors
@@ -35,10 +40,12 @@ namespace Pims.Api.Models.Auth
         /// </summary>
         /// <param name="id"></param>
         /// <param name="key"></param>
-        public UserModel(long id, Guid key)
+        /// <param name="hasValidClaims"></param>
+        public UserModel(long id, Guid key, bool hasValidClaims)
         {
             this.Id = id;
             this.Key = key;
+            this.HasValidClaims = hasValidClaims;
         }
 
         /// <summary>
@@ -47,7 +54,7 @@ namespace Pims.Api.Models.Auth
         /// <param name="user"></param>
         public UserModel(Entity.PimsUser user)
         {
-            this.Id = user.Id;
+            this.Id = user.Internal_Id;
             this.Key = user.GuidIdentifierValue.Value;
         }
         #endregion

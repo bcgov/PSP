@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Api.Models.Concepts
 {
     public class ProjectModel : BaseAppModel
@@ -32,7 +34,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The region code.
         /// </summary>
-        public CodeTypeModel RegionCode { get; set; }
+        public TypeModel<short> RegionCode { get; set; }
 
         /// <summary>
         /// get/set - The project code.
@@ -48,6 +50,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Project notes.
         /// </summary>
         public string Note { get; set; }
+
+        /// <summary>
+        /// get/set - Project products.
+        /// </summary>
+        public List<ProductModel> Products { get; set; }
         #endregion
     }
 }

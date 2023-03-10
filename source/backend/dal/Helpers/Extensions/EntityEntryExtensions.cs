@@ -95,8 +95,6 @@ namespace Pims.Dal.Extensions
         /// </summary>
         /// <param name="entry"></param>
         /// <param name="username"></param>
-        /// <param name="userKey"></param>
-        /// <param name="userDirectory"></param>
         public static void UpdateDbAuditProperties(this EntityEntry entry, string username)
         {
             if (entry.Entity is IBaseAppEntity entity)

@@ -11,7 +11,7 @@ namespace Pims.Core.Converters
     /// Serialization - Extract value from 'EnumValueAttribute' otherwise lowercase the enum name value.
     /// Deserialization - Ignore case.
     /// </summary>
-    /// <typeparam name="T_Enum"></typeparam>
+    /// <typeparam name="T_Enum">The enum type.</typeparam>
     public class EnumValueJsonConverter<T_Enum> : JsonConverter<T_Enum>
         where T_Enum : struct, IConvertible
     {

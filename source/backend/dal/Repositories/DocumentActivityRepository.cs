@@ -50,7 +50,7 @@ namespace Pims.Dal.Repositories
         /// Get a list of all the document activity relationships for a given research file.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsActivityInstanceDocument> GetAllByResearchFile(long fileId)
+        public IList<PimsActivityInstanceDocument> GetAllByResearchFileActivities(long fileId)
         {
             return this.Context.PimsActivityInstanceDocuments
                 .Include(ad => ad.Document)
@@ -63,10 +63,10 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get a list of all the document activity relationships for a a given aquisition file.
+        /// Get a list of all the document activity relationships for a a given acquisition file.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsActivityInstanceDocument> GetAllByAcquisitionFile(long fileId)
+        public IList<PimsActivityInstanceDocument> GetAllByAcquisitionFileActivities(long fileId)
         {
             return this.Context.PimsActivityInstanceDocuments
                 .Include(ad => ad.Document)
@@ -126,7 +126,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentNullException(nameof(activityDocument), "activityDocument cannot be null.");
             }
 
-            this.Context.PimsActivityInstanceDocuments.Remove(new PimsActivityInstanceDocument() { ActivityInstanceDocumentId = activityDocument.ActivityInstanceId });
+            this.Context.PimsActivityInstanceDocuments.Remove(new PimsActivityInstanceDocument() { ActivityInstanceDocumentId = activityDocument.ActivityInstanceDocumentId });
             return true;
         }
 

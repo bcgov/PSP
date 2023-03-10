@@ -31,7 +31,7 @@ namespace Pims.Api.Services
             ValidateTermServiceCall(leaseId, leaseRowVersion);
             ValidateDeletionRules(term);
 
-            _leaseTermRepository.Delete(term.Id);
+            _leaseTermRepository.Delete(term.Internal_Id);
             _leaseTermRepository.CommitTransaction();
 
             return _leaseRepository.Get(leaseId);
@@ -75,7 +75,7 @@ namespace Pims.Api.Services
 
         private void ValidateDeletionRules(PimsLeaseTerm term)
         {
-            PimsLeaseTerm leaseTermToDelete = _leaseTermRepository.GetById(term.Id, true);
+            PimsLeaseTerm leaseTermToDelete = _leaseTermRepository.GetById(term.Internal_Id, true);
             if (leaseTermToDelete.PimsLeasePayments.Count > 0)
             {
                 throw new InvalidOperationException("A term with payments attached can not be deleted. If you intend to delete this term, you must delete each of the corresponding payments first.");
@@ -85,7 +85,7 @@ namespace Pims.Api.Services
                 throw new InvalidOperationException("Exercised terms cannot be deleted. Remove all payments from this term and set this term to 'Not Exercised' to delete this term.");
             }
             IEnumerable<PimsLeaseTerm> termsForLease = _leaseTermRepository.GetAllByLeaseId(term.LeaseId).OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId);
-            if (term.Id == termsForLease.FirstOrDefault()?.Id && termsForLease.Count() > 1)
+            if (term.Internal_Id == termsForLease.FirstOrDefault()?.Internal_Id && termsForLease.Count() > 1)
             {
                 throw new InvalidOperationException("You must delete all renewals before deleting the initial term.");
             }
@@ -138,7 +138,7 @@ namespace Pims.Api.Services
         {
             IEnumerable<PimsLeaseTerm> terms = _leaseTermRepository.GetAllByLeaseId(term.LeaseId);
 
-            return terms.Any(t => t.Id != term.Id && (t.TermExpiryDate >= term.TermStartDate && t.TermStartDate <= term.TermStartDate
+            return terms.Any(t => t.Internal_Id != term.Internal_Id && ((t.TermExpiryDate >= term.TermStartDate && t.TermStartDate <= term.TermStartDate)
                 || (t.TermExpiryDate == null && t.TermStartDate <= term.TermStartDate)
                 || (term.TermExpiryDate == null && t.TermStartDate >= term.TermStartDate)));
         }

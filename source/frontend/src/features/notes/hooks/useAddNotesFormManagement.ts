@@ -1,10 +1,10 @@
 import { NoteTypes } from 'constants/index';
 import { FormikHelpers } from 'formik';
+import { useNoteRepository } from 'hooks/repositories/useNoteRepository';
 import { useCallback } from 'react';
 
 import { AddNotesYupSchema } from '../add/AddNotesYupSchema';
 import { EntityNoteForm } from '../add/models';
-import { useNoteRepository } from './useNoteRepository';
 
 export interface IUseAddNotesFormManagementProps {
   /** The parent entity type for adding notes - e.g. 'activity' */

@@ -6,11 +6,11 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// LeaseTenant class, provides the many-to-many relationship between leases and tenants.
     /// </summary>
-    public partial class PimsLeaseTenant : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsLeaseTenant : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.LeaseTenantId; set => this.LeaseTenantId = value; }
+        public override long Internal_Id { get => this.LeaseTenantId; set => this.LeaseTenantId = value; }
         #endregion
 
         #region Constructors
@@ -31,7 +31,7 @@ namespace Pims.Dal.Entities
             this.Lease = lease;
             this.PersonId = person?.PersonId ?? throw new ArgumentNullException(nameof(person));
             this.Person = person;
-            this.OrganizationId = organization?.Id ?? throw new ArgumentNullException(nameof(organization));
+            this.OrganizationId = organization?.Internal_Id ?? throw new ArgumentNullException(nameof(organization));
             this.Organization = organization;
             this.LessorTypeCode = lessorType?.Id ?? throw new ArgumentNullException(nameof(lessorType));
             this.LessorTypeCodeNavigation = lessorType;

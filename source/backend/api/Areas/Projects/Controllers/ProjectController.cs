@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +6,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -51,15 +51,11 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(ProjectModel), 404)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public async Task<IActionResult> GetById([FromRoute] long id)
+        public IActionResult GetById([FromRoute] long id)
         {
-            var project = await _projectService.GetById(id);
-            if (project is null)
-            {
-                return NotFound();
-            }
+            var project = _projectService.GetById(id);
 
-            return Ok(_mapper.Map<ProjectModel>(project));
+            return new JsonResult(_mapper.Map<ProjectModel>(project));
         }
 
         /// <summary>
@@ -96,15 +92,44 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public async Task<IActionResult> AddProject(ProjectModel projectModel)
+        public IActionResult AddProject(ProjectModel projectModel)
         {
-            var newProject = await _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
-            if(newProject is null)
+            try
             {
-                return BadRequest();
+                var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
+                return new JsonResult(_mapper.Map<ProjectModel>(newProject));
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Updates the project.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
+        [HasPermission(Permissions.ProjectEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        public IActionResult UpdateProject([FromRoute] long id, [FromBody] ProjectModel model)
+        {
+            if (id != model.Id)
+            {
+                return BadRequest("Model and path id do not match.");
             }
 
-            return Ok(newProject);
+            try
+            {
+                var updatedProject = _projectService.Update(_mapper.Map<Dal.Entities.PimsProject>(model));
+                return new JsonResult(updatedProject);
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
         }
 
         /// <summary>
@@ -118,11 +143,11 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(List<ProductModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GetProducts(int projectId)
+        public IActionResult GetProducts(long projectId)
         {
-            var predictions = _projectService.GetProducts(projectId);
+            var products = _projectService.GetProducts(projectId);
 
-            return new JsonResult(_mapper.Map<IList<ProductModel>>(predictions));
+            return new JsonResult(_mapper.Map<IList<ProductModel>>(products));
         }
     }
 }

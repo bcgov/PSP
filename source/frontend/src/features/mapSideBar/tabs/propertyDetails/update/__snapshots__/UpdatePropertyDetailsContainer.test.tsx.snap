@@ -326,7 +326,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
           class="c2"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"
@@ -562,7 +562,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
           class="c2"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"
@@ -602,24 +602,28 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                 >
                   <option
                     class="option"
+                    data-testid="select-option-1"
                     value="1"
                   >
                     South Coast Region
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-2"
                     value="2"
                   >
                     Southern Interior Region
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-3"
                     value="3"
                   >
                     Northern Region
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-4"
                     value="4"
                   >
                     Cannot determine
@@ -658,72 +662,84 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-1"
                     value="1"
                   >
                     Lower Mainland District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-2"
                     value="2"
                   >
                     Vancouver Island District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-3"
                     value="3"
                   >
                     Rocky Mountain District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-4"
                     value="4"
                   >
                     West Kootenay District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-5"
                     value="5"
                   >
                     Okanagan-Shuswap District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-6"
                     value="6"
                   >
                     Thompson-Nicola District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-7"
                     value="7"
                   >
                     Cariboo District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-8"
                     value="8"
                   >
                     Peace District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-9"
                     value="9"
                   >
                     Fort George District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-10"
                     value="10"
                   >
                     Bulkley-Stikine District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-11"
                     value="11"
                   >
                     Skeena District
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-12"
                     value="12"
                   >
                     Cannot determine
@@ -841,60 +857,70 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                 >
                   <option
                     class="option"
+                    data-testid="select-option-CROWNFSRVD"
                     value="CROWNFSRVD"
                   >
                     Crown - Federal - Surveyed
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-CROWNFUSRVD"
                     value="CROWNFUSRVD"
                   >
                     Crown - Federal - Unsurveyed
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-CROWNPSRVD"
                     value="CROWNPSRVD"
                   >
                     Crown - Provincial - Surveyed
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-CROWNPUSRVD"
                     value="CROWNPUSRVD"
                   >
                     Crown - Provincial - Unsurveyed
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-HWYROAD"
                     value="HWYROAD"
                   >
                     Hwy / Road
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-PARKS"
                     value="PARKS"
                   >
                     Parks
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-RESERVE"
                     value="RESERVE"
                   >
                     Reserve (IR)
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-STRATACP"
                     value="STRATACP"
                   >
                     Strata Common Property
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-TITLED"
                     value="TITLED"
                   >
                     Titled
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-UNKNOWN"
                     value="UNKNOWN"
                   >
                     Unknown
@@ -1094,7 +1120,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
           class="c2"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"
@@ -1253,24 +1279,28 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                 >
                   <option
                     class="option"
+                    data-testid="select-option-COMBO"
                     value="COMBO"
                   >
                     Combination (PPH & Non-PPH)
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-NONPPH"
                     value="NONPPH"
                   >
                     Non-Provincial Public Highway (Non-PPH)
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-PPH"
                     value="PPH"
                   >
                     Provincial Public Highway (PPH)
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-UNKNOWN"
                     value="UNKNOWN"
                   >
                     Unknown
@@ -1609,7 +1639,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
           class="c2"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"
@@ -1673,7 +1703,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
           class="c2"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"
@@ -1991,12 +2021,14 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                         >
                           <option
                             class="option"
+                            data-testid="select-option-AIRSPACE"
                             value="AIRSPACE"
                           >
                             Airspace
                           </option>
                           <option
                             class="option"
+                            data-testid="select-option-SUBSURF"
                             value="SUBSURF"
                           >
                             Sub-surface
@@ -2018,7 +2050,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
           class="c2"
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col"

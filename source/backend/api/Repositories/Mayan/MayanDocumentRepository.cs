@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -14,6 +12,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
+using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
@@ -161,61 +160,31 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Downloading file...");
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            ExternalResult<FileDownload> retVal = new()
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
+            client.DefaultRequestHeaders.Accept.Clear();
+            AddAuthentication(client, authenticationToken);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+
+            ExternalResult<FileDownload> result = new ExternalResult<FileDownload>()
             {
                 Status = ExternalResultStatus.Error,
             };
 
-            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
             try
             {
                 Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
-                Stream payload = await response.Content.ReadAsStreamAsync().ConfigureAwait(true);
-                _logger.LogTrace("Response: {response}", response);
-                response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
-                long contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault()) : payload.Length;
-                switch (response.StatusCode)
-                {
-                    case HttpStatusCode.OK:
-                        string contentDisposition = response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault();
-                        string fileName = GetFileNameFromContentDisposition(contentDisposition);
-
-                        retVal.Status = ExternalResultStatus.Success;
-                        retVal.Payload = new FileDownload()
-                        {
-                            FilePayload = payload,
-                            Size = contentLength,
-                            Mimetype = response.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
-                            FileName = fileName,
-                        };
-
-                        break;
-                    case HttpStatusCode.NoContent:
-                        retVal.Status = ExternalResultStatus.Success;
-                        retVal.Message = "No content found";
-                        break;
-                    case HttpStatusCode.Forbidden:
-                        retVal.Status = ExternalResultStatus.Error;
-                        retVal.Message = "Forbidden";
-                        break;
-                    default:
-                        retVal.Status = ExternalResultStatus.Error;
-                        retVal.Message = $"Unable to contact endpoint {endpoint}. Http status {response.StatusCode}";
-                        break;
-                }
+                return await ProcessDownloadResponse(response);
             }
             catch (Exception e)
             {
-                retVal.Status = ExternalResultStatus.Error;
-                retVal.Message = "Exception downloading file";
+                result.Status = ExternalResultStatus.Error;
+                result.Message = "Exception downloading file";
                 _logger.LogError("Unexpected exception downloading file {e}", e);
             }
 
             _logger.LogDebug($"Finished downloading file");
-            return retVal;
+            return result;
         }
 
         public async Task<ExternalResult<string>> TryDeleteDocument(long documentId)
@@ -248,7 +217,7 @@ namespace Pims.Api.Repositories.Mayan
             multiContent.Add(fileBytes, "file", file.FileName);
 
             // Add the document id to the content
-            using HttpContent content = new StringContent(documentType.ToString());
+            using HttpContent content = new StringContent(documentType.ToString(CultureInfo.InvariantCulture));
             multiContent.Add(content, "document_type_id");
 
             Uri endpoint = new($"{this._config.BaseUri}/documents/upload/");
@@ -371,14 +340,6 @@ namespace Pims.Api.Repositories.Mayan
 
             _logger.LogDebug($"Finished deleting document type's metadata type");
             return response;
-        }
-
-        private static string GetFileNameFromContentDisposition(string contentDisposition)
-        {
-            const string fileNameFlag = "filename";
-            string[] parts = contentDisposition.Split("; ");
-            string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
-            return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
         }
     }
 }

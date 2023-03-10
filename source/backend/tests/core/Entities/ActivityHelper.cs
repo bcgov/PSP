@@ -1,5 +1,4 @@
 using System;
-using Pims.Dal;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -53,7 +52,7 @@ namespace Pims.Core.Test
                         ActivityInstance = activity,
                         ActivityInstanceId = activity.ActivityInstanceId,
                         Document = d,
-                        DocumentId = d.Id,
+                        DocumentId = d.Internal_Id,
                         IsDisabled = false,
                     });
                 }

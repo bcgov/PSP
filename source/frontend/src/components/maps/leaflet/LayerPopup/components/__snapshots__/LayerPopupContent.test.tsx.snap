@@ -4,6 +4,10 @@ exports[`Layer Popup Content Renders correctly 1`] = `
 <DocumentFragment>
   <div
     class="list-group"
-  />
+  >
+    <b>
+      No layer information at this location
+    </b>
+  </div>
 </DocumentFragment>
 `;

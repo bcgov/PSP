@@ -183,7 +183,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     <MapSideBarLayout
       showCloseButton
       onClose={close}
-      title="Lease / License"
+      title={containerState.isEditing ? 'Update Lease / License' : 'Lease / License'}
       icon={
         <Fence
           title="Lease file icon"
@@ -209,7 +209,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         title={'Confirm changes'}
         message={
           <>
-            <div>If you cancel now, this research file will not be saved.</div>
+            <div>If you cancel now, this Lease/License will not be saved.</div>
             <br />
             <strong>Are you sure you want to Cancel?</strong>
           </>
@@ -245,6 +245,6 @@ const StyledFormWrapper = styled.div`
   text-align: left;
   height: 100%;
   overflow-y: auto;
-  padding-right: 1rem;
+  padding-right: 2rem;
   padding-bottom: 1rem;
 `;

@@ -3,6 +3,7 @@ import { Api_AuditFields } from 'models/api/AuditFields';
 import { Api_ConcurrentVersion } from 'models/api/ConcurrentVersion';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import { Api_Person } from 'models/api/Person';
+import { Api_Project } from 'models/api/Project';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
@@ -56,6 +57,7 @@ export interface ILease extends Api_ConcurrentVersion, Api_AuditFields {
   improvements: ILeaseImprovement[];
   securityDeposits: Api_SecurityDeposit[];
   securityDepositReturns: Api_SecurityDepositReturn[];
+  project?: Api_Project;
 }
 
 export interface IFormLease
@@ -115,7 +117,6 @@ export const defaultLease: ILease = {
   paymentReceivableType: { id: 'RCVBL', description: 'Receivable', isDisabled: false },
   categoryType: { id: 'COMM', description: 'Commercial', isDisabled: false },
   purposeType: { id: 'BCFERRIES', description: 'BC Ferries', isDisabled: false },
-  responsibilityType: { id: 'HQ', description: 'Headquarters', isDisabled: false },
   initiatorType: { id: 'PROJECT', description: 'Project', isDisabled: false },
   type: { id: 'LSREG', description: 'Lease - Registered', isDisabled: false },
   renewalCount: 0,

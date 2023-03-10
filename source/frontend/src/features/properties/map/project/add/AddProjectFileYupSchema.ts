@@ -1,4 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
+import { MAX_SQL_MONEY_SIZE } from 'constants/API';
 import * as Yup from 'yup';
 
 export const AddProjectYupSchema = Yup.object().shape({
@@ -9,4 +10,22 @@ export const AddProjectYupSchema = Yup.object().shape({
   projectStatusType: Yup.string(),
   region: Yup.string().required('Region is required.'),
   summary: Yup.string().max(2000, 'Project summary must be at most ${max} characters'),
+  products: Yup.array().of(
+    Yup.object().shape({
+      code: Yup.string()
+        .required('Product Code is required')
+        .max(20, 'Product code must be at most ${max} characters'),
+      description: Yup.string()
+        .required('Product Description is required')
+        .max(200, 'Product description must be at most ${max} characters'),
+      costEstimate: Yup.lazy(value =>
+        value === ''
+          ? Yup.string()
+          : Yup.number().typeError('Cost estimate must be a number').max(MAX_SQL_MONEY_SIZE),
+      ),
+      startDate: Yup.date(),
+      objective: Yup.string().max(2000, 'Product objective must be at most ${max} characters'),
+      scope: Yup.string().max(2000, 'Product scope must be at most ${max} characters'),
+    }),
+  ),
 });

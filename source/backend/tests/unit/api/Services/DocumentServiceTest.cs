@@ -1,32 +1,24 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading.Tasks;
-using ClosedXML.Report.Utils;
-using DocumentFormat.OpenXml.Drawing.Charts;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Download;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Repositories.Mayan;
-using Pims.Api.Repositories.Rest;
 using Pims.Api.Services;
 using Pims.Av;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -423,7 +415,7 @@ namespace Pims.Api.Test.Services
 
             PimsDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 MayanId = 1,
             };
 
@@ -450,7 +442,7 @@ namespace Pims.Api.Test.Services
 
             PimsDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 MayanId = 1,
             };
 
@@ -476,7 +468,7 @@ namespace Pims.Api.Test.Services
 
             PimsDocument doc = new()
             {
-                Id = 1,
+                Internal_Id = 1,
                 MayanId = 1,
             };
 
@@ -752,9 +744,10 @@ namespace Pims.Api.Test.Services
                     Status = ExternalResultStatus.Success,
                     Payload = new()
                     {
-                        FilePayload = new System.IO.MemoryStream(),
+                        FilePayload = "156165165156asdasdasd==",
                         Size = 1,
                         FileName = "MyFile",
+                        EncodingType = "base64"
                     },
                 });
 

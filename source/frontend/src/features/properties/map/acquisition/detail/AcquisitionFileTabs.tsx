@@ -1,8 +1,6 @@
 import { Claims } from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { FileTypes } from 'constants/fileTypes';
 import { NoteTypes } from 'constants/noteTypes';
-import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
 import NoteListView from 'features/notes/list/NoteListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -10,8 +8,11 @@ import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
 
 import { ActivityListView } from '../../activity/list/ActivityListView';
+import AgreementForm from '../../shared/detail/AgreementForm';
+import AgreementFormContainer from '../../shared/detail/AgreementFormContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
 import { EditFormNames } from '../EditFormNames';
+import AcquisitionDocumentsTab from './AcquisitionDocumentsTab';
 import AcquisitionSummaryView from './AcquisitionSummaryView';
 
 export interface IAcquisitionFileTabsProps {
@@ -56,13 +57,7 @@ export const AcquisitionFileTabs: React.FunctionComponent<
 
   if (acquisitionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
-      content: (
-        <DocumentListContainer
-          parentId={acquisitionFile?.id}
-          relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
-          disableAdd
-        />
-      ),
+      content: <AcquisitionDocumentsTab acquisitionFileId={acquisitionFile.id} />,
       key: FileTabNames.documents,
       name: 'Documents',
     });
@@ -75,6 +70,12 @@ export const AcquisitionFileTabs: React.FunctionComponent<
       name: 'Notes',
     });
   }
+
+  tabViews.push({
+    content: <AgreementFormContainer View={AgreementForm}></AgreementFormContainer>,
+    key: FileTabNames.forms,
+    name: 'Forms',
+  });
 
   var defaultTab = FileTabNames.fileDetails;
 

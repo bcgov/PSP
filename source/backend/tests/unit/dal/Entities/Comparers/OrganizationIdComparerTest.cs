@@ -21,8 +21,8 @@ namespace Pims.Dal.Test.Entities
             {
                 new object[] { new PimsOrganization(), new PimsOrganization(), true },
                 new object[] { new PimsOrganization("code", EntityHelper.CreateOrganizationType("TYPE"), EntityHelper.CreateOrganizationIdentifierType("ID"), EntityHelper.CreateAddress(1)), new PimsOrganization("code", EntityHelper.CreateOrganizationType("TYPE"), EntityHelper.CreateOrganizationIdentifierType("ID"), EntityHelper.CreateAddress(1)), true },
-                new object[] { new PimsOrganization() { Id = 1 }, new PimsOrganization() { Id = 1 }, true },
-                new object[] { new PimsOrganization() { Id = 1 }, new PimsOrganization() { Id = 2 }, false },
+                new object[] { new PimsOrganization() { Internal_Id = 1 }, new PimsOrganization() { Internal_Id = 1 }, true },
+                new object[] { new PimsOrganization() { Internal_Id = 1 }, new PimsOrganization() { Internal_Id = 2 }, false },
                 new object[] { null, new PimsOrganization(), false },
                 new object[] { new PimsOrganization(), null, false },
                 new object[] { null, null, false },

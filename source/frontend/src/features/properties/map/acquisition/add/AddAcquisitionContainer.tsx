@@ -36,7 +36,8 @@ export const AddAcquisitionContainer: React.FC<
     if (!!selectedFileFeature) {
       const property = PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature));
       acquisitionForm.properties = [property];
-      acquisitionForm.region = property.region?.toString();
+      acquisitionForm.region =
+        property.regionName !== 'Cannot determine' ? property.region?.toString() : undefined;
     }
     return acquisitionForm;
   }, [selectedFileFeature]);
@@ -84,13 +85,7 @@ export const AddAcquisitionContainer: React.FC<
         />
       }
       onClose={close}
-      footer={
-        <SidebarFooter
-          isOkDisabled={formikRef.current?.isSubmitting}
-          onSave={handleSave}
-          onCancel={close}
-        />
-      }
+      footer={<SidebarFooter isOkDisabled={helper.loading} onSave={handleSave} onCancel={close} />}
     >
       <StyledFormWrapper>
         <AddAcquisitionForm

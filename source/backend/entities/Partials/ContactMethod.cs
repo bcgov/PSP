@@ -6,11 +6,11 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// ContactMethod class, provides an entity for the datamodel to manage personal contact method.
     /// </summary>
-    public partial class PimsContactMethod : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsContactMethod : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.ContactMethodId; set => this.ContactMethodId = value; }
+        public override long Internal_Id { get => this.ContactMethodId; set => this.ContactMethodId = value; }
         #endregion
 
         #region Constructors
@@ -36,7 +36,7 @@ namespace Pims.Dal.Entities
             this.Person = person ?? throw new ArgumentNullException(nameof(person));
             this.PersonId = person.PersonId;
             this.Organization = organization;
-            this.OrganizationId = organization?.Id;
+            this.OrganizationId = organization?.Internal_Id;
             this.ContactMethodTypeCode = methodTypeId;
             this.ContactMethodValue = value;
         }
@@ -59,7 +59,7 @@ namespace Pims.Dal.Entities
             this.Person = person ?? throw new ArgumentNullException(nameof(person));
             this.PersonId = person.PersonId;
             this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));
-            this.OrganizationId = organization.Id;
+            this.OrganizationId = organization.Internal_Id;
             this.ContactMethodTypeCodeNavigation = methodType ?? throw new ArgumentNullException(nameof(methodType));
             this.ContactMethodTypeCode = methodType.ContactMethodTypeCode;
             this.ContactMethodValue = value;

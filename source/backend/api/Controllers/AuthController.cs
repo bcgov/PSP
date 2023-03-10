@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
+using Pims.Core.Http.Configuration;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 using Model = Pims.Api.Models.Auth;
@@ -22,6 +23,7 @@ namespace Pims.Api.Controllers
     {
         #region Variables
         private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
+        private readonly OpenIdConnectOptions _optionsOpenIdConnect;
         private readonly IUserRepository _userRepository;
         #endregion
 
@@ -31,10 +33,12 @@ namespace Pims.Api.Controllers
         /// Creates a new instance of a AuthController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="optionsKeycloak"></param>
+        /// <param name="optionsOpenIdConnect"></param>
         /// <param name="userRepository"></param>
-        public AuthController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IUserRepository userRepository)
+        public AuthController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IOptionsMonitor<OpenIdConnectOptions> optionsOpenIdConnect, IUserRepository userRepository)
         {
             _optionsKeycloak = optionsKeycloak.CurrentValue;
+            _optionsOpenIdConnect = optionsOpenIdConnect.CurrentValue;
             _userRepository = userRepository;
         }
         #endregion
@@ -59,12 +63,15 @@ namespace Pims.Api.Controllers
             var exists = _userRepository.UserExists(key);
 
             var user = _userRepository.Activate();
+
             if (!exists)
             {
                 return new CreatedResult($"{user.GuidIdentifierValue}", new Model.UserModel(user));
             }
 
-            return new JsonResult(new Model.UserModel(user.Id, user.GuidIdentifierValue.Value));
+            bool hasValidClaims = _userRepository.ValidateClaims(user);
+
+            return new JsonResult(new Model.UserModel(user.Internal_Id, user.GuidIdentifierValue.Value, hasValidClaims));
         }
 
         /// <summary>
@@ -75,7 +82,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "auth" })]
         public IActionResult Register(string redirect_uri)
         {
-            var uri = new UriBuilder($"{_optionsKeycloak.OpenIdConnect.Authority}{_optionsKeycloak.OpenIdConnect.Register}");
+            var uri = new UriBuilder($"{_optionsOpenIdConnect.Authority}{_optionsOpenIdConnect.Register}");
             uri.AppendQuery("client_id", _optionsKeycloak.Client);
             uri.AppendQuery("redirect_uri", redirect_uri);
             return Redirect(uri.ToString());
@@ -89,7 +96,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "auth" })]
         public IActionResult Login(string redirect_uri)
         {
-            var uri = new UriBuilder($"{_optionsKeycloak.OpenIdConnect.Authority}{_optionsKeycloak.OpenIdConnect.Login}");
+            var uri = new UriBuilder($"{_optionsOpenIdConnect.Authority}{_optionsOpenIdConnect.Login}");
             uri.AppendQuery("client_id", _optionsKeycloak.Client);
             uri.AppendQuery("redirect_uri", redirect_uri);
             return Redirect(uri.ToString());
@@ -103,7 +110,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "auth" })]
         public IActionResult Logout(string redirect_uri)
         {
-            var uri = new UriBuilder($"{_optionsKeycloak.OpenIdConnect.Authority}{_optionsKeycloak.OpenIdConnect.Logout}");
+            var uri = new UriBuilder($"{_optionsOpenIdConnect.Authority}{_optionsOpenIdConnect.Logout}");
             uri.AppendQuery("client_id", _optionsKeycloak.Client);
             uri.AppendQuery("redirect_uri", redirect_uri);
             return Redirect(uri.ToString());

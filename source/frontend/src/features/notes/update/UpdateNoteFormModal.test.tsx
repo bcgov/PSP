@@ -98,8 +98,8 @@ describe('UpdateNoteFormModal component', () => {
 
     // note cannot exceed 4000 characters
     const textarea = await findByLabelText(/Type a note/i);
-    userEvent.paste(textarea, fakeText(4001));
-    userEvent.click(getSaveButton());
+    act(() => userEvent.paste(textarea, fakeText(4001)));
+    act(() => userEvent.click(getSaveButton()));
 
     expect(validationSchema).toBeCalled();
     expect(await findByText(/Notes must be at most 4000 characters/i)).toBeVisible();
@@ -109,7 +109,7 @@ describe('UpdateNoteFormModal component', () => {
     const { getCancelButton, getByText } = setup({ initialValues });
 
     expect(getByText(/Notes/i)).toBeVisible();
-    userEvent.click(getCancelButton());
+    act(() => userEvent.click(getCancelButton()));
 
     expect(onCancelClick).toBeCalled();
     expect(validationSchema).not.toBeCalled();
@@ -125,7 +125,7 @@ describe('UpdateNoteFormModal component', () => {
     initialValues.note = 'foo bar baz';
     const { getSaveButton } = setup({ initialValues });
 
-    await act(() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.click(getSaveButton()));
 
     expect(onSaveClick).toBeCalled();
     expect(validationSchema).toBeCalled();

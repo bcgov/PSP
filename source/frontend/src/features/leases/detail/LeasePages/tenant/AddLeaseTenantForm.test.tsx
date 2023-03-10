@@ -1,421 +1,262 @@
-import userEvent from '@testing-library/user-event';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import { act, screen } from '@testing-library/react';
 import { Claims } from 'constants/claims';
-import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
-import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
-import { IFormLease } from 'interfaces';
-import { noop } from 'lodash';
+import { defaultFormLease } from 'interfaces';
 import { mockLookups } from 'mocks';
-import { getMockLease } from 'mocks/mockLease';
+import { getMockContactOrganizationWithOnePerson, getMockContactPerson } from 'mocks/mockContacts';
+import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import {
-  getAllByRole as getAllByRoleBase,
-  mockKeycloak,
-  renderAsync,
-  RenderOptions,
-  within,
-} from 'utils/test-utils';
+import { mockKeycloak, renderAsync, RenderOptions, userEvent } from 'utils/test-utils';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './ViewTenantForm';
 
-// mock auth library
-jest.mock('@react-keycloak/web');
-
 const history = createMemoryHistory();
-const mockAxios = new MockAdapter(axios);
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const SaveButton = () => {
-  const { submitForm } = useFormikContext();
-  return <button onClick={submitForm}>Save</button>;
+jest.mock('@react-keycloak/web');
+const setSelectedContacts = jest.fn();
+const setShowContactManager = jest.fn();
+const setTenants = jest.fn();
+const onSubmit = jest.fn();
+
+const defaultRenderOptions: IAddLeaseTenantFormProps = {
+  selectedContacts: [],
+  setSelectedContacts,
+  setShowContactManager,
+  setTenants,
+  tenants: [],
+  showContactManager: false,
+  onSubmit,
+  formikRef: React.createRef(),
 };
+
 describe('AddLeaseTenantForm component', () => {
-  const setup = async (
-    renderOptions: RenderOptions &
-      Partial<IAddLeaseTenantFormProps> & {
-        initialValues?: IFormLease;
-        selectedTenants?: FormTenant[];
-        onCancel?: () => void;
-        setSelectedTenants?: (tenants: FormTenant[]) => void;
-      } = {},
-  ) => {
+  const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseTenantFormProps> = {}) => {
     // render component under test
     const component = await renderAsync(
       <AddLeaseTenantForm
-        selectedTenants={renderOptions.selectedTenants ?? []}
-        setSelectedTenants={renderOptions.setSelectedTenants ?? noop}
-        onSubmit={noop as any}
-        formikRef={null}
-        initialValues={renderOptions.initialValues}
-      >
-        <SaveButton />
-      </AddLeaseTenantForm>,
+        lease={defaultFormLease}
+        {...{ ...defaultRenderOptions, ...renderOptions }}
+      ></AddLeaseTenantForm>,
       {
         ...renderOptions,
         store: storeState,
         history,
       },
     );
-
-    return {
-      findFirstRow: () => {
-        const rows = component.getAllByRole('row');
-        return rows && rows.length > 1 ? rows[1] : null;
-      },
-      findFirstRowTableTwo: () => {
-        const rows = within(component.getByTestId('selected-items')).getAllByRole('row');
-        return rows && rows.length > 1 ? rows[1] : null;
-      },
-      findCell: (row: HTMLElement, index: number) => {
-        const columns = getAllByRoleBase(row, 'cell');
-        return columns && columns.length > index ? columns[index] : null;
-      },
-      component,
-    };
+    return { component };
   };
 
   beforeEach(() => {
-    mockAxios.resetHistory();
+    jest.resetAllMocks();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
   it('renders as expected', async () => {
-    mockAxios.onGet().reply(200, []);
     const { component } = await setup({});
 
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('items from the contact list view can be added', async () => {
-    mockAxios.onGet().reply(200, {
-      items: sampleContactResponse,
-    });
+  it('sets display modal prop when button set', async () => {
     const {
       component: { getByText },
-    } = await setup({
-      initialValues: { tenants: [] } as any,
-      selectedTenants: [sampleContactResponse[0] as any],
-    });
+    } = await setup({});
 
-    const saveButton = getByText('Save');
-    expect(saveButton).not.toBeDisabled();
+    const tenantButton = getByText('Select Tenant(s)');
+    act(() => userEvent.click(tenantButton));
+
+    expect(setShowContactManager).toHaveBeenCalledWith(true);
   });
 
-  it('items from the contact list cannot be duplicated', async () => {
-    mockAxios.onGet().reply(200, {
-      items: sampleContactResponse,
+  it('displays modal when prop is set', async () => {
+    await setup({ showContactManager: true });
+
+    const modal = screen.getByText('Select a contact');
+
+    expect(modal).toBeVisible();
+  });
+
+  it('confirming the modal sets the tenants', async () => {
+    await setup({ showContactManager: true });
+
+    const modal = screen.getByText('Select a contact');
+    expect(modal).toBeVisible();
+
+    const confirm = screen.getByText('Select');
+    act(() => userEvent.click(confirm));
+
+    expect(setShowContactManager).toHaveBeenLastCalledWith(false);
+    expect(setTenants).toHaveBeenCalledWith([]);
+  });
+
+  it('cancelling the modal resets the tenants', async () => {
+    const tenants = [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())];
+    await setup({ showContactManager: true, tenants: tenants });
+
+    const modal = screen.getByText('Select a contact');
+    expect(modal).toBeVisible();
+
+    const cancel = screen.getByText('Cancel');
+    act(() => userEvent.click(cancel));
+
+    expect(setShowContactManager).toHaveBeenLastCalledWith(false);
+    expect(setSelectedContacts.mock.calls[0][0][0].id).toBe(tenants[0].id);
+  });
+
+  it('displays modal when prop is set', async () => {
+    await setup({ showContactManager: true });
+
+    const modal = screen.getByText('Select a contact');
+
+    expect(modal).toBeVisible();
+  });
+
+  it('displays the number of previously selected tenants', async () => {
+    await setup({
+      tenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
     });
+
+    const number = screen.getByText('1 Tenants associated with this Lease/License');
+
+    expect(number).toBeVisible();
+  });
+
+  it('displays previously selected tenants', async () => {
+    await setup({
+      tenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+    });
+
+    const summary = screen.getByText('Dairy Queen Forever! Property Management');
+
+    expect(summary).toBeVisible();
+  });
+
+  it('displays Not applicable for contact when contact is a person', async () => {
+    await setup({
+      tenants: [new FormTenant(undefined, getMockContactPerson())],
+    });
+
+    const contactMsg = screen.getByText('Not applicable');
+
+    expect(contactMsg).toBeVisible();
+  });
+
+  it('displays no contacts available if organization has no contacts', async () => {
+    const organization = {
+      ...getMockContactOrganizationWithOnePerson(),
+      organization: { organizationPersons: [] },
+    };
+
+    await setup({
+      tenants: [new FormTenant(undefined, organization)],
+    });
+
+    const contactMsg = screen.getByText('No contacts available');
+
+    expect(contactMsg).toBeVisible();
+  });
+
+  it('displays no contacts available if organization has no contacts', async () => {
+    const organization = {
+      ...getMockContactOrganizationWithOnePerson(),
+      organization: { organizationPersons: [] },
+    };
+
+    await setup({
+      tenants: [new FormTenant(undefined, organization)],
+    });
+
+    const contactMsg = screen.getByText('No contacts available');
+
+    expect(contactMsg).toBeVisible();
+  });
+
+  it('displays no contacts available if organization has no contacts', async () => {
+    const organization = {
+      ...getMockContactOrganizationWithOnePerson(),
+      organization: { organizationPersons: [] },
+    };
+
+    await setup({
+      tenants: [new FormTenant(undefined, organization)],
+    });
+
+    const contactMsg = screen.getByText('No contacts available');
+
+    expect(contactMsg).toBeVisible();
+  });
+
+  it('displays the primary contact if there is only one', async () => {
+    const organization = {
+      ...getMockContactOrganizationWithOnePerson(),
+      organization: {
+        organizationPersons: [
+          {
+            personId: 3,
+            organizationId: 3,
+            isDisabled: false,
+            rowVersion: 1,
+            person: { firstName: 'test', surname: 'testerson' },
+          },
+        ],
+      },
+    };
+
+    await setup({
+      tenants: [new FormTenant(undefined, organization)],
+    });
+
+    const contactPerson = screen.getByText('test testerson');
+
+    expect(contactPerson).toBeVisible();
+  });
+
+  it('displays a list if there are multiple', async () => {
+    const organization = {
+      ...getMockContactOrganizationWithOnePerson(),
+      organization: {
+        organizationPersons: [
+          {
+            personId: 3,
+            organizationId: 3,
+            isDisabled: false,
+            rowVersion: 1,
+            person: { firstName: 'test', surname: 'testerson' },
+          },
+          {
+            personId: 2,
+            organizationId: 3,
+            isDisabled: false,
+            rowVersion: 1,
+            person: { firstName: 'second', surname: 'testerson' },
+          },
+        ],
+      },
+    };
+
+    await setup({
+      tenants: [new FormTenant(undefined, organization)],
+    });
+
+    const contactMsg = screen.getByDisplayValue('Select a contact');
+
+    expect(contactMsg).toBeVisible();
+  });
+
+  it('can remove previously selected tenants', async () => {
     const {
-      component: { getByTestId, findAllByTitle },
+      component: { getByTitle },
     } = await setup({
-      initialValues: { tenants: sampleContactResponse } as any,
-      selectedTenants: [new FormTenant(undefined, sampleContactResponse[0])],
+      tenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
     });
 
-    await findAllByTitle('Click to remove');
-    const dataRows = within(getByTestId('selected-items')).getAllByRole('row');
-    expect(dataRows).not.toBeNull();
-    expect(dataRows).toHaveLength(4);
-  });
+    const deleteButton = getByTitle('Click to remove');
+    act(() => userEvent.click(deleteButton));
 
-  it('items can be removed', async () => {
-    mockAxios.onAny().reply(200, {
-      items: sampleContactResponse,
-    });
-    const {
-      findFirstRowTableTwo,
-      findCell,
-      component: { findAllByTitle },
-    } = await setup({
-      initialValues: { tenants: sampleContactResponse } as any,
-      selectedTenants: [sampleContactResponse[0] as any],
-    });
-
-    await findAllByTitle('Click to remove');
-    let dataRow = findFirstRowTableTwo() as HTMLElement;
-    expect(dataRow).not.toBeNull();
-    const deleteCell = findCell(dataRow, 0);
-    deleteCell && userEvent.click(deleteCell);
-
-    dataRow = findFirstRowTableTwo() as HTMLElement;
-    expect(findCell(dataRow, 3)?.textContent).toBe('Bob Billy Smith');
-    expect(findCell(dataRow, 4)?.textContent).toBe('Not applicable');
-  });
-  describe('primary contact behaviour', () => {
-    it('previously selected organization with one primary contact displays correctly', async () => {
-      mockAxios.onAny().reply(200, {
-        items: sampleContactResponse,
-      });
-      const {
-        component: { findByText },
-      } = await setup({
-        initialValues: apiLeaseToFormLease(getMockLease()),
-        selectedTenants: [],
-      });
-
-      const primaryContact = await findByText('Stinky Cheese');
-      expect(primaryContact).toBeVisible();
-    });
-
-    it('previously selected organization with multiple primary contacts displays correctly', async () => {
-      mockAxios.onAny().reply(200, {
-        items: sampleContactResponse,
-      });
-      const {
-        component: { findByDisplayValue },
-      } = await setup({
-        initialValues: apiLeaseToFormLease(getMockLease()),
-        selectedTenants: [],
-      });
-
-      const primaryContact = await findByDisplayValue('Bob Billy Smith');
-      expect(primaryContact).toBeVisible();
-      expect(primaryContact).toContainHTML(
-        '<option value="">Select a contact</option><option value="1" class="option">Bob Billy Smith</option><option value="4" class="option">Minnie Nacho Cheese Mouse</option>',
-      );
-    });
-
-    it('previously selected organization with no primary contacts displays correctly', async () => {
-      mockAxios.onAny().reply(200, {
-        items: sampleContactResponse,
-      });
-      const {
-        component: { findByText },
-      } = await setup({
-        initialValues: apiLeaseToFormLease(getMockLease()),
-        selectedTenants: [],
-      });
-
-      const primaryContact = await findByText('No contacts available');
-      expect(primaryContact).toBeVisible();
-    });
-
-    it('previously selected organization with multiple primary contacts does not allow duplicate selection', async () => {
-      mockAxios.onAny().reply(200, {
-        items: sampleContactResponse,
-      });
-      const {
-        component: { findByDisplayValue },
-      } = await setup({
-        initialValues: apiLeaseToFormLease(getMockLease()),
-        selectedTenants: [sampleContactResponse[0] as any],
-      });
-
-      const primaryContact = await findByDisplayValue('Bob Billy Smith');
-      expect(primaryContact).toBeVisible();
-    });
-
-    it('selecting organization with one primary contact displays correctly', async () => {
-      mockAxios.onAny().reply(200, {
-        items: [orgWithOnePerson],
-      });
-      const {
-        component: { findByText },
-      } = await setup({
-        initialValues: { tenants: [new FormTenant(undefined, orgWithOnePerson)] } as any,
-        selectedTenants: [new FormTenant(undefined, orgWithOnePerson)],
-      });
-
-      const primaryContact = await findByText('Stinky Cheese');
-      expect(primaryContact).toBeVisible();
-    });
-
-    it('selecting organization with multiple primary contacts displays correctly', async () => {
-      mockAxios.onAny().reply(200, {
-        items: [orgWithMultiplePeople],
-      });
-      const {
-        component: { findByText, findByDisplayValue },
-      } = await setup({
-        initialValues: { tenants: [new FormTenant(undefined, orgWithMultiplePeople)] } as any,
-        selectedTenants: [new FormTenant(undefined, orgWithMultiplePeople)],
-      });
-
-      const organization = await findByText('French Mouse Property Management');
-
-      expect(organization).toBeVisible();
-
-      const primaryContact = await findByDisplayValue('Select a contact');
-      expect(primaryContact).toBeVisible();
-      expect(primaryContact).toContainHTML(
-        '<option value="">Select a contact</option><option value="1" class="option">Bob Billy Smith</option><option value="4" class="option">Minnie Nacho Cheese Mouse</option>',
-      );
-    });
-
-    it('selecting organization with no primary contacts displays correctly', async () => {
-      mockAxios.onAny().reply(200, {
-        items: [orgWithNoPeople],
-      });
-      const {
-        component: { findByText },
-      } = await setup({
-        initialValues: { tenants: [new FormTenant(undefined, orgWithNoPeople)] } as any,
-        selectedTenants: [new FormTenant(undefined, orgWithNoPeople)],
-      });
-
-      const organization = await findByText('Pussycat Property Management');
-
-      expect(organization).toBeVisible();
-
-      const primaryContact = await findByText('No contacts available');
-      expect(primaryContact).toBeVisible();
-      expect(primaryContact).toContainHTML('<p>No contacts available</p>');
-    });
+    expect(setTenants).toHaveBeenCalledWith([]);
+    expect(setSelectedContacts).toHaveBeenCalledWith([]);
   });
 });
-
-const sampleContactResponse = [
-  {
-    id: 'P2',
-    personId: 2,
-    organizationId: 5,
-    rowVersion: 0,
-    summary: 'Bob Billy Smith',
-    surname: 'Smith',
-    firstName: 'Bob',
-    isDisabled: false,
-  },
-  {
-    id: 'O5',
-    organizationId: 5,
-    rowVersion: 0,
-    summary: "Bob's Property Management",
-    organizationName: "Bob's Property Management",
-    isDisabled: false,
-  },
-];
-
-const orgWithOnePerson = {
-  id: 'O3',
-  organizationId: 3,
-  organization: {
-    id: 3,
-    isDisabled: false,
-    name: 'Dairy Queen Forever! Property Management',
-    organizationPersons: [
-      {
-        person: {
-          id: 3,
-          isDisabled: false,
-          surname: 'Cheese',
-          firstName: 'Stinky',
-          middleNames: '',
-          personOrganizations: [
-            {
-              personId: 3,
-              isDisabled: false,
-              rowVersion: 1,
-            },
-          ],
-          personAddresses: [],
-          contactMethods: [],
-          rowVersion: 1,
-        },
-        personId: 3,
-        organizationId: 3,
-        isDisabled: false,
-        rowVersion: 1,
-      },
-    ],
-    organizationAddresses: [],
-    contactMethods: [],
-    rowVersion: 1,
-  },
-  rowVersion: 0,
-  summary: 'Dairy Queen Forever! Property Management',
-  organizationName: 'Dairy Queen Forever! Property Management',
-  isDisabled: false,
-};
-const orgWithMultiplePeople = {
-  id: 'O2',
-  organizationId: 2,
-  organization: {
-    id: 2,
-    isDisabled: false,
-    name: 'French Mouse Property Management',
-    alias: '',
-    incorporationNumber: '',
-    organizationPersons: [
-      {
-        person: {
-          id: 1,
-          isDisabled: false,
-          surname: 'Smith',
-          firstName: 'Bob',
-          middleNames: 'Billy',
-          preferredName: 'Tester McTest',
-          personOrganizations: [
-            {
-              personId: 1,
-              isDisabled: false,
-              rowVersion: 3,
-            },
-          ],
-          personAddresses: [],
-          contactMethods: [],
-          comment: 'This is a test comment.',
-          rowVersion: 4,
-        },
-        personId: 1,
-        organizationId: 2,
-        isDisabled: false,
-        rowVersion: 3,
-      },
-      {
-        person: {
-          id: 4,
-          isDisabled: false,
-          surname: 'Mouse',
-          firstName: 'Minnie',
-          middleNames: 'Nacho Cheese',
-          personOrganizations: [
-            {
-              personId: 4,
-              isDisabled: false,
-              rowVersion: 1,
-            },
-          ],
-          personAddresses: [],
-          contactMethods: [],
-          rowVersion: 1,
-        },
-        personId: 4,
-        organizationId: 2,
-        isDisabled: false,
-        rowVersion: 1,
-      },
-    ],
-    organizationAddresses: [],
-    contactMethods: [],
-    comment: '',
-    rowVersion: 2,
-  },
-  rowVersion: 0,
-  summary: 'French Mouse Property Management',
-  organizationName: 'French Mouse Property Management',
-  mailingAddress: '1450 Glentana rd.',
-  municipalityName: 'Victoria',
-  provinceState: 'BC',
-  isDisabled: false,
-};
-const orgWithNoPeople = {
-  id: 'O4',
-  organizationId: 4,
-  organization: {
-    id: 4,
-    isDisabled: false,
-    name: 'Pussycat Property Management',
-    organizationPersons: [],
-    organizationAddresses: [],
-    contactMethods: [],
-    rowVersion: 1,
-  },
-  rowVersion: 0,
-  summary: 'Pussycat Property Management',
-  organizationName: 'Pussycat Property Management',
-  isDisabled: false,
-};

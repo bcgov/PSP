@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_RESEARCH_FILE_DOCUMENT_HIST")]
-    [Index(nameof(ResearchFileDocumentHistId), nameof(EndDateHist), Name = "PIMS_RSCDOC_H_UK", IsUnique = true)]
+    [Index(nameof(ResearchFileDocumentHistId), nameof(EndDateHist), Name = "PIMS_RFLDOC_H_UK", IsUnique = true)]
     public partial class PimsResearchFileDocumentHist
     {
         [Key]
@@ -25,32 +25,34 @@ namespace Pims.Dal.Entities
         public long ResearchFileId { get; set; }
         [Column("DOCUMENT_ID")]
         public long DocumentId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
+        [Column("CONCURRENCY_CONTROL_NUMBER")]
+        public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppCreateTimestamp { get; set; }
-        [Required]
-        [Column("APP_CREATE_USER_DIRECTORY")]
-        [StringLength(30)]
-        public string AppCreateUserDirectory { get; set; }
-        [Column("APP_CREATE_USER_GUID")]
-        public Guid? AppCreateUserGuid { get; set; }
         [Required]
         [Column("APP_CREATE_USERID")]
         [StringLength(30)]
         public string AppCreateUserid { get; set; }
+        [Column("APP_CREATE_USER_GUID")]
+        public Guid? AppCreateUserGuid { get; set; }
+        [Required]
+        [Column("APP_CREATE_USER_DIRECTORY")]
+        [StringLength(30)]
+        public string AppCreateUserDirectory { get; set; }
         [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppLastUpdateTimestamp { get; set; }
-        [Required]
-        [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
-        [StringLength(30)]
-        public string AppLastUpdateUserDirectory { get; set; }
-        [Column("APP_LAST_UPDATE_USER_GUID")]
-        public Guid? AppLastUpdateUserGuid { get; set; }
         [Required]
         [Column("APP_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string AppLastUpdateUserid { get; set; }
-        [Column("CONCURRENCY_CONTROL_NUMBER")]
-        public long ConcurrencyControlNumber { get; set; }
+        [Column("APP_LAST_UPDATE_USER_GUID")]
+        public Guid? AppLastUpdateUserGuid { get; set; }
+        [Required]
+        [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
+        [StringLength(30)]
+        public string AppLastUpdateUserDirectory { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime DbCreateTimestamp { get; set; }
         [Column("DB_CREATE_USERID")]
@@ -62,7 +64,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
     }
 }

@@ -57,12 +57,16 @@ const documentTypeMetadata: Api_Storage_DocumentMetadata[] = [
 ];
 const mockDocument: ComposedDocument = {
   mayanMetadata: documentTypeMetadata,
-  pimsDocument: {
+  pimsDocumentRelationship: {
     id: 1,
-    mayanDocumentId: 15,
-    documentType: documentTypes[0],
-    statusTypeCode: { id: 'AMEND', description: 'Amended' },
-    fileName: 'NewFile.doc',
+    document: {
+      mayanDocumentId: 15,
+      documentType: documentTypes[0],
+      statusTypeCode: { id: 'AMEND', description: 'Amended' },
+      fileName: 'NewFile.doc',
+    },
+    parentId: undefined,
+    relationshipType: undefined,
   },
   mayanFileId: 2,
 };

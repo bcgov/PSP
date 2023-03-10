@@ -177,30 +177,35 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-FILEDOC"
               value="FILEDOC"
             >
               File Document
             </option>
             <option
               class="option"
+              data-testid="select-option-GENERAL"
               value="GENERAL"
             >
               General
             </option>
             <option
               class="option"
+              data-testid="select-option-GENLTR"
               value="GENLTR"
             >
               Generate Letter
             </option>
             <option
               class="option"
+              data-testid="select-option-SITEVIS"
               value="SITEVIS"
             >
               Site Visit
             </option>
             <option
               class="option"
+              data-testid="select-option-SURVEY"
               value="SURVEY"
             >
               Survey
@@ -227,24 +232,28 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-NOSTART"
               value="NOSTART"
             >
               Not Started
             </option>
             <option
               class="option"
+              data-testid="select-option-INPROG"
               value="INPROG"
             >
               In Progress
             </option>
             <option
               class="option"
+              data-testid="select-option-COMPLETE"
               value="COMPLETE"
             >
               Completed
             </option>
             <option
               class="option"
+              data-testid="select-option-CANCELLED"
               value="CANCELLED"
             >
               Cancelled
@@ -492,30 +501,35 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-FILEDOC"
               value="FILEDOC"
             >
               File Document
             </option>
             <option
               class="option"
+              data-testid="select-option-GENERAL"
               value="GENERAL"
             >
               General
             </option>
             <option
               class="option"
+              data-testid="select-option-GENLTR"
               value="GENLTR"
             >
               Generate Letter
             </option>
             <option
               class="option"
+              data-testid="select-option-SITEVIS"
               value="SITEVIS"
             >
               Site Visit
             </option>
             <option
               class="option"
+              data-testid="select-option-SURVEY"
               value="SURVEY"
             >
               Survey
@@ -542,24 +556,28 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-NOSTART"
               value="NOSTART"
             >
               Not Started
             </option>
             <option
               class="option"
+              data-testid="select-option-INPROG"
               value="INPROG"
             >
               In Progress
             </option>
             <option
               class="option"
+              data-testid="select-option-COMPLETE"
               value="COMPLETE"
             >
               Completed
             </option>
             <option
               class="option"
+              data-testid="select-option-CANCELLED"
               value="CANCELLED"
             >
               Cancelled

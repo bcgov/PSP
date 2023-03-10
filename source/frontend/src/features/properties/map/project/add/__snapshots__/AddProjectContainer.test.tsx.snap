@@ -80,7 +80,141 @@ exports[`AddProjectContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c0 {
+  .c9.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c9.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c9.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c9.btn.btn-primary {
+  border: none;
+}
+
+.c9.btn.btn-secondary {
+  background: none;
+}
+
+.c9.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
+  background: none;
+}
+
+.c9.btn.btn-light {
+  border: none;
+}
+
+.c9.btn.btn-dark {
+  border: none;
+}
+
+.c9.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c9.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c9.Button--icon-only:focus {
+  outline: none;
+}
+
+.c9.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -94,7 +228,13 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c4 {
+.c8 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -112,40 +252,22 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c7 textarea.form-control {
-  min-width: 80rem;
-  height: 7rem;
-  resize: none;
-}
-
 .c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  text-align: left;
-  height: auto;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
-.c3 {
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-  margin-left: 0;
-  margin-right: 0;
+.c4 {
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
   text-align: left;
+}
+
+.c7 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
 }
 
 <div
@@ -157,37 +279,38 @@ exports[`AddProjectContainer component renders as expected 1`] = `
       <div
         class="c2"
       >
-        <div
-          class="c3 row"
+        <form
+          class=""
+          novalidate=""
         >
           <div
-            class="col"
-          >
-            <p>
-              Before creating a project, 
-              <a
-                href="/project/list"
-              >
-                do a search
-              </a>
-               to ensure the the project you're creating doesn't already exist.
-            </p>
-          </div>
-        </div>
-        <div
-          class="container"
-        >
-          <div
-            class="c4 form-section"
+            class="c3 form-section"
           >
             <div
               class="collapse show"
             >
               <div
+                class="c4 no-gutters py-4 mb-5 row"
+              >
+                <div
+                  class="col"
+                >
+                  <p>
+                    Before creating a project, 
+                    <a
+                      href="/project/list"
+                    >
+                      do a search
+                    </a>
+                     to ensure the the project you're creating doesn't already exist.
+                  </p>
+                </div>
+              </div>
+              <div
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-4"
+                  class="pr-0 text-left col-2"
                 >
                   <label
                     class="c5"
@@ -214,7 +337,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-4"
+                  class="pr-0 text-left col-2"
                 >
                   <label
                     class="c5"
@@ -242,7 +365,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-4"
+                  class="pr-0 text-left col-2"
                 >
                   <label
                     class="c5"
@@ -268,36 +391,42 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-AC"
                         value="AC"
                       >
                         Active (AC)
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-CA"
                         value="CA"
                       >
                         Cancelled (CA)
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-CNCN"
                         value="CNCN"
                       >
                         Consolidated (CNCN)
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-CO"
                         value="CO"
                       >
                         Completed (CO)
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-HO"
                         value="HO"
                       >
                         On Hold (HO)
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-PL"
                         value="PL"
                       >
                         Planning (PL)
@@ -310,7 +439,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-4"
+                  class="pr-0 text-left col-2"
                 >
                   <label
                     class="c5"
@@ -332,31 +461,21 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                       <option
                         value=""
                       >
-                        Select...
+                        Select region...
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-1"
                         value="1"
                       >
                         South Coast Region
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-2"
                         value="2"
                       >
                         Southern Interior Region
-                      </option>
-                      <option
-                        class="option"
-                        value="3"
-                      >
-                        Northern Region
-                      </option>
-                      <option
-                        class="option"
-                        value="4"
-                      >
-                        Cannot determine
                       </option>
                     </select>
                   </div>
@@ -366,7 +485,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-4"
+                  class="pr-0 text-left col-12"
                 >
                   <label
                     class="c5"
@@ -390,7 +509,43 @@ exports[`AddProjectContainer component renders as expected 1`] = `
               </div>
             </div>
           </div>
-        </div>
+          <div
+            class="c3 form-section"
+          >
+            <h2
+              class="c8"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Associated products
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <button
+                class="c9 Button btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  + Add another product
+                </div>
+              </button>
+            </div>
+          </div>
+          <div />
+          <div />
+        </form>
       </div>
     </div>
   </div>

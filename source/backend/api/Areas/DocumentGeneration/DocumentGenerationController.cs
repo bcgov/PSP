@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models;
-using Pims.Api.Policies;
+using Pims.Api.Models.DocumentGeneration;
+using Pims.Api.Models.Download;
 using Pims.Api.Services;
-using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers
@@ -13,7 +12,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// DocumentGenerationController class, provides endpoints to handle document generation requests.
     /// </summary>
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documentGeneration/")]
@@ -42,8 +41,9 @@ namespace Pims.Api.Controllers
         /// Get supported file types.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("supported_types")]
-        [HasPermission(Permissions.DocumentView)]
+        [HttpGet("types")]
+
+        // [HasPermission(Permissions.GenerateDocuments)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExternalResult<Models.Cdogs.FileTypes>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
@@ -54,10 +54,11 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Uploads the passed document.
+        /// Uploads the passed document as a template.
         /// </summary>
-        [HttpPost("upload_template")]
-        [HasPermission(Permissions.DocumentAdd)]
+        [HttpPost("template")]
+
+        // [HasPermission(Permissions.GenerateDocuments)]
         [ProducesResponseType(typeof(ExternalResult<string>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         public async Task<IActionResult> UploadTemplate([FromForm] IFormFile file)
@@ -65,6 +66,41 @@ namespace Pims.Api.Controllers
             var result = await _documentGenerationService.UploadFileTemplate(file);
             return new JsonResult(result);
         }
+
+        /// <summary>
+        /// Renders the given template with the request data and returns the result as wrapped encoded base64 file.
+        /// </summary>
+        [HttpPost("template/generate/download-wrapped")]
+
+        // [HasPermission(Permissions.GenerateDocuments)]
+        [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
+        [SwaggerOperation(Tags = new[] { "document-generation" })]
+        public async Task<IActionResult> UploadTemplateAndDownloadWrapped([FromBody] DocumentGenerationRequest request)
+        {
+            var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData);
+            return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// Renders the given template with the request data and returns the result as a file.
+        /// </summary>
+        [HttpPost("template/generate/download")]
+
+        // [HasPermission(Permissions.GenerateDocuments)]
+        [ProducesResponseType(typeof(FileContentResult), 200)]
+        [SwaggerOperation(Tags = new[] { "document-generation" })]
+        public async Task<IActionResult> UploadTemplateAndDownload([FromBody] DocumentGenerationRequest request)
+        {
+            var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData);
+            if (result?.Payload == null)
+            {
+                return new NotFoundResult();
+            }
+
+            byte[] fileBytes = System.Convert.FromBase64String(result.Payload.FilePayload);
+            return new FileContentResult(fileBytes, result.Payload.Mimetype) { FileDownloadName = result.Payload.FileName };
+        }
+
         #endregion
     }
 }

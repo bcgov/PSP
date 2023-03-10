@@ -9,5 +9,9 @@ namespace Pims.Dal.Repositories
     public interface IPropertyLeaseRepository : IRepository<PimsPropertyLease>
     {
         IEnumerable<PimsPropertyLease> GetAllByPropertyId(long propertyId);
+
+        IEnumerable<PimsPropertyLease> GetAllByLeaseId(long leaseId);
+
+        void Delete(PimsPropertyLease propertyLeaseFile);
     }
 }

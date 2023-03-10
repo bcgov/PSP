@@ -1,5 +1,4 @@
 using System;
-using Pims.Dal;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -65,6 +64,33 @@ namespace Pims.Core.Test
         }
 
         /// <summary>
+        /// Create a new instance of AcquisitionFileNote.
+        /// </summary>
+        /// <param name="project"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public static Entity.PimsProjectNote CreateProjectNote(Entity.PimsProject project = null, Entity.PimsNote note = null)
+        {
+            note ??= EntityHelper.CreateNote("Test Note");
+            project ??= EntityHelper.CreateProject(1, "9999", "TEST PROJECT");
+
+            return new Entity.PimsProjectNote()
+            {
+                Note = note,
+                Project = project,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = "admin",
+                AppCreateUserDirectory = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                IsDisabled = false,
+                ConcurrencyControlNumber = 1,
+            };
+        }
+
+        /// <summary>
         /// Create a new instance of a Note.
         /// </summary>
         /// <param name="id"></param>
@@ -76,7 +102,7 @@ namespace Pims.Core.Test
         {
             return new Entity.PimsNote()
             {
-                Id = id,
+                Internal_Id = id,
                 NoteTxt = note,
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = "admin",
