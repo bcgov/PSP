@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AspNetCore.Proxy;
 using AspNetCore.Proxy.Options;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pims.Api.Policies;
