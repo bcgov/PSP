@@ -40,13 +40,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By searchAcquisitionFile1stResult = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchAcquisitionFile1stResultLink = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
-        private By searchAcquisitionFile1stResultName = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
-        private By searchAcquisitionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
-        private By searchAcquisitionFile1stResultProject = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
-        private By searchAcquisitionFile1stResultAddress = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(5) div[class='w-100'] div");
-        private By searchAcquisitionFile1stResultStatus = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(6)");
+        private By searchAcquisitionFile1stResultHistoricalFile = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
+        private By searchAcquisitionFile1stResultName = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
+        private By searchAcquisitionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
+        private By searchAcquisitionFile1stResultProject = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(5)");
+        private By searchAcquisitionFile1stResultAddress = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(6) div[class='w-100'] div");
+        private By searchAcquisitionFile1stResultStatus = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(7)");
 
-        private By searchAcquisitionFileHeaderCode = By.XPath("//label[contains(text(), 'File #:')]/parent::div/following-sibling::div[1]/strong");
+        private By searchAcquisitionFileHeaderCode = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]/strong");
        
 
         public SearchAcquisitionFiles(IWebDriver webDriver) : base(webDriver)
@@ -155,6 +156,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(1500);
 
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultLink).Displayed);
+            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultHistoricalFile).Text == "");
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultName).Text.Equals(name));
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultMOTIRegion).Text != "");
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultProject).Text == "");

@@ -11,22 +11,27 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SearchProperties searchProperties;
         private readonly PropertyInformation propertyInformation;
-        private readonly Activities activities;
+        private readonly SharedNotesTab sharedNotesTab;
 
-        //private readonly string userName = "TRANPSP1";
-        private readonly string userName = "sutairak";
+        private readonly string userName = "TRANPSP1";
+        //private readonly string userName = "sutairak";
 
         private readonly string acquisitionFileName = "Automated Acquisition File";
+        private readonly string acquisitionFileNameNotes = "Automated Acquisition File - Testing Notes Tab";
+        private readonly string acquisitionFileNameNotes2 = "Automated Acquisition File - Testing Notes Tab Update";
+
+        private readonly string acquisitionFileProject = "Super Test Project";
+        private readonly string acquisitionFileProduct = "33-001 Test Product 1";
 
         private readonly string acquisitionFileDeliveryDate = "12/27/2023";
         private readonly string teamMember1 = "Alejandro Sanchez";
         private readonly string teamMember2 = "Devin Smith";
 
         private readonly string PID1Search = "014-083-736";
-        private readonly string PID2Search = "023-212-047";
+        private readonly string PID2Search = "014-929-791";
         private readonly string PID3Search = "000-750-166";
         private readonly string PID4Search = "025-710-176";
-        private readonly string PIN1Search = "14745541";
+        private readonly string PIN1Search = "90077451";
         private readonly string Plan1Search = "EPP92028";
         private readonly string address1Search = "1818 Cornwall";
         private readonly string legalDescription1Search = "65 VICTORIA DISTRICT PLAN 33395";
@@ -42,6 +47,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string propertyDetailsNotes = "Automated Acquisition files - Notes for Property Information";
         private readonly string propertyDetailsNotes2 = "  - Edited note";
 
+        private readonly string notesTabNote1 = "Testing notes tab from Acquisition File";
+
         protected string acquisitionFileCode = "";
 
         public AcquisitionFileSteps(BrowserDriver driver)
@@ -52,8 +59,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
-            activities = new Activities(driver.Current);
+            sharedNotesTab = new SharedNotesTab(driver.Current);
         }
+
         [StepDefinition(@"I navigate to create new Acquisition File")]
         public void NavigateCreateNewAcquisitionFile()
         {
@@ -88,7 +96,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Acquisition File")]
         public void CreateAcquisitionFile()
         {
-            /* TEST COVERAGE: PSP-4163, PSP-4323, PSP-4553, PSP-4164  */
+            /* TEST COVERAGE: PSP-4163, PSP-4164, PSP-4323, PSP-4553  */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -113,7 +121,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add additional information to the Acquisition File")]
         public void AddAdditionalInfoAcquisitionFile()
         {
-            /* TEST COVERAGE: PSP-4163, PSP-4323, PSP-4471, PSP-4553, PSP-4331, PSP-4469 */
+            /* TEST COVERAGE: PSP-4163, PSP-4323, PSP-4471, PSP-4553, PSP-4331, PSP-4469, PSP-5308 */
 
             //Enter to Edit mode of Acquisition File
             acquisitionFile.EditAcquisitionFileDetails();
@@ -122,7 +130,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.VerifyAcquisitionFileUpdate();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFile.AddAdditionalInformation(acquisitionFileDeliveryDate, teamMember1, teamMember2);
+            acquisitionFile.AddAdditionalInformation(acquisitionFileProject, acquisitionFileProduct, acquisitionFileDeliveryDate, teamMember1, teamMember2);
 
             //Save Research File
             acquisitionFile.SaveAcquisitionFile();
@@ -164,7 +172,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a duplicate property
-            sharedSearchProperties.SelectPropertyByPID(PID1Search);
+            sharedSearchProperties.SelectPropertyByPID(PID2Search);
             sharedSearchProperties.SelectFirstOption();
 
             //Save Research File
@@ -174,7 +182,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create an Acquisition File from a pin on map")]
         public void CreateAcquisitionFileFromPin()
         {
-            /* TEST COVERAGE: PSP-4601, PSP-1546, PSP-1556, PSP-4704, PSP-4164 */
+            /* TEST COVERAGE: PSP-4601, PSP-1546, PSP-1556, PSP-4704, PSP-4164, PSP-5308 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -189,6 +197,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ClosePropertyInfoModal();
 
             //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
 
             //Validate Acquisition File Details Create Form
@@ -207,11 +216,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.EditAcquisitionFile();
 
             //Add additional information
-            acquisitionFile.AddAdditionalInformation(acquisitionFileDeliveryDate, teamMember1, teamMember2);
+            acquisitionFile.AddAdditionalInformation(acquisitionFileProject, acquisitionFileProduct, acquisitionFileDeliveryDate, teamMember1, teamMember2);
 
             //Save Acquisition File
             acquisitionFile.SaveAcquisitionFile();
-
         }
 
         [StepDefinition(@"I search for an existing acquisition file")]
@@ -233,7 +241,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I edit an existing Acquisition File")]
         public void EditAcquisitionFile()
         {
-            /* TEST COVERAGE: PSP-4600, PSP-4591, PSP-4545, PSP-4689, PSP-5003, PSP-5006, PSP-5007, PSP-4590, PSP-4544 */
+            /* TEST COVERAGE: PSP-4544, PSP-4545, PSP-4590, PSP-4591, PSP-4600, PSP-4689, PSP-5003, PSP-5006, PSP-5007  */
 
             //Edit Acquisition File
             acquisitionFile.EditAcquisitionFile();
@@ -320,7 +328,61 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for the last created research file
             searchAcquisitionFiles.SearchLastAcquisitionFile();
+        }
 
+        [StepDefinition(@"I create a Acquisition File with a new Note on the Notes Tab")]
+        public void CreateNotesTab()
+        {
+            /* TEST COVERAGE: PSP-5332, PSP-5505, PSP-5506, PSP-5507  */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Acquisition File
+            acquisitionFile.NavigateToCreateNewAcquisitionFile();
+
+            //Create basic Acquisition File
+            acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileNameNotes);
+
+            //Save Acquisition File
+            acquisitionFile.SaveAcquisitionFile();
+
+            //Navigate to the Notes Tab
+            sharedNotesTab.NavigateNotesTab();
+
+            //Create a new note
+            sharedNotesTab.CreateNotesTabButton();
+            sharedNotesTab.AddNewNoteDetails(notesTabNote1);
+
+            //Cancel new note
+            sharedNotesTab.CancelNote();
+
+            //Create a new note
+            sharedNotesTab.CreateNotesTabButton();
+            sharedNotesTab.AddNewNoteDetails(notesTabNote1);
+
+            //Save note
+            sharedNotesTab.SaveNote();
+
+            //Edit note
+            sharedNotesTab.ViewFirstNoteDetails();
+            sharedNotesTab.EditNote(acquisitionFileNameNotes2);
+
+            //Cancel note's update
+            sharedNotesTab.CancelNote();
+
+            //Edit note
+            sharedNotesTab.ViewFirstNoteDetails();
+            sharedNotesTab.EditNote(acquisitionFileNameNotes2);
+
+            //Save changes
+            sharedNotesTab.SaveNote();
+
+            //Verify Notes quantity
+            Assert.True(sharedNotesTab.NotesTabCount() == 1);
+
+            //Delete Note
+            sharedNotesTab.DeleteFirstNote();
         }
 
         [StepDefinition(@"A new Acquisition file is created successfully")]
@@ -354,6 +416,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void CancelSuccessful()
         {
             Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
+        }
+
+        [StepDefinition(@"The Notes Tab rendered successfully")]
+        public void NotesTanSuccessful()
+        {
+            sharedNotesTab.VerifyNotesTabListView();
         }
 
     }
