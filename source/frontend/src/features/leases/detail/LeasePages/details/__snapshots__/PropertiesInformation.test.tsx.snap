@@ -6,16 +6,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c6:not(:first-child) {
-  padding-left: 0;
-}
-
-.c6:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c2 {
+  .c2 {
   float: right;
   cursor: pointer;
 }
@@ -55,7 +46,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
       class="c1"
     >
       <div
-        class="row"
+        class="no-gutters row"
       >
         <div
           class="col"
@@ -137,25 +128,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           <div
             class="c5 text-left col"
           >
-            <div
-              class="w-50 flex-nowrap input-group row"
-            >
-              <div
-                class="c6 col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-properties.0.landArea"
-                    name="properties.0.landArea"
-                    title="123"
-                    value="123"
-                  />
-                </div>
-              </div>
-            </div>
+            123.00 
           </div>
         </div>
         <div

@@ -3,14 +3,16 @@ import MockAdapter from 'axios-mock-adapter';
 import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
+import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockProjectPostResponse } from 'mocks/mockProjects';
+import { getUserMock } from 'mocks/userMock';
 import { Api_Project } from 'models/api/Project';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
+import { ProjectForm } from '../models';
 import AddProjectContainer, { IAddProjectContainerProps } from './AddProjectContainer';
-import { ProjectForm } from './models';
 
 jest.mock('@react-keycloak/web');
 
@@ -31,6 +33,29 @@ jest.mock('react-visibility-sensor', () => {
     }
     return children;
   });
+});
+
+jest.mock('hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
+  retrieveUserInfo: jest.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    ...getUserMock(),
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+        region: { id: 1 },
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+        region: { id: 2 },
+      },
+    ],
+  },
 });
 
 describe('AddProjectContainer component', () => {
@@ -121,11 +146,15 @@ describe('AddProjectContainer component', () => {
       getSummaryTextbox,
     } = setup(DEFAULT_PROPS);
 
-    await waitFor(() => userEvent.paste(getNameTextbox(), formValues.projectName as string));
-    await waitFor(() => userEvent.paste(getNumberTextbox(), formValues.projectNumber as string));
-    userEvent.selectOptions(getRegionDropdown(), formValues.region.toString());
-    userEvent.selectOptions(getStatusDropdown(), formValues.projectStatusType as string);
-    await waitFor(() => userEvent.paste(getSummaryTextbox(), formValues.summary as string));
+    await act(async () => userEvent.paste(getNameTextbox(), formValues.projectName as string));
+    await act(async () => userEvent.paste(getNumberTextbox(), formValues.projectNumber as string));
+    await act(async () =>
+      userEvent.selectOptions(getRegionDropdown(), formValues.region?.toString() as string),
+    );
+    await act(async () =>
+      userEvent.selectOptions(getStatusDropdown(), formValues.projectStatusType as string),
+    );
+    await act(async () => userEvent.paste(getSummaryTextbox(), formValues.summary as string));
 
     mockAxios
       .onPost()
@@ -141,11 +170,11 @@ describe('AddProjectContainer component', () => {
           formValues.summary,
         ),
       );
-    userEvent.click(getSaveButton());
+    act(() => userEvent.click(getSaveButton()));
 
     await waitFor(() => {
       const axiosData: Api_Project = JSON.parse(mockAxios.history.post[0].data);
-      const expectedValues = formValues.toApi(1);
+      const expectedValues = formValues.toApi();
 
       expect(mockAxios.history.post[0].url).toBe('/projects');
       expect(axiosData).toEqual(expectedValues);

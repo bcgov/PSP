@@ -43,41 +43,41 @@ namespace Pims.Dal.Helpers.Extensions
             if (!string.IsNullOrWhiteSpace(filter.Pid))
             {
                 var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
-                query = query.Where(l => l.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pid.ToString(), $"%{pidValue}%")));
+                query = query.Where(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pid.ToString(), $"%{pidValue}%")));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Pin))
             {
                 var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
-                query = query.Where(l => l.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pin.ToString(), $"%{pinValue}%")));
+                query = query.Where(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
-                query = query.Where(l => l.PimsPropertyAcquisitionFiles.Any(pl => pl != null &&
-                    (EF.Functions.Like(pl.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
-                    EF.Functions.Like(pl.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
-                    EF.Functions.Like(pl.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
-                    EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
+                query = query.Where(acq => acq.PimsPropertyAcquisitionFiles.Any(pa => pa != null &&
+                    (EF.Functions.Like(pa.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pa.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileStatusTypeCode))
             {
-                query = query.Where(r => r.AcquisitionFileStatusTypeCode == filter.AcquisitionFileStatusTypeCode);
+                query = query.Where(acq => acq.AcquisitionFileStatusTypeCode == filter.AcquisitionFileStatusTypeCode);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
             {
-                query = query.Where(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+                query = query.Where(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
             {
-                query = query.Where(r => EF.Functions.Like(r.MinistryProjectName, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(r.MinistryProjectNumber, $"%{filter.ProjectNameOrNumber}%"));
+                query = query.Where(acq => EF.Functions.Like(acq.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(acq.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
             }
 
             // Business Requirement: limit search results to user's assigned region(s)
-            query = query.Where(r => regions.Contains(r.RegionCode));
+            query = query.Where(acq => regions.Contains(acq.RegionCode));
 
             if (filter.Sort?.Any() == true)
             {
@@ -85,13 +85,14 @@ namespace Pims.Dal.Helpers.Extensions
             }
             else
             {
-                query = query.OrderBy(l => l.AcquisitionFileId);
+                query = query.OrderBy(acq => acq.AcquisitionFileId);
             }
 
             return query
-                .Include(r => r.AcquisitionFileStatusTypeCodeNavigation)
-                .Include(r => r.RegionCodeNavigation)
-                .Include(r => r.PimsPropertyAcquisitionFiles)
+                .Include(acq => acq.AcquisitionFileStatusTypeCodeNavigation)
+                .Include(acq => acq.RegionCodeNavigation)
+                .Include(acq => acq.Project)
+                .Include(acq => acq.PimsPropertyAcquisitionFiles)
                     .ThenInclude(pa => pa.Property)
                     .ThenInclude(p => p.Address);
         }

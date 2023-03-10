@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsProperty, PropertyModel>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.Pid, src => src.Pid)
                 .Map(dest => dest.Pin, src => src.Pin)
                 .Map(dest => dest.PlanNumber, src => src.SurveyPlanNumber)
@@ -60,7 +60,7 @@ namespace Pims.Api.Models.Concepts
                 .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<PropertyModel, Entity.PimsProperty>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.Pid, src => src.Pid)
                 .Map(dest => dest.Pin, src => src.Pin)
                 .Map(dest => dest.SurveyPlanNumber, src => src.PlanNumber)

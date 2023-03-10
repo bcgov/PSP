@@ -1,9 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IApiError } from 'interfaces/IApiError';
-import { getMockAddresses, getMockLegalDescriptions } from 'mocks/bcAssessmentMock';
 import { useCallback, useEffect } from 'react';
 
-import { getMockDescription, getMockSales, getMockValues } from './../mocks/bcAssessmentMock';
 import { pidParser } from './../utils/propertyUtils';
 import { useWfsLayer } from './pims-api';
 import { IResponseWrapper, useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
@@ -99,15 +97,6 @@ export const useBcAssessmentLayer = (
       if (parsedPid === undefined) {
         throw Error(`Unable to parse PID, invalid format: ${pid}`);
       }
-      if (process.env.NODE_ENV === 'development') {
-        return {
-          data: mockBcAssessmentSummary,
-          status: 200,
-          statusText: 'Success',
-          headers: {},
-          config: {},
-        };
-      }
       let legalDescriptionResponse;
       try {
         legalDescriptionResponse = await getLegalDescriptions(
@@ -142,42 +131,46 @@ export const useBcAssessmentLayer = (
         );
       }
 
-      const addressPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.ADDRESSES)
-        ? getAddresses(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true },
-          )
-        : Promise.resolve();
+      const addressPromise =
+        typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.ADDRESSES)
+          ? getAddresses(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
-      const valuesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
-        ? getValues(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true },
-          )
-        : Promise.resolve();
+      const valuesPromise =
+        typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
+          ? getValues(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
-      const chargesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
-        ? getCharges(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true },
-          )
-        : Promise.resolve();
+      const chargesPromise =
+        typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
+          ? getCharges(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
-      const folioDescriptionsPromise = !!typesToLoad?.find(
-        t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION,
-      )
-        ? getFolioDescriptions(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true },
-          )
-        : Promise.resolve();
+      const folioDescriptionsPromise =
+        typesToLoad === undefined ||
+        !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION)
+          ? getFolioDescriptions(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
-      const salesPromise = !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
-        ? getSales(
-            { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-            { timeout: 40000, forceExactMatch: true },
-          )
-        : Promise.resolve();
+      const salesPromise =
+        typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
+          ? getSales(
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
+              { timeout: 40000, forceExactMatch: true },
+            )
+          : Promise.resolve();
 
       const responses = await Promise.all([
         addressPromise,
@@ -232,14 +225,6 @@ export const useBcAssessmentLayer = (
   };
 };
 
-export const mockBcAssessmentSummary: IBcAssessmentSummary = {
-  LEGAL_DESCRIPTION: getMockLegalDescriptions()?.features[0].properties ?? {},
-  ADDRESSES: getMockAddresses()?.features.map(f => f.properties ?? {}) ?? [],
-  VALUES: getMockValues()?.features.map(f => f.properties ?? {}) ?? [],
-  CHARGES: [],
-  FOLIO_DESCRIPTION: (getMockDescription()?.features[0].properties as any) ?? {},
-  SALES: getMockSales()?.features.map(f => f.properties ?? {}) ?? [],
-};
 export interface IBcAssessmentSummary {
   FOLIO_DESCRIPTION: Partial<{
     BCA_FD_SYSID: number;

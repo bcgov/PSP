@@ -1,5 +1,4 @@
 using System;
-using Pims.Dal;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -47,7 +46,7 @@ namespace Pims.Core.Test
         {
             return new Entity.PimsDocument()
             {
-                Id = id,
+                Internal_Id = id,
                 DocumentId = id,
                 FileName = fileName,
                 AppCreateTimestamp = DateTime.Now,

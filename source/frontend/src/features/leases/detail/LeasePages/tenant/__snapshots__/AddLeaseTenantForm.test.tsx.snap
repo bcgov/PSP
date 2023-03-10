@@ -161,10 +161,6 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c4 {
-  font-size: 1.4rem;
-}
-
 .c3 {
   margin-top: 3rem;
   font-size: 1.4rem;
@@ -177,6 +173,10 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   border-left: 0;
   border-right: 0;
   padding: 0;
+}
+
+.c4 {
+  font-size: 1.4rem;
 }
 
 .c0 {
@@ -192,29 +192,26 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="col-md-12 container"
+      class="row"
     >
-      <div>
-        <div
-          class="row"
+      <div
+        class="col"
+      >
+        <button
+          class="c1 Button c2 ml-auto btn btn-secondary"
+          type="button"
         >
           <div
-            class="col"
+            class="Button__value"
           >
-            <button
-              class="c1 Button c2 ml-auto btn btn-secondary"
-              type="button"
-            >
-              <div
-                class="Button__value"
-              >
-                Select Tenant(s)
-              </div>
-            </button>
+            Select Tenant(s)
           </div>
-        </div>
-        <div />
+        </button>
       </div>
+    </div>
+    <div
+      class="col-md-12 container"
+    >
       <div
         class="c3"
       >
@@ -337,9 +334,8 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
         </div>
       </div>
     </div>
+    <div />
   </div>
-  <button>
-    Save
-  </button>
+  <div />
 </DocumentFragment>
 `;

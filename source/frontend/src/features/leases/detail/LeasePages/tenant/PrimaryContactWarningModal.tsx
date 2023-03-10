@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { FormTenant } from './ViewTenantForm';
 
-interface IPrimaryContactWarningModalProps {
+export interface IPrimaryContactWarningModalProps {
   saveCallback?: Function;
   lease: IFormLease | undefined;
   onCancel?: Function;

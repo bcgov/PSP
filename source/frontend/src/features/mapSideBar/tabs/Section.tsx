@@ -20,7 +20,7 @@ export const Section: React.FC<
     <StyledFormSection className={clsx('form-section', className)}>
       {header && (
         <StyledSectionHeader>
-          <Row>
+          <Row className="no-gutters">
             <Col>{header}</Col>
             <Col xs="1">
               {isCollapsable && isCollapsed && (

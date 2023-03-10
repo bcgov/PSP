@@ -86,6 +86,7 @@ export const ProjectFilter: React.FunctionComponent<
                   <Select
                     field="projectStatusCode"
                     options={projectStatusOptions}
+                    placeholder="All Statuses"
                     value={initialFilter?.projectStatusCode}
                   />
                 </Col>

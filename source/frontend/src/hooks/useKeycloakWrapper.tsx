@@ -33,6 +33,7 @@ export interface IKeycloak {
   businessIdentifierValue: string;
   name?: string;
   preferred_businessIdentifier?: string;
+  idir_user_guid?: string;
   firstName?: string;
   surname?: string;
   email?: string;

@@ -12,8 +12,10 @@ using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 
@@ -34,7 +36,7 @@ namespace Pims.Api.Test.Controllers
         public ProjectControllerTest()
         {
             var helper = new TestHelper();
-            _controller = helper.CreateController< ProjectController>(Permissions.ProjectAdd, Permissions.ProjectEdit, Permissions.ProjectView);
+            _controller = helper.CreateController<ProjectController>(Permissions.ProjectAdd, Permissions.ProjectEdit, Permissions.ProjectView);
             _mapper = helper.GetService<IMapper>();
             _service = helper.GetService<Mock<IProjectService>>();
         }
@@ -74,6 +76,44 @@ namespace Pims.Api.Test.Controllers
 
             // Assert
             act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void UpdateProject_BadRequest()
+        {
+            // Act
+            var result = _controller.UpdateProject(1, new ProjectModel { Id = 2 });
+
+            // Assert
+            result.Should().BeOfType(typeof(BadRequestObjectResult));
+        }
+
+        [Fact]
+        public void UpdateProject_Conflict()
+        {
+            var helper = new TestHelper();
+
+            _service.Setup(x => x.Update(It.IsAny<PimsProject>())).Throws(new DuplicateEntityException());
+
+            // Act
+            var result = _controller.UpdateProject(1, new ProjectModel { Id = 1 });
+
+            // Assert
+            result.Should().BeOfType(typeof(ConflictObjectResult));
+        }
+
+        [Fact]
+        public void AddProject_Conflict()
+        {
+            var helper = new TestHelper();
+
+            _service.Setup(x => x.Add(It.IsAny<PimsProject>())).Throws(new DuplicateEntityException());
+
+            // Act
+            var result = _controller.AddProject(new ProjectModel { Id = 2 });
+
+            // Assert
+            result.Should().BeOfType(typeof(ConflictObjectResult));
         }
 
         #endregion

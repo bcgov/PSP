@@ -160,60 +160,70 @@ exports[`TermForm component renders as expected 1`] = `
         </option>
         <option
           class="option"
+          data-testid="select-option-ANNUAL"
           value="ANNUAL"
         >
           Annually
         </option>
         <option
           class="option"
+          data-testid="select-option-BIMONTH"
           value="BIMONTH"
         >
           Bi-Monthly
         </option>
         <option
           class="option"
+          data-testid="select-option-BIWEEK"
           value="BIWEEK"
         >
           Bi-Weekly
         </option>
         <option
           class="option"
+          data-testid="select-option-DAILY"
           value="DAILY"
         >
           Daily
         </option>
         <option
           class="option"
+          data-testid="select-option-MONTHLY"
           value="MONTHLY"
         >
           Monthly
         </option>
         <option
           class="option"
+          data-testid="select-option-NOMINAL"
           value="NOMINAL"
         >
           Nominal ($1)
         </option>
         <option
           class="option"
+          data-testid="select-option-PREPAID"
           value="PREPAID"
         >
           Prepaid / One Time
         </option>
         <option
           class="option"
+          data-testid="select-option-QUARTER"
           value="QUARTER"
         >
           Quarterly
         </option>
         <option
           class="option"
+          data-testid="select-option-SEMIANN"
           value="SEMIANN"
         >
           Semi Annually
         </option>
         <option
           class="option"
+          data-testid="select-option-WEEKLY"
           value="WEEKLY"
         >
           Weekly
@@ -347,12 +357,14 @@ exports[`TermForm component renders as expected 1`] = `
       >
         <option
           class="option"
+          data-testid="select-option-EXER"
           value="EXER"
         >
           Exercised
         </option>
         <option
           class="option"
+          data-testid="select-option-NEXER"
           value="NEXER"
         >
           Not Exercised
@@ -523,60 +535,70 @@ exports[`TermForm component renders with data as expected 1`] = `
         </option>
         <option
           class="option"
+          data-testid="select-option-ANNUAL"
           value="ANNUAL"
         >
           Annually
         </option>
         <option
           class="option"
+          data-testid="select-option-BIMONTH"
           value="BIMONTH"
         >
           Bi-Monthly
         </option>
         <option
           class="option"
+          data-testid="select-option-BIWEEK"
           value="BIWEEK"
         >
           Bi-Weekly
         </option>
         <option
           class="option"
+          data-testid="select-option-DAILY"
           value="DAILY"
         >
           Daily
         </option>
         <option
           class="option"
+          data-testid="select-option-MONTHLY"
           value="MONTHLY"
         >
           Monthly
         </option>
         <option
           class="option"
+          data-testid="select-option-NOMINAL"
           value="NOMINAL"
         >
           Nominal ($1)
         </option>
         <option
           class="option"
+          data-testid="select-option-PREPAID"
           value="PREPAID"
         >
           Prepaid / One Time
         </option>
         <option
           class="option"
+          data-testid="select-option-QUARTER"
           value="QUARTER"
         >
           Quarterly
         </option>
         <option
           class="option"
+          data-testid="select-option-SEMIANN"
           value="SEMIANN"
         >
           Semi Annually
         </option>
         <option
           class="option"
+          data-testid="select-option-WEEKLY"
           value="WEEKLY"
         >
           Weekly
@@ -710,12 +732,14 @@ exports[`TermForm component renders with data as expected 1`] = `
       >
         <option
           class="option"
+          data-testid="select-option-EXER"
           value="EXER"
         >
           Exercised
         </option>
         <option
           class="option"
+          data-testid="select-option-NEXER"
           value="NEXER"
         >
           Not Exercised

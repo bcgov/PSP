@@ -1,3 +1,6 @@
+import { SelectOption } from 'components/common/form';
+import { mapLookupCode } from 'utils/mapLookupCode';
+
 import { ILookupCode } from './../store/slices/lookupCodes/interfaces/ILookupCode';
 export const mockLookups: Partial<ILookupCode>[] = [
   {
@@ -3498,3 +3501,15 @@ export const mockLookups: Partial<ILookupCode>[] = [
     rowVersion: 0,
   },
 ];
+
+export const getMockLookUpsByType = (codeType: string): SelectOption[] => {
+  let codes = mockLookups.reduce(function (filtered: SelectOption[], reg) {
+    if (reg.type === codeType) {
+      let option = mapLookupCode(reg as ILookupCode);
+      filtered.push(option);
+    }
+    return filtered;
+  }, []);
+
+  return codes;
+};

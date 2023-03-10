@@ -201,7 +201,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var model = mapper.Map<Model.UserModel>(user);
 
             // Act
-            var result = controller.GetUser(user.Id);
+            var result = controller.GetUser(user.Internal_Id);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);

@@ -4,7 +4,7 @@ import { Feature, FeatureCollection, GeoJsonObject, GeoJsonProperties, Geometry 
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
-import { isEmpty, isNumber } from 'lodash';
+import { isNumber } from 'lodash';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useTenant } from 'tenants';
@@ -39,11 +39,12 @@ const useActiveFeatureLayer = ({
   mapRef,
   setLayerPopup,
 }: IUseActiveParcelMapLayer) => {
-  const { parcelsLayerUrl, municipalLayerUrl, regionalLayerUrl, hwyDistrictLayerUrl } = useTenant();
+  const { parcelsLayerUrl, municipalLayerUrl, motiRegionLayerUrl, hwyDistrictLayerUrl } =
+    useTenant();
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(parcelsLayerUrl);
   const municipalitiesService = useLayerQuery(municipalLayerUrl);
-  const regionService = useLayerQuery(regionalLayerUrl);
+  const regionService = useLayerQuery(motiRegionLayerUrl);
   const districtService = useLayerQuery(hwyDistrictLayerUrl);
 
   const {
@@ -62,7 +63,7 @@ const useActiveFeatureLayer = ({
     let center: LatLng | undefined;
     let mapBounds: LatLngBounds | undefined;
     let displayConfig = {};
-    let title = 'Municipality Information';
+    let title = 'Location Information';
     let feature: Feature | undefined = undefined;
 
     // call these APIs in parallel - notice there is no "await"
@@ -89,6 +90,7 @@ const useActiveFeatureLayer = ({
       const municipality = await municipalitiesService.findOneWhereContains(latLng);
 
       if (municipality?.features?.length === 1) {
+        title = 'Municipality Information';
         properties = municipality.features[0].properties!;
         displayConfig = municipalityLayerPopupConfig;
         feature = municipality.features[0];
@@ -106,7 +108,9 @@ const useActiveFeatureLayer = ({
       mapBounds = parcel.features[0]?.geometry
         ? geoJSON(parcel.features[0].geometry).getBounds()
         : undefined;
-    } else if (parcel?.features?.length === 0 && isSelecting) {
+    }
+
+    if (feature === undefined) {
       feature = {
         geometry: { coordinates: [latLng.lng, latLng.lat], type: 'Point' },
         type: 'Feature',
@@ -114,39 +118,40 @@ const useActiveFeatureLayer = ({
       };
     }
 
-    if ((!isEmpty(properties) || isSelecting) && feature) {
-      if (!isSelecting) {
-        if (pimsLocationProperties !== undefined && pimsLocationProperties?.features?.length > 1) {
-          toast.error(
-            'Unable to determine desired PIMS Property due to overlapping map boundaries. Click directly on a map marker to view that markers details.',
-          );
-        }
-        const pimsProperty = pimsLocationProperties?.features[0];
-        setLayerPopup({
-          title,
-          data: properties as any,
-          config: displayConfig as any,
-          latlng: latLng,
-          center,
-          bounds: mapBounds,
-          feature,
-          pimsProperty,
-        } as any);
+    if (!isSelecting) {
+      if (pimsLocationProperties !== undefined && pimsLocationProperties?.features?.length > 1) {
+        toast.error(
+          'Unable to determine desired PIMS Property due to overlapping map boundaries. Click directly on a map marker to view that markers details.',
+        );
       }
-      feature.properties = {
-        ...feature.properties,
-        IS_SELECTED: isSelecting,
-        CLICK_LAT_LNG: latLng,
-        REGION_NUMBER: isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown,
-        REGION_NAME: region.REGION_NAME ?? 'Cannot determine',
-        DISTRICT_NUMBER: isNumber(district.DISTRICT_NUMBER)
-          ? district.DISTRICT_NUMBER
-          : DistrictCodes.Unknown,
-        DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
-      };
-      activeFeatureLayer?.addData(feature);
-      setState({ type: MapStateActionTypes.SELECTED_FEATURE, selectedFeature: feature });
+      const pimsProperty = pimsLocationProperties?.features?.length
+        ? pimsLocationProperties?.features[0]
+        : undefined;
+      setLayerPopup({
+        title,
+        data: properties as any,
+        config: displayConfig as any,
+        latlng: latLng,
+        center,
+        bounds: mapBounds,
+        feature,
+        pimsProperty,
+      } as any);
     }
+    const activeFeature = { ...feature };
+    activeFeature.properties = {
+      ...activeFeature.properties,
+      IS_SELECTED: isSelecting,
+      CLICK_LAT_LNG: latLng,
+      REGION_NUMBER: isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown,
+      REGION_NAME: region.REGION_NAME ?? 'Cannot determine',
+      DISTRICT_NUMBER: isNumber(district.DISTRICT_NUMBER)
+        ? district.DISTRICT_NUMBER
+        : DistrictCodes.Unknown,
+      DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
+    };
+    activeFeatureLayer?.addData(activeFeature);
+    setState({ type: MapStateActionTypes.SELECTED_FEATURE, selectedFeature: activeFeature });
   };
 
   /**

@@ -97,7 +97,7 @@ describe('AcquisitionMenu component', () => {
       { claims: [Claims.ACQUISITION_EDIT] },
     );
 
-    const button = getByTitle('Edit acquisition properties');
+    const button = getByTitle('Change properties');
     expect(button).toBeVisible();
 
     userEvent.click(button);
@@ -119,7 +119,7 @@ describe('AcquisitionMenu component', () => {
       { claims: [Claims.ACQUISITION_VIEW] }, // no edit permissions, just view.
     );
 
-    const button = queryByTitle('Edit acquisition properties');
+    const button = queryByTitle('Change properties');
     expect(button).toBeNull();
   });
 });

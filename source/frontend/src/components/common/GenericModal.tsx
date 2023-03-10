@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { Button } from 'components/common/buttons/Button';
+import { noop } from 'lodash';
 import React, { useState } from 'react';
-import { ModalProps as BsModalProps } from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal';
+import { Modal, ModalProps as BsModalProps } from 'react-bootstrap';
 import styled from 'styled-components';
 
 export enum ModalSize {
@@ -87,7 +87,7 @@ export type ModalProps = ModalVisibleState & ModalContent;
  * Generic Component used to display modal popups to the user.
  * @param props customize the component with custom text, and an operation to take when the component is closed.
  */
-export const GenericModal = (props: BsModalProps & ModalProps) => {
+export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) => {
   const {
     display,
     setDisplay,
@@ -134,7 +134,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
   };
 
   return (
-    <ModalContainer {...rest} show={showState} modalSize={modalSize}>
+    <ModalContainer {...rest} show={showState} modalSize={modalSize} onHide={noop}>
       <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>

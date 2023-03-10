@@ -127,7 +127,7 @@ namespace Pims.Api.Test.Services
             property.CopyValues(newValues);
             newValues.Description = "test";
             newValues.Pid = 200;
-            newValues.Location = GeometryHelper.CreatePoint(0, 0, SpatialReference.BC_ALBERS);
+            newValues.Location = GeometryHelper.CreatePoint(0, 0, SpatialReference.BCALBERS);
 
             // Act
             var updatedProperty = service.Update(newValues);
@@ -155,7 +155,7 @@ namespace Pims.Api.Test.Services
             property.CopyValues(newValues);
             newValues.Description = "test";
             newValues.Pid = 200;
-            newValues.Location = GeometryHelper.CreatePoint(-119, 53, SpatialReference.WGS_84);
+            newValues.Location = GeometryHelper.CreatePoint(-119, 53, SpatialReference.WGS84);
 
             // Act
             var updatedProperty = service.Update(newValues);

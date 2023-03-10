@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Person class, provides an entity for the datamodel to manage persons.
     /// </summary>
-    public partial class PimsPerson : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
+    public partial class PimsPerson : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
 
@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify person.
         /// </summary>
         [NotMapped]
-        public override long Id { get => PersonId; set => PersonId = value; }
+        public override long Internal_Id { get => PersonId; set => PersonId = value; }
 
         public long? GetPersonOrganizationId() => PimsPersonOrganizations?.FirstOrDefault(t => t != null)?.PersonOrganizationId;
 

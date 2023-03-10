@@ -1,4 +1,6 @@
 import Claims from 'constants/claims';
+import { NoteTypes } from 'constants/noteTypes';
+import NoteListView from 'features/notes/list/NoteListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Project } from 'models/api/Project';
 
@@ -46,6 +48,14 @@ const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
       ),
       key: ProjectTabNames.projectDetails,
       name: 'Project details',
+    });
+  }
+
+  if (project?.id && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: <NoteListView type={NoteTypes.Project} entityId={project?.id} />,
+      key: ProjectTabNames.notes,
+      name: 'Notes',
     });
   }
 

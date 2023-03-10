@@ -15,6 +15,7 @@ import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { ResearchFileNameGuide } from '../../common/ResearchFileNameGuide';
+import { UpdateProjectsSubForm } from '../../common/updateProjects/UpdateProjectsSubForm';
 import { ResearchFilePurposeFormModel, UpdateResearchSummaryFormModel } from './models';
 
 interface MultiSelectOption {
@@ -26,9 +27,7 @@ export interface IUpdateSummaryFormProps {
   formikProps: FormikProps<UpdateResearchSummaryFormModel>;
 }
 
-const UpdateSummaryForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdateSummaryFormProps>
-> = props => {
+const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = props => {
   const { values } = useFormikContext<UpdateResearchSummaryFormModel>();
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
   const requestSourceTypeOptions = getOptionsByType(API.REQUEST_SOURCE_TYPES);
@@ -85,7 +84,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           <Select
             field="statusTypeCode"
             data-testid="researchFileStatus"
-            required={true}
+            required
             options={researchStatusOptions}
             placeholder={values.statusTypeCode ? undefined : 'Please Select'}
           />
@@ -94,6 +93,9 @@ const UpdateSummaryForm: React.FunctionComponent<
           <Input field="name" />
         </SectionField>
         <ResearchFileNameGuide />
+      </Section>
+      <Section header="Project">
+        <UpdateProjectsSubForm field="researchFileProjects" fileId={values.id} />
       </Section>
       <Section header="Roads">
         <SectionField label="Road name">
@@ -144,7 +146,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           <Select
             field="requestSourceTypeCode"
             data-testid="requestSource"
-            required={true}
+            required
             options={requestSourceTypeOptions}
             placeholder={values.requestSourceTypeCode ? undefined : 'Please Select'}
           />
@@ -165,7 +167,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           </SectionField>
         )}
         <SectionField label="Description of request" />
-        <TextArea field="requestDescription" required={true} />
+        <TextArea field="requestDescription" required />
       </Section>
 
       <Section header="Result">
@@ -173,7 +175,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           <InlineFastDatePicker formikProps={props.formikProps} field="researchCompletionDate" />
         </SectionField>
         <SectionField label="Result of request" />
-        <TextArea field="researchResult" required={true} />
+        <TextArea field="researchResult" required />
       </Section>
 
       <Section header="Expropriation">
@@ -194,7 +196,7 @@ const UpdateSummaryForm: React.FunctionComponent<
           />
         </SectionField>
         <SectionField label="Expropriation notes" />
-        <TextArea field="expropriationNotes" required={true} />
+        <TextArea field="expropriationNotes" required />
       </Section>
       <ContactManagerModal
         display={showContactManager}

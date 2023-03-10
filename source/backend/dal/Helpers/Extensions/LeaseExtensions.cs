@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +54,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             long leaseId = GetNextLeaseSequenceValue(context);
             lease.LeaseId = leaseId;
-            lease.LFileNo = $"L-{lease.LeaseId.ToString().PadLeft(6, '0').Insert(3, "-")}";
+            lease.LFileNo = $"L-{lease.LeaseId.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0').Insert(3, "-")}";
             return lease;
         }
 
@@ -134,6 +135,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static DateTime? GetExpiryDate(this Pims.Dal.Entities.PimsLease lease)
         {
+            if (lease.PimsLeaseTerms != null && lease.PimsLeaseTerms.Any(t => t.TermExpiryDate == null))
+            {
+                return null;
+            }
             if (lease.OrigExpiryDate != null)
             {
                 if (lease.PimsLeaseTerms != null && lease.PimsLeaseTerms.Any(t => t.TermExpiryDate > lease.OrigExpiryDate))

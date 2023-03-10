@@ -49,10 +49,12 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(o => o.Organization)
                 .Include(r => r.RequestorOrganizationNavigation)
                 .Include(r => r.PimsPropertyResearchFiles)
-                .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTypes)
-                .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
+                    .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTypes)
+                    .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
                 .Include(r => r.PimsResearchFilePurposes)
                     .ThenInclude(rp => rp.ResearchPurposeTypeCodeNavigation)
+                .Include(r => r.PimsResearchFileProjects)
+                    .ThenInclude(rp => rp.Project)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
@@ -68,7 +70,7 @@ namespace Pims.Dal.Repositories
             // Existing properties should not be added.
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
             {
-                if (researchProperty.Property.Id != 0)
+                if (researchProperty.Property.PropertyId != 0)
                 {
                     Context.Entry(researchProperty.Property).State = EntityState.Unchanged;
                 }
@@ -92,9 +94,12 @@ namespace Pims.Dal.Repositories
         {
             researchFile.ThrowIfNull(nameof(researchFile));
 
+            var existingResearchFile = Context.PimsResearchFiles
+                .FirstOrDefault(x => x.ResearchFileId == researchFile.Internal_Id) ?? throw new KeyNotFoundException();
+
             var currentPurposes = Context.PimsResearchFiles
                 .SelectMany(x => x.PimsResearchFilePurposes)
-                .Where(x => x.ResearchFileId == researchFile.Id)
+                .Where(x => x.ResearchFileId == researchFile.Internal_Id)
                 .AsNoTracking()
                 .ToList();
 
@@ -125,9 +130,11 @@ namespace Pims.Dal.Repositories
                 Context.Entry(deletedPurpose).State = EntityState.Deleted;
             }
 
-            researchFile.PimsResearchFilePurposes = purposes;
+            existingResearchFile.PimsResearchFilePurposes = purposes;
 
-            this.Context.PimsResearchFiles.Update(researchFile);
+            Context.Entry(existingResearchFile).CurrentValues.SetValues(researchFile);
+            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject>(p => p.PimsResearchFileProjects, researchFile.Internal_Id, researchFile.PimsResearchFileProjects.ToArray());
+
             return researchFile;
         }
 

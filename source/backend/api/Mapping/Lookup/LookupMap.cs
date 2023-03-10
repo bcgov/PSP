@@ -39,7 +39,7 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.Type, src => src.GetType().Name);
 
             config.NewConfig<Entity.PimsOrganization, Model.LookupModel>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.Code, src => src.OrganizationIdentifier)
                 .Map(dest => dest.Name, src => src.OrganizationName)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)

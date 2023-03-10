@@ -84,11 +84,6 @@ namespace Pims.Api.Helpers.Middleware
                 code = HttpStatusCode.Unauthorized;
                 message = "The authentication token is invalid.";
             }
-            else if (ex is SecurityTokenValidationException)
-            {
-                code = HttpStatusCode.Unauthorized;
-                message = "The authentication token is invalid.";
-            }
             else if (ex is SecurityTokenExpiredException)
             {
                 code = HttpStatusCode.Unauthorized;

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using nClam;
@@ -22,7 +23,7 @@ namespace Pims.Av
             return services
                 .Configure<Configuration.ClamAvOptions>(section)
                 .AddSingleton<IAvService, ClamAvService>()
-                .AddSingleton<IClamClient, ClamClient>(x => new ClamClient(ClamAvOptions.DEFAULTURI) { MaxStreamSize = int.Parse(section["MaxFileSize"]), MaxChunkSize = int.Parse(section["MaxFileSize"]) });
+                .AddSingleton<IClamClient, ClamClient>(x => new ClamClient(ClamAvOptions.DEFAULTURI) { MaxStreamSize = int.Parse(section["MaxFileSize"], CultureInfo.InvariantCulture), MaxChunkSize = int.Parse(section["MaxFileSize"], CultureInfo.InvariantCulture) });
         }
     }
 }

@@ -33,8 +33,8 @@ namespace Pims.Api.Services
             var property = _propertyRepository.GetById(id);
             if (property?.Location != null)
             {
-                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, property.Location.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
             }
             return property;
         }
@@ -48,8 +48,8 @@ namespace Pims.Api.Services
             var property = _propertyRepository.GetByPid(pid);
             if (property?.Location != null)
             {
-                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, property.Location.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
             }
             return property;
         }
@@ -61,16 +61,16 @@ namespace Pims.Api.Services
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
-            if (geom.SRID != SpatialReference.BC_ALBERS)
+            if (geom.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
 
             var newProperty = _propertyRepository.Update(property);
             _propertyRepository.CommitTransaction();
 
-            return GetById(newProperty.Id);
+            return GetById(newProperty.Internal_Id);
         }
     }
 }

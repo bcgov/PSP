@@ -189,7 +189,11 @@ exports[`LayerPopupContainer component renders as expected with layer popup cont
     />
     <div
       class="list-group"
-    />
+    >
+      <b>
+        No layer information at this location
+      </b>
+    </div>
     <div
       class="c2"
     >

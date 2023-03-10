@@ -8,7 +8,8 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsProject, ProjectModel>()
-                .Map(dest => dest.Id, src => src.Id)
+                .PreserveReference(true)
+                .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ProjectStatusTypeCode, src => src.ProjectStatusTypeCodeNavigation)
                 .Map(dest => dest.BusinessFunctionCode, src => src.BusinessFunctionCode)
                 .Map(dest => dest.CostTypeCode, src => src.CostTypeCode)
@@ -17,12 +18,13 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.Products, src => src.PimsProducts)
                 .Map(dest => dest.AppLastUpdateUserid, src => src.AppLastUpdateUserid)
                 .Map(dest => dest.AppLastUpdateTimestamp, src => src.AppLastUpdateTimestamp)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<ProjectModel, Entity.PimsProject>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.ProjectStatusTypeCode, src => src.ProjectStatusTypeCode.Id)
                 .Map(dest => dest.BusinessFunctionCodeId, src => src.BusinessFunctionCode.Id)
                 .Map(dest => dest.CostTypeCodeId, src => src.CostTypeCode.Id)
@@ -31,6 +33,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.PimsProducts, src => src.Products)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }

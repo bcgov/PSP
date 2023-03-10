@@ -60,6 +60,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense)
+                .Map(dest => dest.Project, src => src.Project)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<Model.LeaseModel, Entity.PimsLease>()
@@ -96,6 +97,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.HasPhysicialLicense, src => src.HasPhysicalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
+                .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>()
                 .IgnoreNullValues(true);
         }

@@ -6,7 +6,7 @@ exports[`Lease Documents Page renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c5.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`Lease Documents Page renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c5.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`Lease Documents Page renders as expected 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`Lease Documents Page renders as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,19 +128,19 @@ exports[`Lease Documents Page renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -159,17 +159,33 @@ exports[`Lease Documents Page renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
+.c9 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 .c8 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c7 {
-  width: 1.6rem;
-  height: 1.6rem;
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
 }
 
-.c2 {
+.c2 .btn {
+  margin: 0;
+}
+
+.c3 {
   float: right;
   cursor: pointer;
 }
@@ -187,11 +203,11 @@ exports[`Lease Documents Page renders as expected 1`] = `
   text-align: left;
 }
 
-.c3 {
+.c4 {
   border-radius: 0.5rem 0.5rem 0rem 0rem;
 }
 
-.c4 {
+.c5 {
   border-left: 0.2rem solid white;
 }
 
@@ -202,13 +218,13 @@ exports[`Lease Documents Page renders as expected 1`] = `
       class="c1"
     >
       <div
-        class="row"
+        class="no-gutters row"
       >
         <div
           class="col"
         >
           <div
-            class="no-gutters justify-content-between row"
+            class="c2 no-gutters row"
           >
             <div
               class="px-2 my-1 col-auto"
@@ -224,7 +240,7 @@ exports[`Lease Documents Page renders as expected 1`] = `
           class="col-1"
         >
           <svg
-            class="c2"
+            class="c3"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -251,7 +267,7 @@ exports[`Lease Documents Page renders as expected 1`] = `
       class="collapse show"
     >
       <form
-        class="c3 p-3"
+        class="c4 p-3"
         novalidate=""
       >
         <div
@@ -333,13 +349,13 @@ exports[`Lease Documents Page renders as expected 1`] = `
             class="col-lg-auto"
           >
             <div
-              class="c4 no-gutters pl-2 row"
+              class="c5 no-gutters pl-2 row"
             >
               <div
                 class="col"
               >
                 <button
-                  class="c5 Button Button--icon-only primary btn btn-primary"
+                  class="c6 Button Button--icon-only primary btn btn-primary"
                   data-testid="search"
                   id="search-button"
                   title="search"
@@ -368,7 +384,7 @@ exports[`Lease Documents Page renders as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="c5 Button Button--icon-only btn btn-info"
+                  class="c6 Button Button--icon-only btn btn-info"
                   data-testid="reset-button"
                   id="reset-button"
                   title="reset-button"
@@ -421,11 +437,11 @@ exports[`Lease Documents Page renders as expected 1`] = `
               >
                 Document type
                 <div
-                  class="c6"
+                  class="c7"
                   data-testid="sort-column-documentType"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -440,7 +456,7 @@ exports[`Lease Documents Page renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -467,11 +483,11 @@ exports[`Lease Documents Page renders as expected 1`] = `
               >
                 File name
                 <div
-                  class="c6"
+                  class="c7"
                   data-testid="sort-column-fileName"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -486,7 +502,7 @@ exports[`Lease Documents Page renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -513,11 +529,11 @@ exports[`Lease Documents Page renders as expected 1`] = `
               >
                 Uploaded
                 <div
-                  class="c6"
+                  class="c7"
                   data-testid="sort-column-appCreateTimestamp"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -532,7 +548,7 @@ exports[`Lease Documents Page renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -559,11 +575,11 @@ exports[`Lease Documents Page renders as expected 1`] = `
               >
                 Status
                 <div
-                  class="c6"
+                  class="c7"
                   data-testid="sort-column-statusTypeCode"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -578,7 +594,7 @@ exports[`Lease Documents Page renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

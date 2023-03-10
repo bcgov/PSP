@@ -17,6 +17,7 @@ export interface IViewSelectorProps {
   selectedMenuIndex: number;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
   onSuccess: () => void;
+  ref: React.RefObject<FormikProps<any>>;
 }
 
 export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>(
@@ -95,7 +96,9 @@ const getAcquisitionFileProperty = (
   const properties = acquisitionFile?.fileProperties || [];
   const selectedPropertyIndex = selectedMenuIndex - 1;
   const acquisitionFileProperty = properties[selectedPropertyIndex];
-  acquisitionFileProperty.file = acquisitionFile;
+  if (!!acquisitionFileProperty.file) {
+    acquisitionFileProperty.file = acquisitionFile;
+  }
   return acquisitionFileProperty;
 };
 

@@ -14,10 +14,12 @@ namespace Pims.Dal.Repositories
 
         Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter);
 
-        IList<PimsProject> SearchProjects(string filter, int maxResult);
+        IList<PimsProject> SearchProjects(string filter, HashSet<short> regions, int maxResults);
 
-        Task<PimsProject> Add(PimsProject project);
+        PimsProject Add(PimsProject project);
 
-        Task<PimsProject> Get(long projectId);
+        PimsProject Get(long id);
+
+        PimsProject Update(PimsProject project);
     }
 }

@@ -22,23 +22,25 @@ export const mockKeycloak = (
     roles?: string[];
     organizations?: number[];
     authenticated?: boolean;
+    userInfo?: any;
   } = {},
 ) => {
-  const { claims, roles, organizations, authenticated = true } = props;
+  const { claims, roles, organizations, authenticated = true, userInfo } = props;
   // mock what would be returned by keycloak userinfo endpoint
-  const userInfo = {
+  const defaultUserInfo = {
     organizations: organizations ?? [1],
     client_roles: [...(claims ?? []), ...(roles ?? [])] ?? [],
     email: 'test@test.com',
     name: 'Chester Tester',
+    idir_user_guid: '00000000000000000000000000000000',
   };
 
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
-      userInfo,
+      userInfo: userInfo ?? defaultUserInfo,
       subject: 'test',
       authenticated,
-      loadUserInfo: jest.fn().mockResolvedValue(userInfo),
+      loadUserInfo: jest.fn().mockResolvedValue(userInfo ?? defaultUserInfo),
     },
   });
 };

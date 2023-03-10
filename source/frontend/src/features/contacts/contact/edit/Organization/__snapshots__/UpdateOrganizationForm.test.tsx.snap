@@ -338,12 +338,14 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                 >
                   <option
                     class="option"
+                    data-testid="select-option-true"
                     value="true"
                   >
                     Inactive
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-false"
                     value="false"
                   >
                     Active
@@ -519,12 +521,14 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-PERSEMAIL"
                     value="PERSEMAIL"
                   >
                     Personal email
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-WORKEMAIL"
                     value="WORKEMAIL"
                   >
                     Work email
@@ -637,30 +641,35 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-FAX"
                     value="FAX"
                   >
                     Facsimile machine
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-PERSMOBIL"
                     value="PERSMOBIL"
                   >
                     Personal mobile phone
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-PERSPHONE"
                     value="PERSPHONE"
                   >
                     Personal phone
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-WORKMOBIL"
                     value="WORKMOBIL"
                   >
                     Work mobile phone
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-WORKPHONE"
                     value="WORKPHONE"
                   >
                     Work phone
@@ -854,24 +863,28 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-1"
                     value="1"
                   >
                     Canada
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-2"
                     value="2"
                   >
                     United States of America
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-3"
                     value="3"
                   >
                     Mexico
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-4"
                     value="4"
                   >
                     Other
@@ -1025,24 +1038,28 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-1"
                     value="1"
                   >
                     Canada
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-2"
                     value="2"
                   >
                     United States of America
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-3"
                     value="3"
                   >
                     Mexico
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-4"
                     value="4"
                   >
                     Other
@@ -1196,24 +1213,28 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-1"
                     value="1"
                   >
                     Canada
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-2"
                     value="2"
                   >
                     United States of America
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-3"
                     value="3"
                   >
                     Mexico
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-4"
                     value="4"
                   >
                     Other

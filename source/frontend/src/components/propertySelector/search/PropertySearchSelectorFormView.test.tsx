@@ -65,11 +65,13 @@ describe('PropertySearchSelectorFormView component', () => {
     it('can search for a pid', async () => {
       const { getByTitle, getByText, container } = setup({});
       expect(getByText('No results found for your search criteria.')).toBeInTheDocument();
-      await fillInput(container, 'searchBy', 'pid', 'select');
-      await fillInput(container, 'pid', '123-456-789');
+      await act(async () => {
+        await fillInput(container, 'searchBy', 'pid', 'select');
+        await fillInput(container, 'pid', '123-456-789');
+      });
       const searchButton = getByTitle('search');
 
-      userEvent.click(searchButton);
+      await act(async () => userEvent.click(searchButton));
       await waitFor(() => {
         expect(onSearch).toHaveBeenCalledWith({ ...defaultLayerFilter, pid: '123-456-789' });
       });
@@ -78,11 +80,13 @@ describe('PropertySearchSelectorFormView component', () => {
     it('can search for a pin', async () => {
       const { getByTitle, getByText, container } = setup({});
       expect(getByText('No results found for your search criteria.')).toBeInTheDocument();
-      await fillInput(container, 'searchBy', 'pin', 'select');
-      await fillInput(container, 'pin', '54321');
+      await act(async () => {
+        await fillInput(container, 'searchBy', 'pin', 'select');
+        await fillInput(container, 'pin', '54321');
+      });
       const searchButton = getByTitle('search');
 
-      userEvent.click(searchButton);
+      await act(async () => userEvent.click(searchButton));
       await waitFor(() => {
         expect(onSearch).toHaveBeenCalledWith({
           ...defaultLayerFilter,
@@ -95,11 +99,13 @@ describe('PropertySearchSelectorFormView component', () => {
     it('can search for a plan number', async () => {
       const { getByTitle, getByText, container } = setup({});
       expect(getByText('No results found for your search criteria.')).toBeInTheDocument();
-      await fillInput(container, 'searchBy', 'planNumber', 'select');
-      await fillInput(container, 'planNumber', '123456');
+      await act(async () => {
+        await fillInput(container, 'searchBy', 'planNumber', 'select');
+        await fillInput(container, 'planNumber', '123456');
+      });
       const searchButton = getByTitle('search');
 
-      userEvent.click(searchButton);
+      await act(async () => userEvent.click(searchButton));
       await waitFor(() => {
         expect(onSearch).toHaveBeenCalledWith({
           ...defaultLayerFilter,
@@ -115,16 +121,18 @@ describe('PropertySearchSelectorFormView component', () => {
       });
 
       expect(getByText('No results found for your search criteria.')).toBeInTheDocument();
-      await fillInput(container, 'searchBy', 'legalDescription', 'select');
-      await fillInput(
-        container,
-        'legalDescription',
-        'SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND',
-        'textarea',
-      );
+      await act(async () => {
+        await fillInput(container, 'searchBy', 'legalDescription', 'select');
+        await fillInput(
+          container,
+          'legalDescription',
+          'SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND',
+          'textarea',
+        );
+      });
 
       const searchButton = getByTitle('search');
-      userEvent.click(searchButton);
+      act(() => userEvent.click(searchButton));
 
       await waitFor(() => {
         expect(onSearch).toHaveBeenCalledWith({
@@ -138,14 +146,14 @@ describe('PropertySearchSelectorFormView component', () => {
     it('can reset the search criteria', async () => {
       const { getByTitle, findByText, queryByDisplayValue, container } = setup({});
       expect(await findByText('No results found for your search criteria.')).toBeInTheDocument();
-      await fillInput(container, 'searchby', 'pid', 'select');
-      await fillInput(container, 'pid', '123-456-789');
+      await act(async () => {
+        await fillInput(container, 'searchby', 'pid', 'select');
+        await fillInput(container, 'pid', '123-456-789');
+      });
       expect(queryByDisplayValue('123-456-789')).toBeVisible(); //ensure that expected input value is present.
 
       const resetButton = getByTitle('reset-button');
-      act(() => {
-        userEvent.click(resetButton);
-      });
+      await act(async () => userEvent.click(resetButton));
       expect(onSearch).toHaveBeenCalledWith(defaultLayerFilter);
       expect(queryByDisplayValue('123-456-789')).toBeNull(); //input value should now be cleared.
     });
@@ -164,7 +172,7 @@ describe('PropertySearchSelectorFormView component', () => {
         searchResults: toMapProperty(mockPropertyLayerSearchResponse.features),
       });
       const nextPage = getByLabelText('Page 2');
-      userEvent.click(nextPage);
+      act(() => userEvent.click(nextPage));
       await waitFor(async () => {
         expect(getByText(`6 - 7 of 7`)).toBeVisible();
         expect(getAllByRole('row')).toHaveLength(3);
@@ -193,7 +201,7 @@ describe('PropertySearchSelectorFormView component', () => {
         searchResults: toMapProperty(mockPropertyLayerSearchResponse.features),
       });
       const checkbox = await findByTestId('selectrow-PID-006-772-331');
-      userEvent.click(checkbox);
+      act(() => userEvent.click(checkbox));
       expect(checkbox).toBeChecked();
       expect(onSelectedProperties).toHaveBeenCalledWith([
         {

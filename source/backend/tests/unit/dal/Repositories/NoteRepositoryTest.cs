@@ -84,7 +84,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsNote>();
             result.NoteTxt.Should().Be("Test Note");
-            result.Id.Should().Be(note.Id);
+            result.NoteId.Should().Be(note.NoteId);
         }
 
         [Fact]
@@ -260,6 +260,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission();
 
             var fileNote = EntityHelper.CreateAcquisitionFileNote();
+            fileNote.AcquisitionFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
             var repository = helper.CreateRepository<EntityNoteRepository>(user);
@@ -269,6 +270,26 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             deleted.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Delete_Acquisition_WrongId()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var fileNote = EntityHelper.CreateAcquisitionFileNote();
+            fileNote.AcquisitionFileId = 2;
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteAcquisitionFileNotes(2);
+
+            // Assert
+            deleted.Should().BeFalse();
         }
 
         [Fact]

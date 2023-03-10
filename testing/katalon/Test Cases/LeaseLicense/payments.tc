@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestCaseEntity>
-   <description>Capture adding terms and payments to a lease</description>
-   <name>payments</name>
-   <tag></tag>
-   <comment></comment>
-   <testCaseGuid>c51e5a72-0897-4ea2-8ff9-3a4577396b79</testCaseGuid>
-</TestCaseEntity>

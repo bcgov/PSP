@@ -8,6 +8,7 @@ using Moq;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
@@ -27,7 +28,8 @@ namespace Pims.Api.Test.Controllers
         private IMapper _mapper;
         #endregion
 
-        public AcquisitionControllerTest() {
+        public AcquisitionControllerTest()
+        {
             var helper = new TestHelper();
             _controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
             _mapper = helper.GetService<IMapper>();
@@ -103,6 +105,24 @@ namespace Pims.Api.Test.Controllers
 
             // Assert
             _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Make a conflict request to update an acquisition file's properties.
+        /// </summary>
+        [Fact]
+        public void UpdateAcquisitionFileProperties_Conflict()
+        {
+            // Arrange
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Throws(new BusinessRuleViolationException());
+
+            // Act
+            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile));
+
+            // Assert
+            result.Should().BeAssignableTo<ConflictObjectResult>();
         }
         #endregion
     }

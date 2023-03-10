@@ -147,6 +147,7 @@ services:
       - run_worker
       - worker_a
       - "--prefetch-multiplier=1"
+      - "--concurrency=10 --max-memory-per-child=1000 -E"
     profiles:
       - extra_worker_a
       - all
@@ -158,6 +159,7 @@ services:
       - run_worker
       - worker_b
       - "--prefetch-multiplier=1"
+      - "--concurrency=10 --max-memory-per-child=1000 -E"
     profiles:
       - extra_worker_b
       - all
@@ -169,6 +171,7 @@ services:
       - run_worker
       - worker_c
       - "--prefetch-multiplier=1"
+      - "--concurrency=10 --max-memory-per-child=1000 -E"
     profiles:
       - extra_worker_c
       - all
@@ -180,6 +183,7 @@ services:
       - run_worker
       - worker_d
       - "--concurrency=1 --prefetch-multiplier=1"
+      - "--concurrency=10 --max-memory-per-child=1000 -E"
     profiles:
       - extra_worker_d
       - all

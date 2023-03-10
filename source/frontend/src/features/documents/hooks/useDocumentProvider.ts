@@ -8,6 +8,7 @@ import {
   Api_DocumentUpdateResponse,
 } from 'models/api/Document';
 import {
+  Api_FileDownload,
   Api_Storage_DocumentDetail,
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
@@ -26,8 +27,8 @@ export const useDocumentProvider = () => {
     getDocumentTypeMetadata,
     getDocumentTypes,
     getDocumentDetail,
-    downloadDocumentFileApiCall,
-    downloadDocumentFileLatestApiCall,
+    downloadWrappedDocumentFileApiCall,
+    downloadWrappedDocumentFileLatestApiCall,
     updateDocumentMetadataApiCall,
   } = useApiDocuments();
 
@@ -136,20 +137,17 @@ export const useDocumentProvider = () => {
     });
 
   // Provides functionality for download a document file
-  const { execute: downloadDocumentFile, loading: downloadDocumentFileLoading } =
+  const { execute: downloadWrappedDocumentFile, loading: downloadWrappedDocumentFileLoading } =
     useApiRequestWrapper<
       (
         mayanDocumentId: number,
         mayanFileId: number,
-      ) => Promise<
-        AxiosResponse<AxiosResponse<string | ArrayBuffer | ArrayBufferView | Blob, any>, any>
-      >
+      ) => Promise<AxiosResponse<Api_FileDownload, any>>
     >({
-      rawResponse: true,
       requestFunction: useCallback(
         async (mayanDocumentId: number, mayanFileId: number) =>
-          await downloadDocumentFileApiCall(mayanDocumentId, mayanFileId),
-        [downloadDocumentFileApiCall],
+          await downloadWrappedDocumentFileApiCall(mayanDocumentId, mayanFileId),
+        [downloadWrappedDocumentFileApiCall],
       ),
       requestName: 'DownloadDocumentFile',
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
@@ -161,20 +159,14 @@ export const useDocumentProvider = () => {
 
   // Provides functionality for download the latest file for a document
   const {
-    execute: downloadDocumentFileLatest,
-    response: downloadDocumentFileLatestResponse,
-    loading: downloadDocumentFileLatestLoading,
-  } = useApiRequestWrapper<
-    (
-      documendId: number,
-    ) => Promise<
-      AxiosResponse<AxiosResponse<string | ArrayBuffer | ArrayBufferView | Blob, any>, any>
-    >
-  >({
-    rawResponse: true,
+    execute: downloadWrappedDocumentFileLatest,
+    response: downloadWrappedDocumentFileLatestResponse,
+    loading: downloadWrappedDocumentFileLatestLoading,
+  } = useApiRequestWrapper<(documendId: number) => Promise<AxiosResponse<Api_FileDownload, any>>>({
     requestFunction: useCallback(
-      async (mayanDocumentId: number) => await downloadDocumentFileLatestApiCall(mayanDocumentId),
-      [downloadDocumentFileLatestApiCall],
+      async (mayanDocumentId: number) =>
+        await downloadWrappedDocumentFileLatestApiCall(mayanDocumentId),
+      [downloadWrappedDocumentFileLatestApiCall],
     ),
     requestName: 'DownloadDocumentFileLatest',
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
@@ -187,11 +179,11 @@ export const useDocumentProvider = () => {
   return {
     retrieveDocumentMetadata,
     retrieveDocumentMetadataLoading,
-    downloadDocumentFile,
-    downloadDocumentFileLoading,
-    downloadDocumentFileLatest,
-    downloadDocumentFileLatestResponse,
-    downloadDocumentFileLatestLoading,
+    downloadWrappedDocumentFile,
+    downloadWrappedDocumentFileLoading,
+    downloadWrappedDocumentFileLatest,
+    downloadWrappedDocumentFileLatestResponse,
+    downloadWrappedDocumentFileLatestLoading,
     retrieveDocumentTypeMetadata,
     retrieveDocumentTypeMetadataLoading,
     retrieveDocumentTypes,

@@ -1,5 +1,6 @@
 import { Claims } from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { NoteTypes } from 'constants/noteTypes';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { LeaseFormModel } from 'features/leases/models';
 import {
@@ -7,6 +8,7 @@ import {
   LeaseFileTabs,
   LeaseTabFileView,
 } from 'features/mapSideBar/tabs/LeaseFileTabs';
+import NoteListView from 'features/notes/list/NoteListView';
 import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IFormLease, ILease } from 'interfaces';
@@ -140,6 +142,14 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       ),
       key: LeaseFileTabNames.documents,
       name: 'Documents',
+    });
+  }
+
+  if (lease?.id && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: <NoteListView type={NoteTypes.Lease_File} entityId={lease?.id} />,
+      key: LeaseFileTabNames.notes,
+      name: 'Notes',
     });
   }
 

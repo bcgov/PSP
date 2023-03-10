@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -78,9 +79,11 @@ namespace Pims.Api.Services
 
         public PimsResearchFile Update(PimsResearchFile researchFile)
         {
-            _logger.LogInformation("Updating research file...");
+            researchFile.ThrowIfNull(nameof(researchFile));
+
+            _logger.LogInformation("Updating research file with id {id}", researchFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
-            ValidateVersion(researchFile.Id, researchFile.ConcurrencyControlNumber);
+            ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
             var newResearchFile = _researchFileRepository.Update(researchFile);
             _researchFileRepository.CommitTransaction();
@@ -91,20 +94,20 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating research file properties...");
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
-            ValidateVersion(researchFile.Id, researchFile.ConcurrencyControlNumber);
+            ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
             MatchProperties(researchFile);
 
             // Get the current properties in the research file
-            var currentProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Id);
+            var currentProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incommingResearchProperty in researchFile.PimsPropertyResearchFiles)
             {
                 // If the property is not new, check if the name has been updated.
-                if (incommingResearchProperty.Id != 0)
+                if (incommingResearchProperty.Internal_Id != 0)
                 {
-                    PimsPropertyResearchFile existingProperty = currentProperties.FirstOrDefault(x => x.Id == incommingResearchProperty.Id);
+                    PimsPropertyResearchFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incommingResearchProperty.Internal_Id);
                     if (existingProperty.PropertyName != incommingResearchProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incommingResearchProperty.PropertyName;
@@ -119,7 +122,7 @@ namespace Pims.Api.Services
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyResearchFile> differenceSet = currentProperties.Where(x => !researchFile.PimsPropertyResearchFiles.Any(y => y.Id == x.Id)).ToList();
+            List<PimsPropertyResearchFile> differenceSet = currentProperties.Where(x => !researchFile.PimsPropertyResearchFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 _researchFilePropertyRepository.Delete(deletedProperty);
@@ -138,7 +141,7 @@ namespace Pims.Api.Services
             }
 
             _researchFilePropertyRepository.CommitTransaction();
-            return _researchFileRepository.GetById(researchFile.Id);
+            return _researchFileRepository.GetById(researchFile.Internal_Id);
         }
 
         public Paged<PimsResearchFile> GetPage(ResearchFilter filter)
@@ -172,7 +175,7 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
-                        researchProperty.PropertyId = foundProperty.Id;
+                        researchProperty.PropertyId = foundProperty.Internal_Id;
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -187,7 +190,7 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
-                        researchProperty.PropertyId = foundProperty.Id;
+                        researchProperty.PropertyId = foundProperty.Internal_Id;
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -217,10 +220,10 @@ namespace Pims.Api.Services
 
             property.IsPropertyOfInterest = true;
 
-            if(property.Address != null)
+            if (property.Address != null)
             {
                 var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
-                if(provinceId.HasValue)
+                if (provinceId.HasValue)
                 {
                     property.Address.ProvinceStateId = provinceId.Value;
                 }
@@ -229,10 +232,10 @@ namespace Pims.Api.Services
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
-            if (geom.SRID != SpatialReference.BC_ALBERS)
+            if (geom.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
         }
 
@@ -257,8 +260,8 @@ namespace Pims.Api.Services
                 if (researchProperty.Property.Location != null)
                 {
                     var oldCoords = researchProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
-                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
+                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
         }
@@ -270,8 +273,8 @@ namespace Pims.Api.Services
                 if (researchProperty.Property.Location != null)
                 {
                     var oldCoords = researchProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
-                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
+                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
         }

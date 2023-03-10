@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResearchSummaryView component renders as expected when provided no research file 1`] = `
+exports[`ResearchSummaryView component renders as expected when research file is provided 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -47,7 +47,51 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Project
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Ministry project:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div>
+              00048 CLAIMS
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -107,7 +151,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -218,7 +262,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -277,7 +321,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"

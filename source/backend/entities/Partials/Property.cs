@@ -9,11 +9,11 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Property class, provides an entity for the datamodel to manage properties.
     /// </summary>
-    public partial class PimsProperty : IdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsProperty : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]
-        public override long Id { get => this.PropertyId; set => this.PropertyId = value; }
+        public override long Internal_Id { get => this.PropertyId; set => this.PropertyId = value; }
 
         /// <summary>
         /// get - The friendly formated Parcel Id.
@@ -56,7 +56,7 @@ namespace Pims.Dal.Entities
             this.RegionCode = address.RegionCode.Value;
             this.DistrictCodeNavigation = address.DistrictCodeNavigation ?? throw new ArgumentException($"Argument '{nameof(address)}.{nameof(address.DistrictCode)}' is required.", nameof(address));
             this.DistrictCode = address.DistrictCode.Value;
-            this.PimsPropPropTenureTypes = new List<PimsPropPropTenureType>() { tenure } ?? throw new ArgumentNullException(nameof(tenure));
+            this.PimsPropPropTenureTypes = new List<PimsPropPropTenureType>() { tenure };
             this.PropertyAreaUnitTypeCodeNavigation = areaUnit ?? throw new ArgumentNullException(nameof(areaUnit));
             this.PropertyAreaUnitTypeCode = areaUnit.Id;
             if (address.Longitude.HasValue && address.Latitude.HasValue)

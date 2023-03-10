@@ -297,7 +297,7 @@ exports[`ActivityView test Renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
@@ -339,7 +339,7 @@ exports[`ActivityView test Renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="row"
+          class="no-gutters row"
         >
           <div
             class="col"
