@@ -13,7 +13,7 @@ const setContainerStateMock = jest.fn();
 
 const mockProject = mockProjectGetResponse();
 
-describe('ResearchFileTabs component', () => {
+describe('Project Tabs component', () => {
   // render component under test
   const setup = (props: IProjectTabsContainerProps, renderOptions: RenderOptions = {}) => {
     const utils = render(
