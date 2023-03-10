@@ -1,12 +1,9 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { IApiError } from 'interfaces/IApiError';
-import { useCallback, useEffect } from 'react';
+import { AxiosResponse } from 'axios';
+import { useCallback } from 'react';
 
 import { pidParser } from './../utils/propertyUtils';
 import { useWfsLayer } from './pims-api';
 import { IResponseWrapper, useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
-import useKeycloakWrapper from './useKeycloakWrapper';
-import { useModalContext } from './useModalContext';
 
 export enum BC_ASSESSMENT_TYPES {
   LEGAL_DESCRIPTION = 'LEGAL_DESCRIPTION',
@@ -31,28 +28,9 @@ export const useBcAssessmentLayer = (
     (
       pid: string,
       typesToLoad?: BC_ASSESSMENT_TYPES[],
-    ) => Promise<AxiosResponse<IBcAssessmentSummary>>
+    ) => Promise<AxiosResponse<IBcAssessmentSummary | undefined>>
   >;
 } => {
-  const keycloak = useKeycloakWrapper();
-  const logout = keycloak.obj.logout;
-  const { setModalContent, setDisplayModal } = useModalContext();
-  useEffect(() => {
-    setModalContent({
-      title: 'SiteMinder Session Expired',
-      message:
-        'Your SiteMinder Session has expired, you have not been authorized to access BC Assessment, or BC Assessment is offline. In order to access BC Assessment data, you may try to logout and log back in to the application. If you continue to see this error, contact an administrator',
-      okButtonText: 'Log out',
-      cancelButtonText: 'Continue working',
-      handleOk: () => {
-        logout();
-      },
-      handleCancel: () => {
-        setDisplayModal(false);
-      },
-    });
-  }, [setModalContent, logout, setDisplayModal]);
-
   const getLegalDescriptionsWrapper = useWfsLayer(
     url,
     {
@@ -92,7 +70,7 @@ export const useBcAssessmentLayer = (
     async (
       pid: string,
       typesToLoad?: BC_ASSESSMENT_TYPES[],
-    ): Promise<AxiosResponse<IBcAssessmentSummary>> => {
+    ): Promise<AxiosResponse<IBcAssessmentSummary | undefined>> => {
       const parsedPid = pidParser(pid);
       if (parsedPid === undefined) {
         throw Error(`Unable to parse PID, invalid format: ${pid}`);
@@ -104,17 +82,13 @@ export const useBcAssessmentLayer = (
           { timeout: 40000, forceExactMatch: true },
         );
       } catch (e: any) {
-        if (axios.isAxiosError(e)) {
-          const axiosError = e as AxiosError<IApiError>;
-          try {
-            // Test to see if the service is at all available.
-            await axios.get(url, { withCredentials: true });
-          } catch (err) {
-            if (axiosError.response === undefined && axiosError.code === undefined) {
-              setDisplayModal(true);
-            }
-          }
-        }
+        return {
+          data: undefined,
+          status: 500,
+          statusText: 'Failed to load BC Assessment data',
+          headers: {},
+          config: {},
+        };
       }
 
       if (!legalDescriptionResponse?.features?.length) {
@@ -201,23 +175,14 @@ export const useBcAssessmentLayer = (
       };
       return { data: summary, status: 200, statusText: 'Success', headers: {}, config: {} };
     },
-    [
-      getAddresses,
-      getValues,
-      getCharges,
-      getFolioDescriptions,
-      getSales,
-      getLegalDescriptions,
-      setDisplayModal,
-      url,
-    ],
+    [getAddresses, getValues, getCharges, getFolioDescriptions, getSales, getLegalDescriptions],
   );
 
   const getSummaryWrapper = useApiRequestWrapper<
     (
       pid: string,
       typesToLoad?: BC_ASSESSMENT_TYPES[],
-    ) => Promise<AxiosResponse<IBcAssessmentSummary>>
+    ) => Promise<AxiosResponse<IBcAssessmentSummary | undefined>>
   >({ requestFunction: getSummary, requestName: 'BC_ASSESSMENT_SUMMARY' });
 
   return {

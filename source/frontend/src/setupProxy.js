@@ -23,7 +23,7 @@ module.exports = function (app) {
   app.use(
     '/ogs-internal',
     createProxyMiddleware({
-      target: 'http://localhost:8600/geoserver',
+      target: 'http://localhost:5000/api/geoserver',
       changeOrigin: true,
       secure: false,
       // timeout: 2000,

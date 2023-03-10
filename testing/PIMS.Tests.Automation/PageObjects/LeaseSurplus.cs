@@ -10,8 +10,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By licenseSurplusTableBody = By.CssSelector("div[data-testid='leasesTable'] div[class='tbody']");
 
-        private By licenseHeaderLeaseCode = By.XPath("//b[contains(text(),'L-')]");
-
         public LeaseSurplus(IWebDriver webDriver) : base(webDriver)
         { }
 
@@ -22,12 +20,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licenseSurplusLink).Click();
 
             Assert.True(webDriver.FindElement(licenseSurplusTableBody).Displayed);
-        }
-
-        //Get the lease number
-        public string GetLeaseCode()
-        {
-            return webDriver.FindElement(licenseHeaderLeaseCode).Text;
         }
     }
 }

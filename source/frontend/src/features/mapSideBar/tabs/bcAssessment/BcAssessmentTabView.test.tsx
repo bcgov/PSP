@@ -6,6 +6,7 @@ import { render, RenderOptions } from 'utils/test-utils';
 import BcAssessmentTabView, { IBcAssessmentTabViewProps } from './BcAssessmentTabView';
 
 const history = createMemoryHistory();
+jest.mock('@react-keycloak/web');
 
 describe('BcAssessmentTabView component', () => {
   const setup = (
@@ -24,6 +25,7 @@ describe('BcAssessmentTabView component', () => {
       {
         ...renderOptions,
         history,
+        claims: [],
       },
     );
 

@@ -26,7 +26,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailContainerProps>
 > = props => {
   const [document, setDocument] = useState<ComposedDocument>({
-    pimsDocument: DocumentRow.toApi(props.pimsDocument),
+    pimsDocumentRelationship: DocumentRow.toApi(props.pimsDocument),
   });
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
     Api_Storage_DocumentTypeMetadataType[]
@@ -139,8 +139,8 @@ export const DocumentDetailContainer: React.FunctionComponent<
   ]);
 
   const onUpdateDocument = async (updateRequest: Api_DocumentUpdateRequest) => {
-    if (props.pimsDocument.parentId) {
-      let result = await updateDocument(props.pimsDocument.parentId, updateRequest);
+    if (props.pimsDocument.id) {
+      let result = await updateDocument(props.pimsDocument.id, updateRequest);
       result && props.onUpdateSuccess();
     }
   };

@@ -46,3 +46,7 @@ Scenario: Edit Digital Documents on Acquisition File's activity
 	Given I create a new Acquisition File
 	When I create an Acquisition File with activity and edit attached document
 	Then A digital document has been deleted successfully
+
+Scenario: Notes Tab on Acquisition File
+	Given I create a Acquisition File with a new Note on the Notes Tab
+	Then The Notes Tab rendered successfully
