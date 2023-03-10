@@ -110,7 +110,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetPimsDocumentTypes_Project_Success()
+        public void GetAllProjectDocuments_Project_Success()
         {
             // Arrange
             var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ProjectView);
@@ -317,9 +317,9 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
             var documentService = _helper.GetService<Mock<IDocumentService>>();
-            var researchDocumentRepository = _helper.GetService<Mock<IResearchFileDocumentRepository>>();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
-            researchDocumentRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsResearchFileDocument>() { new PimsResearchFileDocument() });
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
                 .ReturnsAsync(new ExternalResult<string>()
                 {
@@ -345,9 +345,9 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
             var documentService = _helper.GetService<Mock<IDocumentService>>();
-            var researchDocumentRepository = _helper.GetService<Mock<IResearchFileDocumentRepository>>();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
-            researchDocumentRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsResearchFileDocument>() { new PimsResearchFileDocument() });
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
                 .ReturnsAsync(new ExternalResult<string>()
                 {
@@ -422,9 +422,9 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
             var documentService = _helper.GetService<Mock<IDocumentService>>();
-            var acquisitionDocumentRepository = _helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
-            acquisitionDocumentRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsAcquisitionFileDocument>() { new PimsAcquisitionFileDocument() }); ;
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
                 .ReturnsAsync(new ExternalResult<string>()
                 {
@@ -478,9 +478,9 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
             var documentService = _helper.GetService<Mock<IDocumentService>>();
-            var acquisitionDocumentRepository = _helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
-            acquisitionDocumentRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsAcquisitionFileDocument>() { new PimsAcquisitionFileDocument() });
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
                 .ReturnsAsync(new ExternalResult<string>()
                 {
@@ -501,7 +501,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        [Trait("DocumentFileService", "Delete")]
         public void Delete_ProjectDocument_ShouldThrowException_NotAuthorized()
         {
             // Arrange
@@ -521,15 +520,14 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        [Trait("DocumentFileService", "Delete")]
         public async void Delete_ProjectDocument_Success_Status_Success()
         {
             // Arrange
             var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
             var documentService = _helper.GetService<Mock<IDocumentService>>();
-            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
-            projectRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsProjectDocument>() { new PimsProjectDocument() });
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
                 .ReturnsAsync(new ExternalResult<string>()
                 {
@@ -550,15 +548,14 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        [Trait("DocumentFileService", "Delete")]
         public async void Delete_ProjectDocument_Success_Status_NotFound()
         {
             // Arrange
             var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
             var documentService = _helper.GetService<Mock<IDocumentService>>();
-            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
 
-            projectRepository.Setup(x => x.GetAllByDocument(It.IsAny<long>())).Returns(new List<PimsProjectDocument>() { new PimsProjectDocument() });
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
             documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
                 .ReturnsAsync(new ExternalResult<string>()
                 {
@@ -579,7 +576,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        [Trait("DocumentFileService", "Delete")]
         public async void Delete_ProjectDocument_Success_NoResults_Status_NotFound()
         {
             // Arrange

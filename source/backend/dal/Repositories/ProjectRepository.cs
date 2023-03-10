@@ -167,7 +167,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get a list of all the document file relationships for a a given research file.
+        /// Get all Project Documents by Document Id.
         /// </summary>
         /// <returns></returns>
         public IList<PimsProjectDocument> GetAllByDocument(long documentId)

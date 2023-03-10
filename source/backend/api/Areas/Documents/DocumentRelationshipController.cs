@@ -101,8 +101,8 @@ namespace Pims.Api.Controllers
                     return new JsonResult(mappedLeaseDocuments);
                 case DocumentRelationType.Projects:
                     var projectDocuments = _documentFileService.GetFileDocuments<PimsProjectDocument>(FileType.Project, parentId);
-                    var mappedprojectDocuments = _mapper.Map<List<DocumentRelationshipModel>>(projectDocuments);
-                    return new JsonResult(mappedprojectDocuments);
+                    var mappedProjectDocuments = _mapper.Map<List<DocumentRelationshipModel>>(projectDocuments);
+                    return new JsonResult(mappedProjectDocuments);
                 default:
                     throw new BadRequestException("Relationship type not valid for retrieve.");
             }

@@ -151,6 +151,26 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
+        public int DocumentRelationshipCount(long documentId)
+        {
+            var documentRelationships = this.Context.PimsDocuments.AsNoTracking()
+                .Include(d => d.PimsActivityInstanceDocuments)
+                .Include(d => d.PimsActivityTemplateDocuments)
+                .Include(d => d.PimsResearchFileDocuments)
+                .Include(d => d.PimsAcquisitionFileDocuments)
+                .Include(d => d.PimsProjectDocuments)
+                .Where(d => d.DocumentId == documentId)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+            return documentRelationships.PimsResearchFileDocuments.Count +
+                    documentRelationships.PimsAcquisitionFileDocuments.Count +
+                    documentRelationships.PimsProjectDocuments.Count +
+                    documentRelationships.PimsActivityInstanceDocuments.Count +
+                    documentRelationships.PimsActivityTemplateDocuments.Count;
+
+        }
+
         #endregion
     }
 }
