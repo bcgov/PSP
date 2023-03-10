@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AspNetCore.Proxy;
 using AspNetCore.Proxy.Options;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pims.Api.Policies;
@@ -16,6 +15,10 @@ namespace Pims.Api.Controllers
 {
     /// <summary>
     /// PimsGeoserverController class, provides an authenticated proxy to the pims inventory layer.
+    /// Not possible to authenticate geoserver with keycloak gold standard.
+    /// Authentication with SITEMINDER/WebAde flawed as keycloak does not refresh SITEMINDER token and they expire independently of each other.
+    /// Basic auth (via internal gov network and service account) provides a workable method for authentication to Geoserver.
+    /// Authorization of the user is provided at this level and not at the Geoserver level.
     /// </summary>
     [Authorize]
     [ApiController]
