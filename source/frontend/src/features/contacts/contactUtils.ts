@@ -16,6 +16,7 @@ import {
   IEditablePersonForm,
 } from 'interfaces/editable-contact';
 import { IContactPerson } from 'interfaces/IContact';
+import { isEmpty } from 'lodash';
 import { Api_Organization, Api_OrganizationPerson } from 'models/api/Organization';
 import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
 import { formatFullName } from 'utils/personUtils';
@@ -207,8 +208,9 @@ export function formAddressToApiAddress(
   return {
     ...formAddress,
     countryId: parseInt(formAddress?.countryId.toString()) || 0,
-    provinceId:
-      formAddress?.provinceId === '' ? undefined : parseInt(formAddress?.provinceId.toString()),
+    provinceId: isEmpty(formAddress?.provinceId)
+      ? undefined
+      : parseInt(formAddress?.provinceId.toString()),
     addressTypeId: toTypeCode(formAddress?.addressTypeId),
   } as IEditablePersonAddress | IEditableOrganizationAddress;
 }
