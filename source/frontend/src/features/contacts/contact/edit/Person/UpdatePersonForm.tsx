@@ -37,7 +37,7 @@ import { onValidatePerson } from '../../utils/contactUtils';
 /**
  * Formik-connected form to Update Individual Contacts
  */
-export const UpdatePersonForm: React.FC<React.PropsWithChildren<{ id: number }>> = ({ id }) => {
+export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   const history = useHistory();
   const { updatePerson } = useUpdateContact();
 

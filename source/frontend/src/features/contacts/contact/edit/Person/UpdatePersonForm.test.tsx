@@ -144,9 +144,9 @@ describe('UpdatePersonForm', () => {
     it('should save the form with minimal data', async () => {
       const { getSaveButton } = setup();
       const save = getSaveButton();
-      act(() => userEvent.click(save));
+      await act(() => userEvent.click(save));
 
-      await waitFor(() => expect(updatePerson).toBeCalledWith(mockPerson));
+      expect(updatePerson).toBeCalledWith(mockPerson);
     });
 
     it('should save the form with updated values', async () => {
@@ -182,9 +182,9 @@ describe('UpdatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      act(() => userEvent.click(save));
+      await act(() => userEvent.click(save));
 
-      await waitFor(() => expect(updatePerson).toBeCalledWith(newValues));
+      expect(updatePerson).toBeCalledWith(newValues);
     });
 
     it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
@@ -231,9 +231,9 @@ describe('UpdatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      act(() => userEvent.click(save));
+      await act(() => userEvent.click(save));
 
-      await waitFor(() => expect(updatePerson).toBeCalledWith(newValues));
+      expect(updatePerson).toBeCalledWith(newValues);
     });
   });
 });

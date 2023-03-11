@@ -132,12 +132,12 @@ describe('CreatePersonForm', () => {
 
   describe('when Save button is clicked', () => {
     it('should save the form with minimal data', async () => {
-      const expected: IEditablePerson = {
+      const expectedFormData: IEditablePerson = {
         ...mockPerson,
         contactMethods: [{ ...mockContactMethod }],
       };
 
-      addPerson.mockResolvedValue({ ...expected, id: 1 });
+      addPerson.mockResolvedValue({ ...expectedFormData, id: 1 });
       const { getSaveButton, container } = setup();
 
       // provide required fields
@@ -154,16 +154,14 @@ describe('CreatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      act(() => userEvent.click(save));
-      await waitFor(() => expect(addPerson).toBeCalledWith(expected, expect.anything(), false));
+      await act(() => userEvent.click(save));
 
-      await waitFor(() => {
-        expect(history.location.pathname).toBe('/contact/P1');
-      });
+      expect(addPerson).toBeCalledWith(expectedFormData, expect.anything(), false);
+      expect(history.location.pathname).toBe('/contact/P1');
     });
 
     it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
-      const expected: IEditablePerson = {
+      const expectedFormData: IEditablePerson = {
         ...mockPerson,
         addresses: [{ ...mockAddress }],
       };
@@ -185,12 +183,10 @@ describe('CreatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      act(() => userEvent.click(save));
-      await waitFor(() => expect(addPerson).toBeCalledWith(expected, expect.anything(), false));
+      await act(() => userEvent.click(save));
 
-      await waitFor(() => {
-        expect(history.location.pathname).toBe('/contact/P1');
-      });
+      expect(addPerson).toBeCalledWith(expectedFormData, expect.anything(), false);
+      expect(history.location.pathname).toBe('/contact/P1');
     });
   });
 });
