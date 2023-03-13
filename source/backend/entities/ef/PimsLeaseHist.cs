@@ -40,7 +40,6 @@ namespace Pims.Dal.Entities
         [Column("LEASE_PROGRAM_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseProgramTypeCode { get; set; }
-        [Required]
         [Column("LEASE_INITIATOR_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseInitiatorTypeCode { get; set; }
