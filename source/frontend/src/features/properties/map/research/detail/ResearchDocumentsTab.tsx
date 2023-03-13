@@ -16,12 +16,14 @@ const ResearchDocumentsTab: React.FunctionComponent<IResearchDocumentsTabProps> 
         parentId={researchFileId}
         relationshipType={DocumentRelationshipType.RESEARCH_FILES}
       />
-      <DocumentListContainer
-        title="Activity Documents"
-        parentId={researchFileId}
-        relationshipType={DocumentRelationshipType.RESEARCH_FILE_ACTIVITIES}
-        disableAdd
-      />
+      {false && (
+        <DocumentListContainer
+          title="Activity Documents"
+          parentId={researchFileId}
+          relationshipType={DocumentRelationshipType.RESEARCH_FILE_ACTIVITIES}
+          disableAdd
+        />
+      )}
     </>
   );
 };

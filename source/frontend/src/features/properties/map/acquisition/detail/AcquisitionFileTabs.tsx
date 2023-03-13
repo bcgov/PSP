@@ -1,5 +1,4 @@
 import { Claims } from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
 import { NoteTypes } from 'constants/noteTypes';
 import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
 import NoteListView from 'features/notes/list/NoteListView';
@@ -7,7 +6,6 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
 
-import { ActivityListView } from '../../activity/list/ActivityListView';
 import AgreementForm from '../../shared/detail/AgreementForm';
 import AgreementFormContainer from '../../shared/detail/AgreementFormContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
@@ -42,18 +40,19 @@ export const AcquisitionFileTabs: React.FunctionComponent<
     name: 'File details',
   });
 
-  if (acquisitionFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
-    tabViews.push({
-      content: (
-        <ActivityListView
-          fileId={acquisitionFile.id}
-          fileType={FileTypes.Acquisition}
-        ></ActivityListView>
-      ),
-      key: FileTabNames.activities,
-      name: 'Activities',
-    });
-  }
+  // PSP-5591
+  // if (acquisitionFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
+  //   tabViews.push({
+  //     content: (
+  //       <ActivityListView
+  //         fileId={acquisitionFile.id}
+  //         fileType={FileTypes.Acquisition}
+  //       ></ActivityListView>
+  //     ),
+  //     key: FileTabNames.activities,
+  //     name: 'Activities',
+  //   });
+  // }
 
   if (acquisitionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({

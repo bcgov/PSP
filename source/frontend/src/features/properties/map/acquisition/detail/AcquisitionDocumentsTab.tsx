@@ -16,12 +16,14 @@ const AcquisitionDocumentsTab: React.FunctionComponent<IAcquisitionDocumentsTabP
         parentId={acquisitionFileId}
         relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
       />
-      <DocumentListContainer
-        title="Activity Documents"
-        parentId={acquisitionFileId}
-        relationshipType={DocumentRelationshipType.ACQUISITION_FILE_ACTIVITIES}
-        disableAdd
-      />
+      {false && (
+        <DocumentListContainer
+          title="Activity Documents"
+          parentId={acquisitionFileId}
+          relationshipType={DocumentRelationshipType.ACQUISITION_FILE_ACTIVITIES}
+          disableAdd
+        />
+      )}
     </>
   );
 };

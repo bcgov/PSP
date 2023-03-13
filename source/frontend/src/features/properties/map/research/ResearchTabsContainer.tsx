@@ -44,7 +44,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
     name: 'File Details',
   });
 
-  if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
+  if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW) && researchFile?.id === 0) {
     tabViews.push({
       content: (
         <ActivityListView fileId={researchFile.id} fileType={FileTypes.Research}></ActivityListView>
