@@ -25,7 +25,7 @@ namespace Pims.Dal.Entities
         [StringLength(200)]
         public string Description { get; set; }
         [Column("DISPLAY_ORDER")]
-        public short? DisplayOrder { get; set; }
+        public int? DisplayOrder { get; set; }
         [Column("EFFECTIVE_DATE", TypeName = "date")]
         public DateTime EffectiveDate { get; set; }
         [Column("EXPIRY_DATE", TypeName = "date")]

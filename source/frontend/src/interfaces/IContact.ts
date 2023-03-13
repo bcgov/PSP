@@ -20,8 +20,9 @@ export interface IContactAddress {
   streetAddress2?: string;
   streetAddress3?: string;
   municipality?: string;
-  province: IContactProvince;
+  province?: IContactProvince;
   country?: IContactCountry;
+  countryOther?: string;
   postal?: string;
 }
 
