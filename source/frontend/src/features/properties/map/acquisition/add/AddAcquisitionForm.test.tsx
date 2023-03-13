@@ -107,7 +107,6 @@ describe('AddAcquisitionForm component', () => {
 
   it('should display historical field input', async () => {
     const { getByText } = setup({ initialValues });
-
-    expect(getByText(/Historical file number/g)).toBeVisible();
+    expect(getByText(/Historical file number/i)).toBeVisible();
   });
 });
