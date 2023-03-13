@@ -185,6 +185,26 @@ namespace Pims.Dal.Repositories
                 .Where(a => a.ProductId == productId).ToList();
         }
 
+        public List<PimsAcquisitionChecklistItem> GetChecklistItemsByAcquisitionFileId(long acquisitionFileId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsAcquisitionChecklistItems
+                .Where(ci => ci.AcquisitionFileId == acquisitionFileId)
+                .Include(ci => ci.AcqChklstItemTypeCodeNavigation)
+                .Include(ci => ci.AcqChklstItemStatusTypeCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        public PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile)
+        {
+            acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionChecklistItem>(acq => acq.PimsAcquisitionChecklistItems, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionChecklistItems.ToArray());
+
+            return acquisitionFile;
+        }
+
         /// <summary>
         /// Generates a new Acquisition Number in the following format.
         /// </summary>

@@ -17,7 +17,7 @@ namespace Pims.Dal.Entities
         public string Id { get => AcqChklstItemTypeCode; set => AcqChklstItemTypeCode = value; }
 
         /// <summary>
-        /// get/set - Primary key to identify this record.
+        /// get/set - Primary key to the parent section of this checklist item.
         /// </summary>
         [NotMapped]
         public string ParentId { get => AcqChklstSectionTypeCode; set => AcqChklstSectionTypeCode = value; }

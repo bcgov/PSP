@@ -9,6 +9,7 @@ using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Helpers.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
@@ -87,10 +88,18 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsAcquisitionOwner> GetOwners(long id)
         {
-            _logger.LogInformation("Getting acquisition file owners with AcquistionFile id: {id}", id);
+            _logger.LogInformation("Getting acquisition file owners with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
+        }
+
+        public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
+        {
+            _logger.LogInformation("Getting acquisition file checklist with AcquisitionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acqFileRepository.GetChecklistItemsByAcquisitionFileId(id);
         }
 
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
@@ -111,6 +120,7 @@ namespace Pims.Api.Services
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile);
+            PopulateAcquisitionChecklist(acquisitionFile);
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
@@ -202,6 +212,17 @@ namespace Pims.Api.Services
                 }
             }
 
+            _acqFileRepository.CommitTransaction();
+            return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+        }
+
+        public PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile)
+        {
+            acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
+            _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+
+            _acqFileRepository.UpdateChecklistItems(acquisitionFile);
             _acqFileRepository.CommitTransaction();
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
@@ -347,6 +368,23 @@ namespace Pims.Api.Services
             };
 
             _entityNoteRepository.Add(fileNoteInstance);
+        }
+
+        private void PopulateAcquisitionChecklist(PimsAcquisitionFile acquisitionFile)
+        {
+            // Ensure the checklist is empty before populating it
+            acquisitionFile.PimsAcquisitionChecklistItems.Clear();
+
+            foreach (var itemType in _lookupRepository.GetAllAcquisitionChecklistItemTypes().Where(x => !x.IsExpiredType()))
+            {
+                var checklistItem = new PimsAcquisitionChecklistItem
+                {
+                    AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
+                    AcqChklstItemStatusTypeCode = "INCOMP",
+                };
+
+                acquisitionFile.PimsAcquisitionChecklistItems.Add(checklistItem);
+            }
         }
     }
 }
