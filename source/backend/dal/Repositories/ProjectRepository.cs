@@ -41,7 +41,7 @@ namespace Pims.Dal.Repositories
         {
             // business requirement - limit search results to user's assigned region(s)
             return this.Context.PimsProjects.AsNoTracking()
-                .Where(p => EF.Functions.Like(p.Description, $"%{filter}%"))
+                .Where(p => EF.Functions.Like(p.Description, $"%{filter}%") || EF.Functions.Like(p.Code, $"%{filter}%") || EF.Functions.Like(p.Code + " " + p.Description, $"%{filter}%"))
                 .Where(p => regions.Contains(p.RegionCode))
                 .OrderBy(a => a.Code)
                 .Take(maxResults)
