@@ -276,6 +276,12 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
+.c24 {
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c0 {
   width: 100%;
   position: relative;
@@ -1644,6 +1650,11 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
             <div
               class="collapse show"
             >
+              <p
+                class="c24"
+              >
+                Each property in this file should be owned by the owner(s) in this section
+              </p>
               <button
                 class="c20 Button btn btn-link"
                 data-testid="add-file-owner"

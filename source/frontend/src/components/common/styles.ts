@@ -159,3 +159,9 @@ export const StyledDivider = styled.div`
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
 `;
+
+export const StyledSectionParagraph = styled.p`
+  color: ${props => props.theme.css.textColor};
+  font-size: 1.6rem;
+  text-decoration: none;
+`;
