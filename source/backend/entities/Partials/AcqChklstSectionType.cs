@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsAcqChklstSectionType class, provides an entity for the datamodel to manage a list of acquisition checklist section types.
     /// </summary>
-    public partial class PimsAcqChklstSectionType : IBaseTypeEntity<string, short?>, IExpiringTypeEntity
+    public partial class PimsAcqChklstSectionType : ITypeEntity<string>, IExpiringTypeEntity
     {
         #region Properties
 

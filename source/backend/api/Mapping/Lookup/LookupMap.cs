@@ -25,19 +25,10 @@ namespace Pims.Api.Mapping.Lookup
                  .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                  .Map(dest => dest.Type, src => src.GetType().Name);
 
-            // TODO: Remove this extra mapping when DB DisplayOrder properties are changed to INTEGER for ACQ checklist sections & items
-            config.NewConfig<Entity.IBaseTypeEntity<string, short?>, Model.LookupModel>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Name, src => src.Description != null ? src.Description : src.Id)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                .Map(dest => dest.Type, src => src.GetType().Name);
-
-            // TODO: Update this mapping once HINT column gets added for checklist items
             config.NewConfig<Entity.PimsAcqChklstItemType, Model.LookupModel>()
-                .Map(dest => dest.Hint, () => "TODO: needs tooltip mapping")
+                .Map(dest => dest.Hint, src => src.Hint)
                 .Map(dest => dest.ParentId, src => src.AcqChklstSectionTypeCode)
-                .Inherits<Entity.IBaseTypeEntity<string, short?>, Model.LookupModel>();
+                .Inherits<Entity.ITypeEntity<string>, Model.LookupModel>();
 
             config.NewConfig<Entity.ITypeEntity<string>, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
