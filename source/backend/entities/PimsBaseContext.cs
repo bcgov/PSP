@@ -2186,6 +2186,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.DisplayOrder).HasComment("Determines the default display order of the code descriptions.");
+
                 entity.Property(e => e.DocumentType)
                     .HasDefaultValueSql("('<Empty>')")
                     .HasComment("Description of the available document types.");
@@ -2507,7 +2509,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseInitiatorTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseLicenseTypeCodeNavigation)
