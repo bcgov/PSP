@@ -29,10 +29,13 @@ namespace Pims.Dal.Entities
         [Column("DESCRIPTION")]
         [StringLength(200)]
         public string Description { get; set; }
+        [Column("HINT")]
+        [StringLength(200)]
+        public string Hint { get; set; }
         [Column("IS_REQUIRED")]
         public bool? IsRequired { get; set; }
         [Column("DISPLAY_ORDER")]
-        public short? DisplayOrder { get; set; }
+        public int? DisplayOrder { get; set; }
         [Column("EFFECTIVE_DATE", TypeName = "date")]
         public DateTime EffectiveDate { get; set; }
         [Column("EXPIRY_DATE", TypeName = "date")]

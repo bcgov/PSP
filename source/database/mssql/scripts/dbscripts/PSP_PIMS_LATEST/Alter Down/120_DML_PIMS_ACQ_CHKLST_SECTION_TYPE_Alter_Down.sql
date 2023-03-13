@@ -1,0 +1,106 @@
+/* -----------------------------------------------------------------------------
+Alter the data in the PIMS_ACQ_CHKLST_SECTION_TYPE table.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Author        Date         Comment
+------------  -----------  -----------------------------------------------------
+Doug Filteau  2023-Mar-07  Initial version
+----------------------------------------------------------------------------- */
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter the "FILEMGMT" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'FILEMGMT'
+
+SELECT ACQ_CHKLST_SECTION_TYPE_CODE
+FROM   PIMS_ACQ_CHKLST_SECTION_TYPE
+WHERE  ACQ_CHKLST_SECTION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_ACQ_CHKLST_SECTION_TYPE 
+  SET    DESCRIPTION                = N'Active file management'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  ACQ_CHKLST_SECTION_TYPE_CODE = @CurrCd;
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter the "SCTN3AGR" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'SCTN3AGR'
+
+SELECT ACQ_CHKLST_SECTION_TYPE_CODE
+FROM   PIMS_ACQ_CHKLST_SECTION_TYPE
+WHERE  ACQ_CHKLST_SECTION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_ACQ_CHKLST_SECTION_TYPE 
+  SET    DESCRIPTION                = N'Section 3 Agreement'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  ACQ_CHKLST_SECTION_TYPE_CODE = @CurrCd;
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter the "SCTN6XPRP" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'SCTN6XPRP'
+
+SELECT ACQ_CHKLST_SECTION_TYPE_CODE
+FROM   PIMS_ACQ_CHKLST_SECTION_TYPE
+WHERE  ACQ_CHKLST_SECTION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_ACQ_CHKLST_SECTION_TYPE 
+  SET    DESCRIPTION                = N'Section 6 Expropriation'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  ACQ_CHKLST_SECTION_TYPE_CODE = @CurrCd;
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter the "ACQCOMPAC" type
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'ACQCOMPAC'
+
+SELECT ACQ_CHKLST_SECTION_TYPE_CODE
+FROM   PIMS_ACQ_CHKLST_SECTION_TYPE
+WHERE  ACQ_CHKLST_SECTION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_ACQ_CHKLST_SECTION_TYPE 
+  SET    DESCRIPTION                = N'Acquisition Completion Activities'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  ACQ_CHKLST_SECTION_TYPE_CODE = @CurrCd;
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+   PRINT 'The database update failed'
+END
+GO
