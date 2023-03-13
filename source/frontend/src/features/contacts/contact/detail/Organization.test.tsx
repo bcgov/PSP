@@ -248,10 +248,47 @@ describe('Contact OrganizationView component', () => {
 
     // Verify that the display is in the correct order
     expect(addressElements[0].textContent).toBe(
-      `${mailingAddress.streetAddress1} ${mailingAddress.municipality} ${mailingAddress.province.provinceStateCode} ${mailingAddress.postal} ${mailingAddress.country?.description}`,
+      `${mailingAddress.streetAddress1} ${mailingAddress.municipality} ${
+        mailingAddress.province!.provinceStateCode
+      } ${mailingAddress.postal} ${mailingAddress.country?.description}`,
     );
     expect(addressElements[1].textContent).toBe(
-      `${residentialAddress.streetAddress1} ${residentialAddress.municipality} ${residentialAddress.province.provinceStateCode} ${residentialAddress.postal} ${residentialAddress.country?.description}`,
+      `${residentialAddress.streetAddress1} ${residentialAddress.municipality} ${
+        residentialAddress.province!.provinceStateCode
+      } ${residentialAddress.postal} ${residentialAddress.country?.description}`,
+    );
+  });
+
+  it(`Shows address information when 'Other' country selected and no province is supplied`, () => {
+    const mailingAddress: IContactAddress = {
+      id: 1,
+      rowVersion: 0,
+      streetAddress1: 'Test Street',
+      municipality: 'Amsterdam',
+      province: undefined,
+      country: { countryId: 4, countryCode: 'OTHER', description: 'Other' },
+      countryOther: 'Netherlands',
+      postal: '123456',
+      addressType: {
+        id: AddressTypes.Mailing,
+        description: 'Mailing Address',
+        isDisabled: false,
+      },
+    };
+
+    const addressInfo: IContactAddress[] = [mailingAddress];
+    const { component } = setup({
+      organization: {
+        ...fakeOrganization,
+        addresses: addressInfo,
+      },
+    });
+
+    var addressElement = component.getByTestId('contact-organization-address');
+
+    // Verify that the display is in the correct order
+    expect(addressElement.textContent).toBe(
+      `${mailingAddress.streetAddress1} ${mailingAddress.municipality} ${mailingAddress.postal} ${mailingAddress.countryOther}`,
     );
   });
 
