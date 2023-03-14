@@ -129,20 +129,21 @@ const StyledSectionCentered = styled(Section)`
 const StyledChecklistItem = styled.div`
   display: flex;
   width: 100%;
-  padding-right: 1.5rem;
-  gap: 1rem;
-  text-align: right;
+  padding-right: 0.5rem;
+  gap: 0.4rem;
 `;
 
 const StyledChecklistItemAudit = styled.span`
-  min-width: 45%;
+  min-width: 35%;
+  text-align: right;
 `;
 
 const StyledChecklistItemStatus = styled.span<{ color?: string }>`
   color: ${props => props.color ?? props.theme.css.textColor};
-  min-width: 45%;
+  min-width: 55%;
 `;
 
 const StyledChecklistItemIcon = styled.span`
   min-width: 10%;
+  text-align: right;
 `;

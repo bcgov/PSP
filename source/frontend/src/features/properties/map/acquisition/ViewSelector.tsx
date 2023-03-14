@@ -11,6 +11,8 @@ import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
 import { EditFormNames } from './EditFormNames';
+import { UpdateAcquisitionChecklistContainer } from './update/checklist/UpdateAcquisitionChecklistContainer';
+import { UpdateAcquisitionChecklistForm } from './update/checklist/UpdateAcquisitionChecklistForm';
 import { UpdateAcquisitionContainer } from './update/summary/UpdateAcquisitionContainer';
 
 export interface IViewSelectorProps {
@@ -35,13 +37,12 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
       switch (props.activeEditForm) {
         case EditFormNames.acquisitionChecklist:
           return (
-            <></>
-            // TODO:
-            // <UpdateAcquisitionContainer
-            //   ref={formikRef}
-            //   acquisitionFile={props.acquisitionFile}
-            //   onSuccess={props.onSuccess}
-            // />
+            <UpdateAcquisitionChecklistContainer
+              formikRef={formikRef as any}
+              acquisitionFile={props.acquisitionFile}
+              onSuccess={props.onSuccess}
+              View={UpdateAcquisitionChecklistForm}
+            />
           );
 
         case EditFormNames.acquisitionSummary:
