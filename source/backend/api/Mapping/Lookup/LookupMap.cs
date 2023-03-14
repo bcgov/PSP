@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Lookup;
@@ -24,11 +23,6 @@ namespace Pims.Api.Mapping.Lookup
                  .Map(dest => dest.Name, src => src.Description)
                  .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                  .Map(dest => dest.Type, src => src.GetType().Name);
-
-            config.NewConfig<Entity.PimsAcqChklstItemType, Model.LookupModel>()
-                .Map(dest => dest.Hint, src => src.Hint)
-                .Map(dest => dest.ParentId, src => src.AcqChklstSectionTypeCode)
-                .Inherits<Entity.ITypeEntity<string>, Model.LookupModel>();
 
             config.NewConfig<Entity.ITypeEntity<string>, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)

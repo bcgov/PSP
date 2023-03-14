@@ -47,11 +47,6 @@ namespace Pims.Api.Models.Lookup
         public string Name { get; set; }
 
         /// <summary>
-        /// get/set - The item's hint text (optional).
-        /// </summary>
-        public string Hint { get; set; }
-
-        /// <summary>
         /// get/set - Whether the item is disabled.
         /// </summary>
         public bool IsDisabled { get; set; }

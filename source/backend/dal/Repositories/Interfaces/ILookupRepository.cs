@@ -112,8 +112,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsAcqChklstSectionType> GetAllAcquisitionChecklistSectionTypes();
 
-        IEnumerable<PimsAcqChklstItemType> GetAllAcquisitionChecklistItemTypes();
-
         IEnumerable<PimsAcqChklstItemStatusType> GetAllAcquisitionChecklistItemStatusTypes();
     }
 }

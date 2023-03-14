@@ -325,11 +325,6 @@ namespace Pims.Dal.Repositories
             return Context.PimsAcqChklstSectionTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsAcqChklstItemType> GetAllAcquisitionChecklistItemTypes()
-        {
-            return Context.PimsAcqChklstItemTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
-        }
-
         public IEnumerable<PimsAcqChklstItemStatusType> GetAllAcquisitionChecklistItemStatusTypes()
         {
             return Context.PimsAcqChklstItemStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();

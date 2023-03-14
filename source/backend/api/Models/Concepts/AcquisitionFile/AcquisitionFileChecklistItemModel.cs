@@ -13,9 +13,9 @@ namespace Pims.Api.Models.Concepts
         public long AcquisitionFileId { get; set; }
 
         /// <summary>
-        /// get/set - Checklist item type code.
+        /// get/set - Checklist item type.
         /// </summary>
-        public TypeModel<string> ItemTypeCode { get; set; }
+        public AcquisitionFileChecklistItemTypeModel ItemType { get; set; }
 
         /// <summary>
         /// get/set - Checklist item status type code.

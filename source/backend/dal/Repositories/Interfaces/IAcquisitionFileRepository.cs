@@ -20,6 +20,8 @@ namespace Pims.Dal.Repositories
 
         List<PimsAcquisitionFile> GetByProductId(long productId);
 
+        IEnumerable<PimsAcqChklstItemType> GetAllAcquisitionChecklistItemTypes();
+
         List<PimsAcquisitionChecklistItem> GetChecklistItemsByAcquisitionFileId(long acquisitionFileId);
 
         PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);

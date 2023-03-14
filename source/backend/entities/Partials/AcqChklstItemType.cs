@@ -4,9 +4,9 @@ using Pims.Dal.Entities.Helpers.Extensions;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsAcqChklstItemType class, provides an entity for the datamodel to manage a list of acquisition checklist section types.
+    /// PimsAcqChklstItemType class, provides an entity for the datamodel to manage a list of acquisition checklist item types.
     /// </summary>
-    public partial class PimsAcqChklstItemType : ITypeEntity<string>, IExpiringTypeEntity
+    public partial class PimsAcqChklstItemType : IBaseEntity, IExpiringTypeEntity
     {
         #region Properties
 

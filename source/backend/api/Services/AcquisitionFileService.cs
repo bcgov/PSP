@@ -375,7 +375,7 @@ namespace Pims.Api.Services
             // Ensure the checklist is empty before populating it
             acquisitionFile.PimsAcquisitionChecklistItems.Clear();
 
-            foreach (var itemType in _lookupRepository.GetAllAcquisitionChecklistItemTypes().Where(x => !x.IsExpiredType()))
+            foreach (var itemType in _acqFileRepository.GetAllAcquisitionChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
                 var checklistItem = new PimsAcquisitionChecklistItem
                 {
