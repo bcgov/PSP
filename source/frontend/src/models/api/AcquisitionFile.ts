@@ -21,6 +21,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   regionCode?: Api_TypeCode<number>;
   acquisitionTeam?: Api_AcquisitionFilePerson[];
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
+  acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
 
   project?: Api_Project;
   product?: Api_Product;
@@ -54,4 +55,11 @@ export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_Aud
   contactEmailAddr: string | null;
   contactPhoneNum: string | null;
   address: Api_Address | null;
+}
+
+export interface Api_AcquisitionFileChecklistItem extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  acquisitionFileId?: number;
+  itemTypeCode?: Api_TypeCode<string>;
+  statusTypeCode?: Api_TypeCode<string>;
 }
