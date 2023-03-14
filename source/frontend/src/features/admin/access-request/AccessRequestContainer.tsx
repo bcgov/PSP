@@ -13,11 +13,12 @@ import { FormAccessRequest } from './models';
 export interface IAccessRequestContainerProps {
   accessRequestId?: number;
   onSave?: () => void;
+  asAdmin?: boolean;
 }
 
 export const AccessRequestContainer: React.FunctionComponent<
   React.PropsWithChildren<IAccessRequestContainerProps>
-> = ({ accessRequestId, onSave }) => {
+> = ({ accessRequestId, onSave, asAdmin }) => {
   const {
     fetchCurrentAccessRequest: {
       loading,
@@ -69,7 +70,9 @@ export const AccessRequestContainer: React.FunctionComponent<
   return (
     <>
       <LoadingBackdrop parentScreen show={loading || addLoading || byIdLoading} />
-      {response?.id && <Alert variant="success">Your access request has been submitted</Alert>}
+      {response?.id && !asAdmin && (
+        <Alert variant="success">Your access request has been submitted</Alert>
+      )}
       <AccessRequestFormComponent
         initialValues={initialValues}
         addAccessRequest={async (accessRequest: Api_AccessRequest) => {
