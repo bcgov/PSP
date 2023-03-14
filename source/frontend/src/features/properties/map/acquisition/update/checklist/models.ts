@@ -3,6 +3,8 @@ import {
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileChecklistItemType,
 } from 'models/api/AcquisitionFile';
+import { Api_AuditFields } from 'models/api/AuditFields';
+import moment from 'moment';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
@@ -47,6 +49,14 @@ export class AcquisitionChecklistFormModel {
       acquisitionFileChecklist: allChecklistItems.map(c => c.toApi()),
     };
   }
+
+  lastModifiedBy(): Api_AuditFields | undefined {
+    const allChecklistItems = this.checklistSections.reduce((acc: Api_AuditFields[], section) => {
+      return acc.concat(section.items);
+    }, []);
+
+    return AcquisitionChecklistItemFormModel.lastModifiedBy(allChecklistItems);
+  }
 }
 
 export class AcquisitionChecklistSectionFormModel {
@@ -68,12 +78,36 @@ export class AcquisitionChecklistSectionFormModel {
   }
 }
 
-export class AcquisitionChecklistItemFormModel {
+export class AcquisitionChecklistItemFormModel implements Api_AuditFields {
   id?: number;
   acquisitionFileId?: number;
   itemType?: Api_AcquisitionFileChecklistItemType;
   statusType?: string;
   rowVersion?: number;
+  appCreateTimestamp?: string;
+  appLastUpdateTimestamp?: string;
+  appLastUpdateUserid?: string;
+  appCreateUserid?: string;
+  appLastUpdateUserGuid?: string;
+  appCreateUserGuid?: string;
+
+  static lastModifiedBy(items: Api_AuditFields[] = []): Api_AuditFields | undefined {
+    let lastModified: Api_AuditFields | undefined = undefined;
+
+    for (const item of items) {
+      if (lastModified === undefined) {
+        lastModified = item;
+        continue;
+      }
+      if (
+        moment(item.appLastUpdateTimestamp).isAfter(moment(lastModified.appLastUpdateTimestamp))
+      ) {
+        lastModified = item;
+      }
+    }
+
+    return lastModified;
+  }
 
   static fromApi(
     apiChecklistItem: Api_AcquisitionFileChecklistItem,
@@ -84,6 +118,12 @@ export class AcquisitionChecklistItemFormModel {
     model.itemType = apiChecklistItem.itemType;
     model.statusType = fromTypeCode(apiChecklistItem.statusTypeCode);
     model.rowVersion = apiChecklistItem.rowVersion;
+    model.appCreateTimestamp = apiChecklistItem.appCreateTimestamp;
+    model.appLastUpdateTimestamp = apiChecklistItem.appLastUpdateTimestamp;
+    model.appLastUpdateUserid = apiChecklistItem.appLastUpdateUserid;
+    model.appCreateUserid = apiChecklistItem.appCreateUserid;
+    model.appLastUpdateUserGuid = apiChecklistItem.appLastUpdateUserGuid;
+    model.appCreateUserGuid = apiChecklistItem.appCreateUserGuid;
     return model;
   }
 

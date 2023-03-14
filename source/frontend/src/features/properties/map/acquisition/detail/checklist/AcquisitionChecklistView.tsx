@@ -12,6 +12,8 @@ import { FiCheck, FiMinus, FiX } from 'react-icons/fi';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 
+import { AcquisitionChecklistItemFormModel } from '../../update/checklist/models';
+
 export interface IAcquisitionChecklistViewProps {
   acquisitionFile?: Api_AcquisitionFile;
   onEdit: () => void;
@@ -26,13 +28,7 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
   const sectionTypes = getByType(API.ACQUISITION_CHECKLIST_SECTION_TYPES);
 
   const checklist = acquisitionFile?.acquisitionFileChecklist || [];
-
-  // TODO: get from model instead of this mock
-  const mockChecklistAudit = {
-    appLastUpdateTimestamp: '2022-03-18',
-    appLastUpdateUserid: 'ALESANCH',
-    appLastUpdateUserGuid: '4109e6b4-585c-4678-8a24-1a99b45e3a5d',
-  };
+  const lastUpdated = AcquisitionChecklistItemFormModel.lastModifiedBy(checklist);
 
   return (
     <StyledSummarySection>
@@ -41,17 +37,19 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
           <EditButton title="Edit acquisition checklist" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>
-      <StyledSectionCentered>
-        <span>
-          {`This checklist was last updated ${prettyFormatDate(
-            mockChecklistAudit?.appLastUpdateTimestamp,
-          )} by `}
-        </span>
-        <UserNameTooltip
-          userName={mockChecklistAudit?.appLastUpdateUserid}
-          userGuid={mockChecklistAudit?.appLastUpdateUserGuid}
-        />
-      </StyledSectionCentered>
+      {lastUpdated && (
+        <StyledSectionCentered>
+          <span>
+            {`This checklist was last updated ${prettyFormatDate(
+              lastUpdated.appLastUpdateTimestamp,
+            )} by `}
+          </span>
+          <UserNameTooltip
+            userName={lastUpdated.appLastUpdateUserid}
+            userGuid={lastUpdated.appLastUpdateUserGuid}
+          />
+        </StyledSectionCentered>
+      )}
 
       {sectionTypes.map((section, i) => (
         <Section key={section.id ?? `acq-checklist-section-${i}`} header={section.name}>

@@ -33,12 +33,7 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
   const sectionTypes = getByType(API.ACQUISITION_CHECKLIST_SECTION_TYPES);
   const statusTypes = getOptionsByType(API.ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES);
 
-  // TODO: get from model instead of this mock
-  const mockChecklistAudit = {
-    appLastUpdateTimestamp: '2022-03-18',
-    appLastUpdateUserid: 'ALESANCH',
-    appLastUpdateUserGuid: '4109e6b4-585c-4678-8a24-1a99b45e3a5d',
-  };
+  const lastUpdated = initialValues.lastModifiedBy();
 
   return (
     <Formik<AcquisitionChecklistFormModel>
@@ -66,17 +61,19 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
     >
       {formikProps => (
         <StyledSummarySection>
-          <StyledSectionCentered>
-            <span>
-              {`This checklist was last updated ${prettyFormatDate(
-                mockChecklistAudit?.appLastUpdateTimestamp,
-              )} by `}
-            </span>
-            <UserNameTooltip
-              userName={mockChecklistAudit?.appLastUpdateUserid}
-              userGuid={mockChecklistAudit?.appLastUpdateUserGuid}
-            />
-          </StyledSectionCentered>
+          {lastUpdated && (
+            <StyledSectionCentered>
+              <span>
+                {`This checklist was last updated ${prettyFormatDate(
+                  lastUpdated.appLastUpdateTimestamp,
+                )} by `}
+              </span>
+              <UserNameTooltip
+                userName={lastUpdated.appLastUpdateUserid}
+                userGuid={lastUpdated.appLastUpdateUserGuid}
+              />
+            </StyledSectionCentered>
+          )}
 
           {formikProps.values.checklistSections.map((section, i) => (
             <Section key={section.id ?? `acq-checklist-section-${i}`} header={section.name}>
