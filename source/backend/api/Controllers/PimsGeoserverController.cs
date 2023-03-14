@@ -50,16 +50,17 @@ namespace Pims.Api.Controllers
         public Task ProxyCatchAll(string rest)
         {
             var queryString = this.Request.QueryString.Value;
-            HttpProxyOptions httpOptions = AspNetCore.Proxy.Options.HttpProxyOptionsBuilder.Instance.WithBeforeSend((c, hrm) =>
+            HttpProxyOptions httpOptions = AspNetCore.Proxy.Options.HttpProxyOptionsBuilder.Instance.WithShouldAddForwardedHeaders(false).WithBeforeSend((c, hrm) =>
             {
                 // Set something that is needed for the downstream endpoint.
                 var basicAuth = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes($"{_proxyOptions.CurrentValue.ServiceUser}:{_proxyOptions.CurrentValue.ServicePassword}"));
+                hrm.Headers.Clear(); // remove all headers as pre-existing SITEMINDER headers may conflict with BASIC AUTH.
                 hrm.Headers.Authorization = new AuthenticationHeaderValue("Basic", basicAuth);
 
                 return Task.CompletedTask;
             }).Build();
 
-            return this.HttpProxyAsync($"{_proxyOptions.CurrentValue.ProxyUrl}/{rest}{queryString}", httpOptions); ;
+            return this.HttpProxyAsync($"{_proxyOptions.CurrentValue.ProxyUrl}/{rest}{queryString}", httpOptions);
         }
 
         #endregion
