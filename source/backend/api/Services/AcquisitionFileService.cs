@@ -29,6 +29,7 @@ namespace Pims.Api.Services
         private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly IAcquisitionFileChecklistRepository _checklistRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -39,7 +40,8 @@ namespace Pims.Api.Services
             IPropertyRepository propertyRepository,
             ICoordinateTransformService coordinateService,
             ILookupRepository lookupRepository,
-            IEntityNoteRepository entityNoteRepository)
+            IEntityNoteRepository entityNoteRepository,
+            IAcquisitionFileChecklistRepository checklistRepository)
         {
             _user = user;
             _logger = logger;
@@ -50,6 +52,7 @@ namespace Pims.Api.Services
             _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
+            _checklistRepository = checklistRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -99,7 +102,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting acquisition file checklist with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
-            return _acqFileRepository.GetChecklistItemsByAcquisitionFileId(id);
+            return _checklistRepository.GetChecklistItemsByAcquisitionFileId(id);
         }
 
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
@@ -222,8 +225,24 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
-            _acqFileRepository.UpdateChecklistItems(acquisitionFile);
-            _acqFileRepository.CommitTransaction();
+            // Get the current checklist items for this acquisition file.
+            var currentItems = _checklistRepository.GetChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
+
+            foreach (var incomingItem in acquisitionFile.PimsAcquisitionChecklistItems)
+            {
+                if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem))
+                {
+                    throw new BadRequestException($"Cannot update checklist item. Item with Id: {incomingItem.Internal_Id} not found.");
+                }
+
+                // Only update checklist items that changed.
+                if (existingItem.AcqChklstItemStatusTypeCode != incomingItem.AcqChklstItemStatusTypeCode)
+                {
+                    _checklistRepository.Update(incomingItem);
+                }
+            }
+
+            _checklistRepository.CommitTransaction();
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
@@ -375,7 +394,7 @@ namespace Pims.Api.Services
             // Ensure the checklist is empty before populating it
             acquisitionFile.PimsAcquisitionChecklistItems.Clear();
 
-            foreach (var itemType in _acqFileRepository.GetAllAcquisitionChecklistItemTypes().Where(x => !x.IsExpiredType()))
+            foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
                 var checklistItem = new PimsAcquisitionChecklistItem
                 {

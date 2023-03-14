@@ -19,11 +19,5 @@ namespace Pims.Dal.Repositories
         short GetRegion(long id);
 
         List<PimsAcquisitionFile> GetByProductId(long productId);
-
-        IEnumerable<PimsAcqChklstItemType> GetAllAcquisitionChecklistItemTypes();
-
-        List<PimsAcquisitionChecklistItem> GetChecklistItemsByAcquisitionFileId(long acquisitionFileId);
-
-        PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);
     }
 }
