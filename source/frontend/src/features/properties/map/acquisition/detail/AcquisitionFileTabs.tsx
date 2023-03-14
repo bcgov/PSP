@@ -12,7 +12,6 @@ import AgreementForm from '../../shared/detail/AgreementForm';
 import AgreementFormContainer from '../../shared/detail/AgreementFormContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
 import { EditFormNames } from '../EditFormNames';
-import { AcquisitionChecklistContainer } from './checklist/AcquisitionChecklistContainer';
 import { AcquisitionChecklistView } from './checklist/AcquisitionChecklistView';
 import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
 import AcquisitionSummaryView from './fileDetails/AcquisitionSummaryView';
@@ -47,7 +46,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   tabViews.push({
     content: (
-      <AcquisitionChecklistContainer
+      <AcquisitionChecklistView
         acquisitionFile={acquisitionFile}
         onEdit={() =>
           setContainerState({
@@ -55,7 +54,6 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
             activeEditForm: EditFormNames.acquisitionChecklist,
           })
         }
-        View={AcquisitionChecklistView}
       />
     ),
     key: FileTabNames.checklist,

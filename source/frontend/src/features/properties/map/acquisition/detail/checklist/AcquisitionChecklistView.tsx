@@ -1,28 +1,29 @@
 import { EditButton } from 'components/common/EditButton';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
+import * as API from 'constants/API';
 import { Claims } from 'constants/index';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
+import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 import { FiCheck, FiMinus, FiX } from 'react-icons/fi';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 
 export interface IAcquisitionChecklistViewProps {
   acquisitionFile?: Api_AcquisitionFile;
-  sectionTypes?: ILookupCode[];
   onEdit: () => void;
 }
 
 export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> = ({
   acquisitionFile,
   onEdit,
-  sectionTypes = [],
 }) => {
   const keycloak = useKeycloakWrapper();
+  const { getByType } = useLookupCodeHelpers();
+  const sectionTypes = getByType(API.ACQUISITION_CHECKLIST_SECTION_TYPES);
 
   const checklist = acquisitionFile?.acquisitionFileChecklist || [];
 
