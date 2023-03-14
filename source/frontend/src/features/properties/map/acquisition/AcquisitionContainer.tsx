@@ -48,6 +48,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       execute: retrieveAcquisitionFileProperties,
       loading: loadingAcquisitionFileProperties,
     },
+    getAcquisitionFileChecklist: { execute: retrieveAcquisitionFileChecklist },
   } = useAcquisitionProvider();
 
   const formikRef = useRef<FormikProps<any>>(null);
@@ -68,14 +69,26 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
     var retrieved = await retrieveAcquisitionFile(acquisitionFileId);
-    var acquisitionProperties = await retrieveAcquisitionFileProperties(acquisitionFileId);
+    // retrieve related entities (ie properties, checklist items) in parallel
+    const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
+    const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
+    const acquisitionProperties = await acquisitionPropertiesTask;
+    const acquisitionChecklist = await acquisitionChecklistTask;
+
     if (retrieved) {
       retrieved.fileProperties = acquisitionProperties;
+      retrieved.acquisitionFileChecklist = acquisitionChecklist;
     }
 
     setContainerState({ acquisitionFile: retrieved });
     setFile({ ...retrieved, fileType: FileTypes.Acquisition });
-  }, [acquisitionFileId, retrieveAcquisitionFileProperties, retrieveAcquisitionFile, setFile]);
+  }, [
+    acquisitionFileId,
+    retrieveAcquisitionFile,
+    retrieveAcquisitionFileProperties,
+    retrieveAcquisitionFileChecklist,
+    setFile,
+  ]);
 
   useEffect(() => {
     if (acquisitionFile === undefined || acquisitionFileId !== acquisitionFile.id) {

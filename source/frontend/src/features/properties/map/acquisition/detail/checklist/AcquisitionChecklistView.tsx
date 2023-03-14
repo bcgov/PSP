@@ -6,7 +6,7 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
-import { FiCheck, FiX } from 'react-icons/fi';
+import { FiCheck, FiMinus, FiX } from 'react-icons/fi';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
@@ -14,8 +14,6 @@ import { prettyFormatDate } from 'utils';
 export interface IAcquisitionChecklistViewProps {
   acquisitionFile?: Api_AcquisitionFile;
   sectionTypes?: ILookupCode[];
-  itemTypes?: ILookupCode[];
-  itemStatusTypes?: ILookupCode[];
   onEdit: () => void;
 }
 
@@ -23,10 +21,10 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
   acquisitionFile,
   onEdit,
   sectionTypes = [],
-  itemTypes = [],
-  itemStatusTypes = [],
 }) => {
   const keycloak = useKeycloakWrapper();
+
+  const checklist = acquisitionFile?.acquisitionFileChecklist || [];
 
   // TODO: get from model instead of this mock
   const mockChecklistAudit = {
@@ -56,24 +54,24 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
 
       {sectionTypes.map((section, i) => (
         <Section key={section.id ?? `acq-checklist-section-${i}`} header={section.name}>
-          {itemTypes
-            .filter(checklistItem => checklistItem.parentId === section.id)
+          {checklist
+            .filter(checklistItem => checklistItem.itemType?.sectionCode === section.id)
             .map((checklistItem, j) => (
               <SectionField
-                key={checklistItem.code ?? `acq-checklist-item-${j}`}
-                label={checklistItem.name}
-                tooltip={checklistItem.hint}
+                key={checklistItem.itemType?.code ?? `acq-checklist-item-${j}`}
+                label={checklistItem.itemType?.description ?? ''}
+                tooltip={checklistItem.itemType?.hint}
                 labelWidth="7"
               >
                 <StyledChecklistItem>
                   <StyledChecklistItemAudit>&nbsp;</StyledChecklistItemAudit>
-                  <StyledChecklistItemStatus>Incomplete</StyledChecklistItemStatus>
+                  <StyledChecklistItemStatus
+                    color={mapStatusToColor(checklistItem.statusTypeCode?.id)}
+                  >
+                    {checklistItem.statusTypeCode?.description}
+                  </StyledChecklistItemStatus>
                   <StyledChecklistItemIcon>
-                    {(Math.floor(Math.random() * 10) + 1) % 2 === 0 ? (
-                      <FiCheck size="2rem" color="#2E8540" />
-                    ) : (
-                      <FiX size="2rem" />
-                    )}
+                    <StatusIcon status={checklistItem.statusTypeCode?.id} />
                   </StyledChecklistItemIcon>
                 </StyledChecklistItem>
               </SectionField>
@@ -82,6 +80,36 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
       ))}
     </StyledSummarySection>
   );
+};
+
+function mapStatusToColor(status?: string): string | undefined {
+  switch (status) {
+    case 'COMPLT':
+      return '#2E8540';
+
+    case 'NOTAPP':
+      return '#aaaaaa';
+
+    default:
+      return undefined;
+  }
+}
+
+const StatusIcon: React.FC<{ status?: string }> = ({ status }) => {
+  const color = mapStatusToColor(status);
+  switch (status) {
+    case 'INCOMP':
+      return <FiX size="2rem" color={color} />;
+
+    case 'COMPLT':
+      return <FiCheck size="2rem" color={color} />;
+
+    case 'NOTAPP':
+      return <FiMinus size="2rem" color={color} />;
+
+    default:
+      return null;
+  }
 };
 
 const StyledEditWrapper = styled.div`
@@ -109,7 +137,8 @@ const StyledChecklistItemAudit = styled.span`
   min-width: 45%;
 `;
 
-const StyledChecklistItemStatus = styled.span`
+const StyledChecklistItemStatus = styled.span<{ color?: string }>`
+  color: ${props => props.color ?? props.theme.css.textColor};
   min-width: 45%;
 `;
 

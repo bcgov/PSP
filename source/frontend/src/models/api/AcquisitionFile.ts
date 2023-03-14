@@ -60,6 +60,15 @@ export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_Aud
 export interface Api_AcquisitionFileChecklistItem extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   acquisitionFileId?: number;
-  itemTypeCode?: Api_TypeCode<string>;
+  itemType?: Api_AcquisitionFileChecklistItemType;
   statusTypeCode?: Api_TypeCode<string>;
+}
+
+export interface Api_AcquisitionFileChecklistItemType extends Api_ConcurrentVersion {
+  code?: string;
+  sectionCode?: string;
+  description?: string;
+  hint?: string;
+  isDisabled?: boolean;
+  displayOrder?: number;
 }
