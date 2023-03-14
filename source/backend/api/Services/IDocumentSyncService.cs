@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Mayan.Sync;
-using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
 {
@@ -14,6 +13,6 @@ namespace Pims.Api.Services
 
         ExternalBatchResult SyncMayanMetadataTypes(SyncModel model);
 
-        Task<IList<PimsDocumentTyp>> SyncBackendDocumentTypes();
+        Task<DocumentTypeSyncResponse> SyncBackendDocumentTypes(SyncModel model);
     }
 }

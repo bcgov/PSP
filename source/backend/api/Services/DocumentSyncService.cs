@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Api.Models;
+using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
@@ -144,7 +145,7 @@ namespace Pims.Api.Services
             return batchResult;
         }
 
-        public async Task<IList<PimsDocumentTyp>> SyncBackendDocumentTypes()
+        public async Task<DocumentTypeSyncResponse> SyncBackendDocumentTypes(SyncModel model)
         {
             this.Logger.LogInformation("Synchronizing Pims DB and Mayan document types");
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentAdmin, this.keycloakOptions);
@@ -153,29 +154,50 @@ namespace Pims.Api.Services
 
             if (mayanResult.Status != ExternalResultStatus.Success && mayanResult.Payload?.Results?.Count == 0)
             {
-                return new List<PimsDocumentTyp>();
+                return new DocumentTypeSyncResponse();
             }
 
             IList<PimsDocumentTyp> pimsDocumentTypes = documentTypeRepository.GetAll();
 
             // Add the document types not in the backend
             IList<PimsDocumentTyp> createdDocumentTypes = new List<PimsDocumentTyp>();
+            IList<PimsDocumentTyp> updatedDocumentTypes = new List<PimsDocumentTyp>();
             foreach (var mayanDocumentType in mayanResult.Payload.Results)
             {
+                var matchingTypeFromModel = model.DocumentTypes.FirstOrDefault(x => x.Label.Equals(mayanDocumentType.Label, System.StringComparison.OrdinalIgnoreCase));
                 if (pimsDocumentTypes.FirstOrDefault(x => x.MayanId == mayanDocumentType.Id) == null)
                 {
-                    var newPimsDocType = new PimsDocumentTyp() { MayanId = mayanDocumentType.Id, DocumentType = mayanDocumentType.Label };
+                    var newPimsDocType = new PimsDocumentTyp() { MayanId = mayanDocumentType.Id, DocumentType = mayanDocumentType.Label, DisplayOrder = matchingTypeFromModel?.DisplayOrder };
                     createdDocumentTypes.Add(documentTypeRepository.Add(newPimsDocType));
+                }
+                else if (pimsDocumentTypes.FirstOrDefault(x => x.MayanId == mayanDocumentType.Id && (mayanDocumentType.Label != x.DocumentType || x.DisplayOrder != matchingTypeFromModel?.DisplayOrder)) != null)
+                {
+                    // if the Mayan id is the same but the label or display order has changed, update the document type in PIMS.
+                    var updatedPimsDocType = new PimsDocumentTyp() { MayanId = mayanDocumentType.Id, DocumentType = mayanDocumentType.Label, DisplayOrder = matchingTypeFromModel?.DisplayOrder };
+                    updatedDocumentTypes.Add(documentTypeRepository.Update(updatedPimsDocType));
+                }
+            }
+
+            IList<PimsDocumentTyp> removedDocumentTypes = new List<PimsDocumentTyp>();
+            if (model.RemoveLingeringDocumentTypes)
+            {
+                // Delete the document types that are not on the sync model
+                foreach (var documentTypeToRemove in pimsDocumentTypes.Concat(createdDocumentTypes))
+                {
+                    if (mayanResult.Payload.Results.FirstOrDefault(x => x.Id == documentTypeToRemove.MayanId) == null)
+                    {
+                        // TODO: disable this document type: psp-5702
+                    }
                 }
             }
 
             // If there are new doctypes, commit the transaction
-            if (createdDocumentTypes.Count > 0)
+            if (createdDocumentTypes.Count > 0 || removedDocumentTypes.Count > 0)
             {
                 documentTypeRepository.CommitTransaction();
             }
 
-            return createdDocumentTypes;
+            return new DocumentTypeSyncResponse() { Added = createdDocumentTypes, Updated = updatedDocumentTypes };
         }
 
         private void SyncDocumentTypeMetadataTypes(SyncModel model, ref ExternalBatchResult batchResult)
