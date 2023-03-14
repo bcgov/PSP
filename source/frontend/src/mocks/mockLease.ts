@@ -473,6 +473,7 @@ export const getMockApiLease: () => Api_Lease = () => ({
   insurances: [],
   improvements: [],
   securityDeposits: [],
+  consultations: null,
 });
 
 export const getMockLeaseWithNoTenants: () => ILease = () => ({

@@ -8,7 +8,7 @@ import {
 import { PropertyForm } from 'features/properties/map/shared/models';
 import { IAutocompletePrediction } from 'interfaces';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_Lease } from 'models/api/Lease';
+import { Api_Lease, Api_LeaseConsultation } from 'models/api/Lease';
 import { Api_PropertyLease } from 'models/api/PropertyLease';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
@@ -51,6 +51,7 @@ export class LeaseFormModel {
   project?: IAutocompletePrediction;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
+  consultations: FormLeaseConsultation[] = [];
   rowVersion: number = 0;
 
   static fromApi(apiModel?: Api_Lease): LeaseFormModel {
@@ -93,6 +94,8 @@ export class LeaseFormModel {
       apiModel?.project !== undefined
         ? { id: apiModel.project.id || 0, text: apiModel.project.description || '' }
         : undefined;
+    leaseDetail.consultations =
+      apiModel?.consultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
 
     return leaseDetail;
   }
@@ -136,6 +139,7 @@ export class LeaseFormModel {
         this.project?.id !== undefined && this.project?.id !== 0
           ? { id: this.project?.id }
           : undefined,
+      consultations: this.consultations.map(x => x.toApi()),
     };
   }
 
@@ -213,10 +217,35 @@ export class FormLeaseProperty {
       id: this.id,
       rowVersion: this.rowVersion,
       property: this.property?.toApi(),
-      lease: { id: this.leaseId },
+      lease: { id: this.leaseId, consultations: null },
       propertyName: this.name,
       leaseArea: numberLeaseArea,
       areaUnitType: numberLeaseArea !== undefined ? toTypeCode(this.areaUnitTypeCode) : undefined,
+    };
+  }
+}
+
+class FormLeaseConsultation {
+  public id: number = 0;
+  public consultationType: string = '';
+  public consultationStatusType: string = '';
+  public parentLeaseId: number = 0;
+
+  static fromApi(apiModel: Api_LeaseConsultation): FormLeaseConsultation {
+    const model = new FormLeaseConsultation();
+    model.id = apiModel.id || 0;
+    model.consultationType = fromTypeCode(apiModel.consultationType) || '';
+    model.consultationStatusType = fromTypeCode(apiModel.consultationStatusType) || '';
+    model.parentLeaseId = apiModel.parentLeaseId || 0;
+    return model;
+  }
+
+  public toApi(): Api_LeaseConsultation {
+    return {
+      id: this.id,
+      consultationType: toTypeCode(this.consultationType) || null,
+      consultationStatusType: toTypeCode(this.consultationStatusType) || null,
+      parentLeaseId: this.parentLeaseId,
     };
   }
 }
@@ -239,4 +268,5 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     hasPhysicalLicense: undefined,
     statusType: { id: 'DRAFT' },
     paymentReceivableType: { id: 'RCVBL' },
+    consultations: null,
   });

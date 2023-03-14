@@ -8,6 +8,7 @@ import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '../model
 import LeasePropertySelector from '../shared/propertyPicker/LeasePropertySelector';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
+import ConsultationSubForm from './ConsultationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
 import DocumentationSubForm from './ReferenceSubForm';
 import * as Styled from './styles';
@@ -61,6 +62,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
               <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
               <LeasePropertySelector formikProps={formikProps} />
               <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
+              <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
               <DocumentationSubForm />
             </Styled.LeaseForm>
           </>

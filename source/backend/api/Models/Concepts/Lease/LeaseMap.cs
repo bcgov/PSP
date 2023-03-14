@@ -82,6 +82,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
                 .Map(dest => dest.LeaseNotes, src => src.Note)
                 .Map(dest => dest.LeaseDescription, src => src.Description)
+                .Map(dest => dest.PimsLeaseConsultations, src => src.Consultations)
                 .Map(dest => dest.IsExpired, src => src.IsExpired)
                 .Map(dest => dest.HasPhysicalFile, src => src.HasPhysicalFile)
                 .Map(dest => dest.HasPhysicialLicense, src => src.HasPhysicalLicense)
