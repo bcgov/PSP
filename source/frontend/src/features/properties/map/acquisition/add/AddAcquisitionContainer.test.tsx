@@ -1,21 +1,22 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { Api_User } from 'models/api/User';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, renderAsync, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
+import { act, renderAsync, RenderOptions, screen, userEvent } from 'utils/test-utils';
 
+import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
+import { useAcquisitionProvider } from '../hooks/useAcquisitionProvider';
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import { AcquisitionForm } from './models';
+
 jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
-const mockAxios = new MockAdapter(axios);
 
 const onClose = jest.fn();
 
@@ -34,7 +35,7 @@ jest.mock('react-visibility-sensor', () => {
 });
 
 jest.mock('hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.Mock).mockReturnValue({
+(useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
   retrieveUserInfo: jest.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: {
@@ -43,15 +44,34 @@ jest.mock('hooks/repositories/useUserInfoRepository');
         id: 1,
         userId: 5,
         regionCode: 1,
+        region: { id: 1 },
       },
       {
         id: 2,
         userId: 5,
         regionCode: 2,
+        region: { id: 2 },
       },
     ],
-  },
+  } as Api_User,
 });
+
+// Mock API service calls
+jest.mock('components/maps/hooks/useMapSearch');
+(useMapSearch as jest.MockedFunction<typeof useMapSearch>).mockReturnValue({
+  search: jest.fn().mockResolvedValue({}),
+} as any);
+
+jest.mock('../hooks/useAcquisitionProvider');
+const addAcquisitionFile = jest.fn();
+(useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
+  addAcquisitionFile: {
+    execute: addAcquisitionFile as any,
+    error: undefined,
+    loading: false,
+    response: undefined,
+  },
+} as ReturnType<typeof useAcquisitionProvider>);
 
 describe('AddAcquisitionContainer component', () => {
   // render component under test
@@ -90,11 +110,50 @@ describe('AddAcquisitionContainer component', () => {
         utils.container.querySelector(
           `input[name="fundingTypeOtherDescription"]`,
         ) as HTMLInputElement,
+      getOwner: (index = 0) => {
+        return {
+          givenNameTextbox: () =>
+            utils.container.querySelector(
+              `input[name="owners[${index}].givenName"]`,
+            ) as HTMLInputElement,
+          address: {
+            streetAddress1: () =>
+              utils.container.querySelector(
+                `input[name="owners[${index}].address.streetAddress1"]`,
+              ) as HTMLInputElement,
+            municipality: () =>
+              utils.container.querySelector(
+                `input[name="owners[${index}].address.municipality"]`,
+              ) as HTMLInputElement,
+            postal: () =>
+              utils.container.querySelector(
+                `input[name="owners[${index}].address.postal"]`,
+              ) as HTMLInputElement,
+            countryDropdown: () =>
+              utils.container.querySelector(
+                `select[name="owners[${index}].address.countryId"]`,
+              ) as HTMLSelectElement,
+            countryOther: () =>
+              utils.container.querySelector(
+                `input[name="owners[${index}].address.countryOther"]`,
+              ) as HTMLInputElement,
+          },
+        };
+      },
     };
   };
 
+  let formValues: AcquisitionForm;
+
   beforeEach(() => {
-    mockAxios.resetHistory();
+    formValues = new AcquisitionForm();
+    formValues.fileName = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    formValues.acquisitionType = 'CONSEN';
+    formValues.region = '1';
+    formValues.project = { id: 0, text: 'Test Project' };
+    formValues.fundingTypeCode = 'OTHER';
+    formValues.fundingTypeOtherDescription = 'A different type of funding';
+    addAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse(1, formValues.fileName));
   });
 
   afterEach(() => {
@@ -158,14 +217,6 @@ describe('AddAcquisitionContainer component', () => {
   });
 
   it('should save the form and navigate to details view when Save button is clicked', async () => {
-    const formValues = new AcquisitionForm();
-    formValues.fileName = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-    formValues.acquisitionType = 'CONSEN';
-    formValues.region = '1';
-    formValues.project = { id: 0, text: 'Test Project' };
-    formValues.fundingTypeCode = 'OTHER';
-    formValues.fundingTypeOtherDescription = 'A different type of funding';
-
     let testObj: any = undefined;
 
     await act(async () => {
@@ -188,17 +239,77 @@ describe('AddAcquisitionContainer component', () => {
       userEvent.selectOptions(getFundingTypeDropdown(), formValues.fundingTypeCode as string);
       userEvent.paste(getFundingOtherTextbox(), formValues.fundingTypeOtherDescription);
 
-      mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.fileName));
       userEvent.click(getSaveButton());
     });
-    await waitFor(() => {
-      const axiosData: Api_AcquisitionFile = JSON.parse(mockAxios.history.post[0].data);
-      const expectedValues = formValues.toApi();
 
-      expect(mockAxios.history.post[0].url).toBe('/acquisitionfiles');
-      expect(axiosData).toEqual(expectedValues);
+    const expectedValues = formValues.toApi();
+    expect(addAcquisitionFile).toBeCalledWith(expectedValues);
+    expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
+  });
 
-      expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
+  it(`should save the form with owner address information when 'Other' country is selected and no province is supplied`, async () => {
+    const mockOwner = new AcquisitionOwnerFormModel();
+    mockOwner.givenName = 'Space Toad';
+    mockOwner.address = new OwnerAddressFormModel();
+    mockOwner.address.streetAddress1 = 'Test Street';
+    mockOwner.address.streetAddress2 = '';
+    mockOwner.address.streetAddress3 = '';
+    mockOwner.address.municipality = 'Space Station';
+    mockOwner.address.postal = '99999';
+    mockOwner.address.countryId = 4; // OTHER country
+    mockOwner.address.countryOther = 'Outer Space';
+
+    formValues.owners = [mockOwner];
+
+    let testObj: unknown = undefined;
+    await act(async () => {
+      testObj = await setup(DEFAULT_PROPS);
     });
+
+    const {
+      getSaveButton,
+      getNameTextbox,
+      getAcquisitionTypeDropdown,
+      getRegionDropdown,
+      getFundingTypeDropdown,
+      getFundingOtherTextbox,
+      getOwner,
+      getByTestId,
+    } = testObj as Awaited<ReturnType<typeof setup>>;
+
+    const owner = getOwner(0);
+
+    await act(() => {
+      userEvent.paste(getNameTextbox(), formValues.fileName as string);
+      userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType as string);
+      userEvent.selectOptions(getRegionDropdown(), formValues.region as string);
+      userEvent.selectOptions(getFundingTypeDropdown(), formValues.fundingTypeCode as string);
+      userEvent.paste(getFundingOtherTextbox(), formValues.fundingTypeOtherDescription);
+      // add an owner
+      userEvent.click(getByTestId('add-file-owner'));
+    });
+
+    expect(owner.givenNameTextbox()).toBeVisible();
+
+    await act(() => {
+      userEvent.paste(owner.givenNameTextbox(), mockOwner.givenName!);
+      userEvent.paste(owner.address.streetAddress1(), mockOwner.address?.streetAddress1!);
+      userEvent.paste(owner.address.municipality(), mockOwner.address?.municipality!);
+      userEvent.paste(owner.address.postal(), mockOwner.address?.postal!);
+      userEvent.selectOptions(
+        owner.address.countryDropdown(),
+        mockOwner.address?.countryId?.toString() as string,
+      );
+    });
+
+    await act(() => {
+      userEvent.paste(owner.address.countryOther(), mockOwner.address?.countryOther!);
+    });
+
+    await act(() => userEvent.click(getSaveButton()));
+
+    const expectedValues = formValues.toApi();
+    expect(addAcquisitionFile).toBeCalledWith(expectedValues);
+    expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
   });
 });

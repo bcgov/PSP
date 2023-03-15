@@ -41,7 +41,7 @@ namespace Pims.Dal.Repositories
         {
             // business requirement - limit search results to user's assigned region(s)
             return this.Context.PimsProjects.AsNoTracking()
-                .Where(p => EF.Functions.Like(p.Description, $"%{filter}%"))
+                .Where(p => EF.Functions.Like(p.Description, $"%{filter}%") || EF.Functions.Like(p.Code, $"%{filter}%") || EF.Functions.Like(p.Code + " " + p.Description, $"%{filter}%"))
                 .Where(p => regions.Contains(p.RegionCode))
                 .OrderBy(a => a.Code)
                 .Take(maxResults)
@@ -109,6 +109,11 @@ namespace Pims.Dal.Repositories
             return project;
         }
 
+        /// <summary>
+        /// Update Project.
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
         public PimsProject Update(PimsProject project)
         {
             using var queryScope = Logger.QueryScope();
@@ -122,6 +127,74 @@ namespace Pims.Dal.Repositories
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 
             return project;
+        }
+
+        /// <summary>
+        /// Add Projectdocument.
+        /// </summary>
+        /// <param name="projectDocument"></param>
+        /// <returns></returns>
+        public PimsProjectDocument AddProjectDocument(PimsProjectDocument projectDocument)
+        {
+            projectDocument.ThrowIfNull(nameof(projectDocument));
+
+            var newEntry = Context.PimsProjectDocuments.Add(projectDocument);
+            if (newEntry.State == EntityState.Added)
+            {
+                return newEntry.Entity;
+            }
+            else
+            {
+                throw new InvalidOperationException("Could not create document");
+            }
+        }
+
+        /// <summary>
+        /// Get All Document for Project by Id.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        public IList<PimsProjectDocument> GetAllProjectDocuments(long projectId)
+        {
+            return Context.PimsProjectDocuments
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentType)
+                .Where(x => x.ProjectId == projectId)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        /// <summary>
+        /// Get all Project Documents by Document Id.
+        /// </summary>
+        /// <returns></returns>
+        public IList<PimsProjectDocument> GetAllByDocument(long documentId)
+        {
+            return this.Context.PimsProjectDocuments
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentType)
+                .Where(ad => ad.DocumentId == documentId)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        /// <summary>
+        /// Deletes the passed Project Document in the database.
+        /// </summary>
+        /// <param name="projectDocumentId"></param>
+        public void DeleteProjectDocument(long projectDocumentId)
+        {
+            var entity = Context.PimsProjectDocuments.FirstOrDefault(d => d.ProjectDocumentId == projectDocumentId);
+            if(entity is not null)
+            {
+                Context.PimsProjectDocuments.Remove(entity);
+            }
+
+            return;
         }
 
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter)

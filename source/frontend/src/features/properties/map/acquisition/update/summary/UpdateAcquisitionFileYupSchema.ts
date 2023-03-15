@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
+import { UpdateAcquisitionOwnersYupSchema } from '../../common/update/acquisitionOwners/UpdateAcquisitionOwnersYupSchema';
 import { UpdateAcquisitionTeamYupSchema } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamYupSchema';
 
 export const UpdateAcquisitionFileYupSchema = Yup.object()
@@ -13,4 +14,5 @@ export const UpdateAcquisitionFileYupSchema = Yup.object()
     region: Yup.string().required('Ministry region is required'),
     legacyFileNumber: Yup.string().max(18, 'Legacy file number must be at most ${max} characters'),
   })
-  .concat(UpdateAcquisitionTeamYupSchema);
+  .concat(UpdateAcquisitionTeamYupSchema)
+  .concat(UpdateAcquisitionOwnersYupSchema);

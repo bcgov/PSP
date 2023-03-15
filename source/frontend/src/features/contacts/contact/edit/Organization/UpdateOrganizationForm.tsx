@@ -20,8 +20,7 @@ import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
 import { defaultCreateOrganization, IEditableOrganizationForm } from 'interfaces/editable-contact';
 import { IContactPerson } from 'interfaces/IContact';
-import React from 'react';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Col } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
@@ -32,9 +31,7 @@ import { onValidateOrganization } from '../../utils/contactUtils';
 /**
  * Formik-connected form to Update Organizational Contacts
  */
-export const UpdateOrganizationForm: React.FC<React.PropsWithChildren<{ id: number }>> = ({
-  id,
-}) => {
+export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
   const history = useHistory();
   const { updateOrganization } = useUpdateContact();
   const { otherCountryId } = useAddressHelpers();
@@ -98,9 +95,15 @@ export const UpdateOrganizationForm: React.FC<React.PropsWithChildren<{ id: numb
 /**
  * Sub-component that is wrapped by Formik
  */
-const UpdateOrganization: React.FC<
-  React.PropsWithChildren<FormikProps<IEditableOrganizationForm>>
-> = ({ values, errors, touched, dirty, resetForm, submitForm, initialValues }) => {
+const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
+  values,
+  errors,
+  touched,
+  dirty,
+  resetForm,
+  submitForm,
+  initialValues,
+}) => {
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
 

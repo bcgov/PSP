@@ -1,0 +1,1129 @@
+PSP_PIMS S49.02 Sprint 49 2023-Mar-09
+- Altered tables:
+  - PIMS_DOCUMENT_TYP
+  - PIMS_DOCUMENT_TYP_HIST
+  - PIMS_LEASE
+  - PIMS_LEASE_HIST
+- Altered seed scripts:
+  - 121_DML_PIMS_ACQ_CHKLST_ITEM_TYPE_Alter_Down.sql
+  - 121_DML_PIMS_ACQ_CHKLST_ITEM_TYPE_Alter_Up.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S49.01 Sprint 49 2023-Mar-08
+- Altered tables:
+  - PIMS_ACQ_CHKLST_ITEM_TYPE
+  - PIMS_ACQ_CHKLST_SECTION_TYPE
+- Altered seed scripts:
+  - 120_DML_PIMS_ACQ_CHKLST_SECTION_TYPE.sql
+  - 121_DML_PIMS_ACQ_CHKLST_ITEM_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S49.00 Sprint 49 2023-Mar-03
+- Added tables:
+  - PIMS_ACQ_CHKLST_ITEM_STATUS_TYPE
+  - PIMS_ACQ_CHKLST_ITEM_TYPE
+  - PIMS_ACQ_CHKLST_SECTION_TYPE
+  - PIMS_ACQUISITION_CHECKLIST_ITEM
+  - PIMS_ACQUISITION_CHECKLIST_ITEM_HIST
+- Altered tables:
+  - PIMS_ACQUISITION_FILE
+  - PIMS_ACQUISITION_FILE_HIST
+  - PIMS_DOCUMENT
+  - PIMS_TAKE
+  - PIMS_TAKE_HIST
+- Added seed scripts:
+  - 119_DML_PIMS_ACQ_CHKLST_ITEM_STATUS_TYPE.sql
+  - 120_DML_PIMS_ACQ_CHKLST_SECTION_TYPE.sql
+  - 121_DML_PIMS_ACQ_CHKLST_ITEM_TYPE.sql
+- Altered seed scripts:
+  - 088_DML_PIMS_DOCUMENT_STATUS_TYPE.sql
+  - 089_DML_PIMS_ACQUISITION_FILE_STATUS_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S48.00 Sprint 48 2023-Feb-22
+- Added tables:
+  - PIMS_PROJECT_DOCUMENT
+  - PIMS_PROJECT_DOCUMENT_HIST
+  - PIMS_PROJECT_NOTE
+  - PIMS_PROJECT_NOTE_HIST
+  - PIMS_TAKE
+  - PIMS_TAKE_HIST
+  - PIMS_TAKE_SITE_CONTAM_TYPE
+  - PIMS_TAKE_STATUS_TYPE
+  - PIMS_TAKE_TYPE
+- Altered tables:
+  - PIMS_ADDRESS
+  - PIMS_ADDRESS_HIST
+  - PIMS_COUNTRY
+  - PIMS_LEASE
+  - PIMS_LEASE_ACTIVITY_INSTANCE
+  - PIMS_LEASE_HIST
+  - PIMS_PRODUCT
+  - PIMS_PROVINCE_STATE
+  - PIMS_RESEARCH_FILE_NOTE
+  - PIMS_RESEARCH_FILE_PROJECT
+- Dropped tables:
+  - BCA_AREA_AMENDMENT
+  - BCA_AREA_BCTRANSIT_VALUE
+  - BCA_AREA_DELETE
+  - BCA_AREA_GENERAL_VALUE
+  - BCA_AREA_SCHOOL_VALUE
+  - BCA_ASSESSMENT_AREA
+  - BCA_DATA_ADVICE
+  - BCA_DATA_ADVICE_AMENDMENT
+  - BCA_DATA_ADVICE_BCTRANSIT_VALUE
+  - BCA_DATA_ADVICE_DELETE
+  - BCA_DATA_ADVICE_GENERAL_VALUE
+  - BCA_DATA_ADVICE_SCHOOL_VALUE
+  - BCA_DEFINED
+  - BCA_ELECTORAL_AREA
+  - BCA_FOLIO_ADDRESS
+  - BCA_FOLIO_AMENDMENT
+  - BCA_FOLIO_BCTRANSIT_VALUE
+  - BCA_FOLIO_DESCRIPTION
+  - BCA_FOLIO_FARM
+  - BCA_FOLIO_GENERAL_VALUE
+  - BCA_FOLIO_LAND_CHARACTERISTIC
+  - BCA_FOLIO_LEGAL_DESCRIPTION
+  - BCA_FOLIO_MANAGED_FOREST
+  - BCA_FOLIO_MANUFACTURED_HOME
+  - BCA_FOLIO_OIL_AND_GAS
+  - BCA_FOLIO_RECORD
+  - BCA_FOLIO_SALES
+  - BCA_FOLIO_SCHOOL_VALUE
+  - BCA_FOLIO_VALUATION
+  - BCA_GENERAL_SERVICE
+  - BCA_IMPROVEMENT_DISTRICT
+  - BCA_ISLANDS_TRUST
+  - BCA_JURISDICTION
+  - BCA_JURISDICTION_AMENDMENT
+  - BCA_JURISDICTION_BCTRANSIT_VALUE
+  - BCA_JURISDICTION_DELETE
+  - BCA_JURISDICTION_GENERAL_VALUE
+  - BCA_JURISDICTION_SCHOOL_VALUE
+  - BCA_LOCAL_AREA
+  - BCA_MINOR_TAXING
+  - BCA_OWNER
+  - BCA_OWNERSHIP_GROUP
+  - BCA_SERVICE_AREA
+  - BCA_SPECIFIED_MUNICIPAL
+  - BCA_SPECIFIED_REGIONAL
+- Added functions:
+  - pims_IsUniqueProduct
+- Added seed scripts:
+  - 116_DML_PIMS_TAKE_TYPE.sql
+  - 117_DML_PIMS_TAKE_STATUS_TYPE.sql
+  - 118_DML_PIMS_TAKE_SITE_CONTAM_TYPE.sql
+- Alter seed scripts:
+  - 073_DML_PIMS_LEASE_STATUS_TYPE.sql
+- Altered test scripts:
+  - 40_PIMS_PRODUCT.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S47.00 Sprint 47 2023-Feb-03
+- Added tables:
+  - PIMS_CONSULTATION_STATUS_TYPE
+  - PIMS_CONSULTATION_TYPE
+  - PIMS_LEASE_CONSULTATION
+  - PIMS_LEASE_CONSULTATION_HIST
+  - PIMS_LEASE_DOCUMENT
+  - PIMS_LEASE_DOCUMENT_HIST
+  - PIMS_LEASE_NOTE
+  - PIMS_LEASE_NOTE_HIST
+  - PIMS_RESEARCH_FILE_PROJECT
+  - PIMS_RESEARCH_FILE_PROJECT_HIST
+- Altered tables:
+  - PIMS_PROJECT
+  - PIMS_RESEARCH_FILE_DOCUMENT
+  - PIMS_RESEARCH_FILE_DOCUMENT_HIST
+  - PIMS_RESEARCH_FILE_NOTE
+  - PIMS_RESEARCH_FILE_NOTE_HIST
+- Added seed scripts:
+  - 111_DML_PIMS_BUSINESS_FUNCTION_CODE.sql
+  - 112_DML_PIMS_COST_TYPE_CODE.sql
+  - 113_DML_PIMS_WORK_ACTIVITY_CODE.sql
+  - 114_DML_PIMS_CONSULTATION_STATUS_TYPE.sql
+  - 115_DML_PIMS_CONSULTATION_TYPE.sql
+- Altered seed scripts:
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE.sql
+- Altered test scripts:
+  - 24_PIMS_ACTIVITY_TEMPLATE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S46.00 Sprint 46 2023-JAN-20
+- Added tables:
+  - PIMS_ACQUISITION_FILE_DOCUMENT
+  - PIMS_ACQUISITION_FILE_DOCUMENT_HIST
+  - PIMS_RESEARCH_FILE_DOCUMENT
+  - PIMS_RESEARCH_FILE_DOCUMENT_HIST
+  - PIMS_RESEARCH_FILE_NOTE
+  - PIMS_RESEARCH_FILE_NOTE_HIST
+- Altered tables:
+  - PIMS_PROJECT
+  - PIMS_PROJECT_HIST
+- Added test scripts:
+  - 39_PIMS_PROJECT.sql
+  - 41_PIMS_LEASE_TERM.sql
+  - 42_PIMS_LEASE_PAYMENT.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S45.01 Sprint 45 2023-JAN-12
+- Altered tables:
+  - PIMS_ACQUISITION_FILE_NOTE
+  - PIMS_BUSINESS_FUNCTION_CODE
+  - PIMS_COST_TYPE_CODE
+  - PIMS_CHART_OF_ACCOUNTS_CODE
+  - PIMS_CHART_OF_ACCOUNTS_CODE_HIST
+  - PIMS_FINANCIAL_ACTIVITY_CODE
+  - PIMS_FINANCIAL_ACTIVITY_CODE_HIST
+  - PIMS_PROJECT
+  - PIMS_PRODUCT
+  - PIMS_RESPONSIBILITY_CODE
+  - PIMS_RESPONSIBILITY_CODE_HIST
+  - PIMS_WORK_ACTIVITY_CODE
+  - PIMS_YEARLY_FINANCIAL_CODE
+- Added seed scripts:
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE_Alter_Up.sql
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE_Alter_Down.sql
+- Altered seed scripts:
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE.sql
+- Added test scripts:
+  - 39_PIMS_PROJECT.sql
+  - 40_PIMS_PRODUCT.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S45.00 Sprint 45 2023-JAN-05
+- Added tables:
+  - PIMS_ACQUISITION_FILE_NOTE
+  - PIMS_ACQUISITION_FILE_NOTE_HIST
+  - PIMS_PRODUCT
+  - PIMS_PRODUCT_HIST
+  - PIMS_PROJECT
+  - PIMS_PROJECT_HIST
+  - PIMS_PROJECT_STATUS
+- Altered tables:
+  - Added IS_DISABLED column
+    - PIMS_ACTIVITY_TEMPLATE
+    - PIMS_ACTIVITY_TEMPLATE_HIST
+- Requires additional metadata to meet standards
+
+PSP_PIMS S44.00 Sprint 43 2022-DEC-20
+- Altered tables:
+  - Added LEGA​CY_FILE_​NUMBER column
+    - PIMS_ACQUISITION_FILE
+    - PIMS_ACQUISITION_FILE_HIST
+  - Changed FILE​_NUMBER_​SUFFIX from VARCHAR(2) to NVARCHAR(2)
+    - PIMS_PROPERTY
+    - PIMS_PROPERTY_HIST
+  - Changed FILE​_NUMBER_​SUFFIX from NVARCHAR(2) to VARCHAR(2) 
+    - PIMS_PROPERTY
+    - PIMS_PROPERTY_HIST
+    - 002_PSP_PIMS_Build.sql in the following builds:
+      - IS-40.00
+      - IS-41.00
+      - IS-42.00
+      - IS-43.00
+- Altered views:
+  - Added additional qualifier to IS_PAYABLE_LEASE column logic
+    - PIMS_PROPERTY_BOUNDARY_VW
+    - PIMS_PROPERTY_LOCATION_VW
+- Requires additional metadata to meet standards
+
+PSP_PIMS S43.00 Sprint 42 2022-DEC-07
+- Altered tables:
+  - Added NAME column
+    - PIMS_PROPERTY_LEASE
+    - PIMS_PROPERTY_LEASE_HIST
+- Altered views:
+  - Added IS_PAYABLE_LEASE column
+    - PIMS_PROPERTY_BOUNDARY_VW
+    -  PIMS_PROPERTY_LOCATION_VW
+- Requires additional metadata to meet standards
+
+PSP_PIMS S42.00 Sprint 42 2022-DEC-01
+- Added tables:
+  - PIMS_TENANT_TYPE
+- Altered tables:
+  - Indices added:
+    - PIMS_PROPERTY
+    - PMBC_PARCEL_POLYGON_FABRIC
+- Added seed scripts:
+  - PIMS_PROPERTY_BOUNDARY_VW
+    - Added IS_PAYABLE_LEASE
+  - PIMS_PROPERTY_LOCATION_VW
+    - Added IS_PAYABLE_LEASE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S41.00_B Sprint 43 2022-Nov-29
+*** ******************************************************************* ***
+*** THIS RELEASE REPLACES THE DEPRECATED S41.00 AND THE S41.01 RELEASES ***
+*** ******************************************************************* ***
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE
+    - Set ACTIVITY_TEMPLATE_ID to NOT NULL
+  - PIMS_ACTIVITY_TEMPLATE
+    - Set ACTIVITY_TEMPLATE_TYPE_CODE to NOT NULL
+  - PIMS_PROPERTY
+    - Added index to PID
+- Added tables:
+  - PIMS_BUSINESS_FUNCTION_CODE
+  - PIMS_BUSINESS_FUNCTION_CODE_HIST
+  - PIMS_CHART_OF_ACCOUNTS_CODE
+  - PIMS_CHART_OF_ACCOUNTS_CODE_HIST
+  - PIMS_COST_TYPE_CODE
+  - PIMS_COST_TYPE_CODE_HIST
+  - PIMS_FINANCIAL_ACTIVITY_CODE
+  - PIMS_FINANCIAL_ACTIVITY_CODE_HIST
+  - PIMS_RESPONSIBILITY_CODE
+  - PIMS_RESPONSIBILITY_CODE_HIST
+  - PIMS_WORK_ACTIVITY_CODE
+  - PIMS_WORK_ACTIVITY_CODE_HIST
+  - PIMS_YEARLY_FINANCIAL_CODE
+  - PIMS_YEARLY_FINANCIAL_CODE_HIST
+- Added seed scripts:
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE_Insert.sql
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE_Delete.sql
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE_Insert.sql
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE_Delete.sql
+  - 101_DML_PIMS_COST_TYPE_CODE.sql
+  - 102_DML_PIMS_CHART_OF_ACCOUNTS_CODE.sql
+  - 103_DML_PIMS_BUSINESS_FUNCTION_CODE.sql
+  - 104_DML_PIMS_YEARLY_FINANCIAL_CODE.sql
+  - 105_DML_PIMS_RESPONSIBILITY_CODE.sql
+  - 106_DML_SET_PIMS_RESPONSIBILITY_CODE_SEQ.sql
+  - 107_DML_PIMS_FINANCIAL_ACTIVITY_CODE.sql
+  - 108_DML_PIMS_WORK_ACTIVITY_CODE.sql
+- Altered seed script:
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE.sql
+    - Added 'File Document'
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE.sql
+    - Added 'File Document'
+- Requires additional metadata to meet standards
+
+PSP_PIMS S41.01 Sprint 43 2022-Nov-25
+*** ********** ***
+*** DEPRECATED ***
+*** ********** ***
+- Altered tables:
+  - Added named default contrants to the following:
+    - PIMS_ACTIVITY_INSTANCE.ACTIVITY_TEMPLATE_ID
+    - PIMS_ACTIVITY_TEMPLATE.ACTIVITY_TEMPLATE_TYPE_CODE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S41.00 Sprint 40 2022-Oct-31
+*** ********** ***
+*** DEPRECATED ***
+*** ********** ***
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE
+    - Set ACTIVITY_TEMPLATE_ID to NOT NULL
+  - PIMS_ACTIVITY_TEMPLATE
+    - Set ACTIVITY_TEMPLATE_TYPE_CODE to NOT NULL
+  - PIMS_PROPERTY
+    - Added index to PID
+- Added tables:
+  - PIMS_BUSINESS_FUNCTION_CODE
+  - PIMS_BUSINESS_FUNCTION_CODE_HIST
+  - PIMS_CHART_OF_ACCOUNTS_CODE
+  - PIMS_CHART_OF_ACCOUNTS_CODE_HIST
+  - PIMS_COST_TYPE_CODE
+  - PIMS_COST_TYPE_CODE_HIST
+  - PIMS_FINANCIAL_ACTIVITY_CODE
+  - PIMS_FINANCIAL_ACTIVITY_CODE_HIST
+  - PIMS_RESPONSIBILITY_CODE
+  - PIMS_RESPONSIBILITY_CODE_HIST
+  - PIMS_WORK_ACTIVITY_CODE
+  - PIMS_WORK_ACTIVITY_CODE_HIST
+  - PIMS_YEARLY_FINANCIAL_CODE
+  - PIMS_YEARLY_FINANCIAL_CODE_HIST
+- Added seed scripts:
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE_Insert.sql
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE_Delete.sql
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE_Insert.sql
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE_Delete.sql
+  - 101_DML_PIMS_COST_TYPE_CODE.sql
+  - 102_DML_PIMS_CHART_OF_ACCOUNTS_CODE.sql
+  - 103_DML_PIMS_BUSINESS_FUNCTION_CODE.sql
+  - 104_DML_PIMS_YEARLY_FINANCIAL_CODE.sql
+  - 105_DML_PIMS_RESPONSIBILITY_CODE.sql
+  - 106_DML_SET_PIMS_RESPONSIBILITY_CODE_SEQ.sql
+  - 107_DML_PIMS_FINANCIAL_ACTIVITY_CODE.sql
+  - 108_DML_PIMS_WORK_ACTIVITY_CODE.sql
+- Altered seed script:
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE.sql
+    - Added 'File Document'
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE.sql
+    - Added 'File Document'
+- Requires additional metadata to meet standards
+
+PSP_PIMS S40.00 Sprint 39 2022-Oct-25
+- Added table:
+  - PIMS_LEASE_ACTIVITY_INSTANCE
+  - PIMS_LEASE_ACTIVITY_INSTANCE_HIST
+- Requires additional metadata to meet standards
+
+PSP_PIMS S39.01 Sprint 38 2022-Oct-05
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE: Altered child relationships to ON DELETE CASCADE
+    - PIM_ACTINS_PIM_AIPAFL_FK
+    - PIM_ACTINS_PIM_ACTINN_FK
+    - PIM_ACTINS_PIM_ACTDOC_FK
+    - PIM_ACTINS_PIM_AIPRFL_FK
+    - PIM_ACTINS_PIM_RSCHAI_FK
+    - PIM_ACTINS_PIM_ACQAIN_FK
+  - PIMS_ACQUISITION_FILE: Altered child relationships to ON DELETE CASCADE
+    - PIM_ACQNFL_PIM_PRACQF_FK
+    - PIM_ACQNFL_PIM_ACQOWN_FK
+    - PIM_ACQNFL_PIM_ACQAIN_FK
+    - PIM_ACQNFL_PIM_ACQPER_FK
+  - PIMS_LEASE
+    - Added column TFA_FILE_NUMBER
+  - PIMS_ACQUISITION_OWNER
+    - Added PIM_ADDRSS_PIM_ACQOWN_FK to PIMS_ADDRESS
+    - Dropped columns:
+      - OWNER_NAME
+      - OWNER_COMMENT
+    - Added columns:
+      - LAST_NAME_OR_CORP_NAME_1
+      - LAST_NAME_OR_CORP_NAME_2
+      - GIVEN_NAME
+      - INCORPORATION_NUMBER
+  - Altered seed table data:
+    - 093_DML_PIMS_ACQ_FL_PERSON_PROFILE_TYPE.sql
+  - Requires additional metadata to meet standards
+
+PSP_PIMS S38.01 Sprint 38 2022-Sep-27
+- Altered table:
+  - PIMS_ACQUISITION_FILE
+    - Added column PAIMS_ACQUISITION_FILE_ID
+- Altered seed script:
+  - 83_DML_PIMS_RESEARCH_FILE_STATUS_TYPE.sql
+    - Dropped 'Any status'
+- Requires additional metadata to meet standards
+
+PSP_PIMS S38.00 Sprint 38 2022-Sep-22
+- Added table:
+  - PIMS_ACTIVITY_TEMPLATE_DOCUMENT
+- Altered table:
+  - PIMS_ACQUISITION_OWNER
+- Requires additional metadata to meet standards
+
+PSP_PIMS S37.01 Sprint 37 2022-Sep-20
+- Altered seed script:
+  - 97_DML_PIMS_ACTIVITY_INSTANCE_STATUS_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S37.00 Sprint 36 2022-Sep-14
+- Altered tables:
+  - PIMS_ACQUISITION_FILE
+  - PIMS_ACQUISITION_FILE_HIST
+  - PIMS_NOTE_HIST
+- Requires additional metadata to meet standards
+
+PSP_PIMS S36.02 Sprint 36 2022-Sep-08
+- Added seed scripts:
+  - 89_DML_PIMS_ACQUISITION_FILE_STATUS_TYPE.sql
+- Added test data scripts:
+  - 21_PIMS_PROPERTY_RESEARCH_FILE.sql
+  - 22_PIMS_RESEARCH_FILE_PURPOSE.sql
+  - 29_PIMS_ACTIVITY_INSTANCE_NOTE.sql
+  - 30_PIMS_ACTIVITY_INSTANCE_DOCUMENT.sql
+  - 32_PIMS_ACQUISITION_OWNER.sql
+  - 33_PIMS_PROPERTY_ACQUISITION_FILE.sql
+  - 34_PIMS_PROPERTY_ACQUISITION_FILE_PERSON.sql
+  - 36_PIMS_RESEARCH_ACTIVITY_INSTANCE.sql
+  - 35_PIMS_ACQUISITION_ACTIVITY_INSTANCE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S36.01 Sprint 36 2022-Sep-02
+- Added tables:
+  - PIMS_ACT_INST_PROP_ACQ_FILE
+  - PIMS_ACT_INST_PROP_RSRCH_FILE
+- Altered tables:
+  - PIMS_RESEARCH_ACTIVITY_INSTANCE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S36.00 Sprint 36 2022-Aug-29
+- Added tables:
+  - PIMS_FENCE_TYPE
+  - PIMS_LETTER_TYPE
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE_DOCUMENT
+  - PIMS_ACTIVITY_INSTANCE_NOTE
+  - PIMS_ACQUISITION_ACTIVITY_INSTANCE
+  - PIMS_NOTE
+  - PIMS_PROPERTY
+  - PIMS_PROPERTY_ACQUISITION_FILE
+  - PIMS_PROPERTY_RESEARCH_FILE
+  - PIMS_RESEARCH_ACTIVITY_INSTANCE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S35.01 Sprint 35 2022-Aug-22
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S35.00 Sprint 34 2022-Aug-17
+- Added tables:
+  - PIMS_ACTIVITY_INSTANCE_STATUS_TYPE
+  - PIMS_RESEARCH_ACTIVITY_INSTANCE
+  - PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S33.00 Sprint 33 2022-Jul-26
+- Altered tables:
+  - PIMS_ACQUISITION_FILE
+  - PIMS_ACQUISITION_FILE_HIST
+- Requires additional metadata to meet standards
+
+PSP_PIMS S32.00 Sprint 32 2022-Jul-07
+- Added tables:
+  - PIMS_ACQUISITION_ACTIVITY_INSTANCE
+  - PIMS_ACQUISITION_ACTIVITY_INSTANCE_HIST
+  - PIMS_ACQUISITION_FILE
+  - PIMS_ACQUISITION_FILE_HIST
+  - PIMS_ACQUISITION_FILE_PERSON
+  - PIMS_ACQUISITION_FILE_PERSON_HIST
+  - PIMS_ACQUISITION_OWNER
+  - PIMS_ACQUISITION_OWNER_HIST
+  - PIMS_ACQUISITION_FILE_STATUS_TYPE
+  - PIMS_ACQUISITION_FUNDING_TYPE
+  - PIMS_ACQUISITION_TYPE
+  - PIMS_ACQ_FL_PERSON_PROFILE_TYPE
+  - PIMS_ACQ_PHYS_FILE_STATUS_TYPE
+  - PIMS_ACTIVITY_TEMPLATE
+  - PIMS_ACTIVITY_TEMPLATE_HIST
+  - PIMS_ACTIVITY_TEMPLATE_TYPE
+  - PIMS_LAND_SURVEYOR_TYPE
+  - PIMS_PROPERTY_ACQUISITION_FILE
+  - PIMS_PROPERTY_ACQUISITION_FILE_HIST
+  - PIMS_SURVEY_PLAN_TYPE
+- Added seed scripts:
+  - 88_DML_PIMS_DOCUMENT_STATUS_TYPE.sql
+  - 90_DML_PIMS_ACQUISITION_TYPE.sql
+  - 91_DML_PIMS_ACQUISITION_FUNDING_TYPE.sql
+  - 92_DML_PIMS_ACQ_PHYS_FILE_STATUS_TYPE.sql
+  - 93_DML_PIMS_ACQ_FL_PERSON_PROFILE_TYPE.sql
+  - 94_DML_PIMS_ACTIVITY_TEMPLATE_TYPE.sql
+  - 95_DML_PIMS_SURVEY_PLAN_TYPE.sql
+  - 96_DML_PIMS_LAND_SURVEYOR_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S31.01 Sprint 31 2022-Jun-27
+- Added tables:
+  - PIMS_ACTIVITY_INSTANCE
+  - PIMS_ACTIVITY_INSTANCE_DOCUMENT
+  - PIMS_ACTIVITY_INSTANCE_NOTE
+- Dropped tables:
+  - PIMS_PROJECT
+  - PIMS_PROJECT_WORKFLOW_MODEL_HIST
+  - PIMS_PROJECT_STATUS_TYPE
+  - PIMS_PROJECT_TIER_TYPE
+  - PIMS_ACTIVITY
+  - PIMS_ACTIVITY
+  - PIMS_ACTIVITY_HIST
+  - PIMS_PROJECT_NOTE
+  - PIMS_WORKFLOW_MODEL
+  - PIMS_PROJECT_PROPERTY
+  - PIMS_PROJECT_TYPE
+  - PIMS_PROJECT_PROPERTY_HIST
+  - PIMS_WORKFLOW_MODEL_TYPE
+  - PIMS_WORKFLOW_MODEL_HIST
+  - PIMS_PROJECT_HIST
+  - PIMS_TASK
+  - PIMS_TASK_TEMPLATE_ACTIVITY_MODEL
+  - PIMS_TASK_TEMPLATE
+  - PIMS_PROJECT_WORKFLOW_MODEL
+  - PIMS_PROJECT_RISK_TYPE
+  - PIMS_ACTIVITY_MODEL
+  - PIMS_TASK_HIST
+  - PIMS_PROPERTY_ACTIVITY_HIST
+  - PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_HIST
+  - PIMS_ACTIVITY_MODEL_HIST
+  - PIMS_PROPERTY_ACTIVITY
+  - PIMS_TASK_TEMPLATE_TYPE
+  - PIMS_TASK_TEMPLATE_HIST
+- Requires additional metadata to meet standards
+
+PSP_PIMS S31.00 Sprint 30 2022-Jun-21
+- Added tables:
+  - PIMS_NOTE
+  - PIMS_DOCUMENT
+  - PIMS_DOCUMENT_STATUS_TYPE
+  - PIMS_DOCUMENT_TYP
+- Altered tables:
+  - PIMS_PROPERTY
+    - Added column FILE_NUMBER
+    - Added column FILE_NUMBER_SUFFIX
+- Added seed scripts:
+  - 88_DML_PIMS_DOCUMENT_STATUS_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S30.00 Sprint 29 2022-Jun-06
+- Altered tables:
+  - PIMS_PROPERTY
+    - Added column PPH_STATUS_UPDATE_USER_GUID 
+- Added script:
+  - 00_PSP_PIMS_PMBC_Build.sql added to Alter Up and Build
+  - PMBC schema and table was added to support ParcelMapBC property data integration into PIMS.
+- Requires additional metadata to meet standards
+
+PSP_PIMS S29.01 Sprint 29 2022-Jun-06
+- Altered tables:
+  - PIMS_INSURANCE
+    - Dropped unique constraint INSRNC_LEASE_INSURANCE_TYPE_TUC
+- Requires additional metadata to meet standards
+
+PSP_PIMS S28.00 Sprint 28 2022-May-12
+- Seed data table changes:
+  - PIMS_REGION
+    - Added 4: Cannot determine
+  - PIMS_DISTRICT
+    - Added 12: Cannot determine
+- Requires additional metadata to meet standards
+
+PSP_PIMS S29.00 Sprint 28 2022-May-17
+- Altered tables:
+  - PIMS_ACCESS_REQUEST
+    - Added column REGION_CODE
+- Added tables:
+  - PIMS_REGION_USER
+- Requires additional metadata to meet standards
+
+PSP_PIMS S28.00 Sprint 28 2022-May-12
+- Seed data table changes:
+  - PIMS_REGION
+    - Added 4: Cannot determine
+  - PIMS_DISTRICT
+    - Added 12: Cannot determine
+- Requires additional metadata to meet standards
+
+PSP_PIMS S27.00 Sprint 26 2022-Apr-25
+- Altered tables:
+  - PIMS_LEASE
+  - PIMS_LEASE_HIST
+  - PIMS_LEASE_TENANT
+  - PIMS_LEASE_TENANT_HIST
+  - PIMS_SECURITY_DEPOSIT_RETURN
+  - PIMS_SECURITY_DEPOSIT_RETURN_HIST
+  - PIMS_RESEARCH_FILE_PURPOSE
+  - PIMS_RESEARCH_FILE_PURPOSE_HIST
+- Requires additional metadata to meet standards
+
+PSP_PIMS S26.00 Sprint 26 2022-Apr-13
+- Added tables
+  - PIMS_PROP_RESEARCH_PURPOSE_TYPE
+  - PIMS_PRF_PROP_RESEARCH_PURPOSE_TYPE
+  - PIMS_PPH_STATUS_TYPE
+- Altered tables:
+  - PIMS_PROPERTY
+  - PIMS_PROPERTY_HIST
+  - PIMS_PROPERTY_RESEARCH_FILE
+  - PIMS_PROPERTY_RESEARCH_FILE_HIST
+- Seed data table changes:
+  - PIMS_PROPERTY_CLASSIFICATION_TYPE
+    - Added 'UNKNOWN'
+  - PIMS_DATA_SOURCE_TYPE
+    - Added 'PMBC'
+- Requires additional metadata to meet standards
+
+PSP_PIMS S25.01 Sprint 25 2022-Apr-04
+- Altered tables:
+  - PIMS_PROPERTY
+	- Set ADDRESS_ID to nullable
+- Requires additional metadata to meet standards
+
+PSP_PIMS S25.00 Sprint 25 2022-Mar-31
+- Added tables
+  - PIMS_REQUEST_SOURCE_TYPE
+  - PIMS_RESEARCH_PURPOSE_TYPE
+  - PIMS_RESEARCH_FILE_PURPOSE
+  - PIMS_RESEARCH_FILE_PURPOSE_HIST
+- Altered tables:
+  - PIMS_RESEARCH_FILE
+  - PIMS_PROPERTY_RESEARCH_FILE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S24.00 Sprint 24 2022-Mar-17
+- Added tables:
+  - PIMS_PROP_PROP_ADJACENT_LAND_TYPE
+  - PIMS_PROP_PROP_ANOMALY_TYPE
+  - PIMS_PROP_PROP_ROAD_TYPE
+  - PIMS_PROP_PROP_TENURE_TYPE
+  - PIMS_VOLUME_UNIT_TYPE
+  - PIMS_RESEARCH_FILE
+  - PIMS_RESEARCH_FILE_STATUS_TYPE
+  - PIMS_PROPERTY_RESEARCH_FILE
+- Altered tables:
+  - PIMS_PROPERTY
+    - Set PROPERTY_AREA_UNIT_TYPE_CODE to nullable
+  - BCA_FOLIO_ADDRESS
+    - Add column ADDRESS_ID
+  - BCA*VALUE tables
+    - DESCRIPTION columns increased from 16 to 255 bytes
+- Altered views:
+  - PIMS_CONTACT_MGR_VW
+    - Added the subquery to the PERSON portion of the view
+- Requires additional metadata to meet standards
+
+PSP_PIMS S23.01 Sprint 23 2022-Mar-10
+- Added tables:
+  - BCA_AREA_AMENDMENT
+  - BCA_AREA_BCTRANSIT_VALUE
+  - BCA_AREA_DELETE
+  - BCA_AREA_GENERAL_VALUE
+  - BCA_AREA_SCHOOL_VALUE
+  - BCA_ASSESSMENT_AREA
+  - BCA_DATA_ADVICE
+  - BCA_DATA_ADVICE_AMENDMENT
+  - BCA_DATA_ADVICE_BCTRANSIT_VALUE
+  - BCA_DATA_ADVICE_DELETE
+  - BCA_DATA_ADVICE_GENERAL_VALUE
+  - BCA_DATA_ADVICE_SCHOOL_VALUE
+  - BCA_DEFINED
+  - BCA_ELECTORAL_AREA
+  - BCA_FOLIO_ADDRESS
+  - BCA_FOLIO_AMENDMENT
+  - BCA_FOLIO_BCTRANSIT_VALUE
+  - BCA_FOLIO_DESCRIPTION
+  - BCA_FOLIO_FARM
+  - BCA_FOLIO_GENERAL_VALUE
+  - BCA_FOLIO_LAND_CHARACTERISTIC
+  - BCA_FOLIO_LEGAL_DESCRIPTION
+  - BCA_FOLIO_MANAGED_FOREST
+  - BCA_FOLIO_MANUFACTURED_HOME
+  - BCA_FOLIO_OIL_AND_GAS
+  - BCA_FOLIO_RECORD
+  - BCA_FOLIO_SALES
+  - BCA_FOLIO_SCHOOL_VALUE
+  - BCA_FOLIO_VALUATION
+  - BCA_GENERAL_SERVICE
+  - BCA_IMPROVEMENT_DISTRICT
+  - BCA_ISLANDS_TRUST
+  - BCA_JURISDICTION
+  - BCA_JURISDICTION_AMENDMENT
+  - BCA_JURISDICTION_BCTRANSIT_VALUE
+  - BCA_JURISDICTION_DELETE
+  - BCA_JURISDICTION_GENERAL_VALUE
+  - BCA_JURISDICTION_SCHOOL_VALUE
+  - BCA_LOCAL_AREA
+  - BCA_MINOR_TAXING
+  - BCA_OWNER
+  - BCA_OWNERSHIP_GROUP
+  - BCA_SERVICE_AREA
+  - BCA_SPECIFIED_MUNICIPAL
+  - BCA_SPECIFIED_REGIONAL
+- Requires additional metadata to meet standards
+
+PSP_PIMS S21.00 Sprint 21 2022-Feb-11
+- Altered tables:
+  -  PIMS_SECURITY_DEPOSIT_HOLDER
+    - Add constraint to restrict security deposit holder to single person OR organization
+	  - Add constraint to restrict holder as person OR organization (exclusively)
+  - PIMS_SECURITY_DEPOSIT_RETURN_HOLDER
+    - Add constraint to restrict security deposit holder to single person OR organization
+	  - Add constraint to restrict holder as person OR organization (exclusively)
+  - PIMS_SECURITY_DEPOSIT_RETURN
+    - Delete PAYEE_NAME
+    - Delete PAYEE_ADDRESS
+    - Delete FK to PIMS_LEASE.LEASE_ID
+    - Delete FK to PIMS_SECURITY_DEPOSIT_TYPE
+  - PIMS_ORGANIZATION
+    - Alter ORGANIZATION_TYPE_CODE to nullable
+    - Alter ORG_IDENTIFIER_TYPE_CODE to nullable
+  - PIMS_PERSON
+    - Add USE_ORGANIZATION_ADDRESS
+- Altered views:
+  - PIMS_PERSON_CONTACT_VW
+    - Top contact method for each contact method type returned is ordered by the following:
+      - PIMS_PERSON_CONTACT_VW (Descending order)
+      - DB_LAST_UPDATE_TIMESTAMP  (Descending order)
+  - PIMS_CONTACT_MGR_VW
+    - Altered to show organization name and ID if a person has an associated organization.
+- Modified seed script contents:
+  - PIMS_LEASE_STATUS_TYPE
+    - Set EXPIRED code type to disabled.
+    - Ensure DISCARD code is present and enabled.
+- Requires additional metadata to meet standards
+
+PSP_PIMS S20.00 Sprint 20 2022-Jan-28
+- Added table:
+  - PIMS_STATIC_VARIABLE_HIST
+- Altered table:
+  - PIMS_STATIC_VARIABLE
+- Added view:
+  - PIMS_PERSON_CONTACT_VW
+- Altered view:
+  - PIMS_CONTACT_MANAGER_VW
+- Modified seed script contents
+  - 70_DML_PIMS_LEASE_PAYMENT_STATUS_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S19.00 Sprint 19 2022-Jan-11
+- Added tables:
+  - PIMS_SECURITY_DEPOSIT_HOLDER
+  - PIMS_SECURITY_DEPOSIT_RETURN_HOLDER
+- Altered tables:
+  - PIMS_LEASE
+  - PIMS_LEASE_TERM
+  - PIMS_LEASE_PAYMENT
+  - PIMS_SECURITY_DEPOSIT
+  - PIMS_SECURITY_DEPOSIT_RETURN
+- Dropped tables:
+  - PIMS_LEASE_PAYMENT_FORECAST
+  - PIMS_LEASE_PAYMENT_PERIOD
+  - PIMS_SEC_DEP_HOLDER_TYPE
+- Modified seed script contents
+  - 64_DML_PIMS_SECURITY_DEPOSIT_TYPE.sql
+  - 73_DML_PIMS_LEASE_STATUS_TYPE.sql
+  - 74_DML_PIMS_CLAIM.sql
+  - 75_DML_PIMS_ROLE_CLAIM.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S17.00 Sprint 17 2021-Dec-06
+- Altered tables:
+  - PIMS_LEASE
+    - Added ADDRESS_COMMENT
+  - PIMS_PERSON
+    - LEASE_CATEGORY_TYPE_CODE made nullable
+    - LEASE_RESPONSIBILITY_TYPE_CODE made nullable
+    - LEASE_PMT_FREQ_TYPE_CODE made nullable
+  - PIMS_PROPERTY
+    - PID made nullable
+    - PIN made nullable
+  - PIMS_INSURANCE
+    - Added IS_INSURANCE_IN_PLACE
+    - Dropped FK INSURER_ORG_ID
+    - Dropped FK INSURER_CONTACT_ID
+    - Dropped FK MOTI_RISK_MGMT_CONTACT_ID
+    - Dropped FK BCTFA_RISK_MGMT_CONTACT_ID
+    - Dropped FK INSURANCE_PAYEE_TYPE_CODE
+    - Dropped INSURED_VALUE
+    - Dropped START_DATE
+    - Dropped RISK ASSESSMENT_COMPLETED_DATE
+  - PIMS_LEASE_PAYMENT
+    - PAYMENT_AMOUNT_PST made nullable
+  - PIMS_LEASE_PAYMENT_FORECAST
+    - FORECAST_PAYMENT_PST made nullable
+  - PIMS_PROPERTY_IMPROVEMENT
+    - IMPROVEMENT_DESCRIPTION made nullable
+	- ADDRESS renamed to UNIT
+- Dropped tables:
+  - PIMS_INSURANCE_PAYEE_TYPE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S16.01 Sprint 16 2021-Dec-03
+- Added tables:
+  - PIMS_TENANT
+- Added seed data tables:
+  - 51_DML_PIMS_ROLE.sql
+  - 73_DML_PIMS_LEASE_STATUS_TYPE.sql
+  - 74_DML_PIMS_CLAIM.sql
+  - 75_DML_PIMS_ROLE_CLAIM.sql
+  - 76_DML_PIMS_ORGANIZATION.sql
+  - 77_DML_PIMS_TENANT.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S16.00 Sprint 16 2021-Nov-23
+- ETL schema objects are now removed from the PSP build scripts.  ETL entities will be managed by a separate script.
+- Added views:
+  - PIMS_CONTACT_MGR_VW
+- Added tables:
+  - PIMS_LEASE_STATUS_TYPE
+- Altered tables:
+  - PIMS_LEASE (PIMS_PROPERTY_IMPROVEMENT now directly referenced from PIMS_LEASE)
+  - Added column PIMS_PROPERTY_LEASE.AREA_UNIT_TYPE_CODE (FK)
+  - Added column PIMS_PROPERTY_LEASE.LEASE_AREA
+  - Added column PIMS_ADDRESS.OTHER_COUNTRY
+  - Added column PIMS_ORGANIZATION.INCORPORATION_NUMBER
+  - Added column PIMS_LEASE.LEASE_PURPOSE_OTHER_DESC
+  - Added column PIMS_LEASE.DOCUMENTATION_REFERENCE
+  - Added column PIMS_LEASE.OTHER_LEASE_PURPOSE_TYPE
+  - Added column PIMS_LEASE.LEASE_STATUS_TYPE_CODE
+  - Moved column PIMS_SECURITY_DEPOSIT_RETURN.TERMINATION_NOTE to PIMS_LEASE.RETURN_NOTES
+  - Dropped column PIMS_LEASE.IS_ORIG_EXPIRY_REQUIRED
+  - Dropped column PIMS_LEASE.INCLUDED_RENEWALS
+  - Dropped column PIMS_LEASE.RENEWAL_COUNT
+  - Dropped column PIMS_LEASE.RENEWAL_TERM_MONTHS
+  - Altered column PIMS_LEASE.LEASE_DESCRIPTION to NVARCHAR(max)
+  - Altered column PIMS_LEASE.LEASE_NOTES to NVARCHAR(max)
+  - Altered column PIMS_LEASE.RETURN_NOTES To NVARCHAR(max)
+  - Altered column PIMS_LEASE.INSPECTION_NOTES To NVARCHAR(max)
+  - Added sequence etl.ETL_DATA_SOURCE_TRACE_ID_SEQ
+- Requires additional metadata to meet standards
+
+PSP_PIMS S15.00 Sprint 15 2021-Nov-12
+- Added tables:
+  - PIMS_ORGANIZATION_ADDRESS
+  - PIMS_PERSON_ADDRESS
+  - ETL_OPERATIONAL_SS_LOAD
+- Altered tables:
+  - PIMS_ADDRESS
+- Altered views to exclude properties with null geometry values:
+  - PIMS_PROPERTY_BOUNDARY_VW
+  - PIMS_PROPERTY_LOCATION_VW
+- Added seed data tables:
+  - 72_DML_PIMS_INSURANCE_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S13.00 Sprint 13 2021-Oct-22
+- Altered tables:
+  - ETL_CONTACT_METHOD_LOG
+  - ETL_INTEREST_HOLDER_PERSON_ORG_LOG
+  - PIMS_ADDRESS
+  - PIMS_ADDRESS_HIST
+  - PIMS_LEASE_TENANT
+  - PIMS_LEASE_TENANT_HIST
+  - PIMS_PROPERTY_IMPROVEMENT
+  - PIMS_PROPERTY_IMPROVEMENT_HIST
+  - PIMS_LEASE
+  - PIMS_LEASE_HIST
+  - PIMS_PROJECT
+  - PIMS_PERSON
+  - PIMS_PERSON_HIST
+  - PIMS_ORGANIZATION
+  - PIMS_ORGANIZATION_HIST
+- Added tables:
+  - ETL_ERROR_LOG
+  - ETL_PROPERTY_ERROR_LOG
+  - PMBC_PARCEL_POLYGON_FABRIC
+  - PIMS_LEASE_PAYMENT_PERIOD
+  - PIMS_LEASE_PAYMENT_PERIOD_HIST
+  - PIMS_LEASE_TERM
+  - PIMS_LEASE_TERM_HIST
+  - PIMS_STATIC_VARIABLE
+  - PIMS_LEASE_INITIATOR_TYPE
+  - PIMS_LEASE_RESPONSIBILITY_TYPE
+  - PIMS_LEASE_PAYMENT_METHOD_TYPE
+  - PIMS_LEASE_PAYMENT_STATUS_TYPE
+  - PIMS_LEASE_TERM_STATUS_TYPE
+  - PIMS_LEASE_PAYMENT_FORECAST
+  - PIMS_LEASE_PAYMENT_FORECAST_HIST
+  - PIMS_LEASE_PAYMENT
+  - PIMS_LEASE_PAYMENT_HIST
+- Dropped tables:
+  - PIMS_PROPERTY_IMPROVEMENT_UOM_TYPE
+- Added seed data tables:
+  - 67_DML_PIMS_LEASE_INITIATOR_TYPE.sql
+  - 68_DML_PIMS_LEASE_RESPONSIBILITY_TYPE.sql
+  - 69_DML_PIMS_LEASE_TERM_STATUS_TYPE.sql
+  - 69_DML_PIMS_STATIC_VARIABLE.sql
+  - 70_DML_PIMS_LEASE_PAYMENT_STATUS_TYPE.sql
+  - 71_DML_PIMS_LEASE_PAYMENT_METHOD_TYPE.sql
+- Dropped seed data tables:
+  - 63_DML_PIMS_PROPERTY_IMPROVEMENT_UOM_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S11.01 Sprint 12 2021-Oct-05
+- Added tables:
+  - ETL_INTEREST_HOLDER_PERSON_ORG_LOG
+- Added 66_DML_PIMS_LESSOR_TYPE.sql to populate the PIMS_LESSOR_TYPE table
+- Requires additional metadata to meet standards
+
+PSP_PIMS S11.00 Sprint 11 2021-Sep-29
+- Dropped tables:
+  - PIMS_LEASE_SUBTYPE
+  - PIMS_LEASE_ACTIVITY_HIST
+  - PIMS_LEASE_ACTIVITY_PERIOD_HIST
+  - PIMS_LEASE_ACTIVITY_PERIOD
+  - PIMS_EXPECTED_AMOUNT_HIST
+  - PIMS_LEASE_STATUS_TYPE
+  - PIMS_EXPECTED_AMOUNT
+  - PIMS_LEASE_ACTIVITY
+  - PIMS_LEASE_TYPE
+  - PIMS_LEASE_PURPOSE_SUBTYPE
+- Altered tables:
+  - PIMS_CLAIM
+  - PIMS_TASK_TEMPLATE
+  - PIMS_LEASE_PROGRAM_TYPE
+  - PIMS_ROLE
+  - PIMS_USER
+  - PIMS_PROPERTY_HIST
+  - PIMS_LEASE
+  - PIMS_LEASE_HIST
+  - PIMS_LEASE_PURPOSE_TYPE
+  - PIMS_PROPERTY
+  - PIMS_TASK_TEMPLATE_TYPE
+  - PIMS_TASK_TEMPLATE_HIST
+  - PIMS_LEASE_PMT_FREQ_TYPE
+- Added tables:
+  - PIMS_PROPERTY_TAX_REMIT_TYPE
+  - PIMS_PROPERTY_TAX
+  - PIMS_PROPERTY_IMPROVEMENT
+  - PIMS_INSURANCE_PAYEE_TYPE
+  - PIMS_SECURITY_DEPOSIT_TYPE
+  - PIMS_SECURITY_DEPOSIT_HIST
+  - PIMS_INSURANCE
+  - PIMS_LEASE_LICENSE_TYPE
+  - PIMS_LEASE_TENANT
+  - PIMS_LEASE_TENANT_HIST
+  - PIMS_INSURANCE_HIST
+  - PIMS_SECURITY_DEPOSIT_RETURN_HIST
+  - PIMS_INSURANCE_TYPE
+  - PIMS_SECURITY_DEPOSIT
+  - PIMS_PROPERTY_IMPROVEMENT_HIST
+  - PIMS_PROPERTY_IMPROVEMENT_TYPE
+  - PIMS_LEASE_PAY_RVBL_TYPE
+  - PIMS_PROPERTY_IMPROVEMENT_UOM_TYPE
+  - PIMS_SURPLUS_DECLARATION_TYPE
+  - PIMS_LEASE_CATEGORY_TYPE
+  - PIMS_LESSOR_TYPE
+  - PIMS_SECURITY_DEPOSIT_RETURN
+  - PIMS_SEC_DEP_HOLDER_TYPE
+  - PIMS_PROPERTY_TAX_HIST
+- Added DML Files
+  - 53_DML_PIMS_LEASE_PAY_RVBL_TYPE.sql
+  - 54_DML_PIMS_LEASE_LICENSE_TYPE.sql
+  - 55_DML_PIMS_LEASE_CATEGORY_TYPE.sql
+  - 56_DML_PIMS_LEASE_PURPOSE_TYPE.sql
+  - 57_DML_PIMS_LEASE_PROGRAM_TYPE.sql
+  - 58_DML_PIMS_LEASE_PMT_FREQ_TYPE.sql
+  - 59_DML_PIMS_PROPERTY_TAX_REMIT_TYPE.sql
+  - 60_DML_PIMS_INSURANCE_PAYEE_TYPE.sql
+  - 61_DML_PIMS_SURPLUS_DECLARATION_TYPE.sql
+  - 62_DML_PIMS_PROPERTY_IMPROVEMENT_TYPE.sql
+  - 63_DML_PIMS_PROPERTY_IMPROVEMENT_UOM_TYPE.sql
+  - 64_DML_PIMS_SECURITY_DEPOSIT_TYPE.sql
+  - 65_DML_PIMS_SEC_DEP_HOLDER_TYPE.sql
+- Deleted DML Files
+  - 53_DML_PIMS_LEASE_PMT_FREQ_TYPE.sql
+  - 54_DML_PIMS_LEASE_PURPOSE_TYPE.sql
+  - 55_DML_PIMS_LEASE_PURPOSE_SUBTYPE.sql
+  - 56_DML_PIMS_LEASE_STATUS_TYPE.sql
+  - 57_DML_PIMS_LEASE_TYPE.sql
+  - 58_DML_PIMS_LEASE_SUBTYPE.sql
+  - 59_DML_PIMS_LEASE_PROGRAM_TYPE.sql
+- Requires additional metadata to meet standards
+
+PSP_PIMS S10.02 Sprint 10 2021-Sep-22
+- Changed '//' comments in all scripts to '--'
+- Requires additional metadata to meet standards
+
+PSP_PIMS S10.01 Sprint 10 2021-Sep-17
+- Moved test data insertion SQL to "Test Data" folder
+- Requires additional metadata to meet standards
+
+PSP_PIMS S10.00 Sprint 10 2021-Sep-02
+- Added tables:
+  - PIMS_LEASE
+  - PIMS_LEASE_ACTIVITIES
+  - PIMS_LEASE_ACTIVITY_PERIOD
+  - PIMS_LEASE_PMT_FREQ_TYPE
+  - PIMS_LEASE_PURPOSE_SUBTYPE
+  - PIMS_LEASE_PURPOSE_TYPE
+  - PIMS_LEASE_STATUS_TYPE
+  - PIMS_LEASE_SUBTYPE
+  - PIMS_LEASE_TYPE
+  - PIMS_EXPECTED_AMOUNT
+  - PIMS_PROPERTY_LEASE
+  - PIMS_LEASE_PROGRAM_TYPE
+- Requires additional metadata to meet standards
+
+PSP_PIMS S09.01 Sprint 9 2021-Sep-01
+- Added views:
+  - PIMS_PROPERTY_BOUNDARY_VW
+  - PIMS_PROPERTY_LOCATION_VW
+- Requires additional metadata to meet standards
+
+PSP_PIMS S09.00 Sprint 9 2021-Aug-19
+- Altered PIMS_PROPERTY
+  - BOUNDARY altered from GEOGRAPHY to GEOMETRY
+  - LOCATION altered from GEOGRAPHY to GEOMETRY
+  - LOCATION altered from NOT NULL to NULL
+- Altered PIMS_ACCESS_REQUEST
+  - Added NOTE column
+- Altered PIMS_USER
+  - Added POSITION column
+  - Added NOTE column
+  - Added LAST_LOGIN column
+- Added 52_DML_PIMS_PROPERTY_STATUS_TYPE build script
+- Requires additional metadata to meet standards
+
+PSP_PIMS S08.01 Sprint 8 2021-Aug-17
+- Added PIMSX_TableDefinitions table
+- Added generated triggers
+- Added generated history tables
+- Requires additional metadata to meet standards
+
+PSP_PIMS S08.00 Sprint 8 2021-Aug-17
+- Altered PIMS_ADDRESS
+  - Column MUNICIPALITY_NAME length increased from 20 to 200 bytes
+ _ Partial metadata addedd to the following tables:
+   - PIMS_AREA_UNIT_TYPE
+   - PIMS_PROPERTY_TENURE_TYPE
+- Requires additional metadata to meet standards
+- Triggers remain to be generated
+- History tables remain to be generated
+
+PSP_PIMS S07.00 Sprint 7 2021-Aug-04
+- Added numerous indices to enforce uniqueness and support foreign keys
+- Altered PIMS_ADDRESS
+  - Column STREET_ADDRESS renamed to STREET_ADDRESS_1
+  - Column UNIT_NUMBER renamed to STREET_ADDRESS_2
+  - Column STREET_ADDRESS_3 added
+- Altered PIMS_PROPERTY
+  - Column PROPERTY_STATUS_TYPE_CODE added
+  - Column PROPERTY_DATA_SOURCE_TYPE_CODE added
+  - Column PROPERTY_DATA_SOURCE_EFFECTIVE_DATE added
+  - Column IS_PROPERTY_OF_INTEREST added
+- Altered PIMS_ORGANIZATION
+  - Column ORG_IDENTIFIER_TYPE_CODE added
+  - Column ORGANIZATION_IDENTIFIER added
+- Added the following tables
+  - __EFMigrationsHistory
+  - PIMS_PROPERTY_DATA_SOURCE_TYPE
+  - PIMS_PROPERTY_STATUS_TYPE
+  - PIMS_ORG_IDENTIFIER_TYPE
+  - PIMS_PROPERTY_EVALUATION
+- Requires additional metadata to meet standards
+- Triggers remain to be generated
+- History tables remain to be generated
+
+PSP_PIMS V02.01 Sprint 6 2021-Jul-21
+- Model was refactored to meet MoTI business requirements.
+  - Model now conforms to the PSP Conceptual Data Model
+- Triggers remain to be generated
+- History tables remain to be generated
+- Added the following tables:
+  - PIMS_PROPERTY_ORGANIZATION
+  - PIMS_AREA_UNIT_TYPE
+  - PIMS_PROPERTY_TENURE_TYPE
+-  Altered the following tables:
+  - PIMS_REGION
+    - REGION_CODE now SMALLINT
+  - PIMS_DISTRICT
+    - DISTRICT_CODE now SMALLINT
+    - REGION_CODE now SMALLINT
+  - PIMS_ADDRESS
+    - DISTRICT_CODE now SMALLINT
+    - REGION_CODE now SMALLINT
+    - PROVINCE_STATE_ID now SMALLINT
+    - COUNTRY_ID now SMALLINT
+  - PIMS_COUNTRY
+    - COUNTRY_ID now SMALLINT
+  - PIMS_PROVINCE_STATE
+    - PROVINCE_STATE_ID now SMALLINT
+    - COUNTRY_ID now SMALLINT
+  - PIMS_ORGANIZATION
+    - DISTRICT_CODE now SMALLINT
+    - REGION_CODE now SMALLINT
+  - PIMS_PROPERTY
+    - DISTRICT_CODE now SMALLINT
+    - REGION_CODE now SMALLINT
+  - PIMS_PROJECT_STATUS_TYPE
+    - Added column CODE_GROUP
+    - Added column TEXT
+    - Added column IS_MILESTONE
+    - Added column IS_TERMINAL
+- Requires additional metadata to meet standards
+
+PSP_PIMS V01.00 (Pre-Release) Sprint 4 2021-Jun-15
+- Initial release
+- Compliant with MoTI standards
+- Requires additional metadata to meet standards
+
+PSP_PIMS 0.1 (Pre-Release) Sprint F 2021-Apr-08
+- Initial release
+- Requires additional metadata to meet standards
