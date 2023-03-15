@@ -401,7 +401,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.VerifyAcquisitionFileView();
         }
 
-        [StepDefinition(@"Expected Acquisition File Content is displayed on Research File Table")]
+        [StepDefinition(@"Expected Acquisition File Content is displayed on Acquisition File Table")]
         public void VerifyAcquisitionFileTableContent()
         {
             /* TEST COVERAGE: PSP-4253 */

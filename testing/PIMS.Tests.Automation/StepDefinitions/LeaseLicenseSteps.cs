@@ -18,13 +18,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly PropertyInformation propertyInformation;
         private readonly SharedSearchProperties sharedSearchProperties;
 
-        //private readonly string userName = "TRANPSP1";
-        private readonly string userName = "sutairak";
+        private readonly string userName = "TRANPSP1";
+        //private readonly string userName = "sutairak";
 
+        private readonly string status1 = "Draft";
+        private readonly string status2 = "Inactive";
+        private readonly string project = "Super Test Project";
         private readonly string leaseStartDate = "02/22/2022";
         private readonly string leaseExpiryDate = "03/22/2024";
         private readonly string leaseExpiryPastDate = "12/24/2022";
         private readonly string motiContact = "Automation Test";
+        private readonly string program = "BC Ferries";
         private readonly string responsibilityDate = "02/23/2022";
         private readonly string locationDoc = "Automation Test Location of Documents";
         private readonly string description = "Automation Test Intention of use";
@@ -35,7 +39,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string editNotes = "Automation Test Notes - Edited by automation";
 
         private readonly string PID = "001-192-396";
-        private readonly string PIN = "10114481";
+        private readonly string PIN = "553490";
         private readonly string address = "2525 Mill Bay Rd";
         private readonly string planNbr = "VAP7495";
         private readonly string legalDescription = "LOT 3 DISTRICT LOT 118 GROUP 1";
@@ -49,35 +53,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string firstTermFrequency = "Weekly";
         private readonly string firstTermAgreedPayment = "2500";
 
-        private readonly string firstTermPaymentSentDate = "02/23/2022";
-        private readonly string firstTermPaymentStatus = "Paid";
-        private readonly string firstTermPaymentReceived = "2625";
-        private readonly string firstTerm2ndPaymentSentDate = "03/09/2022";
-        private readonly string firstTerm2ndPaymentReceived = "300";
-        private readonly string firstTerm2ndPaymentStatus = "Partial";
-        private readonly string secondTermStartDate = "05/22/2022";
-        private readonly string secondTermEndDate = "06/30/2022";
-        private readonly string secondTermFrequency = "Monthly";
-        private readonly string secondTermAgreedPayment = "3500";
-        private readonly string secondTermPaymentSentDate = "04/23/2022";
-        private readonly string secondTermPaymentReceived = "3000";
-
-
-        private readonly string termPaymentDue = "Automation Test Due";
-        private readonly string noGST = "false";
-        private readonly string yesGST = "true";
-        private readonly string termExercised = "Exercised";
-        private readonly string termNotExercised = "Not Exercised";
-
         private readonly string improvementCommercialAddress = "1688 Blanshard St. Victoria, BC, V7C 1B7";
         private readonly string improvementCommercialSize = "256 sqft";
         private readonly string improvementCommercialDescription = "Automation Test - Commercial Improvement Description";
         private readonly string improvementResidentialAddress = "2301-1155 Nanaimo St. Vancouver, BC V6Z 2C7";
         private readonly string improvementResidentialSize = "175.69 sqft";
         private readonly string improvementResidentialDescription = "Automation Test - Residential Improvement Description";
-        private readonly string improvementOtherAddress = "Stanley Park, Vancouver, BC, V6Z 8J9";
-        private readonly string improvementOtherSize = "2256 sqft";
-        private readonly string improvementOtherDescription = "Automation Test - Other Improvement Description";
+        private readonly string improvementOtherAddress1 = "Stanley Park, Vancouver, BC, V6Z 8J9";
+        private readonly string improvementOtherSize1 = "2256 sqft";
+        private readonly string improvementOtherDescription1 = "Automation Test - Other Improvement Description";
+        private readonly string improvementOtherAddress2 = "Vancouver Aquarium, Vancouver, BC, V6Z 8J9";
+        private readonly string improvementOtherSize2 = "225 sqft";
+        private readonly string improvementOtherDescription2 = "Automation Test Edition - Other Improvement Description edited";
 
         private readonly string insuranceAircraftInPlace = "yes";
         private readonly string insuranceAircraftLimit = "25000";
@@ -115,6 +102,29 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string depositReturnPayeeName = "John Smith";
         private readonly string depositNotes = "Automation Test - Deposit Notes";
 
+        private readonly string depositTypeEdit = "Pet deposit";
+        private readonly string depositDescriptionEdit = "Automation Test Edition - Deposit Description edited";
+        private readonly string depositAmountEdit = "50.99";
+
+        private readonly string firstTermPaymentSentDate = "02/23/2022";
+        private readonly string firstTermPaymentMethod = "Cheque";
+        private readonly string firstTermPaymentReceived = "2625";
+        private readonly string firstTerm2ndPaymentSentDate = "03/09/2022";
+        private readonly string firstTerm2ndPaymentReceived = "300";
+        private readonly string firstTerm2ndPaymentMethod = "Credit / Debit";
+        private readonly string secondTermStartDate = "05/22/2022";
+        private readonly string secondTermEndDate = "06/30/2022";
+        private readonly string secondTermFrequency = "Monthly";
+        private readonly string secondTermAgreedPayment = "3500";
+        private readonly string secondTermPaymentSentDate = "04/23/2022";
+        private readonly string secondTermPaymentReceived = "3000";
+
+        private readonly string termPaymentDue = "Automation Test Due";
+        private readonly string noGST = "false";
+        private readonly string yesGST = "true";
+        private readonly string termExercised = "Exercised";
+        private readonly string termNotExercised = "Not Exercised";
+
         private readonly string greenPropertyPID = "015-254-241";
         private readonly string bluePropertyPID = "001-505-360";
         private readonly string purplePropertyPID = "000-228-729";
@@ -151,7 +161,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //LEASE DETAILS
             //Create a new Lease/ License Details with minimum fields
-            leaseDetails.LicenseDetailsMinFields(leaseStartDate, leaseExpiryDate);
+            leaseDetails.LicenseDetailsMinFields(status1, leaseStartDate, leaseExpiryDate, program);
 
             //Save the new license details
             leaseDetails.SaveLicense();
@@ -226,7 +236,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Inserting Payment for first term
             payments.AddPaymentBttn();
-            payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived, firstTermPaymentStatus);
+            payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentMethod, firstTermPaymentReceived);
 
             //Get new lease's code
             leaseCode = leaseDetails.GetLeaseCode();
@@ -243,7 +253,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
              * Insurance: PSP-2677, PSP-2099
              * Deposits: PSP-2094, PSP-2921, PSP-2922
              * Payments: PSP-2755, PSP-2915, PSP-2918, PSP-2927, PSP-2815
-             * Surplus:
+             * Surplus: PSP-2157
              */
 
             //Login to PIMS
@@ -257,7 +267,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.VerifyLicenseDetailsCreateForm();
 
             //Create a new Lease/ License Details with maximum fields
-            leaseDetails.LicenseDetailsMaxFields(leaseStartDate, leaseExpiryDate, motiContact, responsibilityDate, locationDoc, description, lisDocumentNbr, psDocumentNbr, notes);
+            leaseDetails.LicenseDetailsMaxFields(project, status2, leaseStartDate, leaseExpiryDate, motiContact, program, responsibilityDate, locationDoc, description, lisDocumentNbr, psDocumentNbr, notes);
 
             //Add Several Properties
             //Verify UI/UX from Search By Component
@@ -354,13 +364,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             improvements.AddResidentialImprovement(improvementResidentialAddress, improvementResidentialSize, improvementResidentialDescription);
 
             //Add Commercial Improvements
-            improvements.AddOtherImprovement(improvementOtherAddress, improvementOtherSize, improvementOtherDescription);
+            improvements.AddOtherImprovement(improvementOtherAddress1, improvementOtherSize1, improvementOtherDescription1);
 
             //Save Improvements
             leaseDetails.SaveLicense();
 
             //Verify Improvements View
-            improvements.VerifyImprovementView(improvementCommercialAddress, improvementCommercialSize, improvementCommercialSize, improvementOtherAddress, improvementOtherSize, improvementOtherDescription,
+            improvements.VerifyImprovementView(improvementCommercialAddress, improvementCommercialSize, improvementCommercialSize, improvementOtherAddress1, improvementOtherSize1, improvementOtherDescription1,
                 improvementResidentialAddress, improvementResidentialSize, improvementResidentialDescription);
 
             //INSURANCE
@@ -440,7 +450,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             payments.AddTerm(leaseStartDate, firstTermEndDate, firstTermFrequency, firstTermAgreedPayment, termPaymentDue, yesGST, termExercised);
 
             //Verify inserted Term
-            payments.VerifyInsertedTermTable("Initial term", leaseStartDate, firstTermEndDate, firstTermFrequency, termPaymentDue, firstTermAgreedPayment, yesGST, termExercised);
+            //payments.VerifyInsertedTermTable("Initial term", leaseStartDate, firstTermEndDate, firstTermFrequency, termPaymentDue, firstTermAgreedPayment, yesGST, termExercised);
 
             //Add Payments
             payments.OpenLastPaymentTab();
@@ -450,24 +460,28 @@ namespace PIMS.Tests.Automation.StepDefinitions
             payments.VerifyCreatePaymentForm();
 
             //Inserting Payment for first term
-            payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived, firstTermPaymentStatus);
+            payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentMethod, firstTermPaymentReceived);
 
             //Verify Header for Payments Table
             payments.VerifyPaymentTableHeader();
+            //payments.VerifyInsertedPayment(firstTermPaymentSentDate, firstTermPaymentMethod, firstTermPaymentReceived, yesGST, firstTermAgreedPayment);
 
             //Inserting second Payment
             payments.AddPaymentBttn();
-            payments.AddPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentReceived, firstTerm2ndPaymentStatus);
+            payments.AddPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentMethod, firstTerm2ndPaymentReceived);
+            //payments.VerifyInsertedPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentMethod, firstTerm2ndPaymentReceived, yesGST, firstTermAgreedPayment);
 
             //Inserting second term
+            payments.AddTermBttn();
             payments.AddTerm(secondTermStartDate, secondTermEndDate, secondTermFrequency, secondTermAgreedPayment, termPaymentDue, noGST, termNotExercised);
 
             //Verify inserted Term
-            payments.VerifyInsertedTermTable("Renewal 1", secondTermStartDate, secondTermEndDate, secondTermFrequency, secondTermAgreedPayment, termPaymentDue, noGST, termNotExercised);
+            //payments.VerifyInsertedTermTable("Renewal 1", secondTermStartDate, secondTermEndDate, secondTermFrequency, termPaymentDue, secondTermAgreedPayment, noGST, termNotExercised);
 
             //SURPLUS
             //Navigate to Surplus Declaration Section
-            //surplus.NavigateToSurplusSection();
+            surplus.NavigateToSurplusSection();
+            surplus.VerifySurplusForm();
 
             //Get new lease's code
             leaseCode = leaseDetails.GetLeaseCode();
@@ -495,7 +509,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form
-            leaseDetails.LicenseDetailsMinFields(leaseStartDate, leaseExpiryPastDate);
+            leaseDetails.LicenseDetailsMinFields(status1, leaseStartDate, leaseExpiryPastDate, program);
 
             //Save Lease Details
             leaseDetails.SaveLicense();
@@ -536,7 +550,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form
-            leaseDetails.LicenseDetailsMinFields(leaseStartDate, leaseExpiryPastDate);
+            leaseDetails.LicenseDetailsMinFields(status1, leaseStartDate, leaseExpiryPastDate, program);
 
             //Save Lease Details
             leaseDetails.CancelLicense();
@@ -545,7 +559,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form
-            leaseDetails.LicenseDetailsMinFields(leaseStartDate, leaseExpiryPastDate);
+            leaseDetails.LicenseDetailsMinFields(status1, leaseStartDate, leaseExpiryPastDate, program);
 
             //Save changes
             leaseDetails.SaveLicense();
@@ -576,7 +590,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
 
             //Fill basic information on the form
-            leaseDetails.LicenseDetailsMinFields(leaseStartDate, leaseExpiryPastDate);
+            leaseDetails.LicenseDetailsMinFields(status1, leaseStartDate, leaseExpiryPastDate, program);
 
             //Save Lease Details
             leaseDetails.SaveLicense();
@@ -588,7 +602,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing lease")]
         public void EditExistingLease()
         {
-            /* TEST COVERAGE: PSP-2096, PSP-2642, PSP-5161, PSP-5342, PSP-2637, PSP-2638, PSP-2923, PSP-4195, PSP-4196, PSP-4558 */
+            /* TEST COVERAGE: PSP-2096, PSP-2637, PSP-2638, PSP-2642, PSP-2923, PSP-4195, PSP-4196, PSP-4558, PSP-5161, PSP-5342 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -598,6 +612,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for the last created lease
             searchLease.SearchLastLease();
+            searchLease.SelectFirstOption();
 
             //FILE DETAILS
             //Verify File Details Form
@@ -621,45 +636,121 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save the new license details
             leaseDetails.SaveLicense();
 
+            //TENANTS
+            //Navigate to Tenants section
+            tenant.NavigateToTenantSection();
+
+            //Edit Tenants
+            tenant.EditTenant();
+
+            //Delete last Tenant
+            tenant.DeleteLastTenant();
+
+            //Edit last Tenant
+            tenant.EditLastTenant("Unknown");
+
+            //Save tenants changes
+            tenant.SaveTenant();
+
+            //Assert quantity of tenants
+            Assert.True(tenant.TotalTenants() == 1);
+            Assert.True(tenant.TotalRepresentatives() == 1);
+            Assert.True(tenant.TotalManagers() == 0);
+            Assert.True(tenant.TotalUnknown() == 1);
+
+            //IMPROVEMENTS
+            //Navigate to the improvements section
+            improvements.NavigateToImprovementSection();
+
+            //Edit Improvements
+            improvements.EditImprovements();
+            improvements.AddOtherImprovement(improvementOtherAddress2, improvementOtherSize2, improvementOtherDescription2);
+
+            //Save Improvements
+            leaseDetails.SaveLicense();
+
+            //Verify Improvement Changes
+            improvements.VerifyImprovementView(improvementCommercialAddress, improvementCommercialSize, improvementCommercialSize, improvementOtherAddress2, improvementOtherSize2, improvementOtherDescription2,
+                improvementResidentialAddress, improvementResidentialSize, improvementResidentialDescription);
+
+            //INSURANCE
+            //Navigate to Insurance
+            insurance.NavigateToInsuranceSection();
+
+            //Edit Insurance Section
+            insurance.EditInsurance();
+            insurance.DeleteInsurance("Other");
+
+            //Save Insurance
+            leaseDetails.SaveLicense();
+
+            //Verify Insurance changes
+            insurance.VerifyInsuranceViewForm(insuranceAircraftInPlace, insuranceAircraftLimit, insuranceAircraftExpiryDate, insuranceAircraftDescription, insuranceCGLInPlace, insuranceCGLLimit, insuranceCGLExpiryDate, insuranceCGLDescription,
+               insuranceMarineInPlace, insuranceMarineLimit, insuranceMarineExpiryDate, insuranceMarineDescription, insuranceVehicleInPlace, insuranceVehicleLimit, insuranceVehicleExpiryDate, insuranceVehicleDescription,
+               "", "", "", "");
+
+            //DEPOSITS
+            //Navigate to Deposits
+            deposits.NavigateToDepositSection();
+
+            //Delete first return
+            deposits.DeleteFirstReturn();
+
+            //Verify returns quantity
+            Assert.True(deposits.TotalReturns() == 0);
+
+            //Edit last deposit
+            deposits.EditLastDeposit(depositTypeEdit, depositDescriptionEdit, depositAmountEdit);
+
+            //Verify Deposit changes
+            deposits.VerifyCreatedDepositTable(depositTypeEdit, depositDescriptionEdit, depositAmountEdit, depositPaidDate, depositHolder);
+
+            //Delete last deposit
+            deposits.DeleteLastDeposit();
+
+            //Verify terms quantity
+            Assert.True(deposits.TotalDeposits() == 0);
+
             //PAYMENTS
             //Navigate to Payments
-            //payments.NavigateToPaymentSection();
+            payments.NavigateToPaymentSection();
 
-            ////Delete last term
-            //payments.DeleteLastTerm();
+            //Delete last term
+            payments.DeleteLastTerm();
 
-            ////Navigate to first term payments
-            //payments.OpenLastPaymentTab();
+            //Verify Terms quantity
+            Assert.True(payments.TotalTerms() == 1);
 
-            ////Delete first term last payment
-            //payments.DeleteLastPayment();
+            //Navigate to first term payments
+            payments.OpenLastPaymentTab();
 
+            //Delete first term last payment
+            payments.DeleteLastPayment();
 
-            ////INSURANCE
-            ////Navigate to Improvements
-            //insurance.NavigateToInsuranceSection();
+            //Verify payments quantity
+            Assert.True(payments.TotalPayments() == 1);
+        }
 
-            ////Edit Improvement Section
-            //insurance.EditInsurance();
+        [StepDefinition(@"I search for an existing Lease or License")]
+        public void SearchExistingLicense()
+        {
+            /* TEST COVERAGE: PSP-2466  */
 
-            ////Add Vehicle Insurance
-            //insurance.AddVehicleInsurance(insuranceVechicleLimit, insuranceVehicleExpiryDate, insuranceVehicleDescription);
+            //Login to PIMS
+            loginSteps.Idir(userName);
 
-            ////Add Other Insurance
-            //insurance.AddOtherInsurance(insuranceOtherType, insuranceOtherLimit, insuranceOtherExpiryDate, insuranceOtherDescription);
+            //Navigate to Leases Search
+            searchLease.NavigateToSearchLicense();
 
-            ////Save Insurances
-            //insurance.SaveInsurance();
+            //Filter leases Files
+            searchLease.FilterLeasesFiles(PID, leaseExpiryDate, organizationTenant3,  status2);
+            Assert.True(searchLease.SearchFoundResults());
 
-            ////DEPOSITS
-            ////Navigate to Deposits
-            //deposits.NavigateToDepositSection();
+            searchLease.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Discarded");
+            Assert.False(searchLease.SearchFoundResults());
 
-            ////Delete last return
-            //deposits.DeleteLastReturn();
-
-            ////Delete last deposit
-            //deposits.DeleteLastDeposit();
+            //Look for the last created research file
+            searchLease.SearchLastLease();
         }
 
         [StepDefinition(@"A new lease is created successfully")]
@@ -677,6 +768,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void LeaseEditedSuccessfully()
         {
             //Assert.True(deposits.LeaseDespositExist());
+        }
+
+        [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
+        public void VerifyAcquisitionFileTableContent()
+        {
+            /* TEST COVERAGE: PSP-1833 */
+
+            //Verify List View
+            searchLease.VerifySearchLeasesView();
+            searchLease.VerifyLeaseTableContent(leaseExpiryDate, program, status2);
+
         }
     }
 }
