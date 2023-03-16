@@ -64,7 +64,7 @@ namespace Pims.Core.Test
         }
 
         /// <summary>
-        /// Create a new instance of AcquisitionFileNote.
+        /// Create a new instance of ProjectFileNote.
         /// </summary>
         /// <param name="project"></param>
         /// <param name="note"></param>
@@ -78,6 +78,33 @@ namespace Pims.Core.Test
             {
                 Note = note,
                 Project = project,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = "admin",
+                AppCreateUserDirectory = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                IsDisabled = false,
+                ConcurrencyControlNumber = 1,
+            };
+        }
+
+        /// <summary>
+        /// Create a new instance of ResearchFileNote.
+        /// </summary>
+        /// <param name="project"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public static Entity.PimsResearchFileNote CreateResearchNote(Entity.PimsResearchFile researchFile = null, Entity.PimsNote note = null)
+        {
+            note ??= EntityHelper.CreateNote("Test Note");
+            researchFile ??= EntityHelper.CreateResearchFile(1);
+
+            return new Entity.PimsResearchFileNote()
+            {
+                Note = note,
+                ResearchFile = researchFile,
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = "admin",
                 AppCreateUserDirectory = string.Empty,
