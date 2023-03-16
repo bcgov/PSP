@@ -1,6 +1,5 @@
 import { H1 } from 'components/common/styles';
 import React from 'react';
-import { Alert } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router';
@@ -31,14 +30,10 @@ export const AdminAccessRequestPage: React.FunctionComponent<
       </Row>
       <Row>
         <Col md={7}>
-          <Alert variant="info">Modify this access request</Alert>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={7}>
           <AccessRequestContainer
             accessRequestId={props?.match?.params?.id}
             onSave={() => history.push('/admin/access/requests')}
+            asAdmin
           />
         </Col>
       </Row>
