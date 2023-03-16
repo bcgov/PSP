@@ -109,8 +109,7 @@ namespace Pims.Core.Http
                 // If there is no access token, or the refresh token has expired.
                 response = await RequestToken();
             }
-            else if (_accessToken != null
-                && !string.IsNullOrWhiteSpace(_accessToken.AccessToken)
+            else if (!string.IsNullOrWhiteSpace(_accessToken.AccessToken)
                 && _tokenHandler.ReadJwtToken(_accessToken.AccessToken).ValidTo <= DateTime.UtcNow
                 && !string.IsNullOrWhiteSpace(_accessToken.RefreshToken)
                 && _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo > DateTime.UtcNow)

@@ -21,7 +21,7 @@ namespace Pims.Core.Extensions
         /// Throw an ArgumentNullException if the value is null.
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="message"></param>
+        /// <param name="paramName"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">The argument value cannot be null.</exception>
         public static T ThrowIfNull<T>(this T value, string paramName)

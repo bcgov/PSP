@@ -1,8 +1,9 @@
 namespace Pims.Api.Models
 {
     /// <summary>
-    /// Provides a  type model.
+    /// Provides a type model.
     /// </summary>
+    /// <typeparam name="T">The actual type of this TypeModel.</typeparam>
     public class TypeModel<T>
     {
         /// <summary>

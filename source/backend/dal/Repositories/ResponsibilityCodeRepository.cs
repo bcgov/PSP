@@ -48,7 +48,7 @@ namespace Pims.Dal.Repositories
 
             // Check for uniqueness on save. At any given point an active code should be unique per code type.
             var existingCodes = Context.PimsResponsibilityCodes.Where(
-                    c => EF.Functions.Collate(c.Code, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == pimsCode.Code)
+                    c => EF.Functions.Collate(c.Code, SqlCollation.LATINGENERALCASEINSENSITIVE) == pimsCode.Code)
                 .ToList();
 
             var now = DateTime.UtcNow;
@@ -85,7 +85,7 @@ namespace Pims.Dal.Repositories
         {
             // Check for uniqueness on save. At any given point an active code should be unique per code type.
             var existingCodes = Context.PimsResponsibilityCodes.Where(
-                    c => EF.Functions.Collate(c.Code, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == pimsCode.Code)
+                    c => EF.Functions.Collate(c.Code, SqlCollation.LATINGENERALCASEINSENSITIVE) == pimsCode.Code)
                 .ToList();
 
             // Need to remove the entity from existing codes when updating it. We only want to compare against other entities.

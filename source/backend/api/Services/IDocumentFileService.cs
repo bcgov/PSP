@@ -22,5 +22,9 @@ namespace Pims.Api.Services
         Task<ExternalResult<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument);
 
         Task<ExternalResult<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument);
+
+        Task<ExternalResult<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument);
+
+        Task<DocumentUploadRelationshipResponse> UploadProjectDocumentAsync(long projectId, DocumentUploadRequest uploadRequest);
     }
 }

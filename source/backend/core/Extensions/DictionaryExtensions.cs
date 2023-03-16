@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Pims.Core.Extensions
@@ -66,7 +67,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static int[] GetIntArrayValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, string separator = ",")
         {
-            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value) ? value.ToString().Split(separator).Select(v => { return int.TryParse(v, out int iv) ? (int?)iv : null; }).Where(v => v != null).Select(v => (int)v).ToArray() : new int[0];
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value) ? value.ToString().Split(separator).Select(v => { return int.TryParse(v, out int iv) ? (int?)iv : null; }).Where(v => v != null).Select(v => (int)v).ToArray() : Array.Empty<int>();
         }
 
         /// <summary>
@@ -205,11 +206,11 @@ namespace Pims.Core.Extensions
         /// </summary>
         /// <param name="dict"></param>
         /// <param name="key"></param>
-        /// <param name="defaultValue"></param>
+        /// <param name="separator"></param>
         /// <returns></returns>
         public static string[] GetStringArrayValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, string separator = ",")
         {
-            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value) ? value.ToString().Split(separator) : new string[0];
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value) ? value.ToString().Split(separator) : Array.Empty<string>();
         }
 
         /// <summary>
@@ -329,7 +330,7 @@ namespace Pims.Core.Extensions
 
             try
             {
-                return (T)Convert.ChangeType(value.ToString(), baseType);
+                return (T)Convert.ChangeType(value.ToString(), baseType, CultureInfo.InvariantCulture);
             }
             catch
             {

@@ -1,6 +1,8 @@
+import { Button } from 'components/common/buttons';
 import { FormSection } from 'components/common/form/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -27,6 +29,8 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
   pid,
 }) => {
   const address = summaryData?.ADDRESSES?.find(a => a.PRIMARY_IND === 'true');
+  const keycloak = useKeycloakWrapper();
+  const logout = keycloak.obj.logout;
 
   return (
     <>
@@ -46,9 +50,13 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
           <b>
             Failed to load data from BC Assessment.
             <br />
-            <br /> Refresh this page to try again, or select a different property. If this error
-            persists, contact an administrator.
+            <br /> Refresh this page to try again, your SITEMINDER credentials may have expired. You
+            can refresh your credentials by logging out and logging back into the application. If
+            this error persists past the logout/login, contact a site administrator.
           </b>
+          <Button className="m-auto" onClick={() => logout()}>
+            Log Out
+          </Button>
         </FormSection>
       ) : (
         <StyledForm>

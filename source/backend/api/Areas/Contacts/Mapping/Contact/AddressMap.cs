@@ -17,6 +17,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Contact
                 .Map(dest => dest.Municipality, src => src.Address.MunicipalityName)
                 .Map(dest => dest.Province, src => src.Address.ProvinceState)
                 .Map(dest => dest.Country, src => src.Address.Country)
+                .Map(dest => dest.CountryOther, src => src.Address.OtherCountry)
                 .Map(dest => dest.Postal, src => src.Address.PostalCode)
                 .Map(dest => dest.AddressType, src => src.AddressUsageTypeCodeNavigation);
 
@@ -29,6 +30,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Contact
                 .Map(dest => dest.Municipality, src => src.Address.MunicipalityName)
                 .Map(dest => dest.Province, src => src.Address.ProvinceState)
                 .Map(dest => dest.Country, src => src.Address.Country)
+                .Map(dest => dest.CountryOther, src => src.Address.OtherCountry)
                 .Map(dest => dest.Postal, src => src.Address.PostalCode)
                 .Map(dest => dest.AddressType, src => src.AddressUsageTypeCodeNavigation);
         }

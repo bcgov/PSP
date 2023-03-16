@@ -6,9 +6,9 @@ namespace Pims.Api.Helpers.Constants
     public static class ContentTypes
     {
         #region Properties
-        public const string CONTENT_TYPE_CSV = "text/csv";
-        public const string CONTENT_TYPE_EXCEL = "application/vnd.ms-excel";
-        public const string CONTENT_TYPE_EXCELX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        public const string CONTENTTYPECSV = "text/csv";
+        public const string CONTENTTYPEEXCEL = "application/vnd.ms-excel";
+        public const string CONTENTTYPEEXCELX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         #endregion
     }
 }

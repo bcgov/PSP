@@ -23,6 +23,8 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFileDocumentRepository acquisitionFileDocumentRepository;
         private readonly IResearchFileDocumentRepository researchFileDocumentRepository;
         private readonly IDocumentService documentService;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IDocumentRepository _documentRepository;
         private readonly IMapper mapper;
 
         public DocumentFileService(
@@ -31,13 +33,17 @@ namespace Pims.Api.Services
             IAcquisitionFileDocumentRepository acquisitionFileDocumentRepository,
             IResearchFileDocumentRepository researchFileDocumentRepository,
             IDocumentService documentService,
-            IMapper mapper)
+            IMapper mapper,
+            IProjectRepository projectRepository,
+            IDocumentRepository documentRepository)
             : base(user, logger)
         {
             this.acquisitionFileDocumentRepository = acquisitionFileDocumentRepository;
             this.researchFileDocumentRepository = researchFileDocumentRepository;
             this.documentService = documentService;
             this.mapper = mapper;
+            _projectRepository = projectRepository;
+            _documentRepository = documentRepository;
         }
 
         public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
@@ -54,6 +60,9 @@ namespace Pims.Api.Services
                 case FileType.Acquisition:
                     this.User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
                     return acquisitionFileDocumentRepository.GetAllByAcquisitionFile(fileId).Select(f => f as T).ToArray();
+                case FileType.Project:
+                    this.User.ThrowIfNotAuthorized(Permissions.ProjectView);
+                    return _projectRepository.GetAllProjectDocuments(fileId).Select(f => f as T).ToArray();
                 default:
                     throw new BadRequestException("FileT type not valid to get documents.");
             }
@@ -117,13 +126,41 @@ namespace Pims.Api.Services
             return relationshipResponse;
         }
 
+        public async Task<DocumentUploadRelationshipResponse> UploadProjectDocumentAsync(long projectId, DocumentUploadRequest uploadRequest)
+        {
+            this.Logger.LogInformation("Uploading document for single project");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd, Permissions.ProjectEdit);
+
+            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
+
+            DocumentUploadRelationshipResponse relationshipResponse = new ()
+            {
+                UploadResponse = uploadResult,
+            };
+
+            if (uploadResult.Document.Id != 0)
+            {
+                PimsProjectDocument newProjectDocument = new ()
+                {
+                    ProjectId = projectId,
+                    DocumentId = uploadResult.Document.Id,
+                };
+                newProjectDocument = _projectRepository.AddProjectDocument(newProjectDocument);
+                _projectRepository.CommitTransaction();
+
+                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newProjectDocument);
+            }
+
+            return relationshipResponse;
+        }
+
         public async Task<ExternalResult<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single research file");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            IList<PimsResearchFileDocument> existingResearchFileDocuments = researchFileDocumentRepository.GetAllByDocument(researchFileDocument.DocumentId);
-            if (existingResearchFileDocuments.Count == 1)
+            var relationshipCount = _documentRepository.DocumentRelationshipCount(researchFileDocument.DocumentId);
+            if (relationshipCount == 1)
             {
                 return await documentService.DeleteDocumentAsync(researchFileDocument.Document);
             }
@@ -135,13 +172,31 @@ namespace Pims.Api.Services
             }
         }
 
+        public async Task<ExternalResult<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument)
+        {
+            this.Logger.LogInformation("Deleting PIMS document for single Project");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+
+            var relationshipCount = _documentRepository.DocumentRelationshipCount(projectDocument.DocumentId);
+            if (relationshipCount == 1)
+            {
+                return await documentService.DeleteDocumentAsync(projectDocument.Document);
+            }
+            else
+            {
+                _projectRepository.DeleteProjectDocument(projectDocument.ProjectDocumentId);
+                _projectRepository.CommitTransaction();
+                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
+            }
+        }
+
         public async Task<ExternalResult<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single acquisition file");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            IList<PimsAcquisitionFileDocument> existingAcquisitionFileDocuments = acquisitionFileDocumentRepository.GetAllByDocument(acquisitionFileDocument.DocumentId);
-            if (existingAcquisitionFileDocuments.Count == 1)
+            var relationshipCount = _documentRepository.DocumentRelationshipCount(acquisitionFileDocument.DocumentId);
+            if (relationshipCount == 1)
             {
                 return await documentService.DeleteDocumentAsync(acquisitionFileDocument.Document);
             }

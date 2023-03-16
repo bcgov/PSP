@@ -1,5 +1,4 @@
 using System;
-using Pims.Dal;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test

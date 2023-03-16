@@ -38,5 +38,6 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
     handleSubmit,
     initialValues: props.initialForm ?? new AcquisitionForm(),
     validationSchema: AddAcquisitionFileYupSchema,
+    loading: addAcquisitionFile.loading,
   };
 }

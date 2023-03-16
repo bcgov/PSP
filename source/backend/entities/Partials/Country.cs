@@ -3,13 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
-    public static class CountryCodes
-    {
-        public const string Canada = "CA";
-        public const string US = "US";
-        public const string Other = "OTHER";
-    }
-
     /// <summary>
     /// Country class, provides an entity for the datamodel to manage a list of countries.
     /// </summary>
