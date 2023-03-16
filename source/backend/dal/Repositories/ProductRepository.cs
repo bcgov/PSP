@@ -38,15 +38,17 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Using a list of products, find a matching set of products with the same code and description.
+        /// Using a list of products, find a matching list of products with the same code and description.
+        /// Ignore any products that are being "replaced" in the project referred to by the passed projectId, as those products will be removed and therefore cannot be matches to the incoming products.
         /// </summary>
         /// <param name="incomingProducts"></param>
         /// <returns></returns>
-        public IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts)
+        public IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts, long projectId)
         {
             var incomingCodes = incomingProducts.Select(ip => ip.Code);
-            var matchingCodes = this.Context.PimsProducts.AsNoTracking().Where(databaseProduct => incomingCodes.Contains(databaseProduct.Code)).ToArray();
-            return matchingCodes.Where(mc => incomingProducts.Any(ip => ip.Id != mc.Id && ip.Description == mc.Description));
+            var matchingProductCodes = this.Context.PimsProducts.AsNoTracking().Where(databaseProduct => incomingCodes.Contains(databaseProduct.Code)).ToArray();
+            var ignoreProductCodeIds = GetByProject(projectId).Where(p => !incomingProducts.Any(ip => p.Id == ip.Id)).Select(p => p.Id); // These codes are being removed, so should not be treated as duplicates.
+            return matchingProductCodes.Where(mc => incomingProducts.Any(ip => ip.Id != mc.Id && ip.Description == mc.Description && ip.Code == mc.Code) && !ignoreProductCodeIds.Contains(mc.Id));
         }
     }
 }
