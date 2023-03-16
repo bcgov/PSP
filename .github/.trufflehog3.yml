@@ -14,6 +14,9 @@ exclude: # exclude matching issues
       - .sonarqube/**
       - zap-report.html
       - zap-report.xml
+  - message: Ignore mocks
+    paths:
+      - mockServiceWorker.js
   - message: Ignore auto-generated scan reports
     paths:
       - trufflehog_report.*

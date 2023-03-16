@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IApiError } from 'interfaces/IApiError';
-import { mockBcAssessmentSummary } from 'mocks/bcAssessmentMock';
 import { useCallback, useEffect } from 'react';
 
 import { pidParser } from './../utils/propertyUtils';
@@ -97,15 +96,6 @@ export const useBcAssessmentLayer = (
       const parsedPid = pidParser(pid);
       if (parsedPid === undefined) {
         throw Error(`Unable to parse PID, invalid format: ${pid}`);
-      }
-      if (process.env.NODE_ENV === 'development') {
-        return {
-          data: mockBcAssessmentSummary,
-          status: 200,
-          statusText: 'Success',
-          headers: {},
-          config: {},
-        };
       }
       let legalDescriptionResponse;
       try {

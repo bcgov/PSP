@@ -135,23 +135,25 @@ describe('AddAcquisitionContainer component', () => {
         properties: { REGION_NUMBER: 1 },
         geometry: {
           type: 'Polygon',
-          coordinates: [
-            [
-              [-120.69195885, 50.25163372],
-              [-120.69176022, 50.2588544],
-              [-120.69725103, 50.25889407],
-              [-120.70326422, 50.25893724],
-              [-120.70352697, 50.25172245],
-              [-120.70287648, 50.25171749],
-              [-120.70200152, 50.25171082],
-              [-120.69622707, 50.2516666],
-              [-120.69195885, 50.25163372],
-            ],
-          ],
+          coordinates: [[[-120.69195885, 50.25163372]]],
         },
       } as any);
     });
     const text = await screen.findByDisplayValue(/South Coast Region/i);
+    expect(text).toBeVisible();
+  });
+
+  it('should not pre-populate the region if a property is selected and the region cannot be determined', async () => {
+    await act(async () => {
+      setup(undefined, undefined, {
+        properties: { REGION_NUMBER: 4 },
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[[-120.69195885, 50.25163372]]],
+        },
+      } as any);
+    });
+    const text = await screen.findByDisplayValue(/Select region.../i);
     expect(text).toBeVisible();
   });
 

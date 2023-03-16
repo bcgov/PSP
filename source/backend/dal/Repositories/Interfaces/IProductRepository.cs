@@ -9,5 +9,7 @@ namespace Pims.Dal.Repositories
     public interface IProductRepository : IRepository<PimsProduct>
     {
         IList<PimsProduct> GetByProject(long projectId);
+
+        IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts, long projectId);
     }
 }

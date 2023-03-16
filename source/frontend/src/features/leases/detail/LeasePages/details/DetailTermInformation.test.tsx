@@ -23,34 +23,33 @@ describe('DetailTermInformation component', () => {
       },
     );
 
-    return {
-      component,
-    };
+    return { ...component };
   };
   it('renders a subcomponent with the expected title', () => {
-    const {
-      component: { getByText },
-    } = setup({
+    const { getByText } = setup({
       lease: defaultFormLease,
     });
     expect(getByText('Lease / License')).toBeVisible();
   });
 
   it('renders the start date in the expected format', () => {
-    const {
-      component: { getByText },
-    } = setup({
+    const { getByText } = setup({
       lease: { ...defaultFormLease, startDate: '2000-01-01' },
     });
     expect(getByText('Jan 1, 2000')).toBeVisible();
   });
 
   it('renders the end date in the expected format', () => {
-    const {
-      component: { getByText },
-    } = setup({
+    const { getByText } = setup({
       lease: { ...defaultFormLease, startDate: '2001-01-01' },
     });
     expect(getByText('Jan 1, 2001')).toBeVisible();
+  });
+
+  it('renders the project name', () => {
+    const { getByText } = setup({
+      lease: { ...defaultFormLease, project: { code: '0000', description: 'MOCK PROJECT' } },
+    });
+    expect(getByText('0000 - MOCK PROJECT')).toBeVisible();
   });
 });

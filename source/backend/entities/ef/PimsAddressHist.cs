@@ -26,7 +26,7 @@ namespace Pims.Dal.Entities
         [Column("DISTRICT_CODE")]
         public short? DistrictCode { get; set; }
         [Column("PROVINCE_STATE_ID")]
-        public short ProvinceStateId { get; set; }
+        public short? ProvinceStateId { get; set; }
         [Column("COUNTRY_ID")]
         public short? CountryId { get; set; }
         [Column("STREET_ADDRESS_1")]

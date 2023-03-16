@@ -6,16 +6,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
     class="Toastify"
   />
   <div />
-  .c3:not(:first-child) {
-  padding-left: 0;
-}
-
-.c3:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c2.required::before {
+  .c2.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
@@ -75,25 +66,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
       <div
         class="c2 text-left col"
       >
-        <div
-          class="w-50 flex-nowrap input-group row"
-        >
-          <div
-            class="c3 col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-properties.0.landArea"
-                name="properties.0.landArea"
-                title="123"
-                value="123"
-              />
-            </div>
-          </div>
-        </div>
+        123.00 
       </div>
     </div>
     <div
@@ -197,16 +170,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c3:not(:first-child) {
-  padding-left: 0;
-}
-
-.c3:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c2.required::before {
+  .c2.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
@@ -266,25 +230,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
       <div
         class="c2 text-left col"
       >
-        <div
-          class="w-50 flex-nowrap input-group row"
-        >
-          <div
-            class="c3 col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-properties.0.landArea"
-                name="properties.0.landArea"
-                title="123"
-                value="123"
-              />
-            </div>
-          </div>
-        </div>
+        123.00 
       </div>
     </div>
     <div

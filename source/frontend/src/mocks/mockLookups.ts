@@ -3502,7 +3502,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
 ];
 
-export const GetMockLookUpsByType = (codeType: string): SelectOption[] => {
+export const getMockLookUpsByType = (codeType: string): SelectOption[] => {
   let codes = mockLookups.reduce(function (filtered: SelectOption[], reg) {
     if (reg.type === codeType) {
       let option = mapLookupCode(reg as ILookupCode);

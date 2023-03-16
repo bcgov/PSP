@@ -1,8 +1,10 @@
+import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { Api_Project } from './Project';
 import { Api_PropertyLease } from './PropertyLease';
 import { Api_SecurityDeposit } from './SecurityDeposit';
 import Api_TypeCode from './TypeCode';
 
-export interface Api_Lease {
+export interface Api_Lease extends Api_ConcurrentVersion {
   id?: number;
   lFileNo?: string;
   psFileNo?: string;
@@ -34,9 +36,9 @@ export interface Api_Lease {
   documentationReference?: string;
   hasPhysicalLicense?: boolean;
   hasDigitalLicense?: boolean;
+  project?: Api_Project;
   properties?: Api_PropertyLease[];
   securityDeposits?: Api_SecurityDeposit[];
-  rowVersion?: number;
 }
 
 export const defaultApiLease: Api_Lease = {

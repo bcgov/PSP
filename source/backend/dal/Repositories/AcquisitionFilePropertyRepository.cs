@@ -36,6 +36,8 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.AcquisitionFileId == acquisitionFileId)
                 .Include(rp => rp.PimsActInstPropAcqFiles)
                 .Include(rp => rp.Property)
+                .Include(rp => rp.PimsTakes)
+                .Include(rp => rp.Property)
                 .ThenInclude(rp => rp.RegionCodeNavigation)
                 .Include(rp => rp.Property)
                 .ThenInclude(rp => rp.DistrictCodeNavigation)

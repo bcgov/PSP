@@ -316,8 +316,9 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
-            lease.PimsPropertyLeases.Add(addProperty);
-            var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
+            service.UpdatePropertyLeases(1, 2, new List<PimsPropertyLease>() { addProperty });
+            service.CommitTransaction();
+            var updatedLease = service.Get(lease.LeaseId);
 
             // Assert
             Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);
@@ -330,8 +331,6 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-
 
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             var propertyOne = EntityHelper.CreateProperty(1);
@@ -348,6 +347,9 @@ namespace Pims.Dal.Test.Repositories
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
+
+            var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             // Act
             var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, Lease = lease, PropertyId = propertyOne.PropertyId, Property = propertyOne };
@@ -381,6 +383,7 @@ namespace Pims.Dal.Test.Repositories
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
 
             var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
             leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>(), false));
 
@@ -416,6 +419,7 @@ namespace Pims.Dal.Test.Repositories
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
 
             var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
             leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>(), false));
 
@@ -505,7 +509,9 @@ namespace Pims.Dal.Test.Repositories
 
             var addPropertyLease = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = addProperty.PropertyId, Property = addProperty };
             lease.PimsPropertyLeases.Add(addPropertyLease);
-            var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
+            service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
+            service.CommitTransaction();
+            var updatedLease = service.Get(lease.LeaseId);
 
             // Assert
             Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);

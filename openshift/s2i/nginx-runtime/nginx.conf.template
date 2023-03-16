@@ -39,6 +39,10 @@ http {
         underscores_in_headers on;
         ignore_invalid_headers off;
 
+        ssl_protocols               TLSv1.2 TLSv1.3;
+        ssl_ciphers                 ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256;
+        ssl_prefer_server_ciphers   on;
+
         # add in most common security headers
         add_header Content-Security-Policy %CSP%;
         add_header Strict-Transport-Security "max-age=86400; includeSubDomains";

@@ -306,6 +306,61 @@ export const getMockDescription = () => ({
   bbox: [-123.43521, 48.46278, -123.4349, 48.46286],
 });
 
+export const getMockLandChars = () => ({
+  type: 'FeatureCollection',
+  features: [
+    {
+      type: 'Feature',
+      id: 'WHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_LAND_CHARS_SV.fid-3e7212d3_1865536f20d_-7aa3',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [-125.30638, 52.46303],
+            [-125.3064, 52.46332],
+            [-125.30846, 52.4633],
+            [-125.30671, 52.46245],
+            [-125.30667, 52.46257],
+            [-125.30638, 52.46303],
+          ],
+        ],
+      },
+      geometry_name: 'SHAPE',
+      properties: {
+        BCA_FLC_SYSID: 1182843,
+        ROLL_NUMBER: '24070825',
+        FOLIO_ID: 'A0000SXLPS',
+        FOLIO_STATUS: '01',
+        FOLIO_STATUS_DESCRIPTION: 'Active',
+        LAND_CHARACTERISTICS_COUNT: 1,
+        LAND_CHARACTERISTIC_CODE: '95',
+        LAND_CHARACTERISTIC_DESC: 'Location Inferior To Rate Code',
+        JURISDICTION_CODE: '727',
+        JURISDICTION: 'Williams Lake Rural',
+        WHEN_CREATED: '2021-02-16Z',
+        WHEN_UPDATED: null,
+        EXPIRY_DATE: null,
+        FEATURE_AREA_SQM: 7052.8332,
+        FEATURE_LENGTH_M: 391.2363,
+        OBJECTID: 1857581,
+        SE_ANNO_CAD_DATA: null,
+        bbox: [-125.30846, 52.46245, -125.30638, 52.46332],
+      },
+    },
+  ],
+  totalFeatures: 1,
+  numberMatched: 1,
+  numberReturned: 1,
+  timeStamp: '2023-02-15T19:27:40.853Z',
+  crs: {
+    type: 'name',
+    properties: {
+      name: 'urn:ogc:def:crs:EPSG::4326',
+    },
+  },
+  bbox: [-125.30846, 52.46245, -125.30638, 52.46332],
+});
+
 export const mockBcAssessmentSummary: IBcAssessmentSummary = {
   LEGAL_DESCRIPTION: getMockLegalDescriptions()?.features[0].properties ?? {},
   ADDRESSES: getMockAddresses()?.features.map(f => f.properties ?? {}) ?? [],

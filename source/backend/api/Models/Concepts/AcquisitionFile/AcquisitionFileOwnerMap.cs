@@ -25,6 +25,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.LastNameOrCorpName1, src => src.LastNameOrCorp1)
                 .Map(dest => dest.LastNameOrCorpName2, src => src.LastNameOrCorp2)
                 .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
+                .Map(dest => dest.AddressId, src => src.Address.Id)
                 .Map(dest => dest.Address, src => src.Address);
         }
     }

@@ -1,11 +1,12 @@
 import {
-  AsyncTypeahead,
   FastDatePicker,
   Input,
+  ProjectSelector,
   Select,
   SelectOption,
 } from 'components/common/form';
 import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { StyledSectionParagraph } from 'components/common/styles';
 import TooltipIcon from 'components/common/TooltipIcon';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
@@ -13,13 +14,13 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { IAutocompletePrediction } from 'interfaces';
 import { Api_Product } from 'models/api/Project';
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
+import UpdateAcquisitionOwnersSubForm from '../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import StatusToolTip from './StatusToolTip';
@@ -41,13 +42,10 @@ export const UpdateAcquisitionForm = React.forwardRef<
   IUpdateAcquisitionFormProps
 >((props, formikRef) => {
   const { initialValues, validationSchema, onSubmit } = props;
-
   const [projectProducts, setProjectProducts] = React.useState<Api_Product[] | undefined>(
     undefined,
   );
-
   const { retrieveProjectProducts } = useProjectProvider();
-
   const { getOptionsByType } = useLookupCodeHelpers();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
@@ -55,9 +53,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
   const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
 
-  const { handleTypeaheadSearch, isTypeaheadLoading, matchedProjects } = useProjectTypeahead();
-
-  const onMinistrySelected = React.useCallback(
+  const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
       if (param.length > 0) {
         if (param[0].id !== undefined) {
@@ -75,9 +71,9 @@ export const UpdateAcquisitionForm = React.forwardRef<
 
   React.useEffect(() => {
     if (initialValues.project !== undefined) {
-      onMinistrySelected([initialValues.project]);
+      onMinistryProjectSelected([initialValues.project]);
     }
-  }, [initialValues, onMinistrySelected]);
+  }, [initialValues, onMinistryProjectSelected]);
 
   return (
     <Formik<UpdateAcquisitionSummaryFormModel>
@@ -113,14 +109,10 @@ export const UpdateAcquisitionForm = React.forwardRef<
 
             <Section header="Project">
               <SectionField label="Ministry project">
-                <AsyncTypeahead
+                <ProjectSelector
                   field="project"
-                  labelKey="text"
-                  isLoading={isTypeaheadLoading}
-                  options={matchedProjects}
-                  onSearch={handleTypeaheadSearch}
                   onChange={(vals: IAutocompletePrediction[]) => {
-                    onMinistrySelected(vals);
+                    onMinistryProjectSelected(vals);
                     if (vals.length === 0) {
                       formikProps.setFieldValue('product', 0);
                     }
@@ -209,6 +201,13 @@ export const UpdateAcquisitionForm = React.forwardRef<
 
             <Section header="Acquisition Team">
               <UpdateAcquisitionTeamSubForm />
+            </Section>
+
+            <Section header="Owners">
+              <StyledSectionParagraph>
+                Each property in this file should be owned by the owner(s) in this section
+              </StyledSectionParagraph>
+              <UpdateAcquisitionOwnersSubForm />
             </Section>
           </Container>
 

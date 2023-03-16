@@ -1,4 +1,9 @@
-import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
+import {
+  Api_AcquisitionFile,
+  Api_AcquisitionFileOwner,
+  Api_AcquisitionFilePerson,
+} from 'models/api/AcquisitionFile';
+import { Api_Address } from 'models/api/Address';
 import { formatApiPersonNames } from 'utils/personUtils';
 
 export class DetailAcquisitionFile {
@@ -47,4 +52,65 @@ export class DetailAcquisitionFileOwner {
   ownerName?: string;
   ownerOtherName?: string;
   ownerDisplayAddress?: string;
+
+  static fromApi(owner: Api_AcquisitionFileOwner): DetailAcquisitionFileOwner {
+    return {
+      ownerName: getOwnerDisplayName(owner),
+      ownerOtherName: owner.lastNameOrCorp2?.trim(),
+      ownerDisplayAddress: getFormattedAddress(owner.address),
+    };
+  }
 }
+
+const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
+  let nameDisplay = concatValues([owner.givenName, owner.lastNameOrCorp1]);
+  if (owner.incorporationNumber && owner.incorporationNumber.trim() !== '') {
+    nameDisplay = nameDisplay.concat(` (${owner.incorporationNumber})`);
+  }
+  return nameDisplay;
+};
+
+const getFormattedAddress = (address?: Api_Address): string => {
+  if (address === null || address === undefined) {
+    return '';
+  }
+
+  let addressDisplay = '';
+  let streetAddress1 = address?.streetAddress1 ? address?.streetAddress1.trim() : null;
+  let streetAddress2 = address?.streetAddress2 ? address?.streetAddress2.trim() : null;
+  let streetAddress3 = address?.streetAddress3 ? address?.streetAddress3.trim() : null;
+  let streetAddress4 = concatValues(
+    [address?.municipality, address?.province?.description, address?.postal],
+    ', ',
+  );
+
+  if (streetAddress1) {
+    addressDisplay = addressDisplay.concat(streetAddress1, '\n');
+  }
+
+  if (streetAddress2) {
+    addressDisplay = addressDisplay.concat(streetAddress2, '\n');
+  }
+
+  if (streetAddress3) {
+    addressDisplay = addressDisplay.concat(streetAddress3, '\n');
+  }
+
+  if (streetAddress4) {
+    addressDisplay = addressDisplay.concat(streetAddress4, '\n');
+  }
+
+  if (address?.country?.description) {
+    let countryDisplay = address?.country?.description?.trim() || '';
+    addressDisplay = addressDisplay.concat(countryDisplay);
+  }
+
+  return addressDisplay;
+};
+
+const concatValues = (
+  nameParts: Array<string | undefined | null>,
+  separator: string = ' ',
+): string => {
+  return nameParts.filter(n => n !== null && n !== undefined && n.trim() !== '').join(separator);
+};
