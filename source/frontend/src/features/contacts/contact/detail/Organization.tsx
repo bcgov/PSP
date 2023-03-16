@@ -22,14 +22,12 @@ interface AddressField {
   postal?: string;
 }
 
-const OrganizationView: React.FunctionComponent<React.PropsWithChildren<OrganizationViewProps>> = ({
-  organization,
-}) => {
-  let personAddresses: AddressField[];
+const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ organization }) => {
+  let organizationAddresses: AddressField[];
   if (organization.addresses === undefined) {
-    personAddresses = [];
+    organizationAddresses = [];
   } else {
-    personAddresses = toAddressFields(organization.addresses);
+    organizationAddresses = toAddressFields(organization.addresses);
   }
 
   return (
@@ -75,7 +73,7 @@ const OrganizationView: React.FunctionComponent<React.PropsWithChildren<Organiza
       </FormSection>
       <FormSection key={'contact-org-' + organization.id + '-address'} className="mb-4">
         <Styled.H2Primary>Address</Styled.H2Primary>
-        {personAddresses.map((field: AddressField, index: number) => (
+        {organizationAddresses.map((field: AddressField, index: number) => (
           <Styled.RowAligned className="pb-3" key={'org-address-' + index}>
             <Col md="4">
               <strong>{field.label}:</strong>
@@ -87,7 +85,7 @@ const OrganizationView: React.FunctionComponent<React.PropsWithChildren<Organiza
               <div>{field.municipalityAndProvince} </div>
               {field.postal && <div>{field.postal} </div>}
               {field.country && <div>{field.country}</div>}
-              {index + 1 !== personAddresses.length && <hr></hr>}
+              {index + 1 !== organizationAddresses.length && <hr></hr>}
             </Col>
           </Styled.RowAligned>
         ))}

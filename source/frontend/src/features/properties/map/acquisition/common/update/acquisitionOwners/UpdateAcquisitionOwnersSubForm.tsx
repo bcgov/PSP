@@ -16,9 +16,7 @@ import {
 
 interface IUpdateAcquisitionOwnersSubFormProps {}
 
-const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdateAcquisitionOwnersSubFormProps>
-> = () => {
+const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormProps> = () => {
   const { values } = useFormikContext<WithAcquisitionOwners>();
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);
@@ -34,7 +32,7 @@ const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
                 <Container>
                   <ButtonDiv>
                     <RemoveButton
-                      label={'Remove Owner'}
+                      label="Remove Owner"
                       onRemove={() => {
                         setRemoveIndex(index);
                         setShowRemoveModal(true);

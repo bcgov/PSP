@@ -19,5 +19,7 @@ namespace Pims.Dal.Repositories
         PimsDocument Update(PimsDocument document, bool commitTransaction = true);
 
         bool Delete(PimsDocument document);
+
+        int DocumentRelationshipCount(long documentId);
     }
 }

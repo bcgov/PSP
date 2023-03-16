@@ -50,7 +50,7 @@ namespace Pims.Api.Models.Contact
         /// <summary>
         /// get/set - Foreign key to the address's province.
         /// </summary>
-        public short ProvinceId { get; set; }
+        public short? ProvinceId { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the address's country.

@@ -23,6 +23,10 @@ Scenario: Update an Existing Organization Contact
 	Given I update an existing Organization Contact
 	Then A new Organization contact is successfully created
 
+Scenario: Update an Existing Individual Contact
+	Given I update an existing Individual Contact
+	Then A new Individual contact is successfully created
+
 Scenario: Search for an Existing Contact
 	Given I search for an existing contact Lee
 	Then Search Contacts screen is correctly rendered

@@ -54,7 +54,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By activityHeaderStatusContent = By.XPath("//div[@data-testid='activity-tray']/div/div/div/div/div/div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div/strong");
 
         //Activity Details Elements
-        private By activityDetailsTitle = By.XPath("//div[contains(text(),'Details')]");
+        private By activityDetailsTitle = By.XPath("//div[@data-testid='activity-tray']/div/div/div[2]/div[1]/h2/div/div[contains(text(),'Details')]");
         private By activityDetailsRelatedPropsBttn = By.XPath("//div[contains(text(),'Related properties')]/parent::button");
         private By activityDescriptionLabel = By.XPath("//h2/div/div[contains(text(),'Description')]");
         private By activityDescriptionTextArea = By.Id("input-description");
@@ -154,7 +154,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(activityDescriptionLabel).Displayed);
 
             //Documents
-            digitalDocuments.VerifyDocumentsListView();
+            digitalDocuments.VerifyActivityDocumentsListView();
 
             //Notes
             notes.VerifyNotesListView();

@@ -23,10 +23,15 @@ namespace Pims.Dal
         public virtual DbSet<PimsAccessRequestOrganization> PimsAccessRequestOrganizations { get; set; }
         public virtual DbSet<PimsAccessRequestOrganizationHist> PimsAccessRequestOrganizationHists { get; set; }
         public virtual DbSet<PimsAccessRequestStatusType> PimsAccessRequestStatusTypes { get; set; }
+        public virtual DbSet<PimsAcqChklstItemStatusType> PimsAcqChklstItemStatusTypes { get; set; }
+        public virtual DbSet<PimsAcqChklstItemType> PimsAcqChklstItemTypes { get; set; }
+        public virtual DbSet<PimsAcqChklstSectionType> PimsAcqChklstSectionTypes { get; set; }
         public virtual DbSet<PimsAcqFlPersonProfileType> PimsAcqFlPersonProfileTypes { get; set; }
         public virtual DbSet<PimsAcqPhysFileStatusType> PimsAcqPhysFileStatusTypes { get; set; }
         public virtual DbSet<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
         public virtual DbSet<PimsAcquisitionActivityInstanceHist> PimsAcquisitionActivityInstanceHists { get; set; }
+        public virtual DbSet<PimsAcquisitionChecklistItem> PimsAcquisitionChecklistItems { get; set; }
+        public virtual DbSet<PimsAcquisitionChecklistItemHist> PimsAcquisitionChecklistItemHists { get; set; }
         public virtual DbSet<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; }
         public virtual DbSet<PimsAcquisitionFileDocument> PimsAcquisitionFileDocuments { get; set; }
         public virtual DbSet<PimsAcquisitionFileDocumentHist> PimsAcquisitionFileDocumentHists { get; set; }
@@ -367,6 +372,100 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
+            modelBuilder.Entity<PimsAcqChklstItemStatusType>(entity =>
+            {
+                entity.HasKey(e => e.AcqChklstItemStatusTypeCode)
+                    .HasName("ACQCST_PK");
+
+                entity.HasComment("Tables that contains the codes and associated descriptions of the acquisition checklist item status types.");
+
+                entity.Property(e => e.AcqChklstItemStatusTypeCode).HasComment("Codified version of the acquisition checklist item status type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the acquisition checklist item status type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            });
+
+            modelBuilder.Entity<PimsAcqChklstItemType>(entity =>
+            {
+                entity.HasKey(e => e.AcqChklstItemTypeCode)
+                    .HasName("ACQCIT_PK");
+
+                entity.HasComment("Table that contains the checklist items that are presented to the user through dynamically building the input form.");
+
+                entity.Property(e => e.AcqChklstItemTypeCode).HasComment("Checklist item code value.");
+
+                entity.Property(e => e.AcqChklstSectionTypeCode).HasComment("Section to which the item belongs.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Checklist item descriptive text presented to the user.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the checklist items are presented to the user.");
+
+                entity.Property(e => e.EffectiveDate).HasComment("Date the checklist item is able to be presented to the user via the input form.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the checklist item is removed from the input form.");
+
+                entity.Property(e => e.Hint).HasComment("Checklist item descriptive tooltip presented to the user.");
+
+                entity.Property(e => e.IsRequired)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the checklist item is a required field.");
+
+                entity.HasOne(d => d.AcqChklstSectionTypeCodeNavigation)
+                    .WithMany(p => p.PimsAcqChklstItemTypes)
+                    .HasForeignKey(d => d.AcqChklstSectionTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_AQCSCT_PIM_ACQCIT_FK");
+            });
+
+            modelBuilder.Entity<PimsAcqChklstSectionType>(entity =>
+            {
+                entity.HasKey(e => e.AcqChklstSectionTypeCode)
+                    .HasName("AQCSCT_PK");
+
+                entity.HasComment("Table that contains the checklist sctions that are presented to the user through dynamically building the input form.");
+
+                entity.Property(e => e.AcqChklstSectionTypeCode).HasComment("Checklist section code value.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Checklist section descriptive text presented to the user.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the checklist sections are presented to the user.");
+
+                entity.Property(e => e.EffectiveDate).HasComment("Date the checklist section is able to be presented to the user via the input form.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the checklist section is removed from the input form.");
+            });
+
             modelBuilder.Entity<PimsAcqFlPersonProfileType>(entity =>
             {
                 entity.HasKey(e => e.AcqFlPersonProfileTypeCode)
@@ -477,6 +576,63 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
+            modelBuilder.Entity<PimsAcquisitionChecklistItem>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionChecklistItemId)
+                    .HasName("ACQCKI_PK");
+
+                entity.Property(e => e.AcquisitionChecklistItemId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_CHECKLIST_ITEM_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.AcqChklstItemStatusTypeCodeNavigation)
+                    .WithMany(p => p.PimsAcquisitionChecklistItems)
+                    .HasForeignKey(d => d.AcqChklstItemStatusTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACQCST_PIM_ACQCKI_FK");
+
+                entity.HasOne(d => d.AcqChklstItemTypeCodeNavigation)
+                    .WithMany(p => p.PimsAcquisitionChecklistItems)
+                    .HasForeignKey(d => d.AcqChklstItemTypeCode)
+                    .HasConstraintName("PIM_ACQCIT_PIM_ACQCKI_FK");
+
+                entity.HasOne(d => d.AcquisitionFile)
+                    .WithMany(p => p.PimsAcquisitionChecklistItems)
+                    .HasForeignKey(d => d.AcquisitionFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACQNFL_PIM_ACQCKI_FK");
+            });
+
+            modelBuilder.Entity<PimsAcquisitionChecklistItemHist>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionChecklistItemHistId)
+                    .HasName("PIMS_ACQCKI_H_PK");
+
+                entity.Property(e => e.AcquisitionChecklistItemHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_CHECKLIST_ITEM_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsAcquisitionFile>(entity =>
             {
                 entity.HasKey(e => e.AcquisitionFileId)
@@ -501,6 +657,8 @@ namespace Pims.Dal
                 entity.Property(e => e.AssignedDate)
                     .HasDefaultValueSql("(getutcdate())")
                     .HasComment("Date of file assignment.");
+
+                entity.Property(e => e.CompletionDate).HasComment("Date of acquisition file completion.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -1934,6 +2092,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.DocumentStatusTypeCode).HasDefaultValueSql("('NONE')");
+
                 entity.Property(e => e.FileName)
                     .HasDefaultValueSql("('<Empty>')")
                     .HasComment("Name of the file stored on Mayan EDMS.");
@@ -2025,6 +2185,8 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Determines the default display order of the code descriptions.");
 
                 entity.Property(e => e.DocumentType)
                     .HasDefaultValueSql("('<Empty>')")
@@ -2347,7 +2509,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseInitiatorTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseLicenseTypeCodeNavigation)
@@ -6083,9 +6244,25 @@ namespace Pims.Dal
 
                 entity.Property(e => e.Description).HasComment("Description of the property take.");
 
+                entity.Property(e => e.IsLicenseToConstruct)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Is there a license to construct? (default = FALSE)");
+
+                entity.Property(e => e.IsNewRightOfWay)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Is there a new right of way? (default = FALSE)");
+
+                entity.Property(e => e.IsSection16)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Is there a Section 16? (default = FALSE)");
+
+                entity.Property(e => e.IsStatutoryRightOfWay)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Is there a statutory right of way? (default = FALSE)");
+
                 entity.Property(e => e.IsSurplusSeverance)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Is there Surplus/Severance?");
+                    .HasComment("Is there a surplus or severance? (default = FALSE)");
 
                 entity.Property(e => e.LicenseToConstructArea).HasComment("Area of the license to construct.");
 
@@ -6107,6 +6284,11 @@ namespace Pims.Dal
 
                 entity.Property(e => e.TakeStatusTypeCode).HasDefaultValueSql("('INPROGRESS')");
 
+                entity.HasOne(d => d.AreaUnitTypeCodeNavigation)
+                    .WithMany(p => p.PimsTakes)
+                    .HasForeignKey(d => d.AreaUnitTypeCode)
+                    .HasConstraintName("PIM_ARUNIT_PIM_TAKE_FK");
+
                 entity.HasOne(d => d.PropertyAcquisitionFile)
                     .WithMany(p => p.PimsTakes)
                     .HasForeignKey(d => d.PropertyAcquisitionFileId)
@@ -6116,7 +6298,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.TakeSiteContamTypeCodeNavigation)
                     .WithMany(p => p.PimsTakes)
                     .HasForeignKey(d => d.TakeSiteContamTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_TKCONT_PIM_TAKE_FK");
 
                 entity.HasOne(d => d.TakeStatusTypeCodeNavigation)
@@ -6128,6 +6309,7 @@ namespace Pims.Dal
                 entity.HasOne(d => d.TakeTypeCodeNavigation)
                     .WithMany(p => p.PimsTakes)
                     .HasForeignKey(d => d.TakeTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_TKTYPE_PIM_TAKE_FK");
             });
 
@@ -6607,10 +6789,6 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
-            modelBuilder.HasSequence("BCA_DATA_ADVICE_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("BCA_MINOR_TAXING_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -6644,6 +6822,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_ACQUISITION_ACTIVITY_INSTANCE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_ACQUISITION_CHECKLIST_ITEM_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_ACQUISITION_CHECKLIST_ITEM_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

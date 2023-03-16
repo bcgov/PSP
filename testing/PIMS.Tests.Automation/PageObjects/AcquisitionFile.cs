@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -14,8 +15,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileViewTitle = By.XPath("//h1[contains(text(),'Acquisition File')]");
         
         private By acquisitionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Acquisition File')]");
-        private By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File #:')]");
-        private By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File #:')]/parent::div/following-sibling::div[1]/strong");
+        private By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
+        private By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]/strong");
 
         private By acquisitionFileHeaderProjectLabel = By.XPath("//label[contains(text(), 'Ministry project')]");
         private By acquisitionFileHeaderProjectContent = By.XPath("//label[contains(text(), 'Ministry project')]/parent::div/following-sibling::div[1]/strong");
@@ -27,6 +28,21 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//span[contains(text(), 'Last updated')]//span[@id='userNameTooltip']/span");
         private By acquisitionFileHeaderStatusLabel = By.XPath("//label[contains(text(),'Status')]");
         private By acquisitionFileHeaderStatusContent = By.XPath("//label[contains(text(),'Status')]/parent::div/following-sibling::div[1]/strong");
+
+        private By acquisitionFileProjectSubtitle = By.XPath("//div[contains(text(),'Project')]");
+        private By acquisitionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
+        private By acquisitionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
+        private By acquisitionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
+        private By acquisitionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
+        private By acquisitionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
+        private By acquisitionFileProjectProductSelect = By.Id("input-product");
+        private By acquisitionFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
+        private By acquisitionFileProjectFundingLabel = By.XPath("//label[contains(text(),'Funding')]");
+        private By acquisitionFileProjectFundingInput = By.Id("input-fundingTypeCode");
+        private By acquisitionFileProjectFundingContent = By.XPath("//label[contains(text(),'Funding')]/parent::div/following-sibling::div");
+        private By acquisitionFileProjectOtherFundingLabel = By.XPath("//label[contains(text(),'Other funding')]");
+        private By acquisitionFileProjectOtherFundingInput = By.Id("input-fundingTypeOtherDescription");
+        private By acquisitionFileProjectOtherFundingContent = By.XPath("//label[contains(text(),'Other Funding')]/parent::div/following-sibling::div");
 
         private By acquisitionFileScheduleSubtitle = By.XPath("//div[contains(text(),'Schedule')]");
         private By acquisitionFileScheduleAssigneedDateLabel = By.XPath("//label[contains(text(),'Assigned date')]");
@@ -45,7 +61,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileDetailsMOTIRegionContent = By.XPath("//label[contains(text(),'Ministry region')]/parent::div/following-sibling::div");
 
         private By acquisitionFileTeamSubtitle = By.XPath("//div[contains(text(),'Acquisition Team')]");
-        private By acquisitionFileTeamMembersTotal = By.XPath("//h2/div/div[contains(text(),'Acquisition team')]/parent::div/parent::h2/following-sibling::div/div");
+        private By acquisitionFileTeamMembersTotal = By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div");
 
         //Acquisition File Details Update Form Elements
         private By acquisitionFileUpdateTitle = By.XPath("//h1[contains(text(),'Update Acquisition File')]");
@@ -68,7 +84,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileTeamMembersGroup = By.CssSelector("div[class='collapse show'] div[class='py-3 row']");
 
         private By acquisitionFileEditButton = By.CssSelector("button[title='Edit acquisition file']");
-        private By acquisitionFileEditPropertiesBttn = By.CssSelector("button[title='Edit acquisition properties']");
+        private By acquisitionFileEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
         private By acquisitionFilePropertiesTotal = By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div");
 
@@ -113,10 +129,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionFileDetailsTypeSelect);
 
             Wait();
-            ChooseRandomSelectOption(acquisitionFileDetailsTypeSelect, 2);
+            ChooseRandomSelectOption(acquisitionFileDetailsTypeSelect, 1);
 
             Wait();
-            ChooseRandomSelectOption(acquisitionFileDetailsRegionSelect, 2);
+            ChooseRandomSelectOption(acquisitionFileDetailsRegionSelect, 1);
         }
 
         public void EditAcquisitionFileDetails()
@@ -125,13 +141,25 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(acquisitionFileEditButton);
         }
 
-        public void AddAdditionalInformation(string deliveryDate, string teamMember1, string teamMember2)
+        public void AddAdditionalInformation(string project, string product, string deliveryDate, string teamMember1, string teamMember2)
         {
             Wait();
+            //webDriver.FindElement(acquisitionFileProjectInput).SendKeys(project);
+            //FocusAndClick(acquisitionFileProject1stOption);
+
+            //Wait();
+            //ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, product);
+            //ChooseRandomSelectOption(acquisitionFileProjectFundingInput, 1);
+
+            //if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
+            //{
+            //    webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys("Other funding - Automation fundings");
+            //}
+
             webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(deliveryDate);
             webDriver.FindElement(acquisitionFileScheduleDeliveryDateLabel).Click();
 
-            ChooseRandomSelectOption(acquisitionFilePhysicalStatusSelect, 2);
+            ChooseRandomSelectOption(acquisitionFilePhysicalStatusSelect, 1);
 
             AddTeamMembers(teamMember1);
             AddTeamMembers(teamMember2);
@@ -165,6 +193,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait(5000);
             webDriver.FindElement(acquisitionProperty1stPropLink).Click();
+
+            sharedModals.SiteMinderModal();
         }
 
         public void DeleteLastProperty()
@@ -173,8 +203,8 @@ namespace PIMS.Tests.Automation.PageObjects
             var propertyIndex = webDriver.FindElements(acquisitionFilePropertiesTotal).Count();
             webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div["+ propertyIndex +"]/div[3]/button")).Click();
 
+            Wait();
             var propertiesAfterRemove = webDriver.FindElements(acquisitionFilePropertiesTotal).Count();
-
             Assert.True(propertiesAfterRemove == propertyIndex - 1);
 
         }
@@ -224,7 +254,10 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
                     sharedModals.ModalClickOKBttn();
                 }
-            }           
+            }
+
+            Wait();
+            sharedModals.SiteMinderModal();
         }
 
         public void SaveAcquisitionFileProperties()
@@ -259,7 +292,10 @@ namespace PIMS.Tests.Automation.PageObjects
         public string GetAcquisitionFileCode()
         {
             WaitUntil(acquisitionFileHeaderCodeContent);
-            return webDriver.FindElement(acquisitionFileHeaderCodeContent).Text;
+
+            var totalFileName = webDriver.FindElement(acquisitionFileHeaderCodeContent).Text;
+
+            return Regex.Match(totalFileName, "^[^ ]+").Value;
         }
 
         public int IsCreateAcquisitionFileFormVisible()
@@ -275,38 +311,52 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Header
             Assert.True(webDriver.FindElement(acquisitionFileHeaderCodeLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileHeaderCodeContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileHeaderCodeContent).Text != "");
             Assert.True(webDriver.FindElement(acquisitionFileHeaderProjectLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileHeaderProjectContent).Text != null);
+//            Assert.True(webDriver.FindElement(acquisitionFileHeaderProjectContent).Text != "");
             Assert.True(webDriver.FindElement(acquisitionFileHeaderCreatedDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileHeaderCreatedDateContent).Text != null);
-            Assert.True(webDriver.FindElement(acquisitionFileHeaderCreatedByContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileHeaderCreatedDateContent).Text != "");
+            Assert.True(webDriver.FindElement(acquisitionFileHeaderCreatedByContent).Text != "");
             Assert.True(webDriver.FindElement(acquisitionFileHeaderLastUpdateLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileHeaderLastUpdateContent).Text != null);
-            Assert.True(webDriver.FindElement(acquisitionFileHeaderLastUpdateByContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileHeaderLastUpdateContent).Text != "");
+            Assert.True(webDriver.FindElement(acquisitionFileHeaderLastUpdateByContent).Text != "");
             Assert.True(webDriver.FindElement(acquisitionFileHeaderStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileHeaderStatusContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileHeaderStatusContent).Text != "");
+
+            //Project
+            //Assert.True(webDriver.FindElement(acquisitionFileProjectSubtitle).Displayed);
+            //Assert.True(webDriver.FindElement(acquisitionFileProjectLabel).Displayed);
+            //Assert.True(webDriver.FindElement(acquisitionFileProjectContent).Text != "");
+            //Assert.True(webDriver.FindElement(acquisitionFileProjectProductLabel).Displayed);
+            //Assert.True(webDriver.FindElement(acquisitionFileProjectProductContent).Text != "");
+            //Assert.True(webDriver.FindElement(acquisitionFileProjectFundingLabel).Displayed);
+            //Assert.True(webDriver.FindElement(acquisitionFileProjectFundingContent).Text != "");
+            //if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
+            //{
+
+            //    Assert.True(webDriver.FindElement(acquisitionFileProjectOtherFundingContent).Text == "Other funding - Automation fundings");
+            //}
 
             //Schedule
             Assert.True(webDriver.FindElement(acquisitionFileScheduleSubtitle).Displayed);
             Assert.True(webDriver.FindElement(acquisitionFileScheduleAssigneedDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileScheduleAssigneedDateContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileScheduleAssigneedDateContent).Text != "");
             Assert.True(webDriver.FindElement(acquisitionFileScheduleDeliveryDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileScheduleDeliveryDateContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileScheduleDeliveryDateContent).Text != "");
 
             //Details
             //Assert.True(webDriver.FindElement(acquisitionFileDetailsSubtitle).Displayed);
             Assert.True(webDriver.FindElement(acquisitionFileDetailsNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileDetailsNameContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileDetailsNameContent).Text != "");
             Assert.True(webDriver.FindElement(acquisitionFileDetailsPhysicalFileLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileDetailsPhysicalFileContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileDetailsPhysicalFileContent).Text != "");
             Assert.True(webDriver.FindElement(acquisitionFileDetailsTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileDetailsTypeContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileDetailsTypeContent).Text != "");
             Assert.True(webDriver.FindElement(acquisitionFileDetailsMOTIRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(acquisitionFileDetailsMOTIRegionContent).Text != null);
+            Assert.True(webDriver.FindElement(acquisitionFileDetailsMOTIRegionContent).Text != "");
 
             //Team members
-            //Assert.True(webDriver.FindElement(acquisitionFileTeamSubtitle).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileTeamSubtitle).Displayed);
             Assert.True(webDriver.FindElements(acquisitionFileTeamMembersTotal).Count() > 0);
 
         }
@@ -335,6 +385,13 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(acquisitionFileStatusUpdateLabel).Displayed);
             Assert.True(webDriver.FindElement(acquisitionFileStatusSelect).Displayed);
 
+            //Project
+            Assert.True(webDriver.FindElement(acquisitionFileProjectSubtitle).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileProjectLabel).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileProjectInput).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileProjectFundingLabel).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileProjectFundingInput).Displayed);
+
             //Schedule
             Assert.True(webDriver.FindElement(acquisitionFileScheduleSubtitle).Displayed);
             Assert.True(webDriver.FindElement(acquisitionFileScheduleAssigneedDateLabel).Displayed);
@@ -362,6 +419,13 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             Assert.True(webDriver.FindElement(acquisitionFileCreateTitle).Displayed);
+
+            //Project
+            Assert.True(webDriver.FindElement(acquisitionFileProjectSubtitle).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileProjectLabel).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileProjectInput).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileProjectFundingLabel).Displayed);
+            Assert.True(webDriver.FindElement(acquisitionFileProjectFundingInput).Displayed);
 
             //Schedule
             Assert.True(webDriver.FindElement(acquisitionFileScheduleSubtitle).Displayed);

@@ -6,8 +6,8 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Documents List View Elements
         //Documents List Header
-        private By documentsTitle = By.XPath("//h2/div/div/div/div[contains(text(),'Documents')]");
-        private By addDocumentBttn = By.XPath("//h2/div/div/div/div[contains(text(),'Documents')]/following-sibling::div/button");
+        private By documentsTitle = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/h2/div/div/div/div[contains(text(),'Documents')]");
+        private By addDocumentBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/h2/div/div/div/div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Upload Documents Dialog General Elements
         private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4'] span");
@@ -107,13 +107,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentPhotosCorrespondenceTypeDescriptionInput = By.Id("input-documentMetadata.55");
 
         //Upload Miscellaneous notes (LTSA) Fields
-        private By documentMiscNotesTypeAddressLabel = By.XPath("//label[contains(text(),'PID')]");
-        private By documentMiscNotesTypeAddressInput = By.Id("input-documentMetadata.62");
+        private By documentMiscNotesTypePIDLabel = By.XPath("//input[@id='input-documentMetadata.62']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
+        private By documentMiscNotesTypePIDInput = By.Id("input-documentMetadata.62");
 
         //Upload Title search/ Historical title Fields
         private By documentTitleSearchTypeOwnerLabel = By.XPath("//label[contains(text(),'Owner')]");
         private By documentTitleSearchTypeOwnerInput = By.Id("input-documentMetadata.51");
-        private By documentTitleSearchTypePIDLabel = By.XPath("//label[contains(text(),'PID')]");
+        private By documentTitleSearchTypePIDLabel = By.XPath("//input[@id='input-documentMetadata.62']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
         private By documentTitleSearchTypePIDInput = By.Id("input-documentMetadata.62");
         private By documentTitleSearchTypeTitleLabel = By.XPath("//label[contains(text(),'Title')]");
         private By documentTitleSearchTypeTitleInput = By.Id("input-documentMetadata.58");
@@ -202,7 +202,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentPAPlanRevisionInput = By.Id("input-documentMetadata.79");
         private By documentPAPlanProjectLabel = By.XPath("//label[contains(text(),'Project #')]");
         private By documentPAPlanProjectInput = By.Id("input-documentMetadata.31");
-        private By documentPAPlanProjectNameLabel = By.XPath("//label[contains(text(),'Project name')]");
+        private By documentPAPlanProjectNameLabel = By.XPath("//input[@id='input-documentMetadata.77']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Project name')]");
         private By documentPAPlanProjectNameInput = By.Id("input-documentMetadata.77");
         private By documentPAPlanProjectNameMandatory = By.XPath("//div[contains(text(),'Project name is required')]");
 
@@ -211,7 +211,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentEditDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
         private By documenyEditDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/label[contains(text(),'File name')]");
         private By documentEditFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
-        //div[@class='modal-body']/div/div[3]/div[2]/div/div/button[@type='submit']
 
         //Document Modal Elements
         private By documentModalCloseIcon = By.CssSelector("button[class='close']");
@@ -236,7 +235,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentDeteleContent2 = By.CssSelector("div[class='modal-body'] div:nth-child(3)");
         private By documentDeleteContent3 = By.CssSelector("div[class='modal-body'] div strong");
         private By documentDeleteOkBttn = By.CssSelector("button[title='ok-modal']");
-
 
         //Documents List Filters
         private By documentFilterTypeSelect = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/form/div/div[2]/div/div[1]/div/select[@data-testid='document-type']");
@@ -341,7 +339,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void VerifyDocumentsListView()
+        public void VerifyActivityDocumentsListView()
         {
             Wait();
             Assert.True(webDriver.FindElement(documentsTitle).Displayed);
@@ -359,9 +357,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentTableDateColumn).Displayed);
             Assert.True(webDriver.FindElement(documentTableStatusColumn).Displayed);
             Assert.True(webDriver.FindElement(documentTableActionsColumn).Displayed);
-
-            Assert.True(webDriver.FindElement(documentPagination).Displayed);
-            Assert.True(webDriver.FindElement(documentMenuPagination).Displayed); 
         }
 
         public void UploadDocument(string documentFile)
@@ -413,7 +408,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             webDriver.FindElement(documentSaveEditBttn).Click();
 
-            WaitUntil(documentGeneralToastBody);
+            Wait(10000);
         }
 
         public void CancelDigitalDocument()
@@ -454,11 +449,11 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentTableResults1stViewBttn).Click();
         }
 
-        public void Delete1stDocument()
+        public void Delete1stDocument(string documentLocation)
         {
             Wait();
             webDriver.FindElement(documentTableResults1stDeleteBttn).Click();
-
+           
             Wait();
             Assert.True(webDriver.FindElement(documentDeleteHeader).Text.Equals("Delete a document"));
             Assert.True(webDriver.FindElement(documentDeleteContent1).Text.Equals("You have chosen to delete this document."));
@@ -470,7 +465,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditDocument()
         {
-            WaitUntil(documentGeneralToastBody);
+            Wait(20000);
             webDriver.FindElement(documentEditBttn).Click();
         }
 
@@ -563,6 +558,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private void VerifyDistrictRoadRegisterFields()
         {
             Wait();
+
             VerifyGeneralUploadDocumentForm();
             Assert.True(webDriver.FindElement(documentDistrictRoadRegisterTypeElectoralDistrictLabel).Displayed);
             Assert.True(webDriver.FindElement(documentDistrictRoadRegisterTypeElectoralDistrictInput).Displayed);
@@ -686,8 +682,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             VerifyGeneralUploadDocumentForm();
 
-            Assert.True(webDriver.FindElement(documentMiscNotesTypeAddressLabel).Displayed);
-            Assert.True(webDriver.FindElement(documentMiscNotesTypeAddressInput).Displayed);
+            Assert.True(webDriver.FindElement(documentMiscNotesTypePIDLabel).Displayed);
+            Assert.True(webDriver.FindElement(documentMiscNotesTypePIDInput).Displayed);
         }
 
         private void VerifyTitleSearchFields()

@@ -28,7 +28,7 @@ namespace Pims.Core.Helpers
         /// <summary>
         /// Provides a simple try+catch wrapper to set a variable.
         /// </summary>
-        /// <param name="getValue"></param>
+        /// <param name="getter"></param>
         /// <param name="setter"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>

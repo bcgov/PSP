@@ -1,9 +1,9 @@
 namespace Pims.Api.Models
 {
     /// <summary>
-    /// PageModel class, provides a model that represents a single page of items.
+    /// ParentConcurrencyGuardModel class, provides a model that represents a single page of items.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of the guarded object.</typeparam>
     public class ParentConcurrencyGuardModel<T>
     {
         /// <summary>

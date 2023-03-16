@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <returns></returns>
         [HttpGet]
         [HasPermission(Permissions.AdminUsers)]
-        [Produces(ContentTypes.CONTENT_TYPE_CSV, ContentTypes.CONTENT_TYPE_EXCELX)]
+        [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(typeof(Api.Models.PageModel<Models.User.UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 403)]
@@ -79,7 +79,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <returns></returns>
         [HttpPost("filter")]
         [HasPermission(Permissions.AdminUsers)]
-        [Produces(ContentTypes.CONTENT_TYPE_CSV, ContentTypes.CONTENT_TYPE_EXCELX)]
+        [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(typeof(Api.Models.PageModel<Models.User.UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 403)]
@@ -87,9 +87,9 @@ namespace Pims.Api.Areas.Reports.Controllers
         public IActionResult ExportUsers([FromBody] EModel.UserFilter filter, bool all = false)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
-            var accept = (string)this.Request.Headers["Accept"] ?? throw new BadRequestException($"HTTP request header 'Accept' is required.");
+            var accept = (string)this.Request.Headers["Accept"];
 
-            if (accept != ContentTypes.CONTENT_TYPE_CSV && accept != ContentTypes.CONTENT_TYPE_EXCEL && accept != ContentTypes.CONTENT_TYPE_EXCELX)
+            if (accept != ContentTypes.CONTENTTYPECSV && accept != ContentTypes.CONTENTTYPEEXCEL && accept != ContentTypes.CONTENTTYPEEXCELX)
             {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
             }
@@ -100,7 +100,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             return accept.ToString() switch
             {
-                ContentTypes.CONTENT_TYPE_CSV => ReportHelper.GenerateCsv(report.Items),
+                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(report.Items),
                 _ => ReportHelper.GenerateExcel(report.Items, "PIMS")
             };
         }

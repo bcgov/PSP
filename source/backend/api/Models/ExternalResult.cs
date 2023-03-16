@@ -5,6 +5,7 @@ namespace Pims.Api.Models
     /// <summary>
     /// Defines the results comming back from an external resource.
     /// </summary>
+    /// <typeparam name="T">The type of the object in the payload wrapped by this result.</typeparam>
     public class ExternalResult<T>
     {
         /// <summary>

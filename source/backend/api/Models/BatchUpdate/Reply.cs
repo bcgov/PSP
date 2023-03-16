@@ -5,6 +5,7 @@ namespace Pims.Api.Models.BatchUpdate
     /// <summary>
     /// Provides a wrapper for batch update replies.
     /// </summary>
+    /// <typeparam name="T">The type of the items in the batch.</typeparam>
     public class Reply<T>
     {
         public Reply(IList<T> payload)

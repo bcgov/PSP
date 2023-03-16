@@ -33,13 +33,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchResultExpropiationYesRadioBttn = By.Id("input-true");
         private By researchExpropiationNotes = By.Id("input-expropriationNotes");
 
-        private By researchEditPropertiesBttn = By.XPath("//button/div[contains(text(),'Edit properties')]");
-        private By researchRFileSummaryLink = By.XPath("//div[contains(text(),'RFile Summary')]");
+        private By researchEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
+        private By researchRFileSummaryLink = By.XPath("//div[contains(text(),'File Summary')]");
 
         //Research File Confirmation Modal
         private By researchFileConfirmationModal = By.CssSelector("div[class='modal-content']");
-        private By researchFileContentModal1 = By.CssSelector("div[class='modal-body'] div");
-        private By researchFileContentModal2 = By.CssSelector("div[class='modal-body'] strong");
         private By researchFileConfirmationOkButton = By.XPath("//button[@title='ok-modal']/div[contains(text(),'Save')]/ancestor::button");
 
         //Research File Details Tab View Elements
@@ -58,11 +56,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileDetailsRquesterLabel = By.XPath("//label[contains(text(),'Requester')]");
         private By researchFileDetailsRequesterInput = By.XPath("//label[contains(text(),'Requester')]/parent::div/following-sibling::div");
         private By researchFileDetailsRequestDescripLabel = By.XPath("//label[contains(text(),'Description of request')]");
-        private By researchFileDetailsResultSubtitle = By.XPath("//div[@class='row']/div[contains(text(),'Result')]");
+        private By researchFileDetailsResultSubtitle = By.XPath("//div[@class='no-gutters row']/div[contains(text(),'Result')]");
         private By researchFileDetailsResultCompleteLabel = By.XPath("//label[contains(text(),'Research completed on')]");
         private By researchFileDetailsResultCompleteInput = By.XPath("//label[contains(text(),'Research completed on')]/parent::div/following-sibling::div");
         private By researchFileDetailsResultRequestLabel = By.XPath("//label[contains(text(),'Result of request')]");
-        private By researchFileDetailsExpropriationSubtitle = By.XPath("//div[@class='row']/div[contains(text(),'Expropriation')]");
+        private By researchFileDetailsExpropriationSubtitle = By.XPath("//div[@class='no-gutters row']/div[contains(text(),'Expropriation')]");
         private By researchFileDetailsExpropriationLabel = By.XPath("//label[contains(text(),'Expropriation?')]");
         private By researchFileDetailsExpropriationInput = By.XPath("//label[contains(text(),'Expropriation?')]/parent::div/following-sibling::div");
         private By researchFileDetailsExpropriationNotesLabel = By.XPath("//label[contains(text(),'Expropriation notes')]");
@@ -73,7 +71,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Research File - Properties Elements
         private By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
-        private By researchPropertyResearchEditBttn = By.XPath("(//button[@class='btn btn-link'])[1]");
+        private By researchPropertyResearchEditBttn = By.XPath("(//button[@class='btn btn-link'])[2]");
         private By researchPropertyNameInput = By.Id("input-propertyName");
         private By researchPropertyPurposeSelect = By.Id("purpose-selector_input");
         private By researchPropertyPurposeOptions = By.CssSelector("ul[class='optionContainer']");
@@ -145,6 +143,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(researchProperty1stPropLink).Click();
+
+            sharedModals.SiteMinderModal();
         }
 
         public void AddAdditionalResearchFileInfo(string roadName, string roadAlias, int purposes, string requestDate, string requester, string descriptionRequest, string researchCompletedDate, string resultRequest, Boolean expropiation, string expropiationNotes)
@@ -205,6 +205,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             ButtonElement("Save");
+
+            sharedModals.SiteMinderModal();
         }
 
         public void ConfirmChangesResearchFile()
@@ -235,6 +237,9 @@ namespace PIMS.Tests.Automation.PageObjects
                     sharedModals.ModalClickOKBttn();
                 }
             }
+
+            Wait();
+            sharedModals.SiteMinderModal();
         }
 
         public void CancelResearchFileProps()

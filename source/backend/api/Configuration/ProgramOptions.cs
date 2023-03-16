@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using CommandLine;
 using Pims.Core.Extensions;
@@ -42,7 +43,7 @@ namespace Pims.Api.Configuration
             {
                 this.Urls,
                 this.Environment,
-                this.HttpsPort?.ToString(),
+                this.HttpsPort?.ToString(CultureInfo.InvariantCulture),
             }.NotNull().ToArray();
         }
         #endregion
