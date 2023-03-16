@@ -85,7 +85,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositTable1stRowReturnBttn = By.Id("return-deposit-0");
         private By licenseDepositTable1stRowDeleteBttn = By.Id("delete-deposit-0");
 
-        private By licenseDepositTableTotal = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private By licenseDepositTableTotal = By.XPath("//div[contains(text(),'Deposits Received')]/parent::div/parent::h2/parent::div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
         //Return Table Results Elements
         private By licenseDepositReturn1stRow = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
@@ -99,6 +99,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositReturnTable1stRowReturnedPayeeNameContent = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(8)");
         private By licenseDepositReturnTable1stRowDeleteBttn = By.CssSelector("button[title='delete deposit return']");
         private By licenseDepositReturnTable1stRowEditBttn = By.CssSelector("button[title='edit deposit return']");
+
+        private By licenseDepositReturnTableTotal = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tr-wrapper']");
 
         //Deposit Notes Elements
         private By licenseDepositNotesTextarea = By.Id("input-returnNotes");
@@ -189,6 +191,23 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(sharedModals.ModalHeader() == "Delete Deposit Return");
             Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this deposit return?");
             sharedModals.ModalClickOKBttn();
+        }
+
+        public void EditLastDeposit(string depositType, string description, string amount)
+        {
+            Wait();
+            var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
+            webDriver.FindElement(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") button[title='edit deposit']")).Click();
+
+            ChooseSpecificSelectOption(licenseDepositAddTypeSelect, depositType);
+
+            ClearInput(licenseDepositAddDescriptionTextarea);
+            webDriver.FindElement(licenseDepositAddDescriptionTextarea).SendKeys(description);
+
+            ClearInput(licenseDepositAddAmountInput);
+            webDriver.FindElement(licenseDepositAddAmountInput).SendKeys(amount);
+
+            ButtonElement("Save");
         }
 
         public void DeleteLastDeposit()
@@ -303,7 +322,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(licenseDepositReturnDateLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositReturnDateInput).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositReturnPayeeNameLabel).Displayed);
-            //Assert.True(webDriver.FindElement(licenseDepositRerturnPayeeNameInput).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositAddContactButton).Displayed);
 
             sharedModals.VerifyButtonsPresence();
@@ -322,6 +340,18 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowReturnedPayeeNameContent).Text == payeeName);
             Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowDeleteBttn).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowEditBttn).Displayed);
+        }
+
+        public int TotalDeposits()
+        {
+            Wait();
+            return webDriver.FindElements(licenseDepositTableTotal).Count;
+        }
+
+        public int TotalReturns()
+        {
+            Wait();
+            return webDriver.FindElements(licenseDepositReturnTableTotal).Count;
         }
     }
 }

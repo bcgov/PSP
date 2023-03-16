@@ -72,6 +72,10 @@ namespace PIMS.Tests.Automation.PageObjects
         //Add Other Improvements
         public void AddOtherImprovement(string address, string size, string description)
         {
+            ClearInput(licenceImprovOtherUnitNbrInput);
+            ClearInput(licenceImprovOtherSizeInput);
+            ClearInput(licenceImprovOtherDescriptionTextarea);
+
             webDriver.FindElement(licenceImprovOtherUnitNbrInput).SendKeys(address);
             webDriver.FindElement(licenceImprovOtherSizeInput).SendKeys(size);
             webDriver.FindElement(licenceImprovOtherDescriptionTextarea).SendKeys(description);

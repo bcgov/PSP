@@ -56,7 +56,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsProperty1DescriptiveNameLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Descriptive name')]");
         private By licenseDetailsProperty1DescriptiveNameContent = By.Id("input-properties.0.propertyName");
         private By licenseDetailsProperty1AreaIncludedLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Area included')]");
-        private By licenseDetailsProperty1AreaIncludedContent = By.Id("input-properties.0.landArea");
+        private By licenseDetailsProperty1AreaIncludedContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Area included')]/parent::div/following-sibling::div");
         private By licenseDetailsProperty1AddressLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div[1]/label[contains(text(),'Address')]");
         private By licenseDetailsProperty1AddressNoContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div[1]/label[contains(text(),'Address')]/parent::div/following-sibling::div/label");
         private By licenseDetailsProperty1AddressContent = By.Id("input-properties.0.address.streetAddress1");
@@ -66,7 +66,11 @@ namespace PIMS.Tests.Automation.PageObjects
         //Create Lease Details Elements
         private By licenseCreateTitle = By.XPath("//h1[contains(text(),'Create Lease/License')]");
 
-        private By licenseDetailsStatusLabel = By.XPath("//label[contains(text(),'Status')]");
+        private By licenseDetailsProjectLabel = By.XPath("//label[contains(text(),'Ministry project')]");
+        private By licenseDetailsProjectInput = By.CssSelector("input[id='typeahead-project']");
+        private By licenseDetailsProjectOptions = By.CssSelector("div[id='typeahead-project']");
+        private By licenseDetailsProject1stOption = By.CssSelector("div[id='typeahead-project'] a:nth-child(1)");
+        private By licenseDetailsStatusLabel = By.XPath("//form/div/div/div/div/label[contains(text(),'Status')]");
         private By licenseDetailsStatusSelector = By.Id("input-statusTypeCode");
         private By licenseDetailsAccountTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
         private By licenseDetailsAccountTypeSelector = By.Id("input-paymentReceivableTypeCode");
@@ -108,14 +112,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsInitiatorLabel = By.XPath("//label[contains(text(),'Initiator')]");
         private By licenseDetailsInitiatorTooltip = By.XPath("//label[contains(text(),'Initiator')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
         private By licenseDetailsInitiatorSelector = By.Id("input-initiatorTypeCode");
-        private By licenseDetailsInitiatorContent = By.Id("input-initiatorType. ");
+        private By licenseDetailsInitiatorContent = By.Id("input-responsibilityType.description");
         private By licenseDetailsResponsibilityLabel = By.XPath("//label[contains(text(),'Responsibility')]");
         private By licenseDetailsResponsibilityTooltip = By.XPath("//label[contains(text(),'Responsibility')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
         private By licenseDetailsResposibilitySelector = By.Id("input-responsibilityTypeCode");
         private By licenseDetailsResponsibilityContent = By.Id("input-responsibilityType.description");
         private By licenseDetailsEffectiveDateLabel = By.XPath("//label[contains(text(),'Effective date')]");
         private By licenseDetailsEffectiveDateInput = By.Id("datepicker-responsibilityEffectiveDate");
-        private By licenseDetailsEffectiveDateContent = By.Id("input-responsibilityEffectiveDate");
+        private By licenseDetailsEffectiveDateContent = By.XPath("//label[contains(text(),'Effective date')]/parent::div/following-sibling::div");
         private By licenseDetailsIntendedUseLabel = By.XPath("//label[contains(text(),'Intended use')]");
         private By licenseDetailsIntendedUseTextarea = By.Id("input-description");
 
@@ -168,9 +172,17 @@ namespace PIMS.Tests.Automation.PageObjects
         }
 
         //Covers only required fields on License Details
-        public void LicenseDetailsMinFields(string startDate, string expiryDate)
+        public void LicenseDetailsMinFields(string status, string startDate, string expiryDate, string program)
         {
             Wait();
+
+            //Change Status
+            ChooseSpecificSelectOption(licenseDetailsStatusSelector, status);
+
+            //Selecting Account Type
+            var receivePayableTypeElement = webDriver.FindElement(licenseDetailsAccountTypeSelector);
+            receivePayableTypeElement.Click();
+            ChooseRandomSelectOption(licenseDetailsAccountTypeSelector, 0);
 
             //Insert Start Date
             webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(startDate);
@@ -180,19 +192,11 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(expiryDate);
             webDriver.FindElement(licenseDetailsExpiryDateLabel).Click();
 
-            //Change Status
-            ChooseRandomSelectOption(licenseDetailsStatusSelector, 1);
-
-            //Selecting Account Type
-            var receivePayableTypeElement = webDriver.FindElement(licenseDetailsAccountTypeSelector);
-            receivePayableTypeElement.Click();
-            ChooseRandomSelectOption(licenseDetailsAccountTypeSelector, 0);
-
             //Selecting MOTI Region
             ChooseRandomSelectOption(licenseDetailsMotiRegionSelector, 1);
 
             //Selecting Program
-            ChooseRandomSelectOption(licenseDetailsProgramSelector, 1);
+            ChooseSpecificSelectOption(licenseDetailsProgramSelector, program);
 
             Wait();
             //If other Program is selected, insert input
@@ -240,9 +244,17 @@ namespace PIMS.Tests.Automation.PageObjects
         }
 
         //Covers all fields on License Details
-        public void LicenseDetailsMaxFields(string startDate, string expiryDate, string motiContact, string responsibilityDate, string locationOfDoc, string description, string lis, string ps, string notes)
+        public void LicenseDetailsMaxFields(string ministryProject, string status, string startDate, string expiryDate, string motiContact, string program, string responsibilityDate, string locationOfDoc, string description, string lis, string ps, string notes)
         {
             Wait();
+            
+            //Insert Project
+            webDriver.FindElement(licenseDetailsProjectInput).SendKeys(ministryProject);
+            Wait();
+            webDriver.FindElement(licenseDetailsProject1stOption).Click();
+
+            //Change Status
+            ChooseSpecificSelectOption(licenseDetailsStatusSelector, status);
 
             //Insert Start Date
             webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(startDate);
@@ -250,10 +262,6 @@ namespace PIMS.Tests.Automation.PageObjects
             //Insert Expiry Date
             webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
             webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(expiryDate);
-
-            //Change Status
-            webDriver.FindElement(licenseDetailsStatusSelector).Click();
-            ChooseRandomSelectOption(licenseDetailsStatusSelector, 1);
 
             //Selecting Account Type
             webDriver.FindElement(licenseDetailsAccountTypeSelector).Click();
@@ -266,7 +274,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseRandomSelectOption(licenseDetailsMotiRegionSelector, 1);
 
             //Selecting Program
-            ChooseRandomSelectOption(licenseDetailsProgramSelector, 1);
+            ChooseSpecificSelectOption(licenseDetailsProgramSelector, program);
 
             Wait();
             //If other Program is selected, insert input
@@ -407,6 +415,12 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(licenseHeaderNbrContent).Text;
         }
 
+        public string GetLeaseAccountType()
+        {
+            Wait();
+            return webDriver.FindElement(licenseHeaderAccountType).Text;
+        }
+
         public void VerifyLicenseDetailsCreateForm()
         {
             Wait();
@@ -415,6 +429,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(licenseCreateTitle).Displayed);
 
             //Details
+            Assert.True(webDriver.FindElement(licenseDetailsProjectLabel).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsProjectInput).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsStatusLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsStatusSelector).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsAccountTypeLabel).Displayed);
@@ -557,7 +573,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(licenseDetailsPurposeLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsPurposeContent).GetAttribute("value") != "");
             Assert.True(webDriver.FindElement(licenseDetailsInitiatorLabel).Displayed);
-            //Assert.True(webDriver.FindElement(licenseDetailsInitiatorContent).GetAttribute("value") != "");
+            Assert.True(webDriver.FindElement(licenseDetailsInitiatorContent).GetAttribute("value") != "");
             Assert.True(webDriver.FindElement(licenseDetailsResponsibilityLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsResponsibilityContent).GetAttribute("value") != "");
             Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateLabel).Displayed);

@@ -298,7 +298,29 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(insuranceOtherExpiryDateInput).SendKeys(expiryDate);
             webDriver.FindElement(insuranceOtherDescriptionTextarea).Click();
             webDriver.FindElement(insuranceOtherDescriptionTextarea).SendKeys(description);
+        }
 
+        public void DeleteInsurance(string insuranceType)
+        {
+            Wait();
+            switch (insuranceType)
+            {
+                case "Aircraft":
+                    FocusAndClick(insuranceAircraftCheckbox);
+                    break;
+                case "CGL":
+                    FocusAndClick(insuranceCGLCheckbox);
+                    break;
+                case "Marine":
+                    FocusAndClick(insuranceMarineCheckbox);
+                    break;
+                case "Vehicle":
+                    FocusAndClick(insuranceVehicleCheckbox);
+                    break;
+                case "Other":
+                    FocusAndClick(insuranceOtherCheckbox);
+                    break;
+            }
         }
 
         public void VerifyInsuranceInitForm()

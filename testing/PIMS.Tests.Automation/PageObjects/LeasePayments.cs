@@ -31,12 +31,15 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licencePaymentsNoRows = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='no-rows-message']");
 
         //Payments Table Headers Elements
+        private By licensePaymentsReceivedDateColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Received date')]");
         private By licensePaymentsSendDateColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Sent date')]");
         private By licensePaymentsPaymentMethodColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment method')]");
+        private By licensePaymentsReceivedPaymentColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Received payment ($)')]");
         private By licensePaymentsSentPaymentColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Sent payment ($)')]");
         private By licensePaymentsSendPaymentTooltip = By.Id("actualReceivedPaymentTooltip");
         private By licensePaymentsGSTColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST ($)')]");
         private By licensePaymentsGSTTooltip = By.Id("actualGstTooltip");
+        private By licensePaymentsReceivedTotalColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Received total ($)')]");
         private By licensePaymentsSentTotalColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Sent total ($)')]");
         private By licensePaymentsSendTotalTooltip = By.Id("receivedTotalTooltip");
         private By licensePaymentsPaymentStatusColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment status')]");
@@ -49,7 +52,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Create Term Elements
         private By licensePaymentTermStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
-        private By licensePaymentTermStartDateInput = By.Id("datepicker-startDate");
+        private By licensePaymentTermStartDateInput = By.CssSelector("input[id='datepicker-startDate']");
         private By licensePaymentTermEndDateLabel = By.XPath("//label[contains(text(),'End date')]");
         private By licensePaymentTermEndDateInput = By.Id("datepicker-expiryDate");
         private By licensePaymentTermFrequencySelectLabel = By.XPath("//label[contains(text(),'Payment frequency')]");
@@ -79,21 +82,22 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Last Term Table Elements
         private int totalTermsInLease;
-        private By licensePaymentsTermsTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper'] div[class='td expander svg-btn']");
+        private By licenseTermsTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper'] div[class='td expander svg-btn']");
         
 
         //Last Payment Elements
         private int totalPaymentInTerm;
-        private By licencePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']");
-        private By licenseTermPaymentsTableTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private By licensePaymentsTableTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']");
         private By licensePaymentDeleteTermBttn = By.CssSelector("button[title='delete term']");
 
         
         private SharedModals sharedModals;
+        private LeaseDetails leaseDetails;
 
         public LeasePayments(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
+            leaseDetails = new LeaseDetails(webDriver);
             totalTermsInLease = 0;
             totalPaymentInTerm = 0;
         }
@@ -140,12 +144,15 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save term");
 
             Wait();
-            totalTermsInLease = webDriver.FindElements(licensePaymentsTermsTotal).Count;
+            totalTermsInLease = webDriver.FindElements(licenseTermsTotal).Count;
         }
 
         public void OpenLastPaymentTab()
         {
             Wait();
+
+            totalTermsInLease = webDriver.FindElements(licenseTermsTotal).Count;
+
             var selectedExpander = webDriver.FindElement(By.XPath("//div[@class='tr-wrapper']["+ totalTermsInLease +"]/div/div[@class='td expander svg-btn']"));
             selectedExpander.Click();
         }
@@ -156,7 +163,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Record a Payment");
         }
 
-        public void AddPayment(string sentDate, string totalReceived, string status)
+        public void AddPayment(string sentDate, string paymentMethod, string totalReceived)
         {
             Wait();
 
@@ -165,19 +172,14 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licensePaymentSendDateInput).SendKeys(Keys.Enter);
             webDriver.FindElement(licensePaymentsModal).Click();
 
-            ChooseRandomSelectOption(licensePaymentMethodSelect, 1);
+            ChooseSpecificSelectOption(licensePaymentMethodSelect, paymentMethod);
 
             webDriver.FindElement(licensePaymentAmountReceivedInput).SendKeys(totalReceived);
 
             ButtonElement("Save payment");
 
             Wait();
-            totalPaymentInTerm = webDriver.FindElements(licenseTermPaymentsTableTotal).Count;
-
-            //var totalPayments = webDriver.FindElements(licencePaymentsTermTable).Count();
-            //var paymentStatus = webDriver.FindElement(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']:nth-child("+ totalPayments +") div:nth-child(6)")).Text;
-
-            //Assert.True(paymentStatus.Equals(status));
+            totalPaymentInTerm = webDriver.FindElements(licensePaymentsTableTotal).Count;
         }
 
         public void DeleteLastTerm()
@@ -187,18 +189,35 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntil(licensePaymentsModal);
             sharedModals.ModalClickOKBttn();
+
+            totalTermsInLease = webDriver.FindElements(licenseTermsTotal).Count;
         }
 
         public void DeleteLastPayment()
         {
             Wait();
-            var totalPayments = webDriver.FindElements(licenseTermPaymentsTableTotal).Count();
+           
+
+            var totalPayments = webDriver.FindElements(licensePaymentsTableTotal).Count();
             var lastPaymentDeleteIcon = By.CssSelector("div[class='tbody'] div[class='tr-wrapper']:nth-child("+totalPayments+") button[title='delete actual']");
             webDriver.FindElement(lastPaymentDeleteIcon).Click();
 
             WaitUntil(licensePaymentsModal);
             sharedModals.ModalClickOKBttn();
 
+            totalPaymentInTerm = webDriver.FindElements(licensePaymentsTableTotal).Count;
+        }
+
+        public int TotalTerms()
+        {
+            Wait();
+            return webDriver.FindElements(licenseTermsTotal).Count;
+        }
+
+        public int TotalPayments()
+        {
+            Wait();
+            return webDriver.FindElements(licensePaymentsTableTotal).Count;
         }
 
         public void VerifyPaymentsInitForm()
@@ -267,7 +286,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             else
             {
-                Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]")).Text == CalculateGST(expectedPayment));
+                Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]")).Text == CalculateGST(expectedPayment, gst));
                 System.Diagnostics.Debug.WriteLine(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[11]")).Text);
                 System.Diagnostics.Debug.WriteLine(CalculateExpectedTotal(expectedPayment));
                 Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[11]")).Text == CalculateExpectedTotal(expectedPayment));
@@ -301,13 +320,24 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyPaymentTableHeader()
         {
             Wait();
-            Assert.True(webDriver.FindElement(licensePaymentsSendDateColumn).Displayed);
+
+            if (leaseDetails.GetLeaseAccountType() == "Receivable")
+            {
+                Assert.True(webDriver.FindElement(licensePaymentsReceivedDateColumn).Displayed);
+                Assert.True(webDriver.FindElement(licensePaymentsReceivedPaymentColumn).Displayed);
+                Assert.True(webDriver.FindElement(licensePaymentsReceivedTotalColumn).Displayed);
+            }
+            else
+            {
+                Assert.True(webDriver.FindElement(licensePaymentsSendDateColumn).Displayed);
+                Assert.True(webDriver.FindElement(licensePaymentsSentPaymentColumn).Displayed);
+                Assert.True(webDriver.FindElement(licensePaymentsSentTotalColumn).Displayed);
+            }
+            
             Assert.True(webDriver.FindElement(licensePaymentsPaymentMethodColumn).Displayed);
-            Assert.True(webDriver.FindElement(licensePaymentsSentPaymentColumn).Displayed);
             Assert.True(webDriver.FindElement(licensePaymentsSendPaymentTooltip).Displayed);
             Assert.True(webDriver.FindElement(licensePaymentsGSTColumn).Displayed);
             Assert.True(webDriver.FindElement(licensePaymentsGSTTooltip).Displayed);
-            Assert.True(webDriver.FindElement(licensePaymentsSentTotalColumn).Displayed);
             Assert.True(webDriver.FindElement(licensePaymentsSendTotalTooltip).Displayed);
             Assert.True(webDriver.FindElement(licensePaymentsPaymentStatusColumn).Displayed);
             Assert.True(webDriver.FindElement(licensePaymentsPaymentStatusTooltip).Displayed);
@@ -315,10 +345,19 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(licensePaymentsActionsColumn).Displayed);
         }
 
-        public void VerifyInsertedPayment()
+        public void VerifyInsertedPayment(string paymentDate, string paymentMethod, string paymentAmount, string gst, string expectedAmount)
         {
             Wait();
-            //To-Do
+
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[1]")).Text == TransformDateFormat(paymentDate));
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[2]")).Text == paymentMethod);
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[3]")).Text == TransformCurrencyFormat(paymentAmount));
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[4]")).Text == CalculateGST(paymentAmount, gst));
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[5]")).Text == CalculateExpectedTotal(paymentAmount));
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[6]")).Text == CalculatePaymentStatus(paymentAmount, gst, expectedAmount));
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[7]/button[@title='notes']")).Displayed);
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[8]/div/button[@title='edit actual']")).Displayed);
+            Assert.True(webDriver.FindElement(By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPaymentInTerm +"]/div/div[8]/div/button[@title='delete actual']")).Displayed);
         }
 
         private string ConcatenateDates(string startDate, string endDate)
@@ -329,10 +368,17 @@ namespace PIMS.Tests.Automation.PageObjects
             return startDateFormat.ToString("MMM dd, yyyy") +" - "+ endDateFormat.ToString("MMM dd, yyyy");
         }
 
-        private string CalculateGST(string amount)
+        private string CalculateGST(string amount, string gst)
         {
-            decimal value = decimal.Parse(amount) * 0.05m;
-            return "$" + value.ToString("#,##0.00");
+            if (gst == "Y")
+            {
+                decimal value = decimal.Parse(amount) * 0.05m;
+                return "$" + value.ToString("#,##0.00");
+            }
+            else
+            {
+                return "-";
+            } 
         }
 
         private string CalculateExpectedTotal(string amount)
@@ -385,6 +431,31 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 return "$" + finalAmount.ToString("#,##0.00");
             } 
+        }
+
+        private string CalculatePaymentStatus(string paymentAmount, string gst, string expectedAmount)
+        {
+            var unitAmount = decimal.Parse(paymentAmount);
+            var totalAmount = decimal.Parse(expectedAmount);
+
+            if (gst == "Y")
+            {
+                unitAmount += decimal.Parse(paymentAmount) * 0.05m;
+                totalAmount += decimal.Parse(expectedAmount) * 0.05m;
+            }
+
+            if (totalAmount > unitAmount)
+            {
+                return "Overpayment";
+            }
+            else if (totalAmount < unitAmount)
+            {
+                return "Partial";
+            }
+            else
+            {
+                return "Paid";
+            }
         }
     }
 }

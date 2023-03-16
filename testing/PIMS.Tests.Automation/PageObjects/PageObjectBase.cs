@@ -122,6 +122,23 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
+        protected void ChooseMultiSelectSpecificOption(By element, string option)
+        {
+            
+            var js = (IJavaScriptExecutor)webDriver;
+
+            
+            var parentElement = webDriver.FindElement(element);
+            var childrenElements = parentElement.FindElements(By.TagName("li"));
+            var selectedOption = childrenElements.Should().ContainSingle(o => o.Text.Equals(option)).Subject;
+
+            js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
+
+             Wait();
+             selectedOption.Click();
+            
+        }
+
         protected void ChooseMultiSelectRandomOptions(By element, int options)
         {
             Random random = new Random();
