@@ -63,15 +63,15 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
         <StyledSummarySection>
           {lastUpdated && (
             <StyledSectionCentered>
-              <span>
+              <em>
                 {`This checklist was last updated ${prettyFormatDate(
                   lastUpdated.appLastUpdateTimestamp,
                 )} by `}
-              </span>
-              <UserNameTooltip
-                userName={lastUpdated.appLastUpdateUserid}
-                userGuid={lastUpdated.appLastUpdateUserGuid}
-              />
+                <UserNameTooltip
+                  userName={lastUpdated.appLastUpdateUserid}
+                  userGuid={lastUpdated.appLastUpdateUserGuid}
+                />
+              </em>
             </StyledSectionCentered>
           )}
 
@@ -107,6 +107,7 @@ const StyledSummarySection = styled.div`
 `;
 
 const StyledSectionCentered = styled(Section)`
+  font-size: 1.4rem;
   text-align: center;
 `;
 

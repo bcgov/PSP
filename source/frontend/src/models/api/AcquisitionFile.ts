@@ -1,5 +1,6 @@
 import { Api_File } from 'models/api/File';
 import Api_TypeCode from 'models/api/TypeCode';
+import moment from 'moment';
 
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
@@ -71,4 +72,30 @@ export interface Api_AcquisitionFileChecklistItemType extends Api_ConcurrentVers
   hint?: string;
   isDisabled?: boolean;
   displayOrder?: number;
+}
+
+export function lastModifiedBy(array: Api_AuditFields[] = []): Api_AuditFields | undefined {
+  let lastModified: Api_AuditFields | undefined = undefined;
+
+  for (const item of array) {
+    if (lastModified === undefined) {
+      lastModified = item;
+      continue;
+    }
+    if (moment(item.appLastUpdateTimestamp).isAfter(moment(lastModified.appLastUpdateTimestamp))) {
+      lastModified = item;
+    }
+  }
+
+  return lastModified;
+}
+
+export function isDefaultState(checklistItem: Api_AcquisitionFileChecklistItem): boolean {
+  return (
+    checklistItem.statusTypeCode?.id === 'INCOMP' &&
+    moment(checklistItem.appCreateTimestamp).isSame(
+      moment(checklistItem.appLastUpdateTimestamp),
+      'second',
+    )
+  );
 }

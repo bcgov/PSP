@@ -2,9 +2,9 @@ import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileChecklistItemType,
+  lastModifiedBy,
 } from 'models/api/AcquisitionFile';
 import { Api_AuditFields } from 'models/api/AuditFields';
-import moment from 'moment';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
@@ -55,7 +55,7 @@ export class AcquisitionChecklistFormModel {
       return acc.concat(section.items);
     }, []);
 
-    return AcquisitionChecklistItemFormModel.lastModifiedBy(allChecklistItems);
+    return lastModifiedBy(allChecklistItems);
   }
 }
 
@@ -90,24 +90,6 @@ export class AcquisitionChecklistItemFormModel implements Api_AuditFields {
   appCreateUserid?: string;
   appLastUpdateUserGuid?: string;
   appCreateUserGuid?: string;
-
-  static lastModifiedBy(items: Api_AuditFields[] = []): Api_AuditFields | undefined {
-    let lastModified: Api_AuditFields | undefined = undefined;
-
-    for (const item of items) {
-      if (lastModified === undefined) {
-        lastModified = item;
-        continue;
-      }
-      if (
-        moment(item.appLastUpdateTimestamp).isAfter(moment(lastModified.appLastUpdateTimestamp))
-      ) {
-        lastModified = item;
-      }
-    }
-
-    return lastModified;
-  }
 
   static fromApi(
     apiChecklistItem: Api_AcquisitionFileChecklistItem,
