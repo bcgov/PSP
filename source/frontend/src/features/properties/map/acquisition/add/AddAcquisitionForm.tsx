@@ -6,6 +6,7 @@ import {
   SelectOption,
 } from 'components/common/form/';
 import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { StyledSectionParagraph } from 'components/common/styles';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -185,6 +186,9 @@ export const AddAcquisitionForm = React.forwardRef<
               <UpdateAcquisitionTeamSubForm />
             </Section>
             <Section header="Owners">
+              <StyledSectionParagraph>
+                Each property in this file should be owned by the owner(s) in this section
+              </StyledSectionParagraph>
               <UpdateAcquisitionOwnersSubForm />
             </Section>
           </Container>
