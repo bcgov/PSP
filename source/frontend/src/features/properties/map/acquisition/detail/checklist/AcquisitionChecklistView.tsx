@@ -6,7 +6,12 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { Api_AcquisitionFile, lastModifiedBy } from 'models/api/AcquisitionFile';
+import {
+  Api_AcquisitionFile,
+  isDefaultState,
+  lastModifiedBy,
+  sortByDisplayOrder,
+} from 'models/api/AcquisitionFile';
 import React from 'react';
 import { FiCheck, FiMinus, FiX } from 'react-icons/fi';
 import styled from 'styled-components';
@@ -58,21 +63,26 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
         >
           {checklist
             .filter(checklistItem => checklistItem.itemType?.sectionCode === section.id)
+            .sort(sortByDisplayOrder)
             .map((checklistItem, j) => (
               <SectionField
                 key={checklistItem.itemType?.code ?? `acq-checklist-item-${j}`}
                 label={checklistItem.itemType?.description ?? ''}
                 tooltip={checklistItem.itemType?.hint}
-                fluid
                 labelWidth="6"
+                noGutters
               >
                 <StyledChecklistItem>
                   <StyledChecklistItemAudit>
-                    <UserNameTooltip
-                      userName={checklistItem.appLastUpdateUserid}
-                      userGuid={checklistItem.appLastUpdateUserGuid}
-                    />
-                    <em> {prettyFormatDate(checklistItem.appLastUpdateTimestamp)}</em>
+                    {!isDefaultState(checklistItem) && (
+                      <>
+                        <UserNameTooltip
+                          userName={checklistItem.appLastUpdateUserid}
+                          userGuid={checklistItem.appLastUpdateUserGuid}
+                        />
+                        <em> {prettyFormatDate(checklistItem.appLastUpdateTimestamp)}</em>
+                      </>
+                    )}
                   </StyledChecklistItemAudit>
                   <StyledChecklistItemStatus
                     color={mapStatusToColor(checklistItem.statusTypeCode?.id)}
@@ -139,11 +149,11 @@ const StyledChecklistItem = styled.div`
   align-items: center;
   line-height: 2.4rem;
   width: 100%;
-  gap: 0.4rem;
+  gap: 0.2rem;
 `;
 
 const StyledChecklistItemAudit = styled.span`
-  min-width: 35%;
+  min-width: 13rem;
   font-size: 1.1rem;
   font-style: italic;
   text-align: right;

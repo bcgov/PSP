@@ -3,14 +3,11 @@ import {
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileChecklistItemType,
   lastModifiedBy,
+  sortByDisplayOrder,
 } from 'models/api/AcquisitionFile';
 import { Api_AuditFields } from 'models/api/AuditFields';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
-
-function byDisplayOrder(a: Api_AcquisitionFileChecklistItem, b: Api_AcquisitionFileChecklistItem) {
-  return (a.itemType?.displayOrder ?? 0) - (b.itemType?.displayOrder ?? 0);
-}
 
 export class AcquisitionChecklistFormModel {
   id?: number;
@@ -28,7 +25,7 @@ export class AcquisitionChecklistFormModel {
     model.checklistSections = sectionTypes.map(section =>
       AcquisitionChecklistSectionFormModel.fromApi(
         section,
-        checklist.filter(c => c.itemType?.sectionCode === section.id).sort(byDisplayOrder),
+        checklist.filter(c => c.itemType?.sectionCode === section.id).sort(sortByDisplayOrder),
       ),
     );
 

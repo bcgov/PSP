@@ -82,7 +82,7 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
                   key={checklistItem.itemType?.code ?? `acq-checklist-item-${j}`}
                   label={checklistItem.itemType?.description ?? ''}
                   tooltip={checklistItem.itemType?.hint}
-                  labelWidth="7"
+                  labelWidth="6"
                 >
                   <StyledChecklistItem>
                     <StyledChecklistItemStatus>

@@ -74,6 +74,13 @@ export interface Api_AcquisitionFileChecklistItemType extends Api_ConcurrentVers
   displayOrder?: number;
 }
 
+export function sortByDisplayOrder(
+  a: Api_AcquisitionFileChecklistItem,
+  b: Api_AcquisitionFileChecklistItem,
+) {
+  return (a.itemType?.displayOrder ?? 0) - (b.itemType?.displayOrder ?? 0);
+}
+
 export function lastModifiedBy(array: Api_AuditFields[] = []): Api_AuditFields | undefined {
   let lastModified: Api_AuditFields | undefined = undefined;
 
