@@ -8,27 +8,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_CONSULTATION_STATUS_TYPE")]
-    public partial class PimsConsultationStatusType
+    [Table("PIMS_PROJECT_PERSON_ROLE_TYPE")]
+    public partial class PimsProjectPersonRoleType
     {
-        public PimsConsultationStatusType()
+        public PimsProjectPersonRoleType()
         {
-            PimsLeaseConsultations = new HashSet<PimsLeaseConsultation>();
+            PimsProjectPeople = new HashSet<PimsProjectPerson>();
         }
 
         [Key]
-        [Column("CONSULTATION_STATUS_TYPE_CODE")]
+        [Column("PROJECT_PERSON_ROLE_TYPE_CODE")]
         [StringLength(20)]
-        public string ConsultationStatusTypeCode { get; set; }
+        public string ProjectPersonRoleTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
         public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
         [Required]
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
+        [Column("DISPLAY_ORDER")]
+        public int? DisplayOrder { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsLeaseConsultation.ConsultationStatusTypeCodeNavigation))]
-        public virtual ICollection<PimsLeaseConsultation> PimsLeaseConsultations { get; set; }
+        [InverseProperty(nameof(PimsProjectPerson.ProjectPersonRoleTypeCodeNavigation))]
+        public virtual ICollection<PimsProjectPerson> PimsProjectPeople { get; set; }
     }
 }

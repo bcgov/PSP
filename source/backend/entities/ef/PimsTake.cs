@@ -47,8 +47,6 @@ namespace Pims.Dal.Entities
         public bool? IsStatutoryRightOfWay { get; set; }
         [Column("STATUTORY_RIGHT_OF_WAY_AREA")]
         public float? StatutoryRightOfWayArea { get; set; }
-        [Column("SRW_END_DT", TypeName = "date")]
-        public DateTime? SrwEndDt { get; set; }
         [Required]
         [Column("IS_LICENSE_TO_CONSTRUCT")]
         public bool? IsLicenseToConstruct { get; set; }
@@ -57,17 +55,20 @@ namespace Pims.Dal.Entities
         [Column("LTC_END_DT", TypeName = "date")]
         public DateTime? LtcEndDt { get; set; }
         [Required]
-        [Column("IS_SECTION_16")]
-        public bool? IsSection16 { get; set; }
-        [Column("SECTION_16_AREA")]
-        public float? Section16Area { get; set; }
-        [Column("SECTION_16_END_DT", TypeName = "date")]
-        public DateTime? Section16EndDt { get; set; }
+        [Column("IS_LAND_ACT")]
+        public bool? IsLandAct { get; set; }
+        [Column("LAND_ACT_AREA")]
+        public float? LandActArea { get; set; }
+        [Column("LAND_ACT_DESCRIPTION")]
+        [StringLength(2000)]
+        public string LandActDescription { get; set; }
+        [Column("LAND_ACT_END_DT", TypeName = "date")]
+        public DateTime? LandActEndDt { get; set; }
         [Required]
-        [Column("IS_SURPLUS_SEVERANCE")]
-        public bool? IsSurplusSeverance { get; set; }
-        [Column("SURPLUS_SEVERANCE_AREA")]
-        public float? SurplusSeveranceArea { get; set; }
+        [Column("IS_SURPLUS")]
+        public bool? IsSurplus { get; set; }
+        [Column("SURPLUS_AREA")]
+        public float? SurplusArea { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
