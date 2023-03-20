@@ -1,0 +1,2414 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c1 {
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding-right: 1.5rem;
+  gap: 1rem;
+  text-align: right;
+}
+
+.c6 {
+  min-width: 100%;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="c0 form-section c1"
+    >
+      <div
+        class="collapse show"
+      >
+        <em>
+          This checklist was last updated Mar 17, 2023 by 
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon-userNameTooltip"
+            id="userNameTooltip"
+          >
+            <strong>
+              ALESANCH
+            </strong>
+          </span>
+        </em>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            File Initiation
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Pre-acquisition title:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[0].items[0].statusType"
+                    name="checklistSections[0].items[0].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              BC Assessment:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[0].items[1].statusType"
+                    name="checklistSections[0].items[1].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Company search:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[0].items[2].statusType"
+                    name="checklistSections[0].items[2].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Land Title documents or plans:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[0].items[3].statusType"
+                    name="checklistSections[0].items[3].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Property Acquisition (PA) Plan:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[0].items[4].statusType"
+                    name="checklistSections[0].items[4].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Active File Management
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Photos:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[0].statusType"
+                    name="checklistSections[1].items[0].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Appraisals and reviews:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[1].statusType"
+                    name="checklistSections[1].items[1].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Other reports:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[2].statusType"
+                    name="checklistSections[1].items[2].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Record of negotiation:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[3].statusType"
+                    name="checklistSections[1].items[3].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Copies of correspondence:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[4].statusType"
+                    name="checklistSections[1].items[4].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Spending Authority Approval(s) - SAA:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[5].statusType"
+                    name="checklistSections[1].items[5].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Final agreements with owner(s):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[6].statusType"
+                    name="checklistSections[1].items[6].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              H120(s) processed for compensation:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[7].statusType"
+                    name="checklistSections[1].items[7].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Instructions or documents sent to lawyer:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[8].statusType"
+                    name="checklistSections[1].items[8].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Copy of owners' compensation cheque(s):
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[9].statusType"
+                    name="checklistSections[1].items[9].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Conditions of Entry (H0443):
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[10].statusType"
+                    name="checklistSections[1].items[10].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Conveyance closing documents:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[11].statusType"
+                    name="checklistSections[1].items[11].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Registered Plan:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[12].statusType"
+                    name="checklistSections[1].items[12].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Copy of new title:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[13].statusType"
+                    name="checklistSections[1].items[13].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              If this a total take with a surplus, then BCTFA notified:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[1].items[14].statusType"
+                    name="checklistSections[1].items[14].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Section 3 - Agreement
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Notice of Advanced Payment (Form 8):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[2].items[0].statusType"
+                    name="checklistSections[2].items[0].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Release of Claims:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[2].items[1].statusType"
+                    name="checklistSections[2].items[1].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Conveyance Letter:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[2].items[2].statusType"
+                    name="checklistSections[2].items[2].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Signed Agreement:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[2].items[3].statusType"
+                    name="checklistSections[2].items[3].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Title and charges:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[2].items[4].statusType"
+                    name="checklistSections[2].items[4].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Current year property assessment:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[2].items[5].statusType"
+                    name="checklistSections[2].items[5].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              ALC order:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[2].items[6].statusType"
+                    name="checklistSections[2].items[6].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Section 6 - Expropriation
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Copy of expropriation approval packages:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[3].items[0].statusType"
+                    name="checklistSections[3].items[0].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Notice of Expropriation (Form 1):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[3].items[1].statusType"
+                    name="checklistSections[3].items[1].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Approval of Expropriation (Form 5):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[3].items[2].statusType"
+                    name="checklistSections[3].items[2].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Vesting Notice (Form 9):
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[3].items[3].statusType"
+                    name="checklistSections[3].items[3].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Copies of Affidavits of Service:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[3].items[4].statusType"
+                    name="checklistSections[3].items[4].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              Release of Claims:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[3].items[5].statusType"
+                    name="checklistSections[3].items[5].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Acquisition Completion
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-6"
+          >
+            <label
+              class="c3"
+            >
+              File data entered into PIMS:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5"
+            >
+              <span
+                class="c6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-checklistSections[4].items[0].statusType"
+                    name="checklistSections[4].items[0].statusType"
+                  >
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
