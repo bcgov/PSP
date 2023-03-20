@@ -8,27 +8,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_CONSULTATION_STATUS_TYPE")]
-    public partial class PimsConsultationStatusType
+    [Table("PIMS_FORM_TYPE")]
+    public partial class PimsFormType
     {
-        public PimsConsultationStatusType()
+        public PimsFormType()
         {
-            PimsLeaseConsultations = new HashSet<PimsLeaseConsultation>();
+            PimsAcquisitionFileForms = new HashSet<PimsAcquisitionFileForm>();
         }
 
         [Key]
-        [Column("CONSULTATION_STATUS_TYPE_CODE")]
+        [Column("FORM_TYPE_CODE")]
         [StringLength(20)]
-        public string ConsultationStatusTypeCode { get; set; }
+        public string FormTypeCode { get; set; }
+        [Column("DOCUMENT_ID")]
+        public long? DocumentId { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
         public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
         [Required]
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
+        [Column("DISPLAY_ORDER")]
+        public int? DisplayOrder { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -44,7 +46,10 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsLeaseConsultation.ConsultationStatusTypeCodeNavigation))]
-        public virtual ICollection<PimsLeaseConsultation> PimsLeaseConsultations { get; set; }
+        [ForeignKey(nameof(DocumentId))]
+        [InverseProperty(nameof(PimsDocument.PimsFormTypes))]
+        public virtual PimsDocument Document { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionFileForm.FormTypeCodeNavigation))]
+        public virtual ICollection<PimsAcquisitionFileForm> PimsAcquisitionFileForms { get; set; }
     }
 }

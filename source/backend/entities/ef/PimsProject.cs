@@ -25,6 +25,7 @@ namespace Pims.Dal.Entities
             PimsProducts = new HashSet<PimsProduct>();
             PimsProjectDocuments = new HashSet<PimsProjectDocument>();
             PimsProjectNotes = new HashSet<PimsProjectNote>();
+            PimsProjectPeople = new HashSet<PimsProjectPerson>();
             PimsResearchFileProjects = new HashSet<PimsResearchFileProject>();
         }
 
@@ -116,6 +117,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsProjectDocument> PimsProjectDocuments { get; set; }
         [InverseProperty(nameof(PimsProjectNote.Project))]
         public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; }
+        [InverseProperty(nameof(PimsProjectPerson.Project))]
+        public virtual ICollection<PimsProjectPerson> PimsProjectPeople { get; set; }
         [InverseProperty(nameof(PimsResearchFileProject.Project))]
         public virtual ICollection<PimsResearchFileProject> PimsResearchFileProjects { get; set; }
     }
