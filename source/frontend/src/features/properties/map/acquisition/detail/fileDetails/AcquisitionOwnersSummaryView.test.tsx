@@ -31,7 +31,7 @@ const mockViewProps: IAcquisitionOwnersSummaryViewProps = {
   isLoading: false,
 };
 
-describe('Acquistion File Owners View component', () => {
+describe('Acquisition File Owners View component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
