@@ -18,7 +18,7 @@ const mockApi = {
 
 const mockAcquisitionFile = mockAcquisitionFileResponse();
 
-jest.mock('../hooks/useAcquisitionProvider', () => ({
+jest.mock('../../hooks/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionOwners: mockApi,
