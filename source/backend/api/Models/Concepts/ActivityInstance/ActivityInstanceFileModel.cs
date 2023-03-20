@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Concepts
 {
-    public class ActivityInstanceFileModel
+    public class ActivityInstanceFileModel : BaseAppModel
     {
         public long FileId { get; set; }
 
