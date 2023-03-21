@@ -164,8 +164,8 @@ export const mockAcquisitionFileResponse = (
       otherName: 'Jr.',
       registrationNumber: null,
       incorporationNumber: null,
-      contactEmailAddr: '',
-      contactPhoneNum: '',
+      contactEmailAddr: 'jonh.doe@gmail.com',
+      contactPhoneNum: '775-111-1111',
       address: {
         id: 4,
         streetAddress1: '456 Souris Street',

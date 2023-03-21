@@ -29,6 +29,37 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
         utils.container.querySelector(
           `input[name="owners[${index}].givenName"]`,
         ) as HTMLInputElement,
+      getLastNameCorpNameTextbox: (index = 0) =>
+        utils.container.querySelector(
+          `input[name="owners[${index}].lastNameAndCorpName"]`,
+        ) as HTMLInputElement,
+      getOtherNameTextbox: (index = 0) =>
+        utils.container.querySelector(
+          `input[name="owners[${index}].otherName"]`,
+        ) as HTMLInputElement,
+      getIsOrganizationRadioButtonValue: (index = 0) => {
+        const radio = utils.container.querySelector(
+          `input[name="owners[${index}].isOrganization"]:checked`,
+        ) as HTMLInputElement;
+
+        return radio.value;
+      },
+      getIncorporationTextbox: (index = 0) =>
+        utils.container.querySelector(
+          `input[name="owners[${index}].incorporationNumber"]`,
+        ) as HTMLInputElement,
+      getRegistrationTextbox: (index = 0) =>
+        utils.container.querySelector(
+          `input[name="owners[${index}].registrationNumber"]`,
+        ) as HTMLInputElement,
+      getEmailTextbox: (index = 0) =>
+        utils.container.querySelector(
+          `input[name="owners[${index}].contactEmailAddress"]`,
+        ) as HTMLInputElement,
+      getPhoneTextbox: (index = 0) =>
+        utils.container.querySelector(
+          `input[name="owners[${index}].contactPhoneNumber"]`,
+        ) as HTMLInputElement,
     };
   };
 
@@ -62,12 +93,76 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
   });
 
   it(`renders owner row fields when 'Add owner' link is clicked`, async () => {
-    const { getByTestId, getGivenNameTextbox } = setup({ initialForm: testForm });
+    const { getByTestId, getGivenNameTextbox } = setup({
+      initialForm: testForm,
+    });
     const addRow = getByTestId('add-file-owner');
     await act(async () => {
       userEvent.click(addRow);
     });
     expect(getGivenNameTextbox()).toBeVisible();
+  });
+
+  it(`Only Renders the Owner as Individual fields by Default`, async () => {
+    const {
+      getByTestId,
+      getGivenNameTextbox,
+      getLastNameCorpNameTextbox,
+      getOtherNameTextbox,
+      getIsOrganizationRadioButtonValue,
+      getIncorporationTextbox,
+      getRegistrationTextbox,
+      getEmailTextbox,
+      getPhoneTextbox,
+    } = setup({ initialForm: testForm });
+    const addRow = getByTestId('add-file-owner');
+    await act(async () => {
+      userEvent.click(addRow);
+    });
+
+    expect(getIsOrganizationRadioButtonValue()).toEqual('false');
+
+    expect(getGivenNameTextbox()).toBeVisible();
+    expect(getLastNameCorpNameTextbox()).toBeVisible();
+    expect(getOtherNameTextbox()).toBeVisible();
+
+    expect(getIncorporationTextbox()).toEqual(null);
+    expect(getRegistrationTextbox()).toEqual(null);
+
+    expect(getEmailTextbox()).toBeVisible();
+    expect(getPhoneTextbox()).toBeVisible();
+  });
+
+  it(`Only Renders the Owner as Corporation fields`, async () => {
+    const {
+      container,
+      getByTestId,
+      getGivenNameTextbox,
+      getLastNameCorpNameTextbox,
+      getOtherNameTextbox,
+      getIncorporationTextbox,
+      getRegistrationTextbox,
+      getIsOrganizationRadioButtonValue,
+      getEmailTextbox,
+      getPhoneTextbox,
+    } = setup({ initialForm: testForm });
+    const addRow = getByTestId('add-file-owner');
+
+    await act(async () => userEvent.click(addRow));
+    const organizationsButton = container.querySelector(`#input-true`);
+    await act(() => organizationsButton && userEvent.click(organizationsButton));
+
+    expect(getGivenNameTextbox()).toEqual(null);
+    expect(getLastNameCorpNameTextbox()).toBeVisible();
+    expect(getOtherNameTextbox()).toBeVisible();
+
+    expect(getIsOrganizationRadioButtonValue()).toEqual('true');
+
+    expect(getIncorporationTextbox()).toBeVisible();
+    expect(getRegistrationTextbox()).toBeVisible();
+
+    expect(getEmailTextbox()).toBeVisible();
+    expect(getPhoneTextbox()).toBeVisible();
   });
 
   it(`displays a confirmation popup before owner is removed`, async () => {

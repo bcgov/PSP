@@ -2101,8 +2101,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[0].contactEmailAddress"
                     name="owners[0].contactEmailAddress"
-                    title=""
-                    value=""
+                    title="jonh.doe@gmail.com"
+                    value="jonh.doe@gmail.com"
                   />
                 </div>
               </div>
@@ -2129,8 +2129,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[0].contactPhoneNumber"
                     name="owners[0].contactPhoneNumber"
-                    title=""
-                    value=""
+                    title="775-111-1111"
+                    value="775-111-1111"
                   />
                 </div>
               </div>
@@ -2412,11 +2412,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   <input
                     class="form-control"
-                    id="input-owners[1].incorporationNumber"
-                    name="owners[1].incorporationNumber"
+                    id="input-owners[1].registrationNumber"
+                    name="owners[1].registrationNumber"
                     placeholder="If no Incorporation #"
-                    title="9999"
-                    value="9999"
+                    title="12345"
+                    value="12345"
                   />
                 </div>
               </div>

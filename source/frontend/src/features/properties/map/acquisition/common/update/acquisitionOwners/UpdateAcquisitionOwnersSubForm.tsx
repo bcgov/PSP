@@ -105,7 +105,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
                       tooltip="The number used for tax purposes, (like GST)."
                     >
                       <Input
-                        field={`owners[${index}].incorporationNumber`}
+                        field={`owners[${index}].registrationNumber`}
                         placeholder="If no Incorporation #"
                       />
                     </SectionField>
