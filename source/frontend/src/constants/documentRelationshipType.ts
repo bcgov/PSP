@@ -6,4 +6,5 @@ export enum DocumentRelationshipType {
   ACTIVITIES = 'activities',
   TEMPLATES = 'templates',
   LEASES = 'leases',
+  PROJECTS = 'projects',
 }

@@ -81,5 +81,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("CODE_DESC_UPPER")]
+        [StringLength(220)]
+        public string CodeDescUpper { get; set; }
     }
 }

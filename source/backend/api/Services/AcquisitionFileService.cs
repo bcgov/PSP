@@ -100,9 +100,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
 
-            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
-
-            // reset the region
+            // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
             if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
             {
@@ -110,6 +108,9 @@ namespace Pims.Api.Services
             }
 
             ValidateStaff(acquisitionFile);
+
+            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
+            MatchProperties(acquisitionFile);
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
@@ -182,7 +183,7 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
-                if(acqFileProperties.PimsActInstPropAcqFiles.Any() || acqFileProperties.PimsTakes.Any())
+                if (acqFileProperties.PimsActInstPropAcqFiles.Any() || acqFileProperties.PimsTakes.Any())
                 {
                     throw new BusinessRuleViolationException();
                 }

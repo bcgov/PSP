@@ -16,9 +16,7 @@ import {
 
 interface IUpdateAcquisitionOwnersSubFormProps {}
 
-const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdateAcquisitionOwnersSubFormProps>
-> = () => {
+const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormProps> = () => {
   const { values } = useFormikContext<WithAcquisitionOwners>();
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);
@@ -34,7 +32,7 @@ const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
                 <Container>
                   <ButtonDiv>
                     <RemoveButton
-                      label={'Remove Owner'}
+                      label="Remove Owner"
                       onRemove={() => {
                         setRemoveIndex(index);
                         setShowRemoveModal(true);
@@ -45,19 +43,31 @@ const UpdateAcquisitionOwnersSubForm: React.FunctionComponent<
                   </ButtonDiv>
                   <H3>Name</H3>
                   <SectionField label="Given names">
-                    <Input field={`owners[${index}].givenName`} />
+                    <Input
+                      field={`owners[${index}].givenName`}
+                      placeholder="First name Middle name (individuals only)"
+                    />
                   </SectionField>
                   <SectionField label="Last name/Corporation name">
-                    <Input field={`owners[${index}].lastNameOrCorp1`} />
+                    <Input
+                      field={`owners[${index}].lastNameOrCorp1`}
+                      placeholder="Individual's Last name / Corporation's name"
+                    />
                   </SectionField>
                   <SectionField
                     label="Other name"
                     tooltip="Additional name for Individual (ex: alias or maiden name or space for long last name) Corporation (ex: Doing Business as) or placeholder for the Last name/Corporate name 2 field from Title"
                   >
-                    <Input field={`owners[${index}].lastNameOrCorp2`} />
+                    <Input
+                      field={`owners[${index}].lastNameOrCorp2`}
+                      placeholder="Alias/Doing business as etc."
+                    />
                   </SectionField>
                   <SectionField label="Incorporation number">
-                    <Input field={`owners[${index}].incorporationNumber`} />
+                    <Input
+                      field={`owners[${index}].incorporationNumber`}
+                      placeholder="Incorporation number"
+                    />
                   </SectionField>
                   <StyledDiv>
                     <H3>Mailing Address</H3>

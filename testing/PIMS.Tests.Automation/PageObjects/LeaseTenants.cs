@@ -48,6 +48,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By tenantsSelectedTableContactInfoColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Contact Info')]");
         private By tenantsSelectedTableTypeColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Type')]");
         private By tenantsSelectedNoRows = By.CssSelector("div[class='no-rows-message']");
+        private By tenantsTotalSelected = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
 
         SharedModals sharedModals;
 
@@ -126,6 +127,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Choose tenant type
             ChooseSpecificSelectOption(tenantType1stSelect, tenantType);
+        }
+
+        public void DeleteLastTenant()
+        {
+            Wait();
+
+            var totalTenantsSelected = webDriver.FindElements(tenantsTotalSelected).Count;
+            webDriver.FindElement(By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalTenantsSelected +") svg:has(title)")).Click();
+        }
+
+        public void EditLastTenant(string tenantType)
+        {
+            Wait();
+
+            var totalTenantsIndex = webDriver.FindElements(tenantsTotalSelected).Count -1;
+            By lastTenantSelector = By.Id("input-tenants."+ totalTenantsIndex +".tenantType");
+            ChooseSpecificSelectOption(lastTenantSelector, tenantType);
         }
 
         public void SaveTenant()

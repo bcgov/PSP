@@ -97,6 +97,7 @@ export class OwnerAddressFormModel {
   postal?: string;
   provinceId?: NumberFieldValue;
   countryId?: NumberFieldValue;
+  countryOther?: string;
 
   static addressLines(apiAddress: OwnerAddressFormModel | undefined): number {
     if (!apiAddress) {
@@ -132,10 +133,7 @@ export class OwnerAddressFormModel {
   static toApi(model: OwnerAddressFormModel | undefined): Api_Address | undefined {
     if (
       !model ||
-      (isEmpty(model.streetAddress1) &&
-        isEmpty(model.municipality) &&
-        isEmpty(model.postal) &&
-        isEmpty(model.provinceId))
+      (isEmpty(model.streetAddress1) && isEmpty(model.municipality) && isEmpty(model.postal))
     ) {
       return undefined;
     }
@@ -148,10 +146,11 @@ export class OwnerAddressFormModel {
       streetAddress3: model.streetAddress3,
       municipality: model.municipality,
       postal: model.postal,
-      provinceStateId: Number(model.provinceId),
-      province: toTypeCode(Number(model.provinceId)),
+      provinceStateId: isEmpty(model.provinceId) ? undefined : Number(model.provinceId),
+      province: isEmpty(model.provinceId) ? undefined : toTypeCode(Number(model.provinceId)),
       countryId: Number(model.countryId),
       country: toTypeCode(Number(model.countryId)),
+      countryOther: model.countryOther,
     };
   }
 }
