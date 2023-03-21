@@ -155,10 +155,9 @@ export const useBcAssessmentLayer = (
       ]);
 
       if (
-        responses.length !== 5 ||
         legalDescriptionResponse?.features.length < 1 ||
-        responses[3]?.features === undefined ||
-        responses[3]?.features.length < 1
+        (typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION) &&
+          (responses[3]?.features === undefined || responses[3]?.features.length < 1))
       ) {
         throw Error(
           'Invalid BC Assessment response. Unable to load BC Assessment data for property.',
