@@ -82,7 +82,7 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getByDisplayValue('FORTIS BC')).toBeVisible();
     expect(getByDisplayValue('123 Main Street')).toBeVisible();
-    expect(getByDisplayValue('john')).toBeVisible();
+    expect(getByDisplayValue('John')).toBeVisible();
     expect(getByDisplayValue('456 Souris Street')).toBeVisible();
   });
 });
