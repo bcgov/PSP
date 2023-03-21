@@ -154,8 +154,6 @@ export const useBcAssessmentLayer = (
         salesPromise,
       ]);
 
-      // throw an error if the initial legal description request fails to return data, or the folio description does not contain data
-      // (should not be possible for the folio to be empty if the legal description response is non-empty)
       if (
         legalDescriptionResponse?.features.length < 1 ||
         (typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION) &&

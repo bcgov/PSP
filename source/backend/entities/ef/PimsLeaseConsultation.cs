@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_LEASE_CONSULTATION")]
-    [Index(nameof(ConsultationStatusTypeCode), Name = "LESCON_CONSULTATION_STATUS_TYPE_CODE_IDX")]
     [Index(nameof(ConsultationTypeCode), Name = "LESCON_CONSULTATION_TYPE_CODE_IDX")]
     [Index(nameof(ConsultationTypeCode), nameof(LeaseId), Name = "LESCON_LEASE_CONSULTATION_TUC", IsUnique = true)]
     [Index(nameof(LeaseId), Name = "LESCON_LEASE_ID_IDX")]
@@ -24,10 +23,6 @@ namespace Pims.Dal.Entities
         [Column("CONSULTATION_TYPE_CODE")]
         [StringLength(20)]
         public string ConsultationTypeCode { get; set; }
-        [Required]
-        [Column("CONSULTATION_STATUS_TYPE_CODE")]
-        [StringLength(20)]
-        public string ConsultationStatusTypeCode { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppCreateTimestamp { get; set; }
         [Required]
@@ -68,9 +63,6 @@ namespace Pims.Dal.Entities
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
 
-        [ForeignKey(nameof(ConsultationStatusTypeCode))]
-        [InverseProperty(nameof(PimsConsultationStatusType.PimsLeaseConsultations))]
-        public virtual PimsConsultationStatusType ConsultationStatusTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(ConsultationTypeCode))]
         [InverseProperty(nameof(PimsConsultationType.PimsLeaseConsultations))]
         public virtual PimsConsultationType ConsultationTypeCodeNavigation { get; set; }
