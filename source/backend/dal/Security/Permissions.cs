@@ -151,15 +151,15 @@ namespace Pims.Dal.Security
         ProjectDelete = 48,
 
         [Display(GroupName = "form", Name = "form-view", Description = "Can view file forms.")]
-        FileView = 45,
+        FileView = 49,
 
         [Display(GroupName = "form", Name = "form-add", Description = "Can add new forms.")]
-        FileAdd = 46,
+        FileAdd = 50,
 
         [Display(GroupName = "form", Name = "form-edit", Description = "Can update existing file forms.")]
-        FileEdit = 47,
+        FileEdit = 51,
 
         [Display(GroupName = "form", Name = "form-delete", Description = "Can delete existing file forms.")]
-        FileDelete = 48,
+        FileDelete = 52,
     }
 }
