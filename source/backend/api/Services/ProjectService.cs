@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
@@ -22,6 +22,8 @@ namespace Pims.Api.Services
         private readonly IProductRepository _productRepository;
         private readonly IAcquisitionFileRepository _acquisitionFileRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ILookupRepository _lookupRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly ClaimsPrincipal _user;
 
         /// <summary>
@@ -33,13 +35,17 @@ namespace Pims.Api.Services
         /// <param name="productRepository"></param>
         /// <param name="acquisitionFileRepository"></param>
         /// <param name="userRepository"></param>
+        /// <param name="lookupRepository"></param>
+        /// <param name="entityNoteRepository"></param>
         public ProjectService(
             ClaimsPrincipal user,
             ILogger<ProjectService> logger,
             IProjectRepository projectRepository,
             IProductRepository productRepository,
             IAcquisitionFileRepository acquisitionFileRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            ILookupRepository lookupRepository,
+            IEntityNoteRepository entityNoteRepository)
             : base(user, logger)
         {
             _logger = logger;
@@ -48,6 +54,8 @@ namespace Pims.Api.Services
             _acquisitionFileRepository = acquisitionFileRepository;
             _userRepository = userRepository;
             _user = user;
+            _lookupRepository = lookupRepository;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public IList<PimsProject> SearchProjects(string filter, int maxResult)
@@ -110,7 +118,7 @@ namespace Pims.Api.Services
             {
                 throw new ArgumentNullException(nameof(project), "Project cannot be null.");
             }
-            CheckForDuplicateProducts(project.PimsProducts);
+            CheckForDuplicateProducts(project.PimsProducts, project.Id);
 
             var newProject = _projectRepository.Add(project);
             _projectRepository.CommitTransaction();
@@ -124,32 +132,85 @@ namespace Pims.Api.Services
             project.ThrowIfNull(nameof(project));
             _logger.LogInformation($"Updating project with id ${project.Internal_Id}");
 
-            CheckForDuplicateProducts(project.PimsProducts);
+            CheckForDuplicateProducts(project.PimsProducts, project.Id);
             var updatedProject = _projectRepository.Update(project);
+            AddNoteIfStatusChanged(project);
             _projectRepository.CommitTransaction();
 
             return updatedProject;
         }
 
-        private void CheckForDuplicateProducts(IEnumerable<PimsProduct> products)
+        private void CheckForDuplicateProducts(IEnumerable<PimsProduct> products, long projectId)
         {
-            
             var duplicateProductsInArray = products.GroupBy(p => (p.Code, p.Description)).Where(g => g.Count() > 1).Select(g => g.Key);
             if (duplicateProductsInArray.Any())
             {
-                throw new DuplicateEntityException($"Unable to add project with duplicated codes: {string.Join(", ", duplicateProductsInArray.Select(dp => dp.Code))}");
+                throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProductsInArray.Select(dp => dp.Code))}");
             }
 
-            IEnumerable<PimsProduct> duplicateProducts = _productRepository.GetByProductBatch(products);
+            IEnumerable<PimsProduct> duplicateProducts = _productRepository.GetByProductBatch(products, projectId);
             if (duplicateProducts.Any())
             {
-                throw new DuplicateEntityException($"Unable to add project with duplicated codes: {string.Join(", ", duplicateProducts.Select(dp => dp.Code))}");
+                throw new DuplicateEntityException($"Unable to add project with duplicated product codes: {string.Join(", ", duplicateProducts.Select(dp => dp.Code))}");
             }
         }
 
         private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
         {
             return await _projectRepository.GetPageAsync(filter);
+        }
+
+        private void AddNoteIfStatusChanged(PimsProject updatedProject)
+        {
+            var currentProject = _projectRepository.Get(updatedProject.Internal_Id);
+            bool statusChanged = currentProject.ProjectStatusTypeCode != updatedProject.ProjectStatusTypeCode;
+            if (!statusChanged)
+            {
+                return;
+            }
+
+            PimsProjectNote projectNoteInstance = new()
+            {
+                ProjectId = updatedProject.Internal_Id,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = GetUpdatedNoteText(currentProject.ProjectStatusTypeCode, updatedProject.ProjectStatusTypeCode),
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(projectNoteInstance);
+        }
+
+        private string GetUpdatedNoteText(string oldStatusCode, string newStatusCode)
+        {
+            string newStatusDescription = string.Empty;
+            string oldStatusDescription = string.Empty;
+            var projectStatuses = _lookupRepository.GetAllProjectStatusTypes().ToList();
+
+            if (newStatusCode is null)
+            {
+                newStatusDescription = "'No Status'";
+            }
+            else
+            {
+                newStatusDescription = projectStatuses.FirstOrDefault(x => x.ProjectStatusTypeCode == newStatusCode).Description;
+            }
+
+            if(oldStatusCode is null)
+            {
+                oldStatusDescription = "'No Status'";
+            }
+            else
+            {
+                oldStatusDescription = projectStatuses.FirstOrDefault(x => x.ProjectStatusTypeCode == oldStatusCode).Description;
+            }
+
+            return $"Project status changed from {oldStatusDescription} to {newStatusDescription}";
         }
     }
 }

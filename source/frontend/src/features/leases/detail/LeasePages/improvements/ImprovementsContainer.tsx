@@ -17,9 +17,9 @@ export const ImprovementsContainer: React.FunctionComponent<
 > = ({ isEditing, formikRef, onEdit }) => {
   const { lease } = useContext(LeaseStateContext);
 
-  if (!lease?.improvements?.length) {
+  if (!lease?.improvements?.length && !isEditing) {
     return (
-      <b className="mr-5">
+      <b className="mx-4">
         If this lease/license includes any commercial, residential or other improvements on the
         property, switch to edit mode to add details to this record.
       </b>

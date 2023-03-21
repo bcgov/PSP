@@ -2,7 +2,6 @@ using Mapster;
 using Pims.Api.Helpers.Extensions;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -10,7 +9,7 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsLease, Model.LeaseModel>()
+            config.NewConfig<Entity.PimsLease, LeaseModel>()
                 .Map(dest => dest.Id, src => src.LeaseId)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.Amount, src => src.LeaseAmount)
@@ -51,9 +50,10 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense)
+                .Map(dest => dest.Project, src => src.Project)
                 .PreserveReference(true);
 
-            config.NewConfig<Model.LeaseModel, Entity.PimsLease>()
+            config.NewConfig<LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.LeaseAmount, src => src.Amount)
@@ -87,6 +87,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.HasPhysicialLicense, src => src.HasPhysicalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
+                .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
                 .PreserveReference(true)
                 .IgnoreNullValues(true);
         }

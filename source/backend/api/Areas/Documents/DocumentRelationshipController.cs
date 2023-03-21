@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MapsterMapper;
@@ -38,6 +39,7 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="documentActivityService"></param>
         /// <param name="documentLeaseService"></param>
+        /// <param name="documentFileService"></param>
         /// <param name="mapper"></param>
         public DocumentRelationshipController(
             IDocumentActivityService documentActivityService,
@@ -97,6 +99,10 @@ namespace Pims.Api.Controllers
                     var leaseDocuments = _documentLeaseService.GetLeaseDocuments(parentId);
                     var mappedLeaseDocuments = _mapper.Map<List<DocumentRelationshipModel>>(leaseDocuments);
                     return new JsonResult(mappedLeaseDocuments);
+                case DocumentRelationType.Projects:
+                    var projectDocuments = _documentFileService.GetFileDocuments<PimsProjectDocument>(FileType.Project, parentId);
+                    var mappedProjectDocuments = _mapper.Map<List<DocumentRelationshipModel>>(projectDocuments);
+                    return new JsonResult(mappedProjectDocuments);
                 default:
                     throw new BadRequestException("Relationship type not valid for retrieve.");
             }
@@ -119,26 +125,18 @@ namespace Pims.Api.Controllers
             long parentId,
             [FromForm] DocumentUploadRequest uploadRequest)
         {
-            switch (relationshipType)
+            var response = relationshipType switch
             {
-                case DocumentRelationType.Activities:
-                    var activityResponse = await _documentActivityService.UploadActivityDocumentAsync(parentId, uploadRequest);
-                    return new JsonResult(activityResponse);
-                case DocumentRelationType.AcquisitionFiles:
-                    var acquisitionResponse = await _documentFileService.UploadAcquisitionDocumentAsync(parentId, uploadRequest);
-                    return new JsonResult(acquisitionResponse);
-                case DocumentRelationType.ResearchFiles:
-                    var researchResponse = await _documentFileService.UploadResearchDocumentAsync(parentId, uploadRequest);
-                    return new JsonResult(researchResponse);
-                case DocumentRelationType.Templates:
-                    var templateReponse = await _documentActivityService.UploadActivityTemplateDocumentAsync(parentId, uploadRequest);
-                    return new JsonResult(templateReponse);
-                case DocumentRelationType.Leases:
-                    var leaseReponse = await _documentLeaseService.UploadLeaseDocumentAsync(parentId, uploadRequest);
-                    return new JsonResult(leaseReponse);
-                default:
-                    throw new BadRequestException("Relationship type not valid for upload.");
-            }
+                DocumentRelationType.AcquisitionFiles => await _documentFileService.UploadAcquisitionDocumentAsync(parentId, uploadRequest),
+                DocumentRelationType.ResearchFiles => await _documentFileService.UploadResearchDocumentAsync(parentId, uploadRequest),
+                DocumentRelationType.Activities => await _documentActivityService.UploadActivityDocumentAsync(parentId, uploadRequest),
+                DocumentRelationType.Templates => await _documentActivityService.UploadActivityTemplateDocumentAsync(parentId, uploadRequest),
+                DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(parentId, uploadRequest),
+                DocumentRelationType.Leases => await _documentLeaseService.UploadLeaseDocumentAsync(parentId, uploadRequest),
+                _ => throw new BadRequestException("Relationship type not valid for upload."),
+            };
+
+            return new JsonResult(response);
         }
 
         /// <summary>
@@ -176,6 +174,10 @@ namespace Pims.Api.Controllers
                     var leaseRelationship = _mapper.Map<PimsActivityInstanceDocument>(model);
                     var leaseResult = await _documentLeaseService.DeleteLeaseDocumentAsync(leaseRelationship);
                     return new JsonResult(leaseResult);
+                case DocumentRelationType.Projects:
+                    var projectRelationship = _mapper.Map<PimsProjectDocument>(model);
+                    var projectResult = await _documentFileService.DeleteProjectDocumentAsync(projectRelationship);
+                    return new JsonResult(projectResult);
                 default:
                     throw new BadRequestException("Relationship type not valid for delete.");
             }

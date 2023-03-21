@@ -67,42 +67,6 @@ namespace Pims.Api.Test.Routes.Admin
             Assert.NotNull(endpoint);
             endpoint.HasGet("{key}");
         }
-
-        [Fact]
-        public void AddRole_Route()
-        {
-            // Arrange
-            var endpoint = typeof(RoleController).FindMethod(nameof(RoleController.AddRole), typeof(Model.RoleModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPost();
-        }
-
-        [Fact]
-        public void UpdateRole_Route()
-        {
-            // Arrange
-            var endpoint = typeof(RoleController).FindMethod(nameof(RoleController.UpdateRole), typeof(Guid), typeof(Model.RoleModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPut("{key}");
-        }
-
-        [Fact]
-        public void DeleteRole_Route()
-        {
-            // Arrange
-            var endpoint = typeof(RoleController).FindMethod(nameof(RoleController.DeleteRole), typeof(Guid), typeof(Model.RoleModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasDelete("{key}");
-        }
         #endregion
     }
 }

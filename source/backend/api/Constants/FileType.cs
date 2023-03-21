@@ -10,6 +10,8 @@ namespace Pims.Api.Constants
         Acquisition,
         [EnumMember(Value = "research")]
         Research,
+        [EnumMember(Value = "project")]
+        Project,
         [EnumMember(Value = "unknown")] // Used in tests/logic only. This does not correspond to a valid file type in the db.
         Unknown,
     }

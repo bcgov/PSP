@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Api.Models.Concepts
 {
     public class AcquisitionFilePropertyModel : BaseModel
@@ -38,6 +40,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The relationship's acquisition file id.
         /// </summary>
         public long FileId { get; set; }
+
+        /// <summary>
+        /// get/set - A list of activity instance properties
+        /// </summary>
+        public IList<ActivityInstancePropertyFileModel> ActivityInstanceProperties { get; set; }
 
         #endregion
     }

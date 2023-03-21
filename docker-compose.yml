@@ -62,11 +62,11 @@ services:
   geoserver:
     image: kartoza/geoserver:2.19.2
     volumes:
-      - ./geoserver/geoserver_data:/opt/geoserver/data_dir/workspaces
+      - ./tools/geoserver/geoserver_data:/opt/geoserver/data_dir/workspaces
     ports:
       - 8600:8080
     restart: on-failure
-    env_file: ./geoserver/.env
+    env_file: tools/geoserver/.env
     healthcheck:
       test: curl --fail -s http://localhost:8080/ || exit 1
       interval: 1m30s

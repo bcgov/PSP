@@ -659,6 +659,7 @@ export const mockAccessRequest: IAccessRequest = {
     businessIdentifierValue: 'admin',
     position: '',
     appCreateTimestamp: '2021-05-04T19:07:09.6920606',
+    hasValidClaims: true,
   },
   organizationId: mockOrganization.id,
   organization: mockOrganization,

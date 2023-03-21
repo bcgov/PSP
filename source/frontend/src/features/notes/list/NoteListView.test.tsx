@@ -37,7 +37,7 @@ describe('Note List View', () => {
   });
 
   it('should call the API Endpoint with given type', async () => {
-    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/owner/*`)).reply(200, {});
+    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/*`)).reply(200, {});
     const { getByTitle } = setup({
       type: NoteTypes.Acquisition_File,
       entityId: 0,
@@ -45,12 +45,12 @@ describe('Note List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     await waitFor(() => {
       expect(mockAxios.history.get).toHaveLength(1);
-      expect(mockAxios.history.get[0].url).toBe(`/notes/${NoteTypes.Acquisition_File}/owner/0`);
+      expect(mockAxios.history.get[0].url).toBe(`/notes/${NoteTypes.Acquisition_File}/0`);
     });
   });
 
   it('should have the Notes header in the component', async () => {
-    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/owner/*`)).reply(200, {});
+    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/*`)).reply(200, {});
     const { getByTitle } = setup({ type: NoteTypes.Acquisition_File, entityId: 0 });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     expect(await screen.findByText(`Notes`)).toBeInTheDocument();

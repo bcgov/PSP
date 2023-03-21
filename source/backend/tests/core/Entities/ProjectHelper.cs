@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -17,7 +16,14 @@ namespace Pims.Core.Test
         /// <returns>A entity project.</returns>
         public static Entity.PimsProject CreateProject(short id, string code, string description)
         {
-            return new Entity.PimsProject() { Internal_Id = id, Code = code, Description = description, ConcurrencyControlNumber = 1 };
+            return new Entity.PimsProject()
+            {
+                Internal_Id = id,
+                Code = code,
+                Description = description,
+                ConcurrencyControlNumber = 1,
+                ProjectStatusTypeCodeNavigation = new Entity.PimsProjectStatusType { Id = "ACTIVE", Description = "Active" },
+            };
         }
     }
 }

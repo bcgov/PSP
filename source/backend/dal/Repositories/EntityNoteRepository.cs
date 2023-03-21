@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MoreLinq;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
@@ -64,10 +65,22 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.ActivityInstanceId == entityId).Select(x => x.Note).ToList();
         }
 
-        public IEnumerable<PimsNote> GetAllAcquisitionNotesById(long entityId)
+        public IEnumerable<PimsNote> GetAllAcquisitionNotesById(long acquisitionId)
         {
             return this.Context.PimsAcquisitionFileNotes
-                .Where(x => x.AcquisitionFileId == entityId).Select(x => x.Note).ToList();
+                .Where(x => x.AcquisitionFileId == acquisitionId).Select(x => x.Note).ToList();
+        }
+
+        public IEnumerable<PimsNote> GetAllLeaseNotesById(long leaseId)
+        {
+            return this.Context.PimsLeaseNotes
+                .Where(x => x.LeaseId == leaseId).Select(x => x.Note).ToList();
+        }
+
+        public IEnumerable<PimsNote> GetAllProjectNotesById(long entityId)
+        {
+            return this.Context.PimsProjectNotes
+                .Where(x => x.ProjectId == entityId).Select(x => x.Note).ToList();
         }
 
         public bool DeleteActivityNotes(long entityId)
@@ -85,15 +98,54 @@ namespace Pims.Dal.Repositories
             return false;
         }
 
-        public bool DeleteAcquisitionFileNotes(long entityId)
+        public bool DeleteAcquisitionFileNotes(long noteId)
         {
-            var acquisitionFileNotes = this.Context.PimsAcquisitionFileNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
+            var acquisitionFileNotes = this.Context.PimsAcquisitionFileNotes.
+                                        Include(an => an.Note).
+                                        Where(x => x.NoteId == noteId).ToList();
+
             if (acquisitionFileNotes.Any())
             {
                 foreach (var acquisitionFileNote in acquisitionFileNotes)
                 {
                     this.Context.PimsAcquisitionFileNotes.Remove(acquisitionFileNote);
                     this.Context.PimsNotes.Remove(acquisitionFileNote.Note);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteLeaseFileNotes(long noteId)
+        {
+            var leaseFileNotes = this.Context.PimsLeaseNotes.
+                                        Include(ln => ln.Note).
+                                        Where(x => x.NoteId == noteId).ToList();
+
+            if (leaseFileNotes.Any())
+            {
+                foreach (var leaseFileNote in leaseFileNotes)
+                {
+                    this.Context.PimsLeaseNotes.Remove(leaseFileNote);
+                    this.Context.PimsNotes.Remove(leaseFileNote.Note);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteProjectNotes(long noteId)
+        {
+            var projectNotes = Context.PimsProjectNotes
+                .Include(x => x.Note)
+                .Where(x => x.NoteId == noteId).ToList();
+
+            if (projectNotes.Any())
+            {
+                foreach (var note in projectNotes)
+                {
+                    this.Context.PimsProjectNotes.Remove(note);
+                    this.Context.PimsNotes.Remove(note.Note);
                 }
                 return true;
             }

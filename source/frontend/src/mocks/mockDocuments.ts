@@ -11,7 +11,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
     parentId: 1,
     isDisabled: false,
     document: {
-      id: 1,
+      id: 20,
       mayanDocumentId: 13,
       documentType: {
         id: 12,
@@ -47,7 +47,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
     parentId: 1,
     isDisabled: false,
     document: {
-      id: 2,
+      id: 21,
       mayanDocumentId: 33,
       documentType: {
         id: 8,

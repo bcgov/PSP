@@ -99,11 +99,11 @@ namespace Pims.Api.Areas.Projects.Controllers
                 var newProject = _projectService.Add(_mapper.Map<Dal.Entities.PimsProject>(projectModel));
                 return new JsonResult(_mapper.Map<ProjectModel>(newProject));
             }
-            catch(DuplicateEntityException e)
+            catch (DuplicateEntityException e)
             {
                 return Conflict(e.Message);
             }
-}
+        }
 
         /// <summary>
         /// Updates the project.
@@ -118,7 +118,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         {
             if (id != model.Id)
             {
-                return BadRequest();
+                return BadRequest("Model and path id do not match.");
             }
 
             try
@@ -126,7 +126,7 @@ namespace Pims.Api.Areas.Projects.Controllers
                 var updatedProject = _projectService.Update(_mapper.Map<Dal.Entities.PimsProject>(model));
                 return new JsonResult(updatedProject);
             }
-            catch(DuplicateEntityException e)
+            catch (DuplicateEntityException e)
             {
                 return Conflict(e.Message);
             }

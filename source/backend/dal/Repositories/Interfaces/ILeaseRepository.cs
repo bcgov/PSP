@@ -17,6 +17,8 @@ namespace Pims.Dal.Repositories
 
         PimsLease Get(long id);
 
+        PimsLease GetNoTracking(long id);
+
         Paged<PimsLease> GetPage(LeaseFilter filter);
 
         PimsLease Add(PimsLease lease, bool userOverride = false);

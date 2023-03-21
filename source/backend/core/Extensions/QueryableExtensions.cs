@@ -20,7 +20,7 @@ namespace Pims.Core.Extensions
         /// Order the query results by the specified property names.
         /// Each property can also specify the direction of the sort (i.e. "Name asc", "Name ascending", "Name desc", "Name descending").
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the property being used for this order by.</typeparam>
         /// <param name="source"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
@@ -77,7 +77,7 @@ namespace Pims.Core.Extensions
         /// Order the query results by the specified property names.
         /// Any property name that doesn't exist will be ignored.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the ordered property.</typeparam>
         /// <param name="source"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
@@ -134,7 +134,7 @@ namespace Pims.Core.Extensions
         /// <summary>
         /// Check if the specified property exists in the specified type.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the object to determine if propertyName exists.</typeparam>
         /// <param name="propertyName"></param>
         /// <returns></returns>
         private static bool PropertyExists<T>(string propertyName)
@@ -147,7 +147,7 @@ namespace Pims.Core.Extensions
         /// Fetches the properties from cache so that it doesn't haven't to iterate with reflection each time it is is called.
         /// </summary>
         /// <param name="path"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the object to find the object path for.</typeparam>
         /// <returns></returns>
         private static Type GetPropertyPathType<T>(string path)
         {
@@ -165,8 +165,8 @@ namespace Pims.Core.Extensions
         /// Generates an Expression for the specified 'path'.
         /// </summary>
         /// <param name="path"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="TR"></typeparam>
+        /// <typeparam name="T">The parameter type to generate the property path lambda.</typeparam>
+        /// <typeparam name="TR">The output type.</typeparam>
         /// <returns></returns>
         private static Expression<Func<T, TR>> GeneratePropertyPathLambda<T, TR>(string path)
             where T : class

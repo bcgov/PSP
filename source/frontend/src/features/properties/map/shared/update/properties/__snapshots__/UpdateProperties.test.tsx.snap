@@ -1164,6 +1164,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
     </div>
     <div />
     <div />
+    <div />
   </div>
 </body>
 `;

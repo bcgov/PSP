@@ -1,3 +1,4 @@
+import { StyledSectionParagraph } from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -15,9 +16,12 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
 
   return (
     <Section header="Owners">
+      <StyledSectionParagraph>
+        Each property in this file should be owned by the owner(s) in this section
+      </StyledSectionParagraph>
       {ownersList?.map((owner, index) => {
         return (
-          <>
+          <span key={`owner-${index}-${owner.ownerName}`}>
             <SectionField label="Name">{owner.ownerName}</SectionField>
             <SectionField
               label="Other name"
@@ -29,7 +33,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
               <StyledAddressWrapper>{owner.ownerDisplayAddress}</StyledAddressWrapper>
             </SectionField>
             {index < ownersList.length - 1 && <hr></hr>}
-          </>
+          </span>
         );
       })}
     </Section>

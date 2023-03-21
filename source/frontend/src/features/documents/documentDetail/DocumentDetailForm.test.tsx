@@ -57,7 +57,7 @@ const documentTypeMetadata: Api_Storage_DocumentMetadata[] = [
 ];
 const mockDocument: ComposedDocument = {
   mayanMetadata: documentTypeMetadata,
-  pimsDocument: {
+  pimsDocumentRelationship: {
     id: 1,
     document: {
       mayanDocumentId: 15,

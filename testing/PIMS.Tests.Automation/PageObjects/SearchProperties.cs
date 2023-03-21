@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Events;
+using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -34,9 +36,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyListPaginationMenuItems = By.CssSelector("div[class='Menu-items']");
         private By searchPropertyListPagination = By.CssSelector("ul[class='pagination']");
 
+        private SharedModals sharedModals;
 
         public SearchProperties(IWebDriver webDriver) : base(webDriver)
-        {}
+        {
+            sharedModals = new SharedModals(webDriver);
+        }
 
         public void SearchPropertyByPINPID(string PID)
         {
@@ -69,6 +74,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntil(searchPropertyFoundPin);
             webDriver.FindElement(searchPropertyFoundPin).Click();
+
+            sharedModals.SiteMinderModal();
         }
 
         public void NavigatePropertyListView()
@@ -81,7 +88,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(searchPropertyListContent1stViewTabBttn).Click();
-
         }
 
         public void ValidatePropertyListView()

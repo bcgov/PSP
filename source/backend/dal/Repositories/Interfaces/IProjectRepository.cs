@@ -22,6 +22,12 @@ namespace Pims.Dal.Repositories
 
         PimsProject Update(PimsProject project);
 
-        long GetRowVersion(long id);
+        PimsProjectDocument AddProjectDocument(PimsProjectDocument projectDocument);
+
+        IList<PimsProjectDocument> GetAllProjectDocuments(long projectId);
+
+        IList<PimsProjectDocument> GetAllByDocument(long documentId);
+
+        void DeleteProjectDocument(long projectDocumentId);
     }
 }

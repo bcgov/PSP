@@ -26,6 +26,12 @@ namespace PIMS.Tests.Automation.PageObjects
             wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 
+        public void WaitUntilInteractable(By element)
+        {
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
+            wait.Until(ExpectedConditions.ElementToBeClickable(element));
+        }
+
         protected void ButtonElement(string btnContent)
         {
             Wait();
@@ -82,7 +88,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var selectElement = webDriver.FindElement(parentElement);
             var childrenElements = selectElement.FindElements(By.TagName("option"));
-            var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Contains(option)).Subject;
+            var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Equals(option)).Subject;
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
             Wait();
@@ -103,16 +109,34 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedRadioBttn.Click();
         }
 
-        protected void ChooseSpecificRadioButton(string parentElementName, string option)
+        protected void ChooseSpecificRadioButton(By parentName, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;
 
-            var selectedRadioBttnLocator = "//input[@name='"+ parentElementName +"']/following-sibling::label[contains(text(),'"+ option +"')]";
-            var selectedOption = webDriver.FindElement(By.XPath(selectedRadioBttnLocator));
+            var childrenElements = webDriver.FindElements(parentName);
+            var selectedOption = childrenElements.Should().ContainSingle(o => o.GetAttribute("value").Equals(option)).Subject;
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
+
             Wait();
             selectedOption.Click();
+        }
+
+        protected void ChooseMultiSelectSpecificOption(By element, string option)
+        {
+            
+            var js = (IJavaScriptExecutor)webDriver;
+
+            
+            var parentElement = webDriver.FindElement(element);
+            var childrenElements = parentElement.FindElements(By.TagName("li"));
+            var selectedOption = childrenElements.Should().ContainSingle(o => o.Text.Equals(option)).Subject;
+
+            js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
+
+             Wait();
+             selectedOption.Click();
+            
         }
 
         protected void ChooseMultiSelectRandomOptions(By element, int options)
@@ -142,6 +166,18 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 element.SendKeys(Keys.Backspace);
             }
+        }
+
+        protected string TransformDateFormat(string date)
+        {
+            var dateObject = DateTime.Parse(date);
+            return dateObject.ToString("MMM dd, yyyy");
+        }
+
+        protected string TransformCurrencyFormat(string amount)
+        {
+            decimal value = decimal.Parse(amount);
+            return "$" + value.ToString("#,##0.00");
         }
     }
 

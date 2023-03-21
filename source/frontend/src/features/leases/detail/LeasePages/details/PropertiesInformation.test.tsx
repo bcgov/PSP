@@ -16,10 +16,7 @@ describe('PropertiesInformation component', () => {
     // render component under test
     const component = render(
       <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
-        <PropertiesInformation
-          disabled={renderOptions.disabled}
-          nameSpace={renderOptions.nameSpace}
-        />
+        <PropertiesInformation nameSpace={renderOptions.nameSpace} />
       </Formik>,
       {
         ...renderOptions,

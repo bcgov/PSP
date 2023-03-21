@@ -72,7 +72,10 @@ export const DocumentDetailForm: React.FunctionComponent<
                 initialValues={initialFormState}
                 validationSchema={getDocumentMetadataYupSchema(props.mayanMetadataTypes)}
                 onSubmit={async (values: DocumentUpdateFormData, { setSubmitting }) => {
-                  if (props.document?.pimsDocument?.id && values.documentStatusCode !== undefined) {
+                  if (
+                    props.document?.pimsDocumentRelationship?.id &&
+                    values.documentStatusCode !== undefined
+                  ) {
                     var request = values.toRequestApi();
                     await props.onUpdate(request);
                     setSubmitting(false);

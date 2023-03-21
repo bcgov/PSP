@@ -27,6 +27,7 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -36,7 +37,8 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
             ICoordinateTransformService coordinateService,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            IEntityNoteRepository entityNoteRepository)
         {
             _user = user;
             _logger = logger;
@@ -46,6 +48,7 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -97,14 +100,17 @@ namespace Pims.Api.Services
             _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
 
-            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
-
-            // reset the region
+            // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
             if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
             {
                 throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
+
+            ValidateStaff(acquisitionFile);
+
+            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
+            MatchProperties(acquisitionFile);
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
@@ -125,6 +131,8 @@ namespace Pims.Api.Services
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
 
+            ValidateStaff(acquisitionFile);
+
             // reset the region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
             if (acquisitionFile.RegionCode == cannotDetermineRegion.RegionCode)
@@ -133,6 +141,8 @@ namespace Pims.Api.Services
             }
 
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
+            AddNoteIfStatusChanged(acquisitionFile);
+
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
         }
@@ -172,6 +182,11 @@ namespace Pims.Api.Services
             List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
+                var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
+                if (acqFileProperties.PimsActInstPropAcqFiles.Any() || acqFileProperties.PimsTakes.Any())
+                {
+                    throw new BusinessRuleViolationException();
+                }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
                 {
@@ -189,6 +204,15 @@ namespace Pims.Api.Services
 
             _acqFileRepository.CommitTransaction();
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+        }
+
+        private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
+        {
+            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFilePeople.GroupBy(p => (p.AcqFlPersonProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
+            }
         }
 
         private void MatchProperties(PimsAcquisitionFile acquisitionFile)
@@ -258,28 +282,10 @@ namespace Pims.Api.Services
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
-            if (geom.SRID != SpatialReference.BC_ALBERS)
+            if (geom.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
-            }
-        }
-
-        private void ReprojectPropertyLocationsToWgs84(PimsAcquisitionFile acquisitionFile)
-        {
-            if (acquisitionFile == null)
-            {
-                return;
-            }
-
-            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
-            {
-                if (acquisitionProperty.Property.Location != null)
-                {
-                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
-                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
-                }
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
         }
 
@@ -290,8 +296,8 @@ namespace Pims.Api.Services
                 if (acquisitionProperty.Property.Location != null)
                 {
                     var oldCoords = acquisitionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
-                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
+                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
         }
@@ -312,6 +318,35 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
             }
+        }
+
+        private void AddNoteIfStatusChanged(PimsAcquisitionFile updateAcquisitionFile)
+        {
+            var currentAcquisitionFile = _acqFileRepository.GetById(updateAcquisitionFile.Internal_Id);
+            bool statusChanged = currentAcquisitionFile.AcquisitionFileStatusTypeCode != updateAcquisitionFile.AcquisitionFileStatusTypeCode;
+            if (!statusChanged)
+            {
+                return;
+            }
+
+            var newStatus = _lookupRepository.GetAllAcquisitionFileStatusTypes()
+                .FirstOrDefault(x => x.AcquisitionFileStatusTypeCode == updateAcquisitionFile.AcquisitionFileStatusTypeCode);
+
+            PimsAcquisitionFileNote fileNoteInstance = new()
+            {
+                AcquisitionFileId = updateAcquisitionFile.Internal_Id,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Acquisition File status changed from {currentAcquisitionFile.AcquisitionFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
         }
     }
 }

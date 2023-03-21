@@ -13,7 +13,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Coordinate, src => src.Coordinate);
 
             config.NewConfig<GeometryModel, Geometry>()
-                .ConstructUsing(src => GeometryHelper.CreatePoint(src.Coordinate.X, src.Coordinate.Y, SpatialReference.WGS_84));
+                .ConstructUsing(src => GeometryHelper.CreatePoint(src.Coordinate.X, src.Coordinate.Y, SpatialReference.WGS84));
 
             config.NewConfig<Coordinate, CoordinateModel>()
                 .Map(dest => dest.X, src => src.X)

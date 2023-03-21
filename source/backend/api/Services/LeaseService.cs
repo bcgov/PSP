@@ -1,16 +1,20 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using MoreLinq;
+using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
 {
-    public class LeaseService : ILeaseService
+    public class LeaseService : BaseService, ILeaseService
     {
         private readonly ILogger _logger;
         private readonly ILeaseRepository _leaseRepository;
@@ -18,14 +22,18 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly ILookupRepository _lookupRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
         public LeaseService(
-            ILogger<LeaseService> logger,
+            ClaimsPrincipal user,
+            ILogger<ActivityService> logger,
             ILeaseRepository leaseRepository,
             ICoordinateTransformService coordinateTransformService,
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            IEntityNoteRepository entityNoteRepositoryrvice)
+            : base(user, logger)
         {
             _logger = logger;
             _leaseRepository = leaseRepository;
@@ -33,6 +41,7 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
             _lookupRepository = lookupRepository;
+            _entityNoteRepository = entityNoteRepositoryrvice;
         }
 
         public bool IsRowVersionEqual(long leaseId, long rowVersion)
@@ -49,8 +58,8 @@ namespace Pims.Api.Services
                 var property = propertyLease.Property;
                 if (property?.Location != null)
                 {
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, property.Location.Coordinate);
-                    property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
+                    property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
             return lease;
@@ -64,11 +73,51 @@ namespace Pims.Api.Services
 
         public PimsLease Update(PimsLease lease, bool userOverride = false)
         {
+            var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+            var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
+
+            if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
+            {
+                _entityNoteRepository.Add<PimsLeaseNote>(
+                    new PimsLeaseNote()
+                    {
+                        LeaseId = currentLease.LeaseId,
+                        AppCreateTimestamp = System.DateTime.Now,
+                        AppCreateUserid = this.User.GetUsername(),
+                        Note = new PimsNote()
+                        {
+                            IsSystemGenerated = true,
+                            NoteTxt = $"Lease status changed from {currentLease.LeaseStatusTypeCode} to {lease.LeaseStatusTypeCode}",
+                            AppCreateTimestamp = System.DateTime.Now,
+                            AppCreateUserid = this.User.GetUsername(),
+                        },
+                    });
+            }
+
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverride);
-            var updatedLease = _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
+            _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
+
+            List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            foreach (var deletedProperty in differenceSet)
+            {
+                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                {
+                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
+                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
+                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
+                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
+                    if (researchAssociationCount + acquisitionAssociationCount == 0 && leaseAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
+                    {
+                        _leaseRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                        _propertyRepository.Delete(deletedProperty.Property);
+                    }
+                }
+            }
+
+
             _leaseRepository.CommitTransaction();
-            return updatedLease;
+            return _leaseRepository.GetNoTracking(lease.LeaseId);
         }
 
         /// <summary>
@@ -84,7 +133,7 @@ namespace Pims.Api.Services
         {
             MatchProperties(lease);
 
-            lease.PimsPropertyLeases.ForEach(propertyLease =>
+            foreach (var propertyLease in lease.PimsPropertyLeases)
             {
                 PimsProperty property = propertyLease.Property;
                 var existingPropertyLeases = _propertyLeaseRepository.GetAllByPropertyId(property.PropertyId);
@@ -101,8 +150,8 @@ namespace Pims.Api.Services
                     {
                         throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                     }
-                    throw new UserOverrideException($"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString() ?? string.Empty}, " +
-                        $"{propertyLease?.Property?.Location.Coordinate.Y.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
+                    throw new UserOverrideException($"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
+                        $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}");
                 }
 
                 // If the property exist dont update it, just refer to it by id.
@@ -111,7 +160,7 @@ namespace Pims.Api.Services
                     propertyLease.PropertyId = property.PropertyId;
                     propertyLease.Property = null;
                 }
-            });
+            }
 
             return lease;
         }
@@ -183,10 +232,10 @@ namespace Pims.Api.Services
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
-            if (geom.SRID != SpatialReference.BC_ALBERS)
+            if (geom.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
         }
     }

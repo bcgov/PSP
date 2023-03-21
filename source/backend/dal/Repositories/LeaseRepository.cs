@@ -176,6 +176,128 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.PimsLeaseTerms)
                     .ThenInclude(t => t.PimsLeasePayments)
                     .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation)
+                .Include(l => l.Project)
+                .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
+
+            lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
+            lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
+            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId).Select(t =>
+            {
+                t.PimsLeasePayments = t.PimsLeasePayments.OrderBy(p => p.PaymentReceivedDate).ThenBy(p => p.LeasePaymentId).ToArray();
+                return t;
+            }).ToArray();
+            return lease;
+        }
+
+        // TODO: original Get method should have AsNoTracking() but that breaks a number of existing workflows. Added this as a temporary fix until lease logic is refactored.
+        public PimsLease GetNoTracking(long id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            PimsLease lease = this.Context.PimsLeases.AsSplitQuery()
+                .AsNoTracking()
+                .Include(l => l.PimsPropertyLeases)
+                .ThenInclude(p => p.Property)
+                    .ThenInclude(p => p.Address)
+                    .ThenInclude(p => p.Country)
+                .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.Property)
+                    .ThenInclude(p => p.Address)
+                    .ThenInclude(p => p.ProvinceState)
+                .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.AreaUnitTypeCodeNavigation)
+                .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.Property)
+                    .ThenInclude(s => s.SurplusDeclarationTypeCodeNavigation)
+                .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.Property)
+                    .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(l => l.RegionCodeNavigation)
+
+                .Include(l => l.Project)
+                .Include(l => l.LeaseProgramTypeCodeNavigation)
+                .Include(l => l.LeasePayRvblTypeCodeNavigation)
+                .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
+                .Include(l => l.LeaseInitiatorTypeCodeNavigation)
+                .Include(l => l.LeasePurposeTypeCodeNavigation)
+                .Include(l => l.LeaseCategoryTypeCodeNavigation)
+                .Include(l => l.LeaseStatusTypeCodeNavigation)
+
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(l => l.TenantTypeCodeNavigation)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Person)
+                    .ThenInclude(o => o.PimsPersonOrganizations)
+                    .ThenInclude(o => o.Organization)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Person)
+                    .ThenInclude(o => o.PimsPersonAddresses)
+                    .ThenInclude(o => o.Address)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Person)
+                    .ThenInclude(o => o.PimsPersonAddresses)
+                    .ThenInclude(o => o.AddressUsageTypeCodeNavigation)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Person)
+                    .ThenInclude(o => o.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
+
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Organization)
+                    .ThenInclude(o => o.PimsPersonOrganizations)
+                    .ThenInclude(o => o.Person)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(o => o.AddressUsageTypeCodeNavigation)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(o => o.Address)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Organization)
+                    .ThenInclude(o => o.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
+
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.PrimaryContact)
+
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.LessorTypeCodeNavigation)
+
+                .Include(t => t.PimsPropertyImprovements)
+
+                .Include(l => l.PimsInsurances)
+                    .ThenInclude(i => i.InsuranceTypeCodeNavigation)
+
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.PimsSecurityDepositHolder)
+                    .ThenInclude(h => h.Person)
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.PimsSecurityDepositHolder)
+                    .ThenInclude(h => h.Organization)
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.PimsSecurityDepositReturns)
+                    .ThenInclude(r => r.PimsSecurityDepositReturnHolder)
+                    .ThenInclude(h => h.Person)
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.PimsSecurityDepositReturns)
+                    .ThenInclude(r => r.PimsSecurityDepositReturnHolder)
+                    .ThenInclude(s => s.Organization)
+
+                .Include(l => l.PimsLeaseTerms)
+                     .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
+                .Include(t => t.PimsLeaseTerms)
+                     .ThenInclude(t => t.LeaseTermStatusTypeCodeNavigation)
+                .Include(t => t.PimsLeaseTerms)
+                    .ThenInclude(t => t.PimsLeasePayments)
+                    .ThenInclude(t => t.LeasePaymentMethodTypeCodeNavigation)
+                .Include(t => t.PimsLeaseTerms)
+                    .ThenInclude(t => t.PimsLeasePayments)
+                    .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
@@ -323,7 +445,7 @@ namespace Pims.Dal.Repositories
 
             this.Context.UpdateChild<PimsLease, long, PimsPropertyLease>(l => l.PimsPropertyLeases, leaseId, pimsPropertyLeases.ToArray());
 
-            return Get(existingLease.LeaseId);
+            return GetNoTracking(existingLease.LeaseId);
         }
         #endregion
     }
