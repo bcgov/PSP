@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_CONSULTATION_TYPE")]
+    [Index(nameof(ConsultationStatusTypeCode), Name = "CONTYP_CONSULTATION_STATUS_TYPE_CODE_IDX")]
     public partial class PimsConsultationType
     {
         public PimsConsultationType()
@@ -20,6 +21,10 @@ namespace Pims.Dal.Entities
         [Column("CONSULTATION_TYPE_CODE")]
         [StringLength(20)]
         public string ConsultationTypeCode { get; set; }
+        [Required]
+        [Column("CONSULTATION_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string ConsultationStatusTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -47,6 +52,9 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [ForeignKey(nameof(ConsultationStatusTypeCode))]
+        [InverseProperty(nameof(PimsConsultationStatusType.PimsConsultationTypes))]
+        public virtual PimsConsultationStatusType ConsultationStatusTypeCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsLeaseConsultation.ConsultationTypeCodeNavigation))]
         public virtual ICollection<PimsLeaseConsultation> PimsLeaseConsultations { get; set; }
     }

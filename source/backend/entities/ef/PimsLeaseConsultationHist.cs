@@ -27,10 +27,6 @@ namespace Pims.Dal.Entities
         [Column("CONSULTATION_TYPE_CODE")]
         [StringLength(20)]
         public string ConsultationTypeCode { get; set; }
-        [Required]
-        [Column("CONSULTATION_STATUS_TYPE_CODE")]
-        [StringLength(20)]
-        public string ConsultationStatusTypeCode { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppCreateTimestamp { get; set; }
         [Required]
