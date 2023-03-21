@@ -170,26 +170,6 @@ namespace Pims.Dal.Test.Helpers.Extensions
         }
         #endregion
 
-        #region SetOriginalConcurrencyControlNumber
-        [Fact]
-        public void SetOriginalConcurrencyControlNumber_Success()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var context = helper.InitializeDatabase(user);
-            var property = context.CreateProperty(123);
-            context.SaveChanges();
-            property.ConcurrencyControlNumber = 2;
-
-            // Act
-            property.SetOriginalConcurrencyControlNumber(context);
-
-            // Assert
-            context.Entry(property).OriginalValues[nameof(IBaseEntity.ConcurrencyControlNumber)].Should().BeEquivalentTo(property.ConcurrencyControlNumber);
-            context.Entry(property).CurrentValues[nameof(IBaseEntity.ConcurrencyControlNumber)].Should().BeEquivalentTo(property.ConcurrencyControlNumber);
-        }
-        #endregion
         #endregion
     }
 }

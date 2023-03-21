@@ -1,6 +1,8 @@
+import { CountryCodes } from 'constants/index';
 import { AddressField } from 'features/contacts/interfaces';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { IEditableOrganizationForm, IEditablePersonForm } from 'interfaces/editable-contact';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   hasAddress,
@@ -57,10 +59,16 @@ export const toAddressFields = (addresses: IContactAddress[]) => {
         streetAddress1: value.streetAddress1,
         streetAddress2: value.streetAddress2,
         streetAddress3: value.streetAddress3,
-        municipalityAndProvince:
-          (value.municipality !== undefined ? value.municipality + ' ' : '') +
-          value.province.provinceStateCode,
-        country: value.country?.description,
+        municipalityAndProvince: [
+          value.municipality !== undefined ? value.municipality : '',
+          value.province?.provinceStateCode ?? '',
+        ]
+          .filter(x => !isEmpty(x))
+          .join(' '),
+        country:
+          value.country?.countryCode === CountryCodes.Other
+            ? value.countryOther ?? ''
+            : value.country?.description,
         postal: value.postal,
       });
       return accumulator;

@@ -25,6 +25,8 @@ namespace Pims.Dal.Entities
         [Column("DOCUMENT_TYPE")]
         [StringLength(200)]
         public string DocumentType { get; set; }
+        [Column("DISPLAY_ORDER")]
+        public int? DisplayOrder { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

@@ -120,6 +120,28 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<ArgumentNullException>();
             repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
+
+        [Fact]
+        public void Add_DuplicateTeam()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            Action act = () => service.Add(acqFile);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        }
         #endregion
 
         #region GetById
@@ -594,6 +616,33 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
+
+        [Fact]
+        public void Update_DuplicateTeam()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+            acqFile.PimsAcquisitionFilePeople.Add(new PimsAcquisitionFilePerson() { PersonId = 1, AcqFlPersonProfileTypeCode = "test" });
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            Action act = () => service.Update(acqFile, true);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+
         #endregion
 
         #endregion

@@ -1,9 +1,10 @@
 import userEvent from '@testing-library/user-event';
 import { ContactMethodTypes } from 'constants/contactMethodType';
+import { AddressTypes } from 'constants/index';
 import { useOrganizationDetail } from 'features/contacts/hooks/useOrganizationDetail';
 import { useUpdateContact } from 'features/contacts/hooks/useUpdateContact';
 import { createMemoryHistory } from 'history';
-import { IEditableOrganization } from 'interfaces/editable-contact';
+import { IEditableOrganization, IEditableOrganizationAddress } from 'interfaces/editable-contact';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
@@ -22,22 +23,35 @@ const mockOrganization: IEditableOrganization = {
   alias: '',
   incorporationNumber: 'BC123456789',
   comment: 'I got comments for you',
+  persons: undefined,
   addresses: [],
   contactMethods: [
     { contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail }, value: 'foo@bar.com' },
   ],
 };
 
+const mockAddress: IEditableOrganizationAddress = {
+  streetAddress1: 'Test Street',
+  streetAddress2: '',
+  streetAddress3: '',
+  municipality: 'Amsterdam',
+  provinceId: undefined,
+  countryId: 4,
+  countryOther: 'Netherlands',
+  postal: '123456',
+  addressTypeId: { id: AddressTypes.Mailing },
+};
+
 // Mock API service calls
 jest.mock('features/contacts/hooks/useOrganizationDetail');
 jest.mock('features/contacts/hooks/useUpdateContact');
 
-(useOrganizationDetail as jest.Mock<ReturnType<typeof useOrganizationDetail>>).mockReturnValue({
+(useOrganizationDetail as jest.MockedFunction<typeof useOrganizationDetail>).mockReturnValue({
   organization: mockOrganization,
 });
 
 const updateOrganization = jest.fn();
-(useUpdateContact as jest.Mock<ReturnType<typeof useUpdateContact>>).mockReturnValue({
+(useUpdateContact as jest.MockedFunction<typeof useUpdateContact>).mockReturnValue({
   updateOrganization,
   updatePerson: jest.fn(),
 });
@@ -59,7 +73,7 @@ describe('UpdateOrganizationForm', () => {
   };
 
   beforeEach(() => {
-    updateOrganization.mockReset();
+    updateOrganization.mockClear();
   });
 
   it('renders as expected', async () => {
@@ -72,9 +86,8 @@ describe('UpdateOrganizationForm', () => {
     it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup({ id: 1 });
       const cancel = getCancelButton();
-      act(() => userEvent.click(cancel));
-
-      await act(async () => expect(history.location.pathname).toBe('/contact/O1'));
+      await act(() => userEvent.click(cancel));
+      expect(history.location.pathname).toBe('/contact/O1');
     });
   });
 
@@ -82,13 +95,13 @@ describe('UpdateOrganizationForm', () => {
     it('should update the organization with minimal data', async () => {
       const { getSaveButton } = setup({ id: 1 });
       const save = getSaveButton();
-      act(() => userEvent.click(save));
-
-      await waitFor(() => expect(updateOrganization).toBeCalledWith(mockOrganization));
+      await act(() => userEvent.click(save));
+      expect(updateOrganization).toBeCalledWith(mockOrganization);
     });
 
     it('should save the organization with new values', async () => {
-      const newValues: Partial<IEditableOrganization> = {
+      const newValues: IEditableOrganization = {
+        ...mockOrganization,
         name: 'RandomName Property Management',
         contactMethods: [
           {
@@ -114,11 +127,34 @@ describe('UpdateOrganizationForm', () => {
       );
 
       const save = getSaveButton();
-      act(() => userEvent.click(save));
+      await act(() => userEvent.click(save));
 
-      await waitFor(() =>
-        expect(updateOrganization).toBeCalledWith({ ...mockOrganization, ...newValues }),
-      );
+      expect(updateOrganization).toBeCalledWith(newValues);
+    });
+
+    it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
+      const newValues: IEditableOrganization = {
+        ...mockOrganization,
+        name: 'RandomName Property Management',
+        addresses: [mockAddress],
+      };
+      const { getSaveButton, container } = setup({ id: 1 });
+
+      // change some fields
+      await fillInput(container, 'name', newValues.name);
+      await fillInput(container, 'mailingAddress.streetAddress1', mockAddress.streetAddress1);
+      await fillInput(container, 'mailingAddress.municipality', mockAddress.municipality);
+
+      // wait for re-render upon changing country to OTHER
+      await act(async () => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
+
+      await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
+      await fillInput(container, 'mailingAddress.postal', mockAddress.postal);
+
+      const save = getSaveButton();
+      await act(() => userEvent.click(save));
+
+      expect(updateOrganization).toBeCalledWith(newValues);
     });
   });
 });

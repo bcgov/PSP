@@ -16,6 +16,5 @@ namespace Pims.Api.Repositories.Cdogs
         Task<ExternalResult<FileTypes>> TryGetFileTypesAsync();
 
         Task<ExternalResult<FileDownload>> UploadAndGenerate(RenderRequest request);
-
     }
 }

@@ -12,21 +12,5 @@ namespace Pims.Dal.Repositories
         Paged<PimsRole> GetPage(int page, int quantity, string name = null);
 
         PimsRole GetByKey(Guid key);
-
-        PimsRole GetByName(string name);
-
-        PimsRole GetByKeycloakId(Guid key);
-
-        PimsRole Add(PimsRole add);
-
-        void AddWithoutSave(PimsRole add);
-
-        PimsRole Update(PimsRole update);
-
-        PimsRole UpdateWithoutSave(PimsRole update);
-
-        void Delete(PimsRole delete);
-
-        int RemoveAll(Guid[] exclude);
     }
 }

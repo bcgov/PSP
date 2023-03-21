@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
@@ -57,8 +58,8 @@ namespace Pims.Api.Services
                 var property = propertyLease.Property;
                 if (property?.Location != null)
                 {
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, property.Location.Coordinate);
-                    property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
+                    property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
             return lease;
@@ -149,8 +150,8 @@ namespace Pims.Api.Services
                     {
                         throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                     }
-                    throw new UserOverrideException($"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString() ?? string.Empty}, " +
-                        $"{propertyLease?.Property?.Location.Coordinate.Y.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
+                    throw new UserOverrideException($"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
+                        $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}");
                 }
 
                 // If the property exist dont update it, just refer to it by id.
@@ -231,10 +232,10 @@ namespace Pims.Api.Services
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
-            if (geom.SRID != SpatialReference.BC_ALBERS)
+            if (geom.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
         }
     }

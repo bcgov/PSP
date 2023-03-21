@@ -67,42 +67,6 @@ namespace Pims.Api.Test.Routes.Admin
             Assert.NotNull(endpoint);
             endpoint.HasGet("{key}");
         }
-
-        [Fact]
-        public void AddClaim_Route()
-        {
-            // Arrange
-            var endpoint = typeof(ClaimController).FindMethod(nameof(ClaimController.AddClaim), typeof(Model.ClaimModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPost();
-        }
-
-        [Fact]
-        public void UpdateClaim_Route()
-        {
-            // Arrange
-            var endpoint = typeof(ClaimController).FindMethod(nameof(ClaimController.UpdateClaim), typeof(Guid), typeof(Model.ClaimModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPut("{key}");
-        }
-
-        [Fact]
-        public void DeleteClaim_Route()
-        {
-            // Arrange
-            var endpoint = typeof(ClaimController).FindMethod(nameof(ClaimController.DeleteClaim), typeof(Guid), typeof(Model.ClaimModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasDelete("{key}");
-        }
         #endregion
     }
 }

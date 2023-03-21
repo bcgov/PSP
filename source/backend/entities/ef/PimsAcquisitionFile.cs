@@ -23,7 +23,9 @@ namespace Pims.Dal.Entities
         public PimsAcquisitionFile()
         {
             PimsAcquisitionActivityInstances = new HashSet<PimsAcquisitionActivityInstance>();
+            PimsAcquisitionChecklistItems = new HashSet<PimsAcquisitionChecklistItem>();
             PimsAcquisitionFileDocuments = new HashSet<PimsAcquisitionFileDocument>();
+            PimsAcquisitionFileForms = new HashSet<PimsAcquisitionFileForm>();
             PimsAcquisitionFileNotes = new HashSet<PimsAcquisitionFileNote>();
             PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
             PimsAcquisitionOwners = new HashSet<PimsAcquisitionOwner>();
@@ -82,6 +84,8 @@ namespace Pims.Dal.Entities
         public DateTime? AssignedDate { get; set; }
         [Column("DELIVERY_DATE", TypeName = "datetime")]
         public DateTime? DeliveryDate { get; set; }
+        [Column("COMPLETION_DATE", TypeName = "datetime")]
+        public DateTime? CompletionDate { get; set; }
         [Column("PAIMS_ACQUISITION_FILE_ID")]
         public int? PaimsAcquisitionFileId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -146,8 +150,12 @@ namespace Pims.Dal.Entities
         public virtual PimsRegion RegionCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsAcquisitionActivityInstance.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionChecklistItem.AcquisitionFile))]
+        public virtual ICollection<PimsAcquisitionChecklistItem> PimsAcquisitionChecklistItems { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFileDocument.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionFileDocument> PimsAcquisitionFileDocuments { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionFileForm.AcquisitionFile))]
+        public virtual ICollection<PimsAcquisitionFileForm> PimsAcquisitionFileForms { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFileNote.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionFileNote> PimsAcquisitionFileNotes { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFilePerson.AcquisitionFile))]

@@ -70,6 +70,8 @@ namespace Pims.Dal.Entities
         public DateTime? AssignedDate { get; set; }
         [Column("DELIVERY_DATE", TypeName = "datetime")]
         public DateTime? DeliveryDate { get; set; }
+        [Column("COMPLETION_DATE", TypeName = "datetime")]
+        public DateTime? CompletionDate { get; set; }
         [Column("PAIMS_ACQUISITION_FILE_ID")]
         public int? PaimsAcquisitionFileId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]

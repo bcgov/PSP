@@ -206,7 +206,7 @@ namespace Pims.Api.Test.Services
             var duplicateCode = new PimsProduct() { Code = "1" };
 
             var productRepository = helper.GetService<Mock<IProductRepository>>();
-            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct>() { duplicateCode });
+            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>(), It.IsAny<long>())).Returns(new List<PimsProduct>() { duplicateCode });
             
             // Act
             Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
@@ -372,7 +372,7 @@ namespace Pims.Api.Test.Services
             var duplicateCode = new PimsProduct() { Code = "1" };
 
             var productRepository = helper.GetService<Mock<IProductRepository>>();
-            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct>() { duplicateCode });
+            productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>(), It.IsAny<long>())).Returns(new List<PimsProduct>() { duplicateCode });
 
             // Act
             Action result = () => service.Update(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });

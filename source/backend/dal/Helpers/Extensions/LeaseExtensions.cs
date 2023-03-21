@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +54,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             long leaseId = GetNextLeaseSequenceValue(context);
             lease.LeaseId = leaseId;
-            lease.LFileNo = $"L-{lease.LeaseId.ToString().PadLeft(6, '0').Insert(3, "-")}";
+            lease.LFileNo = $"L-{lease.LeaseId.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0').Insert(3, "-")}";
             return lease;
         }
 
@@ -274,7 +275,6 @@ namespace Pims.Dal.Helpers.Extensions
                     .ThenInclude(t => t.Organization)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(l => l.PimsLeaseTerms);
-                
 
             if (loadPayments)
             {
