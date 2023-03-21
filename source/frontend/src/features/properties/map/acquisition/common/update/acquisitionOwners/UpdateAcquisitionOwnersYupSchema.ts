@@ -6,7 +6,7 @@ export const UpdateAcquisitionOwnersYupSchema = Yup.object().shape({
     Yup.object().shape({
       isOrganization: Yup.string(),
       lastNameAndCorpName: Yup.string().when('isOrganization', {
-        is: true,
+        is: 'true',
         then: Yup.string().max(300, 'Corporation name must be at most ${max} characters'),
         otherwise: Yup.string().max(300, 'Last name must be at most ${max} characters'),
       }),
