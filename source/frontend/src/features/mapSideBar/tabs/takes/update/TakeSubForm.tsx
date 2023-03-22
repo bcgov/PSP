@@ -209,7 +209,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                   }}
                   isEditable
                   unitCode={getIn(values, withNameSpace(nameSpace, 'landActAreaUnitTypeCode'))}
-                  landArea={currentTake.isLandActArea}
+                  landArea={currentTake.landActArea}
                   field={withNameSpace(nameSpace, 'landActArea')}
                 />
               </SectionField>

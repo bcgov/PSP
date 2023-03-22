@@ -159,7 +159,7 @@ describe('TakesUpdateForm component', () => {
 
   it('resets isSurplus values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isSurplus-no');
+    const noButton = getByTestId('radio-takes.0.issurplus-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('20234.28')).not.toBeNull();

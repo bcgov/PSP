@@ -1035,16 +1035,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             <input
                               checked=""
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.issection16-yes"
+                              data-testid="radio-takes.0.islandact-yes"
                               id="input-true"
-                              name="takes.0.isSection16"
+                              name="takes.0.isLandAct"
                               type="radio"
                               value="true"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isSection16"
+                            for="takes.0.isLandAct"
                           >
                             Yes
                           </label>
@@ -1057,16 +1057,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           >
                             <input
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.issection16-no"
+                              data-testid="radio-takes.0.islandact-no"
                               id="input-false"
-                              name="takes.0.isSection16"
+                              name="takes.0.isLandAct"
                               type="radio"
                               value="false"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isSection16"
+                            for="takes.0.isLandAct"
                           >
                             No
                           </label>
@@ -1223,8 +1223,8 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           <input
                             autocomplete="off"
                             class="c16 form-control date-picker"
-                            id="datepicker-takes.0.section16EndDt"
-                            name="takes.0.section16EndDt"
+                            id="datepicker-takes.0.landActEndDt"
+                            name="takes.0.landActEndDt"
                             placeholder="--/--/----"
                             type="text"
                             value="01/01/2020"
@@ -1533,7 +1533,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             <input
                               checked=""
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.isSurplus-yes"
+                              data-testid="radio-takes.0.issurplus-yes"
                               id="input-true"
                               name="takes.0.isSurplus"
                               type="radio"
@@ -1555,7 +1555,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           >
                             <input
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.isSurplus-no"
+                              data-testid="radio-takes.0.issurplus-no"
                               id="input-false"
                               name="takes.0.isSurplus"
                               type="radio"
