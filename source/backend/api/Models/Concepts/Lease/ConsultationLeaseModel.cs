@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
 
         public TypeModel<string> ConsultationType { get; set; }
 
-        // TODO: this needs to be mapped correctly.
         public TypeModel<string> ConsultationStatusType { get; set; }
 
         public long ParentLeaseId { get; set; }

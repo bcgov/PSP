@@ -1,15 +1,11 @@
 import { IMapProperty } from 'components/propertySelector/models';
 import { PropertyAreaUnitTypes } from 'constants/index';
 import { LeaseInitiatorTypes } from 'constants/leaseInitiatorTypes';
-import {
-  DetailAcquisitionFile,
-  DetailAcquisitionFilePerson,
-} from 'features/properties/map/acquisition/detail/models';
 import { PropertyForm } from 'features/properties/map/shared/models';
 import { IAutocompletePrediction } from 'interfaces';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Lease, Api_LeaseConsultation } from 'models/api/Lease';
 import { Api_PropertyLease } from 'models/api/PropertyLease';
+import { ILookupCode } from 'store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 
@@ -94,8 +90,12 @@ export class LeaseFormModel {
       apiModel?.project !== undefined
         ? { id: apiModel.project.id || 0, text: apiModel.project.description || '' }
         : undefined;
+
+    const sortedConsultations = apiModel?.consultations?.sort(
+      (a, b) => (a.consultationType?.displayOrder || 0) - (b.consultationType?.displayOrder || 0),
+    );
     leaseDetail.consultations =
-      apiModel?.consultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
+      sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
 
     return leaseDetail;
   }
@@ -152,32 +152,6 @@ export class LeaseFormModel {
   }
 }
 
-export class LeaseDetails {
-  fileName?: string;
-  assignedDate?: string;
-  deliveryDate?: string;
-  acquisitionPhysFileStatusTypeDescription?: string;
-  acquisitionTypeDescription?: string;
-  regionDescription?: string;
-  acquisitionTeam: DetailAcquisitionFilePerson[] = [];
-
-  static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
-    const detail = new DetailAcquisitionFile();
-    detail.fileName = model?.fileName;
-    detail.assignedDate = model?.assignedDate;
-    detail.deliveryDate = model?.deliveryDate;
-    detail.acquisitionPhysFileStatusTypeDescription =
-      model?.acquisitionPhysFileStatusTypeCode?.description;
-    detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description;
-    detail.regionDescription = model?.regionCode?.description;
-    // acquisition team array
-    detail.acquisitionTeam =
-      model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
-
-    return detail;
-  }
-}
-
 export class FormLeaseProperty {
   id?: number;
   property?: PropertyForm;
@@ -225,18 +199,36 @@ export class FormLeaseProperty {
   }
 }
 
-class FormLeaseConsultation {
+export class FormLeaseConsultation {
   public id: number = 0;
   public consultationType: string = '';
+  public consultationTypeDescription: string = '';
   public consultationStatusType: string = '';
+  public consultationStatusTypeDescription: string = '';
   public parentLeaseId: number = 0;
+  public rowVersion: number | undefined = undefined;
 
   static fromApi(apiModel: Api_LeaseConsultation): FormLeaseConsultation {
     const model = new FormLeaseConsultation();
     model.id = apiModel.id || 0;
     model.consultationType = fromTypeCode(apiModel.consultationType) || '';
+    model.consultationTypeDescription = apiModel.consultationType?.description || '';
     model.consultationStatusType = fromTypeCode(apiModel.consultationStatusType) || '';
+    model.consultationStatusTypeDescription = apiModel.consultationStatusType?.description || '';
     model.parentLeaseId = apiModel.parentLeaseId || 0;
+    model.rowVersion = apiModel.rowVersion || 0;
+    return model;
+  }
+
+  static fromApiLookup(parentLease: number, typeModel: ILookupCode): FormLeaseConsultation {
+    const model = new FormLeaseConsultation();
+    model.id = 0;
+    model.consultationType = typeModel.id.toString() || '';
+    model.consultationTypeDescription = typeModel?.name || '';
+    model.consultationStatusType = 'UNKNOWN';
+    model.consultationStatusTypeDescription = 'Unknown';
+    model.parentLeaseId = parentLease;
+    model.rowVersion = undefined;
     return model;
   }
 
@@ -246,6 +238,7 @@ class FormLeaseConsultation {
       consultationType: toTypeCode(this.consultationType) || null,
       consultationStatusType: toTypeCode(this.consultationStatusType) || null,
       parentLeaseId: this.parentLeaseId,
+      rowVersion: this.rowVersion,
     };
   }
 }

@@ -1,16 +1,13 @@
-import { FastDatePicker, Input, Select } from 'components/common/form';
-import { InlineInput } from 'components/common/form/styles';
+import { Input, Select } from 'components/common/form';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
-import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { LeaseFormModel } from '../models';
-import * as Styled from './styles';
+import { FormLeaseConsultation, LeaseFormModel } from '../models';
 
 export interface IConsultationSubFormProps {
   formikProps: FormikProps<LeaseFormModel>;
@@ -20,41 +17,57 @@ const ConsultationSubForm: React.FunctionComponent<
   React.PropsWithChildren<IConsultationSubFormProps>
 > = ({ formikProps }) => {
   const { values, setFieldValue } = formikProps;
-  const { categoryTypeCode, leaseTypeCode, purposeTypeCode, programTypeCode } = values;
+  const { consultations } = values;
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
-  const programTypes = getOptionsByType(API.LEASE_PROGRAM_TYPES);
-  const types = getOptionsByType(API.LEASE_TYPES);
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
   const consultationStatusTypes = getOptionsByType(API.CONSULTATION_STATUS_TYPES);
 
-  //clear the associated other fields if the corresponding type has its value changed from other to something else.
-  useEffect(() => {
-    if (!!programTypeCode && programTypeCode !== 'OTHER') {
-      setFieldValue('otherProgramTypeDescription', '');
-    }
-  }, [programTypeCode, setFieldValue]);
+  // Not all consultations might be comming from the backend. Add the ones missing.
+  if (consultations.length !== consultationTypes.length) {
+    const newConsultations: FormLeaseConsultation[] = [];
 
-  useEffect(() => {
-    if (!!leaseTypeCode && !isLeaseCategoryVisible(leaseTypeCode)) {
-      setFieldValue('categoryTypeCode', '');
-    }
-  }, [leaseTypeCode, setFieldValue]);
+    consultationTypes.forEach(x => {
+      const newConsultation = FormLeaseConsultation.fromApiLookup(values.id || 0, x);
+
+      // If there is a consultation with the type, set the status to the existing one
+      let existingConsultation = consultations.find(y => y.consultationType === x.id);
+      if (existingConsultation !== undefined) {
+        newConsultation.id = existingConsultation.id;
+        newConsultation.consultationStatusType = existingConsultation.consultationStatusType;
+        newConsultation.consultationStatusTypeDescription =
+          existingConsultation.consultationStatusTypeDescription;
+        newConsultation.rowVersion = existingConsultation.rowVersion;
+      }
+      newConsultations.push(newConsultation);
+    });
+    setFieldValue('consultations', newConsultations);
+  }
 
   return (
-    <Section header="Consultation">
-      {consultationTypes.map((a, i) => (
-        <SectionField key={`consultation-${a.name}`} label={a.name} labelWidth="4" contentWidth="8">
+    <Section header="Consultation" isCollapsable initiallyExpanded>
+      {values.consultations.map((a, i) => (
+        <SectionField
+          key={`consultations.${i}`}
+          label={a.consultationTypeDescription}
+          labelWidth="4"
+          contentWidth="8"
+        >
           <Row>
             <Col>
               <Select
-                field="consultationa"
+                field={`consultations.${i}.consultationStatusType`}
                 options={consultationStatusTypes}
-                placeholder="Unknown"
                 required
               />
             </Col>
             <Col>
-              {a.id === 'OTHER' && <Input field="regionId" placeholder="Describe other" required />}
+              {a.consultationType === 'OTHER' && (
+                <Input
+                  field={`consultations.${i}.consultationTypeOtherDescription`}
+                  placeholder="Describe other"
+                  required
+                />
+              )}
             </Col>
           </Row>
         </SectionField>

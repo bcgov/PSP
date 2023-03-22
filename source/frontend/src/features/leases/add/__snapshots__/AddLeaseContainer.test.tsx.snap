@@ -251,7 +251,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c23 {
+.c24 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -263,7 +263,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c23 .form-label {
+.c24 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -318,6 +318,11 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 .c1 {
   height: 100%;
   width: 100%;
+}
+
+.c23 {
+  float: right;
+  cursor: pointer;
 }
 
 .c8 {
@@ -403,7 +408,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c24 input.form-control {
+.c25 input.form-control {
   min-width: 50rem;
   max-width: 50rem;
 }
@@ -557,6 +562,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         value="DRAFT"
                       >
                         Draft
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-DUPLICATE"
+                        value="DUPLICATE"
+                      >
+                        Duplicate
                       </option>
                       <option
                         class="option"
@@ -2236,6 +2248,533 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               <div
                 class="col"
               >
+                Consultation
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c23"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    collapse-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  First nation:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-8"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-consultations.0.consultationStatusType"
+                        name="consultations.0.consultationStatusType"
+                        required=""
+                      >
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQNTCOM"
+                          value="REQNTCOM"
+                        >
+                          Required, not completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQCOMP"
+                          value="REQCOMP"
+                        >
+                          Required, completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQD"
+                          value="NOTREQD"
+                        >
+                          Not required
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Strategic Real Estate (SRE):
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-8"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-consultations.1.consultationStatusType"
+                        name="consultations.1.consultationStatusType"
+                        required=""
+                      >
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQNTCOM"
+                          value="REQNTCOM"
+                        >
+                          Required, not completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQCOMP"
+                          value="REQCOMP"
+                        >
+                          Required, completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQD"
+                          value="NOTREQD"
+                        >
+                          Not required
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Regional planning:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-8"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-consultations.2.consultationStatusType"
+                        name="consultations.2.consultationStatusType"
+                        required=""
+                      >
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQNTCOM"
+                          value="REQNTCOM"
+                        >
+                          Required, not completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQCOMP"
+                          value="REQCOMP"
+                        >
+                          Required, completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQD"
+                          value="NOTREQD"
+                        >
+                          Not required
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Regional property services:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-8"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-consultations.3.consultationStatusType"
+                        name="consultations.3.consultationStatusType"
+                        required=""
+                      >
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQNTCOM"
+                          value="REQNTCOM"
+                        >
+                          Required, not completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQCOMP"
+                          value="REQCOMP"
+                        >
+                          Required, completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQD"
+                          value="NOTREQD"
+                        >
+                          Not required
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  District:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-8"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-consultations.4.consultationStatusType"
+                        name="consultations.4.consultationStatusType"
+                        required=""
+                      >
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQNTCOM"
+                          value="REQNTCOM"
+                        >
+                          Required, not completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQCOMP"
+                          value="REQCOMP"
+                        >
+                          Required, completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQD"
+                          value="NOTREQD"
+                        >
+                          Not required
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Headquarter (HQ):
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-8"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-consultations.5.consultationStatusType"
+                        name="consultations.5.consultationStatusType"
+                        required=""
+                      >
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQNTCOM"
+                          value="REQNTCOM"
+                        >
+                          Required, not completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQCOMP"
+                          value="REQCOMP"
+                        >
+                          Required, completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQD"
+                          value="NOTREQD"
+                        >
+                          Not required
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c4"
+                >
+                  Other:
+                </label>
+              </div>
+              <div
+                class="c5 text-left col-8"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-consultations.6.consultationStatusType"
+                        name="consultations.6.consultationStatusType"
+                        required=""
+                      >
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQNTCOM"
+                          value="REQNTCOM"
+                        >
+                          Required, not completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REQCOMP"
+                          value="REQCOMP"
+                        >
+                          Required, completed
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQD"
+                          value="NOTREQD"
+                        >
+                          Not required
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="required input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-consultations.6.consultationTypeOtherDescription"
+                        name="consultations.6.consultationTypeOtherDescription"
+                        placeholder="Describe other"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c3 form-section"
+        >
+          <h2
+            class="c8"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
                 Documentation
               </div>
               <div
@@ -2262,7 +2801,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col-5"
               >
                 <div
-                  class="c23 form-group"
+                  class="c24 form-group"
                 >
                   <select
                     class="form-control"
@@ -2304,7 +2843,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col-5"
               >
                 <div
-                  class="c23 form-group"
+                  class="c24 form-group"
                 >
                   <select
                     class="form-control"
@@ -2397,7 +2936,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c21 c24 input form-group"
+                  class="c21 c25 input form-group"
                 >
                   <input
                     class="form-control"
@@ -2425,7 +2964,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 class="c5 text-left col"
               >
                 <div
-                  class="c21 c24 input form-group"
+                  class="c21 c25 input form-group"
                 >
                   <input
                     class="form-control"

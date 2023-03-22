@@ -15,18 +15,5 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Id { get => ConsultationStatusTypeCode; set => ConsultationStatusTypeCode = value; }
         #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Create a new instance of a PimsConsultationStatusType class.
-        /// </summary>
-        /// <param name="id"></param>
-        public PimsConsultationStatusType(string id)
-            : this()
-        {
-            Id = id;
-        }
-        #endregion
     }
 }
