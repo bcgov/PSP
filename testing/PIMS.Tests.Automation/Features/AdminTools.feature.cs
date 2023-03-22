@@ -80,16 +80,16 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Help Desk Section")]
+        [Xunit.SkippableFactAttribute(DisplayName="01. Help Desk Section")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "Help Desk Section")]
+        [Xunit.TraitAttribute("Description", "01. Help Desk Section")]
         [Xunit.TraitAttribute("Category", "AdminTools")]
-        public void HelpDeskSection()
+        public void _01_HelpDeskSection()
         {
             string[] tagsOfScenario = new string[] {
                     "AdminTools"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Help Desk Section", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Help Desk Section", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,14 +110,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="User Management List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="02. User Management List View")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "User Management List View")]
-        public void UserManagementListView()
+        [Xunit.TraitAttribute("Description", "02. User Management List View")]
+        public void _02_UserManagementListView()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User Management List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. User Management List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -138,14 +138,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="CDOGS Templates")]
+        [Xunit.SkippableFactAttribute(DisplayName="03. CDOGS Templates")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "CDOGS Templates")]
-        public void CDOGSTemplates()
+        [Xunit.TraitAttribute("Description", "03. CDOGS Templates")]
+        public void _03_CDOGSTemplates()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CDOGS Templates", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. CDOGS Templates", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -166,14 +166,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create and Edit Financial Codes")]
+        [Xunit.SkippableFactAttribute(DisplayName="04. Create and Edit Financial Codes")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "Create and Edit Financial Codes")]
-        public void CreateAndEditFinancialCodes()
+        [Xunit.TraitAttribute("Description", "04. Create and Edit Financial Codes")]
+        public void _04_CreateAndEditFinancialCodes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create and Edit Financial Codes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Create and Edit Financial Codes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -197,14 +197,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Duplicate existing Financial Code")]
+        [Xunit.SkippableFactAttribute(DisplayName="05. Duplicate existing Financial Code")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "Duplicate existing Financial Code")]
-        public void DuplicateExistingFinancialCode()
+        [Xunit.TraitAttribute("Description", "05. Duplicate existing Financial Code")]
+        public void _05_DuplicateExistingFinancialCode()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Duplicate existing Financial Code", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Duplicate existing Financial Code", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
