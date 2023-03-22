@@ -20,7 +20,7 @@ const mockApi = {
 };
 jest.mock('../hooks/useFormRepository', () => ({
   useFormRepository: () => ({
-    addFileForm: mockApi,
+    addFilesForm: mockApi,
   }),
 }));
 

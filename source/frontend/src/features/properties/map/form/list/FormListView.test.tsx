@@ -21,7 +21,7 @@ describe('form list view', () => {
       ...renderOptions,
       store: storeState,
       history: history,
-      claims: renderOptions?.claims ?? [Claims.ACQUISITION_VIEW],
+      claims: renderOptions?.claims ?? [Claims.FORM_VIEW, Claims.FORM_ADD],
     });
 
     return {
