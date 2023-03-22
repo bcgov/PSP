@@ -48,7 +48,7 @@ namespace Pims.Api.Test.Services
         public void AddFormFile_Success()
         {
             // Arrange
-            var service = CreateFormServiceWithPermissions(Permissions.ActivityAdd, Permissions.ResearchFileEdit);
+            var service = CreateFormServiceWithPermissions(Permissions.FormAdd);
 
             var repository = _helper.GetService<Mock<IAcquisitionFileFormRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFileForm>()));
