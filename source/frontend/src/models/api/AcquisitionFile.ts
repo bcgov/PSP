@@ -45,9 +45,13 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
 export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   acquisitionFileId?: number;
-  lastNameOrCorp1?: string;
-  lastNameOrCorp2?: string;
-  givenName?: string;
-  incorporationNumber?: string;
-  address: Api_Address | undefined;
+  isOrganization: boolean;
+  lastNameAndCorpName: string | null;
+  otherName: string | null;
+  givenName: string | null;
+  incorporationNumber: string | null;
+  registrationNumber: string | null;
+  contactEmailAddr: string | null;
+  contactPhoneNum: string | null;
+  address: Api_Address | null;
 }
