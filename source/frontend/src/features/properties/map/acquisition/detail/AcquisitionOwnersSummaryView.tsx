@@ -32,6 +32,8 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
             <SectionField label="Mailing address">
               <StyledAddressWrapper>{owner.ownerDisplayAddress}</StyledAddressWrapper>
             </SectionField>
+            <SectionField label="Email">{owner.ownerContactEmail}</SectionField>
+            <SectionField label="Phone">{owner.ownerContactPhone}</SectionField>
             {index < ownersList.length - 1 && <hr></hr>}
           </span>
         );

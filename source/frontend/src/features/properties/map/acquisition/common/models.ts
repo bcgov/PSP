@@ -44,19 +44,31 @@ export class AcquisitionOwnerFormModel {
   id?: number;
   rowVersion?: number;
   acquisitionFileId?: number;
-  lastNameOrCorp1?: string;
-  lastNameOrCorp2?: string;
-  givenName?: string;
-  incorporationNumber?: string;
+  isOrganization: string = 'false';
+  lastNameAndCorpName: string | '' = '';
+  otherName: string | '' = '';
+  givenName: string | '' = '';
+  incorporationNumber: string | '' = '';
+  registrationNumber: string | '' = '';
+  contactEmailAddress: string | '' = '';
+  contactPhoneNumber: string | '' = '';
   address?: OwnerAddressFormModel;
 
   isEmpty(): boolean {
-    return (
-      this.lastNameOrCorp1?.trim() === '' &&
-      this.lastNameOrCorp2?.trim() === '' &&
-      this.givenName?.trim() === '' &&
-      this.incorporationNumber?.trim() === ''
-    );
+    if (this.isOrganization) {
+      return (
+        this.lastNameAndCorpName?.trim() === '' &&
+        this.otherName?.trim() === '' &&
+        this.incorporationNumber?.trim() === '' &&
+        this.registrationNumber?.trim() === ''
+      );
+    } else {
+      return (
+        this.givenName?.trim() === '' &&
+        this.lastNameAndCorpName?.trim() === '' &&
+        this.otherName?.trim() === ''
+      );
+    }
   }
 
   toApi(): Api_AcquisitionFileOwner {
@@ -64,10 +76,26 @@ export class AcquisitionOwnerFormModel {
       id: this.id,
       rowVersion: this.rowVersion,
       acquisitionFileId: this.acquisitionFileId,
-      lastNameOrCorp1: this.lastNameOrCorp1,
-      lastNameOrCorp2: this.lastNameOrCorp2,
-      givenName: this.givenName,
-      incorporationNumber: this.incorporationNumber,
+      isOrganization: this.isOrganization === 'true' ? true : false,
+      lastNameAndCorpName: this.lastNameAndCorpName,
+      otherName: this.otherName,
+      givenName: this.isOrganization === 'true' ? null : this.givenName.trim(),
+      incorporationNumber:
+        this.isOrganization === 'true'
+          ? this.incorporationNumber.trim() === ''
+            ? null
+            : this.incorporationNumber.trim()
+          : null,
+      registrationNumber:
+        this.isOrganization === 'true'
+          ? this.registrationNumber.trim() === ''
+            ? null
+            : this.registrationNumber.trim()
+          : null,
+      contactEmailAddr:
+        this.contactEmailAddress.trim() === '' ? null : this.contactEmailAddress.trim(),
+      contactPhoneNum:
+        this.contactPhoneNumber.trim() === '' ? null : this.contactPhoneNumber.trim(),
       address: OwnerAddressFormModel.toApi(this.address),
     };
   }
@@ -77,10 +105,14 @@ export class AcquisitionOwnerFormModel {
     newForm.id = model.id;
     newForm.rowVersion = model.rowVersion;
     newForm.acquisitionFileId = model.acquisitionFileId;
-    newForm.lastNameOrCorp1 = model.lastNameOrCorp1;
-    newForm.lastNameOrCorp2 = model.lastNameOrCorp2;
-    newForm.givenName = model.givenName;
-    newForm.incorporationNumber = model.incorporationNumber;
+    newForm.isOrganization = model.isOrganization ? 'true' : 'false';
+    newForm.lastNameAndCorpName = model.lastNameAndCorpName || '';
+    newForm.otherName = model.otherName || '';
+    newForm.givenName = model.givenName || '';
+    newForm.incorporationNumber = model.incorporationNumber || '';
+    newForm.registrationNumber = model.registrationNumber || '';
+    newForm.contactEmailAddress = model.contactEmailAddr || '';
+    newForm.contactPhoneNumber = model.contactPhoneNum || '';
     newForm.address = model.address ? OwnerAddressFormModel.fromApi(model.address!) : undefined;
 
     return newForm;
@@ -130,12 +162,12 @@ export class OwnerAddressFormModel {
     return model;
   }
 
-  static toApi(model: OwnerAddressFormModel | undefined): Api_Address | undefined {
+  static toApi(model: OwnerAddressFormModel | undefined): Api_Address | null {
     if (
       !model ||
       (isEmpty(model.streetAddress1) && isEmpty(model.municipality) && isEmpty(model.postal))
     ) {
-      return undefined;
+      return null;
     }
 
     return {
