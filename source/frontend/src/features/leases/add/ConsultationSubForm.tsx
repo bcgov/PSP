@@ -22,15 +22,17 @@ const ConsultationSubForm: React.FunctionComponent<
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
   const consultationStatusTypes = getOptionsByType(API.CONSULTATION_STATUS_TYPES);
 
-  // Not all consultations might be comming from the backend. Add the ones missing.
+  // Not all consultations might be coming from the backend. Add the ones missing.
   if (consultations.length !== consultationTypes.length) {
     const newConsultations: FormLeaseConsultation[] = [];
 
-    consultationTypes.forEach(x => {
-      const newConsultation = FormLeaseConsultation.fromApiLookup(values.id || 0, x);
+    consultationTypes.forEach(consultationType => {
+      const newConsultation = FormLeaseConsultation.fromApiLookup(values.id || 0, consultationType);
 
       // If there is a consultation with the type, set the status to the existing one
-      let existingConsultation = consultations.find(y => y.consultationType === x.id);
+      let existingConsultation = consultations.find(
+        consultation => consultation.consultationType === consultationType.id,
+      );
       if (existingConsultation !== undefined) {
         newConsultation.id = existingConsultation.id;
         newConsultation.consultationStatusType = existingConsultation.consultationStatusType;
@@ -45,10 +47,10 @@ const ConsultationSubForm: React.FunctionComponent<
 
   return (
     <Section header="Consultation" isCollapsable initiallyExpanded>
-      {values.consultations.map((a, i) => (
+      {values.consultations.map((consultation, i) => (
         <SectionField
-          key={`consultations.${i}`}
-          label={a.consultationTypeDescription}
+          key={`consultations-${consultation.consultationTypeDescription}`}
+          label={consultation.consultationTypeDescription}
           labelWidth="4"
           contentWidth="8"
         >
@@ -61,7 +63,7 @@ const ConsultationSubForm: React.FunctionComponent<
               />
             </Col>
             <Col>
-              {a.consultationType === 'OTHER' && (
+              {consultation.consultationType === 'OTHER' && (
                 <Input
                   field={`consultations.${i}.consultationTypeOtherDescription`}
                   placeholder="Describe other"
@@ -74,11 +76,6 @@ const ConsultationSubForm: React.FunctionComponent<
       ))}
     </Section>
   );
-};
-
-export const isLeaseCategoryVisible = (typeId?: string) => {
-  const visibleCategoryTypes = ['LSGRND', 'LSREG', 'LSUNREG'];
-  return !!typeId && visibleCategoryTypes.includes(typeId);
 };
 
 export default ConsultationSubForm;

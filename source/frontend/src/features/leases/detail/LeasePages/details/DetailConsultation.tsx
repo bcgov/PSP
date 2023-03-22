@@ -22,21 +22,26 @@ export const DetailConsultation: React.FunctionComponent<
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
 
-  // Not all consultations might be comming from the backend. Add the ones missing.
+  // Not all consultations might be coming from the backend. Add the ones missing.
   if (values.consultations.length !== consultationTypes.length) {
     const newConsultations: Api_LeaseConsultation[] = [];
 
-    consultationTypes.forEach(x => {
+    consultationTypes.forEach(consultationType => {
       const newConsultation: Api_LeaseConsultation = {
         id: 0,
         parentLeaseId: values.id || 0,
-        consultationType: { id: x.id.toString(), description: x.name },
+        consultationType: {
+          id: consultationType.id.toString(),
+          description: consultationType.name,
+        },
         consultationStatusType: { id: 'UNKNOWN', description: 'Unknown' },
         rowVersion: 0,
       };
 
       // If there is a consultation with the type, set the status to the existing one
-      let existingConsultation = values.consultations.find(y => y.consultationType?.id === x.id);
+      let existingConsultation = values.consultations.find(
+        consultation => consultation.consultationType?.id === consultationType.id,
+      );
       if (existingConsultation !== undefined) {
         newConsultation.id = existingConsultation.id;
         newConsultation.consultationStatusType = existingConsultation.consultationStatusType;
@@ -51,7 +56,7 @@ export const DetailConsultation: React.FunctionComponent<
     <Section header="Consultation" initiallyExpanded isCollapsable>
       {values.consultations.map((consultation, index) => (
         <SectionField
-          key={`consultations.${index}`}
+          key={`consultations-${consultation.consultationType?.id}`}
           label={consultation.consultationType?.description || ''}
           labelWidth="4"
           contentWidth="8"
