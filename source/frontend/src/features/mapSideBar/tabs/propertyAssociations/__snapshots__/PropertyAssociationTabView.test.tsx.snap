@@ -22,6 +22,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c4 {

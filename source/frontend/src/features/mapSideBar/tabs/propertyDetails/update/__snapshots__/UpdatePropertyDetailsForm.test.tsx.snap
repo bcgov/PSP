@@ -277,6 +277,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c4.required::before {
@@ -1847,6 +1848,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     <input
                       checked=""
                       class="form-check-input position-static"
+                      data-testid="radio-isvolumetricparcel-yes"
                       id="input-true"
                       name="isVolumetricParcel"
                       type="radio"
@@ -1855,7 +1857,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   </div>
                   <label
                     class="form-check-label form-label"
-                    for="input-isVolumetricParcel"
+                    for="isVolumetricParcel"
                   >
                     Yes
                   </label>
@@ -1868,6 +1870,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   >
                     <input
                       class="form-check-input position-static"
+                      data-testid="radio-isvolumetricparcel-no"
                       id="input-false"
                       name="isVolumetricParcel"
                       type="radio"
@@ -1876,7 +1879,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   </div>
                   <label
                     class="form-check-label form-label"
-                    for="input-isVolumetricParcel"
+                    for="isVolumetricParcel"
                   >
                     No
                   </label>

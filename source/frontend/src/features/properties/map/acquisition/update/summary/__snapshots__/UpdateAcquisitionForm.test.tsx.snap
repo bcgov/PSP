@@ -213,6 +213,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c3.required::before {
@@ -449,10 +450,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-CLOSED"
-                  value="CLOSED"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
                 >
-                  Closed
+                  Complete
                 </option>
                 <option
                   class="option"
@@ -1580,6 +1581,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                         <input
                           checked=""
                           class="form-check-input position-static"
+                          data-testid="radio-owners[0].isorganization-individual"
                           id="input-false"
                           name="owners[0].isOrganization"
                           type="radio"
@@ -1588,7 +1590,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       </div>
                       <label
                         class="form-check-label form-label"
-                        for="input-owners[0].isOrganization"
+                        for="owners[0].isOrganization"
                       >
                         Individual
                       </label>
@@ -1601,6 +1603,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       >
                         <input
                           class="form-check-input position-static"
+                          data-testid="radio-owners[0].isorganization-corporation"
                           id="input-true"
                           name="owners[0].isOrganization"
                           type="radio"
@@ -1609,7 +1612,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       </div>
                       <label
                         class="form-check-label form-label"
-                        for="input-owners[0].isOrganization"
+                        for="owners[0].isOrganization"
                       >
                         Corporation
                       </label>
@@ -2213,6 +2216,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       >
                         <input
                           class="form-check-input position-static"
+                          data-testid="radio-owners[1].isorganization-individual"
                           id="input-false"
                           name="owners[1].isOrganization"
                           type="radio"
@@ -2221,7 +2225,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       </div>
                       <label
                         class="form-check-label form-label"
-                        for="input-owners[1].isOrganization"
+                        for="owners[1].isOrganization"
                       >
                         Individual
                       </label>
@@ -2235,6 +2239,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                         <input
                           checked=""
                           class="form-check-input position-static"
+                          data-testid="radio-owners[1].isorganization-corporation"
                           id="input-true"
                           name="owners[1].isOrganization"
                           type="radio"
@@ -2243,7 +2248,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       </div>
                       <label
                         class="form-check-label form-label"
-                        for="input-owners[1].isOrganization"
+                        for="owners[1].isOrganization"
                       >
                         Corporation
                       </label>

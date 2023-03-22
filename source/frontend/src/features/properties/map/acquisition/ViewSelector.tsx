@@ -1,5 +1,8 @@
+import { FileTypes } from 'constants/fileTypes';
 import { InventoryTabNames, InventoryTabs } from 'features/mapSideBar/tabs/InventoryTabs';
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import TakesUpdateContainer from 'features/mapSideBar/tabs/takes/update/TakesUpdateContainer';
+import TakesUpdateForm from 'features/mapSideBar/tabs/takes/update/TakesUpdateForm';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
@@ -15,6 +18,7 @@ export interface IViewSelectorProps {
   isEditing: boolean;
   activeEditForm?: EditFormNames;
   selectedMenuIndex: number;
+  defaultPropertyTab: InventoryTabNames;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
   onSuccess: () => void;
   ref: React.RefObject<FormikProps<any>>;
@@ -24,6 +28,10 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
   (props, formikRef) => {
     // render edit forms
     if (props.isEditing && !!props.acquisitionFile) {
+      const propertyFile = getAcquisitionFileProperty(
+        props.acquisitionFile,
+        props.selectedMenuIndex,
+      );
       switch (props.activeEditForm) {
         case EditFormNames.acquisitionSummary:
           return (
@@ -35,10 +43,6 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
           );
 
         case EditFormNames.propertyDetails:
-          const propertyFile = getAcquisitionFileProperty(
-            props.acquisitionFile,
-            props.selectedMenuIndex,
-          );
           if (propertyFile?.property?.id === undefined) {
             throw Error('Cannot edit property without a valid id');
           }
@@ -47,6 +51,20 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
               id={propertyFile?.property?.id}
               onSuccess={props.onSuccess}
               ref={formikRef}
+            />
+          );
+        case EditFormNames.takes:
+          return (
+            <TakesUpdateContainer
+              fileProperty={propertyFile}
+              View={TakesUpdateForm}
+              ref={formikRef}
+              onSuccess={() =>
+                props.setContainerState({
+                  isEditing: false,
+                  activeEditForm: undefined,
+                })
+              }
             />
           );
 
@@ -70,15 +88,24 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
                 props.setContainerState({
                   isEditing: true,
                   activeEditForm: EditFormNames.propertyDetails,
+                  defaultPropertyTab: InventoryTabNames.property,
+                })
+              }
+              setEditTakes={() =>
+                props.setContainerState({
+                  isEditing: true,
+                  activeEditForm: EditFormNames.takes,
+                  defaultPropertyTab: InventoryTabNames.takes,
                 })
               }
               fileProperty={getAcquisitionFileProperty(
                 props.acquisitionFile,
                 props.selectedMenuIndex,
               )}
-              defaultTab={InventoryTabNames.property}
+              defaultTab={props.defaultPropertyTab}
               customTabs={[]}
               View={InventoryTabs}
+              fileContext={FileTypes.Acquisition}
             />
           );
         } else {

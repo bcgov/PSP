@@ -380,22 +380,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c2 {
-  height: 100%;
-}
-
-.c3 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c9 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
 .c21.c21.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -454,6 +438,40 @@ exports[`AcquisitionView component renders as expected 1`] = `
   border-color: transparent;
 }
 
+.c11 {
+  height: 100%;
+}
+
+.c11 .nav-tabs {
+  height: 2.4rem;
+}
+
+.c11 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.4rem);
+  overflow-y: auto;
+}
+
+.c11 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c2 {
+  height: 100%;
+}
+
+.c3 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c9 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
 .c0 {
   width: 100%;
   position: relative;
@@ -479,6 +497,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c17.required::before {
@@ -490,24 +509,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
 
 .c16 {
   font-weight: bold;
-}
-
-.c11 {
-  height: 100%;
-}
-
-.c11 .nav-tabs {
-  height: 2.4rem;
-}
-
-.c11 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.4rem);
-  overflow-y: auto;
-}
-
-.c11 .tab-content .tab-pane {
-  position: relative;
 }
 
 .c4 {
