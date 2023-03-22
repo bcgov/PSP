@@ -5,7 +5,6 @@ import { IInventoryTabsProps, InventoryTabNames } from 'features/mapSideBar/tabs
 import { noop } from 'lodash';
 import { mockLtsaResponse, mockWfsGetPropertyById } from 'mocks';
 import { mockLookups } from 'mocks/mockLookups';
-import { getMockApiPropertyFiles } from 'mocks/mockProperties';
 import { getMockResearchFile } from 'mocks/mockResearchFile';
 import { toast } from 'react-toastify';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
