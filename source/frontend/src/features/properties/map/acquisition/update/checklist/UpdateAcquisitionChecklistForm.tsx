@@ -15,7 +15,7 @@ import { prettyFormatDate } from 'utils';
 import { AcquisitionChecklistFormModel } from './models';
 
 export interface IUpdateAcquisitionChecklistFormProps {
-  formikRef: React.RefObject<FormikProps<AcquisitionChecklistFormModel>>;
+  formikRef: React.Ref<FormikProps<AcquisitionChecklistFormModel>>;
   initialValues: AcquisitionChecklistFormModel;
   onSave: (apiAcquisitionFile: Api_AcquisitionFile) => Promise<Api_AcquisitionFile | undefined>;
   onSuccess: (apiAcquisitionFile: Api_AcquisitionFile) => Promise<void>;

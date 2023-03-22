@@ -38,7 +38,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
         case EditFormNames.acquisitionChecklist:
           return (
             <UpdateAcquisitionChecklistContainer
-              formikRef={formikRef as any}
+              formikRef={formikRef}
               acquisitionFile={props.acquisitionFile}
               onSuccess={props.onSuccess}
               View={UpdateAcquisitionChecklistForm}

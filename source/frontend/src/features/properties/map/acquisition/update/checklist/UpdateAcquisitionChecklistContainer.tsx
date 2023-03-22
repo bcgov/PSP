@@ -12,7 +12,7 @@ import { AcquisitionChecklistFormModel } from './models';
 import { IUpdateAcquisitionChecklistFormProps } from './UpdateAcquisitionChecklistForm';
 
 export interface IAcquisitionChecklistContainerProps {
-  formikRef: React.RefObject<FormikProps<AcquisitionChecklistFormModel>>;
+  formikRef: React.Ref<FormikProps<AcquisitionChecklistFormModel>>;
   acquisitionFile?: Api_AcquisitionFile;
   onSuccess: () => void;
   View: React.FC<IUpdateAcquisitionChecklistFormProps>;

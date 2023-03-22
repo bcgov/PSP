@@ -40,7 +40,7 @@ namespace Pims.Dal.Repositories
                 .ToArray();
         }
 
-        public List<PimsAcquisitionChecklistItem> GetChecklistItemsByAcquisitionFileId(long acquisitionFileId)
+        public List<PimsAcquisitionChecklistItem> GetAllChecklistItemsByAcquisitionFileId(long acquisitionFileId)
         {
             using var scope = Logger.QueryScope();
 

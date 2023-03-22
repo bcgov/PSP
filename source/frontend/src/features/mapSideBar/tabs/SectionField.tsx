@@ -1,4 +1,4 @@
-import { default as clsx, default as cx } from 'classnames';
+import cx from 'classnames';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -27,7 +27,7 @@ export const SectionField: React.FunctionComponent<
       </Col>
       <StyledCol
         xs={props.contentWidth ?? true}
-        className={clsx({ required: props.required, 'text-left': true })}
+        className={cx({ required: props.required, 'text-left': true })}
       >
         {props.children}
       </StyledCol>

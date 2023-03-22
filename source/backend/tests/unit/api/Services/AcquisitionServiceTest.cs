@@ -654,13 +654,13 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
-            repository.Setup(x => x.GetChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
 
             // Act
             var result = service.GetChecklistItems(1);
 
             // Assert
-            repository.Verify(x => x.GetChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -691,14 +691,14 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var fileChecklistRepository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
-            fileChecklistRepository.Setup(x => x.GetChecklistItemsByAcquisitionFileId(It.IsAny<long>()))
+            fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()))
                 .Returns(new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "INCOMP" } });
 
             // Act
             service.UpdateChecklistItems(acqFile);
 
             // Assert
-            fileChecklistRepository.Verify(x => x.GetChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsAcquisitionChecklistItem>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
         }
@@ -716,7 +716,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var fileChecklistRepository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
-            fileChecklistRepository.Setup(x => x.GetChecklistItemsByAcquisitionFileId(It.IsAny<long>()))
+            fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()))
                 .Returns(new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "INCOMP" } });
 
             // Act
@@ -725,7 +725,7 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<BadRequestException>();
 
-            fileChecklistRepository.Verify(x => x.GetChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsAcquisitionChecklistItem>()), Times.Never);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
         }
@@ -739,14 +739,14 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
-            repository.Setup(x => x.GetChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
 
             // Act
             Action act = () => service.UpdateChecklistItems(acqFile);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Never);
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Never);
         }
         #endregion
 

@@ -102,7 +102,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting acquisition file checklist with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
-            return _checklistRepository.GetChecklistItemsByAcquisitionFileId(id);
+            return _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(id);
         }
 
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
@@ -226,7 +226,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
             // Get the current checklist items for this acquisition file.
-            var currentItems = _checklistRepository.GetChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
+            var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
 
             foreach (var incomingItem in acquisitionFile.PimsAcquisitionChecklistItems)
             {

@@ -40,7 +40,7 @@ namespace Pims.Dal.Test.Repositories
             _context.AddAndSaveChanges(checklistItem);
 
             // Act
-            var result = _repository.GetChecklistItemsByAcquisitionFileId(1);
+            var result = _repository.GetAllChecklistItemsByAcquisitionFileId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -53,7 +53,7 @@ namespace Pims.Dal.Test.Repositories
         public void GetByAcquisitionFileId_NotFound()
         {
             // Act
-            var result = _repository.GetChecklistItemsByAcquisitionFileId(1);
+            var result = _repository.GetAllChecklistItemsByAcquisitionFileId(1);
 
             // Assert
             result.Should().NotBeNull();
