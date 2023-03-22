@@ -15,13 +15,13 @@ namespace Pims.Api.Models.Concepts
 
         public string Description { get; set; }
 
-        public bool IsSurplusSeverance { get; set; }
+        public bool IsSurplus { get; set; }
 
         public bool IsLicenseToConstruct { get; set; }
 
         public bool IsNewRightOfWay { get; set; }
 
-        public bool IsSection16 { get; set; }
+        public bool IsLandAct { get; set; }
 
         public bool IsStatutoryRightOfWay { get; set; }
 
@@ -31,11 +31,9 @@ namespace Pims.Api.Models.Concepts
 
         public float? NewRightOfWayArea { get; set; }
 
-        public float? Section16Area { get; set; }
+        public float? LandActArea { get; set; }
 
-        public DateTime? Section16EndDt { get; set; }
-
-        public DateTime? SrwEndDt { get; set; }
+        public DateTime? LandActEndDt { get; set; }
 
         public AcquisitionFileModel PropertyAcquisitionFile { get; set; }
 
@@ -43,7 +41,7 @@ namespace Pims.Api.Models.Concepts
 
         public float? StatutoryRightOfWayArea { get; set; }
 
-        public float? SurplusSeveranceArea { get; set; }
+        public float? SurplusArea { get; set; }
 
         public string TakeSiteContamTypeCode { get; set; }
 

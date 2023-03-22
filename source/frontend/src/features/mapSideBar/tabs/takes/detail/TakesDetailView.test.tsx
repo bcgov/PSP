@@ -86,9 +86,9 @@ describe('TakesDetailView component', () => {
             ...getMockApiTakes()[0],
             isLicenseToConstruct: false,
             isNewRightOfWay: false,
-            isSection16: false,
+            isLandAct: false,
             isStatutoryRightOfWay: false,
-            isSurplusSeverance: false,
+            isSurplus: false,
           },
         ],
       },
@@ -104,9 +104,9 @@ describe('TakesDetailView component', () => {
             ...getMockApiTakes()[0],
             isLicenseToConstruct: true,
             isNewRightOfWay: true,
-            isSection16: true,
+            isLandAct: true,
             isStatutoryRightOfWay: true,
-            isSurplusSeverance: true,
+            isSurplus: true,
           },
         ],
       },
@@ -131,15 +131,15 @@ describe('TakesDetailView component', () => {
     expect(date).toBeVisible();
   });
 
-  it('displays section16EndDt if specified', async () => {
+  it('displays landActEndDt if specified', async () => {
     const { findByText } = setup({
       props: {
         loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
-            isSection16: true,
-            section16EndDt: '2020-01-01',
+            isLandAct: true,
+            landActEndDt: '2020-01-01',
           },
         ],
       },

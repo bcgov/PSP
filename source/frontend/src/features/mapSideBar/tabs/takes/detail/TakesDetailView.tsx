@@ -128,16 +128,16 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             </StyledBorderSection>
             <StyledBorderSection>
               <SectionField label="Is there a Section 16? *" labelWidth="8">
-                <YesNoButtons id="section16Toggle" disabled value={take.isSection16} />
+                <YesNoButtons id="landActToggle" disabled value={take.isLandAct} />
               </SectionField>
-              {take.isSection16 && (
+              {take.isLandAct && (
                 <>
                   <SectionField label="Area" labelWidth="12">
-                    <AreaContainer landArea={take.section16Area ?? undefined} />
+                    <AreaContainer landArea={take.landActArea ?? undefined} />
                   </SectionField>
-                  {take.section16EndDt && (
+                  {take.landActEndDt && (
                     <SectionField label="Section 16 end date">
-                      {prettyFormatDate(take.section16EndDt ?? undefined)}
+                      {prettyFormatDate(take.landActEndDt ?? undefined)}
                     </SectionField>
                   )}
                 </>
@@ -168,15 +168,11 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
           <StyledNoTabSection header="Surplus">
             <StyledBorderSection>
               <SectionField label="Is there a Surplus? *" labelWidth="8">
-                <YesNoButtons
-                  id="surplusSeveranceToggle"
-                  disabled
-                  value={take.isSurplusSeverance}
-                />
+                <YesNoButtons id="surplusToggle" disabled value={take.isSurplus} />
               </SectionField>
-              {take.isSurplusSeverance && (
+              {take.isSurplus && (
                 <SectionField label="Area" labelWidth="12">
-                  <AreaContainer landArea={take.surplusSeveranceArea ?? undefined} />
+                  <AreaContainer landArea={take.surplusArea ?? undefined} />
                 </SectionField>
               )}
             </StyledBorderSection>

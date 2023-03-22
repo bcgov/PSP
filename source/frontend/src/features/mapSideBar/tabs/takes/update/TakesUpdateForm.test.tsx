@@ -133,9 +133,9 @@ describe('TakesUpdateForm component', () => {
     expect(queryByDisplayValue('8093.71')).toBeNull();
   });
 
-  it('resets isSection16 values if radio button toggled from yes to no', async () => {
+  it('resets islandAct values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.issection16-no');
+    const noButton = getByTestId('radio-takes.0.islandact-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('12140.57')).not.toBeNull();
@@ -157,9 +157,9 @@ describe('TakesUpdateForm component', () => {
     expect(queryByDisplayValue('16187.43')).toBeNull();
   });
 
-  it('resets isSurplusSeverance values if radio button toggled from yes to no', async () => {
+  it('resets isSurplus values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.issurplusseverance-no');
+    const noButton = getByTestId('radio-takes.0.isSurplus-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('20234.28')).not.toBeNull();

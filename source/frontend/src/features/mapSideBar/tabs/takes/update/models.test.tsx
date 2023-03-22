@@ -9,16 +9,16 @@ describe('take model tests', () => {
       ...emptyTake,
       isLicenseToConstruct: false,
       isNewRightOfWay: false,
-      isSection16: false,
+      isLandAct: false,
       isStatutoryRightOfWay: false,
-      isSurplusSeverance: false,
+      isSurplus: false,
     };
     const takeModel = new TakeModel(apiTake);
     expect(takeModel.isLicenseToConstruct).toBe('false');
     expect(takeModel.isNewRightOfWay).toBe('false');
-    expect(takeModel.isSection16).toBe('false');
+    expect(takeModel.isLandAct).toBe('false');
     expect(takeModel.isStatutoryRightOfWay).toBe('false');
-    expect(takeModel.isSurplusSeverance).toBe('false');
+    expect(takeModel.isSurplus).toBe('false');
   });
 
   it("converts all true it values to 'true'", () => {
@@ -26,30 +26,30 @@ describe('take model tests', () => {
       ...emptyTake,
       isLicenseToConstruct: true,
       isNewRightOfWay: true,
-      isSection16: true,
+      isLandAct: true,
       isStatutoryRightOfWay: true,
-      isSurplusSeverance: true,
+      isSurplus: true,
     };
     const takeModel = new TakeModel(apiTake);
     expect(takeModel.isLicenseToConstruct).toBe('true');
     expect(takeModel.isNewRightOfWay).toBe('true');
-    expect(takeModel.isSection16).toBe('true');
+    expect(takeModel.isLandAct).toBe('true');
     expect(takeModel.isStatutoryRightOfWay).toBe('true');
-    expect(takeModel.isSurplusSeverance).toBe('true');
+    expect(takeModel.isSurplus).toBe('true');
   });
   it('sets all undefined areas to 0', () => {
     const apiTake: Api_Take = {
       ...emptyTake,
-      section16Area: null,
+      landActArea: null,
       newRightOfWayArea: null,
-      surplusSeveranceArea: null,
+      surplusArea: null,
       statutoryRightOfWayArea: null,
       licenseToConstructArea: null,
     };
     const takeModel = new TakeModel(apiTake);
-    expect(takeModel.section16Area).toBe(0);
+    expect(takeModel.landActArea).toBe(0);
     expect(takeModel.newRightOfWayArea).toBe(0);
-    expect(takeModel.surplusSeveranceArea).toBe(0);
+    expect(takeModel.surplusArea).toBe(0);
     expect(takeModel.statutoryRightOfWayArea).toBe(0);
     expect(takeModel.licenseToConstructArea).toBe(0);
   });
@@ -60,9 +60,9 @@ describe('take model tests', () => {
       areaUnitTypeCode: 'FEET2',
     };
     const takeModel = new TakeModel(apiTake);
-    expect(takeModel.section16AreaUnitTypeCode).toBe('FEET2');
+    expect(takeModel.landActAreaUnitTypeCode).toBe('FEET2');
     expect(takeModel.newRightOfWayAreaUnitTypeCode).toBe('FEET2');
-    expect(takeModel.surplusSeveranceAreaUnitTypeCode).toBe('FEET2');
+    expect(takeModel.surplusAreaUnitTypeCode).toBe('FEET2');
     expect(takeModel.statutoryRightOfWayAreaUnitTypeCode).toBe('FEET2');
     expect(takeModel.licenseToConstructAreaUnitTypeCode).toBe('FEET2');
   });
@@ -71,24 +71,24 @@ describe('take model tests', () => {
     it('converts all areas to their m2 equivalents', () => {
       const apiTake: Api_Take = {
         ...emptyTake,
-        section16Area: 1,
+        landActArea: 1,
         newRightOfWayArea: 2,
-        surplusSeveranceArea: 3,
+        surplusArea: 3,
         statutoryRightOfWayArea: 4,
         licenseToConstructArea: 5,
       };
       const takeModel = new TakeModel(apiTake);
-      takeModel.section16AreaUnitTypeCode = 'M2';
+      takeModel.landActAreaUnitTypeCode = 'M2';
       takeModel.newRightOfWayAreaUnitTypeCode = 'FEET2';
-      takeModel.surplusSeveranceAreaUnitTypeCode = 'HA';
+      takeModel.surplusAreaUnitTypeCode = 'HA';
       takeModel.statutoryRightOfWayAreaUnitTypeCode = 'ACRE';
       takeModel.licenseToConstructAreaUnitTypeCode = 'ACRE';
 
       const actualApiTake = takeModel.toApi();
       expect(actualApiTake.areaUnitTypeCode).toBe('M2');
-      expect(actualApiTake.section16Area).toBe(1);
+      expect(actualApiTake.landActArea).toBe(1);
       expect(actualApiTake.newRightOfWayArea).toBe(0.18580608);
-      expect(actualApiTake.surplusSeveranceArea).toBe(30000);
+      expect(actualApiTake.surplusArea).toBe(30000);
       expect(actualApiTake.statutoryRightOfWayArea).toBe(16187.4256896);
       expect(actualApiTake.licenseToConstructArea).toBe(20234.282112);
     });

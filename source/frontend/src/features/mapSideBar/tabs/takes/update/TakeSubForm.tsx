@@ -35,10 +35,10 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
   const takeStatusTypeOptions = getOptionsByType(API.TAKE_STATUS_TYPES);
   const takeSiteContamTypeOptions = getOptionsByType(API.TAKE_SITE_CONTAM_TYPES);
 
-  const isSurplusSeverance = getIn(values, withNameSpace(nameSpace, 'isSurplusSeverance'));
+  const isSurplus = getIn(values, withNameSpace(nameSpace, 'isSurplus'));
   const isNewRightOfWay = getIn(values, withNameSpace(nameSpace, 'isNewRightOfWay'));
   const isStatutoryRightOfWay = getIn(values, withNameSpace(nameSpace, 'isStatutoryRightOfWay'));
-  const isSection16 = getIn(values, withNameSpace(nameSpace, 'isSection16'));
+  const isLandAct = getIn(values, withNameSpace(nameSpace, 'isLandAct'));
   const isLicenseToConstruct = getIn(values, withNameSpace(nameSpace, 'isLicenseToConstruct'));
 
   const getModalWarning = (onOk: () => void) => {
@@ -188,34 +188,34 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
-              field={withNameSpace(nameSpace, 'isSection16')}
+              field={withNameSpace(nameSpace, 'isLandAct')}
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isSection16'), 'false');
-                setFieldValue(withNameSpace(nameSpace, 'section16Area'), 0);
-                setFieldValue(withNameSpace(nameSpace, 'section16EndDt'), '');
+                setFieldValue(withNameSpace(nameSpace, 'isLandAct'), 'false');
+                setFieldValue(withNameSpace(nameSpace, 'landActArea'), 0);
+                setFieldValue(withNameSpace(nameSpace, 'landActEndDt'), '');
               })}
             />
           </SectionField>
-          {isSection16 === 'true' && (
+          {isLandAct === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
-                    formikProps.setFieldValue(withNameSpace(nameSpace, 'section16Area'), landArea);
+                    formikProps.setFieldValue(withNameSpace(nameSpace, 'landActArea'), landArea);
                     formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'section16AreaUnitTypeCode'),
+                      withNameSpace(nameSpace, 'landActAreaUnitTypeCode'),
                       areaUnitTypeCode,
                     );
                   }}
                   isEditable
-                  unitCode={getIn(values, withNameSpace(nameSpace, 'section16AreaUnitTypeCode'))}
-                  landArea={currentTake.section16Area}
-                  field={withNameSpace(nameSpace, 'section16Area')}
+                  unitCode={getIn(values, withNameSpace(nameSpace, 'landActAreaUnitTypeCode'))}
+                  landArea={currentTake.isLandActArea}
+                  field={withNameSpace(nameSpace, 'landActArea')}
                 />
               </SectionField>
               <SectionField label="Section 16 end date" contentWidth="4">
                 <FastDatePicker
-                  field={withNameSpace(nameSpace, 'section16EndDt')}
+                  field={withNameSpace(nameSpace, 'landActEndDt')}
                   formikProps={formikProps}
                 />
               </SectionField>
@@ -273,36 +273,30 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
         <StyledBorderSection>
           <SectionField label="Is there a Surplus? *" labelWidth="8">
             <RadioGroup
-              field={withNameSpace(nameSpace, 'isSurplusSeverance')}
+              field={withNameSpace(nameSpace, 'isSurplus')}
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isSurplusSeverance'), 'false');
-                setFieldValue(withNameSpace(nameSpace, 'surplusSeveranceArea'), 0);
+                setFieldValue(withNameSpace(nameSpace, 'isSurplus'), 'false');
+                setFieldValue(withNameSpace(nameSpace, 'surplusArea'), 0);
               })}
             />
           </SectionField>
-          {isSurplusSeverance === 'true' && (
+          {isSurplus === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
+                    formikProps.setFieldValue(withNameSpace(nameSpace, 'surplusArea'), landArea);
                     formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'surplusSeveranceArea'),
-                      landArea,
-                    );
-                    formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'surplusSeveranceAreaUnitTypeCode'),
+                      withNameSpace(nameSpace, 'surplusAreaUnitTypeCode'),
                       areaUnitTypeCode,
                     );
                   }}
                   isEditable
-                  unitCode={getIn(
-                    values,
-                    withNameSpace(nameSpace, 'surplusSeveranceAreaUnitTypeCode'),
-                  )}
-                  landArea={currentTake.surplusSeveranceArea}
-                  field={withNameSpace(nameSpace, 'surplusSeveranceArea')}
+                  unitCode={getIn(values, withNameSpace(nameSpace, 'surplusAreaUnitTypeCode'))}
+                  landArea={currentTake.surplusArea}
+                  field={withNameSpace(nameSpace, 'surplusArea')}
                 />
               </SectionField>
             </>

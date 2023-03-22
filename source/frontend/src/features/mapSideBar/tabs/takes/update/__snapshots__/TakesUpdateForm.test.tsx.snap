@@ -1533,16 +1533,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             <input
                               checked=""
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.issurplusseverance-yes"
+                              data-testid="radio-takes.0.isSurplus-yes"
                               id="input-true"
-                              name="takes.0.isSurplusSeverance"
+                              name="takes.0.isSurplus"
                               type="radio"
                               value="true"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isSurplusSeverance"
+                            for="takes.0.isSurplus"
                           >
                             Yes
                           </label>
@@ -1555,16 +1555,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           >
                             <input
                               class="form-check-input position-static"
-                              data-testid="radio-takes.0.issurplusseverance-no"
+                              data-testid="radio-takes.0.isSurplus-no"
                               id="input-false"
-                              name="takes.0.isSurplusSeverance"
+                              name="takes.0.isSurplus"
                               type="radio"
                               value="false"
                             />
                           </div>
                           <label
                             class="form-check-label form-label"
-                            for="takes.0.isSurplusSeverance"
+                            for="takes.0.isSurplus"
                           >
                             No
                           </label>

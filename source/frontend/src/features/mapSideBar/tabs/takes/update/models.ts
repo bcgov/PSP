@@ -11,13 +11,13 @@ export const TakesYupSchema = Yup.object().shape({
       description: Yup.string().max(4000, 'Description must be at most ${max} characters'),
       takeTypeCode: Yup.string().required('Take type is required'),
       takeStatusTypeCode: Yup.string().required('Take status type is required.'),
-      isSurplusSeverance: Yup.bool().required('Surplus severance flag required'),
-      isNewRightOfWay: Yup.bool().required('Surplus severance flag required'),
-      isSection16: Yup.bool().required('Section 16 flag required'),
+      isSurplus: Yup.bool().required('Surplus flag required'),
+      isNewRightOfWay: Yup.bool().required('Surplus flag required'),
+      isLandAct: Yup.bool().required('Section 16 flag required'),
       isStatutoryRightOfWay: Yup.bool().required('Statutory right of way flag required'),
       isLicenseToConstruct: Yup.bool().required('License to construct flag required'),
-      surplusSeveranceArea: Yup.number().when('isSurplusSeverance', {
-        is: (isSurplusSeverance: boolean) => isSurplusSeverance,
+      surplusArea: Yup.number().when('isSurplus', {
+        is: (isSurplus: boolean) => isSurplus,
         then: Yup.number()
           .required('Required when flag is true')
           .moreThan(0, 'Must be greater than 0 when flag is true'),
@@ -34,8 +34,8 @@ export const TakesYupSchema = Yup.object().shape({
           .required('Rrequired when flag is true')
           .moreThan(0, 'Must be greater than 0 when flag is true'),
       }),
-      section16Area: Yup.number().when('isSection16', {
-        is: (isSection16: boolean) => isSection16,
+      landActArea: Yup.number().when('isLandAct', {
+        is: (isLandAct: boolean) => isLandAct,
         then: Yup.number()
           .required('Required when flag is true')
           .moreThan(0, 'Must be greater than 0 when flag is true'),
@@ -53,9 +53,9 @@ export const TakesYupSchema = Yup.object().shape({
 export class TakeModel {
   id?: number;
   description: string;
-  isSurplusSeverance: 'false' | 'true';
+  isSurplus: 'false' | 'true';
   isNewRightOfWay: 'false' | 'true';
-  isSection16: 'false' | 'true';
+  isLandAct: 'false' | 'true';
   isStatutoryRightOfWay: 'false' | 'true';
   isLicenseToConstruct: 'false' | 'true';
   ltcEndDt: string;
@@ -63,13 +63,13 @@ export class TakeModel {
   licenseToConstructAreaUnitTypeCode: string;
   newRightOfWayArea: number;
   newRightOfWayAreaUnitTypeCode: string;
-  section16Area: number;
-  section16AreaUnitTypeCode: string;
+  landActArea: number;
+  landActAreaUnitTypeCode: string;
   statutoryRightOfWayArea: number;
   statutoryRightOfWayAreaUnitTypeCode: string;
-  surplusSeveranceArea: number;
-  surplusSeveranceAreaUnitTypeCode: string;
-  section16EndDt: string;
+  surplusArea: number;
+  surplusAreaUnitTypeCode: string;
+  landActEndDt: string;
   propertyAcquisitionFileId: number | null;
   takeSiteContamTypeCode: string | null;
   takeTypeCode: string | null;
@@ -80,9 +80,9 @@ export class TakeModel {
     this.id = base.id;
     this.rowVersion = base.rowVersion;
     this.description = base.description;
-    this.isSurplusSeverance = base.isSurplusSeverance ? 'true' : 'false';
+    this.isSurplus = base.isSurplus ? 'true' : 'false';
     this.isNewRightOfWay = base.isNewRightOfWay ? 'true' : 'false';
-    this.isSection16 = base.isSection16 ? 'true' : 'false';
+    this.isLandAct = base.isLandAct ? 'true' : 'false';
     this.isLicenseToConstruct = base.isLicenseToConstruct ? 'true' : 'false';
     this.isStatutoryRightOfWay = base.isStatutoryRightOfWay ? 'true' : 'false';
     this.licenseToConstructArea = base.licenseToConstructArea ?? 0;
@@ -91,11 +91,10 @@ export class TakeModel {
     this.newRightOfWayArea = base.newRightOfWayArea ?? 0;
     this.newRightOfWayAreaUnitTypeCode =
       base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
-    this.section16Area = base.section16Area ?? 0;
-    this.section16AreaUnitTypeCode = base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
-    this.surplusSeveranceArea = base.surplusSeveranceArea ?? 0;
-    this.surplusSeveranceAreaUnitTypeCode =
-      base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
+    this.landActArea = base.landActArea ?? 0;
+    this.landActAreaUnitTypeCode = base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
+    this.surplusArea = base.surplusArea ?? 0;
+    this.surplusAreaUnitTypeCode = base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
     this.statutoryRightOfWayArea = base.statutoryRightOfWayArea ?? 0;
     this.statutoryRightOfWayAreaUnitTypeCode =
       base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
@@ -103,7 +102,7 @@ export class TakeModel {
     this.takeStatusTypeCode = base.takeStatusTypeCode;
     this.takeSiteContamTypeCode = base.takeSiteContamTypeCode;
     this.propertyAcquisitionFileId = base.propertyAcquisitionFileId;
-    this.section16EndDt = base.section16EndDt ?? '';
+    this.landActEndDt = base.landActEndDt ?? '';
     this.ltcEndDt = base.ltcEndDt ?? '';
   }
 
@@ -126,16 +125,16 @@ export class TakeModel {
           this.newRightOfWayAreaUnitTypeCode,
           AreaUnitTypes.SquareMeters.toString(),
         ) || null,
-      section16Area:
+      landActArea:
         convertArea(
-          parseFloat(this.section16Area.toString()),
-          this.section16AreaUnitTypeCode,
+          parseFloat(this.landActArea.toString()),
+          this.landActAreaUnitTypeCode,
           AreaUnitTypes.SquareMeters.toString(),
         ) || null,
-      surplusSeveranceArea:
+      surplusArea:
         convertArea(
-          parseFloat(this.surplusSeveranceArea.toString()),
-          this.surplusSeveranceAreaUnitTypeCode,
+          parseFloat(this.surplusArea.toString()),
+          this.surplusAreaUnitTypeCode,
           AreaUnitTypes.SquareMeters.toString(),
         ) || null,
       statutoryRightOfWayArea:
@@ -145,10 +144,10 @@ export class TakeModel {
           AreaUnitTypes.SquareMeters.toString(),
         ) || null,
       ltcEndDt: stringToNull(this.ltcEndDt),
-      section16EndDt: stringToNull(this.section16EndDt),
-      isSurplusSeverance: this.isSurplusSeverance === 'true',
+      landActEndDt: stringToNull(this.landActEndDt),
+      isSurplus: this.isSurplus === 'true',
       isNewRightOfWay: this.isNewRightOfWay === 'true',
-      isSection16: this.isSection16 === 'true',
+      isLandAct: this.isLandAct === 'true',
       isLicenseToConstruct: this.isLicenseToConstruct === 'true',
       isStatutoryRightOfWay: this.isStatutoryRightOfWay === 'true',
     };
