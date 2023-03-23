@@ -288,14 +288,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 var contact = individualContacts.SingleOrDefault(u => u.LastName.Equals(searchCriteria, StringComparison.OrdinalIgnoreCase));
                 if (contact == null) throw new InvalidOperationException($"Contact {searchCriteria} not found in the test configuration");
                 searchContacts.SearchIndividualContact(contact.Summary);
-                searchContacts.VerifyContactTableContent(contact.Summary, contact.FirstName, contact.LastName, contact.Organization, contact.Email2, contact.MailAddressLine1, contact.MailCity, contact.MailProvDisplay);
+                searchContacts.VerifyContactTableContent(contact.Summary, contact.FirstName, contact.LastName, contact.Organization, contact.Email2, contact.MailAddressLine1, contact.MailCity, contact.MailProvDisplay, contact.MailCountry);
             }
             else
             {
                 var contact = organizationContacts.SingleOrDefault(u => u.OrganizationName.Equals(searchCriteria, StringComparison.OrdinalIgnoreCase));
                 if (contact == null) throw new InvalidOperationException($"Contact {searchCriteria} not found in the test configuration");
                 searchContacts.SearchOrganizationContact(searchCriteria);
-                searchContacts.VerifyContactTableContent(contact.OrganizationName, "", "", contact.OrganizationName, contact.Email, contact.MailAddressLine1, contact.MailCity, contact.MailProvDisplay);
+                searchContacts.VerifyContactTableContent(contact.OrganizationName, "", "", contact.OrganizationName, contact.Email, contact.MailAddressLine1, contact.MailCity, contact.MailProvDisplay, contact.MailCountry);
             }
             
         }

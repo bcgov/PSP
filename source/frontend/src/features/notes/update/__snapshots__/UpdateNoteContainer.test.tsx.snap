@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UpdateNoteContainer component renders as expected 1`] = `
-.c3.btn {
+.c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -31,49 +31,49 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c3.btn:hover {
+.c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c2.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c2.btn.btn-primary {
   border: none;
 }
 
-.c3.btn.btn-secondary {
+.c2.btn.btn-secondary {
   background: none;
 }
 
-.c3.btn.btn-info {
+.c2.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
   background: none;
 }
 
-.c3.btn.btn-light {
+.c2.btn.btn-light {
   border: none;
 }
 
-.c3.btn.btn-dark {
+.c2.btn.btn-dark {
   border: none;
 }
 
-.c3.btn.btn-link {
+.c2.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -94,9 +94,9 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -105,14 +105,14 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -123,15 +123,15 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c3.Button .Button__icon {
+.c2.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c2.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c2.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -154,10 +154,6 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
   font-weight: 10;
   text-shadow: none;
   font-family: 'Helvetica Narrow';
-}
-
-.c2 {
-  font-weight: bold;
 }
 
 .c1 {
@@ -261,11 +257,9 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
                     data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
-                    <span
-                      class="c2"
-                    >
+                    <strong>
                       admin
-                    </span>
+                    </strong>
                   </span>
                 </span>
               </div>
@@ -292,11 +286,9 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
                     data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
-                    <span
-                      class="c2"
-                    >
+                    <strong>
                       admin
-                    </span>
+                    </strong>
                   </span>
                 </span>
               </div>
@@ -336,7 +328,7 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
           class="modal-footer"
         >
           <button
-            class="c3 Button btn btn-secondary"
+            class="c2 Button btn btn-secondary"
             title="cancel-modal"
             type="button"
           >
@@ -347,7 +339,7 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
             </div>
           </button>
           <button
-            class="c3 Button btn btn-primary"
+            class="c2 Button btn btn-primary"
             title="ok-modal"
             type="button"
           >

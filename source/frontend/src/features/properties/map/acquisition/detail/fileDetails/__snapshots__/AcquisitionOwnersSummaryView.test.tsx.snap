@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Acquistion File Owners View component Renders Component as expected 1`] = `
+exports[`Acquisition File Owners View component Renders Component as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -23,6 +23,7 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c4.required::before {
@@ -158,6 +159,38 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
             </div>
           </div>
         </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Email:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Phone:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
         <hr />
       </span>
       <span>
@@ -250,6 +283,38 @@ exports[`Acquistion File Owners View component Renders Component as expected 1`]
     Canada
             </div>
           </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Email:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Phone:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
         </div>
       </span>
     </div>

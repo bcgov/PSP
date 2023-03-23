@@ -17,6 +17,7 @@ interface IFileTabsProps {
 
 export enum FileTabNames {
   fileDetails = 'fileDetails',
+  checklist = 'checklist',
   activities = 'activities',
   documents = 'documents',
   notes = 'notes',

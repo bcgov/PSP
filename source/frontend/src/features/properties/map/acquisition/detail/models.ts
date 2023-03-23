@@ -52,25 +52,29 @@ export class DetailAcquisitionFileOwner {
   ownerName?: string;
   ownerOtherName?: string;
   ownerDisplayAddress?: string;
+  ownerContactEmail?: string;
+  ownerContactPhone?: string;
 
   static fromApi(owner: Api_AcquisitionFileOwner): DetailAcquisitionFileOwner {
     return {
       ownerName: getOwnerDisplayName(owner),
-      ownerOtherName: owner.lastNameOrCorp2?.trim(),
+      ownerOtherName: owner.otherName?.trim() || '',
       ownerDisplayAddress: getFormattedAddress(owner.address),
+      ownerContactEmail: owner.contactEmailAddr || '',
+      ownerContactPhone: owner.contactPhoneNum || '',
     };
   }
 }
 
 const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
-  let nameDisplay = concatValues([owner.givenName, owner.lastNameOrCorp1]);
+  let nameDisplay = concatValues([owner.givenName, owner.lastNameAndCorpName]);
   if (owner.incorporationNumber && owner.incorporationNumber.trim() !== '') {
     nameDisplay = nameDisplay.concat(` (${owner.incorporationNumber})`);
   }
   return nameDisplay;
 };
 
-const getFormattedAddress = (address?: Api_Address): string => {
+const getFormattedAddress = (address?: Api_Address | null): string => {
   if (address === null || address === undefined) {
     return '';
   }

@@ -17,8 +17,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         //private readonly string userName = "sutairak";
 
         private readonly string acquisitionFileName = "Automated Acquisition File";
-        private readonly string acquisitionFileNameNotes = "Automated Acquisition File - Testing Notes Tab";
-        private readonly string acquisitionFileNameNotes2 = "Automated Acquisition File - Testing Notes Tab Update";
 
         private readonly string acquisitionFileProject = "Super Test Project";
         private readonly string acquisitionFileProduct = "33-001 Test Product 1";
@@ -47,8 +45,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string propertyDetailsNotes = "Automated Acquisition files - Notes for Property Information";
         private readonly string propertyDetailsNotes2 = "  - Edited note";
 
-        private readonly string notesTabNote1 = "Testing notes tab from Acquisition File";
-
         protected string acquisitionFileCode = "";
 
         public AcquisitionFileSteps(BrowserDriver driver)
@@ -59,7 +55,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
-            sharedNotesTab = new SharedNotesTab(driver.Current);
         }
 
         [StepDefinition(@"I navigate to create new Acquisition File")]
@@ -115,7 +110,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Get Research File code
             acquisitionFileCode = acquisitionFile.GetAcquisitionFileCode();
-
         }
 
         [StepDefinition(@"I add additional information to the Acquisition File")]
@@ -330,61 +324,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.SearchLastAcquisitionFile();
         }
 
-        [StepDefinition(@"I create a Acquisition File with a new Note on the Notes Tab")]
-        public void CreateNotesTab()
-        {
-            /* TEST COVERAGE: PSP-5332, PSP-5505, PSP-5506, PSP-5507  */
-
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
-            //Navigate to Acquisition File
-            acquisitionFile.NavigateToCreateNewAcquisitionFile();
-
-            //Create basic Acquisition File
-            acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileNameNotes);
-
-            //Save Acquisition File
-            acquisitionFile.SaveAcquisitionFile();
-
-            //Navigate to the Notes Tab
-            sharedNotesTab.NavigateNotesTab();
-
-            //Create a new note
-            sharedNotesTab.CreateNotesTabButton();
-            sharedNotesTab.AddNewNoteDetails(notesTabNote1);
-
-            //Cancel new note
-            sharedNotesTab.CancelNote();
-
-            //Create a new note
-            sharedNotesTab.CreateNotesTabButton();
-            sharedNotesTab.AddNewNoteDetails(notesTabNote1);
-
-            //Save note
-            sharedNotesTab.SaveNote();
-
-            //Edit note
-            sharedNotesTab.ViewFirstNoteDetails();
-            sharedNotesTab.EditNote(acquisitionFileNameNotes2);
-
-            //Cancel note's update
-            sharedNotesTab.CancelNote();
-
-            //Edit note
-            sharedNotesTab.ViewFirstNoteDetails();
-            sharedNotesTab.EditNote(acquisitionFileNameNotes2);
-
-            //Save changes
-            sharedNotesTab.SaveNote();
-
-            //Verify Notes quantity
-            Assert.True(sharedNotesTab.NotesTabCount() == 1);
-
-            //Delete Note
-            sharedNotesTab.DeleteFirstNote();
-        }
-
         [StepDefinition(@"A new Acquisition file is created successfully")]
         public void NewAcquisitionFileCreated()
         {
@@ -416,12 +355,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void CancelSuccessful()
         {
             Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
-        }
-
-        [StepDefinition(@"The Notes Tab rendered successfully")]
-        public void NotesTanSuccessful()
-        {
-            sharedNotesTab.VerifyNotesTabListView();
         }
 
     }

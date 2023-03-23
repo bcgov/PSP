@@ -144,17 +144,17 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddAdditionalInformation(string project, string product, string deliveryDate, string teamMember1, string teamMember2)
         {
             Wait();
-            //webDriver.FindElement(acquisitionFileProjectInput).SendKeys(project);
-            //FocusAndClick(acquisitionFileProject1stOption);
+            webDriver.FindElement(acquisitionFileProjectInput).SendKeys(project);
+            FocusAndClick(acquisitionFileProject1stOption);
 
-            //Wait();
-            //ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, product);
-            //ChooseRandomSelectOption(acquisitionFileProjectFundingInput, 1);
+            Wait();
+            ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, product);
+            ChooseRandomSelectOption(acquisitionFileProjectFundingInput, 1);
 
-            //if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
-            //{
-            //    webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys("Other funding - Automation fundings");
-            //}
+            if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
+            {
+                webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys("Other funding - Automation fundings");
+            }
 
             webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(deliveryDate);
             webDriver.FindElement(acquisitionFileScheduleDeliveryDateLabel).Click();

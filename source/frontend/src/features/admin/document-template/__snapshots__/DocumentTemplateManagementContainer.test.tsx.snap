@@ -46,6 +46,7 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c4 {

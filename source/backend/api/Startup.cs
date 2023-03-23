@@ -408,6 +408,7 @@ namespace Pims.Api
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IFinancialCodeService, FinancialCodeService>();
             services.AddScoped<IDocumentFileService, DocumentFileService>();
+            services.AddScoped<ITakeService, TakeService>();
         }
 
         /// <summary>

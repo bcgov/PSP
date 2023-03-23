@@ -80,16 +80,16 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create a new research file with properties and activity")]
+        [Xunit.SkippableFactAttribute(DisplayName="01. Create a new Research File with Properties, Documents, Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Create a new research file with properties and activity")]
+        [Xunit.TraitAttribute("Description", "01. Create a new Research File with Properties, Documents, Notes")]
         [Xunit.TraitAttribute("Category", "Reseach-Files")]
-        public void CreateANewResearchFileWithPropertiesAndActivity()
+        public void _01_CreateANewResearchFileWithPropertiesDocumentsNotes()
         {
             string[] tagsOfScenario = new string[] {
                     "Reseach-Files"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new research file with properties and activity", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Create a new Research File with Properties, Documents, Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,7 +110,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I add several Properties to the research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 10
- testRunner.And("I create a new activity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I navigate to the Documents Tab, validate Documents Types and attach a Document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 11
  testRunner.Then("A new research file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -119,14 +119,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create a new research file from Property pop-up")]
+        [Xunit.SkippableFactAttribute(DisplayName="02. Create a new research file from Property pop-up")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Create a new research file from Property pop-up")]
-        public void CreateANewResearchFileFromPropertyPop_Up()
+        [Xunit.TraitAttribute("Description", "02. Create a new research file from Property pop-up")]
+        public void _02_CreateANewResearchFileFromPropertyPop_Up()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new research file from Property pop-up", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Create a new research file from Property pop-up", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -147,14 +147,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update a research file with unexistent PID")]
+        [Xunit.SkippableFactAttribute(DisplayName="03. Update a research file with unexistent PID")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Update a research file with unexistent PID")]
-        public void UpdateAResearchFileWithUnexistentPID()
+        [Xunit.TraitAttribute("Description", "03. Update a research file with unexistent PID")]
+        public void _03_UpdateAResearchFileWithUnexistentPID()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update a research file with unexistent PID", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Update a research file with unexistent PID", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -178,14 +178,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update a research file with too many properties results found")]
+        [Xunit.SkippableFactAttribute(DisplayName="04. Update a research file with too many properties results found")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Update a research file with too many properties results found")]
-        public void UpdateAResearchFileWithTooManyPropertiesResultsFound()
+        [Xunit.TraitAttribute("Description", "04. Update a research file with too many properties results found")]
+        public void _04_UpdateAResearchFileWithTooManyPropertiesResultsFound()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update a research file with too many properties results found", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Update a research file with too many properties results found", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 22
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -209,14 +209,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Cancel creation of new research file")]
+        [Xunit.SkippableFactAttribute(DisplayName="05. Update a Property Information from Research File")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Cancel creation of new research file")]
-        public void CancelCreationOfNewResearchFile()
+        [Xunit.TraitAttribute("Description", "05. Update a Property Information from Research File")]
+        public void _05_UpdateAPropertyInformationFromResearchFile()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cancel creation of new research file", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Update a Property Information from Research File", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 27
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -228,23 +228,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 28
- testRunner.Given("I start creating and cancel a new Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I update Property Details from a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 29
- testRunner.Then("The create research file form is no longer displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Property Information is displayed correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Cancel changes on research File Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="06. Changes on Properties from Research File")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Cancel changes on research File Properties")]
-        public void CancelChangesOnResearchFileProperties()
+        [Xunit.TraitAttribute("Description", "06. Changes on Properties from Research File")]
+        public void _06_ChangesOnPropertiesFromResearchFile()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cancel changes on research File Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Changes on Properties from Research File", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -256,23 +256,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 32
- testRunner.Given("I update and cancel changes on existing research file properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I update an existing research file properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 33
- testRunner.Then("Research File Properties remain unchanged", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Property Research Tab has been updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Cancel the update of a research file")]
+        [Xunit.SkippableFactAttribute(DisplayName="07. Cancel creation of new research file")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Cancel the update of a research file")]
-        public void CancelTheUpdateOfAResearchFile()
+        [Xunit.TraitAttribute("Description", "07. Cancel creation of new research file")]
+        public void _07_CancelCreationOfNewResearchFile()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cancel the update of a research file", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Cancel creation of new research file", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -284,23 +284,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 36
- testRunner.Given("I update and cancel existing research file form", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I start creating and cancel a new Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 37
- testRunner.Then("Research File View Form renders successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The create research file form is no longer displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Verify List View and Results Content")]
+        [Xunit.SkippableFactAttribute(DisplayName="08. Cancel changes on research File Properties")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Verify List View and Results Content")]
-        public void VerifyListViewAndResultsContent()
+        [Xunit.TraitAttribute("Description", "08. Cancel changes on research File Properties")]
+        public void _08_CancelChangesOnResearchFileProperties()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify List View and Results Content", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Cancel changes on research File Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 39
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -312,23 +312,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 40
- testRunner.Given("I search for an existing Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I update and cancel changes on existing research file properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 41
- testRunner.Then("Expected Research Files Content is displayed on Research File Table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Research File Properties remain unchanged", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Changes on Properties from Research File")]
+        [Xunit.SkippableFactAttribute(DisplayName="09. Cancel the update of a research file")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Changes on Properties from Research File")]
-        public void ChangesOnPropertiesFromResearchFile()
+        [Xunit.TraitAttribute("Description", "09. Cancel the update of a research file")]
+        public void _09_CancelTheUpdateOfAResearchFile()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Changes on Properties from Research File", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Cancel the update of a research file", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 43
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -340,23 +340,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 44
- testRunner.Given("I update an existing research file properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I update and cancel existing research file form", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 45
- testRunner.Then("Property Research Tab has been updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Research File View Form renders successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update a Property Information from Research File")]
+        [Xunit.SkippableFactAttribute(DisplayName="10. Cancel changes on a Property Information from a research file")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Update a Property Information from Research File")]
-        public void UpdateAPropertyInformationFromResearchFile()
+        [Xunit.TraitAttribute("Description", "10. Cancel changes on a Property Information from a research file")]
+        public void _10_CancelChangesOnAPropertyInformationFromAResearchFile()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update a Property Information from Research File", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Cancel changes on a Property Information from a research file", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 47
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -368,23 +368,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 48
- testRunner.Given("I update Property Details from a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I cancel changes on a Property Details from a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 49
- testRunner.Then("Property Information is displayed correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Research File Properties remain unchanged", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Cancel changes on a Property Information from a research file")]
+        [Xunit.SkippableFactAttribute(DisplayName="11. Verify List View and Results Content")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "Cancel changes on a Property Information from a research file")]
-        public void CancelChangesOnAPropertyInformationFromAResearchFile()
+        [Xunit.TraitAttribute("Description", "11. Verify List View and Results Content")]
+        public void _11_VerifyListViewAndResultsContent()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cancel changes on a Property Information from a research file", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Verify List View and Results Content", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 51
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -396,10 +396,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 52
- testRunner.Given("I cancel changes on a Property Details from a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I search for an existing Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 53
- testRunner.Then("Research File Properties remain unchanged", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Expected Research Files Content is displayed on Research File Table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
