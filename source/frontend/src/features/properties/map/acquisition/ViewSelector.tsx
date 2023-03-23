@@ -32,58 +32,67 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
   (props, formikRef) => {
     // render edit forms
     if (props.isEditing && !!props.acquisitionFile) {
-      const propertyFile = getAcquisitionFileProperty(
-        props.acquisitionFile,
-        props.selectedMenuIndex,
-      );
-      switch (props.activeEditForm) {
-        case EditFormNames.acquisitionChecklist:
-          return (
-            <UpdateAcquisitionChecklistContainer
-              formikRef={formikRef}
-              acquisitionFile={props.acquisitionFile}
-              onSuccess={props.onSuccess}
-              View={UpdateAcquisitionChecklistForm}
-            />
-          );
+      // File-based tabs
+      if (props.selectedMenuIndex === 0) {
+        switch (props.activeEditForm) {
+          case EditFormNames.acquisitionChecklist:
+            return (
+              <UpdateAcquisitionChecklistContainer
+                formikRef={formikRef}
+                acquisitionFile={props.acquisitionFile}
+                onSuccess={props.onSuccess}
+                View={UpdateAcquisitionChecklistForm}
+              />
+            );
 
-        case EditFormNames.acquisitionSummary:
-          return (
-            <UpdateAcquisitionContainer
-              ref={formikRef}
-              acquisitionFile={props.acquisitionFile}
-              onSuccess={props.onSuccess}
-            />
-          );
+          case EditFormNames.acquisitionSummary:
+            return (
+              <UpdateAcquisitionContainer
+                ref={formikRef}
+                acquisitionFile={props.acquisitionFile}
+                onSuccess={props.onSuccess}
+              />
+            );
 
-        case EditFormNames.propertyDetails:
-          if (propertyFile?.property?.id === undefined) {
-            throw Error('Cannot edit property without a valid id');
-          }
-          return (
-            <UpdatePropertyDetailsContainer
-              id={propertyFile?.property?.id}
-              onSuccess={props.onSuccess}
-              ref={formikRef}
-            />
-          );
-        case EditFormNames.takes:
-          return (
-            <TakesUpdateContainer
-              fileProperty={propertyFile}
-              View={TakesUpdateForm}
-              ref={formikRef}
-              onSuccess={() =>
-                props.setContainerState({
-                  isEditing: false,
-                  activeEditForm: undefined,
-                })
-              }
-            />
-          );
+          default:
+            throw Error('Active edit form not defined');
+        }
+      } else {
+        // Property-based tabs
+        const propertyFile = getAcquisitionFileProperty(
+          props.acquisitionFile,
+          props.selectedMenuIndex,
+        );
+        switch (props.activeEditForm) {
+          case EditFormNames.propertyDetails:
+            if (propertyFile?.property?.id === undefined) {
+              throw Error('Cannot edit property without a valid id');
+            }
+            return (
+              <UpdatePropertyDetailsContainer
+                id={propertyFile?.property?.id}
+                onSuccess={props.onSuccess}
+                ref={formikRef}
+              />
+            );
+          case EditFormNames.takes:
+            return (
+              <TakesUpdateContainer
+                fileProperty={propertyFile}
+                View={TakesUpdateForm}
+                ref={formikRef}
+                onSuccess={() =>
+                  props.setContainerState({
+                    isEditing: false,
+                    activeEditForm: undefined,
+                  })
+                }
+              />
+            );
 
-        default:
-          throw Error('Active edit form not defined');
+          default:
+            throw Error('Active edit form not defined');
+        }
       }
     } else {
       // render read-only views
