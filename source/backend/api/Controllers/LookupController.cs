@@ -138,6 +138,9 @@ namespace Pims.Api.Controllers
                 var takeStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTakeStatusTypes());
                 var takeSiteContamTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTakeSiteContamTypes());
 
+                var acqChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistSectionTypes());
+                var acqChecklistItemStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistItemStatusTypes());
+
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
                 codes.AddRange(classificationTypes);
@@ -188,6 +191,8 @@ namespace Pims.Api.Controllers
                 codes.AddRange(takeTypes);
                 codes.AddRange(takeStatusTypes);
                 codes.AddRange(takeSiteContamTypes);
+                codes.AddRange(acqChecklistSectionTypes);
+                codes.AddRange(acqChecklistItemStatusTypes);
 
                 var response = new JsonResult(codes);
 

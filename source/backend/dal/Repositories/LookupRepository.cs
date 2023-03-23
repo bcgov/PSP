@@ -318,6 +318,17 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsTakeSiteContamTypes.AsNoTracking().ToArray();
         }
+
+        // TODO: Needs DB changes to use correct type here
+        public IEnumerable<PimsAcqChklstSectionType> GetAllAcquisitionChecklistSectionTypes()
+        {
+            return Context.PimsAcqChklstSectionTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsAcqChklstItemStatusType> GetAllAcquisitionChecklistItemStatusTypes()
+        {
+            return Context.PimsAcqChklstItemStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
         #endregion
     }
 }

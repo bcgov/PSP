@@ -113,6 +113,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               isEditing={containerState.isEditing}
               activeEditForm={containerState.activeEditForm}
               selectedMenuIndex={containerState.selectedMenuIndex}
+              defaultFileTab={containerState.defaultFileTab}
               defaultPropertyTab={containerState.defaultPropertyTab}
               setContainerState={setContainerState}
               onSuccess={onSuccess}
@@ -149,6 +150,8 @@ const getEditTitle = (editFormName: EditFormNames) => {
       return 'Update Property File Data';
     case EditFormNames.takes:
       return 'Update Takes';
+    case EditFormNames.acquisitionChecklist:
+      return 'Update Checklist';
     case EditFormNames.propertySelector:
       return 'Updating Acquisition Properties';
     default:

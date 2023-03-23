@@ -145,7 +145,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c13 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -189,7 +189,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c12.form-group {
+.c11.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -197,7 +197,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c12.form-group .radio-group {
+.c11.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -210,7 +210,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c12.form-group .radio-group .form-check {
+.c11.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -225,37 +225,19 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c12.form-group .radio-group .form-check .form-check-input {
+.c11.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c12.form-group .radio-group .form-check-label {
+.c11.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c12 .form-label {
+.c11 .form-label {
   margin-bottom: unset;
 }
 
 .c8 {
-  font-weight: bold;
-}
-
-.c9 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c11 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c14 {
   max-width: 25rem;
   padding: 1rem;
   border: 1px solid;
@@ -263,6 +245,20 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
 }
 
 .c10 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c13 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c9 {
   max-width: 9rem;
 }
 
@@ -1295,11 +1291,9 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
-                <span
-                  class="c8"
-                >
+                <strong>
                   USER
-                </span>
+                </strong>
               </span>
                on May 10, 2020
             </p>
@@ -1719,7 +1713,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="c9"
+                  class="c8"
                 >
                   <div
                     class="pb-2 row"
@@ -1729,7 +1723,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     >
                       <input
                         aria-label="square metres"
-                        class="c10"
+                        class="c9"
                         name="area-sq-meters"
                         step=".01"
                         type="number"
@@ -1750,7 +1744,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     >
                       <input
                         aria-label="hectares"
-                        class="c10"
+                        class="c9"
                         name="area-hectares"
                         step=".01"
                         type="number"
@@ -1769,7 +1763,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="c11"
+                  class="c10"
                 >
                   <div
                     class="pb-2 row"
@@ -1779,7 +1773,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     >
                       <input
                         aria-label="square feet"
-                        class="c10"
+                        class="c9"
                         name="area-sq-feet"
                         step=".01"
                         type="number"
@@ -1800,7 +1794,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     >
                       <input
                         aria-label="acres"
-                        class="c10"
+                        class="c9"
                         name="area-acres"
                         step=".01"
                         type="number"
@@ -1834,13 +1828,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             class="c4 text-left col"
           >
             <div
-              class="c12 form-group"
+              class="c11 form-group"
             >
               <div
                 class="radio-group"
               >
                 <div
-                  class="c13 pb-3"
+                  class="c12 pb-3"
                 >
                   <div
                     class="form-check"
@@ -1863,7 +1857,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c13 pb-3"
+                  class="c12 pb-3"
                 >
                   <div
                     class="form-check"
@@ -1916,7 +1910,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     class="col"
                   >
                     <div
-                      class="c14"
+                      class="c13"
                     >
                       <div
                         class="pb-2 row"
@@ -1926,7 +1920,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         >
                           <input
                             aria-label="cubic metres"
-                            class="c10"
+                            class="c9"
                             name="volume-cubic-meters"
                             step=".01"
                             type="number"
@@ -1952,7 +1946,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                         >
                           <input
                             aria-label="cubic feet"
-                            class="c10"
+                            class="c9"
                             name="volume-cubic-feet"
                             step=".01"
                             type="number"

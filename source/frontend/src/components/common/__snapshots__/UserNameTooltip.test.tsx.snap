@@ -6,18 +6,12 @@ exports[`UserNameTooltip renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
-  font-weight: bold;
-}
-
-<span
+  <span
     class="tooltip-icon"
     data-testid="tooltip-icon-userNameTooltip"
     id="userNameTooltip"
   >
-    <span
-      class="c0"
-    />
+    <strong />
   </span>
 </DocumentFragment>
 `;

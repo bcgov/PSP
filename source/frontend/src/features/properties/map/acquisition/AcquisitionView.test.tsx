@@ -2,6 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/index';
+import { FileTabNames } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
@@ -54,6 +55,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
     isEditing: false,
     selectedMenuIndex: 0,
     showConfirmModal: false,
+    defaultFileTab: FileTabNames.fileDetails,
     defaultPropertyTab: InventoryTabNames.property,
   },
   formikRef: React.createRef(),
