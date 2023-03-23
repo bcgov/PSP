@@ -313,6 +313,32 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsProjectStatusTypes.AsNoTracking().ToArray();
         }
+
+        public IEnumerable<PimsTakeType> GetAllTakeTypes()
+        {
+            return this.Context.PimsTakeTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsTakeStatusType> GetAllTakeStatusTypes()
+        {
+            return this.Context.PimsTakeStatusTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsTakeSiteContamType> GetAllTakeSiteContamTypes()
+        {
+            return this.Context.PimsTakeSiteContamTypes.AsNoTracking().ToArray();
+        }
+
+        // TODO: Needs DB changes to use correct type here
+        public IEnumerable<PimsAcqChklstSectionType> GetAllAcquisitionChecklistSectionTypes()
+        {
+            return Context.PimsAcqChklstSectionTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsAcqChklstItemStatusType> GetAllAcquisitionChecklistItemStatusTypes()
+        {
+            return Context.PimsAcqChklstItemStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
         #endregion
     }
 }

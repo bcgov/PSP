@@ -9,6 +9,7 @@ export interface ILookupCode {
   parentId?: string | number;
   key?: string;
   description?: string;
+  hint?: string;
   displayOrder: number;
   appCreateTimestamp?: string;
   updatedOn?: string;

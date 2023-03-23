@@ -10,18 +10,19 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 
+import { DetailAcquisitionFile } from '../models';
 import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
-import { DetailAcquisitionFile } from './models';
 
 export interface IAcquisitionSummaryViewProps {
   acquisitionFile?: Api_AcquisitionFile;
   onEdit: () => void;
 }
 
-const AcquisitionSummaryView: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionSummaryViewProps>
-> = ({ acquisitionFile, onEdit }) => {
+const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
+  acquisitionFile,
+  onEdit,
+}) => {
   const keycloak = useKeycloakWrapper();
   const detail: DetailAcquisitionFile = DetailAcquisitionFile.fromApi(acquisitionFile);
 
@@ -105,7 +106,6 @@ export default AcquisitionSummaryView;
 
 const StyledEditWrapper = styled.div`
   color: ${props => props.theme.css.primary};
-
   text-align: right;
 `;
 

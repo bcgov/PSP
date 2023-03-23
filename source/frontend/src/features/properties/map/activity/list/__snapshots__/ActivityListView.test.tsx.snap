@@ -151,6 +151,7 @@ exports[`Activity List View renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c9.c9.btn {
@@ -382,13 +383,6 @@ exports[`Activity List View renders as expected 1`] = `
                   value="SITEVIS"
                 >
                   Site Visit
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-SURVEY"
-                  value="SURVEY"
-                >
-                  Survey
                 </option>
               </select>
             </div>

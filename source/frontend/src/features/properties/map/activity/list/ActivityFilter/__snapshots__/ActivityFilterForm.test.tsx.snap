@@ -245,13 +245,6 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
             >
               Site Visit
             </option>
-            <option
-              class="option"
-              data-testid="select-option-SURVEY"
-              value="SURVEY"
-            >
-              Survey
-            </option>
           </select>
         </div>
       </div>
@@ -610,13 +603,6 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
               value="SITEVIS"
             >
               Site Visit
-            </option>
-            <option
-              class="option"
-              data-testid="select-option-SURVEY"
-              value="SURVEY"
-            >
-              Survey
             </option>
           </select>
         </div>

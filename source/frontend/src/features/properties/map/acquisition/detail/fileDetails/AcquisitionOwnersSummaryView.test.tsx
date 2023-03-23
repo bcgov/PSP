@@ -1,8 +1,8 @@
 import { render, RenderOptions } from 'utils/test-utils';
 
+import { DetailAcquisitionFileOwner } from '../models';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
-import { DetailAcquisitionFileOwner } from './models';
 
 jest.mock('@react-keycloak/web');
 
@@ -31,7 +31,7 @@ const mockViewProps: IAcquisitionOwnersSummaryViewProps = {
   isLoading: false,
 };
 
-describe('Acquistion File Owners View component', () => {
+describe('Acquisition File Owners View component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(

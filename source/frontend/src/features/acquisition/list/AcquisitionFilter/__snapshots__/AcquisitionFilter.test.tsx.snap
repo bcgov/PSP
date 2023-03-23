@@ -300,10 +300,10 @@ exports[`Acquisition Filter matches snapshot 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-CLOSED"
-                  value="CLOSED"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
                 >
-                  Closed
+                  Complete
                 </option>
                 <option
                   class="option"

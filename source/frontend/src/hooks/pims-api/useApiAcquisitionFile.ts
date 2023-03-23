@@ -2,6 +2,7 @@ import { IAcquisitionFilter } from 'features/acquisition/list/interfaces';
 import { IPagedItems } from 'interfaces';
 import {
   Api_AcquisitionFile,
+  Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
@@ -38,6 +39,10 @@ export const useApiAcquisitionFile = () => {
         api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
       getAcquisitionFileOwners: (acqFileId: number) =>
         api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
+      getAcquisitionFileChecklist: (acqFileId: number) =>
+        api.get<Api_AcquisitionFileChecklistItem[]>(`/acquisitionfiles/${acqFileId}/checklist`),
+      putAcquisitionFileChecklist: (acqFile: Api_AcquisitionFile) =>
+        api.put<Api_AcquisitionFile>(`/acquisitionfiles/${acqFile?.id}/checklist`, acqFile),
     }),
     [api],
   );

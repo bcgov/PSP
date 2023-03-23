@@ -43,6 +43,8 @@ type OptionalAttributes = {
   toolTipId?: string;
   /** Flex direction for the group */
   flexDirection?: 'column' | 'row';
+  /** Override the default handleChange method provided by formik */
+  handleChange?: (e: React.ChangeEvent<any>) => void;
 };
 
 // only "field" is required for <RadioGroup>, the rest are optional
@@ -68,6 +70,7 @@ export const RadioGroup = ({
   toolTip,
   toolTipId,
   flexDirection,
+  handleChange: overrideChange,
   ...rest
 }: RadioGroupProps) => {
   const { values, errors, touched, handleBlur, handleChange } = useFormikContext();
@@ -76,7 +79,7 @@ export const RadioGroup = ({
   const error = getIn(errors, field);
   return (
     <StyledRadioGroup
-      controlId={`input-${field}`}
+      controlId={`${field}`}
       className={classNames(!!required ? 'required' : '', className)}
       $flexDirection={flexDirection ?? 'column'}
     >
@@ -102,8 +105,9 @@ export const RadioGroup = ({
               value={radioValue}
               placeholder={placeholder}
               checked={activeValue === radioValue}
-              onChange={handleChange}
+              onChange={overrideChange ?? handleChange}
               onBlur={handleBlur}
+              data-testid={`radio-${field}-${radioLabel}`.toLowerCase()}
             />
             <Form.Label className="form-check-label">{radioLabel}</Form.Label>
           </InlineFlexDiv>
@@ -115,6 +119,17 @@ export const RadioGroup = ({
     </StyledRadioGroup>
   );
 };
+
+export const yesNoRadioGroupValues = [
+  {
+    radioValue: 'true',
+    radioLabel: 'Yes',
+  },
+  {
+    radioValue: 'false',
+    radioLabel: 'No',
+  },
+];
 
 export const StyledRadioGroup = styled(Form.Group)`
   &.form-group {
