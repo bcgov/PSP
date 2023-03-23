@@ -124,7 +124,12 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
   // a reference to the layer popup
   const popupRef = useRef<LeafletPopup>(null);
 
-  const { setState, selectedInventoryProperty, selectedFeature } = useContext(MapStateContext);
+  const {
+    setState,
+    selectedInventoryProperty,
+    selectedFeature,
+    loading: mapLoading,
+  } = useContext(MapStateContext);
   const { propertiesLoading } = useContext(PropertyContext);
 
   if (mapRef.current && !selectedInventoryProperty) {
@@ -233,7 +238,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
 
   return (
     <Styled.MapGrid ref={resizeRef} className={classNames('px-0', 'map', { sidebar: showSideBar })}>
-      <LoadingBackdrop show={propertiesLoading} />
+      <LoadingBackdrop show={propertiesLoading || mapLoading} parentScreen />
       {!showSideBar ? (
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
