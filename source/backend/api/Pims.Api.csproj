@@ -64,4 +64,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Services\DocumentLeaseService.cs" />
+    <Compile Remove="Services\IDocumentLeaseService.cs" />
+  </ItemGroup>
 </Project>

@@ -89,6 +89,22 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.DocumentId, src => src.Document.Id)
                 .Map(dest => dest.Document, src => src.Document);
+
+            config.NewConfig<Entity.PimsLeaseDocument, DocumentRelationshipModel>()
+                .PreserveReference(true)
+                .Map(dest => dest.Id, src => src.Internal_Id)
+                .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.Document, src => src.Document)
+                .Map(dest => dest.RelationshipType, src => DocumentRelationType.Leases)
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
+
+            config.NewConfig<DocumentRelationshipModel, Entity.PimsLeaseDocument>()
+                .Map(dest => dest.Internal_Id, src => src.Id)
+                .Map(dest => dest.FileId, src => src.ParentId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DocumentId, src => src.Document.Id)
+                .Map(dest => dest.Document, src => src.Document);
         }
     }
 }
