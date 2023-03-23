@@ -2726,7 +2726,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 'EFCLAUSE',
-    name: 'E\u0026F clause',
+    name: 'E&F clause',
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyAnomalyType',
@@ -3022,7 +3022,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 'COMBO',
-    name: 'Combination (PPH \u0026 Non-PPH)',
+    name: 'Combination (PPH & Non-PPH)',
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPphStatusType',
@@ -3160,14 +3160,6 @@ export const mockLookups: Partial<ILookupCode>[] = [
     id: 'CLOSED',
     name: 'Closed',
     isDisabled: true,
-    displayOrder: 0,
-    type: 'PimsAcquisitionFileStatusType',
-    rowVersion: 0,
-  },
-  {
-    id: 'COMPLT',
-    name: 'Complete',
-    isDisabled: false,
     displayOrder: 0,
     type: 'PimsAcquisitionFileStatusType',
     rowVersion: 0,
@@ -3581,7 +3573,6 @@ export const mockLookups: Partial<ILookupCode>[] = [
     rowVersion: 0,
   },
   {
-<<<<<<< HEAD
     id: '1STNATION',
     name: 'First nation',
     isDisabled: false,
@@ -3659,6 +3650,22 @@ export const mockLookups: Partial<ILookupCode>[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsConsultationStatusType',
+    rowVersion: 0,
+  },
+  {
+    id: 'NOTREQD',
+    name: 'Not required',
+    isDisabled: false,
+    displayOrder: 4,
+    type: 'PimsConsultationStatusType',
+    rowVersion: 0,
+  },
+  {
+    id: 'PARTIAL',
+    name: 'Partial',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsTakeType',
     rowVersion: 0,
   },
   {
