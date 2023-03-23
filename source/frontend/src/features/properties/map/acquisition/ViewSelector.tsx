@@ -1,4 +1,5 @@
 import { FileTypes } from 'constants/fileTypes';
+import { FileTabNames } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames, InventoryTabs } from 'features/mapSideBar/tabs/InventoryTabs';
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import TakesUpdateContainer from 'features/mapSideBar/tabs/takes/update/TakesUpdateContainer';
@@ -20,6 +21,7 @@ export interface IViewSelectorProps {
   isEditing: boolean;
   activeEditForm?: EditFormNames;
   selectedMenuIndex: number;
+  defaultFileTab: FileTabNames;
   defaultPropertyTab: InventoryTabNames;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
   onSuccess: () => void;
@@ -89,6 +91,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
         return (
           <AcquisitionFileTabs
             acquisitionFile={props.acquisitionFile}
+            defaultTab={props.defaultFileTab}
             setContainerState={props.setContainerState}
           />
         );

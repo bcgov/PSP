@@ -1,6 +1,7 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
+import { FileTabNames } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
@@ -24,6 +25,7 @@ export interface AcquisitionContainerState {
   selectedMenuIndex: number;
   showConfirmModal: boolean;
   acquisitionFile: Api_AcquisitionFile | undefined;
+  defaultFileTab: FileTabNames;
   defaultPropertyTab: InventoryTabNames;
 }
 
@@ -33,6 +35,7 @@ const initialState: AcquisitionContainerState = {
   selectedMenuIndex: 0,
   showConfirmModal: false,
   acquisitionFile: undefined,
+  defaultFileTab: FileTabNames.fileDetails,
   defaultPropertyTab: InventoryTabNames.property,
 };
 

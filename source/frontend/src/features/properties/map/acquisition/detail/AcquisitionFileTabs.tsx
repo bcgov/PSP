@@ -18,11 +18,13 @@ import AcquisitionSummaryView from './fileDetails/AcquisitionSummaryView';
 
 export interface IAcquisitionFileTabsProps {
   acquisitionFile?: Api_AcquisitionFile;
+  defaultTab: FileTabNames;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
 export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   acquisitionFile,
+  defaultTab,
   setContainerState,
 }) => {
   const tabViews: TabFileView[] = [];
@@ -36,6 +38,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           setContainerState({
             isEditing: true,
             activeEditForm: EditFormNames.acquisitionSummary,
+            defaultFileTab: FileTabNames.fileDetails,
           })
         }
       />
@@ -52,6 +55,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           setContainerState({
             isEditing: true,
             activeEditForm: EditFormNames.acquisitionChecklist,
+            defaultFileTab: FileTabNames.checklist,
           })
         }
       />
@@ -94,8 +98,6 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     key: FileTabNames.forms,
     name: 'Forms',
   });
-
-  var defaultTab = FileTabNames.fileDetails;
 
   const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
 
