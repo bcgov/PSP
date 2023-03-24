@@ -30,7 +30,7 @@ VALUES
   (N'FILEMGMT',  N'CONVEYCLOS',  N'Conveyance closing documents',                              17, getutcdate(), NULL),
   (N'FILEMGMT',  N'REGSTRDPLAN', N'Registered Plan',                                           18, getutcdate(), 'Letter size (8.5" x 11")'),
   (N'FILEMGMT',  N'NEWTTLACOMP', N'Copy of new title',                                         19, getutcdate(), 'Copy of new title after completion'),
-  (N'FILEMGMT',  N'BCTFANOTIF',  N'BCTFA notified',                                            20, getutcdate(), 'Applicable if this a total take with a surplus'),
+  (N'FILEMGMT',  N'BCTFANOTIF',  N'BCTFA notified',                                            20, getutcdate(), 'Applicable if this is a total take with a surplus'),
   (N'SCTN3AGR',  N'AVNCDPMTNTY', N'Notice of Advanced Payment (Form 8)',                       21, getutcdate(), 'The signed Form 8 is required'),
   (N'SCTN3AGR',  N'CLAIMRELSS3', N'Release of Claims',                                         22, getutcdate(), NULL),
   (N'SCTN3AGR',  N'CONVEYLTR',   N'Conveyance letter',                                         23, getutcdate(), NULL),

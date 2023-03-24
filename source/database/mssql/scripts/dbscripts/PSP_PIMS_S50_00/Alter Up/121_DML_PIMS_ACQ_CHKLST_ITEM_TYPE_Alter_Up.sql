@@ -27,7 +27,7 @@ IF @@ROWCOUNT = 1
   BEGIN
   UPDATE PIMS_ACQ_CHKLST_ITEM_TYPE 
   SET    DESCRIPTION                = N'BCTFA notified'
-       , HINT                       = N'Applicable if this a total take with a surplus'
+       , HINT                       = N'Applicable if this is a total take with a surplus'
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  ACQ_CHKLST_ITEM_TYPE_CODE = @CurrCd;
   END
