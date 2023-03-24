@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { downloadFile as mockDownloadFile } from 'utils/download';
 
 import { useProperties } from './useProperties';
 
@@ -79,34 +78,6 @@ describe('useProperties functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-    });
-  });
-
-  describe('exportProperties action creator', () => {
-    const url = RegExp(`/reports/properties?.*`);
-    it('Request successful, dispatches success with correct response', async () => {
-      const mockResponse = 'foo bar baz - this would be binary content for a csv file';
-      mockAxios.onGet(url).reply(200, mockResponse);
-      const filter: IPaginateProperties = { page: 1, quantity: 10 };
-
-      const { exportProperties } = setup();
-      await exportProperties(filter);
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(mockDownloadFile).toHaveBeenCalledWith(expect.anything(), mockResponse);
-    });
-
-    it('Request failure, dispatches error with correct response', async () => {
-      mockAxios.onGet(url).reply(500);
-      const filter: IPaginateProperties = { page: 1, quantity: 10 };
-
-      const { exportProperties } = setup();
-      await expect(exportProperties(filter)).rejects.toThrow();
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(mockDownloadFile).not.toBeCalled();
     });
   });
 });

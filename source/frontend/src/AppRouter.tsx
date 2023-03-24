@@ -19,9 +19,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
 import { NotFoundPage } from 'pages/404/NotFoundPage';
-import Test from 'pages/Test.ignore';
 import { TestFileManagement } from 'pages/TestFileManagement';
-import { TestNotes } from 'pages/TestNotes';
 import React, { lazy, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
@@ -113,13 +111,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             path="/page-not-found"
             title={getTitle('Page Not Found')}
             customComponent={NotFoundPage}
-            layout={PublicLayout}
-          ></AppRoute>
-          <AppRoute
-            exact
-            path="/test"
-            title={getTitle('Test')}
-            customComponent={Test}
             layout={PublicLayout}
           ></AppRoute>
           <AppRoute
@@ -293,13 +284,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             path="/testFileManagement"
             title={getTitle('Test')}
             customComponent={TestFileManagement}
-            layout={AuthLayout}
-          />
-          <AppRoute
-            exact
-            path="/test/notes"
-            title={getTitle('Test Notes')}
-            customComponent={TestNotes}
             layout={AuthLayout}
           />
           <AppRoute title="*" path="*" customComponent={() => <Redirect to="/page-not-found" />} />

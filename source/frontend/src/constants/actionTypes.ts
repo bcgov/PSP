@@ -64,6 +64,7 @@ export const GET_USER_DETAIL = 'getUserDetail';
 export const STORE_USER_DETAILS = 'STORE_USER_DETAILS';
 export const GET_USER = 'GET_USER';
 export const PUT_USER_DETAIL = 'PUT_USER_DETAIL';
+export const EXPORT_USER = 'EXPORT_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const FILTER_USERS = 'FILTER_USERS';
 export const SORT_USERS = 'SORT_USERS';

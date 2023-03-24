@@ -13,7 +13,6 @@ import {
   asProperty,
   createClusterMarker,
   createPoints,
-  generateKey,
   getMarkerIcon,
   parcelIcon,
   parcelIconSelect,
@@ -120,10 +119,6 @@ describe('mapUtils tests', () => {
         landArea: 0,
         landLegalDescription: '',
       };
-      it('generates parcel keys', () => {
-        const parcel: IProperty = { ...property };
-        expect(generateKey(parcel)).toEqual('parcel-1');
-      });
     });
 
     describe('convert feature to property', () => {
