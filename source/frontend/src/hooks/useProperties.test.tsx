@@ -12,8 +12,6 @@ import { networkSlice } from 'store/slices/network/networkSlice';
 
 import { useProperties } from './useProperties';
 
-jest.mock('utils/download');
-
 const dispatch = jest.fn();
 const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
 const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
