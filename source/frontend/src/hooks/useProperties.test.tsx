@@ -2,7 +2,6 @@ import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { IPaginateProperties } from 'constants/API';
 import find from 'lodash/find';
 import * as MOCK from 'mocks/dataMocks';
 import { mockProperties } from 'mocks/filterDataMock';
