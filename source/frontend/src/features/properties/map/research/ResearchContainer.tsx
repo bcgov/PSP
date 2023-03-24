@@ -40,7 +40,7 @@ export const ResearchContainer: React.FunctionComponent<
   } = useGetResearch();
 
   const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
-  const { setFile, setFileLoading } = React.useContext(SideBarContext);
+  const { setFile, setFileLoading, staleFile, setStaleFile } = React.useContext(SideBarContext);
 
   const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -71,13 +71,14 @@ export const ResearchContainer: React.FunctionComponent<
     });
     setResearchFile(retrieved);
     setFile({ ...retrieved, fileType: FileTypes.Research });
-  }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
+    setStaleFile(false);
+  }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile, setStaleFile]);
 
   React.useEffect(() => {
-    if (researchFile === undefined || researchFileId !== researchFile?.id) {
+    if (researchFile === undefined || researchFileId !== researchFile?.id || staleFile) {
       fetchResearchFile();
     }
-  }, [fetchResearchFile, researchFile, researchFileId]);
+  }, [fetchResearchFile, researchFile, researchFileId, staleFile]);
 
   if (researchFile === undefined && (loadingResearchFile || loadingResearchFileProperties)) {
     return (
