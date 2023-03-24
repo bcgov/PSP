@@ -27,7 +27,7 @@ namespace Pims.Ltsa.Models
             this.ProductOrderParameters = productOrderParameters;
             this.OrderedProduct = orderedProduct;
             this.ProductType = ProductTypeEnum.title;
-            this.FileReference = "folio"; //TODO: PSP-4429 obtain clarification on what this should be.
+            this.FileReference = "folio"; //This attribute is required but not used for government clients, so it can be set to any value.
         }
 
         /// <summary>
