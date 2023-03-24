@@ -1,3 +1,4 @@
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from 'components/propertySelector/models';
 import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
@@ -12,7 +13,7 @@ import { ResearchForm } from './models';
 
 const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { values } = useFormikContext<ResearchForm>();
-  const { getPrimaryAddressByPid } = useBcaAddress();
+  const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   return (
     <Section header="Properties to include in this file:">
@@ -24,6 +25,7 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
       <FieldArray name="properties">
         {({ push, remove }) => (
           <>
+            <LoadingBackdrop show={bcaLoading} />
             <Row className="py-3 no-gutters">
               <Col>
                 <MapSelectorContainer
@@ -32,7 +34,7 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
                       return promise.then(async () => {
                         const formProperty = PropertyForm.fromMapProperty(property);
                         if (property.pid) {
-                          const bcaSummary = await getPrimaryAddressByPid(property.pid);
+                          const bcaSummary = await getPrimaryAddressByPid(property.pid, 3000);
                           formProperty.address = bcaSummary?.address
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
