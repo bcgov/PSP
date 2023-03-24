@@ -107,7 +107,6 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     });
   }
 
-
   const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
 
   return (
