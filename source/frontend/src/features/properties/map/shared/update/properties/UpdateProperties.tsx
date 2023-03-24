@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import GenericModal from 'components/common/GenericModal';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from 'components/propertySelector/models';
 import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
@@ -35,7 +36,7 @@ export const UpdateProperties: React.FunctionComponent<
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
   const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
 
-  const { getPrimaryAddressByPid } = useBcaAddress();
+  const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const handleSaveClick = async () => {
     setShowSaveConfirmModal(true);
@@ -92,6 +93,7 @@ export const UpdateProperties: React.FunctionComponent<
   };
   return (
     <>
+      <LoadingBackdrop show={bcaLoading} />
       <MapSideBarLayout
         title={'Property selection'}
         icon={undefined}
@@ -124,7 +126,7 @@ export const UpdateProperties: React.FunctionComponent<
                             return promise.then(async () => {
                               const formProperty = PropertyForm.fromMapProperty(property);
                               if (property.pid) {
-                                const bcaSummary = await getPrimaryAddressByPid(property.pid);
+                                const bcaSummary = await getPrimaryAddressByPid(property.pid, 3000);
                                 formProperty.address = bcaSummary?.address
                                   ? AddressForm.fromBcaAddress(bcaSummary?.address)
                                   : undefined;

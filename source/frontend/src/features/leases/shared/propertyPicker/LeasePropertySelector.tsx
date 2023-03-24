@@ -1,4 +1,5 @@
 import { ModalProps } from 'components/common/GenericModal';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from 'components/propertySelector/models';
 import { ModalContext } from 'contexts/modalContext';
@@ -34,7 +35,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
   const [propertyIndexToRemove, setPropertyIndexToRemove] = useState<number | undefined>(undefined);
 
-  const { getPrimaryAddressByPid } = useBcaAddress();
+  const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
@@ -97,7 +98,9 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       return promise.then(async () => {
         const formProperty = FormLeaseProperty.fromMapProperty(property);
 
-        const bcaSummary = property?.pid ? await getPrimaryAddressByPid(property.pid) : undefined;
+        const bcaSummary = property?.pid
+          ? await getPrimaryAddressByPid(property.pid, 3000)
+          : undefined;
 
         // Retrieve the pims id of the property if it exists
         if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
@@ -171,50 +174,55 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
   };
 
   return (
-    <Section header="Properties to include in this file:">
-      <div className="py-2">
-        Select one or more properties that you want to include in this lease/license file. You can
-        choose a location from the map, or search by other criteria.
-      </div>
+    <>
+      <LoadingBackdrop show={bcaLoading} />
+      <Section header="Properties to include in this file:">
+        <div className="py-2">
+          Select one or more properties that you want to include in this lease/license file. You can
+          choose a location from the map, or search by other criteria.
+        </div>
 
-      <FieldArray
-        name="properties"
-        render={arrayHelpers => {
-          arrayHelpersRef.current = arrayHelpers;
-          return (
-            <>
-              <Row className="py-3 no-gutters">
-                <Col>
-                  <MapSelectorContainer
-                    addSelectedProperties={processAddedProperties}
-                    modifiedProperties={values.getPropertiesAsForm()}
-                  />
-                </Col>
-              </Row>
-              <Section header="Selected properties">
-                <SelectedPropertyHeaderRow />
-                {formikProps.values.properties.map((leaseProperty, index) => {
-                  const property = leaseProperty?.property;
-                  if (property !== undefined) {
-                    return (
-                      <SelectedPropertyRow
-                        key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                        onRemove={() => onRemoveClick(index)}
-                        nameSpace={`properties.${index}`}
-                        index={index}
-                        property={property}
-                      />
-                    );
-                  }
-                  return <></>;
-                })}
-                {formikProps.values.properties.length === 0 && <span>No Properties selected</span>}
-              </Section>
-            </>
-          );
-        }}
-      />
-    </Section>
+        <FieldArray
+          name="properties"
+          render={arrayHelpers => {
+            arrayHelpersRef.current = arrayHelpers;
+            return (
+              <>
+                <Row className="py-3 no-gutters">
+                  <Col>
+                    <MapSelectorContainer
+                      addSelectedProperties={processAddedProperties}
+                      modifiedProperties={values.getPropertiesAsForm()}
+                    />
+                  </Col>
+                </Row>
+                <Section header="Selected properties">
+                  <SelectedPropertyHeaderRow />
+                  {formikProps.values.properties.map((leaseProperty, index) => {
+                    const property = leaseProperty?.property;
+                    if (property !== undefined) {
+                      return (
+                        <SelectedPropertyRow
+                          key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                          onRemove={() => onRemoveClick(index)}
+                          nameSpace={`properties.${index}`}
+                          index={index}
+                          property={property}
+                        />
+                      );
+                    }
+                    return <></>;
+                  })}
+                  {formikProps.values.properties.length === 0 && (
+                    <span>No Properties selected</span>
+                  )}
+                </Section>
+              </>
+            );
+          }}
+        />
+      </Section>
+    </>
   );
 };
 
