@@ -134,6 +134,16 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsLeaseProgramTypes.AsNoTracking().OrderBy(a => a.LeaseProgramTypeCode).ToArray();
         }
 
+        public IEnumerable<PimsConsultationType> GetAllConsultationTypes()
+        {
+            return this.Context.PimsConsultationTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsConsultationStatusType> GetAllConsultationStatusTypes()
+        {
+            return this.Context.PimsConsultationStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
         public IEnumerable<PimsLeaseStatusType> GetAllLeaseStatusTypes()
         {
             return this.Context.PimsLeaseStatusTypes.AsNoTracking().OrderBy(a => a.LeaseStatusTypeCode).ToArray();

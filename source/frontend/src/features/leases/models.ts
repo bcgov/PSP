@@ -1,15 +1,11 @@
 import { IMapProperty } from 'components/propertySelector/models';
 import { PropertyAreaUnitTypes } from 'constants/index';
 import { LeaseInitiatorTypes } from 'constants/leaseInitiatorTypes';
-import {
-  DetailAcquisitionFile,
-  DetailAcquisitionFilePerson,
-} from 'features/properties/map/acquisition/detail/models';
 import { PropertyForm } from 'features/properties/map/shared/models';
 import { IAutocompletePrediction } from 'interfaces';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_Lease } from 'models/api/Lease';
+import { Api_Lease, Api_LeaseConsultation } from 'models/api/Lease';
 import { Api_PropertyLease } from 'models/api/PropertyLease';
+import { ILookupCode } from 'store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 
@@ -51,6 +47,7 @@ export class LeaseFormModel {
   project?: IAutocompletePrediction;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
+  consultations: FormLeaseConsultation[] = [];
   rowVersion: number = 0;
 
   static fromApi(apiModel?: Api_Lease): LeaseFormModel {
@@ -94,6 +91,12 @@ export class LeaseFormModel {
         ? { id: apiModel.project.id || 0, text: apiModel.project.description || '' }
         : undefined;
 
+    const sortedConsultations = apiModel?.consultations?.sort(
+      (a, b) => (a.consultationType?.displayOrder || 0) - (b.consultationType?.displayOrder || 0),
+    );
+    leaseDetail.consultations =
+      sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
+
     return leaseDetail;
   }
 
@@ -136,6 +139,7 @@ export class LeaseFormModel {
         this.project?.id !== undefined && this.project?.id !== 0
           ? { id: this.project?.id }
           : undefined,
+      consultations: this.consultations.map(x => x.toApi()),
     };
   }
 
@@ -145,32 +149,6 @@ export class LeaseFormModel {
         return property.property;
       })
       .filter((item): item is PropertyForm => !!item);
-  }
-}
-
-export class LeaseDetails {
-  fileName?: string;
-  assignedDate?: string;
-  deliveryDate?: string;
-  acquisitionPhysFileStatusTypeDescription?: string;
-  acquisitionTypeDescription?: string;
-  regionDescription?: string;
-  acquisitionTeam: DetailAcquisitionFilePerson[] = [];
-
-  static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
-    const detail = new DetailAcquisitionFile();
-    detail.fileName = model?.fileName;
-    detail.assignedDate = model?.assignedDate;
-    detail.deliveryDate = model?.deliveryDate;
-    detail.acquisitionPhysFileStatusTypeDescription =
-      model?.acquisitionPhysFileStatusTypeCode?.description;
-    detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description;
-    detail.regionDescription = model?.regionCode?.description;
-    // acquisition team array
-    detail.acquisitionTeam =
-      model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
-
-    return detail;
   }
 }
 
@@ -213,10 +191,54 @@ export class FormLeaseProperty {
       id: this.id,
       rowVersion: this.rowVersion,
       property: this.property?.toApi(),
-      lease: { id: this.leaseId },
+      lease: { id: this.leaseId, consultations: null },
       propertyName: this.name,
       leaseArea: numberLeaseArea,
       areaUnitType: numberLeaseArea !== undefined ? toTypeCode(this.areaUnitTypeCode) : undefined,
+    };
+  }
+}
+
+export class FormLeaseConsultation {
+  public id: number = 0;
+  public consultationType: string = '';
+  public consultationTypeDescription: string = '';
+  public consultationStatusType: string = '';
+  public consultationStatusTypeDescription: string = '';
+  public parentLeaseId: number = 0;
+  public rowVersion: number | undefined = undefined;
+
+  static fromApi(apiModel: Api_LeaseConsultation): FormLeaseConsultation {
+    const model = new FormLeaseConsultation();
+    model.id = apiModel.id || 0;
+    model.consultationType = fromTypeCode(apiModel.consultationType) || '';
+    model.consultationTypeDescription = apiModel.consultationType?.description || '';
+    model.consultationStatusType = fromTypeCode(apiModel.consultationStatusType) || '';
+    model.consultationStatusTypeDescription = apiModel.consultationStatusType?.description || '';
+    model.parentLeaseId = apiModel.parentLeaseId || 0;
+    model.rowVersion = apiModel.rowVersion || 0;
+    return model;
+  }
+
+  static fromApiLookup(parentLease: number, typeModel: ILookupCode): FormLeaseConsultation {
+    const model = new FormLeaseConsultation();
+    model.id = 0;
+    model.consultationType = typeModel.id.toString() || '';
+    model.consultationTypeDescription = typeModel?.name || '';
+    model.consultationStatusType = 'UNKNOWN';
+    model.consultationStatusTypeDescription = 'Unknown';
+    model.parentLeaseId = parentLease;
+    model.rowVersion = undefined;
+    return model;
+  }
+
+  public toApi(): Api_LeaseConsultation {
+    return {
+      id: this.id,
+      consultationType: toTypeCode(this.consultationType) || null,
+      consultationStatusType: toTypeCode(this.consultationStatusType) || null,
+      parentLeaseId: this.parentLeaseId,
+      rowVersion: this.rowVersion,
     };
   }
 }
@@ -239,4 +261,5 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     hasPhysicalLicense: undefined,
     statusType: { id: 'DRAFT' },
     paymentReceivableType: { id: 'RCVBL' },
+    consultations: null,
   });

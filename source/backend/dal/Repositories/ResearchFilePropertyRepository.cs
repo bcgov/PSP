@@ -102,7 +102,7 @@ namespace Pims.Dal.Repositories
             {
                 var currentType = currentTypes.FirstOrDefault(x => x.PropResearchPurposeTypeCode == selectedType.PropResearchPurposeTypeCode);
 
-                // If the code is already on the list, add the existing one, otherwise add the incomming one
+                // If the code is already on the list, add the existing one, otherwise add the incoming one
                 if (currentType != null)
                 {
                     propertyPurposeTypes.Add(currentType);
