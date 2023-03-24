@@ -159,13 +159,13 @@ namespace Pims.Dal.Repositories
 
         public bool DeleteResearchNotes(long noteId)
         {
-            var projectNotes = Context.PimsResearchFileNotes
+            var researchNotes = Context.PimsResearchFileNotes
                 .Include(x => x.Note)
                 .Where(x => x.NoteId == noteId).ToList();
 
-            if (projectNotes.Any())
+            if (researchNotes.Any())
             {
-                foreach (var note in projectNotes)
+                foreach (var note in researchNotes)
                 {
                     this.Context.PimsResearchFileNotes.Remove(note);
                     this.Context.PimsNotes.Remove(note.Note);
