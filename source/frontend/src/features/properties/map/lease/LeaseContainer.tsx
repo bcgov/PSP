@@ -134,7 +134,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { lease, setLease, refresh } = useLeaseDetail(leaseId);
-  const { setFullWidth } = useContext(SideBarContext);
+  const { setFullWidth, setStaleFile, staleFile } = useContext(SideBarContext);
 
   const activeTab = containerState.activeTab;
   useEffect(() => {
@@ -144,6 +144,16 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       setFullWidth(false);
     }
   }, [activeTab, setFullWidth]);
+
+  useEffect(() => {
+    const refreshLease = async () => {
+      await refresh();
+      setStaleFile(false);
+    };
+    if (staleFile) {
+      refreshLease();
+    }
+  }, [staleFile, refresh, setStaleFile]);
 
   if (lease === undefined) {
     return <LoadingBackdrop show={true} parentScreen={true} />;
