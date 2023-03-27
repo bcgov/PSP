@@ -6,9 +6,6 @@ export const DocumentTemplateManagementContainer: React.FunctionComponent<
   React.PropsWithChildren<unknown>
 > = () => {
   const [acitivityTemplateId, setActivityTemplateId] = useState<number | undefined>(undefined);
-  // const {
-  //   getActivityTemplates: { response: templateResponse, loading: templateLoading },
-  // } = useActivityRepository();
 
   return (
     <DocumentTemplateManagementView
