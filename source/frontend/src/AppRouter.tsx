@@ -140,14 +140,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
           ></AppRoute>
           <AppRoute
             protected
-            path="/admin/document_generation"
-            customComponent={ManageDocumentTemplate}
-            layout={AuthLayout}
-            claim={Claims.DOCUMENT_ADMIN}
-            title={getTitle('Document Template')}
-          ></AppRoute>
-          <AppRoute
-            protected
             exact
             path="/admin/financial-code/list"
             customComponent={FinancialCodesListView}
