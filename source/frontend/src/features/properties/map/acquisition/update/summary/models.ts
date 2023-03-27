@@ -4,6 +4,7 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
 } from 'models/api/AcquisitionFile';
+import { defaultProduct, defaultProject } from 'models/api/Project';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
 import {
@@ -54,10 +55,12 @@ export class UpdateAcquisitionSummaryFormModel
       regionCode: toTypeCode(Number(this.region)),
       project:
         this.project?.id !== undefined && this.project?.id !== 0
-          ? { id: this.project?.id }
+          ? { ...defaultProject, id: this.project?.id }
           : undefined,
       product:
-        this.product !== undefined && this.product !== 0 ? { id: Number(this.product) } : undefined,
+        this.product !== undefined && this.product !== 0
+          ? { ...defaultProduct, id: Number(this.product) }
+          : undefined,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       acquisitionFileOwners: this.owners
@@ -92,7 +95,7 @@ export class UpdateAcquisitionSummaryFormModel
       model.project !== undefined
         ? { id: model.project?.id || 0, text: model.project?.description || '' }
         : undefined;
-    newForm.product = model.product?.id;
+    newForm.product = model.product?.id ?? undefined;
 
     return newForm;
   }
