@@ -31,7 +31,7 @@ namespace Pims.Keycloak
         public KeycloakService(IOpenIdConnectRequestClient client, IOptions<Configuration.KeycloakOptions> options)
         {
             this.Options = options.Value;
-            this.Options.Validate(); // TODO: PSP-4428 Figure out how to automatically validate.
+            this.Options.Validate();
             this.Options.ServiceAccount.Validate();
             _client = client;
             _client.AuthClientOptions.Audience = this.Options.ServiceAccount.Audience ?? this.Options.Audience;
