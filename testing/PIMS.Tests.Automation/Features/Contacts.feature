@@ -43,4 +43,8 @@ Scenario Outline: 07. Search for a non-existing Contact
 	| Organization	| 4         |
 
 
+Scenario: 08. Verify Contacts List View
+	Given I verify the Contacts List View
+	Then Expected Content is displayed on Contacts Table Individual Lee
+
 

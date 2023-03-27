@@ -68,6 +68,21 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ProjectId, src => src.Parent.Id)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
 
+            // PimsResearchFileNote -> EntityNoteModel
+            config.NewConfig<Entity.PimsResearchFileNote, EntityNoteModel>()
+                .PreserveReference(true)
+                .Map(dest => dest.Id, src => src.ResearchFileNoteId)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.Parent, src => src)
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
+
+            // PimsResearchFileNote <- EntityNoteModel
+            config.NewConfig<EntityNoteModel, Entity.PimsResearchFileNote>()
+                .Map(dest => dest.ResearchFileNoteId, src => src.Id)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.ResearchFileId, src => src.Parent.Id)
+                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
+
             config.NewConfig<Entity.PimsProjectNote, NoteParentModel>()
                 .ConstructUsing(src => new NoteParentModel { Id = src.ProjectNoteId });
         }

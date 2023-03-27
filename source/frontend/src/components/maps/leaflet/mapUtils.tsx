@@ -227,10 +227,6 @@ export const zoomToCluster = (cluster: ICluster, expansionZoom: number, map: Map
   map?.setView(latlng, expansionZoom, { animate: true });
 };
 
-// we need to namespace the keys as IDs are not enough here.
-// the same ID could be found on both the parcel collection and
-export const generateKey = (p: IProperty) => `parcel-${p.id}`;
-
 /** Creates a IProperty object from a GeoJSON point */
 export const asProperty = (point: PointFeature): IProperty => {
   const { id, name } = point?.properties;

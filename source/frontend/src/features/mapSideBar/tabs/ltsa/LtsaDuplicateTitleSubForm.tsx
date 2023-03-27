@@ -28,7 +28,7 @@ export const LtsaDuplicateTitleSubForm: React.FunctionComponent<
                 `duplicateCertificatesOfTitle.${index}`,
               );
               return (
-                <>
+                <React.Fragment key={`${title}-${index}`}>
                   <SectionField label="To">
                     <Input
                       field={`${withNameSpace(
@@ -62,7 +62,7 @@ export const LtsaDuplicateTitleSubForm: React.FunctionComponent<
                     />
                   </SectionField>
                   {index < certificates.length - 1 && <hr></hr>}
-                </>
+                </React.Fragment>
               );
             })}
           </React.Fragment>

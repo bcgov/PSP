@@ -103,5 +103,19 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsAcquisitionFundingType> GetAllAcquisitionFundingTypes();
 
         IEnumerable<PimsProjectStatusType> GetAllProjectStatusTypes();
+
+        IEnumerable<PimsConsultationType> GetAllConsultationTypes();
+
+        IEnumerable<PimsConsultationStatusType> GetAllConsultationStatusTypes();
+
+        IEnumerable<PimsTakeType> GetAllTakeTypes();
+
+        IEnumerable<PimsTakeStatusType> GetAllTakeStatusTypes();
+
+        IEnumerable<PimsTakeSiteContamType> GetAllTakeSiteContamTypes();
+
+        IEnumerable<PimsAcqChklstSectionType> GetAllAcquisitionChecklistSectionTypes();
+
+        IEnumerable<PimsAcqChklstItemStatusType> GetAllAcquisitionChecklistItemStatusTypes();
     }
 }

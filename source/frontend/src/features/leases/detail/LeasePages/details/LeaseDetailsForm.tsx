@@ -10,6 +10,7 @@ import { noop } from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
 
+import DetailConsultation from './DetailConsultation';
 import DetailDocumentation from './DetailDocumentation';
 
 export interface IDetailsProps {}
@@ -24,6 +25,7 @@ export const LeaseDetailsForm: React.FunctionComponent<
         <DetailTermInformation />
         <PropertiesInformation disabled={true} />
         <DetailAdministration disabled={true} />
+        <DetailConsultation />
         <DetailDocumentation disabled={true} />
       </StyledDetails>
     </Formik>

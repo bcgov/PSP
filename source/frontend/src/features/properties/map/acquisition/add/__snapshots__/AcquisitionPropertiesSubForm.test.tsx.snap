@@ -205,6 +205,7 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c6:hover {
@@ -982,6 +983,7 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c2 {

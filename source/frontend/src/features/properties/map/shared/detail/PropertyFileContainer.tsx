@@ -1,3 +1,4 @@
+import { FileTypes } from 'constants/fileTypes';
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
 import BcAssessmentTabView from 'features/mapSideBar/tabs/bcAssessment/BcAssessmentTabView';
 import {
@@ -8,6 +9,8 @@ import {
 import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from 'features/mapSideBar/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/detail/PropertyDetailsTabView';
+import TakesDetailContainer from 'features/mapSideBar/tabs/takes/detail/TakesDetailContainer';
+import TakesDetailView from 'features/mapSideBar/tabs/takes/detail/TakesDetailView';
 import { PROPERTY_TYPES, useComposedProperties } from 'hooks/useComposedProperties';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
@@ -16,9 +19,11 @@ import { useState } from 'react';
 export interface IPropertyFileContainerProps {
   fileProperty: Api_PropertyFile;
   setEditFileProperty: () => void;
+  setEditTakes: () => void;
   View: React.FunctionComponent<React.PropsWithChildren<IInventoryTabsProps>>;
   customTabs: TabInventoryView[];
   defaultTab: InventoryTabNames;
+  fileContext?: FileTypes;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
@@ -87,17 +92,30 @@ export const PropertyFileContainer: React.FunctionComponent<
       name: 'Property Details',
     });
   }
-
-  if (composedProperties.propertyAssociationWrapper?.response?.id !== undefined) {
+  if (!!id) {
     tabViews.push({
       content: (
         <PropertyAssociationTabView
-          isLoading={composedProperties.propertyAssociationWrapper?.loading}
+          isLoading={composedProperties.propertyAssociationWrapper?.loading ?? false}
           associations={composedProperties.propertyAssociationWrapper?.response}
         />
       ),
       key: InventoryTabNames.pims,
       name: 'PIMS Files',
+    });
+  }
+
+  if (props.fileContext === FileTypes.Acquisition) {
+    tabViews.push({
+      content: (
+        <TakesDetailContainer
+          fileProperty={props.fileProperty}
+          onEdit={props.setEditTakes}
+          View={TakesDetailView}
+        ></TakesDetailContainer>
+      ),
+      key: InventoryTabNames.takes,
+      name: 'Takes',
     });
   }
 

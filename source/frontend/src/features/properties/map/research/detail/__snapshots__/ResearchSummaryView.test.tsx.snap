@@ -17,6 +17,7 @@ exports[`ResearchSummaryView component renders as expected when research file is
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c4.required::before {

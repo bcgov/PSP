@@ -211,6 +211,22 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   position: relative;
 }
 
+.c7 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c7 .btn {
+  margin: 0;
+}
+
 .c8 {
   float: right;
   cursor: pointer;
@@ -227,22 +243,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c7 {
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c7 .btn {
-  margin: 0;
+  border-radius: 0.5rem;
 }
 
 .c6.required::before {

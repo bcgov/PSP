@@ -191,6 +191,11 @@ namespace Pims.Api.Models.Concepts
         public IEnumerable<SecurityDepositModel> SecurityDeposits { get; set; }
 
         /// <summary>
+        /// get/set - A collection the consultations for this lease.
+        /// </summary>
+        public IEnumerable<ConsultationLeaseModel> Consultations { get; set; }
+
+        /// <summary>
         /// get/set - Notes accompanying Lease.
         /// </summary>
         public string ReturnNotes { get; set; }
