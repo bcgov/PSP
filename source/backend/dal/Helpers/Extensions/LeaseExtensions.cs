@@ -73,16 +73,6 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static string GetFullName(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return lease?.PimsLeaseTenants.FirstOrDefault(t => t != null && t.Person != null)?.Person?.GetFullName();
-        }
-
-        /// <summary>
-        /// Get the full name from the lease's first tenant (person).
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
         public static string GetMotiName(this Pims.Dal.Entities.PimsLease lease)
         {
             return lease.MotiContact;
