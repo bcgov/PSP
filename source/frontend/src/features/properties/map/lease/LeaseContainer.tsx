@@ -143,6 +143,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     } else {
       setFullWidth(false);
     }
+    return () => setFullWidth(false);
   }, [activeTab, setFullWidth]);
 
   useEffect(() => {

@@ -15,6 +15,7 @@ import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-le
 import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
+import VisibilitySensor from 'react-visibility-sensor';
 import { useAppSelector } from 'store/hooks';
 import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import styled from 'styled-components';
@@ -237,79 +238,88 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
   const [layersOpen, setLayersOpen] = React.useState(false);
 
   return (
-    <Styled.MapGrid ref={resizeRef} className={classNames('px-0', 'map', { sidebar: showSideBar })}>
-      <LoadingBackdrop show={propertiesLoading || mapLoading} parentScreen />
-      {!showSideBar ? (
-        <StyledFilterContainer fluid className="px-0">
-          <PropertyFilter
-            useGeocoder={true}
-            defaultFilter={{
-              ...defaultFilterValues,
-            }}
-            onChange={handleMapFilterChange}
-            setTriggerFilterChanged={setTriggerFilterChanged}
-          />
-        </StyledFilterContainer>
-      ) : null}
-      <Styled.MapContainer>
-        {baseLayers?.length > 0 && (
-          <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
-        )}
-
-        <ReactLeafletMap
-          center={[lat, lng]}
-          zoom={lastZoom}
-          maxZoom={MAP_MAX_ZOOM}
-          closePopupOnClick={true}
-          ref={handleMapCreated}
-          whenReady={handleMapReady}
+    <VisibilitySensor partialVisibility={true}>
+      {({ isVisible }: any) => (
+        <Styled.MapGrid
+          ref={resizeRef}
+          className={classNames('px-0', 'map', { sidebar: showSideBar })}
         >
-          <MapEvents
-            click={e => showLocationDetails(e.latlng)}
-            zoomend={e => setZoom(e.sourceTarget.getZoom())}
-            moveend={handleBounds}
-            popupclose={onPopupClose}
-          />
-          {activeBasemap && (
-            <LayerGroup attribution={activeBasemap.attribution}>
-              {activeBasemap.urls?.map((tileUrl, index) => (
-                <TileLayer
-                  key={`${activeBasemap.name}-${index}`}
-                  zIndex={index}
-                  url={tileUrl}
-                  maxZoom={MAP_MAX_ZOOM}
-                  maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
+          <LoadingBackdrop show={propertiesLoading || mapLoading} parentScreen />
+          {!showSideBar ? (
+            <StyledFilterContainer fluid className="px-0">
+              <PropertyFilter
+                useGeocoder={true}
+                defaultFilter={{
+                  ...defaultFilterValues,
+                }}
+                onChange={handleMapFilterChange}
+                setTriggerFilterChanged={setTriggerFilterChanged}
+              />
+            </StyledFilterContainer>
+          ) : null}
+          {isVisible && (
+            <Styled.MapContainer>
+              {baseLayers?.length > 0 && (
+                <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
+              )}
+
+              <ReactLeafletMap
+                center={[lat, lng]}
+                zoom={lastZoom}
+                maxZoom={MAP_MAX_ZOOM}
+                closePopupOnClick={true}
+                ref={handleMapCreated}
+                whenReady={handleMapReady}
+              >
+                <MapEvents
+                  click={e => showLocationDetails(e.latlng)}
+                  zoomend={e => setZoom(e.sourceTarget.getZoom())}
+                  moveend={handleBounds}
+                  popupclose={onPopupClose}
                 />
-              ))}
-            </LayerGroup>
+                {activeBasemap && (
+                  <LayerGroup attribution={activeBasemap.attribution}>
+                    {activeBasemap.urls?.map((tileUrl, index) => (
+                      <TileLayer
+                        key={`${activeBasemap.name}-${index}`}
+                        zIndex={index}
+                        url={tileUrl}
+                        maxZoom={MAP_MAX_ZOOM}
+                        maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
+                      />
+                    ))}
+                  </LayerGroup>
+                )}
+                {!!layerPopup && (
+                  <LayerPopup
+                    ref={popupRef}
+                    layerPopup={layerPopup}
+                    onViewPropertyInfo={onViewPropertyClick}
+                  />
+                )}
+                <LegendControl />
+                <ZoomOutButton bounds={defaultBounds} />
+                <LayersControl
+                  open={layersOpen}
+                  setOpen={() => {
+                    setLayersOpen(!layersOpen);
+                  }}
+                />
+                <InventoryLayer
+                  zoom={zoom}
+                  bounds={bounds}
+                  onMarkerClick={(property: IProperty) => {
+                    setLayersOpen(false);
+                    onViewPropertyClick(property.pid, property.id);
+                  }}
+                  filter={geoFilter}
+                ></InventoryLayer>
+              </ReactLeafletMap>
+            </Styled.MapContainer>
           )}
-          {!!layerPopup && (
-            <LayerPopup
-              ref={popupRef}
-              layerPopup={layerPopup}
-              onViewPropertyInfo={onViewPropertyClick}
-            />
-          )}
-          <LegendControl />
-          <ZoomOutButton bounds={defaultBounds} />
-          <LayersControl
-            open={layersOpen}
-            setOpen={() => {
-              setLayersOpen(!layersOpen);
-            }}
-          />
-          <InventoryLayer
-            zoom={zoom}
-            bounds={bounds}
-            onMarkerClick={(property: IProperty) => {
-              setLayersOpen(false);
-              onViewPropertyClick(property.pid, property.id);
-            }}
-            filter={geoFilter}
-          ></InventoryLayer>
-        </ReactLeafletMap>
-      </Styled.MapContainer>
-    </Styled.MapGrid>
+        </Styled.MapGrid>
+      )}
+    </VisibilitySensor>
   );
 };
 
