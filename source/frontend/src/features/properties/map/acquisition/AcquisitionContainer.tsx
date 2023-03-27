@@ -38,7 +38,7 @@ export const AcquisitionContainer: React.FunctionComponent<
 > = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
-  const { setFile, setFileLoading } = useContext(SideBarContext);
+  const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
   const { search } = useMapSearch();
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
@@ -74,13 +74,20 @@ export const AcquisitionContainer: React.FunctionComponent<
 
     setContainerState({ acquisitionFile: retrieved });
     setFile({ ...retrieved, fileType: FileTypes.Acquisition });
-  }, [acquisitionFileId, retrieveAcquisitionFileProperties, retrieveAcquisitionFile, setFile]);
+    setStaleFile(false);
+  }, [
+    acquisitionFileId,
+    retrieveAcquisitionFileProperties,
+    retrieveAcquisitionFile,
+    setFile,
+    setStaleFile,
+  ]);
 
   useEffect(() => {
-    if (acquisitionFile === undefined || acquisitionFileId !== acquisitionFile.id) {
+    if (acquisitionFile === undefined || acquisitionFileId !== acquisitionFile.id || staleFile) {
       fetchAcquisitionFile();
     }
-  }, [acquisitionFile, fetchAcquisitionFile, acquisitionFileId]);
+  }, [acquisitionFile, fetchAcquisitionFile, acquisitionFileId, staleFile]);
 
   useEffect(
     () => setFileLoading(loadingAcquisitionFile || loadingAcquisitionFileProperties),
