@@ -10,5 +10,8 @@ namespace Pims.Api.Models.Mayan.Sync
 
         [JsonPropertyName("metadata_types")]
         public IList<DocumentMetadataTypeModel> MetadataTypes { get; set; }
+
+        [JsonPropertyName("display_order")]
+        public int DisplayOrder { get; set; }
     }
 }
