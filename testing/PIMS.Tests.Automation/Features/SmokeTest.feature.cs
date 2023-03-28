@@ -101,7 +101,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
- testRunner.Given("I create a new Individual Contact with minimum fields Doe", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a new Individual Contact from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
  testRunner.Then("A new Individual contact is successfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -129,7 +129,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 11
- testRunner.Given("I create a new Organization Contact with minimum fields Automation Test Corp I", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a new Organization Contact from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 12
  testRunner.Then("A new Organization contact is successfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
