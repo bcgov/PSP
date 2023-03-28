@@ -25,23 +25,6 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.Document, src => src.Document)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
 
-            config.NewConfig<Entity.PimsActivityTemplateDocument, DocumentRelationshipModel>()
-                .PreserveReference(true)
-                .Map(dest => dest.Id, src => src.ActivityTemplateDocumentId)
-                .Map(dest => dest.ParentId, src => src.ActivityTemplateId)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Document, src => src.Document)
-                .Map(dest => dest.RelationshipType, src => DocumentRelationType.Templates)
-                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
-
-            config.NewConfig<DocumentRelationshipModel, Entity.PimsActivityTemplateDocument>()
-                .Map(dest => dest.ActivityTemplateDocumentId, src => src.Id)
-                .Map(dest => dest.ActivityTemplateId, src => src.ParentId)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.DocumentId, src => src.Document.Id)
-                .Map(dest => dest.Document, src => src.Document)
-                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
-
             config.NewConfig<Entity.PimsAcquisitionFileDocument, DocumentRelationshipModel>()
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
@@ -86,6 +69,19 @@ namespace Pims.Api.Models.Concepts.Document
             config.NewConfig<DocumentRelationshipModel, Entity.PimsProjectDocument>()
                 .Map(dest => dest.Internal_Id, src => src.Id)
                 .Map(dest => dest.FileId, src => src.ParentId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DocumentId, src => src.Document.Id)
+                .Map(dest => dest.Document, src => src.Document);
+
+            config.NewConfig<Entity.PimsFormType, DocumentRelationshipModel>()
+                .PreserveReference(true)
+                .Map(dest => dest.ParentId, src => src.FormTypeCode)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.Document, src => src.Document)
+                .Map(dest => dest.RelationshipType, src => DocumentRelationType.Templates);
+
+            config.NewConfig<DocumentRelationshipModel, Entity.PimsFormType>()
+                .Map(dest => dest.FormTypeCode, src => src.ParentId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.DocumentId, src => src.Document.Id)
                 .Map(dest => dest.Document, src => src.Document);

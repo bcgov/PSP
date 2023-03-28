@@ -41,7 +41,7 @@ describe('Document List View', () => {
     const component = render(
       <DocumentListView
         isLoading={false}
-        parentId={renderOptions?.parentId || 0}
+        parentId={renderOptions?.parentId.toString() || '0'}
         relationshipType={
           renderOptions?.relationshipType || DocumentRelationshipType.RESEARCH_FILES
         }
@@ -89,7 +89,7 @@ describe('Document List View', () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
@@ -105,7 +105,7 @@ describe('Document List View', () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
@@ -121,7 +121,7 @@ describe('Document List View', () => {
     const { getByText } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
@@ -137,7 +137,7 @@ describe('Document List View', () => {
     const { findAllByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
@@ -159,7 +159,7 @@ describe('Document List View', () => {
     const { findByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: documentRows,
       onDelete: deleteMock,
@@ -178,7 +178,7 @@ describe('Document List View', () => {
     const { findAllByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: documentRows,
       onDelete: deleteMock,

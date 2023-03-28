@@ -65,6 +65,7 @@ describe('DocumentUploadView component', () => {
         onCancel={handleCancelClick}
         initialDocumentType={'AMMEND'}
         formikRef={{ current: { submitForm, dirty: true } } as any}
+        documentStatusOptions={[]}
       />,
       {
         ...renderOptions,

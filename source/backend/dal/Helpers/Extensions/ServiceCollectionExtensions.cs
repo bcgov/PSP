@@ -67,6 +67,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IResearchFileDocumentRepository, Repositories.ResearchFileDocumentRepository>();
             repositories.AddScoped<Repositories.ITakeRepository, Repositories.TakeRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFileChecklistRepository, Repositories.AcquisitionFileChecklistRepository>();
+            repositories.AddScoped<Repositories.IFormTypeRepository, Repositories.FormTypeRepository>();
             return repositories; // TODO: PSP-4424 Use reflection to find all Repositories.
         }
 

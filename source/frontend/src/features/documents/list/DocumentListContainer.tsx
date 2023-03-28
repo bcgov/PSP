@@ -14,7 +14,7 @@ import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshi
 import DocumentListView from './DocumentListView';
 
 interface IDocumentListContainerProps {
-  parentId: number;
+  parentId: string;
   relationshipType: DocumentRelationshipType;
   disableAdd?: boolean;
   addButtonText?: string;

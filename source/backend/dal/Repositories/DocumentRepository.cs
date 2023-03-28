@@ -107,6 +107,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
                 .Include(d => d.PimsProjectDocuments)
+                .Include(d => d.PimsFormTypes)
                 .Where(d => d.DocumentId == document.Internal_Id)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -136,6 +137,13 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsActivityTemplateDocuments.Remove(new PimsActivityTemplateDocument() { Internal_Id = pimsTemplateDocument.Internal_Id });
             }
 
+            foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes)
+            {
+                var updatedFormType = pimsFormTypeDocument;
+                updatedFormType.DocumentId = null;
+                Context.Entry(pimsFormTypeDocument).Property(x => x.DocumentId).IsModified = true;
+            }
+
             this.Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
 
             this.Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
@@ -159,6 +167,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
                 .Include(d => d.PimsProjectDocuments)
+                .Include(d => d.PimsFormTypes)
                 .Where(d => d.DocumentId == documentId)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -167,8 +176,8 @@ namespace Pims.Dal.Repositories
                     documentRelationships.PimsAcquisitionFileDocuments.Count +
                     documentRelationships.PimsProjectDocuments.Count +
                     documentRelationships.PimsActivityInstanceDocuments.Count +
-                    documentRelationships.PimsActivityTemplateDocuments.Count;
-
+                    documentRelationships.PimsActivityTemplateDocuments.Count +
+                    documentRelationships.PimsFormTypes.Count;
         }
 
         #endregion
