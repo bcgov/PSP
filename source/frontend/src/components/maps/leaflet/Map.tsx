@@ -22,12 +22,12 @@ import styled from 'styled-components';
 
 import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
-import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import { useFilterContext } from '../providers/FIlterProvider';
 import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
+import { MapStateMachineContext } from '../providers/MapStateMachineContext';
 import { PropertyContext } from '../providers/PropertyContext';
 import { InventoryLayer } from './InventoryLayer';
-import { LayerPopup, LayerPopupInformation } from './LayerPopup';
+import { LayerPopup } from './LayerPopup';
 import LayersControl from './LayersControl';
 import { LegendControl } from './Legend/LegendControl';
 import LoadingBackdrop from './LoadingBackdrop/LoadingBackdrop';
@@ -118,7 +118,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
 
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
   const { setChanged } = useFilterContext();
-  const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
+  // const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
@@ -131,6 +131,8 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
     selectedFeature,
     loading: mapLoading,
   } = useContext(MapStateContext);
+  const mapMachineContext = useContext(MapStateMachineContext);
+
   const { propertiesLoading } = useContext(PropertyContext);
 
   if (mapRef.current && !selectedInventoryProperty) {
@@ -139,14 +141,14 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
     lng = center.lng;
   }
 
-  const parcelLayerFeature = selectedFeature;
-  const { showLocationDetails } = useActiveFeatureLayer({
-    selectedProperty: selectedInventoryProperty,
-    layerPopup,
-    mapRef,
-    parcelLayerFeature,
-    setLayerPopup,
-  });
+  // const parcelLayerFeature = selectedFeature;
+  // const { showLocationDetails } = useActiveFeatureLayer({
+  //   selectedProperty: selectedInventoryProperty,
+  //   layerPopup,
+  //   mapRef,
+  //   parcelLayerFeature,
+  //   setLayerPopup,
+  // });
 
   const lastZoom = useAppSelector(state => state.mapViewZoom) ?? zoomProp;
   const [zoom, setZoom] = useState(lastZoom);
@@ -227,13 +229,16 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
 
   const onPopupClose = (event: PopupEvent) => {
     if (event.popup === popupRef.current) {
-      setLayerPopup(undefined);
-      setState({
-        type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-        selectedInventoryProperty: null,
-      });
+      mapMachineContext.closePopup();
+      // setLayerPopup(undefined);
+      // setState({
+      //   type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
+      //   selectedInventoryProperty: null,
+      // });
     }
   };
+
+  const onMapClick = mapMachineContext.useMapClick();
 
   const [layersOpen, setLayersOpen] = React.useState(false);
 
@@ -263,19 +268,29 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
                 <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
               )}
 
-              <ReactLeafletMap
-                center={[lat, lng]}
-                zoom={lastZoom}
-                maxZoom={MAP_MAX_ZOOM}
-                closePopupOnClick={true}
-                ref={handleMapCreated}
-                whenReady={handleMapReady}
-              >
-                <MapEvents
-                  click={e => showLocationDetails(e.latlng)}
-                  zoomend={e => setZoom(e.sourceTarget.getZoom())}
-                  moveend={handleBounds}
-                  popupclose={onPopupClose}
+        <ReactLeafletMap
+          center={[lat, lng]}
+          zoom={lastZoom}
+          maxZoom={MAP_MAX_ZOOM}
+          closePopupOnClick={true}
+          ref={handleMapCreated}
+          whenReady={handleMapReady}
+        >
+          <MapEvents
+            click={onMapClick}
+            zoomend={e => setZoom(e.sourceTarget.getZoom())}
+            moveend={handleBounds}
+            popupclose={onPopupClose}
+          />
+          {activeBasemap && (
+            <LayerGroup attribution={activeBasemap.attribution}>
+              {activeBasemap.urls?.map((tileUrl, index) => (
+                <TileLayer
+                  key={`${activeBasemap.name}-${index}`}
+                  zIndex={index}
+                  url={tileUrl}
+                  maxZoom={MAP_MAX_ZOOM}
+                  maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
                 />
                 {activeBasemap && (
                   <LayerGroup attribution={activeBasemap.attribution}>
@@ -317,9 +332,33 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
               </ReactLeafletMap>
             </Styled.MapContainer>
           )}
-        </Styled.MapGrid>
-      )}
-    </VisibilitySensor>
+          {!!mapMachineContext.popup && (
+            <LayerPopup
+              ref={popupRef}
+              layerPopup={mapMachineContext.popup}
+              onViewPropertyInfo={onViewPropertyClick}
+            />
+          )}
+          <LegendControl />
+          <ZoomOutButton bounds={defaultBounds} />
+          <LayersControl
+            open={layersOpen}
+            setOpen={() => {
+              setLayersOpen(!layersOpen);
+            }}
+          />
+          <InventoryLayer
+            zoom={zoom}
+            bounds={bounds}
+            onMarkerClick={(property: IProperty) => {
+              setLayersOpen(false);
+              onViewPropertyClick(property.pid, property.id);
+            }}
+            filter={geoFilter}
+          ></InventoryLayer>
+        </ReactLeafletMap>
+      </Styled.MapContainer>
+    </Styled.MapGrid>
   );
 };
 

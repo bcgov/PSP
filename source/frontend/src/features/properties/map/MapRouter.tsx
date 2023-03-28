@@ -1,8 +1,10 @@
+import { useMachine } from '@xstate/react';
 import {
   MapState,
   MapStateActionTypes,
   MapStateContext,
 } from 'components/maps/providers/MapStateContext';
+import { mapMachine } from 'components/maps/stateMachines/mapMachine';
 import Claims from 'constants/claims';
 import { AddLeaseContainer } from 'features/leases';
 import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
@@ -33,6 +35,9 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
   const location = useLocation();
   const history = useHistory();
   const { setState } = useContext(MapStateContext);
+
+  // TODO: PSP-5606 WIP
+  const [, send] = useMachine(mapMachine);
 
   const matched = useMemo(
     () =>
@@ -88,6 +93,8 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
 
   useEffect(() => {
     if (matched !== null) {
+      send('OPEN_SIDEBAR');
+
       if (isAcquisition) {
         setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.ACQUISITION_FILE });
       } else if (isResearch) {
@@ -99,10 +106,12 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
       }
       setShowSideBar(true);
     } else {
+      send('CLOSE_SIDEBAR');
+
       setShowSideBar(false);
       setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
     }
-  }, [isAcquisition, isResearch, isLease, isProject, matched, setShowSideBar, setState]);
+  }, [isAcquisition, isResearch, isLease, isProject, matched, setShowSideBar, setState, send]);
 
   const onClose = () => {
     history.push('/mapview');
