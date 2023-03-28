@@ -1,6 +1,7 @@
 import { TableSort } from 'components/Table/TableSort';
 import { FileTypes } from 'constants/fileTypes';
 import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
+import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
 import orderBy from 'lodash/orderBy';
 import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import React, { useCallback, useContext } from 'react';
@@ -27,6 +28,7 @@ export const FormListViewContainer: React.FunctionComponent<
   const [formFilter, setFormFilter] = React.useState<IFormFilter>(defaultFormFilter);
   const [sort, setSort] = React.useState<TableSort<Api_FileForm>>({});
   const { staleFile, setStaleFile } = useContext(SideBarContext);
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const fetchData = useCallback(async () => {
     await getFileForms(fileType, fileId);
@@ -96,8 +98,18 @@ export const FormListViewContainer: React.FunctionComponent<
       setFormFilter={setFormFilter}
       forms={sortedFilteredForms ?? []}
       onDelete={async (fileFormId: number) => {
-        await deleteForm(FileTypes.Acquisition, fileFormId);
-        setStaleFile(true);
+        setModalContent({
+          ...getDeleteModalProps(),
+          handleOk: async () => {
+            await deleteForm(FileTypes.Acquisition, fileFormId);
+            setStaleFile(true);
+            setDisplayModal(false);
+          },
+          handleCancel: () => {
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
       }}
     />
   );

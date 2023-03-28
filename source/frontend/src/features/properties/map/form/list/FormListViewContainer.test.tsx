@@ -1,20 +1,20 @@
 import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
+import { useFormRepository } from 'hooks/repositories/useFormRepository';
 import { filter, sortBy } from 'lodash';
 import { mockLookups } from 'mocks';
 import { getMockApiFileForms } from 'mocks/mockForm';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
-import { useFormRepository } from '../hooks/useFormRepository';
 import { IFormListViewProps } from './FormListView';
 import FormListViewContainer, { IFormListViewContainerProps } from './FormListViewContainer';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-
+jest.mock('hooks/repositories/useFormRepository');
 const mockApi = {
   error: undefined,
   response: undefined,
@@ -94,11 +94,23 @@ describe('form list view container', () => {
     });
   });
 
-  it('Delete form calls api delete', async () => {
+  it('Delete form calls displays delete modal', async () => {
     setup({
       claims: [],
     });
     viewProps.onDelete(1);
+    const modal = await screen.findByText('Confirm Delete');
+
+    expect(modal).toBeVisible();
+  });
+
+  it('confirming delete modal sends delete call', async () => {
+    setup({
+      claims: [],
+    });
+    viewProps.onDelete(1);
+    const continueButton = await screen.findByText('Continue');
+    act(() => userEvent.click(continueButton));
 
     expect(mockApi.execute).toHaveBeenCalledWith('acquisition', 1);
   });

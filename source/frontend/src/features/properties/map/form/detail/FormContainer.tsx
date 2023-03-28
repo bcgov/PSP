@@ -1,5 +1,6 @@
 import { FileTypes } from 'constants/fileTypes';
 import { SideBarContext } from 'features/properties/map/context/sidebarContext';
+import { useFormRepository } from 'hooks/repositories/useFormRepository';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
@@ -7,7 +8,6 @@ import { useContext } from 'react';
 
 import { formContent } from '../../shared/content/formContent';
 import { FormTemplateTypes } from '../../shared/content/models';
-import { useFormRepository } from '../hooks/useFormRepository';
 import { IFormViewProps } from './FormView';
 
 export interface IFormContainerProps {
