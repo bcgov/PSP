@@ -1,9 +1,9 @@
 import { FileTypes } from 'constants/fileTypes';
+import { useFormRepository } from 'hooks/repositories/useFormRepository';
 import { IActivityFilter } from 'interfaces/IActivityResults';
 import { Api_FileForm } from 'models/api/Form';
 import React from 'react';
 
-import { useFormRepository } from '../hooks/useFormRepository';
 import { IFormListViewProps } from './FormListView';
 
 export interface IFormListViewContainerProps {

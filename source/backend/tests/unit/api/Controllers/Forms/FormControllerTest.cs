@@ -43,7 +43,7 @@ namespace Pims.Api.Test.Controllers
 
         #region Tests
         /// <summary>
-        /// Make a successful request to add an activity to the datastore.
+        /// Make a successful request to add a form to the datastore.
         /// </summary>
         [Fact]
         public void AddFormFile_Acquisition_Success()
@@ -61,7 +61,7 @@ namespace Pims.Api.Test.Controllers
         }
 
         /// <summary>
-        /// Make a successful request to add an activity to the datastore.
+        /// Make a successful request to add a form to the datastore.
         /// </summary>
         [Fact]
         public void AddFormFile_Acquisition_InvalidFileType()
