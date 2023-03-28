@@ -42,9 +42,7 @@ const ManageAccessRequests = lazy(() =>
   componentLoader(import('features/admin/access/ManageAccessRequestsPage'), 2),
 );
 const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsersPage'), 2));
-const ManageDocumentTemplate = lazy(() =>
-  componentLoader(import('features/admin/document-template/DocumentTemplateManagementPage'), 2),
-);
+
 const PropertyListView = lazy(() =>
   componentLoader(import('features/properties/list/PropertyListView'), 2),
 );
@@ -137,14 +135,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.ADMIN_USERS}
             title={getTitle('Access Requests')}
-          ></AppRoute>
-          <AppRoute
-            protected
-            path="/admin/document_generation"
-            customComponent={ManageDocumentTemplate}
-            layout={AuthLayout}
-            claim={Claims.DOCUMENT_ADMIN}
-            title={getTitle('Document Template')}
           ></AppRoute>
           <AppRoute
             protected
