@@ -18,7 +18,7 @@ const mockApi = {
   execute: jest.fn(),
   loading: false,
 };
-jest.mock('../hooks/useFormRepository', () => ({
+jest.mock('hooks/repositories/useFormRepository', () => ({
   useFormRepository: () => ({
     addFilesForm: mockApi,
   }),
