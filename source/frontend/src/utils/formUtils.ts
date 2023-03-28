@@ -42,7 +42,7 @@ export function emptyStringToNull(value: any, originalValue: any) {
   return value;
 }
 
-export function toTypeCode<T = string>(value?: T): Api_TypeCode<T> | undefined {
+export function toTypeCode<T = string>(value?: T | null): Api_TypeCode<T> | undefined {
   return !!value ? { id: value } : undefined;
 }
 

@@ -6,12 +6,12 @@ import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { useApiProperties } from 'hooks/pims-api';
 import { useGeoServer } from 'hooks/pims-api/useGeoServer';
 import { IPagedItems, IProperty } from 'interfaces';
+import fileDownload from 'js-file-download';
 import { Api_Property } from 'models/api/Property';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { logRequest, logSuccess } from 'store/slices/network/networkSlice';
-import { downloadFile } from 'utils/download';
 
 import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
 
@@ -97,7 +97,8 @@ export const useProperties = () => {
         dispatch(logSuccess({ name: requestId, status }));
         dispatch(hideLoading());
         // trigger file download in client browser
-        downloadFile(fileName, data);
+
+        fileDownload(data, fileName);
       } catch (axiosError) {
         if (axios.isAxiosError(axiosError)) {
           catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);

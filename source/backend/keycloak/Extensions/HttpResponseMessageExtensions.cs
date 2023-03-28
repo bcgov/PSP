@@ -50,25 +50,5 @@ namespace Pims.Keycloak.Extensions
                 throw new HttpClientRequestException(response);
             }
         }
-
-        /// <summary>
-        /// Provides a generic way to return the specified restul, or to throw an exception if the request failed.
-        /// </summary>
-        /// <param name="response"></param>
-        /// <param name="result"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <exception type="HttpClientRequestException">The request failed.</exception>
-        /// <returns></returns>
-        public static T HandleResponse<T>(this HttpResponseMessage response, T result)
-        {
-            if (response.IsSuccessStatusCode)
-            {
-                return result;
-            }
-            else
-            {
-                throw new HttpClientRequestException(response);
-            }
-        }
     }
 }

@@ -339,6 +339,11 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsAcqChklstItemStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
+
+        public IEnumerable<PimsFormType> GetAllFormTypes()
+        {
+            return this.Context.PimsFormTypes.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }

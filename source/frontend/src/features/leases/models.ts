@@ -137,7 +137,7 @@ export class LeaseFormModel {
       otherType: stringToNull(this.otherLeaseTypeDescription),
       project:
         this.project?.id !== undefined && this.project?.id !== 0
-          ? { id: this.project?.id }
+          ? ({ id: this.project?.id } as any)
           : undefined,
       consultations: this.consultations.map(x => x.toApi()),
     };

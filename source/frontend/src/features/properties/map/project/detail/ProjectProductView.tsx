@@ -27,7 +27,7 @@ const ProjectProductView: React.FunctionComponent<
             </SectionField>
             <SectionField label="Cost estimate" labelWidth={'2'}>
               {formatMoney(product.costEstimate)}
-              {product.costEstimateDate !== undefined
+              {!!product.costEstimateDate
                 ? ` as of ${prettyFormatDate(product.costEstimateDate)}`
                 : ' no estimate date entered'}
             </SectionField>

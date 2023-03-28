@@ -98,6 +98,7 @@ export const ACQUISITION_FILE_PERSON_PROFILE_TYPES = 'PimsAcqFlPersonProfileType
 export const TENANT_TYPES = 'PimsTenantType';
 export const ACQUISITION_FUNDING_TYPES = 'PimsAcquisitionFundingType';
 export const PROJECT_STATUS_TYPES = 'PimsProjectStatusType';
+export const FORM_TYPES = 'PimsFormType';
 export const TAKE_TYPES = 'PimsTakeType';
 export const TAKE_STATUS_TYPES = 'PimsTakeStatusType';
 export const TAKE_SITE_CONTAM_TYPES = 'PimsTakeSiteContamType';

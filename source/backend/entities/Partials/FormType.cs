@@ -5,15 +5,15 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsFormType class, provides an entity for the datamodel to manage a list of property road types.
     /// </summary>
-    public partial class PimsFormType : StandardIdentityBaseAppEntity<string>, IBaseEntity
+    public partial class PimsFormType : StandardIdentityBaseAppEntity<string>, IBaseEntity, ITypeEntity<string>
     {
         #region Properties
 
-        /// <summary>
-        /// get/set - Primary key to identify a road type.
-        /// </summary>
         [NotMapped]
         public override string Internal_Id { get => FormTypeCode; set => FormTypeCode = value; }
+
+        [NotMapped]
+        public string Id { get => this.FormTypeCode; set => this.FormTypeCode = value; }
         #endregion
     }
 }
