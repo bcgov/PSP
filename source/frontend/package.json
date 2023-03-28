@@ -168,7 +168,9 @@
       ".module.ts",
       "<rootDir>/src/index.tsx",
       ".mock.ts",
-      ".ignore.ts"
+      ".ignore.ts",
+      "msw.ts",
+      "setupProxy.js"
     ],
     "coverageThreshold": {
       "global": {
