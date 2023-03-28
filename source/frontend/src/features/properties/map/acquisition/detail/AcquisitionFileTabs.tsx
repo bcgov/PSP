@@ -8,8 +8,8 @@ import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
 
 import { ActivityListView } from '../../activity/list/ActivityListView';
-import AgreementForm from '../../shared/detail/AgreementForm';
-import AgreementFormContainer from '../../shared/detail/AgreementFormContainer';
+import { FormListView } from '../../form/list/FormListView';
+import FormListViewContainer from '../../form/list/FormListViewContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
 import { EditFormNames } from '../EditFormNames';
 import { AcquisitionChecklistView } from './checklist/AcquisitionChecklistView';
@@ -77,6 +77,20 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     });
   }
 
+  if (acquisitionFile?.id && hasClaim(Claims.FORM_VIEW)) {
+    tabViews.push({
+      content: (
+        <FormListViewContainer
+          View={FormListView}
+          fileId={acquisitionFile.id}
+          fileType={FileTypes.Acquisition}
+        ></FormListViewContainer>
+      ),
+      key: FileTabNames.forms,
+      name: 'Forms',
+    });
+  }
+
   if (acquisitionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: <AcquisitionDocumentsTab acquisitionFileId={acquisitionFile.id} />,
@@ -92,12 +106,6 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       name: 'Notes',
     });
   }
-
-  tabViews.push({
-    content: <AgreementFormContainer View={AgreementForm}></AgreementFormContainer>,
-    key: FileTabNames.forms,
-    name: 'Forms',
-  });
 
   const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
 
