@@ -91,7 +91,7 @@ const ProjectContainer: React.FunctionComponent<
   const [project, setProjectInstance] = useState<Api_Project | undefined>(undefined);
 
   useEffect(() => {
-    if (project === undefined) {
+    if (!project) {
       fetchProject();
     }
   }, [project, fetchProject]);

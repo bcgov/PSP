@@ -1,4 +1,5 @@
 import { IAutocompletePrediction } from 'interfaces';
+import { defaultProject } from 'models/api/Project';
 import { Api_ResearchFileProject } from 'models/api/ResearchFile';
 
 export class ResearchFileProjectFormModel {
@@ -29,7 +30,10 @@ export class ResearchFileProjectFormModel {
       isDisabled: this.isDisabled,
       project:
         this.project?.id !== undefined && this.project?.id !== 0
-          ? { id: this.project?.id }
+          ? {
+              ...defaultProject,
+              id: this.project?.id,
+            }
           : undefined,
     };
   }

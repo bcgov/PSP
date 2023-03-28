@@ -39,7 +39,7 @@ namespace Pims.Api.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Uploads the passed document.
+        /// Synchronizes the mayan document types directly with Mayan.
         /// </summary>
         [HttpPatch("sync/mayan/documenttype")]
         [HasPermission(Permissions.DocumentAdmin)]
@@ -52,7 +52,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Uploads the passed document.
+        /// Synchronizes the mayan metadata directly with Mayan.
         /// </summary>
         [HttpPatch("sync/mayan/metadatatype")]
         [HasPermission(Permissions.DocumentAdmin)]
@@ -65,15 +65,15 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Uploads the passed document.
+        /// Synchronizes the document types from Mayan to PIMS.
         /// </summary>
         [HttpPatch("sync/backend/documenttype")]
         [HasPermission(Permissions.DocumentAdmin)]
         [ProducesResponseType(typeof(PimsDocumentTyp), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
-        public async Task<IActionResult> SyncDocumentTypes()
+        public async Task<IActionResult> SyncDocumentTypes([FromBody] SyncModel model)
         {
-            var result = await _documentSyncService.SyncBackendDocumentTypes();
+            var result = await _documentSyncService.SyncBackendDocumentTypes(model);
             return new JsonResult(result);
         }
 
