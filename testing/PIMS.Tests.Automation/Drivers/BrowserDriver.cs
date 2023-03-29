@@ -4,7 +4,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace PIMS.Tests.Automation.Drivers
 {
-    public class BrowserDriver
+    public class BrowserDriver : IDisposable
     {
         private readonly Lazy<IWebDriver> currentWebDriverLazy;
         private readonly Lazy<IConfiguration> configurationLazy;
@@ -38,8 +38,6 @@ namespace PIMS.Tests.Automation.Drivers
 
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options);
             chromeDriver.Url = Configuration.GetValue<string>("baseUrl");
-
-            //var ngWebDriver = new NgWebDriver(chromeDriver);
 
             return chromeDriver;
         }

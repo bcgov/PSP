@@ -186,7 +186,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province, string country)
         {
-            Wait(1500);
+            Wait(5000);
 
             Assert.True(webDriver.FindElement(searchContactFirstResultLink).Text.Equals(summary));
             Assert.True(webDriver.FindElement(searchContactFirstNameDiv).Text.Equals(firstName));

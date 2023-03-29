@@ -14,8 +14,8 @@ then
       sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$i" -b -I 
       count=$?
       if [ $count -ne 0 ]; 
-      then echo "======= SCRIPT ${i} RETURNS AN ERROR. ========="
-      exit 1;
+         then echo "======= SCRIPT ${i} RETURNS AN ERROR. ========="
+         exit 1;
       else echo "======= SCRIPT ${i} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
       fi
    done
