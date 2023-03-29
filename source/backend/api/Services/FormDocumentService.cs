@@ -52,7 +52,7 @@ namespace Pims.Api.Services
         public IList<PimsFormType> GetFormDocumentTypes(string formTypeCode)
         {
             this.Logger.LogInformation("Getting document types for code {formTypeCode}", formTypeCode);
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+            this.User.ThrowIfNotAuthorized(Permissions.FormView);
 
             return new List<PimsFormType>() { _formTypeRepository.GetByFormTypeCode(formTypeCode) };
         }
@@ -72,6 +72,7 @@ namespace Pims.Api.Services
                 }
                 else
                 {
+                    // Retrieve the form type again to get the latest after deletion.
                     currentFormType = _formTypeRepository.GetByFormTypeCode(formTypeCode);
                 }
             }

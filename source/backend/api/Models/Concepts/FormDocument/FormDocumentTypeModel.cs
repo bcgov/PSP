@@ -1,6 +1,5 @@
 namespace Pims.Api.Models.Concepts
 {
-
     /// <summary>
     /// FormDocumentTypeModel class, provides a model to represent form document types.
     /// </summary>
