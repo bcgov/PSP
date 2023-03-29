@@ -3,7 +3,7 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { Section } from 'features/mapSideBar/tabs/Section';
-import { Api_FormDocumentType } from 'models/api/formDocument';
+import { Api_FormDocumentType } from 'models/api/FormDocument';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';

@@ -10,10 +10,12 @@ namespace Pims.Api.Services
     {
         IList<PimsFormType> GetAllFormDocumentTypes();
 
-        IList<PimsFormType> GetFormDocuments(string formTypeCode);
+        IList<PimsFormType> GetFormDocumentTypes(string formTypeCode);
 
-        Task<DocumentUploadRelationshipResponse> UploadFormDocumentAsync(string formTypeCode, DocumentUploadRequest uploadRequest);
+        Task<DocumentUploadRelationshipResponse> UploadFormDocumentTemplateAsync(string formTypeCode, DocumentUploadRequest uploadRequest);
 
-        Task<ExternalResult<string>> DeleteFormDocumentAsync(PimsFormType formType);
+        Task<ExternalResult<string>> DeleteFormDocumentTemplateAsync(PimsFormType formType);
+
+        PimsAcquisitionFileForm AddAcquisitionForm(PimsFormType formType, long acquisitionFileId);
     }
 }

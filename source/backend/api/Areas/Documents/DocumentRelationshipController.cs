@@ -95,7 +95,7 @@ namespace Pims.Api.Controllers
                     var mappedActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(activityDocuments);
                     return new JsonResult(mappedActivityDocuments);
                 case DocumentRelationType.Templates:
-                    var templateDocuments = _formDocumentService.GetFormDocuments(parentId);
+                    var templateDocuments = _formDocumentService.GetFormDocumentTypes(parentId);
                     var mappedTemplateDocuments = _mapper.Map<List<DocumentRelationshipModel>>(templateDocuments);
                     return new JsonResult(mappedTemplateDocuments);
                 case DocumentRelationType.Leases:
@@ -133,7 +133,7 @@ namespace Pims.Api.Controllers
                 DocumentRelationType.AcquisitionFiles => await _documentFileService.UploadAcquisitionDocumentAsync(long.Parse(parentId), uploadRequest),
                 DocumentRelationType.ResearchFiles => await _documentFileService.UploadResearchDocumentAsync(long.Parse(parentId), uploadRequest),
                 DocumentRelationType.Activities => await _documentActivityService.UploadActivityDocumentAsync(long.Parse(parentId), uploadRequest),
-                DocumentRelationType.Templates => await _formDocumentService.UploadFormDocumentAsync(parentId, uploadRequest),
+                DocumentRelationType.Templates => await _formDocumentService.UploadFormDocumentTemplateAsync(parentId, uploadRequest),
                 DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(long.Parse(parentId), uploadRequest),
                 DocumentRelationType.Leases => await _documentLeaseService.UploadLeaseDocumentAsync(long.Parse(parentId), uploadRequest),
                 _ => throw new BadRequestException("Relationship type not valid for upload."),
@@ -171,7 +171,7 @@ namespace Pims.Api.Controllers
                     return new JsonResult(researchResult);
                 case DocumentRelationType.Templates:
                     var formTypeRelationship = _mapper.Map<PimsFormType>(model);
-                    var templateResult = await _formDocumentService.DeleteFormDocumentAsync(formTypeRelationship);
+                    var templateResult = await _formDocumentService.DeleteFormDocumentTemplateAsync(formTypeRelationship);
                     return new JsonResult(templateResult);
                 case DocumentRelationType.Leases:
                     var leaseRelationship = _mapper.Map<PimsActivityInstanceDocument>(model);

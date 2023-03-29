@@ -20,6 +20,7 @@ namespace Pims.Api.Services
         private readonly IFormTypeRepository _formTypeRepository;
         private readonly IDocumentService _documentService;
         private readonly IDocumentRepository _documentRepository;
+        private readonly IAcquisitionFileFormRepository _acquisitionFileFormRepository;
 
         public FormDocumentService(
             ClaimsPrincipal user,
@@ -27,7 +28,8 @@ namespace Pims.Api.Services
             IMapper mapper,
             IFormTypeRepository formTypeRepository,
             IDocumentService documentService,
-            IDocumentRepository documentRepository)
+            IDocumentRepository documentRepository,
+            IAcquisitionFileFormRepository acquisitionFileFormRepository)
             : base(user, logger)
         {
             _logger = logger;
@@ -35,37 +37,38 @@ namespace Pims.Api.Services
             _formTypeRepository = formTypeRepository;
             _documentService = documentService;
             _documentRepository = documentRepository;
+            _acquisitionFileFormRepository = acquisitionFileFormRepository;
         }
 
         public IList<PimsFormType> GetAllFormDocumentTypes()
         {
-            _logger.LogInformation("Getting form document types");
-            //this.User.ThrowIfNotAuthorized(Permissions.FormDocumentView);
+            _logger.LogInformation("Getting all form document types");
+            this.User.ThrowIfNotAuthorized(Permissions.FormView);
 
             var formTemplates = _formTypeRepository.GetAllFormTypes();
             return formTemplates;
         }
 
-        public IList<PimsFormType> GetFormDocuments(string formTypeCode)
+        public IList<PimsFormType> GetFormDocumentTypes(string formTypeCode)
         {
-            this.Logger.LogInformation("Retrieving PIMS document for single activity template");
+            this.Logger.LogInformation("Getting document types for code {formTypeCode}", formTypeCode);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             return new List<PimsFormType>() { _formTypeRepository.GetByFormTypeCode(formTypeCode) };
         }
 
-        public async Task<DocumentUploadRelationshipResponse> UploadFormDocumentAsync(string formTypeCode, DocumentUploadRequest uploadRequest)
+        public async Task<DocumentUploadRelationshipResponse> UploadFormDocumentTemplateAsync(string formTypeCode, DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document for document form type");
+            this.Logger.LogInformation("Uploading template for document form type");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
 
             var currentFormType = _formTypeRepository.GetByFormTypeCode(formTypeCode);
             if (currentFormType.DocumentId != null)
             {
-                var result = await DeleteFormDocumentAsync(currentFormType);
+                var result = await DeleteFormDocumentTemplateAsync(currentFormType);
                 if (result.Status != ExternalResultStatus.Success)
                 {
-                    throw new InvalidOperationException("Could not remove existing document");
+                    throw new InvalidOperationException("Could not remove existing template");
                 }
                 else
                 {
@@ -86,17 +89,15 @@ namespace Pims.Api.Services
                 var updatedFormType = _formTypeRepository.SetFormTypeDocument(currentFormType);
                 _formTypeRepository.CommitTransaction();
 
-
                 relationshipResponse.DocumentRelationship = _mapper.Map<DocumentRelationshipModel>(updatedFormType);
             }
 
             return relationshipResponse;
         }
 
-
-        public async Task<ExternalResult<string>> DeleteFormDocumentAsync(PimsFormType formType)
+        public async Task<ExternalResult<string>> DeleteFormDocumentTemplateAsync(PimsFormType formType)
         {
-            this.Logger.LogInformation("Deleting PIMS document for single activity");
+            this.Logger.LogInformation("Deleting form document template");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
 
             long? documentId = formType.DocumentId;
@@ -119,6 +120,16 @@ namespace Pims.Api.Services
             {
                 return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
             }
+        }
+
+        public PimsAcquisitionFileForm AddAcquisitionForm(PimsFormType formType, long acquisitionFileId)
+        {
+            _logger.LogInformation("Adding acquisition form ...");
+            this.User.ThrowIfNotAuthorized(Permissions.FormAdd);
+
+            var createdFileForm = _acquisitionFileFormRepository.Add(new PimsAcquisitionFileForm() { AcquisitionFileId = acquisitionFileId, FormTypeCode = formType.FormTypeCode });
+            _acquisitionFileFormRepository.CommitTransaction();
+            return createdFileForm;
         }
     }
 }

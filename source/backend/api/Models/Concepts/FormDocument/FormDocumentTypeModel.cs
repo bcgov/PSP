@@ -14,7 +14,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Form type document id.
         /// </summary>
-        public long DocumentId { get; set; }
+        public long? DocumentId { get; set; }
 
         /// <summary>
         /// get/set - Form type description.
@@ -24,6 +24,6 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Display order of the type.
         /// </summary>
-        public long DisplayOrder { get; set; }
+        public long? DisplayOrder { get; set; }
     }
 }
