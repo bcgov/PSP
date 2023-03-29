@@ -1,6 +1,5 @@
-import { useMachine } from '@xstate/react';
 import { Button } from 'components/common/buttons';
-import { mapMachine } from 'components/maps/stateMachines/mapMachine';
+import { useMapStateMachine } from 'components/maps/providers/MapStateMachineContext';
 import * as actionTypes from 'constants/actionTypes';
 import { Roles } from 'constants/roles';
 import { useQuery } from 'hooks/use-query';
@@ -28,7 +27,8 @@ const Login = () => {
   const tenant = useTenant();
 
   // TODO: PSP-5606 WIP
-  const [, send] = useMachine(mapMachine);
+  const { service } = useMapStateMachine();
+  service.send('LOGIN');
 
   if (!keycloak) {
     return <Spinner animation="border"></Spinner>;
@@ -37,16 +37,18 @@ const Login = () => {
     if (activated?.status === 201 || !keyCloakWrapper?.obj?.userInfo?.client_roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
     } else if (typeof redirect === 'string' && redirect.length) {
+      service.send('LOGIN_SUCCESS');
       return <Redirect to={redirect} />;
     } else if (keyCloakWrapper.roles?.length === 1 && keyCloakWrapper.hasRole(Roles.FINANCE)) {
+      service.send('LOGIN_SUCCESS');
       return <Redirect to="/lease/list" />;
     } else {
-      send('LOGIN_SUCCESS');
+      service.send('LOGIN_SUCCESS');
       return <Redirect to={'/mapview'} />;
     }
   }
   if (isIE) {
-    send('LOGIN_ERROR');
+    service.send('LOGIN_ERROR');
     return <Redirect to={{ pathname: '/ienotsupported' }} />;
   }
 
@@ -63,7 +65,6 @@ const Login = () => {
             <Button
               variant="primary"
               onClick={() => {
-                send('LOGIN');
                 keycloak.login({ idpHint: 'idir' });
               }}
             >

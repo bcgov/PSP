@@ -24,7 +24,7 @@ import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
 import { useFilterContext } from '../providers/FIlterProvider';
 import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
-import { MapStateMachineContext } from '../providers/MapStateMachineContext';
+import { useMapStateMachine } from '../providers/MapStateMachineContext';
 import { PropertyContext } from '../providers/PropertyContext';
 import { InventoryLayer } from './InventoryLayer';
 import { LayerPopup } from './LayerPopup';
@@ -132,7 +132,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
   } = useContext(MapStateContext);
 
   // TODO: PSP-5606 Work-in-progress
-  const machineContext = useContext(MapStateMachineContext);
+  const machineContext = useMapStateMachine();
 
   const { propertiesLoading } = useContext(PropertyContext);
 

@@ -26,11 +26,19 @@ const defaultMapInfo: MapInformation = {
   activeInventoryProperty: null,
 };
 
-export const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
+const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
   {} as IMapStateMachineContext,
 );
 
-export const MapStateMachineContextProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+export function useMapStateMachine() {
+  const context = React.useContext(MapStateMachineContext);
+  if (context === undefined) {
+    throw new Error('useMapStateMachine must be used within a MapStateMachineContextProvider');
+  }
+  return context;
+}
+
+export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   // static reference to the state machine (will not change between renders)

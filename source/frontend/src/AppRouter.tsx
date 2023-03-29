@@ -1,6 +1,6 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
-import { MapStateMachineContextProvider } from 'components/maps/providers/MapStateMachineContext';
+import { MapStateMachineProvider } from 'components/maps/providers/MapStateMachineContext';
 import { Claims } from 'constants/claims';
 import { Roles } from 'constants/roles';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
@@ -85,7 +85,7 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
       }
     >
       <MapStateContextProvider>
-        <MapStateMachineContextProvider>
+        <MapStateMachineProvider>
           <Switch>
             <Redirect exact from="/" to="/login" />
             <AppRoute
@@ -296,7 +296,7 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
               customComponent={() => <Redirect to="/page-not-found" />}
             />
           </Switch>
-        </MapStateMachineContextProvider>{' '}
+        </MapStateMachineProvider>{' '}
       </MapStateContextProvider>
     </Suspense>
   );
