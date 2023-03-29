@@ -77,8 +77,9 @@ export class AcquisitionOwnerFormModel {
       rowVersion: this.rowVersion,
       acquisitionFileId: this.acquisitionFileId,
       isOrganization: this.isOrganization === 'true' ? true : false,
-      lastNameAndCorpName: this.lastNameAndCorpName,
-      otherName: this.otherName,
+      lastNameAndCorpName:
+        this.lastNameAndCorpName.trim() === '' ? null : this.lastNameAndCorpName.trim(),
+      otherName: this.otherName.trim() === '' ? null : this.otherName.trim(),
       givenName: this.isOrganization === 'true' ? null : this.givenName.trim(),
       incorporationNumber:
         this.isOrganization === 'true'
