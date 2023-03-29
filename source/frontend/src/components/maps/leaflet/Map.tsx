@@ -11,7 +11,7 @@ import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
+import { GeoJSON, LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
@@ -118,7 +118,6 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
 
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
   const { setChanged } = useFilterContext();
-  // const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
@@ -131,7 +130,9 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
     selectedFeature,
     loading: mapLoading,
   } = useContext(MapStateContext);
-  const mapMachineContext = useContext(MapStateMachineContext);
+
+  // TODO: PSP-5606 Work-in-progress
+  const machineContext = useContext(MapStateMachineContext);
 
   const { propertiesLoading } = useContext(PropertyContext);
 
@@ -141,6 +142,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
     lng = center.lng;
   }
 
+  // TODO: PSP-5606 Remove dead code below
   // const parcelLayerFeature = selectedFeature;
   // const { showLocationDetails } = useActiveFeatureLayer({
   //   selectedProperty: selectedInventoryProperty,
@@ -229,7 +231,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
 
   const onPopupClose = (event: PopupEvent) => {
     if (event.popup === popupRef.current) {
-      mapMachineContext.closePopup();
+      machineContext.closePopup();
       // setLayerPopup(undefined);
       // setState({
       //   type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
@@ -238,7 +240,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
     }
   };
 
-  const onMapClick = mapMachineContext.useMapClick();
+  const onMapClick = machineContext.useMapClick();
 
   const [layersOpen, setLayersOpen] = React.useState(false);
 
@@ -332,11 +334,17 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
               </ReactLeafletMap>
             </Styled.MapContainer>
           )}
-          {!!mapMachineContext.popup && (
+          {machineContext.popup && (
             <LayerPopup
               ref={popupRef}
-              layerPopup={mapMachineContext.popup}
+              layerPopup={machineContext.popup}
               onViewPropertyInfo={onViewPropertyClick}
+            />
+          )}
+          {machineContext.map?.activeParcelMapFeature && (
+            <GeoJSON
+              key="ltsa-parcelmap-selected"
+              data={machineContext.map.activeParcelMapFeature}
             />
           )}
           <LegendControl />

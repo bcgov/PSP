@@ -4,10 +4,9 @@ import { useMapProperties } from 'features/properties/map/hooks/useMapProperties
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { geoJSON, LatLng, LatLngBounds, LeafletMouseEvent } from 'leaflet';
 import isNumber from 'lodash/isNumber';
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useTenant } from 'tenants';
-import { ActorRefFrom, StateFrom } from 'xstate';
 
 import {
   LayerPopupInformation,
@@ -17,26 +16,15 @@ import {
 } from '../leaflet/LayerPopup';
 import { mapMachine } from '../stateMachines/mapMachine';
 import { States } from '../stateMachines/mapMachine.types';
+import { IMapStateMachineContext, MapInformation } from './MapStateMachineContext.types';
 
-export interface MapInformation {
-  loading: boolean;
-  selectedMapFeature: Feature | undefined;
-}
-
-export interface IMapStateMachineContext {
-  // shared map state
-  map: MapInformation | undefined;
-  sidebar: {} | undefined;
-  popup: LayerPopupInformation | undefined;
-
-  // event handlers
-  useMapClick: () => (event: LeafletMouseEvent) => Promise<Feature | undefined>;
-  closePopup: () => void;
-
-  // access to underlying state machine
-  service: ActorRefFrom<typeof mapMachine>;
-  useMachine: () => [StateFrom<typeof mapMachine>, ActorRefFrom<typeof mapMachine>['send']];
-}
+const defaultMapInfo: MapInformation = {
+  isLoading: false,
+  isSelecting: false,
+  activeParcelMapFeature: null,
+  activeFileFeature: null,
+  activeInventoryProperty: null,
+};
 
 export const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
   {} as IMapStateMachineContext,
@@ -45,25 +33,26 @@ export const MapStateMachineContext = React.createContext<IMapStateMachineContex
 export const MapStateMachineContextProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
+  // static reference to the state machine (will not change between renders)
+  const service = useInterpret(mapMachine);
   const [popup, setPopup] = useState<LayerPopupInformation | undefined>();
   const [mapInfo, setMapInfo] = useReducer(
     (prevState: MapInformation, newState: Partial<MapInformation>) => ({
       ...prevState,
       ...newState,
     }),
-    {
-      loading: false,
-      selectedMapFeature: undefined,
-    } as MapInformation,
+    defaultMapInfo,
   );
 
-  const service = useInterpret(mapMachine);
+  // keep context values in sync with machine internal state
+  const isSelecting = useSelector(service, state => state.matches(States.SELECTING_ON_MAP));
+  useEffect(() => {
+    setMapInfo({ isSelecting });
+  }, [isSelecting]);
 
   function useMachine() {
     return useActor(service);
   }
-
-  const isSelecting = useSelector(service, state => state.matches(States.SELECTING_ON_MAP));
 
   function closePopup() {
     setPopup(undefined);
@@ -88,6 +77,9 @@ export const MapStateMachineContextProvider: React.FC<React.PropsWithChildren<un
       let displayConfig = {};
       let title = 'Location Information';
       let feature: Feature | undefined = undefined;
+
+      // clear the active LTSA ParcelMap boundary (if any)
+      setMapInfo({ activeParcelMapFeature: null });
 
       // call these APIs in parallel - notice there is no "await"
       const task1 = parcelsService.findOneWhereContains(e.latlng);
@@ -177,7 +169,7 @@ export const MapStateMachineContextProvider: React.FC<React.PropsWithChildren<un
         DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
       };
 
-      setMapInfo({ selectedMapFeature: activeFeature });
+      setMapInfo({ activeParcelMapFeature: activeFeature });
       return activeFeature;
     }
 
