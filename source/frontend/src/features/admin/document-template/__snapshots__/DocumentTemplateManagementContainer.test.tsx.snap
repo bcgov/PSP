@@ -15,7 +15,33 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
   overflow-y: auto;
 }
 
-.c4 {
+.c3 {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c5 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -23,7 +49,7 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3 {
+.c4 {
   text-align: left;
 }
 
@@ -55,13 +81,21 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
     <div
       class="c1 c2"
     >
-      <h3
+      <div
         class="c3"
+      >
+        <div
+          class="spinner-border text-warning"
+          data-testid="filter-backdrop-loading"
+        />
+      </div>
+      <h3
+        class="c4"
       >
         PIMS Document Template Management
       </h3>
       <div
-        class="c4 form-section"
+        class="c5 form-section"
       >
         <div
           class="collapse show"

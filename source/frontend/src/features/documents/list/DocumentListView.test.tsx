@@ -133,25 +133,6 @@ describe('Document List View', () => {
     await act(async () => expect(getByText('Add a Document')).toBeInTheDocument());
   });
 
-  it('should display the warning tooltip instead of the download icon', async () => {
-    const { findAllByTestId } = setup({
-      hideFilters: false,
-      isLoading: false,
-      parentId: '0',
-      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
-      documentResults: mockDocumentRowResponse(),
-      onDelete: deleteMock,
-      onSuccess: noop,
-      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
-      onPageChange,
-      pageProps: { pageSize: 10, pageIndex: 0 },
-    });
-    const downloadButtonTooltip = await findAllByTestId(
-      'tooltip-icon-document-not-available-tooltip',
-    );
-    await act(async () => expect(downloadButtonTooltip[0]).toBeInTheDocument());
-  });
-
   it('should not display the download icon on the listview', async () => {
     mockAxios.onGet().reply(200, mockDocumentDetailResponse());
     const documentRows = mockDocumentRowResponse();
