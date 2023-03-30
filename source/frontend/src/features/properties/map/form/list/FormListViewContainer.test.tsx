@@ -1,6 +1,6 @@
 import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
-import { useFormRepository } from 'hooks/repositories/useFormRepository';
+import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import { filter, sortBy } from 'lodash';
 import { mockLookups } from 'mocks';
 import { getMockApiFileForms } from 'mocks/mockForm';
@@ -14,18 +14,19 @@ import FormListViewContainer, { IFormListViewContainerProps } from './FormListVi
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-jest.mock('hooks/repositories/useFormRepository');
 const mockApi = {
   error: undefined,
   response: undefined,
   execute: jest.fn(),
   loading: false,
 };
-jest.mock('hooks/repositories/useFormDocumentRepository', () => ({
-  useFormDocumentRepository: () => ({
-    addFilesForm: mockApi,
-  }),
-}));
+const mockGetApi = {
+  error: undefined,
+  response: getMockApiFileForms(),
+  execute: jest.fn(),
+  loading: false,
+};
+jest.mock('hooks/repositories/useFormDocumentRepository');
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
@@ -62,8 +63,8 @@ describe('form list view container', () => {
   };
 
   beforeEach(() => {
-    (useFormRepository as jest.Mock).mockImplementation(() => ({
-      addFileForm: mockApi,
+    (useFormDocumentRepository as jest.Mock).mockImplementation(() => ({
+      addFilesForm: mockApi,
       deleteFileForm: mockApi,
       getFileForms: mockGetApi,
     }));
@@ -85,6 +86,7 @@ describe('form list view container', () => {
 
     expect(mockApi.execute).toHaveBeenCalledWith('acquisition', {
       fileId: 0,
+      id: null,
       formDocumentType: {
         description: '',
         displayOrder: null,
@@ -116,8 +118,8 @@ describe('form list view container', () => {
   });
 
   it('fetchs data when no data is currently available in container', async () => {
-    (useFormRepository as jest.Mock).mockImplementation(() => ({
-      addFileForm: mockApi,
+    (useFormDocumentRepository as jest.Mock).mockImplementation(() => ({
+      addFilesForm: mockApi,
       deleteFileForm: mockApi,
       getFileForms: mockApi,
     }));
@@ -130,8 +132,8 @@ describe('form list view container', () => {
   });
 
   it('fetchs data when no data is currently available in container', async () => {
-    (useFormRepository as jest.Mock).mockImplementation(() => ({
-      addFileForm: mockApi,
+    (useFormDocumentRepository as jest.Mock).mockImplementation(() => ({
+      addFilesForm: mockApi,
       deleteFileForm: mockApi,
       getFileForms: mockApi,
     }));
@@ -147,11 +149,11 @@ describe('form list view container', () => {
     setup({
       claims: [],
     });
-    act(() => viewProps.setSort({ formTypeCode: 'asc' }));
+    act(() => viewProps.setSort({ formDocumentType: 'asc' }));
 
     await waitFor(() => {
       expect(viewProps.forms).toStrictEqual(
-        sortBy(getMockApiFileForms(), form => form.formTypeCode.name),
+        sortBy(getMockApiFileForms(), form => form.formDocumentType.formTypeCode),
       );
     });
   });
@@ -174,7 +176,7 @@ describe('form list view container', () => {
     act(() => viewProps.setFormFilter({ formTypeId: 'h120' }));
 
     expect(viewProps.forms).toStrictEqual(
-      filter(getMockApiFileForms(), form => form.formTypeCode.id === 'h120'),
+      filter(getMockApiFileForms(), form => form.formDocumentType.formTypeCode === 'h120'),
     );
   });
 });

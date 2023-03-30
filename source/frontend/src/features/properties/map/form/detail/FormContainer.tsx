@@ -1,6 +1,6 @@
 import { FileTypes } from 'constants/fileTypes';
 import { SideBarContext } from 'features/properties/map/context/sidebarContext';
-import { useFormRepository } from 'hooks/repositories/useFormRepository';
+import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
@@ -22,7 +22,7 @@ export const FormContainer: React.FunctionComponent<
 > = ({ fileType, formFileId, onClose, View }) => {
   const {
     getFileForm: { execute: getForm, response, loading },
-  } = useFormRepository();
+  } = useFormDocumentRepository();
   const { file, fileLoading } = useContext(SideBarContext);
 
   const fetchForm = useCallback(async () => {
@@ -38,8 +38,8 @@ export const FormContainer: React.FunctionComponent<
     throw new Error('Unable to determine id of current file.');
   }
 
-  const currentFormContent = response?.formTypeCode?.id
-    ? formContent.get(response?.formTypeCode?.id as FormTemplateTypes)
+  const currentFormContent = response?.formDocumentType?.formTypeCode
+    ? formContent.get(response?.formDocumentType?.formTypeCode as FormTemplateTypes)
     : undefined;
 
   return !!file?.id ? (

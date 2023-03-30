@@ -1,10 +1,9 @@
-import { fireEvent } from '@testing-library/react';
 import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks';
 import { getMockApiFileForms } from 'mocks/mockForm';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import FormListView, { IFormListViewProps } from './FormListView';
 
@@ -73,13 +72,9 @@ describe('form list view', () => {
   });
 
   it('it calls saveForm form with appropriate type code value when plus button is clicked', async () => {
-    const { getByTitle, getByTestId } = setup();
+    const { getByTitle, container } = setup();
 
     await fillInput(container, 'formTypeCode', 'H120', 'select');
-    await act(async () => {
-      fireEvent.change(select, { target: { value: 'H120' } });
-      fireEvent.blur(select);
-    });
     const plusButton = getByTitle('add form');
     await waitFor(() => {
       expect(plusButton).not.toBeDisabled();

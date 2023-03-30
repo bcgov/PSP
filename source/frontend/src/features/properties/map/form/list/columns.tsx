@@ -3,7 +3,7 @@ import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_FileForm } from 'models/api/Form';
+import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import { FaTrash } from 'react-icons/fa';
 import { ImEye } from 'react-icons/im';
 import { CellProps } from 'react-table';
@@ -11,25 +11,25 @@ import styled from 'styled-components';
 import { stringToFragment } from 'utils';
 
 export function createFormTableColumns(
-  onShowForm: (form: Api_FileForm) => void,
+  onShowForm: (form: Api_FormDocumentFile) => void,
   onDelete: (formFileId: number) => void,
 ) {
-  const columns: ColumnWithProps<Api_FileForm>[] = [
+  const columns: ColumnWithProps<Api_FormDocumentFile>[] = [
     {
       Header: 'Form type',
-      accessor: 'formTypeCode',
+      accessor: 'formDocumentType',
       align: 'left',
       sortable: true,
       minWidth: 40,
       maxWidth: 50,
-      Cell: (cellProps: CellProps<Api_FileForm>) => {
+      Cell: (cellProps: CellProps<Api_FormDocumentFile>) => {
         const { hasClaim } = useKeycloakWrapper();
         return hasClaim(Claims.FORM_VIEW) ? (
           <LinkButton onClick={() => onShowForm(cellProps.row.original)}>
-            {cellProps.row.original?.formTypeCode?.name ?? ''}
+            {cellProps.row.original?.formDocumentType?.description ?? ''}
           </LinkButton>
         ) : (
-          stringToFragment(cellProps.row.original?.formTypeCode?.name ?? '')
+          stringToFragment(cellProps.row.original?.formDocumentType?.description ?? '')
         );
       },
     },
@@ -39,7 +39,7 @@ export function createFormTableColumns(
       sortable: false,
       width: 20,
       maxWidth: 20,
-      Cell: (cellProps: CellProps<Api_FileForm>) => {
+      Cell: (cellProps: CellProps<Api_FormDocumentFile>) => {
         const { hasClaim } = useKeycloakWrapper();
         return (
           <StyledDiv>

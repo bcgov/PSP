@@ -334,7 +334,7 @@ exports[`form list view renders as expected 1`] = `
                 Form type
                 <div
                   class="c3"
-                  data-testid="sort-column-formTypeCode"
+                  data-testid="sort-column-formDocumentType"
                 >
                   <svg
                     class="c4"

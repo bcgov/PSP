@@ -2,6 +2,7 @@ import { TableSort } from 'components/Table/TableSort';
 import { FileTypes } from 'constants/fileTypes';
 import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
+import { defaultFormFilter, IFormFilter } from 'interfaces/IFormResults';
 import orderBy from 'lodash/orderBy';
 import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import React, { useCallback, useContext } from 'react';
@@ -23,10 +24,12 @@ export const FormListViewContainer: React.FunctionComponent<
   React.PropsWithChildren<IFormListViewContainerProps>
 > = ({ fileId, defaultFilters, fileType, View }: IFormListViewContainerProps) => {
   const {
-    addFileForm: { execute: addForm },
+    addFilesForm: { execute: addForm },
+    getFileForms: { execute: getFileForms, response: forms },
+    deleteFileForm: { execute: deleteForm },
   } = useFormDocumentRepository();
   const [formFilter, setFormFilter] = React.useState<IFormFilter>(defaultFormFilter);
-  const [sort, setSort] = React.useState<TableSort<Api_FileForm>>({});
+  const [sort, setSort] = React.useState<TableSort<Api_FormDocumentFile>>({});
   const { staleFile, setStaleFile } = useContext(SideBarContext);
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -37,7 +40,6 @@ export const FormListViewContainer: React.FunctionComponent<
   React.useEffect(() => {
     if (forms === undefined || staleFile) {
       fetchData();
-      setStaleFile(false);
     }
   }, [fetchData, staleFile, setStaleFile, forms]);
 
@@ -47,19 +49,21 @@ export const FormListViewContainer: React.FunctionComponent<
 
       if (formFilter) {
         formItems = formItems.filter(form => {
-          return !formFilter.formTypeId || form.formTypeCode?.id === formFilter.formTypeId;
+          return (
+            !formFilter.formTypeId || form.formDocumentType?.formTypeCode === formFilter.formTypeId
+          );
         });
       }
       if (sort) {
         const sortFields = Object.keys(sort);
         if (sortFields?.length > 0) {
-          const keyName = sortFields[0] as keyof Api_FileForm;
+          const keyName = sortFields[0] as keyof Api_FormDocumentFile;
           const sortDirection = sort[keyName];
 
           let sortBy: string;
           switch (keyName) {
-            case 'formTypeCode':
-              sortBy = 'formTypeCode.name';
+            case 'formDocumentType':
+              sortBy = 'formDocumentType.formTypeCode';
               break;
 
             default:
@@ -77,10 +81,11 @@ export const FormListViewContainer: React.FunctionComponent<
   }, [forms, sort, formFilter]);
 
   const saveForm = async (formTypeId: string) => {
+    const fileForm: Api_FormDocumentFile = {
       id: null,
       fileId: fileId,
       formDocumentType: {
-        formTypeCode: formTypeCode,
+        formTypeCode: formTypeId,
         description: '',
         displayOrder: null,
         documentId: null,

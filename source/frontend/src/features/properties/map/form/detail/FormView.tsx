@@ -1,6 +1,6 @@
 import { ActivityTrayPage, CloseButton, TrayHeader } from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { Api_FileForm } from 'models/api/Form';
+import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import * as React from 'react';
 import { MdClose } from 'react-icons/md';
 
@@ -8,7 +8,7 @@ import { IFormContent } from '../../shared/content/models';
 
 export interface IFormViewProps {
   loading: boolean;
-  formFile?: Api_FileForm;
+  formFile?: Api_FormDocumentFile;
   formContent?: IFormContent;
   onClose: () => void;
 }
@@ -25,7 +25,7 @@ export const FormView: React.FunctionComponent<IFormViewProps> = ({
   return (
     <ActivityTrayPage>
       <TrayHeader>
-        {loading ? '' : formFile?.formTypeCode?.name ?? ''}
+        {loading ? '' : formFile?.formDocumentType?.description ?? ''}
         <CloseButton
           id="close-tray"
           icon={<MdClose size={20} />}

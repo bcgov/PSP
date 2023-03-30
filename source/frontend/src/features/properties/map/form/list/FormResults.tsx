@@ -1,15 +1,15 @@
 import { Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
-import { Api_FileForm, Api_Form } from 'models/api/Form';
+import { Api_FormDocumentFile, Api_FormDocumentType } from 'models/api/FormDocument';
 
 import { createFormTableColumns } from './columns';
 
 export interface IFormResultProps {
-  results: Api_FileForm[];
+  results: Api_FormDocumentFile[];
   loading?: boolean;
-  sort: TableSort<Api_Form>;
-  setSort: (value: TableSort<Api_Form>) => void;
-  onShowForm: (form: Api_FileForm) => void;
+  sort: TableSort<Api_FormDocumentType>;
+  setSort: (value: TableSort<Api_FormDocumentType>) => void;
+  onShowForm: (form: Api_FormDocumentFile) => void;
   onDelete: (formFileId: number) => void;
 }
 
@@ -19,7 +19,7 @@ export function FormResults(props: IFormResultProps) {
   const columns = createFormTableColumns(props.onShowForm, props.onDelete);
 
   return (
-    <Table<Api_FileForm>
+    <Table<Api_FormDocumentFile>
       name="AcqusitionFormTable"
       manualSortBy={false}
       lockPageSize={true}
