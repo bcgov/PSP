@@ -58,7 +58,6 @@ export const ActivityListView: React.FunctionComponent<
   React.useEffect(() => {
     if (activityResults === undefined || staleFile) {
       fetchData();
-      setStaleFile(false);
     }
   }, [fetchData, staleFile, setStaleFile, activityResults]);
 

@@ -17,13 +17,13 @@ const ResearchDocumentsTab: React.FunctionComponent<IResearchDocumentsTabProps> 
     <>
       <DocumentListContainer
         title="File Documents"
-        parentId={researchFileId}
+        parentId={researchFileId.toString()}
         relationshipType={DocumentRelationshipType.RESEARCH_FILES}
       />
       {hasClaim(Claims.ACTIVITY_VIEW) && (
         <DocumentListContainer
           title="Activity Documents"
-          parentId={researchFileId}
+          parentId={researchFileId.toString()}
           relationshipType={DocumentRelationshipType.RESEARCH_FILE_ACTIVITIES}
           disableAdd
         />

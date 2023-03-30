@@ -25,12 +25,18 @@ exports[`Note List View renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c9 {
+.c8 {
+  color: activeColor;
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c8 {
+.c10 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c9 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -187,7 +193,7 @@ exports[`Note List View renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="th"
+                  class="th sort-desc"
                   colspan="1"
                   role="columnheader"
                   style="box-sizing: border-box; flex: 24 0 auto; min-width: 24px; width: 24px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
@@ -202,21 +208,6 @@ exports[`Note List View renders as expected 1`] = `
                     >
                       <svg
                         class="c8"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        style="margin-bottom: -8px;"
-                        viewBox="0 0 512 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M128 320l128-128 128 128z"
-                        />
-                      </svg>
-                      <svg
-                        class="c9"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -247,7 +238,7 @@ exports[`Note List View renders as expected 1`] = `
                       data-testid="sort-column-appLastUpdateUserid"
                     >
                       <svg
-                        class="c8"
+                        class="c9"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -262,7 +253,7 @@ exports[`Note List View renders as expected 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c9"
+                        class="c10"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"

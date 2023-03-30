@@ -41,7 +41,7 @@ describe('Document List View', () => {
     const component = render(
       <DocumentListView
         isLoading={false}
-        parentId={renderOptions?.parentId || 0}
+        parentId={renderOptions?.parentId.toString() || '0'}
         relationshipType={
           renderOptions?.relationshipType || DocumentRelationshipType.RESEARCH_FILES
         }
@@ -89,7 +89,7 @@ describe('Document List View', () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
@@ -105,7 +105,7 @@ describe('Document List View', () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
@@ -121,7 +121,7 @@ describe('Document List View', () => {
     const { getByText } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentRowResponse(),
       onDelete: deleteMock,
@@ -133,33 +133,14 @@ describe('Document List View', () => {
     await act(async () => expect(getByText('Add a Document')).toBeInTheDocument());
   });
 
-  it('should display the warning tooltip instead of the download icon', async () => {
-    const { findAllByTestId } = setup({
-      hideFilters: false,
-      isLoading: false,
-      parentId: 0,
-      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
-      documentResults: mockDocumentRowResponse(),
-      onDelete: deleteMock,
-      onSuccess: noop,
-      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
-      onPageChange,
-      pageProps: { pageSize: 10, pageIndex: 0 },
-    });
-    const downloadButtonTooltip = await findAllByTestId(
-      'tooltip-icon-document-not-available-tooltip',
-    );
-    await act(async () => expect(downloadButtonTooltip[0]).toBeInTheDocument());
-  });
-
-  it('should display the download icon if download is available', async () => {
+  it('should not display the download icon on the listview', async () => {
     mockAxios.onGet().reply(200, mockDocumentDetailResponse());
     const documentRows = mockDocumentRowResponse();
     documentRows[0].isFileAvailable = true;
-    const { findByTestId } = setup({
+    const { queryByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: documentRows,
       onDelete: deleteMock,
@@ -168,8 +149,8 @@ describe('Document List View', () => {
       onPageChange,
       pageProps: { pageSize: 10, pageIndex: 0 },
     });
-    const downloadButtonTooltip = await findByTestId('document-download-button');
-    await act(async () => expect(downloadButtonTooltip).toBeInTheDocument());
+    const downloadButtonTooltip = await queryByTestId('document-download-button');
+    await act(async () => expect(downloadButtonTooltip).toBeNull());
   });
 
   it('should call on delete for a document when the document id does not equal the document relationship id', async () => {
@@ -178,7 +159,7 @@ describe('Document List View', () => {
     const { findAllByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      parentId: 0,
+      parentId: '0',
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: documentRows,
       onDelete: deleteMock,

@@ -40,9 +40,11 @@ const ManageAccessRequests = lazy(() =>
   componentLoader(import('features/admin/access/ManageAccessRequestsPage'), 2),
 );
 const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsersPage'), 2));
+
 const ManageDocumentTemplate = lazy(() =>
   componentLoader(import('features/admin/document-template/DocumentTemplateManagementPage'), 2),
 );
+
 const PropertyListView = lazy(() =>
   componentLoader(import('features/properties/list/PropertyListView'), 2),
 );

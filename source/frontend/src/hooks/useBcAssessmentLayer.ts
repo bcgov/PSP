@@ -28,6 +28,7 @@ export const useBcAssessmentLayer = (
     (
       pid: string,
       typesToLoad?: BC_ASSESSMENT_TYPES[],
+      timeout?: number,
     ) => Promise<AxiosResponse<IBcAssessmentSummary | undefined>>
   >;
 } => {
@@ -70,6 +71,7 @@ export const useBcAssessmentLayer = (
     async (
       pid: string,
       typesToLoad?: BC_ASSESSMENT_TYPES[],
+      timeout?: number,
     ): Promise<AxiosResponse<IBcAssessmentSummary | undefined>> => {
       const parsedPid = pidParser(pid);
       if (parsedPid === undefined) {
@@ -79,7 +81,7 @@ export const useBcAssessmentLayer = (
       try {
         legalDescriptionResponse = await getLegalDescriptions(
           { PID_NUMBER: parsedPid.toString() },
-          { timeout: 40000, forceExactMatch: true },
+          { timeout: timeout ?? 10000, forceExactMatch: true },
         );
       } catch (e: any) {
         return {
@@ -109,7 +111,7 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.ADDRESSES)
           ? getAddresses(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: 40000, forceExactMatch: true },
+              { timeout: timeout ?? 10000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -117,7 +119,7 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
           ? getValues(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: 40000, forceExactMatch: true },
+              { timeout: timeout ?? 10000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -125,7 +127,7 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
           ? getCharges(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: 40000, forceExactMatch: true },
+              { timeout: timeout ?? 10000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -134,7 +136,7 @@ export const useBcAssessmentLayer = (
         !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION)
           ? getFolioDescriptions(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: 40000, forceExactMatch: true },
+              { timeout: timeout ?? 10000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -142,7 +144,7 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
           ? getSales(
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: 40000, forceExactMatch: true },
+              { timeout: timeout ?? 10000, forceExactMatch: true },
             )
           : Promise.resolve();
 
@@ -155,10 +157,9 @@ export const useBcAssessmentLayer = (
       ]);
 
       if (
-        responses.length !== 5 ||
         legalDescriptionResponse?.features.length < 1 ||
-        responses[3]?.features === undefined ||
-        responses[3]?.features.length < 1
+        (typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION) &&
+          (responses[3]?.features === undefined || responses[3]?.features.length < 1))
       ) {
         throw Error(
           'Invalid BC Assessment response. Unable to load BC Assessment data for property.',
