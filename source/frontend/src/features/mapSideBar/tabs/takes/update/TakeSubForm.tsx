@@ -184,7 +184,10 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           )}
         </StyledBorderSection>
         <StyledBorderSection>
-          <SectionField label="Is there a Section 16? *" labelWidth="8">
+          <SectionField
+            label="Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)? *"
+            labelWidth="8"
+          >
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
@@ -193,6 +196,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 setFieldValue(withNameSpace(nameSpace, 'isLandAct'), 'false');
                 setFieldValue(withNameSpace(nameSpace, 'landActArea'), 0);
                 setFieldValue(withNameSpace(nameSpace, 'landActEndDt'), '');
+                setFieldValue(withNameSpace(nameSpace, 'landActDescription'), '');
               })}
             />
           </SectionField>
@@ -217,6 +221,12 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 <FastDatePicker
                   field={withNameSpace(nameSpace, 'landActEndDt')}
                   formikProps={formikProps}
+                />
+              </SectionField>
+              <SectionField label="Describe Land Act" contentWidth="12">
+                <TextArea
+                  field={withNameSpace(nameSpace, 'landActDescription')}
+                  placeholder="e.g. Section 15 / Section 16 / Section 17 etc."
                 />
               </SectionField>
             </>

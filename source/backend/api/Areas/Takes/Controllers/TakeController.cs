@@ -99,15 +99,15 @@ namespace Pims.Api.Areas.Takes.Controllers
         }
 
         /// <summary>
-        /// Gets a list of takes that belong to the associated property id.
+        /// Gets a count of takes that that match a property and are not a part of an AcquisitionFile.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("property/{propertyId:long}/count")]
+        [HttpGet("acquisition/{acquisitionFileId:long}/property/{propertyId:long}/count")]
         [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(TakeModel), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
-        public IActionResult GetTakesCountByPropertyId(long propertyId)
+        public IActionResult GetTakesCountByPropertyId([FromRoute]long acquisitionFileId, [FromRoute]long propertyId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -118,7 +118,7 @@ namespace Pims.Api.Areas.Takes.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
 
-            var count = _takeService.GetCountByPropertyId(propertyId);
+            var count = _takeService.GetCountByPropertyId(acquisitionFileId, propertyId);
             return new JsonResult(count);
         }
 

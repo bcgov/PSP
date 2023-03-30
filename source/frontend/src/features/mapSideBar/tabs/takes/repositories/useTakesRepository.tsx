@@ -25,10 +25,11 @@ export const useTakesRepository = () => {
   });
 
   const getTakesCountByPropertyIdApi = useApiRequestWrapper<
-    (propertyId: number) => Promise<AxiosResponse<number, any>>
+    (acquisitionFileId: number, propertyId: number) => Promise<AxiosResponse<number, any>>
   >({
     requestFunction: useCallback(
-      async (propertyId: number) => await getTakesCountByPropertyId(propertyId),
+      async (acquisitionFileId: number, propertyId: number) =>
+        await getTakesCountByPropertyId(acquisitionFileId, propertyId),
       [getTakesCountByPropertyId],
     ),
     requestName: 'GetTakesCountByPropertyId',

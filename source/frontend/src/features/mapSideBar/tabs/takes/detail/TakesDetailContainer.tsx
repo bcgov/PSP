@@ -35,7 +35,7 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
 
   React.useEffect(() => {
     fileId && executeTakesByFile(fileId);
-    propertyId && executeTakesCount(propertyId);
+    propertyId && executeTakesCount(fileId!, propertyId);
   }, [executeTakesByFile, executeTakesCount, fileId, propertyId]);
 
   return (

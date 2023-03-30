@@ -41,15 +41,22 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get the count of all takes for this property on any acquisition file.
+        /// Returns the Take Counts for a Property outisde of the AcquisitionFile.
         /// </summary>
+        /// <param name="acquisitionFileId"></param>
         /// <param name="propertyId"></param>
         /// <returns></returns>
-        public int GetCountByPropertyId(long propertyId)
+        public int GetCountByPropertyId(long acquisitionFileId, long propertyId)
         {
+            //return Context.PimsTakes
+            //    .Include(t => t.PropertyAcquisitionFile)
+            //    .Where(x => x.PropertyAcquisitionFile.PropertyId == propertyId
+            //            && x.PropertyAcquisitionFileId != x.PropertyAcquisitionFile.PropertyAcquisitionFileId).Count();
+
             return Context.PimsTakes
-                .Include(t => t.PropertyAcquisitionFile)
-                .Count(t => t.PropertyAcquisitionFile.PropertyId == propertyId);
+                    .Include(x => x.PropertyAcquisitionFile)
+                    .Count(x => x.PropertyAcquisitionFile.PropertyId == propertyId
+                        && x.PropertyAcquisitionFile.PropertyAcquisitionFileId != acquisitionFileId);
         }
 
         /// <summary>
@@ -60,16 +67,6 @@ namespace Pims.Dal.Repositories
         public void UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes)
         {
             Context.UpdateChild<PimsPropertyAcquisitionFile, long, PimsTake>(p => p.PimsTakes, acquisitionFilePropertyId, takes.ToArray(), true);
-            
-        }
-
-        /// <summary>
-        /// Returns the total number of takes in the database.
-        /// </summary>
-        /// <returns></returns>
-        public int Count()
-        {
-            return Context.PimsTakes.Count();
         }
 
         public IEnumerable<PimsTake> GetAllByPropertyAcquisitionFileId(long acquisitionFilePropertyId)
