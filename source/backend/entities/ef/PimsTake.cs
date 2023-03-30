@@ -20,6 +20,7 @@ namespace Pims.Dal.Entities
         public long TakeId { get; set; }
         [Column("PROPERTY_ACQUISITION_FILE_ID")]
         public long PropertyAcquisitionFileId { get; set; }
+        [Required]
         [Column("TAKE_TYPE_CODE")]
         [StringLength(20)]
         public string TakeTypeCode { get; set; }
@@ -27,27 +28,42 @@ namespace Pims.Dal.Entities
         [Column("TAKE_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string TakeStatusTypeCode { get; set; }
-        [Required]
         [Column("TAKE_SITE_CONTAM_TYPE_CODE")]
         [StringLength(20)]
         public string TakeSiteContamTypeCode { get; set; }
+        [Column("AREA_UNIT_TYPE_CODE")]
+        [StringLength(20)]
+        public string AreaUnitTypeCode { get; set; }
         [Column("DESCRIPTION")]
         [StringLength(4000)]
         public string Description { get; set; }
+        [Required]
+        [Column("IS_NEW_RIGHT_OF_WAY")]
+        public bool? IsNewRightOfWay { get; set; }
         [Column("NEW_RIGHT_OF_WAY_AREA")]
         public float? NewRightOfWayArea { get; set; }
+        [Required]
+        [Column("IS_STATUTORY_RIGHT_OF_WAY")]
+        public bool? IsStatutoryRightOfWay { get; set; }
         [Column("STATUTORY_RIGHT_OF_WAY_AREA")]
         public float? StatutoryRightOfWayArea { get; set; }
         [Column("SRW_END_DT", TypeName = "date")]
         public DateTime? SrwEndDt { get; set; }
+        [Required]
+        [Column("IS_LICENSE_TO_CONSTRUCT")]
+        public bool? IsLicenseToConstruct { get; set; }
         [Column("LICENSE_TO_CONSTRUCT_AREA")]
         public float? LicenseToConstructArea { get; set; }
         [Column("LTC_END_DT", TypeName = "date")]
         public DateTime? LtcEndDt { get; set; }
+        [Required]
+        [Column("IS_SECTION_16")]
+        public bool? IsSection16 { get; set; }
         [Column("SECTION_16_AREA")]
         public float? Section16Area { get; set; }
         [Column("SECTION_16_END_DT", TypeName = "date")]
         public DateTime? Section16EndDt { get; set; }
+        [Required]
         [Column("IS_SURPLUS_SEVERANCE")]
         public bool? IsSurplusSeverance { get; set; }
         [Column("SURPLUS_SEVERANCE_AREA")]
@@ -91,6 +107,9 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [ForeignKey(nameof(AreaUnitTypeCode))]
+        [InverseProperty(nameof(PimsAreaUnitType.PimsTakes))]
+        public virtual PimsAreaUnitType AreaUnitTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(PropertyAcquisitionFileId))]
         [InverseProperty(nameof(PimsPropertyAcquisitionFile.PimsTakes))]
         public virtual PimsPropertyAcquisitionFile PropertyAcquisitionFile { get; set; }

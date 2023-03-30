@@ -89,8 +89,8 @@ namespace Pims.Dal.Repositories
             if (!userOverride)
             {
                 List<PimsPerson> existingPersons = this.Context.PimsPeople.Where(
-                    p => EF.Functions.Collate(p.FirstName, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.FirstName &&
-                        EF.Functions.Collate(p.Surname, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.Surname)
+                    p => EF.Functions.Collate(p.FirstName, SqlCollation.LATINGENERALCASEINSENSITIVE) == person.FirstName &&
+                        EF.Functions.Collate(p.Surname, SqlCollation.LATINGENERALCASEINSENSITIVE) == person.Surname)
                 .Include(p => p.PimsContactMethods).ToList();
 
                 var isDuplicate = existingPersons.Any(
@@ -139,7 +139,7 @@ namespace Pims.Dal.Repositories
             this.Context.UpdateChild<PimsPerson, long, PimsPersonOrganization>(p => p.PimsPersonOrganizations, personId, person.PimsPersonOrganizations.ToArray());
 
             // Can only delete an associated address if not shared with an organization. Only applies to MAILING address.
-            Func<PimsContext, PimsPersonAddress, bool> canDeleteGrandchild = (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false;
+            Func<PimsContext, PimsPersonAddress, bool> canDeleteGrandchild = (context, pa) => !context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId);
 
             // update addresses via UpdateGrandchild method
             this.Context.UpdateGrandchild<PimsPerson, long, PimsPersonAddress>(

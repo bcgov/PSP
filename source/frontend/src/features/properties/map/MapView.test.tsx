@@ -35,6 +35,16 @@ jest.mock('hooks/usePropertyAssociations');
 jest.mock('hooks/pims-api');
 jest.mock('hooks/useLtsa');
 
+// Need to mock this library for unit tests
+jest.mock('react-visibility-sensor', () => {
+  return jest.fn().mockImplementation(({ children }) => {
+    if (children instanceof Function) {
+      return children({ isVisible: true });
+    }
+    return children;
+  });
+});
+
 const mockStore = configureMockStore([thunk]);
 
 (useComposedProperties as any).mockImplementation(() => ({

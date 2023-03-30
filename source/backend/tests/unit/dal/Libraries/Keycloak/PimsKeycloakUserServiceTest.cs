@@ -62,7 +62,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
-            roleRepository.Setup(m => m.GetByKeycloakId(It.IsAny<System.Guid>())).Returns(removeRole);
             userRepository.Setup(m => m.RemoveRole(It.IsAny<Pims.Dal.Entities.PimsUser>(), removeRole.RoleId)).Returns((Pims.Dal.Entities.PimsUser eUser, long roleId) =>
             {
                 var userRole = eUser.PimsUserRoles.FirstOrDefault(r => r.RoleId == roleId);

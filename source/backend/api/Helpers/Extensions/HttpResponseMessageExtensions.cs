@@ -18,7 +18,7 @@ namespace Pims.Api.Helpers.Extensions
         /// </summary>
         /// <param name="response"></param>
         /// <param name="logger"></param>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the http response entity.</typeparam>
         /// <returns></returns>
         public static async Task<IActionResult> HandleResponseAsync<T>(this HttpResponseMessage response, ILogger logger = null)
         {
@@ -37,7 +37,7 @@ namespace Pims.Api.Helpers.Extensions
 
                 using var readStream = new StreamReader(responseStream, Encoding.UTF8);
                 var error = readStream.ReadToEnd();
-                logger?.LogError(error);
+                logger?.LogError("http error response {error}", error);
                 responseStream.Position = 0;
 
                 if (response.Content.Headers.ContentType.MediaType == "application/json")

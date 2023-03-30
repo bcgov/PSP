@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Lookup
     /// <summary>
     /// LookupModel class, provides a model that represents a code lookup item.
     /// </summary>
+    /// <typeparam name="T">The underlying type of this LookupModel.</typeparam>
     public class LookupModel<T> : LookupModel
     {
         #region Properties

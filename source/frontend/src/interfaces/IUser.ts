@@ -23,4 +23,5 @@ export interface IUser {
   rowVersion?: number;
   landline?: string;
   mobile?: string;
+  hasValidClaims: boolean;
 }

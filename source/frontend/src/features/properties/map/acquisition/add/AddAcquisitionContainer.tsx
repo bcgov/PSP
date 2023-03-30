@@ -20,9 +20,7 @@ export interface IAddAcquisitionContainerProps {
   onClose?: () => void;
 }
 
-export const AddAcquisitionContainer: React.FC<
-  React.PropsWithChildren<IAddAcquisitionContainerProps>
-> = props => {
+export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = props => {
   const { onClose } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
@@ -85,13 +83,7 @@ export const AddAcquisitionContainer: React.FC<
         />
       }
       onClose={close}
-      footer={
-        <SidebarFooter
-          isOkDisabled={formikRef.current?.isSubmitting}
-          onSave={handleSave}
-          onCancel={close}
-        />
-      }
+      footer={<SidebarFooter isOkDisabled={helper.loading} onSave={handleSave} onCancel={close} />}
     >
       <StyledFormWrapper>
         <AddAcquisitionForm

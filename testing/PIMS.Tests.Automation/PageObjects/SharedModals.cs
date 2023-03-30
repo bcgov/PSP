@@ -10,6 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By generalModalHeader = By.CssSelector("div[class='modal-header'] div");
         private By generalModalContent = By.CssSelector("div[class='modal-body']");
         private By generalModalOkBttn = By.CssSelector("button[title='ok-modal']");
+        private By generalModalCancelBttn = By.CssSelector("button[title='cancel-modal']");
 
         private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
         private By generalConfirmationModalBody1 = By.CssSelector("div[class='modal-body'] div");
@@ -52,6 +53,22 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntil(generalConfirmationModalBody2);
             return (webDriver.FindElement(generalConfirmationModalBody2).Text);
+        }
+
+        public void VerifyButtonsPresence()
+        {
+            Wait();
+            Assert.True(webDriver.FindElement(generalModalOkBttn).Displayed);
+            Assert.True(webDriver.FindElement(generalModalCancelBttn).Displayed);
+        }
+
+        public void SiteMinderModal()
+        {
+            Wait();
+            if (webDriver.FindElements(generalModal).Count > 0 && ModalHeader() == "SiteMinder Session Expired")
+            {
+                webDriver.FindElement(generalModalCancelBttn).Click();
+            }
         }
     }
 }

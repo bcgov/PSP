@@ -8,7 +8,7 @@ namespace Pims.Api.Models
     /// <summary>
     /// PageModel class, provides a model that represents a single page of items.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of the paged items in the result.</typeparam>
     public class PageModel<T>
     {
         #region Properties

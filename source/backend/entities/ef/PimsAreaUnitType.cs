@@ -15,6 +15,7 @@ namespace Pims.Dal.Entities
         {
             PimsProperties = new HashSet<PimsProperty>();
             PimsPropertyLeases = new HashSet<PimsPropertyLease>();
+            PimsTakes = new HashSet<PimsTake>();
         }
 
         [Key]
@@ -49,5 +50,7 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsProperty> PimsProperties { get; set; }
         [InverseProperty(nameof(PimsPropertyLease.AreaUnitTypeCodeNavigation))]
         public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
+        [InverseProperty(nameof(PimsTake.AreaUnitTypeCodeNavigation))]
+        public virtual ICollection<PimsTake> PimsTakes { get; set; }
     }
 }
