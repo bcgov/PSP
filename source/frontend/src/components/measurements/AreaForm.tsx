@@ -134,7 +134,7 @@ export const AreaForm: React.FC<IAreaFormProps> = ({
                   aria-label="square metres"
                   type="number"
                   step=".01"
-                  value={sqMeters}
+                  value={isNaN(sqMeters) ? 0 : sqMeters}
                   onChange={e =>
                     handleInputChange(e.target.valueAsNumber, AreaUnitTypes.SquareMeters)
                   }
@@ -149,7 +149,7 @@ export const AreaForm: React.FC<IAreaFormProps> = ({
                   aria-label="hectares"
                   type="number"
                   step=".01"
-                  value={ha}
+                  value={isNaN(ha) ? 0 : ha}
                   onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Hectares)}
                 />
               </Col>
@@ -166,7 +166,7 @@ export const AreaForm: React.FC<IAreaFormProps> = ({
                   aria-label="square feet"
                   type="number"
                   step=".01"
-                  value={sqFeet}
+                  value={isNaN(sqFeet) ? 0 : sqFeet}
                   onChange={e =>
                     handleInputChange(e.target.valueAsNumber, AreaUnitTypes.SquareFeet)
                   }
@@ -181,7 +181,7 @@ export const AreaForm: React.FC<IAreaFormProps> = ({
                   aria-label="acres"
                   type="number"
                   step=".01"
-                  value={acres}
+                  value={isNaN(acres) ? 0 : acres}
                   onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Acres)}
                 />
               </Col>

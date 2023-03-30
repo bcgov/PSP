@@ -23,7 +23,7 @@ export const useApiProperties = () => {
       getPropertyAssociations: (id: number) =>
         api.get<Api_PropertyAssociations>(`/properties/${id}/associations`),
       exportProperties: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
-        api.get(
+        api.get<Blob>(
           `/reports/properties?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
           {
             responseType: 'blob',

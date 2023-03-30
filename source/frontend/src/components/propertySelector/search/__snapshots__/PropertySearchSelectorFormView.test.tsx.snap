@@ -185,6 +185,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 <div
@@ -361,6 +362,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 <div

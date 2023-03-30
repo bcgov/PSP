@@ -8,21 +8,25 @@ import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
 
 import { ActivityListView } from '../../activity/list/ActivityListView';
-import AgreementForm from '../../shared/detail/AgreementForm';
-import AgreementFormContainer from '../../shared/detail/AgreementFormContainer';
+import { FormListView } from '../../form/list/FormListView';
+import FormListViewContainer from '../../form/list/FormListViewContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
 import { EditFormNames } from '../EditFormNames';
-import AcquisitionDocumentsTab from './AcquisitionDocumentsTab';
-import AcquisitionSummaryView from './AcquisitionSummaryView';
+import { AcquisitionChecklistView } from './checklist/AcquisitionChecklistView';
+import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
+import AcquisitionSummaryView from './fileDetails/AcquisitionSummaryView';
 
 export interface IAcquisitionFileTabsProps {
   acquisitionFile?: Api_AcquisitionFile;
+  defaultTab: FileTabNames;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
-export const AcquisitionFileTabs: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionFileTabsProps>
-> = ({ acquisitionFile, setContainerState }) => {
+export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
+  acquisitionFile,
+  defaultTab,
+  setContainerState,
+}) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
 
@@ -34,12 +38,30 @@ export const AcquisitionFileTabs: React.FunctionComponent<
           setContainerState({
             isEditing: true,
             activeEditForm: EditFormNames.acquisitionSummary,
+            defaultFileTab: FileTabNames.fileDetails,
           })
         }
       />
     ),
     key: FileTabNames.fileDetails,
     name: 'File details',
+  });
+
+  tabViews.push({
+    content: (
+      <AcquisitionChecklistView
+        acquisitionFile={acquisitionFile}
+        onEdit={() =>
+          setContainerState({
+            isEditing: true,
+            activeEditForm: EditFormNames.acquisitionChecklist,
+            defaultFileTab: FileTabNames.checklist,
+          })
+        }
+      />
+    ),
+    key: FileTabNames.checklist,
+    name: 'Checklist',
   });
 
   if (acquisitionFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
@@ -52,6 +74,20 @@ export const AcquisitionFileTabs: React.FunctionComponent<
       ),
       key: FileTabNames.activities,
       name: 'Activities',
+    });
+  }
+
+  if (acquisitionFile?.id && hasClaim(Claims.FORM_VIEW)) {
+    tabViews.push({
+      content: (
+        <FormListViewContainer
+          View={FormListView}
+          fileId={acquisitionFile.id}
+          fileType={FileTypes.Acquisition}
+        ></FormListViewContainer>
+      ),
+      key: FileTabNames.forms,
+      name: 'Forms',
     });
   }
 
@@ -70,14 +106,6 @@ export const AcquisitionFileTabs: React.FunctionComponent<
       name: 'Notes',
     });
   }
-
-  tabViews.push({
-    content: <AgreementFormContainer View={AgreementForm}></AgreementFormContainer>,
-    key: FileTabNames.forms,
-    name: 'Forms',
-  });
-
-  var defaultTab = FileTabNames.fileDetails;
 
   const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
 

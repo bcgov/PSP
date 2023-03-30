@@ -79,10 +79,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
   position: relative;
 }
 
-.c3 {
-  font-weight: bold;
-}
-
 .c1 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
@@ -180,11 +176,9 @@ exports[`AcquisitionView component renders as expected 1`] = `
                 data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
-                <span
-                  class="c3"
-                >
+                <strong>
                   admin
-                </span>
+                </strong>
               </span>
             </span>
           </div>
@@ -208,11 +202,9 @@ exports[`AcquisitionView component renders as expected 1`] = `
                 data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
-                <span
-                  class="c3"
-                >
+                <strong>
                   admin
-                </span>
+                </strong>
               </span>
             </span>
           </div>
@@ -246,191 +238,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c20.btn {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  padding: 0.4rem 1.2rem;
-  min-height: 3rem;
-  border: 0.2rem solid transparent;
-  border-radius: 0.4rem;
-  text-align: center;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 1.8rem;
-  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
-  font-weight: 700;
-  -webkit-letter-spacing: 0.1rem;
-  -moz-letter-spacing: 0.1rem;
-  -ms-letter-spacing: 0.1rem;
-  letter-spacing: 0.1rem;
-  cursor: pointer;
-}
-
-.c20.btn:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-  opacity: 0.8;
-}
-
-.c20.btn:focus {
-  outline-width: 0.4rem;
-  outline-style: solid;
-  outline-offset: 1px;
-  box-shadow: none;
-}
-
-.c20.btn.btn-primary {
-  border: none;
-}
-
-.c20.btn.btn-secondary {
-  background: none;
-}
-
-.c20.btn.btn-info {
-  border: none;
-  background: none;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
-}
-
-.c20.btn.btn-info:hover,
-.c20.btn.btn-info:active,
-.c20.btn.btn-info:focus {
-  background: none;
-}
-
-.c20.btn.btn-light {
-  border: none;
-}
-
-.c20.btn.btn-dark {
-  border: none;
-}
-
-.c20.btn.btn-link {
-  font-size: 1.6rem;
-  font-weight: 400;
-  background: none;
-  border: none;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  min-height: 2.5rem;
-  line-height: 3rem;
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-  -ms-flex-pack: left;
-  justify-content: left;
-  -webkit-letter-spacing: unset;
-  -moz-letter-spacing: unset;
-  -ms-letter-spacing: unset;
-  letter-spacing: unset;
-  text-align: left;
-  padding: 0;
-}
-
-.c20.btn.btn-link:hover,
-.c20.btn.btn-link:active,
-.c20.btn.btn-link:focus {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-  border: none;
-  background: none;
-  box-shadow: none;
-  outline: none;
-}
-
-.c20.btn.btn-link:disabled,
-.c20.btn.btn-link.disabled {
-  background: none;
-  pointer-events: none;
-}
-
-.c20.btn:disabled,
-.c20.btn:disabled:hover {
-  box-shadow: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  pointer-events: none;
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.c20.Button .Button__icon {
-  margin-right: 1.6rem;
-}
-
-.c20.Button--icon-only:focus {
-  outline: none;
-}
-
-.c20.Button--icon-only .Button__icon {
-  margin-right: 0;
-}
-
-.c2 {
-  height: 100%;
-}
-
-.c3 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c9 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c21.c21.btn {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c21.c21.btn .text {
-  display: none;
-}
-
-.c21.c21.btn:hover,
-.c21.c21.btn:active,
-.c21.c21.btn:focus {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c21.c21.btn:hover .text,
-.c21.c21.btn:active .text,
-.c21.c21.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
-}
-
-.c12 {
+  .c12 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
@@ -452,6 +260,40 @@ exports[`AcquisitionView component renders as expected 1`] = `
 .c12 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
+}
+
+.c11 {
+  height: 100%;
+}
+
+.c11 .nav-tabs {
+  height: 2.4rem;
+}
+
+.c11 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.4rem);
+  overflow-y: auto;
+}
+
+.c11 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c2 {
+  height: 100%;
+}
+
+.c3 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c9 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
 }
 
 .c0 {
@@ -494,6 +336,11 @@ exports[`AcquisitionView component renders as expected 1`] = `
   justify-content: center;
 }
 
+.c21 {
+  float: right;
+  cursor: pointer;
+}
+
 .c15 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -505,6 +352,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c17.required::before {
@@ -516,24 +364,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
 
 .c16 {
   font-weight: bold;
-}
-
-.c11 {
-  height: 100%;
-}
-
-.c11 .nav-tabs {
-  height: 2.4rem;
-}
-
-.c11 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.4rem);
-  overflow-y: auto;
-}
-
-.c11 .tab-content .tab-pane {
-  position: relative;
 }
 
 .c4 {
@@ -596,13 +426,8 @@ exports[`AcquisitionView component renders as expected 1`] = `
   line-height: 2.2rem;
 }
 
-.c22 {
-  position: -webkit-sticky;
-  position: sticky;
-  padding-top: 2rem;
-  bottom: 0;
-  background: white;
-  z-index: 10;
+.c20 {
+  text-align: right;
 }
 
 .c13 {
@@ -761,11 +586,11 @@ exports[`AcquisitionView component renders as expected 1`] = `
                 <a
                   aria-selected="false"
                   class="nav-item nav-link"
-                  data-rb-event-key="forms"
+                  data-rb-event-key="checklist"
                   href="#"
                   role="tab"
                 >
-                  Forms
+                  Checklist
                 </a>
               </nav>
               <div
@@ -1198,887 +1023,235 @@ exports[`AcquisitionView component renders as expected 1`] = `
                   role="tabpanel"
                 >
                   <div
-                    class="c14 form-section"
+                    class=""
                   >
-                    <h2
-                      class="c15"
-                    >
-                      <div
-                        class="no-gutters row"
-                      >
-                        <div
-                          class="col"
-                        >
-                          Project
-                        </div>
-                        <div
-                          class="col-1"
-                        />
-                      </div>
-                    </h2>
                     <div
-                      class="collapse show"
+                      class="c20 mr-3 my-1"
+                    />
+                    <div
+                      class="c14 form-section"
                     >
-                      <div
-                        class="pb-2 row"
+                      <h2
+                        class="c15"
                       >
                         <div
-                          class="pr-0 text-left col-4"
-                        >
-                          <label
-                            class="c16"
-                          >
-                            Project name:
-                          </label>
-                        </div>
-                        <div
-                          class="c17 text-left col"
+                          class="no-gutters row"
                         >
                           <div
-                            class="input form-group"
+                            class="col"
                           >
-                            <input
-                              class="form-control"
-                              id="input-project_name"
-                              name="project_name"
-                              title="TEST PROJECT"
-                              value="TEST PROJECT"
-                            />
+                            File Initiation
+                          </div>
+                          <div
+                            class="col-1"
+                          >
+                            <svg
+                              class="c21"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <title>
+                                collapse-section
+                              </title>
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M7 14l5-5 5 5z"
+                              />
+                            </svg>
                           </div>
                         </div>
-                      </div>
+                      </h2>
                       <div
-                        class="pb-2 row"
-                      >
-                        <div
-                          class="pr-0 text-left col-4"
-                        >
-                          <label
-                            class="c16"
-                          >
-                            Project number:
-                          </label>
-                        </div>
-                        <div
-                          class="c17 text-left col"
-                        >
-                          <div
-                            class="input form-group"
-                          >
-                            <input
-                              class="form-control"
-                              id="input-project_number"
-                              name="project_number"
-                              title="005"
-                              value="005"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="pb-2 row"
-                      >
-                        <div
-                          class="pr-0 text-left col-4"
-                        >
-                          <label
-                            class="c16"
-                          >
-                            Product name:
-                          </label>
-                        </div>
-                        <div
-                          class="c17 text-left col"
-                        >
-                          <div
-                            class="input form-group"
-                          >
-                            <input
-                              class="form-control"
-                              id="input-road"
-                              name="road"
-                              title="AUTOPLAN"
-                              value="AUTOPLAN"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="pb-2 row"
-                      >
-                        <div
-                          class="pr-0 text-left col-4"
-                        >
-                          <label
-                            class="c16"
-                          >
-                            PS file number:
-                          </label>
-                        </div>
-                        <div
-                          class="c17 text-left col"
-                        >
-                          <div
-                            class="input form-group"
-                          >
-                            <input
-                              class="form-control"
-                              id="input-ps_file_no"
-                              name="ps_file_no"
-                              title="1234"
-                              value="1234"
-                            />
-                          </div>
-                        </div>
-                      </div>
+                        class="collapse show"
+                      />
                     </div>
-                  </div>
-                  <div
-                    class="c14 form-section"
-                  >
-                    <h2
-                      class="c15"
-                    >
-                      <div
-                        class="no-gutters row"
-                      >
-                        <div
-                          class="col"
-                        >
-                          Price (in CAD)
-                        </div>
-                        <div
-                          class="col-1"
-                        />
-                      </div>
-                    </h2>
                     <div
-                      class="collapse show"
+                      class="c14 form-section"
                     >
-                      <div
-                        class="pb-2 row"
+                      <h2
+                        class="c15"
                       >
                         <div
-                          class="pr-0 text-left col-4"
-                        >
-                          <label
-                            class="c16"
-                          >
-                            Purchase price:
-                          </label>
-                        </div>
-                        <div
-                          class="c17 text-left col"
+                          class="no-gutters row"
                         >
                           <div
-                            class="input form-group"
+                            class="col"
                           >
-                            <input
-                              class="form-control"
-                              id="input-purchase_price"
-                              name="purchase_price"
-                              title="$10,000"
-                              value="$10,000"
-                            />
+                            Active File Management
+                          </div>
+                          <div
+                            class="col-1"
+                          >
+                            <svg
+                              class="c21"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <title>
+                                collapse-section
+                              </title>
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M7 14l5-5 5 5z"
+                              />
+                            </svg>
                           </div>
                         </div>
-                      </div>
+                      </h2>
                       <div
-                        class="pb-2 row"
-                      >
-                        <div
-                          class="pr-0 text-left col-4"
-                        >
-                          <label
-                            class="c16"
-                          >
-                            Deposit amount:
-                          </label>
-                        </div>
-                        <div
-                          class="c17 text-left col"
-                        >
-                          <div
-                            class="input form-group"
-                          >
-                            <input
-                              class="form-control"
-                              id="input-deposit_amount"
-                              name="deposit_amount"
-                              title="$1,000"
-                              value="$1,000"
-                            />
-                          </div>
-                        </div>
-                      </div>
+                        class="collapse show"
+                      />
                     </div>
-                  </div>
-                  <div
-                    class="c14 form-section"
-                  >
-                    <h2
-                      class="c15"
-                    >
-                      <div
-                        class="no-gutters row"
-                      >
-                        <div
-                          class="col"
-                        >
-                          Participants
-                        </div>
-                        <div
-                          class="col-1"
-                        />
-                      </div>
-                    </h2>
                     <div
-                      class="collapse show"
+                      class="c14 form-section"
                     >
-                      <div
-                        class="c14 form-section"
+                      <h2
+                        class="c15"
                       >
-                        <h2
-                          class="c15"
-                        >
-                          <div
-                            class="no-gutters row"
-                          >
-                            <div
-                              class="col"
-                            >
-                              Owners
-                            </div>
-                            <div
-                              class="col-1"
-                            />
-                          </div>
-                        </h2>
                         <div
-                          class="collapse show"
+                          class="no-gutters row"
                         >
                           <div
-                            class="c14 form-section"
+                            class="col"
                           >
-                            <h2
-                              class="c15"
-                            >
-                              <div
-                                class="no-gutters row"
-                              >
-                                <div
-                                  class="col"
-                                >
-                                  <div
-                                    class="d-flex justify-content-between"
-                                  >
-                                    Owner #1
-                                    <button
-                                      class="c20 Button c21 btn btn-link"
-                                      type="button"
-                                    >
-                                      <div
-                                        class="Button__value"
-                                      >
-                                        <svg
-                                          data-testid="remove-button"
-                                          fill="currentColor"
-                                          height="2rem"
-                                          stroke="currentColor"
-                                          stroke-width="0"
-                                          viewBox="0 0 24 24"
-                                          width="2rem"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <title>
-                                            remove
-                                          </title>
-                                          <path
-                                            d="M0 0h24v24H0z"
-                                            fill="none"
-                                          />
-                                          <path
-                                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                          />
-                                        </svg>
-                                         
-                                        <span
-                                          class="text"
-                                        >
-                                          Remove
-                                        </span>
-                                      </div>
-                                    </button>
-                                  </div>
-                                </div>
-                                <div
-                                  class="col-1"
-                                />
-                              </div>
-                            </h2>
-                            <div
-                              class="collapse show"
-                            >
-                              <div
-                                class="pb-2 row"
-                              >
-                                <div
-                                  class="pr-0 text-left col-4"
-                                >
-                                  <label
-                                    class="c16"
-                                  >
-                                    First name:
-                                  </label>
-                                </div>
-                                <div
-                                  class="c17 text-left col"
-                                >
-                                  <div
-                                    class="input form-group"
-                                  >
-                                    <input
-                                      class="form-control"
-                                      id="input-owners.0.firstname"
-                                      name="owners.0.firstname"
-                                      title="owner"
-                                      value="owner"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="pb-2 row"
-                              >
-                                <div
-                                  class="pr-0 text-left col-4"
-                                >
-                                  <label
-                                    class="c16"
-                                  >
-                                    Last name:
-                                  </label>
-                                </div>
-                                <div
-                                  class="c17 text-left col"
-                                >
-                                  <div
-                                    class="input form-group"
-                                  >
-                                    <input
-                                      class="form-control"
-                                      id="input-owners.0.lastname"
-                                      name="owners.0.lastname"
-                                      title="one"
-                                      value="one"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="pb-2 row"
-                              >
-                                <div
-                                  class="pr-0 text-left col-4"
-                                >
-                                  <label
-                                    class="c16"
-                                  >
-                                    Organization name:
-                                  </label>
-                                </div>
-                                <div
-                                  class="c17 text-left col"
-                                >
-                                  <div
-                                    class="input form-group"
-                                  >
-                                    <input
-                                      class="form-control"
-                                      id="input-owners.0.organization_name"
-                                      name="owners.0.organization_name"
-                                      title="test organization"
-                                      value="test organization"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="pb-2 row"
-                              >
-                                <div
-                                  class="pr-0 text-left col-4"
-                                >
-                                  <label
-                                    class="c16"
-                                  >
-                                    Incorporation number:
-                                  </label>
-                                </div>
-                                <div
-                                  class="c17 text-left col"
-                                >
-                                  <div
-                                    class="input form-group"
-                                  >
-                                    <input
-                                      class="form-control"
-                                      id="input-owners.0.incorporation_number"
-                                      name="owners.0.incorporation_number"
-                                      title="5678"
-                                      value="5678"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="pb-2 row"
-                              >
-                                <div
-                                  class="pr-0 text-left col-4"
-                                >
-                                  <label
-                                    class="c16"
-                                  >
-                                    Reg number:
-                                  </label>
-                                </div>
-                                <div
-                                  class="c17 text-left col"
-                                >
-                                  <div
-                                    class="input form-group"
-                                  >
-                                    <input
-                                      class="form-control"
-                                      id="input-owners.0.reg_no"
-                                      name="owners.0.reg_no"
-                                      title="910"
-                                      value="910"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            Section 3 - Agreement
                           </div>
-                          <button
-                            class="c20 Button btn btn-link"
-                            type="button"
+                          <div
+                            class="col-1"
                           >
-                            <div
-                              class="Button__value"
+                            <svg
+                              class="c21"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              + Add another owner
-                            </div>
-                          </button>
+                              <title>
+                                collapse-section
+                              </title>
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M7 14l5-5 5 5z"
+                              />
+                            </svg>
+                          </div>
                         </div>
-                      </div>
+                      </h2>
                       <div
-                        class="c14 form-section"
-                      >
-                        <h2
-                          class="c15"
-                        >
-                          <div
-                            class="no-gutters row"
-                          >
-                            <div
-                              class="col"
-                            >
-                              Agents
-                            </div>
-                            <div
-                              class="col-1"
-                            />
-                          </div>
-                        </h2>
-                        <div
-                          class="collapse show"
-                        >
-                          <div
-                            class="c14 form-section"
-                          >
-                            <h2
-                              class="c15"
-                            >
-                              <div
-                                class="no-gutters row"
-                              >
-                                <div
-                                  class="col"
-                                >
-                                  <div
-                                    class="d-flex justify-content-between"
-                                  >
-                                    Agent #1
-                                    <button
-                                      class="c20 Button c21 btn btn-link"
-                                      type="button"
-                                    >
-                                      <div
-                                        class="Button__value"
-                                      >
-                                        <svg
-                                          data-testid="remove-button"
-                                          fill="currentColor"
-                                          height="2rem"
-                                          stroke="currentColor"
-                                          stroke-width="0"
-                                          viewBox="0 0 24 24"
-                                          width="2rem"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <title>
-                                            remove
-                                          </title>
-                                          <path
-                                            d="M0 0h24v24H0z"
-                                            fill="none"
-                                          />
-                                          <path
-                                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                          />
-                                        </svg>
-                                         
-                                        <span
-                                          class="text"
-                                        >
-                                          Remove
-                                        </span>
-                                      </div>
-                                    </button>
-                                  </div>
-                                </div>
-                                <div
-                                  class="col-1"
-                                />
-                              </div>
-                            </h2>
-                            <div
-                              class="collapse show"
-                            >
-                              <div
-                                class="pb-2 row"
-                              >
-                                <div
-                                  class="pr-0 text-left col-4"
-                                >
-                                  <label
-                                    class="c16"
-                                  >
-                                    Phone # (work landline):
-                                  </label>
-                                </div>
-                                <div
-                                  class="c17 text-left col"
-                                >
-                                  <div
-                                    class="input form-group"
-                                  >
-                                    <input
-                                      class="form-control"
-                                      id="input-agents.0.workphone"
-                                      name="agents.0.workphone"
-                                      title="250-812-4261"
-                                      value="250-812-4261"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="pb-2 row"
-                              >
-                                <div
-                                  class="pr-0 text-left col-4"
-                                >
-                                  <label
-                                    class="c16"
-                                  >
-                                    Phone # (work mobile):
-                                  </label>
-                                </div>
-                                <div
-                                  class="c17 text-left col"
-                                >
-                                  <div
-                                    class="input form-group"
-                                  >
-                                    <input
-                                      class="form-control"
-                                      id="input-agents.0.mobilephone"
-                                      name="agents.0.mobilephone"
-                                      title="778-921-6221"
-                                      value="778-921-6221"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="pb-2 row"
-                              >
-                                <div
-                                  class="pr-0 text-left col-4"
-                                >
-                                  <label
-                                    class="c16"
-                                  >
-                                    Organization name:
-                                  </label>
-                                </div>
-                                <div
-                                  class="c17 text-left col"
-                                >
-                                  <div
-                                    class="input form-group"
-                                  >
-                                    <input
-                                      class="form-control"
-                                      id="input-agents.0.name"
-                                      name="agents.0.name"
-                                      title="test agent"
-                                      value="test agent"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <button
-                            class="c20 Button btn btn-link"
-                            type="button"
-                          >
-                            <div
-                              class="Button__value"
-                            >
-                              + Add another agent
-                            </div>
-                          </button>
-                        </div>
-                      </div>
+                        class="collapse show"
+                      />
                     </div>
-                  </div>
-                  <div
-                    class="c14 form-section"
-                  >
-                    <h2
-                      class="c15"
-                    >
-                      <div
-                        class="no-gutters row"
-                      >
-                        <div
-                          class="col"
-                        >
-                          Dates
-                        </div>
-                        <div
-                          class="col-1"
-                        />
-                      </div>
-                    </h2>
                     <div
-                      class="collapse show"
+                      class="c14 form-section"
                     >
-                      <div
-                        class="pb-2 row"
+                      <h2
+                        class="c15"
                       >
                         <div
-                          class="pr-0 text-left col-4"
-                        >
-                          <label
-                            class="c16"
-                          >
-                            Sale completion date:
-                          </label>
-                        </div>
-                        <div
-                          class="c17 text-left col"
+                          class="no-gutters row"
                         >
                           <div
-                            class="input form-group"
+                            class="col"
                           >
-                            <input
-                              class="form-control"
-                              id="input-completion_date"
-                              name="completion_date"
-                              title="Feb 10, 2023"
-                              value="Feb 10, 2023"
-                            />
+                            Section 6 - Expropriation
+                          </div>
+                          <div
+                            class="col-1"
+                          >
+                            <svg
+                              class="c21"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <title>
+                                collapse-section
+                              </title>
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M7 14l5-5 5 5z"
+                              />
+                            </svg>
                           </div>
                         </div>
-                      </div>
+                      </h2>
+                      <div
+                        class="collapse show"
+                      />
                     </div>
-                  </div>
-                  <div
-                    class="c14 form-section"
-                  >
-                    <h2
-                      class="c15"
-                    >
-                      <div
-                        class="no-gutters row"
-                      >
-                        <div
-                          class="col"
-                        >
-                          Properties
-                        </div>
-                        <div
-                          class="col-1"
-                        />
-                      </div>
-                    </h2>
                     <div
-                      class="collapse show"
+                      class="c14 form-section"
                     >
+                      <h2
+                        class="c15"
+                      >
+                        <div
+                          class="no-gutters row"
+                        >
+                          <div
+                            class="col"
+                          >
+                            Acquisition Completion
+                          </div>
+                          <div
+                            class="col-1"
+                          >
+                            <svg
+                              class="c21"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <title>
+                                collapse-section
+                              </title>
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M7 14l5-5 5 5z"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      </h2>
                       <div
-                        class="c14 form-section"
-                      >
-                        <h2
-                          class="c15"
-                        >
-                          <div
-                            class="no-gutters row"
-                          >
-                            <div
-                              class="col"
-                            >
-                              <div
-                                class="d-flex justify-content-between"
-                              >
-                                Property #1
-                                <button
-                                  class="c20 Button c21 btn btn-link"
-                                  type="button"
-                                >
-                                  <div
-                                    class="Button__value"
-                                  >
-                                    <svg
-                                      data-testid="remove-button"
-                                      fill="currentColor"
-                                      height="2rem"
-                                      stroke="currentColor"
-                                      stroke-width="0"
-                                      viewBox="0 0 24 24"
-                                      width="2rem"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <title>
-                                        remove
-                                      </title>
-                                      <path
-                                        d="M0 0h24v24H0z"
-                                        fill="none"
-                                      />
-                                      <path
-                                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                      />
-                                    </svg>
-                                     
-                                    <span
-                                      class="text"
-                                    >
-                                      Remove
-                                    </span>
-                                  </div>
-                                </button>
-                              </div>
-                            </div>
-                            <div
-                              class="col-1"
-                            />
-                          </div>
-                        </h2>
-                        <div
-                          class="collapse show"
-                        >
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c16"
-                              >
-                                PID:
-                              </label>
-                            </div>
-                            <div
-                              class="c17 text-left col"
-                            >
-                              <div
-                                class="input form-group"
-                              >
-                                <input
-                                  class="form-control"
-                                  id="input-properties.0.pid"
-                                  name="properties.0.pid"
-                                  title="016-272-622"
-                                  value="016-272-622"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c16"
-                              >
-                                Legal description:
-                              </label>
-                            </div>
-                            <div
-                              class="c17 text-left col"
-                            >
-                              <div
-                                class="input form-group"
-                              >
-                                <input
-                                  class="form-control"
-                                  id="input-properties.0.full_legal"
-                                  name="properties.0.full_legal"
-                                  title="A fake legal description for testing purposes."
-                                  value="A fake legal description for testing purposes."
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        class="c20 Button btn btn-link"
-                        type="button"
-                      >
-                        <div
-                          class="Button__value"
-                        >
-                          + Add another property
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    class="c22 justify-content-end mt-auto no-gutters row"
-                  >
-                    <div
-                      class="col-auto"
-                    >
-                      <button
-                        class="c20 Button btn btn-primary"
-                        type="button"
-                      >
-                        <div
-                          class="Button__value"
-                        >
-                          Generate
-                        </div>
-                      </button>
+                        class="collapse show"
+                      />
                     </div>
                   </div>
                 </div>

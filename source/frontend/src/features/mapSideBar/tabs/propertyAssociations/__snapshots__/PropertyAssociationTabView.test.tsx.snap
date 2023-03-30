@@ -22,10 +22,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c4 {
-  font-weight: bold;
+  border-radius: 0.5rem;
 }
 
 .c2 {
@@ -264,11 +261,9 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                     data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
-                    <span
-                      class="c4"
-                    >
+                    <strong>
                       admin
-                    </span>
+                    </strong>
                   </span>
                 </div>
                 <div
@@ -496,11 +491,9 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                     data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
-                    <span
-                      class="c4"
-                    >
+                    <strong>
                       Acquisition File Data
-                    </span>
+                    </strong>
                   </span>
                 </div>
                 <div
@@ -728,11 +721,9 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                     data-testid="tooltip-icon-userNameTooltip"
                     id="userNameTooltip"
                   >
-                    <span
-                      class="c4"
-                    >
+                    <strong>
                       Lease Seed Data
-                    </span>
+                    </strong>
                   </span>
                 </div>
                 <div

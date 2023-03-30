@@ -54,6 +54,8 @@ export const AREA_UNIT_TYPES = 'PimsAreaUnitType';
 export const VOLUME_UNIT_TYPES = 'PimsVolumeUnitType';
 export const CONTACT_METHOD_TYPES = 'PimsContactMethodType';
 export const COUNTRY_TYPES = 'PimsCountry';
+export const CONSULTATION_TYPES = 'PimsConsultationType';
+export const CONSULTATION_STATUS_TYPES = 'PimsConsultationStatusType';
 export const INSURANCE_TYPES = 'PimsInsuranceType';
 export const LEASE_CATEGORY_TYPES = 'PimsLeaseCategoryType';
 export const LEASE_INITIATOR_TYPES = 'PimsLeaseInitiatorType';
@@ -96,6 +98,13 @@ export const ACQUISITION_FILE_PERSON_PROFILE_TYPES = 'PimsAcqFlPersonProfileType
 export const TENANT_TYPES = 'PimsTenantType';
 export const ACQUISITION_FUNDING_TYPES = 'PimsAcquisitionFundingType';
 export const PROJECT_STATUS_TYPES = 'PimsProjectStatusType';
+export const FORM_TYPES = 'PimsFormType';
+export const TAKE_TYPES = 'PimsTakeType';
+export const TAKE_STATUS_TYPES = 'PimsTakeStatusType';
+export const TAKE_SITE_CONTAM_TYPES = 'PimsTakeSiteContamType';
+export const ACQUISITION_CHECKLIST_SECTION_TYPES = 'PimsAcqChklstSectionType';
+export const ACQUISITION_CHECKLIST_ITEM_TYPES = 'PimsAcqChklstItemType';
+export const ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsAcqChklstItemStatusType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

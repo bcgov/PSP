@@ -6,7 +6,7 @@ import { useApiUsers } from 'hooks/pims-api/useApiUsers';
  * hook that wraps calls to the users api.
  */
 export const useUsers = () => {
-  const { getUsersPaged, activateUser, putUser, getUser } = useApiUsers();
+  const { getUsersPaged, activateUser, putUser, getUser, exportUsers } = useApiUsers();
 
   /**
    * fetch all of the users from the server based on a filter.
@@ -45,11 +45,21 @@ export const useUsers = () => {
     requestName: actionTypes.PUT_USER_DETAIL,
   });
 
+  /**
+   * export a filtered list of users to a file.
+   * @return the updated user.
+   */
+  const exportList = useApiRequestWrapper({
+    requestFunction: exportUsers,
+    requestName: actionTypes.EXPORT_USER,
+  });
+
   return {
     fetchUsers: fetch,
     fetchUserDetail: fetchDetail,
     updateUser: update,
     activateUser: activate,
+    exportUsers: exportList,
   };
 };
 

@@ -2,6 +2,7 @@ import { IPaginateParams } from 'constants/API';
 import * as pimsToasts from 'constants/toasts';
 import { LifecycleToasts } from 'customAxios';
 import { IPagedItems, IUser } from 'interfaces';
+import queryString from 'query-string';
 import React from 'react';
 
 import { Api_User } from './../../models/api/User';
@@ -31,6 +32,16 @@ export const useApiUsers = () => {
         api.post<IPagedItems<Api_User>>(`/admin/users/filter`, params),
       putUser: (user: Api_User) =>
         apiWithToasts.put<Api_User>(`/keycloak/users/${user.guidIdentifierValue}`, user),
+      exportUsers: (filter: IPaginateParams, accept: string) =>
+        api.get<Blob>(
+          `/reports/users?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: accept === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
+            },
+          },
+        ),
     }),
     [api, apiWithToasts],
   );

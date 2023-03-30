@@ -1,6 +1,8 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
+import { FileTabNames } from 'features/mapSideBar/tabs/FileTabs';
+import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
@@ -23,6 +25,8 @@ export interface AcquisitionContainerState {
   selectedMenuIndex: number;
   showConfirmModal: boolean;
   acquisitionFile: Api_AcquisitionFile | undefined;
+  defaultFileTab: FileTabNames;
+  defaultPropertyTab: InventoryTabNames;
 }
 
 const initialState: AcquisitionContainerState = {
@@ -31,11 +35,11 @@ const initialState: AcquisitionContainerState = {
   selectedMenuIndex: 0,
   showConfirmModal: false,
   acquisitionFile: undefined,
+  defaultFileTab: FileTabNames.fileDetails,
+  defaultPropertyTab: InventoryTabNames.property,
 };
 
-export const AcquisitionContainer: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionContainerProps>
-> = props => {
+export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
@@ -47,6 +51,7 @@ export const AcquisitionContainer: React.FunctionComponent<
       execute: retrieveAcquisitionFileProperties,
       loading: loadingAcquisitionFileProperties,
     },
+    getAcquisitionFileChecklist: { execute: retrieveAcquisitionFileChecklist },
   } = useAcquisitionProvider();
 
   const formikRef = useRef<FormikProps<any>>(null);
@@ -67,9 +72,15 @@ export const AcquisitionContainer: React.FunctionComponent<
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
     var retrieved = await retrieveAcquisitionFile(acquisitionFileId);
-    var acquisitionProperties = await retrieveAcquisitionFileProperties(acquisitionFileId);
+    // retrieve related entities (ie properties, checklist items) in parallel
+    const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
+    const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
+    const acquisitionProperties = await acquisitionPropertiesTask;
+    const acquisitionChecklist = await acquisitionChecklistTask;
+
     if (retrieved) {
       retrieved.fileProperties = acquisitionProperties;
+      retrieved.acquisitionFileChecklist = acquisitionChecklist;
     }
 
     setContainerState({ acquisitionFile: retrieved });
@@ -79,6 +90,7 @@ export const AcquisitionContainer: React.FunctionComponent<
     acquisitionFileId,
     retrieveAcquisitionFileProperties,
     retrieveAcquisitionFile,
+    retrieveAcquisitionFileChecklist,
     setFile,
     setStaleFile,
   ]);

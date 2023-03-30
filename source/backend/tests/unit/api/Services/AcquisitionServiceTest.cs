@@ -29,8 +29,7 @@ namespace Pims.Api.Test.Services
     public class AcquisitionServiceTest
     {
         #region Tests
-        #region Add
-        private TestHelper _helper;
+        private readonly TestHelper _helper;
 
         public AcquisitionServiceTest()
         {
@@ -43,6 +42,7 @@ namespace Pims.Api.Test.Services
             return _helper.Create<AcquisitionFileService>(user);
         }
 
+        #region Add
         [Fact]
         public void Add_Success()
         {
@@ -642,7 +642,112 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<BadRequestException>();
         }
 
+        #endregion
 
+        #region Checklist
+        [Fact]
+        public void GetChecklist_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetChecklist_NoPermission()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            // Act
+            Action act = () => service.GetChecklistItems(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void UpdateChecklist_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionChecklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "COMPLT" } };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var fileChecklistRepository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "INCOMP" } });
+
+            // Act
+            service.UpdateChecklistItems(acqFile);
+
+            // Assert
+            fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsAcquisitionChecklistItem>()), Times.Once);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateChecklist_ItemNotFound()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionChecklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 999, AcqChklstItemStatusTypeCode = "COMPLT" } };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var fileChecklistRepository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "INCOMP" } });
+
+            // Act
+            Action act = () => service.UpdateChecklistItems(acqFile);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+
+            fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsAcquisitionChecklistItem>()), Times.Never);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void UpdateChecklist_NoPermission()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
+
+            // Act
+            Action act = () => service.UpdateChecklistItems(acqFile);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Never);
+        }
         #endregion
 
         #endregion

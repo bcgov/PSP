@@ -152,7 +152,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
                 return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
             }
-            catch(BusinessRuleViolationException e)
+            catch (BusinessRuleViolationException e)
             {
                 return Conflict(e.Message);
             }
@@ -188,6 +188,37 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var owners = _acquisitionService.GetOwners(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
+        }
+
+        /// <summary>
+        /// Get the acquisition file checklist.
+        /// </summary>
+        /// <returns>The checklist items.</returns>
+        [HttpGet("{id:long}/checklist")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileChecklistItemModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileChecklist([FromRoute] long id)
+        {
+            var checklist = _acquisitionService.GetChecklistItems(id);
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileChecklistItemModel>>(checklist));
+        }
+
+        /// <summary>
+        /// Update the acquisition file checklist.
+        /// </summary>
+        /// <returns>The updated checklist items.</returns>
+        [HttpPut("{id:long}/checklist")]
+        [HasPermission(Permissions.AcquisitionFileEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult UpdateAcquisitionFileChecklist([FromBody] AcquisitionFileModel acquisitionFileModel)
+        {
+            var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
+            var acquisitionFile = _acquisitionService.UpdateChecklistItems(acquisitionFileEntity);
+            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
         #endregion

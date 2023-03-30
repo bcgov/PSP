@@ -1,7 +1,6 @@
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
 import useIsMounted from 'hooks/useIsMounted';
 import * as React from 'react';
-import styled from 'styled-components';
 
 import TooltipIcon from './TooltipIcon';
 
@@ -11,9 +10,10 @@ export interface IUserNameTooltipProps {
 }
 
 /** Generic user info tooltip component that displays user name on hover */
-export const UserNameTooltip: React.FunctionComponent<
-  React.PropsWithChildren<IUserNameTooltipProps>
-> = ({ userGuid, userName }) => {
+export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = ({
+  userGuid,
+  userName,
+}) => {
   const isMounted = useIsMounted();
   const { getUserInfo } = useApiUsers();
   const [userNameInfo, setUserNameInfo] = React.useState<string>('');
@@ -39,12 +39,7 @@ export const UserNameTooltip: React.FunctionComponent<
       toolTipId={'userNameTooltip'}
       innerClassName={'userNameTooltip'}
       toolTip={userNameInfo}
-      customToolTipIcon={<StyledUserLabel>{userName ?? 'USER'}</StyledUserLabel>}
+      customToolTipIcon={<strong>{userName ?? 'USER'}</strong>}
     ></TooltipIcon>
   );
 };
-
-const StyledUserLabel = styled.span`
-  font-weight: bold;
-  color: ${({ theme }) => theme.css.secondaryVariantColor};
-`;

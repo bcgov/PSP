@@ -36,5 +36,7 @@ namespace Pims.Dal.Repositories
         PimsLease UpdateLeaseImprovements(long leaseId, long rowVersion, ICollection<PimsPropertyImprovement> pimsPropertyImprovements);
 
         PimsLease UpdatePropertyLeases(long leaseId, long rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases, bool userOverride = false);
+
+        PimsLease UpdateLeaseConsultations(long leaseId, long rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations);
     }
 }

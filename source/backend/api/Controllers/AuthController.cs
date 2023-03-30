@@ -75,20 +75,6 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Redirect user to registration page.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("register")]
-        [SwaggerOperation(Tags = new[] { "auth" })]
-        public IActionResult Register(string redirect_uri)
-        {
-            var uri = new UriBuilder($"{_optionsOpenIdConnect.Authority}{_optionsOpenIdConnect.Register}");
-            uri.AppendQuery("client_id", _optionsKeycloak.Client);
-            uri.AppendQuery("redirect_uri", redirect_uri);
-            return Redirect(uri.ToString());
-        }
-
-        /// <summary>
         /// Redirect to the keycloak login page.
         /// </summary>
         /// <returns></returns>

@@ -42,17 +42,29 @@ find ./PSP*/'Alter Up' -type f -iname "*.sql" | sort -n | while read file; do
 	
   if awk "BEGIN {exit !($scriptversion > $currentdbversion)}";
 	then
-      if [ -z "$TARGET_VERSION" ];
-	    then
-          echo "** run sql script: $file";
-	      sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$file" -b -I 
-      else
-	    if awk "BEGIN {exit !($scriptversion <= $TARGET_VERSION)}";
-		  then
-            echo "** run sql script: $file";
-	        sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$file" -b -I 
-		fi
-	  fi
+    if [ -z "$TARGET_VERSION" ];
+    then
+      echo "** run sql script: $file";
+      sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$file" -b -I
+      count=$?
+      if [ $count -ne 0 ]; 
+        then echo "======= SCRIPT ${file} RETURNS AN ERROR. ========="
+        exit 1;
+      else echo "======= SCRIPT ${file} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
+      fi
+    else
+      if awk "BEGIN {exit !($scriptversion <= $TARGET_VERSION)}";
+      then
+        echo "** run sql script: $file";
+        sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$file" -b -I 
+        count=$?
+        if [ $count -ne 0 ]; 
+          then echo "======= SCRIPT ${file} RETURNS AN ERROR. ========="
+          exit 1;
+        else echo "======= SCRIPT ${file} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
+        fi
+      fi
+    fi
   fi
   
 done
