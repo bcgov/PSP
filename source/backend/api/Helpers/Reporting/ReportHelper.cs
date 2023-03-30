@@ -17,7 +17,7 @@ namespace Pims.Api.Helpers.Reporting
         /// <summary>
         /// Generates a CSV file for the specified 'items'.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the passed items.</typeparam>
         /// <param name="items"></param>
         /// <returns></returns>
         public static ContentResult GenerateCsv<T>(IEnumerable<T> items)
@@ -26,7 +26,7 @@ namespace Pims.Api.Helpers.Reporting
             var result = new ContentResult
             {
                 Content = csv,
-                ContentType = ContentTypes.CONTENT_TYPE_CSV,
+                ContentType = ContentTypes.CONTENTTYPECSV,
             };
             return result;
         }
@@ -34,7 +34,7 @@ namespace Pims.Api.Helpers.Reporting
         /// <summary>
         /// Generates an Excel document for the specified 'items'.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the passed items.</typeparam>
         /// <param name="items"></param>
         /// <param name="sheetName"></param>
         /// <returns></returns>
@@ -46,13 +46,13 @@ namespace Pims.Api.Helpers.Reporting
             excel.SaveAs(stream);
             stream.Position = 0;
 
-            return new FileStreamResult(stream, ContentTypes.CONTENT_TYPE_EXCELX);
+            return new FileStreamResult(stream, ContentTypes.CONTENTTYPEEXCELX);
         }
 
         /// <summary>
         /// Generates an Excel document for the specified 'items'.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the items in the array of arrays.</typeparam>
         /// <param name="itemArray"></param>
         /// <param name="sheetName"></param>
         /// <returns></returns>
@@ -71,7 +71,7 @@ namespace Pims.Api.Helpers.Reporting
                 wb.SaveAs(stream);
                 stream.Position = 0;
             }
-            return new FileStreamResult(stream, ContentTypes.CONTENT_TYPE_EXCELX);
+            return new FileStreamResult(stream, ContentTypes.CONTENTTYPEEXCELX);
         }
         #endregion
     }

@@ -34,7 +34,8 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   const [showDeleteConfirm, setShowDeleteConfirm] = React.useState<boolean>(false);
   const [currentNote, setCurrentNote] = React.useState<Api_Note>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [sort, setSort] = React.useState<TableSort<Api_Note>>({});
+  // Notes should display by default in descending order of created date
+  const [sort, setSort] = React.useState<TableSort<Api_Note>>({ appCreateTimestamp: 'desc' });
   const [noteResult, setNoteResult] = React.useState<Api_Note[]>([]);
 
   const [isAddNotesOpened, openAddNotes, closeAddNotes] = useModalManagement();

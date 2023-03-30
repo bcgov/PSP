@@ -144,24 +144,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Inserting contact mail address
             webDriver.FindElement(contactMailAddressLine1Input).SendKeys(mailAddressLine1);
-
             ChooseSpecificSelectOption(contactMailCountrySelect, mailCountry);
-
             webDriver.FindElement(contactMailCityInput).SendKeys(mailCity);
-
             ChooseSpecificSelectOption(contactMailProvinceSelect, mailProvince);
-
             webDriver.FindElement(contactMailPostalCodeInput).SendKeys(mailPostalCode);
 
             //Inserting contact property address
             webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(propertyAddressLine1);
-
             ChooseSpecificSelectOption(contactPropertyCountrySelect, propertyCountry);
-
             webDriver.FindElement(contactPropertyCityInput).SendKeys(propertyCity);
-
             ChooseSpecificSelectOption(contactPropertyProvinceSelect, propertyProvince);
-
             webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(propertyPostalCode);
 
             //Inserting contact billing address
@@ -228,24 +220,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Inserting contact mail address
             webDriver.FindElement(contactMailAddressLine1Input).SendKeys(mailAddressLine1);
-
             ChooseSpecificSelectOption(contactMailCountrySelect, mailCountry);
-
             webDriver.FindElement(contactMailCityInput).SendKeys(mailCity);
-
             ChooseSpecificSelectOption(contactMailProvinceSelect, mailProvince);
-
             webDriver.FindElement(contactMailPostalCodeInput).SendKeys(mailPostalCode);
 
             //Inserting property mail address
             webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(propertyAddressLine1);
-
             ChooseSpecificSelectOption(contactPropertyCountrySelect, propertyCountry);
-
             webDriver.FindElement(contactPropertyCityInput).SendKeys(propertyCity);
-            
             ChooseSpecificSelectOption(contactPropertyProvinceSelect, propertyProvince);
-
             webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(propertyPostalCode);
 
             //Inserting billing mail address

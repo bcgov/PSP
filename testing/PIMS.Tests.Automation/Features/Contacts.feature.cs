@@ -222,14 +222,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Search for an Existing Contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update an Existing Individual Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "Search for an Existing Contact")]
-        public void SearchForAnExistingContact()
+        [Xunit.TraitAttribute("Description", "Update an Existing Individual Contact")]
+        public void UpdateAnExistingIndividualContact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search for an Existing Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an Existing Individual Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -241,9 +241,37 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 27
- testRunner.Given("I search for an existing contact Lee", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I update an existing Individual Contact", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 28
+ testRunner.Then("A new Individual contact is successfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Search for an Existing Contact")]
+        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
+        [Xunit.TraitAttribute("Description", "Search for an Existing Contact")]
+        public void SearchForAnExistingContact()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search for an Existing Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 31
+ testRunner.Given("I search for an existing contact Lee", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 32
  testRunner.Then("Search Contacts screen is correctly rendered", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -258,7 +286,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search for a non-existing Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 30
+#line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -268,10 +296,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 31
+#line 35
  testRunner.Given("I search for an non-existing contact", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 32
+#line 36
  testRunner.Then("No contacts results are found", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

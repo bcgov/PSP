@@ -138,7 +138,7 @@ namespace Pims.Api.Services
         {
             IEnumerable<PimsLeaseTerm> terms = _leaseTermRepository.GetAllByLeaseId(term.LeaseId);
 
-            return terms.Any(t => t.Internal_Id != term.Internal_Id && (t.TermExpiryDate >= term.TermStartDate && t.TermStartDate <= term.TermStartDate
+            return terms.Any(t => t.Internal_Id != term.Internal_Id && ((t.TermExpiryDate >= term.TermStartDate && t.TermStartDate <= term.TermStartDate)
                 || (t.TermExpiryDate == null && t.TermStartDate <= term.TermStartDate)
                 || (term.TermExpiryDate == null && t.TermStartDate >= term.TermStartDate)));
         }

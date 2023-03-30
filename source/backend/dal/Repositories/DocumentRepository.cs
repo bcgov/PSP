@@ -106,6 +106,8 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsActivityTemplateDocuments)
                 .Include(d => d.PimsResearchFileDocuments)
                 .Include(d => d.PimsAcquisitionFileDocuments)
+                .Include(d => d.PimsProjectDocuments)
+                .Include(d => d.PimsLeaseDocuments)
                 .Where(d => d.DocumentId == document.Internal_Id)
                 .AsNoTracking()
                 .FirstOrDefault();
@@ -118,6 +120,16 @@ namespace Pims.Dal.Repositories
             foreach (var pimsAcquisitionFileDocument in documentToDelete.PimsAcquisitionFileDocuments)
             {
                 this.Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { Internal_Id = pimsAcquisitionFileDocument.Internal_Id });
+            }
+
+            foreach (var pimsProjectDocument in documentToDelete.PimsProjectDocuments)
+            {
+                this.Context.PimsProjectDocuments.Remove(new PimsProjectDocument() { Internal_Id = pimsProjectDocument.Internal_Id });
+            }
+
+            foreach (var pimsLeaseDocument in documentToDelete.PimsLeaseDocuments)
+            {
+                this.Context.PimsLeaseDocuments.Remove(new PimsLeaseDocument() { Internal_Id = pimsLeaseDocument.Internal_Id });
             }
 
             foreach (var pimsActivityInstanceDocument in documentToDelete.PimsActivityInstanceDocuments)
@@ -143,6 +155,27 @@ namespace Pims.Dal.Repositories
                 .Where(d => d.DocumentType.DocumentType == documentType)
                 .AsNoTracking()
                 .ToList();
+        }
+
+        public int DocumentRelationshipCount(long documentId)
+        {
+            var documentRelationships = this.Context.PimsDocuments.AsNoTracking()
+                .Include(d => d.PimsActivityInstanceDocuments)
+                .Include(d => d.PimsActivityTemplateDocuments)
+                .Include(d => d.PimsResearchFileDocuments)
+                .Include(d => d.PimsAcquisitionFileDocuments)
+                .Include(d => d.PimsProjectDocuments)
+                .Include(d => d.PimsLeaseDocuments)
+                .Where(d => d.DocumentId == documentId)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+            return documentRelationships.PimsResearchFileDocuments.Count +
+                    documentRelationships.PimsAcquisitionFileDocuments.Count +
+                    documentRelationships.PimsProjectDocuments.Count +
+                    documentRelationships.PimsActivityInstanceDocuments.Count +
+                    documentRelationships.PimsActivityTemplateDocuments.Count +
+                    documentRelationships.PimsLeaseDocuments.Count;
         }
 
         #endregion

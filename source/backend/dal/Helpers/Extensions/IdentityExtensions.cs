@@ -214,50 +214,6 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Throw exception if the 'user' is not allowed to edit the specified entity.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="paramName"></param>
-        /// <param name="entity"></param>
-        /// <param name="permission"></param>
-        /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
-        /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
-        /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions permission, string message = null)
-            where T : class, IBaseEntity
-        {
-            entity.ThrowIfNull(paramName);
-            user.ThrowIfNotAuthorized(permission, message);
-
-            return entity;
-        }
-
-        /// <summary>
-        /// Throw exception if the 'user' is not allowed to edit the specified entity.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="paramName"></param>
-        /// <param name="entity"></param>
-        /// <param name="permission"></param>
-        /// <param name="message"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
-        /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
-        /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions[] permission, string message = null)
-            where T : class, IBaseEntity
-        {
-            entity.ThrowIfNull(paramName);
-            user.ThrowIfNotAuthorized(permission, message);
-
-            return entity;
-        }
-
-        /// <summary>
         /// A user is supposed to only belong to one child organization or one parent organization.
         /// While in Keycloak these rules can be broken, we have to assume the first parent organization, or the first child organization is the user's primary.
         /// </summary>

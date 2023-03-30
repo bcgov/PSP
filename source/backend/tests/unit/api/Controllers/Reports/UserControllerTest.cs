@@ -70,7 +70,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Csv_Success(UserFilter filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
@@ -84,7 +84,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPECSV, actionResult.ContentType);
             _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
@@ -95,7 +95,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Csv_Query_Success()
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
@@ -109,7 +109,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Assert
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPECSV, actionResult.ContentType);
             _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
@@ -121,7 +121,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Excel_Success(UserFilter filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
@@ -134,7 +134,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
@@ -148,7 +148,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_Excel_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
@@ -161,7 +161,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
@@ -175,7 +175,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_ExcelX_Success(UserFilter filter)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
@@ -188,7 +188,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
@@ -202,7 +202,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public void ExportUsers_ExcelX_Query_Success(Uri uri)
         {
             // Arrange
-            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
@@ -215,7 +215,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             _repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());

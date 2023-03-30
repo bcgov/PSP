@@ -10,7 +10,10 @@ export const UpdateAcquisitionOwnersYupSchema = Yup.object().shape({
       ),
       lastNameOrCorp2: Yup.string().max(300, 'Other name must be at most ${max} characters'),
       givenName: Yup.string().max(300, 'Given name must be at most ${max} characters'),
-      incorporationNumber: Yup.string().max(50, 'Given name must be at most ${max} characters'),
+      incorporationNumber: Yup.string().max(
+        50,
+        'Incorporation number must be at most ${max} characters',
+      ),
       address: Yup.object().shape({
         streetAddress1: Yup.string().max(200, 'Address (line 1) must be at most ${max} characters'),
         streetAddress2: Yup.string().max(200, 'Address (line 2) be at most ${max} characters'),

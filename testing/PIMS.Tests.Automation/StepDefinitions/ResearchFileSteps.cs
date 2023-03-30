@@ -127,6 +127,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ClosePropertyInfoModal();
 
             //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Research File - Create new");
 
             //Fill basic Research File information
