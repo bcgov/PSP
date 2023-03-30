@@ -126,6 +126,37 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetAllDocuments_Lease_Success()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.LeaseView);
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+
+            leaseRepository.Setup(x => x.GetAllLeaseDocuments(It.IsAny<long>())).Returns(new List<PimsLeaseDocument>());
+
+            // Act
+            var sut = service.GetFileDocuments<PimsLeaseDocument>(Constants.FileType.Lease, 1);
+
+            // Assert
+            leaseRepository.Verify(x => x.GetAllLeaseDocuments(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPimsDocumentTypes_Lease_NotAuthorized()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions();
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+
+            // Act
+            Action sut = () => service.GetFileDocuments<PimsLeaseDocument>(Constants.FileType.Lease, 1);
+
+            // Assert
+            sut.Should().Throw<NotAuthorizedException>();
+            leaseRepository.Verify(x => x.GetAllLeaseDocuments(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
         public void GetPimsDocumentTypes_Project_NotAuthorized()
         {
             // Arrange
@@ -158,39 +189,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Research_Sucess()
-        {
-            // Arrange
-            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
-            var documentService = _helper.GetService<Mock<IDocumentService>>();
-            var researchFileDocumentRepository = _helper.GetService<Mock<IResearchFileDocumentRepository>>();
-
-            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
-                .ReturnsAsync(new DocumentUploadResponse()
-                {
-                    Document = new DocumentModel()
-                    {
-                        Id = 1,
-                    }
-                });
-
-            // Act
-            DocumentUploadRequest uploadRequest = new()
-            {
-                DocumentTypeMayanId = 3,
-                DocumentTypeId = 4,
-                File = _helper.GetFormFile(string.Empty),
-                DocumentStatusCode = "DocumentStatus",
-            };
-
-            await service.UploadResearchDocumentAsync(1, uploadRequest);
-
-            // Assert
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-            researchFileDocumentRepository.Verify(x => x.AddResearch(It.IsAny<PimsResearchFileDocument>()));
-        }
-
-        [Fact]
         public void UploadDocumentAsync_Acquisition_ShouldThrowException_NotAuthorized()
         {
             // Arrange
@@ -208,39 +206,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Acquisition_Sucess()
-        {
-            // Arrange
-            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
-            var documentService = _helper.GetService<Mock<IDocumentService>>();
-            var acquisitionFileDocumentRepository = _helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
-
-            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
-                .ReturnsAsync(new DocumentUploadResponse()
-                {
-                    Document = new DocumentModel()
-                    {
-                        Id = 1,
-                    }
-                });
-
-            // Act
-            DocumentUploadRequest uploadRequest = new()
-            {
-                DocumentTypeMayanId = 3,
-                DocumentTypeId = 4,
-                File = _helper.GetFormFile(string.Empty),
-                DocumentStatusCode = "DocumentStatus",
-            };
-
-            await service.UploadAcquisitionDocumentAsync(1, uploadRequest);
-
-            // Assert
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-            acquisitionFileDocumentRepository.Verify(x => x.AddAcquisition(It.IsAny<PimsAcquisitionFileDocument>()));
-        }
-
-        [Fact]
         public void UploadDocumentAsync_Project_ShouldThrowException_NotAuthorized()
         {
             // Arrange
@@ -251,6 +216,23 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Func<Task> sut = async () => await service.UploadProjectDocumentAsync(1, uploadRequest);
+
+            // Assert
+            sut.Should().Throw<NotAuthorizedException>();
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+        }
+
+        [Fact]
+        public void UploadDocumentAsync_Lease_ShouldThrowException_NotAuthorized()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions();
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = _helper.GetFormFile(string.Empty) };
+
+            // Assert
+            Func<Task> sut = async () => await service.UploadLeaseDocumentAsync(1, uploadRequest);
 
             // Assert
             sut.Should().Throw<NotAuthorizedException>();
@@ -288,6 +270,105 @@ namespace Pims.Api.Test.Services
             // Assert
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
             projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()));
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Acquisition_Sucess()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var acquisitionFileDocumentRepository = _helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
+
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
+                .ReturnsAsync(new DocumentUploadResponse()
+                {
+                    Document = new DocumentModel()
+                    {
+                        Id = 1,
+                    }
+                });
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = _helper.GetFormFile(string.Empty),
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            await service.UploadAcquisitionDocumentAsync(1, uploadRequest);
+
+            // Assert
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
+            acquisitionFileDocumentRepository.Verify(x => x.AddAcquisition(It.IsAny<PimsAcquisitionFileDocument>()));
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Research_Sucess()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var researchFileDocumentRepository = _helper.GetService<Mock<IResearchFileDocumentRepository>>();
+
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
+                .ReturnsAsync(new DocumentUploadResponse()
+                {
+                    Document = new DocumentModel()
+                    {
+                        Id = 1,
+                    }
+                });
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = _helper.GetFormFile(string.Empty),
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            await service.UploadResearchDocumentAsync(1, uploadRequest);
+
+            // Assert
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
+            researchFileDocumentRepository.Verify(x => x.AddResearch(It.IsAny<PimsResearchFileDocument>()));
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Lease_Sucess()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
+                .ReturnsAsync(new DocumentUploadResponse()
+                {
+                    Document = new DocumentModel()
+                    {
+                        Id = 1,
+                    }
+                });
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = _helper.GetFormFile(string.Empty),
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            await service.UploadLeaseDocumentAsync(1, uploadRequest);
+
+            // Assert
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
+            leaseRepository.Verify(x => x.AddLeaseDocument(It.IsAny<PimsLeaseDocument>()));
         }
 
         [Fact]
@@ -601,6 +682,109 @@ namespace Pims.Api.Test.Services
 
             // Assert
             projectRepository.Verify(x => x.DeleteProjectDocument(It.Is<long>(x => x == 1)), Times.Once);
+        }
+
+        [Fact]
+        public void Delete_LeaseDocument_ShouldThrowException_NotAuthorized()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions();
+
+            PimsLeaseDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            Func<Task> act = async () => await service.DeleteLeaseDocumentAsync(doc);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public async void Delete_LeaseDocument_Success_Status_Success()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
+
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResult<string>()
+                {
+                    Status = ExternalResultStatus.Success,
+                });
+
+            PimsLeaseDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteLeaseDocumentAsync(doc);
+
+            // Assert
+            documentService.Verify(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()), Times.Once);
+        }
+
+        [Fact]
+        public async void Delete_LeaseDocument_Success_Status_NotFound()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var documentRepository = _helper.GetService<Mock<IDocumentRepository>>();
+
+            documentRepository.Setup(x => x.DocumentRelationshipCount(It.IsAny<long>())).Returns(1);
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResult<string>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.NotFound,
+                });
+
+            PimsLeaseDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteLeaseDocumentAsync(doc);
+
+            // Assert
+            documentService.Verify(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()), Times.Once);
+        }
+
+        [Fact]
+        public async void Delete_LeaseDocument_Success_NoResults_Status_NotFound()
+        {
+            // Arrange
+            var service = CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete);
+            var documentService = _helper.GetService<Mock<IDocumentService>>();
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+
+            leaseRepository.Setup(x => x.GetAllLeaseDocuments(It.IsAny<long>())).Returns(new List<PimsLeaseDocument>());
+            documentService.Setup(x => x.DeleteDocumentAsync(It.IsAny<PimsDocument>()))
+                .ReturnsAsync(new ExternalResult<string>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.NotFound,
+                });
+
+            PimsLeaseDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+            };
+
+            // Act
+            await service.DeleteLeaseDocumentAsync(doc);
+
+            // Assert
+            leaseRepository.Verify(x => x.DeleteLeaseDocument(It.Is<long>(x => x == 1)), Times.Once);
         }
     }
 }

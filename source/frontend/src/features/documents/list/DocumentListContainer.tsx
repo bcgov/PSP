@@ -1,15 +1,11 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { SideBarContext } from 'features/properties/map/context/sidebarContext';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentRelationship } from 'models/api/Document';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { getPage } from 'utils';
 
 import { DocumentRow } from '../ComposedDocument';
-import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentListView from './DocumentListView';
 
@@ -41,8 +37,6 @@ const DocumentListContainer: React.FunctionComponent<
     deleteDocumentRelationship,
   } = useDocumentRelationshipProvider();
 
-  const { retrieveDocumentDetail } = useDocumentProvider();
-
   const retrieveDocuments = useCallback(async () => {
     const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
     if (documents !== undefined && isMounted()) {
@@ -57,32 +51,6 @@ const DocumentListContainer: React.FunctionComponent<
   useEffect(() => {
     retrieveDocuments();
   }, [retrieveDocuments]);
-
-  useDeepCompareEffect(() => {
-    const getDetails = async () => {
-      const currentPage = getPage<DocumentRow>(
-        pageProps.pageIndex ?? 0,
-        pageProps.pageSize,
-        documentResults,
-      );
-      const newDocumentResults = [...currentPage];
-      let updated = false;
-      await newDocumentResults.forEach(async (d, index) => {
-        if (d?.mayanDocumentId && d?.isFileAvailable === undefined) {
-          updated = true;
-          const detail = await retrieveDocumentDetail(d.mayanDocumentId);
-          const matchingResult = documentResults.find(dr => dr.id === d.id);
-          if (matchingResult && detail?.status === ExternalResultStatus.Success) {
-            matchingResult.isFileAvailable = !!detail.payload.file_latest?.id;
-          }
-        }
-      });
-      if (updated) {
-        setDocumentResults([...documentResults]);
-      }
-    };
-    getDetails();
-  }, [retrieveDocumentDetail, documentResults, pageProps]);
 
   useEffect(() => {
     if (staleFile) {

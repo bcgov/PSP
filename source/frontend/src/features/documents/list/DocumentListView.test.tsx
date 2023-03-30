@@ -152,11 +152,11 @@ describe('Document List View', () => {
     await act(async () => expect(downloadButtonTooltip[0]).toBeInTheDocument());
   });
 
-  it('should display the download icon if download is available', async () => {
+  it('should not display the download icon on the listview', async () => {
     mockAxios.onGet().reply(200, mockDocumentDetailResponse());
     const documentRows = mockDocumentRowResponse();
     documentRows[0].isFileAvailable = true;
-    const { findByTestId } = setup({
+    const { queryByTestId } = setup({
       hideFilters: false,
       isLoading: false,
       parentId: '0',
@@ -168,8 +168,8 @@ describe('Document List View', () => {
       onPageChange,
       pageProps: { pageSize: 10, pageIndex: 0 },
     });
-    const downloadButtonTooltip = await findByTestId('document-download-button');
-    await act(async () => expect(downloadButtonTooltip).toBeInTheDocument());
+    const downloadButtonTooltip = await queryByTestId('document-download-button');
+    await act(async () => expect(downloadButtonTooltip).toBeNull());
   });
 
   it('should call on delete for a document when the document id does not equal the document relationship id', async () => {

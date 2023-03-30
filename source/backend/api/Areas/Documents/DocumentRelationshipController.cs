@@ -28,7 +28,6 @@ namespace Pims.Api.Controllers
         private readonly IFormDocumentService _formDocumentService;
         private readonly IDocumentActivityService _documentActivityService;
         private readonly IDocumentFileService _documentFileService;
-        private readonly IDocumentLeaseService _documentLeaseService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -38,19 +37,16 @@ namespace Pims.Api.Controllers
         /// Creates a new instance of a DocumentRelationshipController class.
         /// </summary>
         /// <param name="documentActivityService"></param>
-        /// <param name="documentLeaseService"></param>
         /// <param name="documentFileService"></param>
         /// <param name="formDocumentService"></param>
         /// <param name="mapper"></param>
         public DocumentRelationshipController(
             IDocumentActivityService documentActivityService,
-            IDocumentLeaseService documentLeaseService,
             IDocumentFileService documentFileService,
             IFormDocumentService formDocumentService,
             IMapper mapper)
         {
             _documentActivityService = documentActivityService;
-            _documentLeaseService = documentLeaseService;
             _documentFileService = documentFileService;
             _formDocumentService = formDocumentService;
             _mapper = mapper;
@@ -99,7 +95,7 @@ namespace Pims.Api.Controllers
                     var mappedTemplateDocuments = _mapper.Map<List<DocumentRelationshipModel>>(templateDocuments);
                     return new JsonResult(mappedTemplateDocuments);
                 case DocumentRelationType.Leases:
-                    var leaseDocuments = _documentLeaseService.GetLeaseDocuments(long.Parse(parentId));
+                    var leaseDocuments = _documentFileService.GetFileDocuments<PimsLeaseDocument>(FileType.Lease, long.Parse(parentId));
                     var mappedLeaseDocuments = _mapper.Map<List<DocumentRelationshipModel>>(leaseDocuments);
                     return new JsonResult(mappedLeaseDocuments);
                 case DocumentRelationType.Projects:
@@ -135,7 +131,7 @@ namespace Pims.Api.Controllers
                 DocumentRelationType.Activities => await _documentActivityService.UploadActivityDocumentAsync(long.Parse(parentId), uploadRequest),
                 DocumentRelationType.Templates => await _formDocumentService.UploadFormDocumentTemplateAsync(parentId, uploadRequest),
                 DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(long.Parse(parentId), uploadRequest),
-                DocumentRelationType.Leases => await _documentLeaseService.UploadLeaseDocumentAsync(long.Parse(parentId), uploadRequest),
+                DocumentRelationType.Leases => await _documentFileService.UploadLeaseDocumentAsync(long.Parse(parentId), uploadRequest),
                 _ => throw new BadRequestException("Relationship type not valid for upload."),
             };
 
@@ -174,8 +170,8 @@ namespace Pims.Api.Controllers
                     var templateResult = await _formDocumentService.DeleteFormDocumentTemplateAsync(formTypeRelationship);
                     return new JsonResult(templateResult);
                 case DocumentRelationType.Leases:
-                    var leaseRelationship = _mapper.Map<PimsActivityInstanceDocument>(model);
-                    var leaseResult = await _documentLeaseService.DeleteLeaseDocumentAsync(leaseRelationship);
+                    var leaseRelationship = _mapper.Map<PimsLeaseDocument>(model);
+                    var leaseResult = await _documentFileService.DeleteLeaseDocumentAsync(leaseRelationship);
                     return new JsonResult(leaseResult);
                 case DocumentRelationType.Projects:
                     var projectRelationship = _mapper.Map<PimsProjectDocument>(model);
