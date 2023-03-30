@@ -18,8 +18,8 @@ const mockApi = {
   execute: jest.fn(),
   loading: false,
 };
-jest.mock('hooks/repositories/useFormRepository', () => ({
-  useFormRepository: () => ({
+jest.mock('hooks/repositories/useFormDocumentRepository', () => ({
+  useFormDocumentRepository: () => ({
     addFilesForm: mockApi,
   }),
 }));
@@ -74,7 +74,12 @@ describe(' form list view container', () => {
 
     expect(mockApi.execute).toHaveBeenCalledWith('acquisition', {
       fileId: 0,
-      formTypeCode: { id: 'h120' },
+      formDocumentType: {
+        description: '',
+        displayOrder: null,
+        documentId: null,
+        formTypeCode: 'h120',
+      },
     });
   });
 });

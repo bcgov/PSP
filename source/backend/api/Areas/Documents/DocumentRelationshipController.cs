@@ -25,6 +25,7 @@ namespace Pims.Api.Controllers
     public class DocumentRelationshipController : ControllerBase
     {
         #region Variables
+        private readonly IFormDocumentService _formDocumentService;
         private readonly IDocumentActivityService _documentActivityService;
         private readonly IDocumentFileService _documentFileService;
         private readonly IMapper _mapper;
@@ -37,14 +38,17 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="documentActivityService"></param>
         /// <param name="documentFileService"></param>
+        /// <param name="formDocumentService"></param>
         /// <param name="mapper"></param>
         public DocumentRelationshipController(
             IDocumentActivityService documentActivityService,
             IDocumentFileService documentFileService,
+            IFormDocumentService formDocumentService,
             IMapper mapper)
         {
             _documentActivityService = documentActivityService;
             _documentFileService = documentFileService;
+            _formDocumentService = formDocumentService;
             _mapper = mapper;
         }
         #endregion
@@ -57,45 +61,45 @@ namespace Pims.Api.Controllers
         /// <param name="relationshipType">Used to identify document type.</param>
         /// <param name="parentId">Used to identify document's parent entity.</param>
         /// <returns></returns>
-        [HttpGet("{relationshipType}/{parentId:long}")]
+        [HttpGet("{relationshipType}/{parentId}")]
         [Produces("application/json")]
         [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(IList<DocumentRelationshipModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document" })]
-        public IActionResult GetRelationshipDocuments(DocumentRelationType relationshipType, long parentId)
+        public IActionResult GetRelationshipDocuments(DocumentRelationType relationshipType, string parentId)
         {
             switch (relationshipType)
             {
                 case DocumentRelationType.ResearchFileActivities:
-                    var researchActivityDocuments = _documentActivityService.GetFileActivityDocuments(FileType.Research, parentId);
+                    var researchActivityDocuments = _documentActivityService.GetFileActivityDocuments(FileType.Research, long.Parse(parentId));
                     var mappedResearchFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(researchActivityDocuments);
                     return new JsonResult(mappedResearchFileActivityDocuments);
                 case DocumentRelationType.AcquisitionFileActivities:
-                    var aquistionFileActivityDocuments = _documentActivityService.GetFileActivityDocuments(FileType.Acquisition, parentId);
+                    var aquistionFileActivityDocuments = _documentActivityService.GetFileActivityDocuments(FileType.Acquisition, long.Parse(parentId));
                     var mappedAquisitionFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(aquistionFileActivityDocuments);
                     return new JsonResult(mappedAquisitionFileActivityDocuments);
                 case DocumentRelationType.ResearchFiles:
-                    var researchFileDocuments = _documentFileService.GetFileDocuments<PimsResearchFileDocument>(FileType.Research, parentId);
+                    var researchFileDocuments = _documentFileService.GetFileDocuments<PimsResearchFileDocument>(FileType.Research, long.Parse(parentId));
                     var mappedResearchFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(researchFileDocuments);
                     return new JsonResult(mappedResearchFileDocuments);
                 case DocumentRelationType.AcquisitionFiles:
-                    var acquistionFileDocuments = _documentFileService.GetFileDocuments<PimsAcquisitionFileDocument>(FileType.Acquisition, parentId);
+                    var acquistionFileDocuments = _documentFileService.GetFileDocuments<PimsAcquisitionFileDocument>(FileType.Acquisition, long.Parse(parentId));
                     var mappedAquisitionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(acquistionFileDocuments);
                     return new JsonResult(mappedAquisitionFileDocuments);
                 case DocumentRelationType.Activities:
-                    var activityDocuments = _documentActivityService.GetActivityDocuments(parentId);
+                    var activityDocuments = _documentActivityService.GetActivityDocuments(long.Parse(parentId));
                     var mappedActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(activityDocuments);
                     return new JsonResult(mappedActivityDocuments);
                 case DocumentRelationType.Templates:
-                    var templateDocuments = _documentActivityService.GetActivityTemplateDocuments(parentId);
+                    var templateDocuments = _formDocumentService.GetFormDocumentTypes(parentId);
                     var mappedTemplateDocuments = _mapper.Map<List<DocumentRelationshipModel>>(templateDocuments);
                     return new JsonResult(mappedTemplateDocuments);
                 case DocumentRelationType.Leases:
-                    var leaseDocuments = _documentFileService.GetFileDocuments<PimsLeaseDocument>(FileType.Lease, parentId);
+                    var leaseDocuments = _documentFileService.GetFileDocuments<PimsLeaseDocument>(FileType.Lease, long.Parse(parentId));
                     var mappedLeaseDocuments = _mapper.Map<List<DocumentRelationshipModel>>(leaseDocuments);
                     return new JsonResult(mappedLeaseDocuments);
                 case DocumentRelationType.Projects:
-                    var projectDocuments = _documentFileService.GetFileDocuments<PimsProjectDocument>(FileType.Project, parentId);
+                    var projectDocuments = _documentFileService.GetFileDocuments<PimsProjectDocument>(FileType.Project, long.Parse(parentId));
                     var mappedProjectDocuments = _mapper.Map<List<DocumentRelationshipModel>>(projectDocuments);
                     return new JsonResult(mappedProjectDocuments);
                 default:
@@ -110,24 +114,24 @@ namespace Pims.Api.Controllers
         /// <param name="parentId">Used to identify document's parent entity.</param>
         /// <param name="uploadRequest">Contains information about the file to upload.</param>
         /// <returns></returns>
-        [HttpPost("upload/{relationshipType}/{parentId:long}")]
+        [HttpPost("upload/{relationshipType}/{parentId}")]
         [Produces("application/json")]
         [HasPermission(Permissions.DocumentAdd)]
         [ProducesResponseType(typeof(DocumentUploadResponse), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public async Task<IActionResult> UploadDocumentWithParent(
             DocumentRelationType relationshipType,
-            long parentId,
+            string parentId,
             [FromForm] DocumentUploadRequest uploadRequest)
         {
             var response = relationshipType switch
             {
-                DocumentRelationType.AcquisitionFiles => await _documentFileService.UploadAcquisitionDocumentAsync(parentId, uploadRequest),
-                DocumentRelationType.ResearchFiles => await _documentFileService.UploadResearchDocumentAsync(parentId, uploadRequest),
-                DocumentRelationType.Activities => await _documentActivityService.UploadActivityDocumentAsync(parentId, uploadRequest),
-                DocumentRelationType.Templates => await _documentActivityService.UploadActivityTemplateDocumentAsync(parentId, uploadRequest),
-                DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(parentId, uploadRequest),
-                DocumentRelationType.Leases => await _documentFileService.UploadLeaseDocumentAsync(parentId, uploadRequest),
+                DocumentRelationType.AcquisitionFiles => await _documentFileService.UploadAcquisitionDocumentAsync(long.Parse(parentId), uploadRequest),
+                DocumentRelationType.ResearchFiles => await _documentFileService.UploadResearchDocumentAsync(long.Parse(parentId), uploadRequest),
+                DocumentRelationType.Activities => await _documentActivityService.UploadActivityDocumentAsync(long.Parse(parentId), uploadRequest),
+                DocumentRelationType.Templates => await _formDocumentService.UploadFormDocumentTemplateAsync(parentId, uploadRequest),
+                DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(long.Parse(parentId), uploadRequest),
+                DocumentRelationType.Leases => await _documentFileService.UploadLeaseDocumentAsync(long.Parse(parentId), uploadRequest),
                 _ => throw new BadRequestException("Relationship type not valid for upload."),
             };
 
@@ -162,8 +166,8 @@ namespace Pims.Api.Controllers
                     var researchResult = await _documentFileService.DeleteResearchDocumentAsync(researchRelationship);
                     return new JsonResult(researchResult);
                 case DocumentRelationType.Templates:
-                    var templateRelationship = _mapper.Map<PimsActivityTemplateDocument>(model);
-                    var templateResult = await _documentActivityService.DeleteActivityTemplateDocumentAsync(templateRelationship);
+                    var formTypeRelationship = _mapper.Map<PimsFormType>(model);
+                    var templateResult = await _formDocumentService.DeleteFormDocumentTemplateAsync(formTypeRelationship);
                     return new JsonResult(templateResult);
                 case DocumentRelationType.Leases:
                     var leaseRelationship = _mapper.Map<PimsLeaseDocument>(model);

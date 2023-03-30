@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Id of the other entity in the relationship (i.e. activity-id, file-id, etc).
         /// </summary>
-        public long ParentId { get; set; }
+        public string ParentId { get; set; }
 
         /// <summary>
         /// get/set - True if disabled.

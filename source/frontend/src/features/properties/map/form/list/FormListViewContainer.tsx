@@ -1,7 +1,7 @@
 import { FileTypes } from 'constants/fileTypes';
-import { useFormRepository } from 'hooks/repositories/useFormRepository';
+import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import { IActivityFilter } from 'interfaces/IActivityResults';
-import { Api_FileForm } from 'models/api/Form';
+import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import React from 'react';
 
 import { IFormListViewProps } from './FormListView';
@@ -21,13 +21,16 @@ export const FormListViewContainer: React.FunctionComponent<
 > = ({ fileId, defaultFilters, fileType, View }: IFormListViewContainerProps) => {
   const {
     addFilesForm: { execute: addForm },
-  } = useFormRepository();
+  } = useFormDocumentRepository();
 
-  const saveForm = (formTypeId: string) => {
-    const fileForm: Api_FileForm = {
+  const saveForm = (formTypeCode: string) => {
+    const fileForm: Api_FormDocumentFile = {
       fileId: fileId,
-      formTypeCode: {
-        id: formTypeId,
+      formDocumentType: {
+        formTypeCode: formTypeCode,
+        description: '',
+        displayOrder: null,
+        documentId: null,
       },
     };
     addForm(FileTypes.Acquisition, fileForm);

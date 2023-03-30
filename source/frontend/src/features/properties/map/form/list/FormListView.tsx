@@ -19,8 +19,8 @@ export const FormListView: React.FunctionComponent<IFormListViewProps> = ({ save
     <Section>
       {hasClaim(Claims.FORM_ADD) && (
         <AddForm
-          onAddForm={(formTypeId: string) => {
-            saveForm(formTypeId);
+          onAddForm={(formTypeCode: string) => {
+            saveForm(formTypeCode);
           }}
           templateTypes={formTypes}
         ></AddForm>

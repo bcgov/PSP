@@ -402,7 +402,7 @@ namespace Pims.Api
             services.AddScoped<IFinancialCodeService, FinancialCodeService>();
             services.AddScoped<IDocumentFileService, DocumentFileService>();
             services.AddScoped<ITakeService, TakeService>();
-            services.AddScoped<IFormService, FormService>();
+            services.AddScoped<IFormDocumentService, FormDocumentService>();
         }
 
         /// <summary>

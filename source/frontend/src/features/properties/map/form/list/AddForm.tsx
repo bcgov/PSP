@@ -4,26 +4,26 @@ import { Formik } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 
 export interface IAddFormProps {
-  onAddForm: (formTypeId: string) => void;
+  onAddForm: (formTypeCode: string) => void;
   templateTypes: SelectOption[];
 }
 
 export interface IAddForm {
-  formTypeId: string;
+  formTypeCode: string;
 }
 
 export function AddForm(props: IAddFormProps) {
   const { onAddForm, templateTypes } = props;
 
   const addForm = (values: IAddForm) => {
-    onAddForm(values.formTypeId);
+    onAddForm(values.formTypeCode);
   };
 
   return (
     <Formik<IAddForm>
       enableReinitialize
-      initialValues={{ formTypeId: '' }}
-      onSubmit={(values: IAddForm, { setSubmitting }: any) => {
+      initialValues={{ formTypeCode: '' }}
+      onSubmit={(values: IAddForm, { setSubmitting }) => {
         addForm(values);
         setSubmitting(false);
       }}
@@ -33,7 +33,7 @@ export function AddForm(props: IAddFormProps) {
           <Col md={10}>
             <Select
               data-testid="add-form-type"
-              field="formTypeId"
+              field="formTypeCode"
               placeholder="Create new document from a template"
               options={templateTypes}
             />
@@ -47,7 +47,7 @@ export function AddForm(props: IAddFormProps) {
               onClick={() => {
                 formikProps.submitForm();
               }}
-              disabled={!formikProps.values.formTypeId}
+              disabled={!formikProps.values.formTypeCode}
             ></PlusButton>
           </Col>
         </Row>

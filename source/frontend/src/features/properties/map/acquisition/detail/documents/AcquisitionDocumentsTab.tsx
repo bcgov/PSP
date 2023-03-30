@@ -17,13 +17,13 @@ const AcquisitionDocumentsTab: React.FunctionComponent<IAcquisitionDocumentsTabP
     <>
       <DocumentListContainer
         title="File Documents"
-        parentId={acquisitionFileId}
+        parentId={acquisitionFileId.toString()}
         relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
       />
       {hasClaim(Claims.ACTIVITY_VIEW) && (
         <DocumentListContainer
           title="Activity Documents"
-          parentId={acquisitionFileId}
+          parentId={acquisitionFileId.toString()}
           relationshipType={DocumentRelationshipType.ACQUISITION_FILE_ACTIVITIES}
           disableAdd
         />
