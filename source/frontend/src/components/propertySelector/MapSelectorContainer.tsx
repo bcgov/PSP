@@ -71,9 +71,10 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
       {activeSelectorTab === SelectorTabNames.list ? (
         <Button
           variant="secondary"
-          onClick={() =>
-            addProperties(searchSelectedProperties, modifiedMapProperties, addSelectedProperties)
-          }
+          onClick={() => {
+            addProperties(searchSelectedProperties, modifiedMapProperties, addSelectedProperties);
+            setSearchSelectedProperties([]);
+          }}
         >
           Add to selection
         </Button>
