@@ -1,4 +1,4 @@
-import { useActivityRepository } from 'features/properties/map/activity/hooks/useActivityRepository';
+import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import { useState } from 'react';
 
 import DocumentTemplateManagementView from './DocumentTemplateManagementView';
@@ -6,17 +6,19 @@ import DocumentTemplateManagementView from './DocumentTemplateManagementView';
 export const DocumentTemplateManagementContainer: React.FunctionComponent<
   React.PropsWithChildren<unknown>
 > = () => {
-  const [acitivityTemplateId, setActivityTemplateId] = useState<number | undefined>(undefined);
+  const [selectedFormDocumentTypeCode, setSelectedFormDocumentTypeCode] = useState<
+    string | undefined
+  >(undefined);
   const {
-    getActivityTemplates: { response: templateResponse, loading: templateLoading },
-  } = useActivityRepository();
+    getFormDocumentTypes: { response: templateResponse, loading: templateLoading },
+  } = useFormDocumentRepository();
 
   return (
     <DocumentTemplateManagementView
       isLoading={templateLoading}
-      activityTypes={templateResponse}
-      activityTypeId={acitivityTemplateId}
-      setActivityTemplateId={setActivityTemplateId}
+      formDocumentTypes={templateResponse}
+      selectedFormDocumentTypeCode={selectedFormDocumentTypeCode}
+      setSelectedFormDocumentTypeCode={setSelectedFormDocumentTypeCode}
     />
   );
 };

@@ -4,7 +4,6 @@ import TooltipIcon from 'components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode } from 'components/Table';
 import { Claims } from 'constants/index';
 import { DocumentRow } from 'features/documents/ComposedDocument';
-import DownloadDocumentButton from 'features/documents/DownloadDocumentButton';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
 import { Col, Row } from 'react-bootstrap';
@@ -108,14 +107,6 @@ const renderActions = (
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIconsRow className="no-gutters">
-        {hasClaim(Claims.DOCUMENT_VIEW) && original?.mayanDocumentId !== undefined && (
-          <Col>
-            <DownloadDocumentButton
-              mayanDocumentId={original?.mayanDocumentId}
-              isFileAvailable={original?.isFileAvailable}
-            />
-          </Col>
-        )}
         {hasClaim(Claims.DOCUMENT_VIEW) && (
           <Col>
             <Button

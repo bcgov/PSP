@@ -45,7 +45,7 @@ export const ActivityView: React.FunctionComponent<React.PropsWithChildren<IActi
         {hasClaim(Claims.DOCUMENT_VIEW) && (
           <DocumentListContainer
             relationshipType={DocumentRelationshipType.ACTIVITIES}
-            parentId={activity.id}
+            parentId={activity.id.toString()}
           />
         )}
         {hasClaim(Claims.NOTE_VIEW) && (

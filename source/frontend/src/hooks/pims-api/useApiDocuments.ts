@@ -36,7 +36,7 @@ export const useApiDocuments = () => {
           `/documents/storage/types/${mayanDocumentTypeId}/metadata`,
         ),
 
-      getDocumentRelationship: (relationshipType: DocumentRelationshipType, parentId: number) =>
+      getDocumentRelationship: (relationshipType: DocumentRelationshipType, parentId: string) =>
         api.get<Api_DocumentRelationship[]>(`/documents/${relationshipType}/${parentId}`),
 
       deleteDocumentRelationshipApiCall: (
@@ -64,7 +64,7 @@ export const useApiDocuments = () => {
 
       uploadDocumentRelationshipApiCall: (
         relationshipType: DocumentRelationshipType,
-        parentId: number,
+        parentId: string,
         uploadRequest: Api_DocumentUploadRequest,
       ) => {
         const formData = new FormData();

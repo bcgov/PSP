@@ -211,7 +211,13 @@ describe('ActivityForm test', () => {
           validationSchema: Yup.object().shape({}),
           version: '1.0',
         },
-        activity: { activityDataJson: '{"test":"test string"}' } as any,
+        activity: {
+          activityDataJson: '{"test":"test string"}',
+          id: 1,
+          description: 'some description',
+          status: 'DONE',
+          activityTemplate: {},
+        },
       });
       await findByText('No matching Documents found');
 

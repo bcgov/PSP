@@ -106,7 +106,7 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
             <div
               class="col-auto"
             >
-              Activity Type:
+              Form Type:
             </div>
             <div
               class="col-auto"
@@ -119,7 +119,7 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
                   class="form-control"
                 >
                   <option>
-                    Select an Activity type
+                    Select a form type
                   </option>
                 </select>
               </div>

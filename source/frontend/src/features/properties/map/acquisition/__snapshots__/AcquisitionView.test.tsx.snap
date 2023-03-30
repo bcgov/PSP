@@ -310,6 +310,32 @@ exports[`AcquisitionView component renders as expected 1`] = `
   width: 100%;
 }
 
+.c19 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
 .c21 {
   float: right;
   cursor: pointer;
@@ -398,32 +424,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
 .c7 {
   font-size: 1.4rem;
   line-height: 2.2rem;
-}
-
-.c19 {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.4);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-  align-content: center;
-  justify-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
 }
 
 .c20 {

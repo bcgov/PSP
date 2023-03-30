@@ -189,7 +189,7 @@ namespace Pims.Dal.Repositories
         public void DeleteProjectDocument(long projectDocumentId)
         {
             var entity = Context.PimsProjectDocuments.FirstOrDefault(d => d.ProjectDocumentId == projectDocumentId);
-            if(entity is not null)
+            if (entity is not null)
             {
                 Context.PimsProjectDocuments.Remove(entity);
             }
@@ -218,7 +218,7 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectRegionCode))
             {
-                query = query.Where(x => x.RegionCode.ToString(CultureInfo.InvariantCulture) == filter.ProjectRegionCode);
+                query = query.Where(x => x.RegionCode == short.Parse(filter.ProjectRegionCode));
             }
 
             if (filter.Sort?.Any() == true)

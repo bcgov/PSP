@@ -52,7 +52,7 @@ describe('form list view', () => {
   it('it calls saveForm form with appropriate type code value when plus button is clicked', async () => {
     const { getByTitle, container } = setup();
 
-    await fillInput(container, 'formTypeId', 'H120', 'select');
+    await fillInput(container, 'formTypeCode', 'H120', 'select');
     const plusButton = getByTitle('add form');
     await waitFor(() => {
       expect(plusButton).not.toBeDisabled();

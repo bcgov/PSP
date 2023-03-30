@@ -382,7 +382,6 @@ namespace Pims.Api
         {
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IDocumentActivityService, DocumentActivityService>();
-            services.AddScoped<IDocumentLeaseService, DocumentLeaseService>();
             services.AddScoped<IDocumentSyncService, DocumentSyncService>();
             services.AddScoped<INoteService, NoteService>();
             services.AddScoped<IActivityService, ActivityService>();
@@ -403,7 +402,7 @@ namespace Pims.Api
             services.AddScoped<IFinancialCodeService, FinancialCodeService>();
             services.AddScoped<IDocumentFileService, DocumentFileService>();
             services.AddScoped<ITakeService, TakeService>();
-            services.AddScoped<IFormService, FormService>();
+            services.AddScoped<IFormDocumentService, FormDocumentService>();
         }
 
         /// <summary>
