@@ -5,7 +5,7 @@
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-03-28 15:34                                */
+/* Created on:            2023-03-29 16:10                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -1534,14 +1534,6 @@ GO
 
 
 DROP TRIGGER [dbo].[PIMS_TKCONT_I_S_I_TR]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop procedures                                                        */
-/* ---------------------------------------------------------------------- */
-
-DROP FUNCTION [dbo].[pims_IsUniqueProduct]
 GO
 
 
@@ -4004,10 +3996,6 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACQUISITION_OWNER] DROP CONSTRAINT [ACQOWN_IS_ORGANIZATION_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQUISITION_OWNER] DROP CONSTRAINT [ACQOWN_LAST_NAME_OR_CORP_NAME_1_DEF]
 GO
 
 
@@ -8104,58 +8092,6 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_PROJECT_PERSON_HIST"                              */
-/* ---------------------------------------------------------------------- */
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_PROJECT_PERSON_HIST] DROP CONSTRAINT [DF__PIMS_PROJ___PROJ__230A1C49]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROJECT_PERSON_HIST] DROP CONSTRAINT [DF__PIMS_PROJ__EFFEC__23FE4082]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROJECT_PERSON_HIST] DROP CONSTRAINT [PIMS_PRJPER_H_PK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROJECT_PERSON_HIST] DROP CONSTRAINT [PIMS_PRJPER_H_UK]
-GO
-
-
-DROP TABLE [dbo].[PIMS_PROJECT_PERSON_HIST]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_ACQUISITION_FILE_FORM_HIST"                       */
-/* ---------------------------------------------------------------------- */
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE_FORM_HIST] DROP CONSTRAINT [DF__PIMS_ACQU___ACQU__0BB1B5A5]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE_FORM_HIST] DROP CONSTRAINT [DF__PIMS_ACQU__EFFEC__0CA5D9DE]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE_FORM_HIST] DROP CONSTRAINT [PIMS_ACQFRM_H_PK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE_FORM_HIST] DROP CONSTRAINT [PIMS_ACQFRM_H_UK]
-GO
-
-
-DROP TABLE [dbo].[PIMS_ACQUISITION_FILE_FORM_HIST]
-GO
-
-
-/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_PROJECT_PERSON_ROLE_TYPE"                         */
 /* ---------------------------------------------------------------------- */
 
@@ -8786,6 +8722,10 @@ GO
 /* Drop constraints */
 
 ALTER TABLE [dbo].[PIMS_PROJECT] DROP CONSTRAINT [PROJCT_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_PROJECT] DROP CONSTRAINT [PROJCT_PROJECT_STATUS_TYPE_CODE_DEF]
 GO
 
 
@@ -12928,14 +12868,6 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_ACQUISITION_FILE_FORM_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_PROJECT_PERSON_H_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_ACQUISITION_FILE_FORM_H_ID_SEQ]
 GO
 
 

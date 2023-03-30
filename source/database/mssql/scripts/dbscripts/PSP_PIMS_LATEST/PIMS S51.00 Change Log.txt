@@ -11,6 +11,8 @@ PSP_PIMS S51.00 Sprint 50 2023-Mar-29
   - PIMS_ACQUISITION_OWNER_HIST
   - PIMS_DOCUMENT_TYP
   - PIMS_DOCUMENT_TYP_HIST
+  - PIMS_PROJECT
+  - PIMS_PROJECT_HIST
 - Dropped functions:
   - pims_ColumnExists
 - Added seed scripts:
