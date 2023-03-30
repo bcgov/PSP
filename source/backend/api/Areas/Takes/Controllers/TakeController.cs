@@ -118,7 +118,7 @@ namespace Pims.Api.Areas.Takes.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
 
-            var count = _takeService.GetCountByPropertyId(acquisitionFileId, propertyId);
+            var count = _takeService.GetTakesCountForAcquisitionProperty(acquisitionFileId, propertyId);
             return new JsonResult(count);
         }
 

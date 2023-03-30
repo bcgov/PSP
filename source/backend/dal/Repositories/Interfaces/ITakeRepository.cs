@@ -10,7 +10,7 @@ namespace Pims.Dal.Repositories
     {
         IEnumerable<PimsTake> GetAllByAcquisitionFileId(long fileId);
 
-        int GetCountByPropertyId(long acquisitionFileId, long propertyId);
+        int GetTakesCountForAcquisitionProperty(long acquisitionFileId, long propertyId);
 
         void UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes);
 
