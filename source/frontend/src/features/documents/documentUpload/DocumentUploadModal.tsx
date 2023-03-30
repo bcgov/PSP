@@ -5,7 +5,7 @@ import { FaUpload } from 'react-icons/fa';
 import { DocumentUploadContainer } from './DocumentUploadContainer';
 
 export interface IDocumentUploadModalProps {
-  parentId: number;
+  parentId: string;
   relationshipType: DocumentRelationshipType;
   display?: boolean;
   setDisplay?: (display: boolean) => void;

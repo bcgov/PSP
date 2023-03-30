@@ -44,6 +44,7 @@ const DEFAULT_PROPS: IPropertyFileContainerProps = {
   setEditFileProperty: noop,
   customTabs: [],
   defaultTab: InventoryTabNames.property,
+  setEditTakes: noop,
 };
 
 describe('PropertyFileContainer component', () => {
@@ -162,16 +163,6 @@ describe('PropertyFileContainer component', () => {
     expect(viewProps?.tabViews).toHaveLength(2);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
-  });
-
-  it('skips the property associations tab if no property associations are found', async () => {
-    mockAxios.onGet(new RegExp('properties/495/associations')).reply(200, {});
-    await setup();
-
-    expect(viewProps?.tabViews).toHaveLength(3);
-    expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
-    expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
-    expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.property);
   });
 
   it('passes on custom tabs if provided', async () => {

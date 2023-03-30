@@ -17,6 +17,9 @@ export const AdminTools = ({ onLinkClick }: ISideTrayPageProps) => {
       <Link to="/admin/access/requests" onClick={onLinkClick}>
         Manage Access Requests
       </Link>
+      <Link to="/admin/document_generation" onClick={onLinkClick}>
+        Manage Form Document Templates
+      </Link>
       <Link to="/admin/financial-code/list" onClick={onLinkClick}>
         Manage Financial Codes
       </Link>

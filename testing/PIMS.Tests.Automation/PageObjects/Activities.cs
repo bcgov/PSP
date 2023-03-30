@@ -65,14 +65,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By activityPropertiesModal = By.CssSelector("div[class='modal-content']");
         private By activityPropertiesAllInput = By.CssSelector("input[data-testid='selectrow-parent']");
 
-        private DigitalDocuments digitalDocuments;
+        private SharedDocumentsTab digitalDocuments;
         private Notes notes;
         private SharedModals sharedModals;
 
 
         public Activities(IWebDriver webDriver) : base(webDriver)
         {
-            digitalDocuments = new DigitalDocuments(webDriver);
+            digitalDocuments = new SharedDocumentsTab(webDriver);
             notes = new Notes(webDriver);
             sharedModals = new SharedModals(webDriver);
         }

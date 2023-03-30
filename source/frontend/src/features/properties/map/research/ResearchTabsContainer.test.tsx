@@ -77,4 +77,23 @@ describe('ResearchFileTabs component', () => {
       expect(getByText('Documents')).toHaveClass('active');
     });
   });
+
+  it('notes tab can be changed to', async () => {
+    const { getAllByText } = setup(
+      {
+        researchFile: getMockResearchFile(),
+        setEditKey,
+        setEditMode,
+      },
+      { claims: [Claims.NOTE_VIEW] },
+    );
+
+    const editButton = getAllByText('Notes')[0];
+    act(() => {
+      userEvent.click(editButton);
+    });
+    await waitFor(() => {
+      expect(getAllByText('Notes')[0]).toHaveClass('active');
+    });
+  });
 });

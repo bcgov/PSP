@@ -267,6 +267,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c7:hover {

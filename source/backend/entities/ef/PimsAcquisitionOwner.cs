@@ -11,7 +11,7 @@ namespace Pims.Dal.Entities
     [Table("PIMS_ACQUISITION_OWNER")]
     [Index(nameof(AcquisitionFileId), Name = "ACQOWN_ACQUISITION_FILE_ID_IDX")]
     [Index(nameof(AddressId), Name = "ACQOWN_ADDRESS_ID_IDX")]
-    [Index(nameof(LastNameOrCorpName1), Name = "ACQOWN_LAST_NAME_OR_CORP_NAME_1_IDX")]
+    [Index(nameof(LastNameAndCorpName), Name = "ACQOWN_LAST_NAME_OR_CORP_NAME_1_IDX")]
     public partial class PimsAcquisitionOwner
     {
         [Key]
@@ -22,18 +22,29 @@ namespace Pims.Dal.Entities
         [Column("ADDRESS_ID")]
         public long? AddressId { get; set; }
         [Required]
-        [Column("LAST_NAME_OR_CORP_NAME_1")]
+        [Column("IS_ORGANIZATION")]
+        public bool? IsOrganization { get; set; }
+        [Column("LAST_NAME_AND_CORP_NAME")]
         [StringLength(300)]
-        public string LastNameOrCorpName1 { get; set; }
-        [Column("LAST_NAME_OR_CORP_NAME_2")]
+        public string LastNameAndCorpName { get; set; }
+        [Column("OTHER_NAME")]
         [StringLength(300)]
-        public string LastNameOrCorpName2 { get; set; }
+        public string OtherName { get; set; }
         [Column("GIVEN_NAME")]
         [StringLength(300)]
         public string GivenName { get; set; }
         [Column("INCORPORATION_NUMBER")]
         [StringLength(50)]
         public string IncorporationNumber { get; set; }
+        [Column("REGISTRATION_NUMBER")]
+        [StringLength(50)]
+        public string RegistrationNumber { get; set; }
+        [Column("CONTACT_EMAIL_ADDR")]
+        [StringLength(250)]
+        public string ContactEmailAddr { get; set; }
+        [Column("CONTACT_PHONE_NUM")]
+        [StringLength(20)]
+        public string ContactPhoneNum { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

@@ -200,6 +200,7 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c6:hover {

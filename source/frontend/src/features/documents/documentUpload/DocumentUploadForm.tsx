@@ -2,10 +2,8 @@ import { Button } from 'components/common/buttons/Button';
 import { Select, SelectOption } from 'components/common/form';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import * as API from 'constants/API';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikProps } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -22,6 +20,7 @@ interface IDocumentUploadFormProps {
   formikRef: React.RefObject<FormikProps<DocumentUploadFormData>>;
   initialDocumentType: string;
   documentTypes: Api_DocumentType[];
+  documentStatusOptions: SelectOption[];
   mayanMetadataTypes: Api_Storage_DocumentTypeMetadataType[];
   onDocumentTypeChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
   onUploadDocument: (uploadRequest: Api_DocumentUploadRequest) => void;
@@ -40,9 +39,6 @@ const DocumentUploadForm: React.FunctionComponent<
     return { label: x.documentType || '', value: x.id?.toString() || '' };
   });
 
-  const { getOptionsByType } = useLookupCodeHelpers();
-  const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
-
   const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
     // handle validations
     if (changeEvent.target !== null) {
@@ -56,7 +52,7 @@ const DocumentUploadForm: React.FunctionComponent<
   };
 
   const initialFormData = new DocumentUploadFormData(
-    documentStatusTypes[0]?.value?.toString(),
+    props.documentStatusOptions[0]?.value?.toString(),
     props.initialDocumentType,
     props.mayanMetadataTypes,
   );
@@ -107,6 +103,7 @@ const DocumentUploadForm: React.FunctionComponent<
                 field="documentTypeId"
                 options={documentTypes}
                 onChange={props.onDocumentTypeChange}
+                disabled={documentTypes.length === 1}
               />
             </SectionField>
             <SectionField label="Choose document to upload" labelWidth="12" className="mb-4">
@@ -133,7 +130,11 @@ const DocumentUploadForm: React.FunctionComponent<
                 </Col>
               </Row>
               <SectionField label="Status" labelWidth="4">
-                <Select field="documentStatusCode" options={documentStatusTypes} />
+                <Select
+                  field="documentStatusCode"
+                  options={props.documentStatusOptions}
+                  disabled={props.documentStatusOptions.length === 1}
+                />
               </SectionField>
 
               <StyledH3>Details</StyledH3>

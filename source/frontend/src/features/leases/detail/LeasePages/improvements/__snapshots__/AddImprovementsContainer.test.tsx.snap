@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Add lease container component renders as expected 1`] = `
+exports[`Add Improvements container component renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -17,6 +17,7 @@ exports[`Add lease container component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c5.required::before {

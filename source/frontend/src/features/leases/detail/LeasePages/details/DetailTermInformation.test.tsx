@@ -48,7 +48,7 @@ describe('DetailTermInformation component', () => {
 
   it('renders the project name', () => {
     const { getByText } = setup({
-      lease: { ...defaultFormLease, project: { code: '0000', description: 'MOCK PROJECT' } },
+      lease: { ...defaultFormLease, project: { code: '0000', description: 'MOCK PROJECT' } } as any,
     });
     expect(getByText('0000 - MOCK PROJECT')).toBeVisible();
   });

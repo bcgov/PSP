@@ -1,5 +1,6 @@
 import { LinkButton, RemoveButton } from 'components/common/buttons';
 import { Input } from 'components/common/form';
+import { RadioGroup } from 'components/common/form/RadioGroup';
 import Address from 'features/contacts/contact/create/components/address/Address';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArray, useFormikContext } from 'formik';
@@ -41,34 +42,75 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
                       Remove Owner
                     </RemoveButton>
                   </ButtonDiv>
-                  <H3>Name</H3>
-                  <SectionField label="Given names">
-                    <Input
-                      field={`owners[${index}].givenName`}
-                      placeholder="First name Middle name (individuals only)"
+                  <SectionField label="Is this owner an individual / corporation ?">
+                    <RadioGroup
+                      field={`owners[${index}].isOrganization`}
+                      flexDirection="row"
+                      radioValues={[
+                        {
+                          radioValue: 'false',
+                          radioLabel: 'Individual',
+                        },
+                        {
+                          radioValue: 'true',
+                          radioLabel: 'Corporation',
+                        },
+                      ]}
                     />
                   </SectionField>
-                  <SectionField label="Last name/Corporation name">
+                  <H3>Name</H3>
+
+                  {owner.isOrganization === 'false' && (
+                    <SectionField label="Given names">
+                      <Input
+                        field={`owners[${index}].givenName`}
+                        placeholder="First name Middle name (individuals only)"
+                      />
+                    </SectionField>
+                  )}
+                  <SectionField
+                    label={owner.isOrganization === 'true' ? 'Corporation name ' : 'Last name'}
+                  >
                     <Input
-                      field={`owners[${index}].lastNameOrCorp1`}
-                      placeholder="Individual's Last name / Corporation's name"
+                      field={`owners[${index}].lastNameAndCorpName`}
+                      placeholder={
+                        owner.isOrganization === 'true'
+                          ? "Business' legal name"
+                          : "Individual's last name"
+                      }
                     />
                   </SectionField>
                   <SectionField
                     label="Other name"
-                    tooltip="Additional name for Individual (ex: alias or maiden name or space for long last name) Corporation (ex: Doing Business as) or placeholder for the Last name/Corporate name 2 field from Title"
+                    tooltip="Additional name for Individual (ex: alias or maiden name or space for long last name) Corporation (ex: Doing business as)"
                   >
                     <Input
-                      field={`owners[${index}].lastNameOrCorp2`}
+                      field={`owners[${index}].otherName`}
                       placeholder="Alias/Doing business as etc."
                     />
                   </SectionField>
-                  <SectionField label="Incorporation number">
-                    <Input
-                      field={`owners[${index}].incorporationNumber`}
-                      placeholder="Incorporation number"
-                    />
-                  </SectionField>
+
+                  {owner.isOrganization === 'true' && (
+                    <SectionField label="Incorporation number">
+                      <Input
+                        field={`owners[${index}].incorporationNumber`}
+                        placeholder="Incorporation #"
+                      />
+                    </SectionField>
+                  )}
+
+                  {owner.isOrganization === 'true' && (
+                    <SectionField
+                      label="Registration number"
+                      tooltip="The number used for tax purposes, (like GST)."
+                    >
+                      <Input
+                        field={`owners[${index}].registrationNumber`}
+                        placeholder="If no Incorporation #"
+                      />
+                    </SectionField>
+                  )}
+
                   <StyledDiv>
                     <H3>Mailing Address</H3>
                     <Address
@@ -76,6 +118,16 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
                       addressLines={OwnerAddressFormModel.addressLines(owner.address)}
                     />
                   </StyledDiv>
+
+                  <H3>Contact Information</H3>
+                  <SectionField label="Email">
+                    <Input field={`owners[${index}].contactEmailAddress`} />
+                  </SectionField>
+
+                  <SectionField label="Phone">
+                    <Input field={`owners[${index}].contactPhoneNumber`} />
+                  </SectionField>
+                  {index < values.owners.length - 1 && <hr></hr>}
                 </Container>
               </Row>
             ))}
