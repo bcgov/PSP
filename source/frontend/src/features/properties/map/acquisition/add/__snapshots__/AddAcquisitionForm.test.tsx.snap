@@ -1258,7 +1258,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c4 required text-left col"
           >
             <div
               class="c20 input form-group"
@@ -1391,7 +1391,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c4 required text-left col"
           >
             <div
               class="required form-group"
@@ -1445,7 +1445,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c4 required text-left col"
           >
             <div
               class="required form-group"
