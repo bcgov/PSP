@@ -119,7 +119,7 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
                   class="form-control"
                 >
                   <option>
-                    Select an Form type
+                    Select a form type
                   </option>
                 </select>
               </div>
