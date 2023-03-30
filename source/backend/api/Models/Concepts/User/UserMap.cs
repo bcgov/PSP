@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts.AccessRequest
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsUser, UserModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.UserId)
                 .Map(dest => dest.BusinessIdentifierValue, src => src.BusinessIdentifierValue)
                 .Map(dest => dest.GuidIdentifierValue, src => src.GuidIdentifierValue)
@@ -24,7 +23,6 @@ namespace Pims.Api.Models.Concepts.AccessRequest
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<UserModel, Entity.PimsUser>()
-                .PreserveReference(true)
                 .Map(dest => dest.UserId, src => src.Id)
                 .Map(dest => dest.BusinessIdentifierValue, src => src.BusinessIdentifierValue)
                 .Map(dest => dest.GuidIdentifierValue, src => src.GuidIdentifierValue)

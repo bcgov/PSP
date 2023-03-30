@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsAcquisitionFilePerson, AcquisitionFilePersonModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.AcquisitionFilePersonId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Person, src => src.Person)

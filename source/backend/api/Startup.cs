@@ -102,6 +102,7 @@ namespace Pims.Api
                 options.Default.IgnoreNullValues(true);
                 options.AllowImplicitDestinationInheritance = true;
                 options.AllowImplicitSourceInheritance = true;
+                options.Default.PreserveReference(true);
                 options.Default.UseDestinationValue(member =>
                     member.SetterModifier == AccessModifier.None &&
                     member.Type.IsGenericType &&

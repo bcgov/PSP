@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPropPropRoadType, PropertyRoadModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PropPropRoadTypeId)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.PropertyRoadTypeCode, src => src.PropertyRoadTypeCodeNavigation)
