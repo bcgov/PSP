@@ -48,15 +48,12 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public int GetCountByPropertyId(long acquisitionFileId, long propertyId)
         {
-            //return Context.PimsTakes
-            //    .Include(t => t.PropertyAcquisitionFile)
-            //    .Where(x => x.PropertyAcquisitionFile.PropertyId == propertyId
-            //            && x.PropertyAcquisitionFileId != x.PropertyAcquisitionFile.PropertyAcquisitionFileId).Count();
-
             return Context.PimsTakes
-                    .Include(x => x.PropertyAcquisitionFile)
-                    .Count(x => x.PropertyAcquisitionFile.PropertyId == propertyId
-                        && x.PropertyAcquisitionFile.PropertyAcquisitionFileId != acquisitionFileId);
+                .Include(t => t.PropertyAcquisitionFile)
+                .Where(x => x.PropertyAcquisitionFile.PropertyId == propertyId
+                        && x.PropertyAcquisitionFile.AcquisitionFileId != acquisitionFileId
+                        && x.PropertyAcquisitionFile.PropertyAcquisitionFileId == x.PropertyAcquisitionFileId)
+                .Count();
         }
 
         /// <summary>
