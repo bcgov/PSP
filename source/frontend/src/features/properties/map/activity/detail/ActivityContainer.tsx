@@ -7,11 +7,11 @@ import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useContext, useState } from 'react';
 
+import { formContent } from '../../shared/content/formContent';
+import { ActivityTemplateTypes } from '../../shared/content/models';
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import { useActivityRepository } from '../hooks/useActivityRepository';
 import ActivityPropertyModal from './ActivityPropertyModal';
-import { formContent } from './content/formContent';
-import { ActivityTemplateTypes } from './content/models';
 import { ActivityModel } from './models';
 
 export interface IActivityContainerProps {
