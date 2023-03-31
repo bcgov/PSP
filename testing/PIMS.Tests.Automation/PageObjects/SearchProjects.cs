@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -61,7 +62,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchProjectButton).Click();
         }
 
-        public void SearchLastResearchFile()
+        public void SearchLastProject()
         {
             Wait();
             webDriver.FindElement(searchProjectResetButton).Click();
@@ -107,15 +108,18 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchProjectPagination).Displayed);
         }
 
-        public void VerifyViewSearchResult(string number, string name, string region, string status, string lastUpdatedBy, string lastUpdatedDate)
+        public void VerifyViewSearchResult(Project project)
         {
+            DateTime thisDay = DateTime.Today;
+            string today = thisDay.ToString("MMM dd, yyyy");
+
             Wait();
-            Assert.True(webDriver.FindElement(searchProject1stResultNbrLink).Text.Equals(number));
-            Assert.True(webDriver.FindElement(searchProject1stResultNameLink).Text.Equals(name));
-            Assert.True(webDriver.FindElement(searchProject1stResultRegionContent).Text.Equals(region));
-            Assert.True(webDriver.FindElement(searchProject1stResultStatusContent).Text.Equals(status));
-            Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedByContent).Text.Equals(lastUpdatedBy));
-            Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedDateContent).Text.Equals(TransformDateFormat(lastUpdatedDate)));
+            Assert.True(webDriver.FindElement(searchProject1stResultNbrLink).Text.Equals(project.Number));
+            Assert.True(webDriver.FindElement(searchProject1stResultNameLink).Text.Equals(project.Name));
+            Assert.True(webDriver.FindElement(searchProject1stResultRegionContent).Text.Equals(project.MOTIRegion));
+            Assert.True(webDriver.FindElement(searchProject1stResultStatusContent).Text.Equals(project.Status));
+            Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedByContent).Text.Equals(project.UpdatedBy));
+            Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedDateContent).Text.Equals(today));
         }
     }
 }
