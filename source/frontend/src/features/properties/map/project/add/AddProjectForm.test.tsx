@@ -1,4 +1,3 @@
-/* eslint-disable simple-import-sort/imports */
 import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
@@ -9,7 +8,7 @@ import { mockProjectGetResponse } from 'mocks/mockProjects';
 import { getUserMock } from 'mocks/userMock';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { RenderOptions, act, fakeText, fillInput, render, userEvent } from 'utils/test-utils';
+import { act, fakeText, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
