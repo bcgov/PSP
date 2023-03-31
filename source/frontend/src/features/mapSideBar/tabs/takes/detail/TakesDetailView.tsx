@@ -69,7 +69,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
           </SectionField>
           <SectionField
             labelWidth="8"
-            label="Takes for this property in other file"
+            label="Takes for this property in other files"
             tooltip="The number of takes in completed, In-progress or cancelled state for this property, in files other than this acquisition file. The other files can be found under the Acquisition section of the PIMS Files tab"
           >
             {allTakesCount ?? 0}
@@ -138,7 +138,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                     <AreaContainer landArea={take.landActArea ?? undefined} />
                   </SectionField>
 
-                  <SectionField label="Land Act end date">
+                  <SectionField label="Land Act end date" labelWidth="3" contentWidth="4">
                     {prettyFormatDate(take.landActEndDt ?? undefined)}
                   </SectionField>
 
@@ -162,7 +162,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                     <AreaContainer landArea={take.licenseToConstructArea ?? undefined} />
                   </SectionField>
 
-                  <SectionField label="LTC end date">
+                  <SectionField label="LTC end date" labelWidth="3" contentWidth="4">
                     {prettyFormatDate(take.ltcEndDt ?? undefined)}
                   </SectionField>
                 </>

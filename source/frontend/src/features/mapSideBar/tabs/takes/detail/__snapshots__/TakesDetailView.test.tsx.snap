@@ -114,7 +114,7 @@ exports[`TakesDetailView component renders as expected 1`] = `
               <label
                 class="c4"
               >
-                Takes for this property in other file:
+                Takes for this property in other files:
                 <span
                   class="ml-2"
                 >
