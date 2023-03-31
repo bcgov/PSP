@@ -1,13 +1,15 @@
+/* eslint-disable simple-import-sort/imports */
 import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
 import { getMockLookUpsByType, mockLookups } from 'mocks/mockLookups';
+import { mockProjectGetResponse } from 'mocks/mockProjects';
 import { getUserMock } from 'mocks/userMock';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fakeText, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
+import { RenderOptions, act, fakeText, fillInput, render, userEvent } from 'utils/test-utils';
 
 import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
@@ -97,6 +99,11 @@ describe('AddProjectForm component', () => {
 
   it('renders as expected', () => {
     const { asFragment } = setup({ initialValues });
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders as expected with existing data', () => {
+    const { asFragment } = setup({ initialValues: ProjectForm.fromApi(mockProjectGetResponse()) });
     expect(asFragment()).toMatchSnapshot();
   });
 

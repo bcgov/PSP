@@ -435,3 +435,1064 @@ exports[`AddProjectForm component renders as expected 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`AddProjectForm component renders as expected with existing data 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c6.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c6.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c6.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c6.btn.btn-primary {
+  border: none;
+}
+
+.c6.btn.btn-secondary {
+  background: none;
+}
+
+.c6.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
+  background: none;
+}
+
+.c6.btn.btn-light {
+  border: none;
+}
+
+.c6.btn.btn-dark {
+  border: none;
+}
+
+.c6.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c6.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c6.Button--icon-only:focus {
+  outline: none;
+}
+
+.c6.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c8.c8.form-control.is-valid {
+  background-image: none;
+}
+
+.c8.c8.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c7.c7.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c7.c7.btn .text {
+  display: none;
+}
+
+.c7.c7.btn:hover,
+.c7.c7.btn:active,
+.c7.c7.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c7.c7.btn:hover .text,
+.c7.c7.btn:active .text,
+.c7.c7.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c5 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+.c9 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
+}
+
+.c10 {
+  border-bottom: 0.1rem solid grey;
+}
+
+.c0 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.c4 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
+}
+
+<div
+    class="c0"
+  >
+    <form
+      class=""
+      novalidate=""
+    >
+      <div
+        class="c1 form-section"
+      >
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                Project name:
+              </label>
+            </div>
+            <div
+              class="c3 required text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-projectName"
+                  name="projectName"
+                  title="Project Cool A"
+                  value="Project Cool A"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                Project number:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-projectNumber"
+                  name="projectNumber"
+                  placeholder="if known"
+                  title="771"
+                  value="771"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                Status:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-projectStatusType"
+                  name="projectStatusType"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-AC"
+                    value="AC"
+                  >
+                    Active (AC)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-CA"
+                    value="CA"
+                  >
+                    Cancelled (CA)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-CNCN"
+                    value="CNCN"
+                  >
+                    Consolidated (CNCN)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-CO"
+                    value="CO"
+                  >
+                    Completed (CO)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-HO"
+                    value="HO"
+                  >
+                    On Hold (HO)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-PL"
+                    value="PL"
+                  >
+                    Planning (PL)
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                MoTI region:
+              </label>
+            </div>
+            <div
+              class="c3 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-region"
+                  name="region"
+                >
+                  <option
+                    value=""
+                  >
+                    Select region...
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-1"
+                    value="1"
+                  >
+                    South Coast Region
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-2"
+                    value="2"
+                  >
+                    Southern Interior Region
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-12"
+            >
+              <label
+                class="c2"
+              >
+                Project summary:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="c4 textarea input form-group"
+              >
+                <textarea
+                  class="form-control"
+                  id="input-summary"
+                  name="summary"
+                  title="Summary of the Project Cool A"
+                >
+                  Summary of the Project Cool A
+                </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c5"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Associated products
+            </div>
+            <div
+              class="col-1"
+            />
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div>
+            <div
+              class="align-items-end pb-4 row"
+            >
+              <div
+                class="col"
+              />
+              <div
+                class="col-auto"
+              >
+                <button
+                  class="c6 Button c7 btn btn-link"
+                  title="Delete Project"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Product code:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 required text-left col"
+                  >
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-products.0.code"
+                        name="products.0.code"
+                        title="70"
+                        value="70"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-2"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Name:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 required text-left col"
+                  >
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-products.0.description"
+                        name="products.0.description"
+                        title="Product A"
+                        value="Product A"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c2"
+                >
+                  Start date:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="react-datepicker-wrapper d-block"
+                  >
+                    <div
+                      class="react-datepicker__input-container"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="c8 form-control date-picker"
+                        id="datepicker-products.0.startDate"
+                        name="products.0.startDate"
+                        placeholder="--/--/----"
+                        type="text"
+                        value="02/01/2023"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Cost estimate:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div
+                        class="input-tooltip-wrapper"
+                      >
+                        <input
+                          class="form-control input-number"
+                          id="input-products.0.costEstimate"
+                          inputmode="numeric"
+                          name="products.0.costEstimate"
+                          placeholder=""
+                          type="text"
+                          value="$60.00"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Estimate date:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container"
+                        >
+                          <input
+                            autocomplete="off"
+                            class="c8 form-control date-picker"
+                            id="datepicker-products.0.costEstimateDate"
+                            name="products.0.costEstimateDate"
+                            placeholder="--/--/----"
+                            type="text"
+                            value="02/02/2023"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-12"
+              >
+                <label
+                  class="c2"
+                >
+                  Objectives:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="c9 textarea input form-group"
+                >
+                  <textarea
+                    class="form-control"
+                    id="input-products.0.objective"
+                    name="products.0.objective"
+                    title="Objective of Product A"
+                  >
+                    Objective of Product A
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-12"
+              >
+                <label
+                  class="c2"
+                >
+                  Scope:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="c9 textarea input form-group"
+                >
+                  <textarea
+                    class="form-control"
+                    id="input-products.0.scope"
+                    name="products.0.scope"
+                    title="Scope of Product A"
+                  >
+                    Scope of Product A
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c10 my-5"
+            />
+          </div>
+          <div>
+            <div
+              class="align-items-end pb-4 row"
+            >
+              <div
+                class="col"
+              />
+              <div
+                class="col-auto"
+              >
+                <button
+                  class="c6 Button c7 btn btn-link"
+                  title="Delete Project"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Product code:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 required text-left col"
+                  >
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-products.1.code"
+                        name="products.1.code"
+                        title="71"
+                        value="71"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-2"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Name:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 required text-left col"
+                  >
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-products.1.description"
+                        name="products.1.description"
+                        title="Product B"
+                        value="Product B"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c2"
+                >
+                  Start date:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col-4"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="react-datepicker-wrapper d-block"
+                  >
+                    <div
+                      class="react-datepicker__input-container"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="c8 form-control date-picker"
+                        id="datepicker-products.1.startDate"
+                        name="products.1.startDate"
+                        placeholder="--/--/----"
+                        type="text"
+                        value="02/03/2023"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Cost estimate:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div
+                        class="input-tooltip-wrapper"
+                      >
+                        <input
+                          class="form-control input-number"
+                          id="input-products.1.costEstimate"
+                          inputmode="numeric"
+                          name="products.1.costEstimate"
+                          placeholder=""
+                          type="text"
+                          value="$61.00"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Estimate date:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container"
+                        >
+                          <input
+                            autocomplete="off"
+                            class="c8 form-control date-picker"
+                            id="datepicker-products.1.costEstimateDate"
+                            name="products.1.costEstimateDate"
+                            placeholder="--/--/----"
+                            type="text"
+                            value="02/04/2023"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-12"
+              >
+                <label
+                  class="c2"
+                >
+                  Objectives:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="c9 textarea input form-group"
+                >
+                  <textarea
+                    class="form-control"
+                    id="input-products.1.objective"
+                    name="products.1.objective"
+                    title="Objective of Product B"
+                  >
+                    Objective of Product B
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-12"
+              >
+                <label
+                  class="c2"
+                >
+                  Scope:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="c9 textarea input form-group"
+                >
+                  <textarea
+                    class="form-control"
+                    id="input-products.1.scope"
+                    name="products.1.scope"
+                    title="Scope of Product B"
+                  >
+                    Scope of Product B
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="c6 Button btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              + Add another product
+            </div>
+          </button>
+        </div>
+      </div>
+      <div />
+      <div />
+    </form>
+  </div>
+</DocumentFragment>
+`;
