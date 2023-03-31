@@ -48,4 +48,24 @@ describe('AcquisitionHeader component', () => {
     expect(getByText('File:')).toBeVisible();
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
   });
+
+  it('renders the file Project Number and name concatenated', async () => {
+    const testAcquisitionFile = mockAcquisitionFileResponse();
+    const { getByText } = setup({ acquisitionFile: testAcquisitionFile });
+
+    expect(getByText('Ministry project:')).toBeVisible();
+    expect(
+      getByText(
+        "001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to",
+      ),
+    ).toBeVisible();
+  });
+
+  it('renders the file Product code and description concatenated', async () => {
+    const testAcquisitionFile = mockAcquisitionFileResponse();
+    const { getByText } = setup({ acquisitionFile: testAcquisitionFile });
+
+    expect(getByText('Ministry product:')).toBeVisible();
+    expect(getByText('00048 - MISCELLANEOUS CLAIMS')).toBeVisible();
+  });
 });

@@ -132,7 +132,9 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
-          />
+          >
+            00048 MISCELLANEOUS CLAIMS
+          </div>
         </div>
         <div
           class="pb-2 row"

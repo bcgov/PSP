@@ -36,6 +36,16 @@ export const AcquisitionHeader: React.FunctionComponent<
             </HeaderField>
           </Col>
         </Row>
+        <Row className="no-gutters">
+          <Col>
+            <HeaderField label="Ministry product:" labelWidth={leftColumnLabel} contentWidth="9">
+              {formatMinistryProduct(
+                acquisitionFile?.product?.code,
+                acquisitionFile?.product?.description,
+              )}
+            </HeaderField>
+          </Col>
+        </Row>
       </Col>
       <Col xs="5">
         <Row className="no-gutters">
@@ -90,5 +100,10 @@ const StyleSmallText = styled.span`
 
 function formatMinistryProject(projectNumber?: string | null, projectName?: string | null) {
   const formattedValue = [projectNumber, projectName].filter(x => x).join(' - ');
+  return formattedValue;
+}
+
+function formatMinistryProduct(productCode?: string | null, productDescription?: string | null) {
+  const formattedValue = [productCode, productDescription].filter(x => x).join(' - ');
   return formattedValue;
 }
