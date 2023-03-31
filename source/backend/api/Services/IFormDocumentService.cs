@@ -17,5 +17,11 @@ namespace Pims.Api.Services
         Task<ExternalResult<string>> DeleteFormDocumentTemplateAsync(PimsFormType formType);
 
         PimsAcquisitionFileForm AddAcquisitionForm(PimsFormType formType, long acquisitionFileId);
+
+        IEnumerable<PimsAcquisitionFileForm> GetAcquisitionForms(long acquisitionFileId);
+
+        PimsAcquisitionFileForm GetAcquisitionForm(long fileFormId);
+
+        bool DeleteAcquisitionFileForm(long fileFormId);
     }
 }

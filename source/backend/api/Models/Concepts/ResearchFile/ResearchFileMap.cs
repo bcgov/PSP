@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsResearchFile, ResearchFileModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ResearchFileId)
                 .Map(dest => dest.FileName, src => src.Name)
                 .Map(dest => dest.FileNumber, src => src.RfileNumber)

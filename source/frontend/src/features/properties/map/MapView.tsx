@@ -16,6 +16,7 @@ import Map from '../../../components/maps/leaflet/Map';
 import ActivityRouter from './ActivityRouter';
 import { SideBarContextProvider } from './context/sidebarContext';
 import MapSideBar from './MapSideBar';
+import PopupRouter from './PopupRouter';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
 const defaultLatLng = {
@@ -73,6 +74,7 @@ const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = (props: MapView
                 onZoom={onZoom}
               />
               <ActivityRouter setShowActionBar={setShowActionBar} />
+              <PopupRouter setShowActionBar={setShowActionBar} />
             </SideBarContextProvider>
             {!showActionBar && (
               <FilterProvider>
