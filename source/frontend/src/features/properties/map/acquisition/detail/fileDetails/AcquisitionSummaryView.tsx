@@ -60,6 +60,12 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         >
           {prettyFormatDate(detail.deliveryDate)}
         </SectionField>
+        <SectionField
+          label="Acquisition completed date"
+          tooltip={`This will be enabled when the file status is set to "Completed"`}
+        >
+          {prettyFormatDate(detail.completionDate)}
+        </SectionField>
       </Section>
       <Section header="Acquisition Details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>
