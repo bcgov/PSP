@@ -1,12 +1,15 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { FormikProps } from 'formik';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNotesResponse } from 'mocks/mockNoteResponses';
+import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
+import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
 import UpdateAcquisitionForm, { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
 
 const mockAxios = new MockAdapter(axios);
@@ -15,12 +18,8 @@ const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 
 const onSubmit = jest.fn();
-
-const DEFAULT_PROPS: IUpdateAcquisitionFormProps = {
-  validationSchema: {} as any,
-  initialValues: UpdateAcquisitionSummaryFormModel.fromApi(mockAcquisitionFileResponse()),
-  onSubmit,
-};
+const validationSchema = jest.fn().mockReturnValue(UpdateAcquisitionFileYupSchema);
+type TestProps = Pick<IUpdateAcquisitionFormProps, 'initialValues'>;
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -34,19 +33,27 @@ jest.mock('react-visibility-sensor', () => {
 
 describe('UpdateAcquisitionForm component', () => {
   // render component under test
-  const setup = (
-    props: IUpdateAcquisitionFormProps = { ...DEFAULT_PROPS },
-    renderOptions: RenderOptions = {},
-  ) => {
-    const utils = render(<UpdateAcquisitionForm {...props} />, {
-      claims: [],
-      store: {
-        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+  const setup = (props: TestProps, renderOptions: RenderOptions = {}) => {
+    const ref = createRef<FormikProps<UpdateAcquisitionSummaryFormModel>>();
+    const utils = render(
+      <UpdateAcquisitionForm
+        ref={ref}
+        initialValues={props.initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      />,
+      {
+        ...renderOptions,
+        claims: [],
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
       },
-    });
+    );
 
     return {
       ...utils,
+      getFormikRef: () => ref,
       getIsOrganizationRadioButtonValue: (index = 0) => {
         const radio = utils.container.querySelector(
           `input[name="owners[${index}].isOrganization"]:checked`,
@@ -83,10 +90,18 @@ describe('UpdateAcquisitionForm component', () => {
           `input[name="owners[${index}].contactPhoneNumber"]`,
         ) as HTMLInputElement,
       getCloseButton: () => utils.getByTitle('close'),
+      getFileStatusDropdown: () =>
+        utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,
+      getFileCompletionDatePicker: () =>
+        utils.container.querySelector(`input[name="completionDate"]`) as HTMLInputElement,
     };
   };
 
+  let initialValues: UpdateAcquisitionSummaryFormModel;
+
   beforeEach(() => {
+    initialValues = UpdateAcquisitionSummaryFormModel.fromApi(mockAcquisitionFileResponse());
+
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios
       .onGet(new RegExp('acquisitionfiles/1/properties'))
@@ -101,18 +116,16 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup();
-
+    const { asFragment } = setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays legacy file number', async () => {
-    const { getByDisplayValue } = setup();
-
+    const { getByDisplayValue } = setup({ initialValues });
     expect(getByDisplayValue('legacy file number')).toBeVisible();
   });
 
-  it('Displays Individual type Owner with data.', async () => {
+  it('displays Individual type Owner with data', async () => {
     const {
       getIsOrganizationRadioButtonValue,
       getGivenNameTextbox,
@@ -122,7 +135,7 @@ describe('UpdateAcquisitionForm component', () => {
       getRegistrationTextbox,
       getEmailTextbox,
       getPhoneTextbox,
-    } = setup();
+    } = setup({ initialValues });
 
     expect(getIsOrganizationRadioButtonValue()).toEqual('false');
 
@@ -137,7 +150,7 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getPhoneTextbox(0).value).toEqual('775-111-1111');
   });
 
-  it('Displays Corporation type Onwer with Data', async () => {
+  it('displays Corporation type Owner with data', async () => {
     const {
       getIsOrganizationRadioButtonValue,
       getGivenNameTextbox,
@@ -147,7 +160,7 @@ describe('UpdateAcquisitionForm component', () => {
       getRegistrationTextbox,
       getEmailTextbox,
       getPhoneTextbox,
-    } = setup();
+    } = setup({ initialValues });
 
     expect(getIsOrganizationRadioButtonValue(1)).toEqual('true');
 
@@ -161,5 +174,37 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getEmailTextbox(1).value).toEqual('fake@email.ca');
     expect(getPhoneTextbox(1).value).toEqual('');
+  });
+
+  it('should disable file completion date until the user marks the file as COMPLETED', async () => {
+    const { getFormikRef, getFileStatusDropdown, getFileCompletionDatePicker } = setup({
+      initialValues,
+    });
+
+    await act(() => userEvent.selectOptions(getFileStatusDropdown(), 'DRAFT'));
+    expect(getFileCompletionDatePicker()).toBeDisabled();
+
+    // submit form to trigger validation check
+    await waitFor(() => getFormikRef().current?.submitForm());
+
+    expect(validationSchema).toBeCalled();
+    expect(onSubmit).toBeCalled();
+  });
+
+  it('should require a file completion date when status is set to COMPLETED', async () => {
+    const { getFormikRef, getFileStatusDropdown, findByText } = setup({ initialValues });
+
+    await act(() => userEvent.selectOptions(getFileStatusDropdown(), 'COMPLT'));
+
+    // submit form to trigger validation check
+    await waitFor(() => getFormikRef().current?.submitForm());
+
+    expect(validationSchema).toBeCalled();
+    expect(
+      await findByText(
+        /Acquisition completed date is required when file status is set to "Complete"/i,
+      ),
+    ).toBeVisible();
+    expect(onSubmit).not.toBeCalled();
   });
 });
