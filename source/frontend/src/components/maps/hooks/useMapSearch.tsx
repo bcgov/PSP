@@ -17,9 +17,9 @@ export const useMapSearch = () => {
   const {
     loadProperties: { execute: loadProperties, loading, response },
   } = useMapProperties();
-  const { parcelsLayerUrl, boundaryLayerUrl } = useTenant();
+  const { parcelsLayerUrl, propertiesUrl } = useTenant();
   const parcelsService = useLayerQuery(parcelsLayerUrl);
-  const pimsService = useLayerQuery(boundaryLayerUrl, true);
+  const pimsService = useLayerQuery(propertiesUrl, true);
   const { setModalContent, setDisplayModal } = useModalContext();
   const keycloak = useKeycloakWrapper();
   const logout = keycloak.obj.logout;
@@ -118,7 +118,6 @@ export const useMapSearch = () => {
 };
 
 /**
- * TODO: PSP-4390 convert polygon features into lat/lng coordinates, remove this when new Point Geoserver layer available.
  * @param feature the feature to obtain lat/lng coordinates for.
  * @returns [lat, lng]
  */
@@ -135,7 +134,6 @@ export const propertiesResponseToPointFeature = (
 ): PointFeature[] => {
   const validFeatures = response?.features.filter(feature => !!feature?.geometry) ?? [];
   const data: PointFeature[] = validFeatures.map((feature: Feature) => {
-    //TODO: PSP-4390 this converts all polygons to points, this should be changed to a View that returns the POINT instead of the POLYGON (psp-1859)
     return {
       ...feature,
       geometry: { type: 'Point', coordinates: getLatLng(feature) },
