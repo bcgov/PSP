@@ -8,6 +8,7 @@ export interface Api_FormDocumentType extends Api_ConcurrentVersion {
 }
 
 export interface Api_FormDocumentFile extends Api_ConcurrentVersion {
+  id: number | null;
   fileId: number;
   formDocumentType: Api_FormDocumentType;
 }

@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts.AccessRequest
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsRoleClaim, RoleClaimModel>()
-                .PreserveReference(true)
                 .MaxDepth(3)
                 .Map(dest => dest.Id, src => src.RoleClaimId)
                 .Map(dest => dest.Role, src => src.Role)
@@ -18,7 +17,6 @@ namespace Pims.Api.Models.Concepts.AccessRequest
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<RoleClaimModel, Entity.PimsRoleClaim>()
-                .PreserveReference(true)
                 .MaxDepth(3)
                 .Map(dest => dest.RoleClaimId, src => src.Id)
                 .Map(dest => dest.Role, src => src.Role)

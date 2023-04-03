@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts.AccessRequest
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsRegionUser, RegionUserModel>()
-                .PreserveReference(true)
                 .MaxDepth(3)
                 .Map(dest => dest.Id, src => src.RegionUserId)
                 .Map(dest => dest.UserId, src => src.UserId)
@@ -18,7 +17,6 @@ namespace Pims.Api.Models.Concepts.AccessRequest
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<RegionUserModel, Entity.PimsRegionUser>()
-                .PreserveReference(true)
                 .MaxDepth(3)
                 .Map(dest => dest.RegionUserId, src => src.Id)
                 .Map(dest => dest.UserId, src => src.UserId)

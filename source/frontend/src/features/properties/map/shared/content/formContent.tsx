@@ -4,9 +4,9 @@ import { Col, Row } from 'react-bootstrap';
 import { withNameSpace } from 'utils/formUtils';
 import * as Yup from 'yup';
 
-import { ActivityModel } from '../models';
-import { ActivityTemplateTypes, IActivityFormContent } from './models';
-export const formContent = new Map<ActivityTemplateTypes, IActivityFormContent>([
+import { ActivityModel } from '../../activity/detail/models';
+import { ActivityTemplateTypes, FormTemplateTypes, IFormContent } from './models';
+export const formContent = new Map<ActivityTemplateTypes | FormTemplateTypes, IFormContent>([
   [
     ActivityTemplateTypes.SURVEY,
     {
