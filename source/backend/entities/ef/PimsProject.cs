@@ -32,6 +32,7 @@ namespace Pims.Dal.Entities
         [Key]
         [Column("ID")]
         public long Id { get; set; }
+        [Required]
         [Column("PROJECT_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string ProjectStatusTypeCode { get; set; }

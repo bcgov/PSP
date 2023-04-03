@@ -8,48 +8,54 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_OWNER_HIST")]
-    [Index(nameof(AcquisitionOwnerHistId), nameof(EndDateHist), Name = "PIMS_ACQOWN_H_UK", IsUnique = true)]
-    public partial class PimsAcquisitionOwnerHist
+    [Table("PIMS_AGREEMENT_HIST")]
+    [Index(nameof(AgreementHistId), nameof(EndDateHist), Name = "PIMS_AGRMNT_H_UK", IsUnique = true)]
+    public partial class PimsAgreementHist
     {
         [Key]
-        [Column("_ACQUISITION_OWNER_HIST_ID")]
-        public long AcquisitionOwnerHistId { get; set; }
+        [Column("_AGREEMENT_HIST_ID")]
+        public long AgreementHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("ACQUISITION_OWNER_ID")]
-        public long AcquisitionOwnerId { get; set; }
+        [Required]
+        [Column("AGREEMENT_ID")]
+        [StringLength(40)]
+        public string AgreementId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
-        public long? AcquisitionFileId { get; set; }
-        [Column("ADDRESS_ID")]
-        public long? AddressId { get; set; }
-        [Column("IS_PRIMARY_OWNER")]
-        public bool IsPrimaryOwner { get; set; }
-        [Column("IS_ORGANIZATION")]
-        public bool IsOrganization { get; set; }
-        [Column("LAST_NAME_AND_CORP_NAME")]
-        [StringLength(300)]
-        public string LastNameAndCorpName { get; set; }
-        [Column("OTHER_NAME")]
-        [StringLength(300)]
-        public string OtherName { get; set; }
-        [Column("GIVEN_NAME")]
-        [StringLength(300)]
-        public string GivenName { get; set; }
-        [Column("INCORPORATION_NUMBER")]
-        [StringLength(50)]
-        public string IncorporationNumber { get; set; }
-        [Column("REGISTRATION_NUMBER")]
-        [StringLength(50)]
-        public string RegistrationNumber { get; set; }
-        [Column("CONTACT_EMAIL_ADDR")]
-        [StringLength(250)]
-        public string ContactEmailAddr { get; set; }
-        [Column("CONTACT_PHONE_NUM")]
+        public long AcquisitionFileId { get; set; }
+        [Required]
+        [Column("AGREEMENT_TYPE_CODE")]
         [StringLength(20)]
-        public string ContactPhoneNum { get; set; }
+        public string AgreementTypeCode { get; set; }
+        [Column("AGREEMENT_DATE", TypeName = "date")]
+        public DateTime? AgreementDate { get; set; }
+        [Column("AGREEMENT_STATUS")]
+        public bool? AgreementStatus { get; set; }
+        [Column("COMPLETION_DATE", TypeName = "date")]
+        public DateTime? CompletionDate { get; set; }
+        [Column("TERMINATION_DATE", TypeName = "date")]
+        public DateTime? TerminationDate { get; set; }
+        [Column("COMMENCEMENT_DATE", TypeName = "date")]
+        public DateTime? CommencementDate { get; set; }
+        [Column("DEPOSIT_AMOUNT", TypeName = "money")]
+        public decimal? DepositAmount { get; set; }
+        [Column("NO_LATER_THAN_DAYS")]
+        public int? NoLaterThanDays { get; set; }
+        [Column("PURCHASE_PRICE", TypeName = "money")]
+        public decimal? PurchasePrice { get; set; }
+        [Column("LEGAL_SURVEY_PLAN_NUM")]
+        [StringLength(250)]
+        public string LegalSurveyPlanNum { get; set; }
+        [Column("OFFER_DATE", TypeName = "date")]
+        public DateTime? OfferDate { get; set; }
+        [Column("EXPIRY_TS", TypeName = "datetime")]
+        public DateTime? ExpiryTs { get; set; }
+        [Column("SIGNED_DATE", TypeName = "date")]
+        public DateTime? SignedDate { get; set; }
+        [Column("INSPECTION_DATE", TypeName = "date")]
+        public DateTime? InspectionDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
