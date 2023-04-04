@@ -37,6 +37,13 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
         utils.container.querySelector(
           `input[name="owners[${index}].otherName"]`,
         ) as HTMLInputElement,
+      getIsPrymaryContactRadioButtonValue: (index = 0) => {
+        const radio = utils.container.querySelector(
+          `input[name="owners[${index}].isPrimaryContact"]:checked`,
+        ) as HTMLInputElement;
+
+        return radio.value;
+      },
       getIsOrganizationRadioButtonValue: (index = 0) => {
         const radio = utils.container.querySelector(
           `input[name="owners[${index}].isOrganization"]:checked`,
@@ -93,7 +100,7 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
   });
 
   it(`renders owner row fields when 'Add owner' link is clicked`, async () => {
-    const { getByTestId, getGivenNameTextbox } = setup({
+    const { getByTestId, getGivenNameTextbox, getIsPrymaryContactRadioButtonValue } = setup({
       initialForm: testForm,
     });
     const addRow = getByTestId('add-file-owner');
@@ -101,11 +108,13 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
       userEvent.click(addRow);
     });
     expect(getGivenNameTextbox()).toBeVisible();
+    expect(getIsPrymaryContactRadioButtonValue()).toEqual('true');
   });
 
   it(`Only Renders the Owner as Individual fields by Default`, async () => {
     const {
       getByTestId,
+      getIsPrymaryContactRadioButtonValue,
       getGivenNameTextbox,
       getLastNameCorpNameTextbox,
       getOtherNameTextbox,
@@ -120,6 +129,7 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
       userEvent.click(addRow);
     });
 
+    expect(getIsPrymaryContactRadioButtonValue()).toEqual('true');
     expect(getIsOrganizationRadioButtonValue()).toEqual('false');
 
     expect(getGivenNameTextbox()).toBeVisible();

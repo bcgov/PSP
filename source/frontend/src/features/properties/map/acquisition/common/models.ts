@@ -44,6 +44,7 @@ export class AcquisitionOwnerFormModel {
   id?: number;
   rowVersion?: number;
   acquisitionFileId?: number;
+  isPrimaryContact: string = 'false';
   isOrganization: string = 'false';
   lastNameAndCorpName: string | '' = '';
   otherName: string | '' = '';
@@ -76,6 +77,7 @@ export class AcquisitionOwnerFormModel {
       id: this.id,
       rowVersion: this.rowVersion,
       acquisitionFileId: this.acquisitionFileId,
+      isPrimaryContact: this.isPrimaryContact === 'true' ? true : false,
       isOrganization: this.isOrganization === 'true' ? true : false,
       lastNameAndCorpName: this.lastNameAndCorpName,
       otherName: this.otherName,
@@ -105,6 +107,7 @@ export class AcquisitionOwnerFormModel {
     newForm.id = model.id;
     newForm.rowVersion = model.rowVersion;
     newForm.acquisitionFileId = model.acquisitionFileId;
+    newForm.isPrimaryContact = model.isPrimaryContact ? 'true' : '';
     newForm.isOrganization = model.isOrganization ? 'true' : 'false';
     newForm.lastNameAndCorpName = model.lastNameAndCorpName || '';
     newForm.otherName = model.otherName || '';

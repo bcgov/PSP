@@ -250,6 +250,7 @@ describe('AddAcquisitionContainer component', () => {
   it(`should save the form with owner address information when 'Other' country is selected and no province is supplied`, async () => {
     const mockOwner = new AcquisitionOwnerFormModel();
     mockOwner.givenName = 'Space Toad';
+    mockOwner.isPrimaryContact = 'true';
     mockOwner.address = new OwnerAddressFormModel();
     mockOwner.address.streetAddress1 = 'Test Street';
     mockOwner.address.streetAddress2 = '';
