@@ -1,16 +1,16 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
-import { FileTabNames } from 'features/mapSideBar/tabs/FileTabs';
+import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { IAcquisitionViewProps } from './AcquisitionView';
-import { EditFormNames } from './EditFormNames';
-import { useAcquisitionProvider } from './hooks/useAcquisitionProvider';
+import { EditFormType } from './EditFormNames';
 
 export interface IAcquisitionContainerProps {
   acquisitionFileId: number;
@@ -21,11 +21,11 @@ export interface IAcquisitionContainerProps {
 // Interface for our internal state
 export interface AcquisitionContainerState {
   isEditing: boolean;
-  activeEditForm?: EditFormNames;
+  activeEditForm?: EditFormType;
   selectedMenuIndex: number;
   showConfirmModal: boolean;
   acquisitionFile: Api_AcquisitionFile | undefined;
-  defaultFileTab: FileTabNames;
+  defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
 }
 
@@ -35,7 +35,7 @@ const initialState: AcquisitionContainerState = {
   selectedMenuIndex: 0,
   showConfirmModal: false,
   acquisitionFile: undefined,
-  defaultFileTab: FileTabNames.fileDetails,
+  defaultFileTab: FileTabType.FILE_DETAILS,
   defaultPropertyTab: InventoryTabNames.property,
 };
 
@@ -176,7 +176,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   if (
     loadingAcquisitionFile ||
     (loadingAcquisitionFileProperties &&
-      containerState.activeEditForm !== EditFormNames.propertySelector)
+      containerState.activeEditForm !== EditFormType.PROPERTY_SELECTOR)
   ) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }

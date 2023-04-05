@@ -8,7 +8,7 @@ import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { AcquisitionContainerState } from '../AcquisitionContainer';
-import { EditFormNames } from '../EditFormNames';
+import { EditFormType } from '../EditFormNames';
 
 export interface IAcquisitionMenuProps {
   items: string[];
@@ -52,7 +52,7 @@ const AcquisitionMenu: React.FunctionComponent<
                   onClick={() => {
                     props.setContainerState({
                       isEditing: true,
-                      activeEditForm: EditFormNames.propertySelector,
+                      activeEditForm: EditFormType.PROPERTY_SELECTOR,
                     });
                   }}
                 />

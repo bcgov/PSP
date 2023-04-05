@@ -22,7 +22,7 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { AcquisitionContainer, IAcquisitionContainerProps } from './AcquisitionContainer';
 import { IAcquisitionViewProps } from './AcquisitionView';
-import { EditFormNames } from './EditFormNames';
+import { EditFormType } from './EditFormNames';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -130,7 +130,7 @@ describe('AcquisitionContainer component', () => {
 
     mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).timeout();
     await act(async () => {
-      viewProps.setContainerState({ activeEditForm: EditFormNames.propertySelector });
+      viewProps.setContainerState({ activeEditForm: EditFormType.PROPERTY_SELECTOR });
       viewProps.canRemove(1);
       expect(spinner).not.toBeVisible();
     });
@@ -152,7 +152,7 @@ describe('AcquisitionContainer component', () => {
       },
     ]);
     await act(async () => {
-      viewProps.setContainerState({ activeEditForm: EditFormNames.propertySelector });
+      viewProps.setContainerState({ activeEditForm: EditFormType.PROPERTY_SELECTOR });
     });
     const canRemoveResponse = await viewProps.canRemove(1);
     expect(canRemoveResponse).toBe(true);
@@ -175,7 +175,7 @@ describe('AcquisitionContainer component', () => {
       },
     ]);
     await act(async () => {
-      viewProps.setContainerState({ activeEditForm: EditFormNames.propertySelector });
+      viewProps.setContainerState({ activeEditForm: EditFormType.PROPERTY_SELECTOR });
     });
     expect(await viewProps.canRemove(1)).toBe(false);
   });

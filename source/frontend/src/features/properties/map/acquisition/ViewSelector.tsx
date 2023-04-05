@@ -1,5 +1,5 @@
 import { FileTypes } from 'constants/fileTypes';
-import { FileTabNames } from 'features/mapSideBar/tabs/FileTabs';
+import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames, InventoryTabs } from 'features/mapSideBar/tabs/InventoryTabs';
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import TakesUpdateContainer from 'features/mapSideBar/tabs/takes/update/TakesUpdateContainer';
@@ -11,7 +11,7 @@ import React from 'react';
 import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
-import { EditFormNames } from './EditFormNames';
+import { EditFormType } from './EditFormNames';
 import { UpdateAcquisitionChecklistContainer } from './update/checklist/UpdateAcquisitionChecklistContainer';
 import { UpdateAcquisitionChecklistForm } from './update/checklist/UpdateAcquisitionChecklistForm';
 import { UpdateAcquisitionContainer } from './update/summary/UpdateAcquisitionContainer';
@@ -19,9 +19,9 @@ import { UpdateAcquisitionContainer } from './update/summary/UpdateAcquisitionCo
 export interface IViewSelectorProps {
   acquisitionFile?: Api_AcquisitionFile;
   isEditing: boolean;
-  activeEditForm?: EditFormNames;
+  activeEditForm?: EditFormType;
   selectedMenuIndex: number;
-  defaultFileTab: FileTabNames;
+  defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
   onSuccess: () => void;
@@ -35,7 +35,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
       // File-based tabs
       if (props.selectedMenuIndex === 0) {
         switch (props.activeEditForm) {
-          case EditFormNames.acquisitionChecklist:
+          case EditFormType.ACQUISITION_CHECKLIST:
             return (
               <UpdateAcquisitionChecklistContainer
                 formikRef={formikRef}
@@ -45,7 +45,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
               />
             );
 
-          case EditFormNames.acquisitionSummary:
+          case EditFormType.ACQUISITION_SUMMARY:
             return (
               <UpdateAcquisitionContainer
                 ref={formikRef}
@@ -64,7 +64,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
           props.selectedMenuIndex,
         );
         switch (props.activeEditForm) {
-          case EditFormNames.propertyDetails:
+          case EditFormType.PROPERTY_DETAILS:
             if (propertyFile?.property?.id === undefined) {
               throw Error('Cannot edit property without a valid id');
             }
@@ -75,9 +75,23 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
                 ref={formikRef}
               />
             );
-          case EditFormNames.takes:
+          case EditFormType.TAKES:
             return (
               <TakesUpdateContainer
+                fileProperty={propertyFile}
+                View={TakesUpdateForm}
+                ref={formikRef}
+                onSuccess={() =>
+                  props.setContainerState({
+                    isEditing: false,
+                    activeEditForm: undefined,
+                  })
+                }
+              />
+            );
+          case EditFormType.AGREEMENTS:
+            return (
+              <TakesUpdateContainer /*TODO */
                 fileProperty={propertyFile}
                 View={TakesUpdateForm}
                 ref={formikRef}
@@ -111,14 +125,14 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
               setEditFileProperty={() =>
                 props.setContainerState({
                   isEditing: true,
-                  activeEditForm: EditFormNames.propertyDetails,
+                  activeEditForm: EditFormType.PROPERTY_DETAILS,
                   defaultPropertyTab: InventoryTabNames.property,
                 })
               }
               setEditTakes={() =>
                 props.setContainerState({
                   isEditing: true,
-                  activeEditForm: EditFormNames.takes,
+                  activeEditForm: EditFormType.TAKES,
                   defaultPropertyTab: InventoryTabNames.takes,
                 })
               }

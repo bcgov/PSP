@@ -4,14 +4,15 @@ import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import { Formik, FormikProps } from 'formik';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import { IApiError } from 'interfaces/IApiError';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
-import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 
+import { StyledSectionCentered } from '../../detail/checklist/styles';
 import { AcquisitionChecklistFormModel } from './models';
 
 export interface IUpdateAcquisitionChecklistFormProps {
@@ -82,16 +83,12 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
                   key={checklistItem.itemType?.code ?? `acq-checklist-item-${j}`}
                   label={checklistItem.itemType?.description ?? ''}
                   tooltip={checklistItem.itemType?.hint}
-                  labelWidth="6"
+                  labelWidth="7"
                 >
-                  <StyledChecklistItem>
-                    <StyledChecklistItemStatus>
-                      <Select
-                        field={`checklistSections[${i}].items[${j}].statusType`}
-                        options={statusTypes}
-                      />
-                    </StyledChecklistItemStatus>
-                  </StyledChecklistItem>
+                  <Select
+                    field={`checklistSections[${i}].items[${j}].statusType`}
+                    options={statusTypes}
+                  />
                 </SectionField>
               ))}
             </Section>
@@ -101,24 +98,3 @@ export const UpdateAcquisitionChecklistForm: React.FC<IUpdateAcquisitionChecklis
     </Formik>
   );
 };
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;
-
-const StyledSectionCentered = styled(Section)`
-  font-size: 1.4rem;
-  text-align: center;
-`;
-
-const StyledChecklistItem = styled.div`
-  display: flex;
-  width: 100%;
-  padding-right: 1.5rem;
-  gap: 1rem;
-  text-align: right;
-`;
-
-const StyledChecklistItemStatus = styled.span`
-  min-width: 100%;
-`;
