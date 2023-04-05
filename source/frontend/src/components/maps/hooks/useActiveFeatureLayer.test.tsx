@@ -21,6 +21,7 @@ let addData = jest.fn();
 const setLayerPopup = jest.fn();
 (geoJSON as jest.Mock).mockReturnValue({
   addTo: () => ({ clearLayers, addData } as any),
+  getBounds: jest.fn(),
 });
 
 const useLayerQueryMock = {
@@ -58,7 +59,10 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('sets the active feature only when there is a selected property', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValue({ features: [{ properties: [{}] }] });
+    useLayerQueryMock.findOneWhereContains.mockClear();
+    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+      features: [{ geometry: { type: 'Polygon', coordinates: [1, 2] }, properties: [{}] }],
+    });
     renderHook(
       () =>
         useActiveFeatureLayer({
