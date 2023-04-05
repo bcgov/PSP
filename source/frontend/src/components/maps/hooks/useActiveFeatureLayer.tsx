@@ -152,7 +152,7 @@ const useActiveFeatureLayer = ({
           : DistrictCodes.Unknown,
         DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
       };
-      if (activeFeature.geometry.type === 'Polygon') {
+      if (activeFeature?.geometry?.type === 'Polygon') {
         activeFeatureLayer?.addData(activeFeature);
       }
       setState({ type: MapStateActionTypes.SELECTED_FEATURE, selectedFeature: activeFeature });
