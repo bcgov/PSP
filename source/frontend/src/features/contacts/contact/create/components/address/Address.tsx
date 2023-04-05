@@ -36,6 +36,12 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
   const { setFieldValue, values } = useFormikContext();
   const countryId = getIn(values, withNameSpace(namespace, 'countryId'));
 
+  const line1Count = !!getIn(values, withNameSpace(namespace, 'streetAddress1')) ? 1 : 0;
+  const line2Count = !!getIn(values, withNameSpace(namespace, 'streetAddress2')) ? 1 : 0;
+  const line3Count = !!getIn(values, withNameSpace(namespace, 'streetAddress3')) ? 1 : 0;
+
+  addressLines = addressLines ?? line1Count + line2Count + line3Count;
+
   useEffect(() => {
     setSelectedCountryId(countryId);
   }, [countryId, namespace, setFieldValue, setSelectedCountryId]);
@@ -51,20 +57,20 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
 
   // this counter determines how many address lines we render in the form; e.g. street1, street2, etc
   const { count, increment, decrement } = useCounter({
-    initial: addressLines ?? 1,
+    initial: addressLines || 1,
     min: 1,
     max: 3,
   });
-
   // clear extra address fields when they get removed from address form...
-  useEffect(() => {
-    if (count < 3) {
+  const decrementFunction = () => {
+    if (count === 3) {
       setFieldValue(withNameSpace(namespace, 'streetAddress3'), '');
     }
-    if (count < 2) {
+    if (count === 2) {
       setFieldValue(withNameSpace(namespace, 'streetAddress2'), '');
     }
-  }, [count, namespace, setFieldValue]);
+    decrement();
+  };
 
   return (
     <>
@@ -93,7 +99,7 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
         <Col style={{ paddingLeft: 0, paddingBottom: '2rem' }}>
           {count > 1 && !disabled && (
             <Stack justifyContent="flex-end" className="h-100">
-              <RemoveButton onRemove={decrement}>
+              <RemoveButton onRemove={decrementFunction}>
                 <MdClose size="2rem" /> <span className="text">Remove</span>
               </RemoveButton>
             </Stack>

@@ -131,6 +131,28 @@ describe('UpdatePersonForm', () => {
     expect(fragment).toMatchSnapshot();
   });
 
+  it('renders 2 address lines if provided', async () => {
+    mockUsePersonDetail.mockClear();
+    mockUsePersonDetail.mockReturnValue({
+      person: { ...mockPerson, addresses: [{ ...mockAddress, streetAddress2: 'line 2' }] },
+    });
+    const { findByDisplayValue } = setup();
+    expect(await findByDisplayValue('line 2')).toBeVisible();
+  });
+
+  it('renders 3 address lines if provided', async () => {
+    mockUsePersonDetail.mockClear();
+    mockUsePersonDetail.mockReturnValue({
+      person: {
+        ...mockPerson,
+        addresses: [{ ...mockAddress, streetAddress3: 'line 3', streetAddress2: 'line 2' }],
+      },
+    });
+    const { findByDisplayValue } = setup();
+    expect(await findByDisplayValue('line 2')).toBeVisible();
+    expect(await findByDisplayValue('line 3')).toBeVisible();
+  });
+
   describe('when Cancel button is clicked', () => {
     it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup();
