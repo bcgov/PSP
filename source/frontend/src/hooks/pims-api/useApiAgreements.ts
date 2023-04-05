@@ -1,8 +1,7 @@
-import { IAcquisitionFilter } from 'features/acquisition/list/interfaces';
 import { Api_Agreement } from 'models/api/Agreement';
 import React from 'react';
 
-import { IPaginateRequest, useAxiosApi } from '.';
+import { useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the agreements endpoints.

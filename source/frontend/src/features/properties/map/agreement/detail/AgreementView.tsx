@@ -1,12 +1,10 @@
 import EditButton from 'components/common/EditButton';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import Claims from 'constants/claims';
-import { SectionHeader } from 'features/leases/detail/styles';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Agreement } from 'models/api/Agreement';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -67,7 +65,9 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             {formatMoney(agreement.purchasePrice)}
           </SectionField>
           <SectionField labelWidth="5" label="Deposit due no later than">
-            {agreement.noLaterThanDays} <strong>days</strong>
+            {agreement.noLaterThanDays !== null
+              ? agreement.noLaterThanDays && <strong>days</strong>
+              : ''}
           </SectionField>
           <SectionField labelWidth="5" label="Deposit amount">
             {formatMoney(agreement.depositAmount)}
