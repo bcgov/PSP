@@ -38,7 +38,12 @@ export const AcquisitionHeader: React.FunctionComponent<
         </Row>
         <Row className="no-gutters">
           <Col>
-            <HeaderField label="Ministry product:" labelWidth={leftColumnLabel} contentWidth="9">
+            <HeaderField
+              label="Ministry product:"
+              labelWidth={leftColumnLabel}
+              valueTestId={'acq-header-product-val'}
+              contentWidth="9"
+            >
               {formatMinistryProduct(
                 acquisitionFile?.product?.code,
                 acquisitionFile?.product?.description,
@@ -104,6 +109,5 @@ function formatMinistryProject(projectNumber?: string | null, projectName?: stri
 }
 
 function formatMinistryProduct(productCode?: string | null, productDescription?: string | null) {
-  const formattedValue = [productCode, productDescription].filter(x => x).join(' - ');
-  return formattedValue;
+  return [productCode, productDescription].filter(x => x).join(' - ');
 }

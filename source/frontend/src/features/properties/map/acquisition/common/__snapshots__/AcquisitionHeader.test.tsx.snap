@@ -93,6 +93,7 @@ exports[`AcquisitionHeader component renders as expected when no data is provide
             </div>
             <div
               class="pl-1 text-left col-9"
+              data-testid="acq-header-product-val"
             >
               <strong />
             </div>

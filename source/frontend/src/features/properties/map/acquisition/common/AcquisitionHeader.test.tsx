@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { prettyFormatDate } from 'utils';
-import { render, RenderOptions } from 'utils/test-utils';
+import { getByTestId, render, RenderOptions } from 'utils/test-utils';
 
 import { AcquisitionHeader, IAcquisitionHeaderProps } from './AcquisitionHeader';
 
@@ -67,5 +67,17 @@ describe('AcquisitionHeader component', () => {
 
     expect(getByText('Ministry product:')).toBeVisible();
     expect(getByText('00048 - MISCELLANEOUS CLAIMS')).toBeVisible();
+  });
+
+  it('renders the Product label when null', async () => {
+    const { getByText, getByTestId } = setup({
+      acquisitionFile: {
+        ...mockAcquisitionFileResponse,
+        product: undefined,
+      },
+    });
+
+    expect(getByText('Ministry product:')).toBeVisible();
+    expect(getByTestId('acq-header-product-val')).toHaveTextContent('');
   });
 });

@@ -171,6 +171,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
               </div>
               <div
                 class="pl-1 text-left col-9"
+                data-testid="acq-header-product-val"
               >
                 <strong>
                   00048 - MISCELLANEOUS CLAIMS
