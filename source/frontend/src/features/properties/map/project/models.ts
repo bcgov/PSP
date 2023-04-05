@@ -54,6 +54,10 @@ export class ProjectForm {
   rowVersion?: number;
   products: ProductForm[] = [];
 
+  constructor() {
+    this.projectStatusType = 'AC';
+  }
+
   toApi(): Api_Project {
     return {
       id: this.id,
