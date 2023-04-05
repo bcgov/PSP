@@ -25,6 +25,8 @@ namespace Pims.Dal.Entities
         public long? AcquisitionFileId { get; set; }
         [Column("ADDRESS_ID")]
         public long? AddressId { get; set; }
+        [Column("IS_PRIMARY_OWNER")]
+        public bool IsPrimaryOwner { get; set; }
         [Column("IS_ORGANIZATION")]
         public bool IsOrganization { get; set; }
         [Column("LAST_NAME_AND_CORP_NAME")]
