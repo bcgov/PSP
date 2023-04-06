@@ -15,5 +15,6 @@ VALUES
   (N'PROPCOORD',  N'Property coordinator'),
   (N'EXPRAGENT',  N'Expropriation agent'),
   (N'PROPAGENT',  N'Property agent'),
-  (N'PROPANLYS',  N'Property analyst');
+  (N'PROPANLYS',  N'Property analyst'),
+  (N'MOTILAWYER', N'MoTI Solicitor');
 GO
