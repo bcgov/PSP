@@ -2,7 +2,7 @@ import { ResetButton, SearchButton } from 'components/common/buttons';
 import { Input, Select } from 'components/common/form';
 import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { FilterBoxForm } from 'components/common/styles';
-import { PROJECT_STATUS_TYPES, REGION_TYPES } from 'constants/API';
+import { PROJECT_STATUS_TYPES } from 'constants/API';
 import { ProjectStatusTypes } from 'constants/projectStatusTypes';
 import { IProjectFilter } from 'features/projects/interfaces';
 import { Formik } from 'formik';
