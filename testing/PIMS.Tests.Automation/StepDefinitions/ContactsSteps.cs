@@ -314,11 +314,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (contactType == "Individual")
             {
-                searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.Email1, individualContact.MailAddressLine1, individualContact.MailCity, individualContact.MailProvDisplay);
+                searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.Email1, individualContact.MailAddressLine1, individualContact.MailCity, individualContact.MailProvDisplay, individualContact.MailCountry);
             }
             else
             {
-                searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.Email1, organizationContact.MailAddressLine1, organizationContact.MailCity, organizationContact.MailProvDisplay);
+                searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.Email1, organizationContact.MailAddressLine1, organizationContact.MailCity, organizationContact.MailProvDisplay,organizationContact.MailCountry);
             }
         }
 
