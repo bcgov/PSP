@@ -1205,7 +1205,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c7"
                     >
-                      Section 16 end date:
+                      End date:
                     </label>
                   </div>
                   <div

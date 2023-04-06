@@ -138,7 +138,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                     <AreaContainer landArea={take.landActArea ?? undefined} />
                   </SectionField>
 
-                  <SectionField label="Land Act end date" labelWidth="3" contentWidth="4">
+                  <SectionField label="End date" labelWidth="3" contentWidth="4">
                     {prettyFormatDate(take.landActEndDt ?? undefined)}
                   </SectionField>
 

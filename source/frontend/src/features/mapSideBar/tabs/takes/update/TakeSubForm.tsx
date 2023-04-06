@@ -217,7 +217,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                   field={withNameSpace(nameSpace, 'landActArea')}
                 />
               </SectionField>
-              <SectionField label="Section 16 end date" contentWidth="4">
+              <SectionField label="End date" contentWidth="4">
                 <FastDatePicker
                   field={withNameSpace(nameSpace, 'landActEndDt')}
                   formikProps={formikProps}
