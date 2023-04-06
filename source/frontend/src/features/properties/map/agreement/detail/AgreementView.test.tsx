@@ -1,0 +1,69 @@
+import { Claims } from 'constants/index';
+import { useApiUsers } from 'hooks/pims-api/useApiUsers';
+import { mockLookups } from 'mocks';
+import {
+  mockAcquisitionFileChecklistResponse,
+  mockAcquisitionFileResponse,
+} from 'mocks/mockAcquisitionFiles';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import AgreementView, { IAgreementViewProps } from './AgreementView';
+import { mockAgreementsResponse } from 'mocks/mockAgreements';
+
+// mock auth library
+jest.mock('@react-keycloak/web');
+
+// mock API service calls
+jest.mock('hooks/pims-api/useApiUsers');
+
+(useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
+  getUserInfo: jest.fn().mockResolvedValue({}),
+} as any);
+
+const mockViewProps: IAgreementViewProps = {
+  agreements: [],
+  onEdit: jest.fn(),
+  loading: false,
+};
+
+describe('AgreementView component', () => {
+  const setup = (renderOptions: RenderOptions = {}) => {
+    const utils = render(
+      <AgreementView
+        agreements={mockViewProps.agreements}
+        onEdit={mockViewProps.onEdit}
+        loading={mockViewProps.loading}
+      />,
+      {
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
+        useMockAuthentication: true,
+        claims: renderOptions?.claims ?? [],
+        ...renderOptions,
+      },
+    );
+
+    return {
+      ...utils,
+    };
+  };
+
+  beforeEach(() => {
+    mockViewProps.agreements = mockAgreementsResponse();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders as expected', async () => {
+    const { asFragment } = setup();
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders the agreement type ', () => {
+    const { getByText } = setup();
+    expect(getByText(/License Of Occupation/i)).toBeVisible();
+  });
+});

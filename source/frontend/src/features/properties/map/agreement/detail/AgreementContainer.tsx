@@ -19,20 +19,19 @@ export const AgreementContainer: React.FunctionComponent<
   const {
     getAcquisitionAgreements: { execute: getAgreements, response, loading },
   } = useAgreementProvider();
+
   const { file, fileLoading } = useContext(SideBarContext);
-
-  const fetchAgreements = useCallback(async () => {
-    if (!!acquisitionFileId) {
-      return await getAgreements(acquisitionFileId);
-    }
-  }, [acquisitionFileId, getAgreements]);
-  useEffect(() => {
-    fetchAgreements();
-  }, [fetchAgreements]);
-
   if (!!file && file?.id === undefined && fileLoading === false) {
     throw new Error('Unable to determine id of current file.');
   }
+
+  const fetchAgreements = useCallback(async () => {
+    return await getAgreements(acquisitionFileId);
+  }, [acquisitionFileId, getAgreements]);
+
+  useEffect(() => {
+    fetchAgreements();
+  }, [fetchAgreements]);
 
   return !!file?.id ? (
     <>

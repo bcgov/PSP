@@ -23,6 +23,10 @@ exports[`TakesDetailView component renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
+.c0 {
+  text-align: right;
+}
+
 .c1 {
   margin: 1.5rem;
   padding: 1.5rem;
@@ -40,10 +44,6 @@ exports[`TakesDetailView component renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
-}
-
-.c0 {
-  text-align: right;
 }
 
 .c3 {
