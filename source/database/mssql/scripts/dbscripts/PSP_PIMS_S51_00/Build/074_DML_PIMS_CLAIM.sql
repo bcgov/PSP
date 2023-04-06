@@ -279,4 +279,10 @@ INSERT [dbo].[PIMS_CLAIM]
 VALUES
     (51, N'500b99f7-d3ea-4a51-b8e2-7c12624b4944', N'form-delete', N'500b99f7-d3ea-4a51-b8e2-7c12624b4944', N'Ability to delete file forms.', 0, 1, @seedTime, @appUserId, @appUserGuid, @appUserDirectory, @seedTime, @dbUserId, @seedTime, @appUserId, @appUserGuid, @appUserDirectory, @seedTime, @dbUserId);
 
+-- Agreement claims
+INSERT [dbo].[PIMS_CLAIM]
+    ([CLAIM_ID], [CLAIM_UID], [NAME], [KEYCLOAK_ROLE_ID], [DESCRIPTION], [IS_DISABLED], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID])
+VALUES
+    (52, N'7bad14e8-03c7-49c5-aa94-650128a734f3', N'agreement-view', N'7bad14e8-03c7-49c5-aa94-650128a734f3', N'Ability to view agreements.', 0, 1, @seedTime, @appUserId, @appUserGuid, @appUserDirectory, @seedTime, @dbUserId, @seedTime, @appUserId, @appUserGuid, @appUserDirectory, @seedTime, @dbUserId);
+
 GO
