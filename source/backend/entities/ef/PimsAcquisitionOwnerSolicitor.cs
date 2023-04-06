@@ -8,46 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQUISITION_OWNER")]
-    [Index(nameof(AcquisitionFileId), Name = "ACQOWN_ACQUISITION_FILE_ID_IDX")]
-    [Index(nameof(AddressId), Name = "ACQOWN_ADDRESS_ID_IDX")]
-    [Index(nameof(LastNameAndCorpName), Name = "ACQOWN_LAST_NAME_OR_CORP_NAME_1_IDX")]
-    public partial class PimsAcquisitionOwner
+    [Table("PIMS_ACQUISITION_OWNER_SOLICITOR")]
+    [Index(nameof(AcquisitionFileId), Name = "AQOWSO_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(AcquisitionFileId), nameof(PersonId), Name = "AQOWSO_ACQUISITION_FILE_PERSON_TUC", IsUnique = true)]
+    [Index(nameof(PersonId), Name = "AQOWSO_PERSON_ID_IDX")]
+    public partial class PimsAcquisitionOwnerSolicitor
     {
         [Key]
-        [Column("ACQUISITION_OWNER_ID")]
-        public long AcquisitionOwnerId { get; set; }
+        [Column("OWNER_SOLICITOR_ID")]
+        public long OwnerSolicitorId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
-        public long? AcquisitionFileId { get; set; }
-        [Column("ADDRESS_ID")]
-        public long? AddressId { get; set; }
-        [Required]
-        [Column("IS_PRIMARY_OWNER")]
-        public bool? IsPrimaryOwner { get; set; }
-        [Required]
-        [Column("IS_ORGANIZATION")]
-        public bool? IsOrganization { get; set; }
-        [Column("LAST_NAME_AND_CORP_NAME")]
-        [StringLength(300)]
-        public string LastNameAndCorpName { get; set; }
-        [Column("OTHER_NAME")]
-        [StringLength(300)]
-        public string OtherName { get; set; }
-        [Column("GIVEN_NAME")]
-        [StringLength(300)]
-        public string GivenName { get; set; }
-        [Column("INCORPORATION_NUMBER")]
-        [StringLength(50)]
-        public string IncorporationNumber { get; set; }
-        [Column("REGISTRATION_NUMBER")]
-        [StringLength(50)]
-        public string RegistrationNumber { get; set; }
-        [Column("CONTACT_EMAIL_ADDR")]
-        [StringLength(250)]
-        public string ContactEmailAddr { get; set; }
-        [Column("CONTACT_PHONE_NUM")]
-        [StringLength(20)]
-        public string ContactPhoneNum { get; set; }
+        public long AcquisitionFileId { get; set; }
+        [Column("PERSON_ID")]
+        public long PersonId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -88,10 +63,10 @@ namespace Pims.Dal.Entities
         public string DbLastUpdateUserid { get; set; }
 
         [ForeignKey(nameof(AcquisitionFileId))]
-        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionOwners))]
+        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionOwnerSolicitors))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
-        [ForeignKey(nameof(AddressId))]
-        [InverseProperty(nameof(PimsAddress.PimsAcquisitionOwners))]
-        public virtual PimsAddress Address { get; set; }
+        [ForeignKey(nameof(PersonId))]
+        [InverseProperty(nameof(PimsPerson.PimsAcquisitionOwnerSolicitors))]
+        public virtual PimsPerson Person { get; set; }
     }
 }
