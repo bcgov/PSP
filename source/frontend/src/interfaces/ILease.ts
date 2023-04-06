@@ -119,7 +119,7 @@ export const defaultLease: ILease = {
   paymentReceivableType: { id: 'RCVBL', description: 'Receivable', isDisabled: false },
   categoryType: { id: 'COMM', description: 'Commercial', isDisabled: false },
   purposeType: { id: 'BCFERRIES', description: 'BC Ferries', isDisabled: false },
-  initiatorType: { id: 'PROJECT', description: 'Project', isDisabled: false },
+  initiatorType: { id: '', description: '', isDisabled: false },
   type: { id: 'LSREG', description: 'Lease - Registered', isDisabled: false },
   renewalCount: 0,
   motiName: 'Moti, Name, Name',
