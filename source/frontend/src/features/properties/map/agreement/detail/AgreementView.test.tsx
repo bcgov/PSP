@@ -1,14 +1,10 @@
-import { Claims } from 'constants/index';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
 import { mockLookups } from 'mocks';
-import {
-  mockAcquisitionFileChecklistResponse,
-  mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
-import AgreementView, { IAgreementViewProps } from './AgreementView';
 import { mockAgreementsResponse } from 'mocks/mockAgreements';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { render, RenderOptions } from 'utils/test-utils';
+
+import AgreementView, { IAgreementViewProps } from './AgreementView';
 
 // mock auth library
 jest.mock('@react-keycloak/web');

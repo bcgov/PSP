@@ -1,8 +1,3 @@
-import {
-  Api_AcquisitionFile,
-  Api_AcquisitionFileChecklistItem,
-  Api_AcquisitionFileOwner,
-} from 'models/api/AcquisitionFile';
 import { Api_Agreement } from 'models/api/Agreement';
 
 export const mockAgreementsResponse = (): Api_Agreement[] => [
