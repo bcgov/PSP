@@ -1,4 +1,5 @@
 import { IProjectFilter } from 'features/projects/interfaces';
+import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
@@ -10,17 +11,42 @@ const storeState = {
 };
 
 const setFilter = jest.fn();
+jest.mock('@react-keycloak/web');
 
 // render component under test
 const setup = (
   renderOptions: RenderOptions & IProjectFilterProps = { store: storeState, setFilter },
 ) => {
   const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
-  const utils = render(<ProjectFilter filter={filter} setFilter={setFilterFn} />, { ...rest });
+  const utils = render(<ProjectFilter filter={filter} setFilter={setFilterFn} />, {
+    ...rest,
+    claims: [],
+  });
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   return { searchButton, resetButton, setFilter: setFilterFn, ...utils };
 };
+
+const retrieveUserInfo = jest.fn();
+jest.mock('hooks/repositories/useUserInfoRepository');
+(useUserInfoRepository as jest.Mock).mockReturnValue({
+  retrieveUserInfo,
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+      },
+    ],
+  },
+});
 
 describe('Project Filter', () => {
   beforeEach(() => {

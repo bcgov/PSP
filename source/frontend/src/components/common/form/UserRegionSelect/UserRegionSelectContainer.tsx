@@ -49,6 +49,7 @@ export const UserRegionSelectContainer: React.FunctionComponent<
       {...rest}
       options={userRegionTypes}
       field={field}
+      className="d-flex"
       tooltip={
         !userRegionTypes?.length
           ? `You aren't associated to any regions! ask an administrator to add you to one or more regions.`

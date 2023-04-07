@@ -1749,9 +1749,7 @@ namespace Pims.Dal
 
                 entity.HasComment("Table containing the details of the acquisition agreement.");
 
-                entity.Property(e => e.AgreementId)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('NEXT VALUE FOR [PIMS_AGREEMENT_ID_SEQ]')");
+                entity.Property(e => e.AgreementId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_AGREEMENT_ID_SEQ])");
 
                 entity.Property(e => e.AgreementDate).HasComment("Date of the agreement.");
 
@@ -1822,8 +1820,6 @@ namespace Pims.Dal
                     .HasName("PIMS_AGRMNT_H_PK");
 
                 entity.Property(e => e.AgreementHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_AGREEMENT_H_ID_SEQ])");
-
-                entity.Property(e => e.AgreementId).IsUnicode(false);
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -2036,7 +2032,6 @@ namespace Pims.Dal
                 entity.HasComment("Description of the consultation status type for (currently) a lease or license.");
 
                 entity.Property(e => e.ConsultationStatusTypeCode)
-                    .IsUnicode(false)
                     .HasDefaultValueSql("('OTHER')")
                     .HasComment("Code value of the consultation status type.");
 
@@ -2069,7 +2064,6 @@ namespace Pims.Dal
                 entity.HasComment("Description of the consultation type required for (currently) a lease or license.");
 
                 entity.Property(e => e.ConsultationTypeCode)
-                    .IsUnicode(false)
                     .HasDefaultValueSql("('OTHER')")
                     .HasComment("Code value of the consultation type.");
 
@@ -2931,11 +2925,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ConsultationStatusTypeCode)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('UNKNOWN')");
-
-                entity.Property(e => e.ConsultationTypeCode).IsUnicode(false);
+                entity.Property(e => e.ConsultationStatusTypeCode).HasDefaultValueSql("('UNKNOWN')");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -2974,10 +2964,6 @@ namespace Pims.Dal
                     .HasName("PIMS_LESCON_H_PK");
 
                 entity.Property(e => e.LeaseConsultationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_CONSULTATION_H_ID_SEQ])");
-
-                entity.Property(e => e.ConsultationStatusTypeCode).IsUnicode(false);
-
-                entity.Property(e => e.ConsultationTypeCode).IsUnicode(false);
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
