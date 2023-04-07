@@ -36,16 +36,12 @@ export const HeaderLabelCol: React.FC<IHeaderLabelColProps> = props => (
 export const HeaderContentCol: React.FC<
   React.PropsWithChildren<IHeaderContentColProps>
 > = props => {
-  return props.valueTestId ? (
+  return (
     <Col
       xs={props.contentWidth ?? 'auto'}
       className="pl-1 text-left"
       data-testid={props.valueTestId}
     >
-      <strong>{props.children}</strong>
-    </Col>
-  ) : (
-    <Col xs={props.contentWidth ?? 'auto'} className="pl-1 text-left">
       <strong>{props.children}</strong>
     </Col>
   );
