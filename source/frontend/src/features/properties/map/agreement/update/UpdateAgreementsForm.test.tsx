@@ -1,10 +1,7 @@
 import { FormikProps } from 'formik';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
 import { mockLookups } from 'mocks';
-import {
-  mockAcquisitionFileChecklistResponse,
-  mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
+
 import { Api_Agreement } from 'models/api/Agreement';
 import { createRef } from 'react';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -12,6 +9,8 @@ import { act, createAxiosError, render, RenderOptions } from 'utils/test-utils';
 
 import { AgreementsFormModel } from './models';
 import { IUpdateAgreementsFormProps, UpdateAgreementsForm } from './UpdateAgreementsForm';
+import { mockAgreementsResponse } from 'mocks/mockAgreements';
+import { AGREEMENT_TYPES } from 'constants/API';
 
 // mock API service calls
 jest.mock('hooks/pims-api/useApiUsers');
@@ -20,17 +19,17 @@ jest.mock('hooks/pims-api/useApiUsers');
   getUserInfo: jest.fn().mockResolvedValue({}),
 } as any);
 
-const sectionTypes: Api_Agreement[] = [];
+const agreementTypes: ILookupCode[] = mockLookups.filter(x => x.type === AGREEMENT_TYPES);
 
 let mockViewProps: IUpdateAgreementsFormProps = {
   isLoading: false,
   formikRef: null as any,
-  initialValues: new AgreementsFormModel(1),
-  agreementTypes: [],
+  initialValues: new AgreementsFormModel(0),
+  agreementTypes: agreementTypes,
   onSave: jest.fn(),
 };
 
-describe('UpdateAcquisitionChecklist form', () => {
+describe('UpdateAgreementsForm component', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
     const formikRef = createRef<FormikProps<AgreementsFormModel>>();
     const utils = render(
@@ -38,7 +37,7 @@ describe('UpdateAcquisitionChecklist form', () => {
         isLoading={false}
         formikRef={formikRef}
         initialValues={mockViewProps.initialValues}
-        agreementTypes={[]}
+        agreementTypes={mockViewProps.agreementTypes}
         onSave={mockViewProps.onSave}
       />,
       {
@@ -58,10 +57,9 @@ describe('UpdateAcquisitionChecklist form', () => {
   };
 
   beforeEach(() => {
-    const apiAcquisitionFile = mockAcquisitionFileResponse();
-    apiAcquisitionFile.acquisitionFileChecklist = mockAcquisitionFileChecklistResponse();
+    const agreements = mockAgreementsResponse();
 
-    mockViewProps.initialValues = AgreementsFormModel.fromApi(1, sectionTypes);
+    mockViewProps.initialValues = AgreementsFormModel.fromApi(1, agreements);
   });
 
   afterEach(() => {
@@ -73,51 +71,13 @@ describe('UpdateAcquisitionChecklist form', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders last updated by and last updated on for the overall checklist', () => {
-    const { getByText } = setup();
-    expect(getByText(/This checklist was last updated Mar 17, 2023 by/i)).toBeVisible();
-  });
-
   it('saves the form with minimal data', async () => {
     const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockAcquisitionFileResponse());
+    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockAgreementsResponse());
 
     await act(async () => {
       formikRef.current?.submitForm();
     });
-    expect(mockViewProps.onSave).toHaveBeenCalled();
-  });
-
-  it('saves the form with updated values', async () => {
-    const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockAcquisitionFileResponse());
-
-    await act(async () => {
-      formikRef.current?.submitForm();
-    });
-    expect(mockViewProps.onSave).toHaveBeenCalled();
-  });
-
-  it('calls onSuccess when the acquisition checklist is saved successfully', async () => {
-    const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockAcquisitionFileResponse());
-
-    await act(async () => {
-      formikRef.current?.submitForm();
-    });
-
-    expect(mockViewProps.onSave).toHaveBeenCalled();
-  });
-
-  it('calls onError when it cannot save the form', async () => {
-    const { formikRef } = setup();
-    const error500 = createAxiosError(500);
-    (mockViewProps.onSave as jest.Mock).mockRejectedValue(error500);
-
-    await act(async () => {
-      formikRef.current?.submitForm();
-    });
-
     expect(mockViewProps.onSave).toHaveBeenCalled();
   });
 });

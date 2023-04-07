@@ -1,30 +1,37 @@
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { mockLookups } from 'mocks';
-import {
-  mockAcquisitionFileChecklistResponse,
-  mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
+
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Agreement } from 'models/api/Agreement';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions, screen } from 'utils/test-utils';
 
-import { AgreementsFormModel } from './models';
+import { AgreementFormModelITEM, AgreementsFormModel } from './models';
 import { UpdateAgreementsContainer } from './UpdateAgreementsContainer';
 import { IUpdateAgreementsFormProps } from './UpdateAgreementsForm';
+import { useAgreementProvider } from 'hooks/repositories/useAgreementProvider';
+import { mockAgreementsResponse } from 'mocks/mockAgreements';
 
 // mock API service calls
-jest.mock('hooks/repositories/useAcquisitionProvider');
+jest.mock('hooks/repositories/useAgreementProvider');
 
-type Provider = typeof useAcquisitionProvider;
-const mockUpdateAcquisitionChecklist = jest.fn();
+type Provider = typeof useAgreementProvider;
+const mockUpdateAgreements = jest.fn();
+const mockGetAgreements = jest.fn();
+const testAcquisitionFileId = 100;
 
-(useAcquisitionProvider as jest.MockedFunction<Provider>).mockReturnValue({
-  updateAcquisitionChecklist: {
+(useAgreementProvider as jest.MockedFunction<Provider>).mockReturnValue({
+  updateAcquisitionAgreements: {
     error: undefined,
     response: undefined,
-    execute: mockUpdateAcquisitionChecklist,
+    execute: mockUpdateAgreements,
+    loading: false,
+  },
+  getAcquisitionAgreements: {
+    error: undefined,
+    response: undefined,
+    execute: mockGetAgreements,
     loading: false,
   },
 } as unknown as ReturnType<Provider>);
@@ -36,15 +43,15 @@ const TestView: React.FC<IUpdateAgreementsFormProps> = props => {
   return <span>Content Rendered</span>;
 };
 
-describe('UpdateAcquisitionChecklist container', () => {
-  let acquisitionFile: Api_AcquisitionFile | undefined = undefined;
+describe('UpdateAgreementsContainer component', () => {
+  let agreements: Api_Agreement[] | undefined = undefined;
   const onSuccess = jest.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <UpdateAgreementsContainer
         formikRef={createRef()}
-        acquisitionFileId={1}
+        acquisitionFileId={testAcquisitionFileId}
         onSuccess={onSuccess}
         View={TestView}
       />,
@@ -65,8 +72,7 @@ describe('UpdateAcquisitionChecklist container', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    acquisitionFile = mockAcquisitionFileResponse();
-    acquisitionFile.acquisitionFileChecklist = mockAcquisitionFileChecklistResponse();
+    agreements = mockAgreementsResponse();
   });
 
   afterEach(() => {
@@ -78,48 +84,48 @@ describe('UpdateAcquisitionChecklist container', () => {
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
-  it('makes request to update the acquisition checklist and returns the response', async () => {
+  it('makes request to update the agreements and returns the response', async () => {
     setup();
-    mockUpdateAcquisitionChecklist.mockResolvedValue(mockAcquisitionFileChecklistResponse());
+    mockUpdateAgreements.mockResolvedValue(mockAgreementsResponse());
+    let updatedAgreements: Api_Agreement[] | undefined;
 
-    let updatedChecklist: Api_Agreement[] | undefined;
+    const testAgreementForm = new AgreementsFormModel(testAcquisitionFileId);
+    const testAgreementItem = new AgreementFormModelITEM();
+    testAgreementItem.agreementId = 10;
+    testAgreementItem.depositAmount = '50';
+
+    testAgreementForm.agreements = [testAgreementItem];
     await act(async () => {
-      updatedChecklist = await viewProps?.onSave(new AgreementsFormModel(1));
+      updatedAgreements = await viewProps?.onSave(testAgreementForm);
     });
 
-    expect(mockUpdateAcquisitionChecklist).toHaveBeenCalled();
-    expect(updatedChecklist).toStrictEqual([...mockAcquisitionFileChecklistResponse()]);
+    expect(mockUpdateAgreements).toHaveBeenCalledWith(
+      testAcquisitionFileId,
+      testAgreementForm.toApi(),
+    );
+    expect(updatedAgreements).toStrictEqual([...mockAgreementsResponse()]);
   });
 
-  it('calls onSuccess when the acquisition checklist is saved successfully', async () => {
+  it('calls onSuccess when the agreements are saved successfully', async () => {
     setup();
 
-    /*await act(async () => {
-      viewProps?.onSuccess([]);
-    });*/
+    await act(async () => {
+      viewProps?.onSave(new AgreementsFormModel(1));
+    });
 
+    expect(mockUpdateAgreements).toHaveBeenCalled();
     expect(onSuccess).toHaveBeenCalled();
   });
 
-  it('displays a toast with server-returned error responses', async () => {
+  it('does not call onSucess if the returned value is invalid', async () => {
     setup();
+    mockUpdateAgreements.mockResolvedValue(undefined);
 
-    /*await act(async () => {
-      const error400 = createAxiosError(400, 'Lorem ipsum error');
-      viewProps?.onError(error400);
-    });*/
+    await act(async () => {
+      await viewProps?.onSave(new AgreementsFormModel(1));
+    });
 
-    expect(await screen.findByText('Lorem ipsum error')).toBeVisible();
-  });
-
-  it('displays a toast for generic server errors', async () => {
-    setup();
-
-    /*await act(async () => {
-      const error500 = createAxiosError(500);
-      viewProps?.onError(error500);
-    });*/
-
-    expect(await screen.findByText('Unable to save. Please try again.')).toBeVisible();
+    expect(mockUpdateAgreements).toHaveBeenCalled();
+    expect(onSuccess).not.toHaveBeenCalled();
   });
 });

@@ -1181,6 +1181,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-NEGOTAGENT"
                   value="NEGOTAGENT"
                 >
@@ -1365,6 +1372,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value="EXPRAGENT"
                 >
                   Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
                 </option>
                 <option
                   class="option"

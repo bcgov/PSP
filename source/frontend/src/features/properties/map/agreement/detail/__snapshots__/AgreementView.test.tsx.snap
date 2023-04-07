@@ -487,9 +487,12 @@ exports[`AgreementView component renders as expected 1`] = `
           <div
             class="c6 text-left col"
           >
-            <strong>
-              days
-            </strong>
+            <span>
+              20 
+              <strong>
+                days
+              </strong>
+            </span>
           </div>
         </div>
         <div

@@ -1,6 +1,6 @@
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
-import { useAgreementProvider } from 'hooks/repositories/useAgreemetProvider';
+import { useAgreementProvider } from 'hooks/repositories/useAgreementProvider';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import React, { useEffect, useState } from 'react';
 

@@ -1,5 +1,5 @@
 import { SideBarContext } from 'features/properties/map/context/sidebarContext';
-import { useAgreementProvider } from 'hooks/repositories/useAgreemetProvider';
+import { useAgreementProvider } from 'hooks/repositories/useAgreementProvider';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
