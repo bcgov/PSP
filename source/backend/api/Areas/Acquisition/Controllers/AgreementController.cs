@@ -48,30 +48,30 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get the acquisition file checklist.
+        /// Get the acquisition file agreements.
         /// </summary>
-        /// <returns>The checklist items.</returns>
+        /// <returns>The agreements items.</returns>
         [HttpGet("{id:long}/agreements")]
         [HasPermission(Permissions.AgreementView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<AgreementModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult GetAcquisitionFileChecklist([FromRoute] long id)
+        public IActionResult GetAcquisitionFileAgreements([FromRoute] long id)
         {
-            var checklist = _acquisitionService.GetAgreements(id);
-            return new JsonResult(_mapper.Map<IEnumerable<AgreementModel>>(checklist));
+            var agreements = _acquisitionService.GetAgreements(id);
+            return new JsonResult(_mapper.Map<IEnumerable<AgreementModel>>(agreements));
         }
 
         /// <summary>
         /// Update the acquisition file agreements.
         /// </summary>
-        /// <returns>The updated checklist items.</returns>
+        /// <returns>The updated agreements items.</returns>
         [HttpPost("{id:long}/agreements")]
         [HasPermission(Permissions.AgreementView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AgreementModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult UpdateAcquisitionFileChecklist([FromRoute] long id, [FromBody] List<AgreementModel> agreements)
+        public IActionResult UpdateAcquisitionFileAgreements([FromRoute] long id, [FromBody] List<AgreementModel> agreements)
         {
             var agreementEntities = _mapper.Map<List<Dal.Entities.PimsAgreement>>(agreements);
             var acquisitionFile = _acquisitionService.UpdateAgreements(id, agreementEntities);
