@@ -2,7 +2,7 @@ import { Api_Agreement } from 'models/api/Agreement';
 import { booleanToString, stringToBooleanOrNull, stringToNull, toTypeCode } from 'utils/formUtils';
 
 export class AgreementFormModelITEM {
-  public agreementId: string | null = null;
+  public agreementId: number = 0;
 
   public agreementTypeCode: string = '';
   public agreementTypeDescription: string = '';

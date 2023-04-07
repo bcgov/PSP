@@ -3,7 +3,7 @@ import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Agreement extends Api_ConcurrentVersion, Api_AuditFields {
-  agreementId: string | null;
+  agreementId: number;
   acquisitionFileId: number;
   agreementType: Api_TypeCode<string>;
   agreementDate: string | null;

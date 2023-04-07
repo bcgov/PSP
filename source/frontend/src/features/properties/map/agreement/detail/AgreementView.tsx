@@ -64,9 +64,13 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             {formatMoney(agreement.purchasePrice)}
           </SectionField>
           <SectionField labelWidth="5" label="Deposit due no later than">
-            {agreement.noLaterThanDays !== null
-              ? agreement.noLaterThanDays && <strong>days</strong>
-              : ''}
+            {agreement.noLaterThanDays ? (
+              <span>
+                {agreement.noLaterThanDays} <strong>days</strong>
+              </span>
+            ) : (
+              ''
+            )}
           </SectionField>
           <SectionField labelWidth="5" label="Deposit amount">
             {formatMoney(agreement.depositAmount)}

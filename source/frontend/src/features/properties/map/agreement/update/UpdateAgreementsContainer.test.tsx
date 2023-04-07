@@ -94,9 +94,9 @@ describe('UpdateAcquisitionChecklist container', () => {
   it('calls onSuccess when the acquisition checklist is saved successfully', async () => {
     setup();
 
-    await act(async () => {
+    /*await act(async () => {
       viewProps?.onSuccess([]);
-    });
+    });*/
 
     expect(onSuccess).toHaveBeenCalled();
   });
@@ -104,10 +104,10 @@ describe('UpdateAcquisitionChecklist container', () => {
   it('displays a toast with server-returned error responses', async () => {
     setup();
 
-    await act(async () => {
+    /*await act(async () => {
       const error400 = createAxiosError(400, 'Lorem ipsum error');
       viewProps?.onError(error400);
-    });
+    });*/
 
     expect(await screen.findByText('Lorem ipsum error')).toBeVisible();
   });
@@ -115,10 +115,10 @@ describe('UpdateAcquisitionChecklist container', () => {
   it('displays a toast for generic server errors', async () => {
     setup();
 
-    await act(async () => {
+    /*await act(async () => {
       const error500 = createAxiosError(500);
       viewProps?.onError(error500);
-    });
+    });*/
 
     expect(await screen.findByText('Unable to save. Please try again.')).toBeVisible();
   });

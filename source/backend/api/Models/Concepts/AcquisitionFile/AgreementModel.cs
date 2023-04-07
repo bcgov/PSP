@@ -4,7 +4,7 @@ namespace Pims.Api.Models.Concepts
 {
     public class AgreementModel : BaseAppModel
     {
-        public string AgreementId { get; set; }
+        public long AgreementId { get; set; }
 
         public long AcquisitionFileId { get; set; }
 

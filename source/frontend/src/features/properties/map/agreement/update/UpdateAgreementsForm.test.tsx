@@ -1,4 +1,3 @@
-import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
 import { mockLookups } from 'mocks';
@@ -29,8 +28,6 @@ let mockViewProps: IUpdateAgreementsFormProps = {
   initialValues: new AgreementsFormModel(1),
   agreementTypes: [],
   onSave: jest.fn(),
-  onError: jest.fn(),
-  onSuccess: jest.fn(),
 };
 
 describe('UpdateAcquisitionChecklist form', () => {
@@ -43,8 +40,6 @@ describe('UpdateAcquisitionChecklist form', () => {
         initialValues={mockViewProps.initialValues}
         agreementTypes={[]}
         onSave={mockViewProps.onSave}
-        onSuccess={mockViewProps.onSuccess}
-        onError={mockViewProps.onError}
       />,
       {
         store: {
@@ -112,7 +107,6 @@ describe('UpdateAcquisitionChecklist form', () => {
     });
 
     expect(mockViewProps.onSave).toHaveBeenCalled();
-    expect(mockViewProps.onSuccess).toHaveBeenCalled();
   });
 
   it('calls onError when it cannot save the form', async () => {
@@ -125,7 +119,5 @@ describe('UpdateAcquisitionChecklist form', () => {
     });
 
     expect(mockViewProps.onSave).toHaveBeenCalled();
-    expect(mockViewProps.onError).toHaveBeenCalled();
-    expect(mockViewProps.onSuccess).not.toHaveBeenCalled();
   });
 });

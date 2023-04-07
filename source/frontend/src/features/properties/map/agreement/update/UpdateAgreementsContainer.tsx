@@ -1,12 +1,8 @@
-import { AxiosError } from 'axios';
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { useAgreementProvider } from 'hooks/repositories/useAgreemetProvider';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { IApiError } from 'interfaces/IApiError';
-import { Api_Agreement } from 'models/api/Agreement';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
 import { AgreementsFormModel } from './models';
 import { IUpdateAgreementsFormProps } from './UpdateAgreementsForm';
@@ -41,23 +37,14 @@ export const UpdateAgreementsContainer: React.FC<IUpdateAgreementsContainerProps
       setInitialValues(AgreementsFormModel.fromApi(acquisitionFileId, agreements));
     };
     fetchData();
-  }, [acquisitionFileId]);
+  }, [acquisitionFileId, getAgreements]);
 
-  const saveChecklist = async (apiAcquisitionFile: AgreementsFormModel) => {
-    return updateAcquisitionAgreements(acquisitionFileId, apiAcquisitionFile.toApi());
-  };
-
-  const onUpdateSuccess = async (apiAcquisitionFile: Api_Agreement[]) => {
-    onSuccess && onSuccess();
-  };
-
-  // generic error handler.
-  const onError = (e: AxiosError<IApiError>) => {
-    if (e?.response?.status === 400) {
-      toast.error(e?.response.data.error);
-    } else {
-      toast.error('Unable to save. Please try again.');
+  const saveAgreements = async (apiAcquisitionFile: AgreementsFormModel) => {
+    const result = await updateAcquisitionAgreements(acquisitionFileId, apiAcquisitionFile.toApi());
+    if (result !== undefined) {
+      onSuccess();
     }
+    return result;
   };
 
   return (
@@ -66,9 +53,7 @@ export const UpdateAgreementsContainer: React.FC<IUpdateAgreementsContainerProps
       formikRef={formikRef}
       initialValues={initialValues}
       agreementTypes={sectionTypes}
-      onSave={saveChecklist}
-      onSuccess={onUpdateSuccess}
-      onError={onError}
+      onSave={saveAgreements}
     />
   );
 };
