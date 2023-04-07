@@ -14,6 +14,8 @@ export const useApiAgreements = () => {
     () => ({
       getAcquisitionAgreementsApi: (acqFileId: number) =>
         api.get<Api_Agreement[]>(`/acquisitionfiles/${acqFileId}/agreements`),
+      postAcquisitionAgreementsApi: (acqFileId: number, agreements: Api_Agreement[]) =>
+        api.post<Api_Agreement[]>(`/acquisitionfiles/${acqFileId}/agreements`, agreements),
     }),
     [api],
   );

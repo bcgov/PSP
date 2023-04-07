@@ -66,17 +66,16 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Update the acquisition file agreements.
         /// </summary>
         /// <returns>The updated checklist items.</returns>
-        [HttpPut("{id:long}/agreements")]
+        [HttpPost("{id:long}/agreements")]
         [HasPermission(Permissions.AgreementView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AgreementModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult UpdateAcquisitionFileChecklist([FromBody] List<AgreementModel> agreements)
+        public IActionResult UpdateAcquisitionFileChecklist([FromRoute] long id, [FromBody] List<AgreementModel> agreements)
         {
-            /*var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
-            var acquisitionFile = _acquisitionService.UpdateChecklistItems(acquisitionFileEntity);
-            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));*/
-            return BadRequest();
+            var agreementEntities = _mapper.Map<List<Dal.Entities.PimsAgreement>>(agreements);
+            var acquisitionFile = _acquisitionService.UpdateAgreements(id, agreementEntities);
+            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
         #endregion

@@ -6,10 +6,10 @@ import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler } from 'utils';
 
 /**
- * hook that interacts with the Acquisition File API.
+ * hook that interacts with the Agreements API.
  */
 export const useAgreementProvider = () => {
-  const { getAcquisitionAgreementsApi } = useApiAgreements();
+  const { getAcquisitionAgreementsApi, postAcquisitionAgreementsApi } = useApiAgreements();
 
   const getAcquisitionAgreements = useApiRequestWrapper<
     (acqFileId: number) => Promise<AxiosResponse<Api_Agreement[], any>>
@@ -22,10 +22,23 @@ export const useAgreementProvider = () => {
     onError: useAxiosErrorHandler('Failed to load Acquisition File Agreements'),
   });
 
+  const updateAcquisitionAgreements = useApiRequestWrapper<
+    (acqFileId: number, agreements: Api_Agreement[]) => Promise<AxiosResponse<Api_Agreement[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number, agreement: Api_Agreement[]) =>
+        await postAcquisitionAgreementsApi(acqFileId, agreement),
+      [postAcquisitionAgreementsApi],
+    ),
+    requestName: 'updateAcquisitionAgreements',
+    onError: useAxiosErrorHandler('Failed to update Acquisition File Agreements'),
+  });
+
   return useMemo(
     () => ({
       getAcquisitionAgreements,
+      updateAcquisitionAgreements,
     }),
-    [getAcquisitionAgreements],
+    [getAcquisitionAgreements, updateAcquisitionAgreements],
   );
 };

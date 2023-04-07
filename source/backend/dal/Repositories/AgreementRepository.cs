@@ -60,6 +60,12 @@ namespace Pims.Dal.Repositories
             return agreement;
         }
 
+        public List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements)
+        {
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAgreement, string>(p => p.PimsAgreements, acquisitionFileId, agreements.ToArray());
+            return agreements;
+        }
+
         #endregion
     }
 }

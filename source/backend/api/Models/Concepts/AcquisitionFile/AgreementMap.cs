@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsAgreement, AgreementModel>()
-                .Map(dest => dest.AgreementId, src => 1)
+                .Map(dest => dest.AgreementId, src => src.AgreementId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.AgreementType, src => src.AgreementTypeCodeNavigation)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)

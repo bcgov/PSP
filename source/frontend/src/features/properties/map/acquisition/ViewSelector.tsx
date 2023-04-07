@@ -8,6 +8,8 @@ import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 
+import { UpdateAgreementsContainer } from '../agreement/update/UpdateAgreementsContainer';
+import { UpdateAgreementsForm } from '../agreement/update/UpdateAgreementsForm';
 import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
@@ -54,6 +56,21 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
               />
             );
 
+          case EditFormType.AGREEMENTS:
+            return (
+              <UpdateAgreementsContainer
+                acquisitionFileId={props.acquisitionFile.id || -1}
+                View={UpdateAgreementsForm}
+                formikRef={formikRef}
+                onSuccess={() =>
+                  props.setContainerState({
+                    isEditing: false,
+                    activeEditForm: undefined,
+                  })
+                }
+              />
+            );
+
           default:
             throw Error('Active edit form not defined');
         }
@@ -78,20 +95,6 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
           case EditFormType.TAKES:
             return (
               <TakesUpdateContainer
-                fileProperty={propertyFile}
-                View={TakesUpdateForm}
-                ref={formikRef}
-                onSuccess={() =>
-                  props.setContainerState({
-                    isEditing: false,
-                    activeEditForm: undefined,
-                  })
-                }
-              />
-            );
-          case EditFormType.AGREEMENTS:
-            return (
-              <TakesUpdateContainer /*TODO */
                 fileProperty={propertyFile}
                 View={TakesUpdateForm}
                 ref={formikRef}

@@ -118,7 +118,7 @@ namespace Pims.Dal.Repositories
         public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance instance)
         {
             instance.ThrowIfNull(nameof(instance));
-            this.Context.UpdateChild<PimsActivityInstance, long, PimsActInstPropRsrchFile>(a => a.PimsActInstPropRsrchFiles, instance.Internal_Id, instance.PimsActInstPropRsrchFiles.ToArray(), false);
+            this.Context.UpdateChild<PimsActivityInstance, long, PimsActInstPropRsrchFile, long>(a => a.PimsActInstPropRsrchFiles, instance.Internal_Id, instance.PimsActInstPropRsrchFiles.ToArray(), false);
 
             return instance;
         }
@@ -126,7 +126,7 @@ namespace Pims.Dal.Repositories
         public PimsActivityInstance UpdateActivityAcquisitionProperties(PimsActivityInstance instance)
         {
             instance.ThrowIfNull(nameof(instance));
-            this.Context.UpdateChild<PimsActivityInstance, long, PimsActInstPropAcqFile>(a => a.PimsActInstPropAcqFiles, instance.Internal_Id, instance.PimsActInstPropAcqFiles.ToArray(), false);
+            this.Context.UpdateChild<PimsActivityInstance, long, PimsActInstPropAcqFile, long>(a => a.PimsActInstPropAcqFiles, instance.Internal_Id, instance.PimsActInstPropAcqFiles.ToArray(), false);
 
             return instance;
         }

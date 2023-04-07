@@ -59,8 +59,8 @@ namespace Pims.Dal.Repositories
         /// <param name="takes"></param>
         public void UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes)
         {
-            Context.UpdateChild<PimsPropertyAcquisitionFile, long, PimsTake>(p => p.PimsTakes, acquisitionFilePropertyId, takes.ToArray(), true);
-            
+            Context.UpdateChild<PimsPropertyAcquisitionFile, long, PimsTake, long>(p => p.PimsTakes, acquisitionFilePropertyId, takes.ToArray(), true);
+
         }
 
         /// <summary>

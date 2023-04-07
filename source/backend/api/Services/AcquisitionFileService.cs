@@ -259,7 +259,10 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements)
         {
-            return null;
+            var updatedAgreements = _agreementRepository.UpdateAllForAcquisition(acquisitionFileId, agreements);
+            _agreementRepository.CommitTransaction();
+
+            return updatedAgreements;
         }
 
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)

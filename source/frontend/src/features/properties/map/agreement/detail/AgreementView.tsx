@@ -10,6 +10,8 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
+import { StyledSectionSubheader } from '../styles';
+
 export interface IAgreementViewProps {
   loading: boolean;
   agreements: Api_Agreement[];
@@ -23,18 +25,15 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
 }) => {
   const keycloak = useKeycloakWrapper();
 
-  if (loading) {
-    return <LoadingBackdrop show={loading} parentScreen={true} />;
-  }
-
   return (
     <StyledSummarySection>
+      <LoadingBackdrop show={loading} parentScreen={true} />
       <StyledEditWrapper className="mr-3 my-1">
         {keycloak.hasClaim(Claims.ACQUISITION_EDIT) ? (
           <EditButton title="Edit agreements file" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>
-
+      {agreements.length === 0 && <StyledNoData>No agreements on record</StyledNoData>}
       {agreements.map((agreement, index) => (
         <Section header={`Agreement ${index + 1}`} isCollapsable initiallyExpanded>
           <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
@@ -80,9 +79,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
 
 export default AgreementView;
 
-const StyledSectionSubheader = styled.div`
-  font-weight: bold;
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: 0.2rem ${props => props.theme.css.primaryColor} solid;
-  margin-bottom: 2rem;
+export const StyledNoData = styled.div`
+  text-align: center;
+  font-style: italic;
 `;

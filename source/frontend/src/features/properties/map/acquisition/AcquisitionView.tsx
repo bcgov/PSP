@@ -154,6 +154,8 @@ const getEditTitle = (editFormName: EditFormType) => {
       return 'Update Checklist';
     case EditFormType.PROPERTY_SELECTOR:
       return 'Updating Acquisition Properties';
+    case EditFormType.AGREEMENTS:
+      return 'Updating Agreements';
     default:
       throw Error('Cannot edit this type of form');
   }

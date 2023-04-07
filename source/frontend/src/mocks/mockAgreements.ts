@@ -2,7 +2,7 @@ import { Api_Agreement } from 'models/api/Agreement';
 
 export const mockAgreementsResponse = (): Api_Agreement[] => [
   {
-    agreementId: 1,
+    agreementId: '1',
     acquisitionFileId: 1,
     agreementType: {
       id: 'H0074',
@@ -30,7 +30,7 @@ export const mockAgreementsResponse = (): Api_Agreement[] => [
     rowVersion: 1,
   },
   {
-    agreementId: 2,
+    agreementId: '2',
     acquisitionFileId: 1,
     agreementType: {
       id: 'ABCD',

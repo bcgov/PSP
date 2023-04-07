@@ -8,5 +8,7 @@ namespace Pims.Dal.Repositories
         List<PimsAgreement> GetAgreementsByAquisitionFile(long acquisitionFileId);
 
         PimsAgreement Update(PimsAgreement agreement);
+
+        List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements);
     }
 }

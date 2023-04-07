@@ -118,7 +118,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           onEdit={() =>
             setContainerState({
               isEditing: true,
-              activeEditForm: EditFormType.ACQUISITION_CHECKLIST,
+              activeEditForm: EditFormType.AGREEMENTS,
               defaultFileTab: FileTabType.AGREEMENTS,
             })
           }
