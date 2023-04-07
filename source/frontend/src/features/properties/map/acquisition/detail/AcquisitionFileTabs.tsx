@@ -109,7 +109,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     });
   }
 
-  if (acquisitionFile?.id && hasClaim(Claims.NOTE_VIEW)) {
+  if (acquisitionFile?.id && hasClaim(Claims.AGREEMENT_VIEW)) {
     tabViews.push({
       content: (
         <AgreementContainer

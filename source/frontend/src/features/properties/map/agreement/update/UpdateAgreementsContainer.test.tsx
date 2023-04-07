@@ -1,17 +1,14 @@
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import { useAgreementProvider } from 'hooks/repositories/useAgreementProvider';
 import { mockLookups } from 'mocks';
-
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { mockAgreementsResponse } from 'mocks/mockAgreements';
 import { Api_Agreement } from 'models/api/Agreement';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, createAxiosError, render, RenderOptions, screen } from 'utils/test-utils';
+import { act, render, RenderOptions } from 'utils/test-utils';
 
 import { AgreementFormModelITEM, AgreementsFormModel } from './models';
 import { UpdateAgreementsContainer } from './UpdateAgreementsContainer';
 import { IUpdateAgreementsFormProps } from './UpdateAgreementsForm';
-import { useAgreementProvider } from 'hooks/repositories/useAgreementProvider';
-import { mockAgreementsResponse } from 'mocks/mockAgreements';
 
 // mock API service calls
 jest.mock('hooks/repositories/useAgreementProvider');
@@ -44,7 +41,6 @@ const TestView: React.FC<IUpdateAgreementsFormProps> = props => {
 };
 
 describe('UpdateAgreementsContainer component', () => {
-  let agreements: Api_Agreement[] | undefined = undefined;
   const onSuccess = jest.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -72,7 +68,6 @@ describe('UpdateAgreementsContainer component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    agreements = mockAgreementsResponse();
   });
 
   afterEach(() => {
