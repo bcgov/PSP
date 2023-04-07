@@ -18,7 +18,7 @@ namespace Pims.Dal.Entities
 
         [Key]
         [Column("CONSULTATION_STATUS_TYPE_CODE")]
-        [StringLength(20)]
+        [StringLength(40)]
         public string ConsultationStatusTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
