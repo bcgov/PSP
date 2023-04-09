@@ -10,7 +10,7 @@ import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
 
 import AgreementSubForm from './AgreementSubForm';
-import { AgreementFormModelITEM, AgreementsFormModel } from './models';
+import { AgreementsFormModel, SingleAgreementFormModel } from './models';
 import { UpdateAgreementsYupSchema } from './UpdateAgreementsYupSchema';
 
 export interface IUpdateAgreementsFormProps {
@@ -52,7 +52,7 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
                   <>
                     <Button
                       className="m-4"
-                      onClick={() => arrayHelpers.push(new AgreementFormModelITEM())}
+                      onClick={() => arrayHelpers.push(new SingleAgreementFormModel())}
                       variant="success"
                     >
                       + Create new agreement

@@ -1,7 +1,7 @@
 import { Api_Agreement } from 'models/api/Agreement';
 import { booleanToString, stringToBooleanOrNull, stringToNull, toTypeCode } from 'utils/formUtils';
 
-export class AgreementFormModelITEM {
+export class SingleAgreementFormModel {
   public agreementId: number = 0;
 
   public agreementTypeCode: string = '';
@@ -22,8 +22,8 @@ export class AgreementFormModelITEM {
 
   public rowVersion: number | null = null;
 
-  static fromApi(apiModel: Api_Agreement): AgreementFormModelITEM {
-    const agreement = new AgreementFormModelITEM();
+  static fromApi(apiModel: Api_Agreement): SingleAgreementFormModel {
+    const agreement = new SingleAgreementFormModel();
 
     agreement.agreementId = apiModel.agreementId;
     agreement.agreementTypeCode = apiModel.agreementType.id || '';
@@ -72,7 +72,7 @@ export class AgreementFormModelITEM {
 
 export class AgreementsFormModel {
   acquisitionFileId: number;
-  agreements: AgreementFormModelITEM[] = [];
+  agreements: SingleAgreementFormModel[] = [];
 
   public constructor(acquisitionFileId: number) {
     this.acquisitionFileId = acquisitionFileId;
@@ -80,7 +80,7 @@ export class AgreementsFormModel {
 
   static fromApi(acquisitionFileId: number, agreements: Api_Agreement[]): AgreementsFormModel {
     const newFormModel = new AgreementsFormModel(acquisitionFileId);
-    agreements.forEach(x => newFormModel.agreements.push(AgreementFormModelITEM.fromApi(x)));
+    agreements.forEach(x => newFormModel.agreements.push(SingleAgreementFormModel.fromApi(x)));
     return newFormModel;
   }
 

@@ -6,7 +6,7 @@ import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions } from 'utils/test-utils';
 
-import { AgreementFormModelITEM, AgreementsFormModel } from './models';
+import { AgreementsFormModel, SingleAgreementFormModel } from './models';
 import { UpdateAgreementsContainer } from './UpdateAgreementsContainer';
 import { IUpdateAgreementsFormProps } from './UpdateAgreementsForm';
 
@@ -85,7 +85,7 @@ describe('UpdateAgreementsContainer component', () => {
     let updatedAgreements: Api_Agreement[] | undefined;
 
     const testAgreementForm = new AgreementsFormModel(testAcquisitionFileId);
-    const testAgreementItem = new AgreementFormModelITEM();
+    const testAgreementItem = new SingleAgreementFormModel();
     testAgreementItem.agreementId = 10;
     testAgreementItem.depositAmount = '50';
 
