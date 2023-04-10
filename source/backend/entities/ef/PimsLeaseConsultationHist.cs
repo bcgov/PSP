@@ -25,11 +25,11 @@ namespace Pims.Dal.Entities
         public long LeaseId { get; set; }
         [Required]
         [Column("CONSULTATION_TYPE_CODE")]
-        [StringLength(20)]
+        [StringLength(40)]
         public string ConsultationTypeCode { get; set; }
         [Required]
         [Column("CONSULTATION_STATUS_TYPE_CODE")]
-        [StringLength(20)]
+        [StringLength(40)]
         public string ConsultationStatusTypeCode { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppCreateTimestamp { get; set; }
