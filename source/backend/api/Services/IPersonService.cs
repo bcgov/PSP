@@ -8,6 +8,6 @@ namespace Pims.Api.Services
 
         PimsPerson AddPerson(PimsPerson person, bool userOverride);
 
-        PimsPerson UpdatePerson(PimsPerson person, long rowVersion);
+        PimsPerson UpdatePerson(PimsPerson person, long? rowVersion);
     }
 }
