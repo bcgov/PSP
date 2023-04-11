@@ -15,6 +15,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
+  completionDate?: string;
   // Code Tables
   acquisitionPhysFileStatusTypeCode?: Api_TypeCode<string>;
   acquisitionTypeCode?: Api_TypeCode<string>;

@@ -1,6 +1,5 @@
 import { IMapProperty } from 'components/propertySelector/models';
 import { PropertyAreaUnitTypes } from 'constants/index';
-import { LeaseInitiatorTypes } from 'constants/leaseInitiatorTypes';
 import { PropertyForm } from 'features/properties/map/shared/models';
 import { IAutocompletePrediction } from 'interfaces';
 import { Api_Lease, Api_LeaseConsultation } from 'models/api/Lease';
@@ -65,7 +64,7 @@ export class LeaseFormModel {
     leaseDetail.categoryTypeCode = fromTypeCode(apiModel?.categoryType) || '';
     leaseDetail.purposeTypeCode = fromTypeCode(apiModel?.purposeType) || '';
     leaseDetail.responsibilityTypeCode = fromTypeCode(apiModel?.responsibilityType) || '';
-    leaseDetail.initiatorTypeCode = fromTypeCode(apiModel?.initiatorType) || LeaseInitiatorTypes.Hq;
+    leaseDetail.initiatorTypeCode = fromTypeCode(apiModel?.initiatorType) || '';
     leaseDetail.statusTypeCode = fromTypeCode(apiModel?.statusType) || '';
     leaseDetail.leaseTypeCode = fromTypeCode(apiModel?.type) || '';
     leaseDetail.regionId = fromTypeCode(apiModel?.region)?.toString() || '';

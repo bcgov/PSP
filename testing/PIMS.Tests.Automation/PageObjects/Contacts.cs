@@ -180,40 +180,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(createContactButton).Click();
         }
 
-        //Creates Individual Contact with minimum fields
-        //public void CreateIndividualContactMinFields(string firstName, string lastName, string orgName, string email, string country, string addressLine1, string province, string city, string postalCode)
-        //{
-        //    Wait();
-
-        //    //Choosing individual contact option
-        //    FocusAndClick(contactIndividualRadioBttn);
-
-        //    //Inserting individual personal details
-        //    webDriver.FindElement(contactIndFirstNameInput).SendKeys(firstName);
-        //    webDriver.FindElement(contactIndLastNameInput).SendKeys(lastName);
-        //    webDriver.FindElement(contactIndOrgInput).SendKeys(orgName);
-
-        //    Wait();
-        //    webDriver.FindElement(contactOrgNameSelect).Click();
-
-        //    //Inserting individual contact info
-        //    webDriver.FindElement(contactEmailInput1).SendKeys(email);
-        //    ChooseRandomSelectOption(contactEmailSelect1, 2);
-
-        //    //Inserting contact mail address
-        //    webDriver.FindElement(contactMailAddressLine1Input).SendKeys(addressLine1);
-
-        //    var countryElement = webDriver.FindElement(contactMailCountrySelect);
-        //    ChooseSpecificSelectOption(contactMailCountrySelect, country);
-
-        //    webDriver.FindElement(contactMailCityInput).SendKeys(city);
-
-        //    var provinceElement = webDriver.FindElement(contactMailProvinceSelect);
-        //    ChooseSpecificSelectOption(contactMailProvinceSelect, province);
-
-        //    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(postalCode);
-        //}
-
         //Creates Individual Contact with all fields
         public void CreateIndividualContact(string firstName, string middleName, string lastName, string prefName, string orgName, string email1, string emailType1, string phone1, string phoneType1,
             string mailAddressLine1, string mailAddressLine2, string mailAddressLine3, string mailCity, string mailProvince, string mailPostalCode, string mailCountry, string mailOtherCountry, 
@@ -337,32 +303,6 @@ namespace PIMS.Tests.Automation.PageObjects
             //Inserting comments
             webDriver.FindElement(contactCommentTextarea).SendKeys(comments);
         }
-
-        //public void CreateOrganizationContactMinFields(string orgName, string phone, string addressLine1, string country, string province, string city, string postalCode)
-        //{
-        //    Wait();
-
-        //    //Choosing organization contact option
-        //    FocusAndClick(contactOrganizationRadioBttn);
-
-        //    //Inserting organization contact details
-        //    webDriver.FindElement(contactOrgNameInput).SendKeys(orgName);
-
-        //    //Inserting organization contact info
-        //    webDriver.FindElement(contactPhoneInput1).SendKeys(phone);
-        //    ChooseRandomSelectOption(contactPhoneSelect1, 2);
-
-        //    //Inserting contact property address
-        //    webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(addressLine1);
-
-        //    ChooseSpecificSelectOption(contactPropertyCountrySelect, country);
-
-        //    webDriver.FindElement(contactPropertyCityInput).SendKeys(city);
-
-        //    ChooseSpecificSelectOption(contactPropertyProvinceSelect, province);
-
-        //    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(postalCode);
-        //}
 
         //Creates Organization Contact with all fields
         public void CreateOrganizationContact(string orgName, string alias, string incNumber,
