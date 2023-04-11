@@ -67,11 +67,25 @@ export class DetailAcquisitionFileOwner {
 }
 
 const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
-  let nameDisplay = concatValues([owner.givenName, owner.lastNameAndCorpName]);
-  if (owner.incorporationNumber && owner.incorporationNumber.trim() !== '') {
-    nameDisplay = nameDisplay.concat(` (${owner.incorporationNumber})`);
+  let ownerDisplayName = '';
+  if (owner.isOrganization) {
+    let regNumber = owner.registrationNumber ? `Reg#:${owner.registrationNumber}` : null;
+    let incNumber = owner.incorporationNumber ? `Inc#:${owner.incorporationNumber}` : null;
+    let separator = owner.incorporationNumber && owner.registrationNumber ? ' / ' : null;
+
+    if (incNumber || regNumber) {
+      ownerDisplayName = concatValues(
+        [owner.lastNameAndCorpName, ' (', incNumber, separator, regNumber, ')'],
+        '',
+      );
+    } else {
+      ownerDisplayName = owner.lastNameAndCorpName ? owner.lastNameAndCorpName : '';
+    }
+  } else {
+    ownerDisplayName = concatValues([owner.givenName, owner.lastNameAndCorpName]);
   }
-  return nameDisplay;
+
+  return ownerDisplayName;
 };
 
 const getFormattedAddress = (address?: Api_Address | null): string => {
