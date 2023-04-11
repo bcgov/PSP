@@ -114,7 +114,10 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab}
-      setActiveTab={setActiveTab}
+      setActiveTab={(tab: FileTabNames) => {
+        setActiveTab(tab);
+        setContainerState({ defaultFileTab: tab });
+      }}
     />
   );
 };
