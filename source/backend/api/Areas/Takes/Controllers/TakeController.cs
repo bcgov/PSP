@@ -75,6 +75,32 @@ namespace Pims.Api.Areas.Takes.Controllers
         }
 
         /// <summary>
+        /// Get all takes for a property in the Acquisition File.
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <param name="acquisitionFilePropertyId"></param>
+        /// <returns></returns>
+        [HttpGet("acquisition/{fileId:long}/property/{acquisitionFilePropertyId:long}")]
+        [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(TakeModel), 200)]
+        [SwaggerOperation(Tags = new[] { "take" })]
+        public IActionResult GetTakesByPropertyId([FromRoute]long fileId, [FromRoute]long acquisitionFilePropertyId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(TakeController),
+                nameof(GetTakesByAcquisitionFileId),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
+
+            var takes = _takeService.GetByPropertyId(fileId, acquisitionFilePropertyId);
+            return new JsonResult(_mapper.Map<IEnumerable<TakeModel>>(takes));
+        }
+
+        /// <summary>
         /// Update the list of takes associated to a property within an acquisition file.
         /// </summary>
         /// <returns></returns>
@@ -99,15 +125,15 @@ namespace Pims.Api.Areas.Takes.Controllers
         }
 
         /// <summary>
-        /// Gets a count of takes that that match a property and are not a part of an AcquisitionFile.
+        /// Gets a count of takes that that match a property.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("acquisition/{acquisitionFileId:long}/property/{propertyId:long}/count")]
+        [HttpGet("property/{propertyId:long}/count")]
         [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(TakeModel), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
-        public IActionResult GetTakesCountByPropertyId([FromRoute]long acquisitionFileId, [FromRoute]long propertyId)
+        public IActionResult GetTakesCountByPropertyId([FromRoute]long propertyId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -118,7 +144,7 @@ namespace Pims.Api.Areas.Takes.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
 
-            var count = _takeService.GetTakesCountForAcquisitionProperty(acquisitionFileId, propertyId);
+            var count = _takeService.GetTakesCountForAcquisitionProperty(propertyId);
             return new JsonResult(count);
         }
 

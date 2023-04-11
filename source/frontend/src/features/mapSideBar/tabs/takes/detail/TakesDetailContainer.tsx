@@ -22,21 +22,26 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
   onEdit,
   View,
 }) => {
+  const fileId = fileProperty.fileId;
+  const propertyId = fileProperty.property?.id;
+
   const {
-    getTakesByFileId: { loading: takesByFileLoading, response: takes, execute: executeTakesByFile },
+    getTakesByPropertyId: {
+      loading: takesByFileLoading,
+      response: takes,
+      execute: executeTakesByFileProperty,
+    },
     getTakesCountByPropertyId: {
       loading: takesCountLoading,
       response: takesCount,
       execute: executeTakesCount,
     },
   } = useTakesRepository();
-  const fileId = fileProperty.fileId;
-  const propertyId = fileProperty.property?.id;
 
   React.useEffect(() => {
-    fileId && executeTakesByFile(fileId);
-    propertyId && executeTakesCount(fileId!, propertyId);
-  }, [executeTakesByFile, executeTakesCount, fileId, propertyId]);
+    fileId && executeTakesByFileProperty(fileId, propertyId!);
+    propertyId && executeTakesCount(propertyId);
+  }, [executeTakesByFileProperty, executeTakesCount, fileId, propertyId]);
 
   return (
     <View

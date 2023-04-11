@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -41,18 +40,34 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Returns the Take Counts for a Property outisde of the AcquisitionFile.
+        /// Get all Takes for a Property in the Acquisition File
         /// </summary>
-        /// <param name="acquisitionFileId"></param>
-        /// <param name="propertyId"></param>
+        /// <param name="fileId"></param>
+        /// <param name="acquisitionFilePropertyId"></param>
         /// <returns></returns>
-        public int GetTakesCountForAcquisitionProperty(long acquisitionFileId, long propertyId)
+        public IEnumerable<PimsTake> GetAllByPropertyId(long fileId, long acquisitionFilePropertyId)
         {
             return Context.PimsTakes
                 .Include(t => t.PropertyAcquisitionFile)
-                .Where(x => x.PropertyAcquisitionFile.PropertyId == propertyId
-                        && x.PropertyAcquisitionFile.AcquisitionFileId != acquisitionFileId
-                        && x.PropertyAcquisitionFile.PropertyAcquisitionFileId == x.PropertyAcquisitionFileId)
+                .Include(t => t.TakeSiteContamTypeCodeNavigation)
+                .Include(t => t.TakeStatusTypeCodeNavigation)
+                .Include(t => t.TakeTypeCodeNavigation)
+                .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId
+                        && t.PropertyAcquisitionFile.PropertyId == acquisitionFilePropertyId)
+                .AsNoTracking();
+        }
+
+        /// <summary>
+        /// Returns the Take Counts for a Property.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <returns></returns>
+        public int GetTakesCountForAcquisitionProperty(long propertyId)
+        {
+            return Context.PimsTakes
+                .Include(t => t.PropertyAcquisitionFile)
+                .Where(x => x.PropertyAcquisitionFile.PropertyId == propertyId)
+                .AsNoTracking()
                 .Count();
         }
 
