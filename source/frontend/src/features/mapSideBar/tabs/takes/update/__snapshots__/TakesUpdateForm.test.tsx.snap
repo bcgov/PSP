@@ -513,7 +513,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             <label
               class="c7"
             >
-              Take contamination:
+              Site Contamination:
             </label>
           </div>
           <div
