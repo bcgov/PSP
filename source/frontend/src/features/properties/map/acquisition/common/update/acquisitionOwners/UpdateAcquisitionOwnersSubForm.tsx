@@ -64,6 +64,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
                   <ButtonDiv>
                     <RemoveButton
                       label="Remove Owner"
+                      dataTestId={`owners[${index}]-remove-button`}
                       onRemove={() => {
                         setRemoveIndex(index);
                         setShowRemoveModal(true);

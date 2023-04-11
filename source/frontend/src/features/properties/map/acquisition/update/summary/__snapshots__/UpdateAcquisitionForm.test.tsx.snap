@@ -1526,7 +1526,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="Button__value"
                 >
                   <svg
-                    data-testid="remove-button"
+                    data-testid="owners[0]-remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -2208,7 +2208,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="Button__value"
                 >
                   <svg
-                    data-testid="remove-button"
+                    data-testid="owners[1]-remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
