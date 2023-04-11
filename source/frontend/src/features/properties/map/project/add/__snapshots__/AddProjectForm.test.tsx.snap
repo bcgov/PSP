@@ -336,7 +336,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="c3 required text-left col"
             >
               <div
-                class="form-group"
+                class="d-flex form-group"
               >
                 <select
                   class="form-select form-control"
@@ -824,7 +824,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="c3 required text-left col"
             >
               <div
-                class="form-group"
+                class="d-flex form-group"
               >
                 <select
                   class="form-select form-control"

@@ -5,7 +5,7 @@
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-03-29 16:10                                */
+/* Created on:            2023-04-05 15:21                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -905,15 +905,15 @@ DROP TRIGGER [dbo].[PIMS_NOTE_A_S_IUD_TR]
 GO
 
 
+DROP TRIGGER [dbo].[PIMS_DOCTYP_I_S_I_TR]
+GO
+
+
 DROP TRIGGER [dbo].[PIMS_DOCTYP_I_S_U_TR]
 GO
 
 
 DROP TRIGGER [dbo].[PIMS_DOCTYP_A_S_IUD_TR]
-GO
-
-
-DROP TRIGGER [dbo].[PIMS_DOCTYP_I_S_I_TR]
 GO
 
 
@@ -1529,11 +1529,35 @@ DROP TRIGGER [dbo].[PIMS_ACQFRM_A_S_IUD_TR]
 GO
 
 
-DROP TRIGGER [dbo].[PIMS_TKCONT_I_S_U_TR]
+DROP TRIGGER [dbo].[PIMS_AGRMNT_I_S_I_TR]
 GO
 
 
-DROP TRIGGER [dbo].[PIMS_TKCONT_I_S_I_TR]
+DROP TRIGGER [dbo].[PIMS_AGRMNT_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_AGRMNT_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_AGRTYP_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_AGRTYP_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_AQOWSO_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_AQOWSO_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_AQOWSO_A_S_IUD_TR]
 GO
 
 
@@ -12859,6 +12883,22 @@ GO
 /* Drop sequences                                                         */
 /* ---------------------------------------------------------------------- */
 
+DROP SEQUENCE [dbo].[PIMS_AGREEMENT_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_OWNER_SOLICITOR_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_ACQUISITION_OWNER_SOLICITOR_H_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_AGREEMENT_H_ID_SEQ]
+GO
+
+
 DROP SEQUENCE [dbo].[PIMS_PROJECT_PERSON_ID_SEQ]
 GO
 
@@ -13344,13 +13384,5 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_PROPERTY_SERVICE_FILE_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_AGREEMENT_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_OWNER_SOLICITOR_ID_SEQ]
 GO
 

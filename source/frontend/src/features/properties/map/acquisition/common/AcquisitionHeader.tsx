@@ -36,6 +36,22 @@ export const AcquisitionHeader: React.FunctionComponent<
             </HeaderField>
           </Col>
         </Row>
+        <Row className="no-gutters">
+          <Col>
+            <HeaderField
+              label="Ministry product:"
+              labelWidth={leftColumnLabel}
+              valueTestId={'acq-header-product-val'}
+              contentWidth="9"
+            >
+              {acquisitionFile?.product && (
+                <>
+                  {acquisitionFile.product.code} - {acquisitionFile.product.description}
+                </>
+              )}
+            </HeaderField>
+          </Col>
+        </Row>
       </Col>
       <Col xs="5">
         <Row className="no-gutters">
