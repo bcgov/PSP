@@ -54,6 +54,28 @@ namespace Pims.Dal.Repositories
             return fileForm;
         }
 
+        public IEnumerable<PimsAcquisitionFileForm> GetAllByAcquisitionFileId(long acquisitionFileId)
+        {
+            return Context.PimsAcquisitionFileForms.Include(af => af.FormTypeCodeNavigation).AsNoTracking().Where(af => af.AcquisitionFileId == acquisitionFileId);
+        }
+
+        public PimsAcquisitionFileForm GetByAcquisitionFileFormId(long acquisitionFileFormId)
+        {
+            return Context.PimsAcquisitionFileForms.Include(af => af.FormTypeCodeNavigation).AsNoTracking().FirstOrDefault(af => af.AcquisitionFileFormId == acquisitionFileFormId)
+                ?? throw new KeyNotFoundException($"Failed to find acquisition file form with id ${acquisitionFileFormId}"); ;
+        }
+
+        public bool TryDelete(long acquisitionFileFormId)
+        {
+            var deletedEntity = Context.PimsAcquisitionFileForms.FirstOrDefault(af => af.AcquisitionFileFormId == acquisitionFileFormId);
+            if (deletedEntity != null)
+            {
+                Context.Remove(deletedEntity);
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Retrieves the row version of the form with the specified id.
         /// </summary>

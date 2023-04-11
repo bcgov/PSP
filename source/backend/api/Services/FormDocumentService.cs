@@ -132,5 +132,33 @@ namespace Pims.Api.Services
             _acquisitionFileFormRepository.CommitTransaction();
             return createdFileForm;
         }
+
+        public IEnumerable<PimsAcquisitionFileForm> GetAcquisitionForms(long acquisitionFileId)
+        {
+            _logger.LogInformation("Getting acquisition forms by acquisition file id ...", acquisitionFileId);
+            this.User.ThrowIfNotAuthorized(Permissions.FormView, Permissions.AcquisitionFileView);
+
+            var fileForms = _acquisitionFileFormRepository.GetAllByAcquisitionFileId(acquisitionFileId);
+            return fileForms;
+        }
+
+        public PimsAcquisitionFileForm GetAcquisitionForm(long fileFormId)
+        {
+            _logger.LogInformation("Getting acquisition form by form file id ...", fileFormId);
+            this.User.ThrowIfNotAuthorized(Permissions.FormView, Permissions.AcquisitionFileView);
+
+            var fileForm = _acquisitionFileFormRepository.GetByAcquisitionFileFormId(fileFormId);
+            return fileForm;
+        }
+
+        public bool DeleteAcquisitionFileForm(long fileFormId)
+        {
+            _logger.LogInformation("Deleting acquisition file form id ...", fileFormId);
+            this.User.ThrowIfNotAuthorized(Permissions.FormDelete, Permissions.AcquisitionFileEdit);
+
+            var fileFormToDelete = _acquisitionFileFormRepository.TryDelete(fileFormId);
+            _acquisitionFileFormRepository.CommitTransaction();
+            return fileFormToDelete;
+        }
     }
 }

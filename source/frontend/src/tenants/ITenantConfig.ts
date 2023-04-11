@@ -19,7 +19,7 @@ export interface ITenantConfig {
   // optional additional layers to add using config.
   layers: ILayerItem[];
   // the url that should be used to query the PSP properties layer.
-  propertiesUrl?: string;
+  propertiesUrl: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
   parcelMapFullyAttributed: ILayerConfig;
   electoralLayerUrl: string;

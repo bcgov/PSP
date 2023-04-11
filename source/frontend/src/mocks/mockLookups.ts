@@ -2123,7 +2123,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 6,
-    key: '6d580047-a2ee-410a-a1f4-9f9d53f20277',
+    key: 'e157eb8b-8122-4b0f-9176-ae74682d7f5c',
     name: 'Finance',
     description: 'Finance team members.',
     isDisabled: false,
@@ -2134,7 +2134,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 7,
-    key: 'adf9e7da-0444-48ca-8537-08c0b85d17ac',
+    key: 'e963e11f-3c82-4710-8151-9db8997994ba',
     name: 'Functional',
     description: 'PLMB staff (includes team members from HQ, regions and districts).',
     isDisabled: false,
@@ -2145,7 +2145,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 8,
-    key: '3a5b3488-2ddf-4aef-8397-904e3180fe04',
+    key: 'd9adc114-8d6a-496c-9f95-77de4e1dc6b2',
     name: 'Functional (Restricted)',
     description: 'Contractors, Internal ministry staff.',
     isDisabled: false,
@@ -2156,7 +2156,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 2,
-    key: '5634b028-a7d2-4e9d-86ba-5112430b5d6a',
+    key: 'fe89354a-ee69-4af7-a167-d7271c6ace05',
     name: 'Organization Administrator',
     description: "Administrator of the user's organization.",
     isDisabled: true,
@@ -2167,7 +2167,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 9,
-    key: 'de6b7f94-1736-43c2-9b7b-38bba6ed151b',
+    key: '0b4f9a8a-d8fc-4873-842a-718908ee6437',
     name: 'Read Only',
     description: 'Other ministries (e.g. Attorney General).',
     isDisabled: false,
@@ -2178,7 +2178,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 5,
-    key: '1c4cffd0-b04a-4684-acdb-35cc84ca1258',
+    key: 'ad47d199-ff34-4a81-92ec-cae43bdf391c',
     name: 'Real Estate Analyst',
     description: 'Real Estate Analyst can manage properties within their organization.',
     isDisabled: true,
@@ -2189,7 +2189,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 4,
-    key: '3f3c7dad-abc1-447a-981b-beb2fb2f7f54',
+    key: '7acce397-c69d-416b-807f-cfd5e55db51b',
     name: 'Real Estate Manager',
     description: 'Real Estate Manager can manage properties within their agency.',
     isDisabled: true,
@@ -2200,7 +2200,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 1,
-    key: '0226882f-69e2-4cdb-abef-e442f01749b2',
+    key: '669b521a-f949-40c5-96ea-1fc81f8f3c5b',
     name: 'System Administrator',
     description: 'System Administrator of the PIMS solution.',
     isDisabled: false,
@@ -2211,7 +2211,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 3,
-    key: '6c7bdc76-25fc-4ab6-93a7-fd062f643c6e',
+    key: 'e1aeb98c-e24e-49bb-8412-09a7ceaced7a',
     name: 'Undetermined',
     description: 'The user has an undetermined role with their organization.',
     isDisabled: true,
@@ -3821,7 +3821,6 @@ export const mockLookups: Partial<ILookupCode>[] = [
     rowVersion: 0,
   },
 ];
-
 export const getMockLookUpsByType = (codeType: string): SelectOption[] => {
   let codes = mockLookups.reduce(function (filtered: SelectOption[], reg) {
     if (reg.type === codeType) {

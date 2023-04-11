@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsActivityInstance, ActivityInstanceModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ActivityInstanceId)
                 .Map(dest => dest.ActivityTemplateId, src => src.ActivityTemplateId)
                 .Map(dest => dest.ActivityStatusTypeCode, src => src.ActivityInstanceStatusTypeCodeNavigation)
@@ -21,7 +20,6 @@ namespace Pims.Api.Models.Concepts
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<ActivityInstanceModel, Entity.PimsActivityInstance>()
-                .PreserveReference(true)
                 .Map(dest => dest.ActivityInstanceId, src => src.Id)
                 .Map(dest => dest.ActivityTemplateId, src => src.ActivityTemplateId)
                 .Map(dest => dest.ActivityInstanceStatusTypeCode, src => src.ActivityStatusTypeCode.Id)

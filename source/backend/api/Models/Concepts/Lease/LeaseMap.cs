@@ -51,8 +51,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense)
-                .Map(dest => dest.Project, src => src.Project)
-                .PreserveReference(true);
+                .Map(dest => dest.Project, src => src.Project);
 
             config.NewConfig<LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)
@@ -90,7 +89,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
-                .PreserveReference(true)
                 .IgnoreNullValues(true);
         }
     }

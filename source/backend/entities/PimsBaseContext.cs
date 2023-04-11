@@ -46,6 +46,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsAcquisitionFundingType> PimsAcquisitionFundingTypes { get; set; }
         public virtual DbSet<PimsAcquisitionOwner> PimsAcquisitionOwners { get; set; }
         public virtual DbSet<PimsAcquisitionOwnerHist> PimsAcquisitionOwnerHists { get; set; }
+        public virtual DbSet<PimsAcquisitionOwnerSolicitor> PimsAcquisitionOwnerSolicitors { get; set; }
+        public virtual DbSet<PimsAcquisitionOwnerSolicitorHist> PimsAcquisitionOwnerSolicitorHists { get; set; }
         public virtual DbSet<PimsAcquisitionType> PimsAcquisitionTypes { get; set; }
         public virtual DbSet<PimsActInstPropAcqFile> PimsActInstPropAcqFiles { get; set; }
         public virtual DbSet<PimsActInstPropAcqFileHist> PimsActInstPropAcqFileHists { get; set; }
@@ -66,6 +68,9 @@ namespace Pims.Dal
         public virtual DbSet<PimsAddress> PimsAddresses { get; set; }
         public virtual DbSet<PimsAddressHist> PimsAddressHists { get; set; }
         public virtual DbSet<PimsAddressUsageType> PimsAddressUsageTypes { get; set; }
+        public virtual DbSet<PimsAgreement> PimsAgreements { get; set; }
+        public virtual DbSet<PimsAgreementHist> PimsAgreementHists { get; set; }
+        public virtual DbSet<PimsAgreementType> PimsAgreementTypes { get; set; }
         public virtual DbSet<PimsAreaUnitType> PimsAreaUnitTypes { get; set; }
         public virtual DbSet<PimsBusinessFunctionCode> PimsBusinessFunctionCodes { get; set; }
         public virtual DbSet<PimsBusinessFunctionCodeHist> PimsBusinessFunctionCodeHists { get; set; }
@@ -1088,9 +1093,11 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the owner is an organization.  Default value is FALSE, indicating that the owner is a person.");
 
-                entity.Property(e => e.LastNameAndCorpName)
-                    .HasDefaultValueSql("('<Empty>')")
-                    .HasComment("Name of the owner (person or organization).  If person, surname.");
+                entity.Property(e => e.IsPrimaryOwner)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates that this is the file's primary owner.");
+
+                entity.Property(e => e.LastNameAndCorpName).HasComment("Name of the owner (person or organization).  If person, surname.");
 
                 entity.Property(e => e.OtherName).HasComment("Optional name field if required.");
 
@@ -1114,6 +1121,64 @@ namespace Pims.Dal
                     .HasName("PIMS_ACQOWN_H_PK");
 
                 entity.Property(e => e.AcquisitionOwnerHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_OWNER_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsAcquisitionOwnerSolicitor>(entity =>
+            {
+                entity.HasKey(e => e.OwnerSolicitorId)
+                    .HasName("AQOWSO_PK");
+
+                entity.HasComment("Table describing the owners' solicitor that is assigned to the acquisition file.");
+
+                entity.Property(e => e.OwnerSolicitorId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_OWNER_SOLICITOR_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code value is inactive.");
+
+                entity.HasOne(d => d.AcquisitionFile)
+                    .WithMany(p => p.PimsAcquisitionOwnerSolicitors)
+                    .HasForeignKey(d => d.AcquisitionFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACQNFL_PIM_AQOWSO_FK");
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.PimsAcquisitionOwnerSolicitors)
+                    .HasForeignKey(d => d.PersonId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PERSON_PIM_AQOWSO_FK");
+            });
+
+            modelBuilder.Entity<PimsAcquisitionOwnerSolicitorHist>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionOwnerSolicitorHistId)
+                    .HasName("PIMS_AQOWSO_H_PK");
+
+                entity.Property(e => e.AcquisitionOwnerSolicitorHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_OWNER_SOLICITOR_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -1677,6 +1742,116 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
+            modelBuilder.Entity<PimsAgreement>(entity =>
+            {
+                entity.HasKey(e => e.AgreementId)
+                    .HasName("AGRMNT_PK");
+
+                entity.HasComment("Table containing the details of the acquisition agreement.");
+
+                entity.Property(e => e.AgreementId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_AGREEMENT_ID_SEQ])");
+
+                entity.Property(e => e.AgreementDate).HasComment("Date of the agreement.");
+
+                entity.Property(e => e.AgreementStatus)
+                    .HasDefaultValueSql("(CONVERT([bit],(1)))")
+                    .HasComment("Status of the agreement (currently Yes/No).");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.CommencementDate).HasComment("Date of commencement of the agreement.");
+
+                entity.Property(e => e.CompletionDate).HasComment("Date of completion of the agreement.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DepositAmount).HasComment("Amount of the deposit on the agreement.");
+
+                entity.Property(e => e.ExpiryTs).HasComment("Expiry date and time of acquisition offer.");
+
+                entity.Property(e => e.InspectionDate).HasComment("Date of inspection.");
+
+                entity.Property(e => e.LegalSurveyPlanNum).HasComment("Legal survey plan number,");
+
+                entity.Property(e => e.NoLaterThanDays).HasComment("Deposit due date");
+
+                entity.Property(e => e.OfferDate).HasComment("Date of acquisition offer.");
+
+                entity.Property(e => e.PurchasePrice).HasComment("Amount of the purchase price of the agreement.");
+
+                entity.Property(e => e.SignedDate).HasComment("Signed date of acquisition offer.");
+
+                entity.Property(e => e.TerminationDate).HasComment("Date of termination of the agreement.");
+
+                entity.HasOne(d => d.AcquisitionFile)
+                    .WithMany(p => p.PimsAgreements)
+                    .HasForeignKey(d => d.AcquisitionFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACQNFL_PIM_AGRMNT_FK");
+
+                entity.HasOne(d => d.AgreementTypeCodeNavigation)
+                    .WithMany(p => p.PimsAgreements)
+                    .HasForeignKey(d => d.AgreementTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_AGRTYP_PIM_AGRMNT_FK");
+            });
+
+            modelBuilder.Entity<PimsAgreementHist>(entity =>
+            {
+                entity.HasKey(e => e.AgreementHistId)
+                    .HasName("PIMS_AGRMNT_H_PK");
+
+                entity.Property(e => e.AgreementHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_AGREEMENT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsAgreementType>(entity =>
+            {
+                entity.HasKey(e => e.AgreementTypeCode)
+                    .HasName("AGRTYP_PK");
+
+                entity.HasComment("Table that contains the codes and associated descriptions of the agreement types.");
+
+                entity.Property(e => e.AgreementTypeCode).HasComment("Codified version of the agreement type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the agreement type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code value is inactive.");
+            });
+
             modelBuilder.Entity<PimsAreaUnitType>(entity =>
             {
                 entity.HasKey(e => e.AreaUnitTypeCode)
@@ -1857,7 +2032,6 @@ namespace Pims.Dal
                 entity.HasComment("Description of the consultation status type for (currently) a lease or license.");
 
                 entity.Property(e => e.ConsultationStatusTypeCode)
-                    .IsUnicode(false)
                     .HasDefaultValueSql("('OTHER')")
                     .HasComment("Code value of the consultation status type.");
 
@@ -1890,7 +2064,6 @@ namespace Pims.Dal
                 entity.HasComment("Description of the consultation type required for (currently) a lease or license.");
 
                 entity.Property(e => e.ConsultationTypeCode)
-                    .IsUnicode(false)
                     .HasDefaultValueSql("('OTHER')")
                     .HasComment("Code value of the consultation type.");
 
@@ -2255,6 +2428,10 @@ namespace Pims.Dal
                 entity.Property(e => e.DisplayOrder).HasComment("Determines the default display order of the code descriptions.");
 
                 entity.Property(e => e.DocumentType)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Code value of the available document types.");
+
+                entity.Property(e => e.DocumentTypeDescription)
                     .HasDefaultValueSql("('<Empty>')")
                     .HasComment("Description of the available document types.");
 
@@ -2748,11 +2925,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ConsultationStatusTypeCode)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('UNKNOWN')");
-
-                entity.Property(e => e.ConsultationTypeCode).IsUnicode(false);
+                entity.Property(e => e.ConsultationStatusTypeCode).HasDefaultValueSql("('UNKNOWN')");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -2791,10 +2964,6 @@ namespace Pims.Dal
                     .HasName("PIMS_LESCON_H_PK");
 
                 entity.Property(e => e.LeaseConsultationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_CONSULTATION_H_ID_SEQ])");
-
-                entity.Property(e => e.ConsultationStatusTypeCode).IsUnicode(false);
-
-                entity.Property(e => e.ConsultationTypeCode).IsUnicode(false);
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -3979,6 +4148,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.Note).HasComment("Descriptive note relevant to the project.");
 
+                entity.Property(e => e.ProjectStatusTypeCode).HasDefaultValueSql("('AC')");
+
                 entity.Property(e => e.RegionCode).HasDefaultValueSql("((4))");
 
                 entity.HasOne(d => d.BusinessFunctionCode)
@@ -3994,6 +4165,7 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ProjectStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsProjects)
                     .HasForeignKey(d => d.ProjectStatusTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PRJSTS_PIM_PROJCT_FK");
 
                 entity.HasOne(d => d.RegionCodeNavigation)
@@ -7088,6 +7260,10 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_ACQUISITION_OWNER_SOLICITOR_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_ACT_INST_PROP_ACQ_FILE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -7165,6 +7341,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_ADDRESS_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_AGREEMENT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_AGREEMENT_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -7381,6 +7565,10 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_ORGANIZATION_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_OWNER_SOLICITOR_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

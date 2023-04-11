@@ -9,9 +9,9 @@ import { Api_Activity } from 'models/api/Activity';
 import * as React from 'react';
 import * as Yup from 'yup';
 
+import { IFormContent } from '../../shared/content/models';
 import { Activity, ActivityFile } from './ActivityContainer';
 import { ActivityView } from './ActivityView';
-import { IActivityFormContent } from './content/models';
 import { ActivityModel } from './models';
 
 export interface IActivityFormProps {
@@ -22,7 +22,7 @@ export interface IActivityFormProps {
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
   onEditRelatedProperties: () => void;
-  formContent?: IActivityFormContent;
+  formContent?: IFormContent;
 }
 
 export const ActivityForm = ({
