@@ -9,7 +9,7 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsTake> GetByPropertyId(long fileId, long acquisitionFilePropertyId);
 
-        int GetTakesCountForAcquisitionProperty(long propertyId);
+        int GetCountByPropertyId(long propertyId);
 
         IEnumerable<PimsTake> UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes);
     }

@@ -62,7 +62,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="propertyId"></param>
         /// <returns></returns>
-        public int GetTakesCountForAcquisitionProperty(long propertyId)
+        public int GetCountByPropertyId(long propertyId)
         {
             return Context.PimsTakes
                 .Include(t => t.PropertyAcquisitionFile)

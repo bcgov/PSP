@@ -96,13 +96,13 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
             var repo = _helper.GetService<Mock<ITakeRepository>>();
-            repo.Setup(x => x.GetTakesCountForAcquisitionProperty(It.IsAny<long>()));
+            repo.Setup(x => x.GetCountByPropertyId(It.IsAny<long>()));
 
             // Act
-            var result = service.GetTakesCountForAcquisitionProperty(1);
+            var result = service.GetCountByPropertyId(1);
 
             // Assert
-            repo.Verify(x => x.GetTakesCountForAcquisitionProperty(It.IsAny<long>()), Times.Once);
+            repo.Verify(x => x.GetCountByPropertyId(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -112,7 +112,7 @@ namespace Pims.Api.Test.Services
             var service = CreateWithPermissions();
 
             // Act
-            Action act = () => service.GetTakesCountForAcquisitionProperty(1);
+            Action act = () => service.GetCountByPropertyId(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();

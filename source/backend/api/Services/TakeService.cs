@@ -38,11 +38,11 @@ namespace Pims.Api.Services
             return _takeRepository.GetAllByPropertyId(fileId, acquisitionFilePropertyId);
         }
 
-        public int GetTakesCountForAcquisitionProperty(long propertyId)
+        public int GetCountByPropertyId(long propertyId)
         {
             _logger.LogInformation("Getting take count with propertyId {fileId}", propertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            return _takeRepository.GetTakesCountForAcquisitionProperty(propertyId);
+            return _takeRepository.GetCountByPropertyId(propertyId);
         }
 
         public IEnumerable<PimsTake> UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes)
