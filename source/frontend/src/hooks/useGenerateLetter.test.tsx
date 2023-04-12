@@ -1,16 +1,10 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-import find from 'lodash/find';
-import { mockProperties } from 'mocks/filterDataMock';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
-import { getMockResearchFile } from 'mocks/mockResearchFile';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { networkSlice } from 'store/slices/network/networkSlice';
 
 import { useApiContacts } from './pims-api/useApiContacts';
 import { useGenerateLetter } from './useGenerateLetter';
