@@ -68,7 +68,7 @@ describe('TakesDetailContainer component', () => {
 
   beforeEach(() => {
     (useTakesRepository as jest.Mock).mockReturnValue({
-      getTakesByFileId: mockGetApi,
+      getTakesByPropertyId: mockGetApi,
       getTakesCountByPropertyId: mockCountsApi,
     });
   });
@@ -93,7 +93,7 @@ describe('TakesDetailContainer component', () => {
 
   it('returns the takes sorted by the created date', async () => {
     (useTakesRepository as jest.Mock).mockReturnValue({
-      getTakesByFileId: {
+      getTakesByPropertyId: {
         ...mockGetApi,
         response: [
           { ...getMockApiTakes(), appCreateTimestamp: '2020-01-01' },

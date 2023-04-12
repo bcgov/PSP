@@ -1014,7 +1014,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c7"
                     >
-                      Is there a Section 16? *:
+                      Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)? *:
                     </label>
                   </div>
                   <div
@@ -1205,7 +1205,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c7"
                     >
-                      Section 16 end date:
+                      End date:
                     </label>
                   </div>
                   <div
@@ -1231,6 +1231,36 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           />
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c7"
+                    >
+                      Describe Land Act:
+                    </label>
+                  </div>
+                  <div
+                    class="c8 text-left col-12"
+                  >
+                    <div
+                      class="textarea input form-group"
+                    >
+                      <textarea
+                        class="form-control"
+                        id="input-takes.0.landActDescription"
+                        name="takes.0.landActDescription"
+                        placeholder="e.g. Section 15 / Section 16 / Section 17 etc."
+                        title="NEW LAND"
+                      >
+                        NEW LAND
+                      </textarea>
                     </div>
                   </div>
                 </div>
