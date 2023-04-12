@@ -1,4 +1,3 @@
-import { getMockApiAddress } from 'mocks/mockAddress';
 import { getMockPerson } from 'mocks/mockContacts';
 
 import { GeneratePerson } from './GeneratePerson';
