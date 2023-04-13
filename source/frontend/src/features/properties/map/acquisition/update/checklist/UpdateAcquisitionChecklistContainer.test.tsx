@@ -1,3 +1,4 @@
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { mockLookups } from 'mocks';
 import {
   mockAcquisitionFileChecklistResponse,
@@ -8,12 +9,11 @@ import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions, screen } from 'utils/test-utils';
 
-import { useAcquisitionProvider } from '../../hooks/useAcquisitionProvider';
 import { UpdateAcquisitionChecklistContainer } from './UpdateAcquisitionChecklistContainer';
 import { IUpdateAcquisitionChecklistFormProps } from './UpdateAcquisitionChecklistForm';
 
 // mock API service calls
-jest.mock('../../hooks/useAcquisitionProvider');
+jest.mock('hooks/repositories/useAcquisitionProvider');
 
 type Provider = typeof useAcquisitionProvider;
 const mockUpdateAcquisitionChecklist = jest.fn();

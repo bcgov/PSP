@@ -20,19 +20,6 @@ export const pidFormatter = (pid?: string) => {
 };
 
 /**
- * Pads the specified PID value with leading zeroes
- * @param pid This is the target PID to be formatted; e.g. 45678
- * @returns The padded PID; e.g. 0000045678
- */
-export const pidPadded = (pid?: string) => {
-  if (!!pid) {
-    let result = pid.toString().padStart(9, '0');
-    return result;
-  }
-  return '';
-};
-
-/**
  * The pidParser is used to return a numeric pid value from a formatted pid.
  * @param {string} pid This is the target PID to be parsed
  */
@@ -50,25 +37,6 @@ export const pidParser = (pid?: string | number | null): number | undefined => {
     }
   }
   return undefined;
-};
-
-/**
- * Provides a formatted address as a string.
- * @param address Address object from property.
- * @returns Civic address string value.
- */
-export const formatAddress = (address?: IAddress) => {
-  const values = [
-    address?.streetAddress1 ?? '',
-    address?.streetAddress2 ?? '',
-    address?.streetAddress3 ?? '',
-    address?.municipality ?? '',
-    address?.province ?? '',
-  ];
-  return (
-    values.filter(text => text !== '').join(' ') +
-    (address?.postal ? ', ' + (address?.postal ?? '') : '')
-  );
 };
 
 /**

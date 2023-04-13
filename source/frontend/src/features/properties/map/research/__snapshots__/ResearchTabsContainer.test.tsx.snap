@@ -232,6 +232,10 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   cursor: pointer;
 }
 
+.c2 {
+  text-align: right;
+}
+
 .c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -263,10 +267,6 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
 
 .c10 {
   border-left: 0.2rem solid white;
-}
-
-.c2 {
-  text-align: right;
 }
 
 <div

@@ -133,7 +133,7 @@ namespace Pims.Dal.Repositories
             existingResearchFile.PimsResearchFilePurposes = purposes;
 
             Context.Entry(existingResearchFile).CurrentValues.SetValues(researchFile);
-            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject>(p => p.PimsResearchFileProjects, researchFile.Internal_Id, researchFile.PimsResearchFileProjects.ToArray());
+            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject, long>(p => p.PimsResearchFileProjects, researchFile.Internal_Id, researchFile.PimsResearchFileProjects.ToArray());
 
             return researchFile;
         }

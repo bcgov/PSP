@@ -9,7 +9,7 @@ import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
-import { StyledSummarySection } from '../styles';
+import { StyledSummarySection } from '../../SectionStyles';
 import { TakeModel, TakesYupSchema } from './models';
 import TakeSubForm from './TakeSubForm';
 
@@ -107,6 +107,7 @@ export const emptyTake: Api_Take = {
   newRightOfWayArea: null,
   landActArea: null,
   landActEndDt: null,
+  landActDescription: null,
   statutoryRightOfWayArea: null,
   surplusArea: null,
   propertyAcquisitionFileId: null,

@@ -95,6 +95,7 @@ describe('TakesDetailView component', () => {
     });
     expect(queryAllByText('Area:')).toHaveLength(0);
   });
+
   it('displays all area fields if all is radio buttons are true', () => {
     const { getAllByText } = setup({
       props: {
@@ -144,20 +145,28 @@ describe('TakesDetailView component', () => {
         ],
       },
     });
-    const date = await findByText('Section 16 end date:');
-    expect(date).toBeVisible();
-  });
-
-  it('displays count of takes on file', async () => {
-    const { findByText } = setup({
-      props: {
-        loading: false,
-        takes: [{} as any],
-      },
-    });
-    const date = await findByText('1 take(s)', {
+    const date = await findByText('Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)', {
       exact: false,
     });
     expect(date).toBeVisible();
+  });
+
+  it('displays the land act description', async () => {
+    const { findByText } = setup({
+      props: {
+        loading: false,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            isLicenseToConstruct: true,
+            ltcEndDt: '2020-01-01',
+          },
+        ],
+      },
+    });
+    const description = await findByText('NEW LAND', {
+      exact: false,
+    });
+    expect(description).toBeVisible();
   });
 });

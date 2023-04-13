@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsAcquisitionChecklistItem, AcquisitionFileChecklistItemModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.ItemType, src => src.AcqChklstItemTypeCodeNavigation)

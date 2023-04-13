@@ -15,6 +15,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
+  completionDate?: string;
   // Code Tables
   acquisitionPhysFileStatusTypeCode?: Api_TypeCode<string>;
   acquisitionTypeCode?: Api_TypeCode<string>;
@@ -47,6 +48,7 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
 export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   acquisitionFileId?: number;
+  isPrimaryContact: boolean;
   isOrganization: boolean;
   lastNameAndCorpName: string | null;
   otherName: string | null;

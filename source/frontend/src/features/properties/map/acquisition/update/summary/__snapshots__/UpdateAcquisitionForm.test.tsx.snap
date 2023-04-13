@@ -275,7 +275,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   margin-bottom: unset;
 }
 
-.c17 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -295,8 +295,12 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: flex-end;
 }
 
-.c16 {
+.c17 {
   background-color: none;
+}
+
+.c16 {
+  margin: 1.5rem;
 }
 
 .c12 {
@@ -801,6 +805,69 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Acquisition completed date:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container"
+                >
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    disabled=""
+                    id="datepicker-completionDate"
+                    name="completionDate"
+                    placeholder="--/--/----"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -1028,7 +1095,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="c3 required text-left col"
           >
             <div
-              class="required form-group"
+              class="required d-flex form-group"
             >
               <span
                 class="tooltip-icon"
@@ -1115,6 +1182,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value="EXPRAGENT"
                 >
                   Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
                 </option>
                 <option
                   class="option"
@@ -1302,6 +1376,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value="EXPRAGENT"
                 >
                   Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
                 </option>
                 <option
                   class="option"
@@ -1522,7 +1603,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="Button__value"
                 >
                   <svg
-                    data-testid="remove-button"
+                    data-testid="owners[0]-remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -1626,6 +1707,52 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             >
               Name
             </h3>
+            <div
+              class="c16"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                />
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="c13 form-group"
+                  >
+                    <div
+                      class="radio-group"
+                    >
+                      <div
+                        class="c14"
+                      >
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input position-static"
+                            data-testid="radio-owners[0].isprimarycontact-primary contact"
+                            id="input-true"
+                            name="owners[0].isPrimaryContact"
+                            type="radio"
+                            value="true"
+                          />
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="owners[0].isPrimaryContact"
+                        >
+                          Primary Contact
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div
               class="pb-2 row"
             >
@@ -1738,7 +1865,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
             >
               <h3
                 class="c15"
@@ -1808,7 +1935,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   style="padding-left: 0px; padding-bottom: 2rem;"
                 >
                   <div
-                    class="c17 h-100"
+                    class="c18 h-100"
                   >
                     <button
                       class="c8 Button c10 btn btn-link"
@@ -2158,7 +2285,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="Button__value"
                 >
                   <svg
-                    data-testid="remove-button"
+                    data-testid="owners[1]-remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -2262,6 +2389,51 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             >
               Name
             </h3>
+            <div
+              class="c16"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                />
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="c13 form-group"
+                  >
+                    <div
+                      class="radio-group"
+                    >
+                      <div
+                        class="c14"
+                      >
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            class="form-check-input position-static"
+                            data-testid="radio-owners[1].isprimarycontact-primary contact"
+                            id="input-true"
+                            name="owners[1].isPrimaryContact"
+                            type="radio"
+                            value="true"
+                          />
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="owners[1].isPrimaryContact"
+                        >
+                          Primary Contact
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div
               class="pb-2 row"
             >
@@ -2427,7 +2599,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
             >
               <h3
                 class="c15"
@@ -2497,7 +2669,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   style="padding-left: 0px; padding-bottom: 2rem;"
                 >
                   <div
-                    class="c17 h-100"
+                    class="c18 h-100"
                   >
                     <button
                       class="c8 Button c10 btn btn-link"

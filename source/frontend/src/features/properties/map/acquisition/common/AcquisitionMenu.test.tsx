@@ -1,7 +1,7 @@
 import { Claims } from 'constants/index';
 import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
-import { EditFormNames } from '../EditFormNames';
+import { EditFormType } from '../EditFormNames';
 import AcquisitionMenu, { IAcquisitionMenuProps } from './AcquisitionMenu';
 
 // mock auth library
@@ -9,6 +9,7 @@ jest.mock('@react-keycloak/web');
 
 const onChange = jest.fn();
 const setContainerState = jest.fn();
+const onGenerateLetter = jest.fn();
 
 const testData = ['one', 'two', 'three'];
 
@@ -21,6 +22,7 @@ describe('AcquisitionMenu component', () => {
         items={props.items}
         onChange={props.onChange}
         setContainerState={props.setContainerState}
+        onGenerateLetter={props.onGenerateLetter}
       />,
       {
         useMockAuthentication: true,
@@ -42,6 +44,7 @@ describe('AcquisitionMenu component', () => {
       selectedIndex: 0,
       onChange,
       setContainerState,
+      onGenerateLetter,
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -52,6 +55,7 @@ describe('AcquisitionMenu component', () => {
       selectedIndex: 0,
       onChange,
       setContainerState,
+      onGenerateLetter,
     });
 
     expect(getByText('one')).toBeVisible();
@@ -65,6 +69,7 @@ describe('AcquisitionMenu component', () => {
       selectedIndex: 1,
       onChange,
       setContainerState,
+      onGenerateLetter,
     });
 
     expect(getByTestId('menu-item-row-0')).not.toHaveClass('selected');
@@ -78,6 +83,7 @@ describe('AcquisitionMenu component', () => {
       selectedIndex: 1,
       onChange,
       setContainerState,
+      onGenerateLetter,
     });
 
     const lastItem = getByText('three');
@@ -93,6 +99,7 @@ describe('AcquisitionMenu component', () => {
         selectedIndex: 1,
         onChange,
         setContainerState,
+        onGenerateLetter,
       },
       { claims: [Claims.ACQUISITION_EDIT] },
     );
@@ -104,7 +111,7 @@ describe('AcquisitionMenu component', () => {
 
     expect(setContainerState).toHaveBeenCalledWith({
       isEditing: true,
-      activeEditForm: EditFormNames.propertySelector,
+      activeEditForm: EditFormType.PROPERTY_SELECTOR,
     });
   });
 
@@ -115,6 +122,7 @@ describe('AcquisitionMenu component', () => {
         selectedIndex: 1,
         onChange,
         setContainerState,
+        onGenerateLetter,
       },
       { claims: [Claims.ACQUISITION_VIEW] }, // no edit permissions, just view.
     );

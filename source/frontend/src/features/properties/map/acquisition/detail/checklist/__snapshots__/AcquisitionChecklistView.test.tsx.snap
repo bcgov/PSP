@@ -11,6 +11,10 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
   cursor: pointer;
 }
 
+.c0 {
+  text-align: right;
+}
+
 .c3 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -36,34 +40,26 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c0 {
-  text-align: right;
-}
-
 .c2 {
   font-size: 1.4rem;
   text-align: center;
 }
 
-.c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  line-height: 2.4rem;
-  width: 100%;
-  gap: 0.2rem;
+.c8 {
+  color: #2E8540;
+  min-width: 11rem;
 }
 
-.c8 {
+.c10 {
+  min-width: 11rem;
+}
+
+.c11 {
+  color: #aaaaaa;
+  min-width: 11rem;
+}
+
+.c7 {
   min-width: 13rem;
   font-size: 1.1rem;
   font-style: italic;
@@ -71,20 +67,6 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
 }
 
 .c9 {
-  color: #2E8540;
-  min-width: 11rem;
-}
-
-.c11 {
-  min-width: 11rem;
-}
-
-.c12 {
-  color: #aaaaaa;
-  min-width: 11rem;
-}
-
-.c10 {
   min-width: 2.4rem;
   text-align: right;
 }
@@ -175,51 +157,63 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
+              <div
+                class="col-6"
               >
                 <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
+                  class="c7"
                 >
-                  <strong>
-                    ALESANCH
-                  </strong>
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      ALESANCH
+                    </strong>
+                  </span>
+                  <em>
+                     Mar 17, 2023
+                  </em>
                 </span>
-                <em>
-                   Mar 17, 2023
-                </em>
-              </span>
-              <span
-                class="c9"
-                color="#2E8540"
+              </div>
+              <div
+                class="col-5"
               >
-                Complete
-              </span>
-              <span
-                class="c10"
-              >
-                <svg
+                <span
+                  class="c8"
                   color="#2E8540"
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  style="color: rgb(46, 133, 64);"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <polyline
-                    points="20 6 9 17 4 12"
-                  />
-                </svg>
-              </span>
+                  Complete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    color="#2E8540"
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    style="color: rgb(46, 133, 64);"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline
+                      points="20 6 9 17 4 12"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -239,44 +233,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -296,54 +302,66 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
+              <div
+                class="col-6"
               >
                 <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
+                  class="c7"
                 >
-                  <strong>
-                    ALESANCH
-                  </strong>
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      ALESANCH
+                    </strong>
+                  </span>
+                  <em>
+                     Mar 17, 2023
+                  </em>
                 </span>
-                <em>
-                   Mar 17, 2023
-                </em>
-              </span>
-              <span
-                class="c12"
-                color="#aaaaaa"
+              </div>
+              <div
+                class="col-5"
               >
-                Not applicable
-              </span>
-              <span
-                class="c10"
-              >
-                <svg
+                <span
+                  class="c11"
                   color="#aaaaaa"
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  style="color: rgb(170, 170, 170);"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <line
-                    x1="5"
-                    x2="19"
-                    y1="12"
-                    y2="12"
-                  />
-                </svg>
-              </span>
+                  Not applicable
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    color="#aaaaaa"
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    style="color: rgb(170, 170, 170);"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="5"
+                      x2="19"
+                      y1="12"
+                      y2="12"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -363,51 +381,63 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
+              <div
+                class="col-6"
               >
                 <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
+                  class="c7"
                 >
-                  <strong>
-                    ALESANCH
-                  </strong>
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      ALESANCH
+                    </strong>
+                  </span>
+                  <em>
+                     Mar 17, 2023
+                  </em>
                 </span>
-                <em>
-                   Mar 17, 2023
-                </em>
-              </span>
-              <span
-                class="c9"
-                color="#2E8540"
+              </div>
+              <div
+                class="col-5"
               >
-                Complete
-              </span>
-              <span
-                class="c10"
-              >
-                <svg
+                <span
+                  class="c8"
                   color="#2E8540"
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  style="color: rgb(46, 133, 64);"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <polyline
-                    points="20 6 9 17 4 12"
-                  />
-                </svg>
-              </span>
+                  Complete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    color="#2E8540"
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    style="color: rgb(46, 133, 64);"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline
+                      points="20 6 9 17 4 12"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -451,44 +481,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -554,44 +596,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -611,44 +665,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -692,44 +758,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -749,44 +827,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -806,44 +896,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -887,57 +989,69 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
+              <div
+                class="col-6"
               >
                 <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
+                  class="c7"
                 >
-                  <strong>
-                    ALESANCH
-                  </strong>
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      ALESANCH
+                    </strong>
+                  </span>
+                  <em>
+                     Mar 17, 2023
+                  </em>
                 </span>
-                <em>
-                   Mar 17, 2023
-                </em>
-              </span>
-              <span
-                class="c11"
+              </div>
+              <div
+                class="col-5"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
-              >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -981,44 +1095,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1038,44 +1164,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1095,44 +1233,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1152,44 +1302,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1209,44 +1371,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1266,44 +1440,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1347,44 +1533,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1428,44 +1626,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1485,44 +1695,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1612,44 +1834,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1669,44 +1903,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1726,44 +1972,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1783,44 +2041,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1840,44 +2110,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1897,44 +2179,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1978,44 +2272,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2105,44 +2411,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2186,44 +2504,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2267,44 +2597,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2348,44 +2690,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2405,44 +2759,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2462,44 +2828,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2589,44 +2967,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="c6 text-left col"
           >
             <div
-              class="c7"
+              class="no-gutters row"
             >
-              <span
-                class="c8"
-              />
-              <span
-                class="c11"
+              <div
+                class="col-6"
               >
-                Incomplete
-              </span>
-              <span
-                class="c10"
+                <span
+                  class="c7"
+                />
+              </div>
+              <div
+                class="col-5"
               >
-                <svg
-                  fill="none"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="c10"
                 >
-                  <line
-                    x1="18"
-                    x2="6"
-                    y1="6"
-                    y2="18"
-                  />
-                  <line
-                    x1="6"
-                    x2="18"
-                    y1="6"
-                    y2="18"
-                  />
-                </svg>
-              </span>
+                  Incomplete
+                </span>
+              </div>
+              <div
+                class="col-1"
+              >
+                <span
+                  class="c9"
+                >
+                  <svg
+                    fill="none"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="18"
+                      x2="6"
+                      y1="6"
+                      y2="18"
+                    />
+                    <line
+                      x1="6"
+                      x2="18"
+                      y1="6"
+                      y2="18"
+                    />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>

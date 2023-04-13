@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ExcelDataReader;
 using System.Data;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.Data
 {

@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPrfPropResearchPurposeType, PropertyPurposeModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.PropertyPurposeType, src => src.PropResearchPurposeTypeCodeNavigation)
                 .Map(dest => dest.PropertyResearchFileId, src => src.PropertyResearchFileId)

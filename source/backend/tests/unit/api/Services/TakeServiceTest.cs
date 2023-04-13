@@ -63,6 +63,34 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetByPropertyId_Success()
+        {
+            // Arrange
+            var service = CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            var repo = _helper.GetService<Mock<ITakeRepository>>();
+            repo.Setup(x => x.GetAllByPropertyId(It.IsAny<long>(), It.IsAny<long>()));
+
+            // Act
+            var result = service.GetByPropertyId(1, 2);
+
+            // Assert
+            repo.Verify(x => x.GetAllByPropertyId(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetByPropertyId_NoPermission()
+        {
+            // Arrange
+            var service = CreateWithPermissions();
+
+            // Act
+            Action act = () => service.GetByPropertyId(1, 2);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
         public void GetCountByPropertyId_Success()
         {
             // Arrange
