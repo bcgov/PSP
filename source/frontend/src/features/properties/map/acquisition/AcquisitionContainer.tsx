@@ -4,6 +4,7 @@ import { FileTypes } from 'constants/index';
 import { FileTabNames } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
+import { useGenerateLetter } from 'hooks/useGenerateLetter';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 
@@ -42,7 +43,7 @@ const initialState: AcquisitionContainerState = {
 export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
-  const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
+  const { setFile, setFileLoading, staleFile, setStaleFile, file } = useContext(SideBarContext);
   const { search } = useMapSearch();
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
@@ -53,6 +54,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     },
     getAcquisitionFileChecklist: { execute: retrieveAcquisitionFileChecklist },
   } = useAcquisitionProvider();
+  const generateLetter = useGenerateLetter();
 
   const formikRef = useRef<FormikProps<any>>(null);
 
@@ -194,6 +196,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       onSuccess={onSuccess}
       canRemove={canRemove}
       formikRef={formikRef}
+      onGenerateLetter={() => (!!file ? generateLetter(file) : Promise.resolve())}
     ></View>
   );
 };

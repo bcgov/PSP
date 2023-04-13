@@ -86,6 +86,10 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(rp => rp.AcqFlPersonProfileTypeCodeNavigation)
                 .Include(r => r.PimsAcquisitionOwners)
                     .ThenInclude(x => x.Address)
+                        .ThenInclude(x => x.ProvinceState)
+                .Include(r => r.PimsAcquisitionOwners)
+                    .ThenInclude(x => x.Address)
+                        .ThenInclude(x => x.Country)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 

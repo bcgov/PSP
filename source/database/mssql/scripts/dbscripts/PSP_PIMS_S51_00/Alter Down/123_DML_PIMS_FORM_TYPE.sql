@@ -6,14 +6,18 @@ Author        Date         Comment
 Doug Filteau  2023-Jan-30  Initial version
 ----------------------------------------------------------------------------- */
 
-DELETE FROM PIMS_FORM_TYPE
-GO
+-- Remove the "LETTER" type
 
-INSERT INTO PIMS_FORM_TYPE (FORM_TYPE_CODE, DESCRIPTION)
-VALUES
-  (N'H179P', N'Offer agreement - Partial (H179 P)'),
-  (N'H179T', N'Offer agreement - Total (H179 T)'),
-  (N'H179A', N'Offer agreement - Section 3 (H179 A)'),
-  (N'H120',  N'Payment requisition (H120)');
-  (N'LETTER',  N'General Letter');
-GO
+DECLARE @FormType NVARCHAR(20)
+SET     @FormType = N'LETTER'
+
+SELECT FORM_TYPE_CODE
+FROM   PIMS_FORM_TYPE
+WHERE  FORM_TYPE_CODE = @FormType;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+    DELETE FROM PIMS_FORM_TYPE
+    WHERE FORM_TYPE_CODE = @FormType
+  END
+
