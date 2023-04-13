@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
 import { Api_Address } from 'models/api/Address';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { fromTypeCode, toTypeCode } from 'utils/formUtils';
+import { fromTypeCode, stringToBoolean, toTypeCode } from 'utils/formUtils';
 
 export interface WithAcquisitionTeam {
   team: AcquisitionTeamFormModel[];
@@ -77,8 +77,8 @@ export class AcquisitionOwnerFormModel {
       id: this.id,
       rowVersion: this.rowVersion,
       acquisitionFileId: this.acquisitionFileId,
-      isPrimaryContact: this.isPrimaryContact === 'true' ? true : false,
-      isOrganization: this.isOrganization === 'true' ? true : false,
+      isPrimaryContact: stringToBoolean(this.isPrimaryContact),
+      isOrganization: stringToBoolean(this.isOrganization),
       lastNameAndCorpName: this.lastNameAndCorpName,
       otherName: this.otherName,
       givenName: this.isOrganization === 'true' ? null : this.givenName.trim(),

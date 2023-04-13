@@ -46,7 +46,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
         if (index === 0) {
           values.owners[++index].isPrimaryContact = 'true';
         } else {
-          values.owners[--index].isPrimaryContact = 'true';
+          values.owners[0].isPrimaryContact = 'true';
         }
       }
     }
