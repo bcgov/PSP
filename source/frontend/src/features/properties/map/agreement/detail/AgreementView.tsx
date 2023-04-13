@@ -35,7 +35,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
       </StyledEditWrapper>
       {agreements.length === 0 && <StyledNoData>No agreements on record</StyledNoData>}
       {agreements.map((agreement, index) => (
-        <Section header={`Agreement ${index + 1}`} isCollapsable initiallyExpanded>
+        <Section
+          key={`agreement-section-${index}`}
+          header={`Agreement ${index + 1}`}
+          isCollapsable
+          initiallyExpanded
+        >
           <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
           <SectionField labelWidth="5" label="Agreement status">
             {agreement.agreementStatus === true ? 'Yes' : 'No'}

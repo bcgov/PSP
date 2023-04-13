@@ -9,9 +9,6 @@ import AgreementView, { IAgreementViewProps } from './AgreementView';
 // mock auth library
 jest.mock('@react-keycloak/web');
 
-// mock API service calls
-jest.mock('hooks/pims-api/useApiUsers');
-
 (useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
   getUserInfo: jest.fn().mockResolvedValue({}),
 } as any);

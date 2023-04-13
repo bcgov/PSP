@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a repository to interact with agreements within the datasource.
     /// </summary>
-    public class AgreementRepository : BaseRepository<PimsAcquisitionChecklistItem>, IAgreementRepository
+    public class AgreementRepository : BaseRepository<PimsAgreement>, IAgreementRepository
     {
         #region Constructors
 
@@ -30,15 +30,6 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
-
-        public IEnumerable<PimsAcqChklstItemType> GetAllChecklistItemTypes()
-        {
-            return Context.PimsAcqChklstItemTypes
-                .Include(it => it.AcqChklstSectionTypeCodeNavigation)
-                .OrderBy(it => it.DisplayOrder)
-                .AsNoTracking()
-                .ToArray();
-        }
 
         public List<PimsAgreement> GetAgreementsByAquisitionFile(long acquisitionFileId)
         {

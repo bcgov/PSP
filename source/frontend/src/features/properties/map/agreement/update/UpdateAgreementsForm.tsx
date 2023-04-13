@@ -2,6 +2,7 @@ import { Button, StyledRemoveLinkButton } from 'components/common/buttons';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, Form, Formik, FormikProps } from 'formik';
+import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_Agreement } from 'models/api/Agreement';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -30,6 +31,12 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
 }) => {
   const field = 'agreements';
 
+  const { setModalContent, setDisplayModal } = useModalContext();
+
+  const onRemove = (index: number, removeCallback: (index: number) => void) => {
+    removeCallback(index);
+  };
+
   return (
     <StyledFormWrapper>
       <Formik<AgreementsFormModel>
@@ -57,7 +64,7 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
                     >
                       + Create new agreement
                     </Button>
-                    {formikProps.values.agreements.map((product, index, array) => (
+                    {formikProps.values.agreements.map((agreement, index) => (
                       <Section
                         key={`agreement-edit-${index}`}
                         header={`Agreement ${index + 1}`}
@@ -70,7 +77,16 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
                             <StyledRemoveLinkButton
                               title="Delete Agreement"
                               variant="light"
-                              onClick={() => arrayHelpers.remove(index)}
+                              onClick={() => {
+                                setModalContent({
+                                  ...getDeleteModalProps(),
+                                  handleOk: () => {
+                                    onRemove(index, arrayHelpers.remove);
+                                    setDisplayModal(false);
+                                  },
+                                });
+                                setDisplayModal(true);
+                              }}
                             >
                               <FaTrash size="2rem" />
                             </StyledRemoveLinkButton>
