@@ -165,7 +165,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
             </Section>
 
             <Section header="Acquisition Details">
-              <SectionField label="Acquisition file name">
+              <SectionField label="Acquisition file name" required>
                 <Input field="fileName" />
               </SectionField>
               <SectionField
@@ -181,7 +181,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
                   placeholder="Select..."
                 />
               </SectionField>
-              <SectionField label="Acquisition type">
+              <SectionField label="Acquisition type" required>
                 <Select
                   field="acquisitionType"
                   options={acquisitionTypes}
@@ -189,7 +189,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
                   required
                 />
               </SectionField>
-              <SectionField label="Ministry region">
+              <SectionField label="Ministry region" required>
                 <UserRegionSelectContainer
                   field="region"
                   options={regionTypes}
