@@ -18,7 +18,7 @@ import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
 
 export interface IDocumentListViewProps {
-  parentId: number;
+  parentId: string;
   relationshipType: DocumentRelationshipType;
   isLoading: boolean;
   documentResults: DocumentRow[];

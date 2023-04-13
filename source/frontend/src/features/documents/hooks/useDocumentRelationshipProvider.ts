@@ -26,11 +26,11 @@ export const useDocumentRelationshipProvider = () => {
     useApiRequestWrapper<
       (
         relationshipType: DocumentRelationshipType,
-        parentId: number,
+        parentId: string,
       ) => Promise<AxiosResponse<Api_DocumentRelationship[], any>>
     >({
       requestFunction: useCallback(
-        async (relationshipType: DocumentRelationshipType, parentId: number) =>
+        async (relationshipType: DocumentRelationshipType, parentId: string) =>
           await getDocumentRelationship(relationshipType, parentId),
         [getDocumentRelationship],
       ),
@@ -80,14 +80,14 @@ export const useDocumentRelationshipProvider = () => {
   const { execute: uploadDocument, loading: uploadDocumentLoading } = useApiRequestWrapper<
     (
       relationshipType: DocumentRelationshipType,
-      parentId: number,
+      parentId: string,
       uploadRequest: Api_DocumentUploadRequest,
     ) => Promise<AxiosResponse<Api_DocumentUploadResponse, any>>
   >({
     requestFunction: useCallback(
       async (
         relationshipType: DocumentRelationshipType,
-        parentId: number,
+        parentId: string,
         uploadRequest: Api_DocumentUploadRequest,
       ) => await uploadDocumentRelationshipApiCall(relationshipType, parentId, uploadRequest),
       [uploadDocumentRelationshipApiCall],

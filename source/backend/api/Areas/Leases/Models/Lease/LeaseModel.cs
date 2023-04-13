@@ -208,6 +208,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IEnumerable<SecurityDepositModel> SecurityDeposits { get; set; }
 
         /// <summary>
+        /// get/set - The consultations related to this lease.
+        /// </summary>
+        public IEnumerable<ConsultationLeaseModel> Consultations { get; set; }
+
+        /// <summary>
         /// get/set - Notes accompanying Lease.
         /// </summary>
         public string ReturnNotes { get; set; }

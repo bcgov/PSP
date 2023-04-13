@@ -8,6 +8,6 @@ namespace Pims.Api.Services
 
         PimsOrganization AddOrganization(PimsOrganization organization, bool userOverride);
 
-        PimsOrganization UpdateOrganization(PimsOrganization organization, long rowVersion);
+        PimsOrganization UpdateOrganization(PimsOrganization organization, long? rowVersion);
     }
 }

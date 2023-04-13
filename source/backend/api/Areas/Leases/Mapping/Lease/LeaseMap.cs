@@ -53,6 +53,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.TenantNotes, src => src.PimsLeaseTenants.Select(t => t.Note))
                 .Map(dest => dest.Improvements, src => src.GetImprovements())
                 .Map(dest => dest.SecurityDeposits, src => src.PimsSecurityDeposits)
+                .Map(dest => dest.Consultations, src => src.PimsLeaseConsultations)
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
                 .Map(dest => dest.ReturnNotes, src => src.ReturnNotes)
                 .Map(dest => dest.IsExpired, src => src.IsExpired)

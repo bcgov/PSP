@@ -1,8 +1,7 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { SideBarContext } from 'features/properties/map/context/sidebarContext';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentRelationship } from 'models/api/Document';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { DocumentRow } from '../ComposedDocument';
@@ -10,7 +9,7 @@ import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshi
 import DocumentListView from './DocumentListView';
 
 interface IDocumentListContainerProps {
-  parentId: number;
+  parentId: string;
   relationshipType: DocumentRelationshipType;
   disableAdd?: boolean;
   addButtonText?: string;
@@ -23,8 +22,6 @@ const DocumentListContainer: React.FunctionComponent<
   const isMounted = useIsMounted();
 
   const [documentResults, setDocumentResults] = useState<DocumentRow[]>([]);
-
-  const { file, staleFile, setStaleFile } = useContext(SideBarContext);
 
   const [pageProps, setPageProps] = useState<{ pageIndex?: number; pageSize: number }>({
     pageIndex: 0,
@@ -52,12 +49,6 @@ const DocumentListContainer: React.FunctionComponent<
     retrieveDocuments();
   }, [retrieveDocuments]);
 
-  useEffect(() => {
-    if (staleFile) {
-      retrieveDocuments();
-    }
-  }, [staleFile, retrieveDocuments]);
-
   const onDelete = async (
     documentRelationship: Api_DocumentRelationship,
   ): Promise<boolean | undefined> => {
@@ -83,13 +74,8 @@ const DocumentListContainer: React.FunctionComponent<
   };
 
   const updateCallback = useCallback(() => {
-    // Check if the component is working in a File context. If it is, delegate the update.
-    if (file === undefined) {
-      retrieveDocuments();
-    } else {
-      setStaleFile(true);
-    }
-  }, [file, setStaleFile, retrieveDocuments]);
+    retrieveDocuments();
+  }, [retrieveDocuments]);
 
   const currentPageIndex = pageProps.pageIndex;
   const onPageChange = useCallback(

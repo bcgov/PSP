@@ -9,7 +9,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The project id.
         /// </summary>
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// get/set - The status type code.

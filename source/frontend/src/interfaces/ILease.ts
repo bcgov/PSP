@@ -1,6 +1,7 @@
 import { FormTenant } from 'features/leases/detail/LeasePages/tenant/ViewTenantForm';
 import { Api_AuditFields } from 'models/api/AuditFields';
 import { Api_ConcurrentVersion } from 'models/api/ConcurrentVersion';
+import { Api_LeaseConsultation } from 'models/api/Lease';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import { Api_Person } from 'models/api/Person';
 import { Api_Project } from 'models/api/Project';
@@ -57,6 +58,7 @@ export interface ILease extends Api_ConcurrentVersion, Api_AuditFields {
   improvements: ILeaseImprovement[];
   securityDeposits: Api_SecurityDeposit[];
   securityDepositReturns: Api_SecurityDepositReturn[];
+  consultations: Api_LeaseConsultation[];
   project?: Api_Project;
 }
 
@@ -133,6 +135,7 @@ export const defaultLease: ILease = {
   tenants: [],
   hasDigitalLicense: false,
   hasPhysicalLicense: false,
+  consultations: [],
 };
 
 export const defaultFormLease: IFormLease = {
@@ -162,4 +165,5 @@ export const defaultFormLease: IFormLease = {
   tenants: [],
   hasDigitalLicense: 'Unknown',
   hasPhysicalLicense: 'Unknown',
+  consultations: [],
 };

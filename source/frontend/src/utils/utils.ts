@@ -2,10 +2,9 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { SelectOption } from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
-import _, { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
+import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
 import moment, { Moment } from 'moment-timezone';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
 
 /**
@@ -18,22 +17,6 @@ export function round(value: number, decimalPlaces = 2): number {
   const factorOfTen = Math.pow(10, decimalPlaces);
   return Math.round((value + Number.EPSILON) * factorOfTen) / factorOfTen;
 }
-
-/**
- * Convert the specified 'input' value into a decimal or undefined.
- * @param input The string value to convert to a decimal.
- */
-export const decimalOrUndefined = (input: string): number | undefined => {
-  return input !== '' && input !== undefined ? parseInt(input, 10) : undefined;
-};
-
-/**
- * Convert the specified 'input' value into a float or undefined.
- * @param input The string value to convert to a float.
- */
-export const floatOrUndefined = (input: string): number | undefined => {
-  return input !== '' && input !== undefined ? parseFloat(input) : undefined;
-};
 
 /**
  * Determine if the specified 'input' value is a positive number of zero.
@@ -55,33 +38,6 @@ export const isPositiveNumberOrZero = (input: string | number | undefined | null
 export const isNullOrWhitespace = (value: string | null | undefined): boolean => {
   return value === null || value === undefined || value.trim() === '';
 };
-
-/** used for filters that need to display the string value of a parent organization organization */
-export const mapLookupCodeWithParentString = (
-  code: ILookupCode,
-  /** the list of lookup codes to look for parent */
-  options: ILookupCode[],
-): SelectOption => ({
-  label: code.name,
-  value: code.id.toString(),
-  code: code.code,
-  parentId: code.parentId,
-  parent: options.find((a: ILookupCode) => a.id.toString() === code.parentId?.toString())?.name,
-});
-
-/** used for inputs that need to display the string value of a parent organization organization */
-export const mapSelectOptionWithParent = (
-  code: SelectOption,
-  /** the list of lookup codes to look for parent */
-  options: SelectOption[],
-): SelectOption => ({
-  label: code.label,
-  value: code.value.toString(),
-  code: code.code,
-  parentId: code.parentId,
-  parent: options.find((a: SelectOption) => a.value.toString() === code.parentId?.toString())
-    ?.label,
-});
 
 type FormikMemoProps = {
   formikProps: FormikProps<any>;
@@ -200,15 +156,11 @@ export const getCurrentFiscalYear = (): number => {
   return now.month() >= 4 ? now.add(1, 'years').year() : now.year();
 };
 
-export const formatDate = (date?: string | Date | Moment) => {
-  return !!date ? moment(date).format('YYYY-MM-DD') : '';
-};
-
-export const prettyFormatDate = (date?: string | Date | Moment) => {
+export const prettyFormatDate = (date?: string | Date | Moment | null) => {
   return !!date ? moment(date).format('MMM D, YYYY') : '';
 };
 
-export const prettyFormatDateTime = (date?: string | Date | Moment) => {
+export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
   return !!date ? moment.utc(date).local().format('MMM D, YYYY hh:mm a') : '';
 };
 
@@ -220,57 +172,6 @@ export const prettyFormatDateTime = (date?: string | Date | Moment) => {
 export const formatApiDateTime = (date?: string | Date | Moment) => {
   if (typeof date === 'string') return moment.utc(date).local().format('YYYY-MM-DD hh:mm a');
   return !!date ? moment.utc(date).local().format('YYYY-MM-DD hh:mm a') : '';
-};
-
-/**
- * Get the current date time in the UTC timezone. This allows the frontend to create timestamps that are compatible with timestamps created by the API.
- */
-export const generateUtcNowDateTime = () =>
-  moment(new Date()).utc().format('YYYY-MM-DDTHH:mm:ss.SSSSSSS');
-
-/**
- * Returns true only if the passed mouse event occurred within the last 500ms, or the mouse event is null.
- */
-export const isMouseEventRecent = (timeStamp?: number) =>
-  !!timeStamp && timeStamp >= (document?.timeline?.currentTime ?? 0) - 500;
-
-/**
- * postalCodeFormatter takes the specified postal code and formats it with a space in the middle
- * @param {string} postal The target postal to be formatted
- */
-export const postalCodeFormatter = (postal: string) => {
-  const regex = /([a-zA-z][0-9][a-zA-z])[\s-]?([0-9][a-zA-z][0-9])/;
-  const format = postal.match(regex);
-  if (format !== null && format.length === 3) {
-    postal = `${format[1]} ${format[2]}`;
-  }
-  return postal.toUpperCase();
-};
-
-/**
- * Using the administrative areas code set, find the matching municipality returned by the parcel layer, if present.
- * @param administrativeAreas the full list from the administrative areas code set.
- * @param layerMunicipality the municipality returned by the layer.
- */
-export const getAdminAreaFromLayerData = (
-  administrativeAreas: ILookupCode[],
-  layerMunicipality: string,
-) => {
-  let administrativeArea = _.find(administrativeAreas, { name: layerMunicipality });
-  if (administrativeArea) {
-    return administrativeArea;
-  }
-  if (!!layerMunicipality?.length) {
-    const splitLayerMunicipality = layerMunicipality.split(',');
-    if (splitLayerMunicipality.length === 2) {
-      const formattedLayerMunicipality = `${splitLayerMunicipality[1].trim()} ${splitLayerMunicipality[0].trim()}`;
-      let match = _.find(administrativeAreas, { name: formattedLayerMunicipality });
-      if (!match) {
-        match = _.find(administrativeAreas, { name: splitLayerMunicipality[0].trim() });
-      }
-      return match;
-    }
-  }
 };
 
 /**

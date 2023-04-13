@@ -1,3 +1,5 @@
+import { DisplayError } from 'components/common/form';
+
 import { AreaForm } from './AreaForm';
 import AreaView from './AreaView';
 
@@ -12,6 +14,7 @@ interface ViewOnlyProps {
 interface EditableProps {
   landArea?: number;
   unitCode?: string;
+  field?: string;
 
   isEditable: boolean;
   onChange: (landArea: number, areaUnitTypeCode: string) => void;
@@ -28,7 +31,14 @@ const AreaContainer: React.FunctionComponent<IAreaContainerProps> = props => {
     return <AreaView landArea={props.landArea} unitCode={props.unitCode} />;
   } else {
     return (
-      <AreaForm area={props.landArea} areaUnitTypeCode={props.unitCode} onChange={props.onChange} />
+      <>
+        <AreaForm
+          area={props.landArea}
+          areaUnitTypeCode={props.unitCode}
+          onChange={props.onChange}
+        />
+        <DisplayError field={props.field} />
+      </>
     );
   }
 };

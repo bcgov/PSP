@@ -19,9 +19,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
 import { NotFoundPage } from 'pages/404/NotFoundPage';
-import Test from 'pages/Test.ignore';
 import { TestFileManagement } from 'pages/TestFileManagement';
-import { TestNotes } from 'pages/TestNotes';
 import React, { lazy, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
@@ -42,6 +40,10 @@ const ManageAccessRequests = lazy(() =>
   componentLoader(import('features/admin/access/ManageAccessRequestsPage'), 2),
 );
 const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsersPage'), 2));
+
+const ManageDocumentTemplate = lazy(() =>
+  componentLoader(import('features/admin/document-template/DocumentTemplateManagementPage'), 2),
+);
 
 const PropertyListView = lazy(() =>
   componentLoader(import('features/properties/list/PropertyListView'), 2),
@@ -114,13 +116,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={PublicLayout}
           ></AppRoute>
           <AppRoute
-            exact
-            path="/test"
-            title={getTitle('Test')}
-            customComponent={Test}
-            layout={PublicLayout}
-          ></AppRoute>
-          <AppRoute
             protected
             path="/admin/users"
             customComponent={ManageUsers}
@@ -135,6 +130,14 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.ADMIN_USERS}
             title={getTitle('Access Requests')}
+          ></AppRoute>
+          <AppRoute
+            protected
+            path="/admin/document_generation"
+            customComponent={ManageDocumentTemplate}
+            layout={AuthLayout}
+            claim={Claims.DOCUMENT_ADMIN}
+            title={getTitle('Document Template')}
           ></AppRoute>
           <AppRoute
             protected
@@ -283,13 +286,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             path="/testFileManagement"
             title={getTitle('Test')}
             customComponent={TestFileManagement}
-            layout={AuthLayout}
-          />
-          <AppRoute
-            exact
-            path="/test/notes"
-            title={getTitle('Test Notes')}
-            customComponent={TestNotes}
             layout={AuthLayout}
           />
           <AppRoute title="*" path="*" customComponent={() => <Redirect to="/page-not-found" />} />

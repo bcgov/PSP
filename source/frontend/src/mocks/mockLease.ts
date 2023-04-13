@@ -229,6 +229,7 @@ export const getMockLease: () => ILease = () => ({
   insurances: [],
   improvements: [],
   securityDeposits: [],
+  consultations: [],
   startDate: '',
   paymentReceivableType: { id: '' },
   categoryType: { id: '' },
@@ -473,6 +474,7 @@ export const getMockApiLease: () => Api_Lease = () => ({
   insurances: [],
   improvements: [],
   securityDeposits: [],
+  consultations: null,
 });
 
 export const getMockLeaseWithNoTenants: () => ILease = () => ({
@@ -639,6 +641,7 @@ export const getMockLeaseWithNoTenants: () => ILease = () => ({
   insurances: [],
   improvements: [],
   securityDeposits: [],
+  consultations: [],
   startDate: '',
   paymentReceivableType: { id: '' },
   categoryType: { id: '' },
@@ -857,6 +860,7 @@ export const getMockLeaseResponse: () => ILease = () => ({
   improvements: [],
   securityDeposits: [],
   securityDepositReturns: [],
+  consultations: [],
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,

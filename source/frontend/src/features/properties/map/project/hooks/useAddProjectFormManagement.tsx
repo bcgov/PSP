@@ -19,9 +19,10 @@ export function useAddProjectForm(props: IUseAddProjectFormProps) {
   const { getPublicByType } = useLookupCodeHelpers();
   const initialValues = props.initialForm ?? new ProjectForm();
   if (!initialValues.projectStatusType) {
-    initialValues.projectStatusType = getPublicByType(API.PROJECT_STATUS_TYPES)
-      .find(s => s.id === 'AC')
-      ?.id?.toString();
+    initialValues.projectStatusType =
+      getPublicByType(API.PROJECT_STATUS_TYPES)
+        .find(s => s.id === 'AC')
+        ?.id?.toString() ?? '';
   }
 
   // save handler

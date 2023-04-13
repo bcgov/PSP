@@ -19,9 +19,9 @@ export function useLookupCodeHelpers() {
   };
 
   const getByType = useCallback(
-    (type: string) =>
+    (type: string, includeDisabled = false) =>
       (lookupCodes || [])
-        .filter(code => code.type === type && code.isDisabled !== true)
+        .filter(code => code.type === type && (includeDisabled ? true : code.isDisabled !== true))
         .sort(byDisplayOrder),
     [lookupCodes],
   );
@@ -36,7 +36,7 @@ export function useLookupCodeHelpers() {
   );
 
   const getOptionsByType = useCallback(
-    (type: string) => getByType(type).map(mapLookupCode),
+    (type: string, includeDisabled = false) => getByType(type, includeDisabled).map(mapLookupCode),
     [getByType],
   );
 

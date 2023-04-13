@@ -42,7 +42,7 @@ namespace Pims.Api.Services
             return GetOrganization(createdOrganization.Internal_Id);
         }
 
-        public PimsOrganization UpdateOrganization(PimsOrganization organization, long rowVersion)
+        public PimsOrganization UpdateOrganization(PimsOrganization organization, long? rowVersion)
         {
             organization.ThrowIfNull(nameof(organization));
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
@@ -54,7 +54,7 @@ namespace Pims.Api.Services
             return GetOrganization(updatedOrganization.Internal_Id);
         }
 
-        public void ValidateRowVersion(long organizationId, long rowVersion)
+        public void ValidateRowVersion(long organizationId, long? rowVersion)
         {
             if (_organizationRepository.GetRowVersion(organizationId) != rowVersion)
             {

@@ -151,6 +151,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c3.required::before {
@@ -210,6 +211,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
                   class="form-control"
                   id="input-projectName"
                   name="projectName"
+                  title=""
                   value=""
                 />
               </div>
@@ -238,6 +240,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
                   id="input-projectNumber"
                   name="projectNumber"
                   placeholder="if known"
+                  title=""
                   value=""
                 />
               </div>
@@ -385,6 +388,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
                   class="form-control"
                   id="input-summary"
                   name="summary"
+                  title=""
                 />
               </div>
             </div>

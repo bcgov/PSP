@@ -13,7 +13,6 @@ import {
   asProperty,
   createClusterMarker,
   createPoints,
-  generateKey,
   getMarkerIcon,
   parcelIcon,
   parcelIconSelect,
@@ -94,36 +93,6 @@ describe('mapUtils tests', () => {
           true,
         ),
       ).toEqual(parcelIconSelect);
-    });
-
-    describe('convert feature to property', () => {
-      const property: IProperty = {
-        id: 1,
-        pid: '000-000-0001',
-        statusId: PropertyStatusTypes.UnderAdmin,
-        classificationId: PropertyClassificationTypes.CoreOperational,
-        tenureId: PropertyTenureTypes.HighwayRoad,
-        dataSourceId: PropertyDataSourceTypes.PAIMS,
-        dataSourceEffectiveDate: '2021-08-30T18:11:13.883Z',
-        latitude: 1,
-        longitude: 2,
-        isSensitive: false,
-        address: {
-          streetAddress1: '1243 St',
-          provinceId: 1,
-          municipality: '',
-          postal: '',
-        },
-        regionId: 1,
-        districtId: 1,
-        areaUnitId: PropertyAreaUnitTypes.Hectare,
-        landArea: 0,
-        landLegalDescription: '',
-      };
-      it('generates parcel keys', () => {
-        const parcel: IProperty = { ...property };
-        expect(generateKey(parcel)).toEqual('parcel-1');
-      });
     });
 
     describe('convert feature to property', () => {

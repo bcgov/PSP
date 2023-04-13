@@ -1,35 +1,23 @@
 import { StyledIconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
-import { IPaginateParams } from 'constants/API';
-import { ENVIRONMENT } from 'constants/environment';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
 import { useSearch } from 'hooks/useSearch';
 import { IUsersFilter } from 'interfaces';
+import fileDownload from 'js-file-download';
 import isEmpty from 'lodash/isEmpty';
 import { Api_User } from 'models/api/User';
-import queryString from 'query-string';
 import React, { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { RootState } from 'store/store';
 import styled from 'styled-components';
 import { generateMultiSortCriteria } from 'utils';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
-import download from 'utils/download';
 
 import { defaultUserFilter, UsersFilterBar } from './components/UsersFilterBar';
 import { getUserColumns } from './constants';
 import { FormUser } from './models';
 import * as Styled from './styles';
-
-const downloadUsers = (filter: IPaginateParams) =>
-  `${ENVIRONMENT.apiUrl}/reports/users?${
-    filter ? queryString.stringify({ ...filter, all: true }) : ''
-  }`;
 
 /**
  * Component to manage the user accounts.
@@ -39,9 +27,7 @@ const downloadUsers = (filter: IPaginateParams) =>
  * @returns A ManagerUser component.
  */
 export const ManageUsersPage = () => {
-  const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
-
-  const { getUsersPaged } = useApiUsers();
+  const { getUsersPaged, exportUsers } = useApiUsers();
   const {
     results,
     filter,
@@ -68,23 +54,16 @@ export const ManageUsersPage = () => {
   /**
    * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
    */
-  const fetch = (accept: 'csv' | 'excel') => {
+  const fetch = async (accept: 'csv' | 'excel') => {
     const query = toFilteredApiPaginateParams<IUsersFilter>(
       currentPage,
       pageSize,
       sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
       filter,
     );
-    return dispatch(
-      download({
-        url: downloadUsers(query),
-        fileName: `pims-users.${accept === 'csv' ? 'csv' : 'xlsx'}`,
-        actionType: 'users',
-        headers: {
-          Accept: accept === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
-        },
-      }),
-    );
+
+    const { data } = await exportUsers(query, accept);
+    return fileDownload(data, `pims-users.${accept === 'csv' ? 'csv' : 'xlsx'}`);
   };
 
   return (

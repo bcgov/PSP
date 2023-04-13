@@ -151,6 +151,7 @@ exports[`Activity List View renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c9.c9.btn {
@@ -315,10 +316,24 @@ exports[`Activity List View renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-FILEDOC"
-                  value="FILEDOC"
+                  data-testid="select-option-COMPREQ"
+                  value="COMPREQ"
                 >
-                  File Document
+                  Compensation requisition (H120)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CONDENTRY"
+                  value="CONDENTRY"
+                >
+                  Condition of entry (H0443)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CONSULT"
+                  value="CONSULT"
+                >
+                  Consultation
                 </option>
                 <option
                   class="option"
@@ -336,17 +351,38 @@ exports[`Activity List View renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-NOTENTRY"
+                  value="NOTENTRY"
+                >
+                  Notice of possible entry (H0224)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-OFFAGREE"
+                  value="OFFAGREE"
+                >
+                  Offer agreement (H179x)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-RECNEGOT"
+                  value="RECNEGOT"
+                >
+                  Record of negotiation
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-RECTAKES"
+                  value="RECTAKES"
+                >
+                  Record takes
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-SITEVIS"
                   value="SITEVIS"
                 >
                   Site Visit
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-SURVEY"
-                  value="SURVEY"
-                >
-                  Survey
                 </option>
               </select>
             </div>

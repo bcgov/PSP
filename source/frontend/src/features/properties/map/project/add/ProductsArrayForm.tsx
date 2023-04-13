@@ -34,7 +34,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
 
   const handleRemove = async (index: number) => {
     const productId = products[index].id;
-    if (productId !== undefined && productId !== 0) {
+    if (!!productId) {
       const files = await retrieveProductFiles(productId);
       if (files !== undefined && files !== null && files.length > 0) {
         setShowFileModal(true);
