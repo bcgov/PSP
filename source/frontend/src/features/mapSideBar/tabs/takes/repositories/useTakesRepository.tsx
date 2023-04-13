@@ -9,8 +9,12 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
  * hook that interacts with the Takes API.
  */
 export const useTakesRepository = () => {
-  const { getTakesByAcqFileId, getTakesCountByPropertyId, updateTakesCountByPropertyId } =
-    useApiTakes();
+  const {
+    getTakesByAcqFileId,
+    getTakesCountByPropertyId,
+    updateTakesCountByPropertyId,
+    getTakesByPropertyId,
+  } = useApiTakes();
 
   const getTakesByFileIdApi = useApiRequestWrapper<
     (fileId: number) => Promise<AxiosResponse<Api_Take[], any>>
@@ -20,6 +24,18 @@ export const useTakesRepository = () => {
       [getTakesByAcqFileId],
     ),
     requestName: 'GetTakesByAcqFileId',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(),
+  });
+
+  const getTakesByPropertyApi = useApiRequestWrapper<
+    (fileId: number, propertyId: number) => Promise<AxiosResponse<Api_Take[], any>>
+  >({
+    requestFunction: useCallback(
+      async (fileId: number, propertyId: number) => await getTakesByPropertyId(fileId, propertyId),
+      [getTakesByPropertyId],
+    ),
+    requestName: 'GetTakesByAcqPropertyId',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
@@ -52,9 +68,15 @@ export const useTakesRepository = () => {
   return useMemo(
     () => ({
       getTakesByFileId: getTakesByFileIdApi,
+      getTakesByPropertyId: getTakesByPropertyApi,
       getTakesCountByPropertyId: getTakesCountByPropertyIdApi,
       updateTakesByAcquisitionPropertyId: updateTakesByAcquisitionPropertyIdApi,
     }),
-    [getTakesByFileIdApi, getTakesCountByPropertyIdApi, updateTakesByAcquisitionPropertyIdApi],
+    [
+      getTakesByFileIdApi,
+      getTakesByPropertyApi,
+      getTakesCountByPropertyIdApi,
+      updateTakesByAcquisitionPropertyIdApi,
+    ],
   );
 };

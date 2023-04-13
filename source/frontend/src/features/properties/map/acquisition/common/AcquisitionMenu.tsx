@@ -15,6 +15,7 @@ export interface IAcquisitionMenuProps {
   selectedIndex: number;
   onChange: (index: number) => void;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
+  onGenerateLetter: () => Promise<void>;
 }
 
 const AcquisitionMenu: React.FunctionComponent<
@@ -25,43 +26,60 @@ const AcquisitionMenu: React.FunctionComponent<
     props.onChange(index);
   };
   return (
-    <StyledMenuWrapper>
-      {props.items.map((label: string, index: number) => (
-        <StyledRow
-          key={`menu-item-row-${index}`}
-          data-testid={`menu-item-row-${index}`}
-          className={cx('no-gutters', { selected: props.selectedIndex === index })}
-          onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}
-        >
-          <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
-          {index !== 0 && (
-            <Col xs="auto" className="pr-2">
-              <StyledIconWrapper className={cx({ selected: props.selectedIndex === index })}>
-                {index}
-              </StyledIconWrapper>
-            </Col>
-          )}
-          <Col>{label}</Col>
-          {index === 0 && (
-            <StyledMenuHeaderWrapper>
-              <StyledMenuHeader>Properties</StyledMenuHeader>
-              {hasClaim(Claims.ACQUISITION_EDIT) && (
-                <EditButton
-                  title="Change properties"
-                  icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
-                  onClick={() => {
-                    props.setContainerState({
-                      isEditing: true,
-                      activeEditForm: EditFormType.PROPERTY_SELECTOR,
-                    });
-                  }}
-                />
-              )}
-            </StyledMenuHeaderWrapper>
-          )}
-        </StyledRow>
-      ))}
-    </StyledMenuWrapper>
+    <>
+      <StyledMenuWrapper>
+        {props.items.map((label: string, index: number) => (
+          <StyledRow
+            key={`menu-item-row-${index}`}
+            data-testid={`menu-item-row-${index}`}
+            className={cx('no-gutters', { selected: props.selectedIndex === index })}
+            onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}
+          >
+            <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
+            {index !== 0 && (
+              <Col xs="auto" className="pr-2">
+                <StyledIconWrapper className={cx({ selected: props.selectedIndex === index })}>
+                  {index}
+                </StyledIconWrapper>
+              </Col>
+            )}
+            <Col>{label}</Col>
+            {index === 0 && (
+              <StyledMenuHeaderWrapper>
+                <StyledMenuHeader>Properties</StyledMenuHeader>
+                {hasClaim(Claims.ACQUISITION_EDIT) && (
+                  <EditButton
+                    title="Change properties"
+                    icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
+                    onClick={() => {
+                      props.setContainerState({
+                        isEditing: true,
+                        activeEditForm: EditFormNames.propertySelector,
+                      });
+                    }}
+                  />
+                )}
+              </StyledMenuHeaderWrapper>
+            )}
+          </StyledRow>
+        ))}
+      </StyledMenuWrapper>
+      {hasClaim(Claims.FORM_ADD) && (
+        <StyledMenuGenerateWrapper>
+          <StyledMenuHeaderWrapper>
+            <StyledMenuHeader>Generate a form:</StyledMenuHeader>
+          </StyledMenuHeaderWrapper>
+          <StyledRow
+            className="no-gutters"
+            onClick={() => {
+              props.onGenerateLetter();
+            }}
+          >
+            <Col>Generate Letter</Col>
+          </StyledRow>
+        </StyledMenuGenerateWrapper>
+      )}
+    </>
   );
 };
 
@@ -73,6 +91,11 @@ const StyledMenuWrapper = styled.div`
   margin: 0px;
   width: 100%;
   color: ${props => props.theme.css.linkColor};
+`;
+
+const StyledMenuGenerateWrapper = styled(StyledMenuWrapper)`
+  margin-top: auto;
+  margin-bottom: 4rem;
 `;
 
 const StyledRow = styled(Row)`

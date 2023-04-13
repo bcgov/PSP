@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -41,7 +40,25 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get the count of all takes for this property on any acquisition file.
+        /// Get all Takes for a Property in the Acquisition File
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <param name="acquisitionFilePropertyId"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsTake> GetAllByPropertyId(long fileId, long acquisitionFilePropertyId)
+        {
+            return Context.PimsTakes
+                .Include(t => t.PropertyAcquisitionFile)
+                .Include(t => t.TakeSiteContamTypeCodeNavigation)
+                .Include(t => t.TakeStatusTypeCodeNavigation)
+                .Include(t => t.TakeTypeCodeNavigation)
+                .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId
+                        && t.PropertyAcquisitionFile.PropertyId == acquisitionFilePropertyId)
+                .AsNoTracking();
+        }
+
+        /// <summary>
+        /// Returns the Take Counts for a Property.
         /// </summary>
         /// <param name="propertyId"></param>
         /// <returns></returns>
@@ -49,7 +66,9 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsTakes
                 .Include(t => t.PropertyAcquisitionFile)
-                .Count(t => t.PropertyAcquisitionFile.PropertyId == propertyId);
+                .Where(x => x.PropertyAcquisitionFile.PropertyId == propertyId)
+                .AsNoTracking()
+                .Count();
         }
 
         /// <summary>
@@ -60,16 +79,6 @@ namespace Pims.Dal.Repositories
         public void UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes)
         {
             Context.UpdateChild<PimsPropertyAcquisitionFile, long, PimsTake, long>(p => p.PimsTakes, acquisitionFilePropertyId, takes.ToArray(), true);
-
-        }
-
-        /// <summary>
-        /// Returns the total number of takes in the database.
-        /// </summary>
-        /// <returns></returns>
-        public int Count()
-        {
-            return Context.PimsTakes.Count();
         }
 
         public IEnumerable<PimsTake> GetAllByPropertyAcquisitionFileId(long acquisitionFilePropertyId)

@@ -492,7 +492,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
           class="c8 no-gutters row"
         >
           <div
-            class="c9 col-3"
+            class="c9 d-flex flex-column col-3"
           >
             <div
               class="c10"

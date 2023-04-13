@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FileTypes } from 'constants/index';
+import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 import {
@@ -25,9 +26,14 @@ import { IAcquisitionViewProps } from './AcquisitionView';
 import { EditFormType } from './EditFormNames';
 
 const mockAxios = new MockAdapter(axios);
+const generateFn = jest.fn();
 
 // mock auth library
 jest.mock('@react-keycloak/web');
+jest.mock('features/documents/hooks/useDocumentGenerationRepository');
+(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
+  generateDocumentDownloadWrappedRequest: generateFn,
+}));
 
 const onClose = jest.fn();
 
@@ -254,5 +260,17 @@ describe('AcquisitionContainer component', () => {
     await act(async () => viewProps.onSave());
 
     await waitFor(async () => viewProps.formikRef.current?.submitCount === 1);
+  });
+
+  it('calls document generation endpoint when generate function called', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    await act(async () => viewProps.onGenerateLetter());
+
+    await waitFor(async () => expect(generateFn).toHaveBeenCalledTimes(1));
   });
 });

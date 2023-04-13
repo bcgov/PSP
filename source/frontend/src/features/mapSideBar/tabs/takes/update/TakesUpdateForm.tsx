@@ -107,6 +107,7 @@ export const emptyTake: Api_Take = {
   newRightOfWayArea: null,
   landActArea: null,
   landActEndDt: null,
+  landActDescription: null,
   statutoryRightOfWayArea: null,
   surplusArea: null,
   propertyAcquisitionFileId: null,

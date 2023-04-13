@@ -497,7 +497,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
         class="c2 no-gutters row"
       >
         <div
-          class="c3 col-3"
+          class="c3 d-flex flex-column col-3"
         >
           <div
             class="c4"
