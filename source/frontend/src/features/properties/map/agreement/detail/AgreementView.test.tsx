@@ -1,4 +1,3 @@
-import { useApiUsers } from 'hooks/pims-api/useApiUsers';
 import { mockLookups } from 'mocks';
 import { mockAgreementsResponse } from 'mocks/mockAgreements';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -8,10 +7,6 @@ import AgreementView, { IAgreementViewProps } from './AgreementView';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
-
-(useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
-  getUserInfo: jest.fn().mockResolvedValue({}),
-} as any);
 
 const mockViewProps: IAgreementViewProps = {
   agreements: [],

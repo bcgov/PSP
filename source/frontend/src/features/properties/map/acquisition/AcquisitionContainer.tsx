@@ -4,8 +4,8 @@ import { FileTypes } from 'constants/index';
 import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
-import { useGenerateLetter } from 'hooks/useGenerateLetter';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import { useGenerateLetter } from 'hooks/useGenerateLetter';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 

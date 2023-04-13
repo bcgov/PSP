@@ -15,21 +15,10 @@ exports[`TakesDetailView component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-<<<<<<< HEAD
-.c6 {
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom-style: solid;
-  border-bottom-color: grey;
-  border-bottom-width: 0.1rem;
-}
-
 .c0 {
   text-align: right;
 }
 
-=======
->>>>>>> dev
 .c1 {
   margin: 1.5rem;
   padding: 1.5rem;

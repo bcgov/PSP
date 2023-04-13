@@ -54,7 +54,7 @@ const AcquisitionMenu: React.FunctionComponent<
                     onClick={() => {
                       props.setContainerState({
                         isEditing: true,
-                        activeEditForm: EditFormNames.propertySelector,
+                        activeEditForm: EditFormType.PROPERTY_SELECTOR,
                       });
                     }}
                   />
