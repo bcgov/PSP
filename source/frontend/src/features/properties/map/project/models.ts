@@ -1,6 +1,6 @@
 import { Api_Product, Api_Project, defaultProject } from 'models/api/Project';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { toTypeCode } from 'utils/formUtils';
+import { stringToNull, toTypeCode } from 'utils/formUtils';
 
 export class ProductForm {
   id: number | null = null;
@@ -24,9 +24,9 @@ export class ProductForm {
         : null,
       code: this.code,
       description: this.description,
-      startDate: this.startDate,
+      startDate: stringToNull(this.startDate),
       costEstimate: !!this.costEstimate ? Number(this.costEstimate) : null,
-      costEstimateDate: this.costEstimateDate,
+      costEstimateDate: stringToNull(this.costEstimateDate),
       objective: this.objective,
       scope: this.scope,
       rowVersion: this.rowVersion,

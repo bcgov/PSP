@@ -81,7 +81,7 @@ export class TakeModel {
   surplusArea: number;
   surplusAreaUnitTypeCode: string;
   propertyAcquisitionFileId: number | null;
-  takeSiteContamTypeCode: string | null;
+  takeSiteContamTypeCode: string | null = 'UNK';
   takeTypeCode: string | null;
   takeStatusTypeCode: string | null;
   rowVersion?: number;
@@ -110,7 +110,7 @@ export class TakeModel {
       base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
     this.takeTypeCode = base.takeTypeCode;
     this.takeStatusTypeCode = base.takeStatusTypeCode;
-    this.takeSiteContamTypeCode = base.takeSiteContamTypeCode;
+    this.takeSiteContamTypeCode = base.takeSiteContamTypeCode ? base.takeSiteContamTypeCode : 'UNK';
     this.propertyAcquisitionFileId = base.propertyAcquisitionFileId;
     this.landActEndDt = base.landActEndDt ?? '';
     this.ltcEndDt = base.ltcEndDt ?? '';

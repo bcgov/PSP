@@ -209,7 +209,7 @@ const AcquisitionDetailSubForm: React.FC<{
       </Section>
 
       <Section header="Acquisition Details">
-        <SectionField label="Acquisition file name">
+        <SectionField label="Acquisition file name" required>
           <Input field="fileName" />
         </SectionField>
         <SectionField
@@ -225,7 +225,7 @@ const AcquisitionDetailSubForm: React.FC<{
             placeholder="Select..."
           />
         </SectionField>
-        <SectionField label="Acquisition type">
+        <SectionField label="Acquisition type" required>
           <Select
             field="acquisitionType"
             options={acquisitionTypes}
@@ -233,7 +233,7 @@ const AcquisitionDetailSubForm: React.FC<{
             required
           />
         </SectionField>
-        <SectionField label="Ministry region">
+        <SectionField label="Ministry region" required>
           <UserRegionSelectContainer
             field="region"
             options={regionTypes}

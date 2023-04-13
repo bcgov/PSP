@@ -222,7 +222,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateVersion(FinancialCodeTypes type, long id, long rowVersion)
+        private void ValidateVersion(FinancialCodeTypes type, long id, long? rowVersion)
         {
             long currentRowVersion = type switch
             {
