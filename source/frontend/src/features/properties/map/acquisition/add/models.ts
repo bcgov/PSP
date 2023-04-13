@@ -72,7 +72,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
           acquisitionFile: { id: this.id },
         };
       }),
-      acquisitionFileOwners: this.owners.map<Api_AcquisitionFileOwner>(x => x.toApi()),
+      acquisitionFileOwners: this.owners
+        .filter(x => !x.isEmpty())
+        .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi()),

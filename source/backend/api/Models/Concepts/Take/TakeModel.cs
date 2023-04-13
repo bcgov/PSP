@@ -33,6 +33,8 @@ namespace Pims.Api.Models.Concepts
 
         public float? LandActArea { get; set; }
 
+        public string LandActDescription { get; set; }
+
         public DateTime? LandActEndDt { get; set; }
 
         public AcquisitionFileModel PropertyAcquisitionFile { get; set; }

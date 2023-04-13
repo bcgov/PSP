@@ -1,0 +1,1147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdateAgreementsForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c1.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c1.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c1.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c1.btn.btn-primary {
+  border: none;
+}
+
+.c1.btn.btn-secondary {
+  background: none;
+}
+
+.c1.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
+  background: none;
+}
+
+.c1.btn.btn-light {
+  border: none;
+}
+
+.c1.btn.btn-dark {
+  border: none;
+}
+
+.c1.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c1.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c1.Button--icon-only:focus {
+  outline: none;
+}
+
+.c1.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c9.c9.form-control.is-valid {
+  background-image: none;
+}
+
+.c9.c9.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c5.c5.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c5.c5.btn .text {
+  display: none;
+}
+
+.c5.c5.btn:hover,
+.c5.c5.btn:active,
+.c5.c5.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c5.c5.btn:hover .text,
+.c5.c5.btn:active .text,
+.c5.c5.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c4 {
+  float: right;
+  cursor: pointer;
+}
+
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c8.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c7 {
+  font-weight: bold;
+}
+
+.c6 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+<div
+    class="c0"
+  >
+    <form
+      action="#"
+    >
+      <button
+        class="c1 Button m-4 btn btn-success"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          + Create new agreement
+        </div>
+      </button>
+      <div
+        class="c2 form-section"
+      >
+        <h2
+          class="c3"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Agreement 1
+            </div>
+            <div
+              class="col-1"
+            >
+              <svg
+                class="c4"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  collapse-section
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 14l5-5 5 5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="align-items-end pb-0 row"
+          >
+            <div
+              class="col"
+            />
+            <div
+              class="col-auto"
+            >
+              <button
+                class="c1 Button c5 btn btn-link"
+                title="Delete Agreement"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="c6"
+          >
+            Agreement details
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Agreement status:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-control"
+                  id="input-agreements.0.agreementStatus"
+                  name="agreements.0.agreementStatus"
+                >
+                  <option
+                    value="true"
+                  >
+                    Yes
+                  </option>
+                  <option
+                    value="false"
+                  >
+                    No
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Legal survey plan:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-agreements.0.legalSurveyPlanNum"
+                  name="agreements.0.legalSurveyPlanNum"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Agreement type:
+              </label>
+            </div>
+            <div
+              class="c8 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-agreements.0.agreementTypeCode"
+                  name="agreements.0.agreementTypeCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select Agreement Type
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179T"
+                    value="H179T"
+                  >
+                    Total Agreement (H179T)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179P"
+                    value="H179P"
+                  >
+                    Partial Agreement (H179P)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179A"
+                    value="H179A"
+                  >
+                    Section 3 Agreement (H179A)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H0074"
+                    value="H0074"
+                  >
+                    License Of Occupation (H0074)
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Agreement date:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c9 form-control date-picker"
+                      id="datepicker-agreements.0.agreementDate"
+                      name="agreements.0.agreementDate"
+                      placeholder="--/--/----"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Commencement date:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c9 form-control date-picker"
+                      id="datepicker-agreements.0.commencementDate"
+                      name="agreements.0.commencementDate"
+                      placeholder="--/--/----"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Completion date:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c9 form-control date-picker"
+                      id="datepicker-agreements.0.completionDate"
+                      name="agreements.0.completionDate"
+                      placeholder="--/--/----"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Termination date:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c9 form-control date-picker"
+                      id="datepicker-agreements.0.terminationDate"
+                      name="agreements.0.terminationDate"
+                      placeholder="--/--/----"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c6"
+          >
+            Financial
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Purchase price:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="input-tooltip-wrapper"
+                >
+                  <input
+                    class="form-control input-number"
+                    id="input-agreements.0.purchasePrice"
+                    inputmode="numeric"
+                    name="agreements.0.purchasePrice"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Deposit due no later than:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-agreements.0.noLaterThanDays"
+                  name="agreements.0.noLaterThanDays"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Deposit amount:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="input-tooltip-wrapper"
+                >
+                  <input
+                    class="form-control input-number"
+                    id="input-agreements.0.depositAmount"
+                    inputmode="numeric"
+                    name="agreements.0.depositAmount"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c2 form-section"
+      >
+        <h2
+          class="c3"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Agreement 2
+            </div>
+            <div
+              class="col-1"
+            >
+              <svg
+                class="c4"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  collapse-section
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 14l5-5 5 5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="align-items-end pb-0 row"
+          >
+            <div
+              class="col"
+            />
+            <div
+              class="col-auto"
+            >
+              <button
+                class="c1 Button c5 btn btn-link"
+                title="Delete Agreement"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="c6"
+          >
+            Agreement details
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Agreement status:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-control"
+                  id="input-agreements.1.agreementStatus"
+                  name="agreements.1.agreementStatus"
+                >
+                  <option
+                    value="true"
+                  >
+                    Yes
+                  </option>
+                  <option
+                    value="false"
+                  >
+                    No
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Legal survey plan:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-agreements.1.legalSurveyPlanNum"
+                  name="agreements.1.legalSurveyPlanNum"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Agreement type:
+              </label>
+            </div>
+            <div
+              class="c8 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-agreements.1.agreementTypeCode"
+                  name="agreements.1.agreementTypeCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select Agreement Type
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179T"
+                    value="H179T"
+                  >
+                    Total Agreement (H179T)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179P"
+                    value="H179P"
+                  >
+                    Partial Agreement (H179P)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179A"
+                    value="H179A"
+                  >
+                    Section 3 Agreement (H179A)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H0074"
+                    value="H0074"
+                  >
+                    License Of Occupation (H0074)
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Agreement date:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c9 form-control date-picker"
+                      id="datepicker-agreements.1.agreementDate"
+                      name="agreements.1.agreementDate"
+                      placeholder="--/--/----"
+                      type="text"
+                      value="04/05/2023"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Completion date:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c9 form-control date-picker"
+                      id="datepicker-agreements.1.completionDate"
+                      name="agreements.1.completionDate"
+                      placeholder="--/--/----"
+                      type="text"
+                      value="04/05/2023"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Termination date:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c9 form-control date-picker"
+                      id="datepicker-agreements.1.terminationDate"
+                      name="agreements.1.terminationDate"
+                      placeholder="--/--/----"
+                      type="text"
+                      value="04/05/2023"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c6"
+          >
+            Financial
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Purchase price:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="input-tooltip-wrapper"
+                >
+                  <input
+                    class="form-control input-number"
+                    id="input-agreements.1.purchasePrice"
+                    inputmode="numeric"
+                    name="agreements.1.purchasePrice"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Deposit due no later than:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-agreements.1.noLaterThanDays"
+                  name="agreements.1.noLaterThanDays"
+                  title="20"
+                  value="20"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c7"
+              >
+                Deposit amount:
+              </label>
+            </div>
+            <div
+              class="c8 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="input-tooltip-wrapper"
+                >
+                  <input
+                    class="form-control input-number"
+                    id="input-agreements.1.depositAmount"
+                    inputmode="numeric"
+                    name="agreements.1.depositAmount"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;

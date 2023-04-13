@@ -109,7 +109,7 @@ describe('useAcquisitionProvider hook', () => {
       const { getAcquisitionFile } = setup();
 
       await act(async () => {
-        await getAcquisitionFile.execute(mockAcquisitionFileResponse());
+        await getAcquisitionFile.execute(mockAcquisitionFileResponse().id || 0);
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();

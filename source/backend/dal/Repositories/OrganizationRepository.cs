@@ -126,7 +126,7 @@ namespace Pims.Dal.Repositories
             Context.Entry(existingOrganization).CurrentValues.SetValues(organization);
 
             // update direct relationships - contact_methods, organizations
-            this.Context.UpdateChild<PimsOrganization, long, PimsContactMethod>(o => o.PimsContactMethods, orgId, organization.PimsContactMethods.ToArray());
+            this.Context.UpdateChild<PimsOrganization, long, PimsContactMethod, long>(o => o.PimsContactMethods, orgId, organization.PimsContactMethods.ToArray());
 
             // update addresses via UpdateGrandchild method
             this.Context.UpdateGrandchild<PimsOrganization, long, PimsOrganizationAddress>(o => o.PimsOrganizationAddresses, oa => oa.Address, orgId, organization.PimsOrganizationAddresses.ToArray());

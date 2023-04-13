@@ -1,10 +1,11 @@
 import YesNoButtons from 'components/common/buttons/YesNoButtons';
 import EditButton from 'components/common/EditButton';
-import { H2, StyledDivider } from 'components/common/styles';
+import { H2 } from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import AreaContainer from 'components/measurements/AreaContainer';
 import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
+import { TakesStatusTypes } from 'constants/takesStatusTypes';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
@@ -16,12 +17,8 @@ import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
 import { Section } from '../../Section';
 import { SectionField } from '../../SectionField';
-import {
-  StyledBorderSection,
-  StyledEditWrapper,
-  StyledNoTabSection,
-  StyledSummarySection,
-} from '../styles';
+import { StyledEditWrapper, StyledSummarySection } from '../../SectionStyles';
+import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 export interface ITakesDetailViewProps {
   takes: Api_Take[];
@@ -38,8 +35,9 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
   loading,
   onEdit,
 }) => {
-  const cancelledTakes = takes?.filter(t => t.takeStatusTypeCode === 'CANCELLED');
-  const nonCancelledTakes = takes?.filter(t => t.takeStatusTypeCode !== 'CANCELLED');
+  const cancelledTakes = takes?.filter(t => t.takeStatusTypeCode === TakesStatusTypes.CANCELLED);
+  const nonCancelledTakes = takes?.filter(t => t.takeStatusTypeCode !== TakesStatusTypes.CANCELLED);
+  const takesNotInFile = allTakesCount - (takes?.length ?? 0);
 
   const { getCodeById } = useLookupCodeHelpers();
   const { hasClaim } = useKeycloakWrapper();
@@ -59,22 +57,20 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
       <Section>
         <H2>Takes for {getApiPropertyName(fileProperty.property).value}</H2>
         <StyledBlueSection>
-          <SectionField labelWidth="6" label="Total takes for this property">
-            {allTakesCount ?? 0}
-          </SectionField>
-          <i>Count is inclusive of all files</i>
           <SectionField
-            labelWidth="6"
-            label="Total cancelled takes for this property"
-            className="mt-3"
+            labelWidth="8"
+            label="Takes for this property in the current file"
+            tooltip="The number of takes in completed, , In-progress or cancelled state for this property in this acquisition file."
           >
-            {cancelledTakes?.length ?? 0}
+            {takes?.length ?? 0}
           </SectionField>
-          <i>Count is inclusive of all files</i>
-          <StyledDivider />
-          <p>
-            There are <b>{takes?.length ?? 0} take(s)</b> for this property on this file.
-          </p>
+          <SectionField
+            labelWidth="8"
+            label="Takes for this property in other files"
+            tooltip="The number of takes in completed, In-progress or cancelled state for this property, in files other than this acquisition file. The other files can be found under the Acquisition section of the PIMS Files tab"
+          >
+            {takesNotInFile}
+          </SectionField>
         </StyledBlueSection>
       </Section>
       {[...nonCancelledTakes, ...cancelledTakes].map((take, index) => (
@@ -127,7 +123,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
               )}
             </StyledBorderSection>
             <StyledBorderSection>
-              <SectionField label="Is there a Section 16? *" labelWidth="8">
+              <SectionField
+                label="Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)? *"
+                labelWidth="8"
+              >
                 <YesNoButtons id="landActToggle" disabled value={take.isLandAct} />
               </SectionField>
               {take.isLandAct && (
@@ -135,11 +134,14 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   <SectionField label="Area" labelWidth="12">
                     <AreaContainer landArea={take.landActArea ?? undefined} />
                   </SectionField>
-                  {take.landActEndDt && (
-                    <SectionField label="Section 16 end date">
-                      {prettyFormatDate(take.landActEndDt ?? undefined)}
-                    </SectionField>
-                  )}
+
+                  <SectionField label="End date" labelWidth="3" contentWidth="4">
+                    {prettyFormatDate(take.landActEndDt ?? undefined)}
+                  </SectionField>
+
+                  <SectionField label="Description" labelWidth="12">
+                    {take.landActDescription}
+                  </SectionField>
                 </>
               )}
             </StyledBorderSection>
@@ -156,11 +158,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   <SectionField label="Area" labelWidth="12">
                     <AreaContainer landArea={take.licenseToConstructArea ?? undefined} />
                   </SectionField>
-                  {take.ltcEndDt && (
-                    <SectionField label="LTC end date">
-                      {prettyFormatDate(take.ltcEndDt ?? undefined)}
-                    </SectionField>
-                  )}
+
+                  <SectionField label="LTC end date" labelWidth="3" contentWidth="4">
+                    {prettyFormatDate(take.ltcEndDt ?? undefined)}
+                  </SectionField>
                 </>
               )}
             </StyledBorderSection>
@@ -186,7 +187,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
 const StyledBlueSection = styled.div`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
 `;
 
 export default TakesDetailView;

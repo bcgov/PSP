@@ -75,6 +75,32 @@ namespace Pims.Api.Areas.Takes.Controllers
         }
 
         /// <summary>
+        /// Get all takes for a property in the Acquisition File.
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <param name="acquisitionFilePropertyId"></param>
+        /// <returns></returns>
+        [HttpGet("acquisition/{fileId:long}/property/{acquisitionFilePropertyId:long}")]
+        [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(TakeModel), 200)]
+        [SwaggerOperation(Tags = new[] { "take" })]
+        public IActionResult GetTakesByPropertyId([FromRoute]long fileId, [FromRoute]long acquisitionFilePropertyId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(TakeController),
+                nameof(GetTakesByAcquisitionFileId),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
+
+            var takes = _takeService.GetByPropertyId(fileId, acquisitionFilePropertyId);
+            return new JsonResult(_mapper.Map<IEnumerable<TakeModel>>(takes));
+        }
+
+        /// <summary>
         /// Update the list of takes associated to a property within an acquisition file.
         /// </summary>
         /// <returns></returns>
@@ -99,7 +125,7 @@ namespace Pims.Api.Areas.Takes.Controllers
         }
 
         /// <summary>
-        /// Gets a list of takes that belong to the associated property id.
+        /// Gets a count of takes that that match a property.
         /// </summary>
         /// <returns></returns>
         [HttpGet("property/{propertyId:long}/count")]
@@ -107,7 +133,7 @@ namespace Pims.Api.Areas.Takes.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(TakeModel), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
-        public IActionResult GetTakesCountByPropertyId(long propertyId)
+        public IActionResult GetTakesCountByPropertyId([FromRoute]long propertyId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",

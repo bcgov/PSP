@@ -15,4 +15,5 @@ VALUES
   (N'H179T', N'Offer agreement - Total (H179 T)'),
   (N'H179A', N'Offer agreement - Section 3 (H179 A)'),
   (N'H120',  N'Payment requisition (H120)');
+  (N'LETTER',  N'General Letter');
 GO

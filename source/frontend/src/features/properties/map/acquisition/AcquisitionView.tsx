@@ -13,7 +13,7 @@ import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
-import { EditFormNames } from './EditFormNames';
+import { EditFormType } from './EditFormNames';
 import ViewSelector from './ViewSelector';
 
 export interface IAcquisitionViewProps {
@@ -24,6 +24,7 @@ export interface IAcquisitionViewProps {
   onSuccess: () => void;
   onCancelConfirm: () => void;
   onUpdateProperties: (file: Api_File) => Promise<Api_File | undefined>;
+  onGenerateLetter: () => Promise<void>;
   canRemove: (propertyId: number) => Promise<boolean>;
   containerState: AcquisitionContainerState;
   setContainerState: React.Dispatch<Partial<AcquisitionContainerState>>;
@@ -38,6 +39,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onSuccess,
   onCancelConfirm,
   onUpdateProperties,
+  onGenerateLetter,
   canRemove,
   containerState,
   setContainerState,
@@ -53,7 +55,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   menuItems.unshift('File Summary');
 
   if (
-    containerState.activeEditForm === EditFormNames.propertySelector &&
+    containerState.activeEditForm === EditFormType.PROPERTY_SELECTOR &&
     containerState.acquisitionFile
   ) {
     return (
@@ -102,6 +104,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               selectedIndex={containerState.selectedMenuIndex}
               onChange={onMenuChange}
               setContainerState={setContainerState}
+              onGenerateLetter={onGenerateLetter}
             />
           </>
         }
@@ -142,18 +145,20 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   );
 };
 
-const getEditTitle = (editFormName: EditFormNames) => {
+const getEditTitle = (editFormName: EditFormType) => {
   switch (editFormName) {
-    case EditFormNames.acquisitionSummary:
+    case EditFormType.ACQUISITION_SUMMARY:
       return 'Update Acquisition File';
-    case EditFormNames.propertyDetails:
+    case EditFormType.PROPERTY_DETAILS:
       return 'Update Property File Data';
-    case EditFormNames.takes:
+    case EditFormType.TAKES:
       return 'Update Takes';
-    case EditFormNames.acquisitionChecklist:
+    case EditFormType.ACQUISITION_CHECKLIST:
       return 'Update Checklist';
-    case EditFormNames.propertySelector:
+    case EditFormType.PROPERTY_SELECTOR:
       return 'Updating Acquisition Properties';
+    case EditFormType.AGREEMENTS:
+      return 'Updating Agreements';
     default:
       throw Error('Cannot edit this type of form');
   }
