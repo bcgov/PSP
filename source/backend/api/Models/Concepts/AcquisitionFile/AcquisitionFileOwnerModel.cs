@@ -8,6 +8,8 @@ namespace Pims.Api.Models.Concepts
 
         public bool IsOrganization { get; set; }
 
+        public bool IsPrimaryContact { get; set; }
+
         public string LastNameAndCorpName { get; set; }
 
         public string OtherName { get; set; }
