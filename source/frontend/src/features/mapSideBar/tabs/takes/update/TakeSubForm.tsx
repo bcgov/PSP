@@ -97,7 +97,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           options={takeStatusTypeOptions}
         />
       </SectionField>
-      <SectionField label="Take contamination" labelWidth="4" contentWidth="5">
+      <SectionField label="Site Contamination" labelWidth="4" contentWidth="5">
         <Select
           field={withNameSpace(nameSpace, 'takeSiteContamTypeCode')}
           options={takeSiteContamTypeOptions}
