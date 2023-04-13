@@ -55,18 +55,18 @@ export class AcquisitionOwnerFormModel {
   address?: OwnerAddressFormModel;
 
   isEmpty(): boolean {
-    if (this.isOrganization) {
+    if (this.isOrganization === 'true') {
       return (
-        this.lastNameAndCorpName?.trim() === '' &&
-        this.otherName?.trim() === '' &&
-        this.incorporationNumber?.trim() === '' &&
-        this.registrationNumber?.trim() === ''
+        this.lastNameAndCorpName.trim() === '' &&
+        this.otherName.trim() === '' &&
+        this.incorporationNumber.trim() === '' &&
+        this.registrationNumber.trim() === ''
       );
     } else {
       return (
-        this.givenName?.trim() === '' &&
-        this.lastNameAndCorpName?.trim() === '' &&
-        this.otherName?.trim() === ''
+        this.givenName.trim() === '' &&
+        this.lastNameAndCorpName.trim() === '' &&
+        this.otherName.trim() === ''
       );
     }
   }
@@ -77,9 +77,15 @@ export class AcquisitionOwnerFormModel {
       rowVersion: this.rowVersion,
       acquisitionFileId: this.acquisitionFileId,
       isOrganization: this.isOrganization === 'true' ? true : false,
-      lastNameAndCorpName: this.lastNameAndCorpName,
-      otherName: this.otherName,
-      givenName: this.isOrganization === 'true' ? null : this.givenName.trim(),
+      lastNameAndCorpName:
+        this.lastNameAndCorpName.trim() === '' ? null : this.lastNameAndCorpName.trim(),
+      otherName: this.otherName.trim() === '' ? null : this.otherName.trim(),
+      givenName:
+        this.isOrganization === 'true'
+          ? null
+          : this.givenName.trim() === ''
+          ? null
+          : this.givenName.trim(),
       incorporationNumber:
         this.isOrganization === 'true'
           ? this.incorporationNumber.trim() === ''
