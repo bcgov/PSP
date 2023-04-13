@@ -14,8 +14,10 @@
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
   DTS:TransactionOption="0"
+
   DTS:VersionBuild="1346"
   DTS:VersionGUID="{6AFC5657-973D-486E-BFAB-E14DEF6CABE0}">
+
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -28,7 +30,9 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
+
           DTS:ConnectionString="Data Source=musket.th.gov.bc.ca:20208/prd11;User ID=prisharm;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"></DTS:Password>
@@ -3674,11 +3678,13 @@ where [refTable].[COST_ESTIMATE_DATE] = ? and [refTable].[COST_ESTIMATE] = ? and
      , SUB.OBJECTIVES                        PRODUCT_OBJECTIVE
      ,ROW_NUMBER() over (partition by cast(PRJ.PRODUCT_CODE as nvarchar2(20)),cast(PRJ.PRODUCT_DESC as nvarchar2(200)) 
      order by VER.ORIGINAL_ESTIMATE_DATE desc) as rownum1
+
 FROM APP_HWY.HWY_MINISTRY_PROJECT MIN JOIN
 APP_HWY.HWY_PROJECT_REGION REG ON REG.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID LEFT JOIN
 APP_PAM.PAM_PROJECT_VERSION VER ON VER.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID JOIN
 APP_PAM.PAM_CPS_PRODUCT_PROJECT_V PRJ on PRJ.PROJECT_CODE = LTRIM(TO_CHAR(MIN.FMIS_NO , '00009')) LEFT JOIN
 APP_PAM.PAM_SUB_PROJECT SUB ON SUB.PRODUCT_CODE = PRJ.PRODUCT_CODE</property>
+
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -4384,7 +4390,9 @@ where [refTable].[COST_ESTIMATE_DATE] = ? and [refTable].[COST_ESTIMATE] = ? and
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+
                   name="ParameterMap">#{Package\Load PIMS_PRODUCT\889:invalid};#{Package\Load PIMS_PRODUCT\890:invalid};#{Package\Load PIMS_PRODUCT\891:invalid};#{Package\Load PIMS_PRODUCT\892:invalid};#{Package\Load PIMS_PRODUCT\893:invalid};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]};</property>
+
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -5705,37 +5713,51 @@ and	APP_CREATE_USER_DIRECTORY=?
               name="Data Conversion Output"
               startId="Package\Load PIMS_PRODUCT\Data Conversion.Outputs[Data Conversion Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output]"
+
               endId="Package\Load PIMS_PRODUCT\ETL Error Log 1 1 2.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column 1 2.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output1]"
+
               endId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Audit Trail 1.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output2]"
+
               endId="Package\Load PIMS_PRODUCT\ETL Error Log 1 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column 1.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output3]"
+
               endId="Package\Load PIMS_PRODUCT\ETL Error Log 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output4]"
+
               endId="Package\Load PIMS_PRODUCT\ETL Error Log 1 1 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column 1 1.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output5]"
+
               endId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output6]"
+
               endId="Package\Load PIMS_PRODUCT\Union All.Inputs[Union All Input 1]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column 2.Outputs[Derived Column Output]" />
@@ -5745,7 +5767,9 @@ and	APP_CREATE_USER_DIRECTORY=?
               name="Latest Cost Estimate"
               startId="Package\Load PIMS_PRODUCT\Conditional Split.Outputs[Latest Cost Estimate]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output1]"
+
               endId="Package\Load PIMS_PRODUCT\Union All.Inputs[Union All Input 2]"
               name="Lookup Match Output"
               startId="Package\Load PIMS_PRODUCT\PARENT_PROJECT_ID.Outputs[Lookup Match Output]" />
@@ -5755,42 +5779,58 @@ and	APP_CREATE_USER_DIRECTORY=?
               name="Lookup Match Output"
               startId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST.Outputs[Lookup Match Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output]"
+
               endId="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records.Outputs[Lookup Match Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output]"
+
               endId="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT_HIST.Inputs[OLE DB Command Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\PIMS_PRODUCT_HIST records to be updated.Outputs[Lookup No Match Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output1]"
+
               endId="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT.Inputs[OLE DB Command Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated.Outputs[Lookup No Match Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output2]"
+
               endId="Package\Load PIMS_PRODUCT\Derived Column 2.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\PARENT_PROJECT_ID.Outputs[Lookup No Match Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output3]"
+
               endId="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT_HIST.Inputs[OLE DB Destination Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST.Outputs[Lookup No Match Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output4]"
+
               endId="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT.Inputs[OLE DB Destination Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records.Outputs[Lookup No Match Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output]"
+
               endId="Package\Load PIMS_PRODUCT\Derived Column 1 1.Inputs[Derived Column Input]"
               name="OLE DB Command Error Output"
               startId="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT_HIST.Outputs[OLE DB Command Error Output]" />
             <path
+
               refId="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output1]"
+
               endId="Package\Load PIMS_PRODUCT\Derived Column 1 2.Inputs[Derived Column Input]"
               name="OLE DB Command Error Output"
               startId="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT.Outputs[OLE DB Command Error Output]" />
@@ -7958,6 +7998,7 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[APP
                   description="The SQL command to be executed."
                   name="SqlCommand"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT LTRIM(TO_CHAR(MIN.FMIS_NO , '00009')) PROJECT_CODE
+
 , MIN.NAME PROJECT_DESCRIPTION
 , PRJ.PRODUCT_CODE PRODUCT_CODE
 , PRJ.PRODUCT_DESC PRODUCT_DESC
@@ -7975,6 +8016,7 @@ APP_HWY.HWY_PROJECT_REGION REG ON REG.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT
 APP_PAM.PAM_PROJECT_VERSION VER ON VER.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID JOIN
 APP_PAM.PAM_CPS_PRODUCT_PROJECT_V PRJ on PRJ.PROJECT_CODE = LTRIM(TO_CHAR(MIN.FMIS_NO , '00009')) LEFT JOIN
 APP_PAM.PAM_SUB_PROJECT SUB ON SUB.PRODUCT_CODE = PRJ.PRODUCT_CODE</property>
+
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -8707,11 +8749,13 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[PRO
                         <property
                           dataType="System.Int32"
                           description="Specifies the comparison options for character data."
+
                           name="NewComparisonFlags">0</property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the sort order of the column."
                           name="NewSortKeyPosition">0</property>
+
                       </properties>
                     </inputColumn>
                     <inputColumn
@@ -8920,10 +8964,12 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[PRO
                     </outputColumn>
                     <outputColumn
                       refId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output].Columns[PROJECT_NOTE]"
+
                       dataType="wstr"
                       length="2000"
                       lineageId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output].Columns[PROJECT_NOTE]"
                       name="PROJECT_NOTE">
+
                       <properties>
                         <property
                           containsID="true"
@@ -9130,9 +9176,11 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[PRO
                     </inputColumn>
                     <inputColumn
                       refId="Package\Load PIMS_PROJECT\Union All.Inputs[Union All Input 1].Columns[PROJECT_NOTE]"
+
                       cachedDataType="wstr"
                       cachedLength="2000"
                       cachedName="PROJECT_NOTE"
+
                       lineageId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output].Columns[PROJECT_NOTE]">
                       <properties>
                         <property
@@ -9426,9 +9474,11 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[PRO
                     </inputColumn>
                     <inputColumn
                       refId="Package\Load PIMS_PROJECT\Union All.Inputs[Union All Input 2].Columns[PROJECT_NOTE]"
+
                       cachedDataType="wstr"
                       cachedLength="2000"
                       cachedName="PROJECT_NOTE"
+
                       lineageId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output].Columns[PROJECT_NOTE]">
                       <properties>
                         <property
@@ -11152,6 +11202,7 @@ where [refTable].[CODE] = ?</property>
               name="Data Conversion Output"
               startId="Package\Load PIMS_PROJECT\Data Conversion.Outputs[Data Conversion Output]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output4]"
               endId="Package\Load PIMS_PROJECT\Union All 2.Inputs[Union All Input 2]"
               name="Derived Column Output"
@@ -11163,25 +11214,31 @@ where [refTable].[CODE] = ?</property>
               startId="Package\Load PIMS_PROJECT\Derived Column 2.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output5]"
+
               endId="Package\Load PIMS_PROJECT\Existing PIMS_PROJECT records.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PROJECT\Audit Trail.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output1]"
+
               endId="Package\Load PIMS_PROJECT\ETL Error Log 1 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PROJECT\Derived Column 1.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output]"
               endId="Package\Load PIMS_PROJECT\ETL Error Log 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PROJECT\Derived Column.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output2]"
+
               endId="Package\Load PIMS_PROJECT\Union All 1.Inputs[Union All Input 2]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PROJECT\Derived Column 3.Outputs[Derived Column Output]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Lookup Match Output]"
               endId="Package\Load PIMS_PROJECT\Union All 2.Inputs[Union All Input 1]"
               name="Lookup Match Output"
@@ -11208,25 +11265,30 @@ where [refTable].[CODE] = ?</property>
               startId="Package\Load PIMS_PROJECT\WORK_ACTIVITY_CODE_ID.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output3]"
+
               endId="Package\Load PIMS_PROJECT\Derived Column 3.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PROJECT\COST_TYPE_CODE_ID.Outputs[Lookup No Match Output]" />
+
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output]"
               endId="Package\Load PIMS_PROJECT\Derived Column 2.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PROJECT\BUSINESS_FUNCTION_CODE_ID.Outputs[Lookup No Match Output]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output2]"
               endId="Package\Load PIMS_PROJECT\Insert PIMS_PROJECT.Inputs[OLE DB Destination Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PROJECT\Existing PIMS_PROJECT records.Outputs[Lookup No Match Output]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output1]"
               endId="Package\Load PIMS_PROJECT\UPDATE PIMS PROJECT.Inputs[OLE DB Command Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PROJECT\PIMS_PROJECT records to be updated.Outputs[Lookup No Match Output]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[OLE DB Command Error Output]"
               endId="Package\Load PIMS_PROJECT\Derived Column 1.Inputs[Derived Column Input]"
               name="OLE DB Command Error Output"
@@ -11247,20 +11309,24 @@ where [refTable].[CODE] = ?</property>
               name="Sort Output"
               startId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Union All Output 12]"
               endId="Package\Load PIMS_PROJECT\Audit Trail.Inputs[Derived Column Input]"
               name="Union All Output 1"
               startId="Package\Load PIMS_PROJECT\Union All 2.Outputs[Union All Output 1]" />
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Union All Output 1]"
+
               endId="Package\Load PIMS_PROJECT\WORK_ACTIVITY_CODE_ID.Inputs[Lookup Input]"
               name="Union All Output 1"
               startId="Package\Load PIMS_PROJECT\Union All 1.Outputs[Union All Output 1]" />
             <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Union All Output 11]"
               endId="Package\Load PIMS_PROJECT\COST_TYPE_CODE_ID.Inputs[Lookup Input]"
               name="Union All Output 1"
               startId="Package\Load PIMS_PROJECT\Union All.Outputs[Union All Output 1]" />
+
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -11289,6 +11355,7 @@ where [refTable].[CODE] = ?</property>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+
           Size="191.2,41.6"
           Id="Package\Load PIMS_PRODUCT"
           TopLeft="250.769239967392,193.741932503763" />
@@ -11296,6 +11363,7 @@ where [refTable].[CODE] = ?</property>
           Size="188,41.6"
           Id="Package\Load PIMS_PROJECT"
           TopLeft="248.958934293364,94.067758409933" />
+
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="344.664087130378,135.667758409933">
@@ -11322,11 +11390,14 @@ where [refTable].[CODE] = ?</property>
     </LayoutInfo>
   </Package>
   <TaskHost
+
     design-time-name="Package\Load PIMS_PRODUCT">
+
     <LayoutInfo>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+
           Size="164.8,41.6"
           Id="Package\Load PIMS_PRODUCT\Derived Column 2"
           TopLeft="197.679488420957,232.489243138387" />
@@ -11431,10 +11502,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="243.8,33.6204467188501"
               Start="0,0"
               End="243.8,26.1204467188501">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,9.6519389706846" />
                   <mssgle:CubicBezierSegment
                     Point1="0,9.6519389706846"
@@ -11448,17 +11521,21 @@ where [refTable].[CODE] = ?</property>
                     Point3="243.8,17.6519389706846" />
                   <mssgle:LineSegment
                     End="243.8,26.1204467188501" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="89.60990234375,18.6519389706846,64.5801953125,9.7490234375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Source Output]"
           TopLeft="408.683102843666,43.9086025698169">
           <EdgeLayout.Curve>
@@ -11467,16 +11544,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,34.3186416007763"
               Start="0,0"
               End="0,26.8186416007763">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,26.8186416007763" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11489,22 +11570,28 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,45.6963336180141"
               Start="0,0"
               End="0,38.1963336180141">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,38.1963336180141" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-73.20890625,13.3813699340071,146.4178125,11.43359375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Destination Error Output]"
           TopLeft="443.111541492323,596.998490342706">
           <EdgeLayout.Curve>
@@ -11513,22 +11600,28 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,47.3516126194071"
               Start="0,0"
               End="0,39.8516126194071">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,39.8516126194071" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-73.20890625,14.2090094347035,146.4178125,11.43359375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output1]"
           TopLeft="139.683663188197,600.349527806926">
           <EdgeLayout.Curve>
@@ -11537,16 +11630,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,40.6736847008422"
               Start="0,0"
               End="0,33.1736847008422">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,33.1736847008422" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-70.70890625,10.7821548504211,141.4178125,11.609375"
               RelativePosition="Any" />
@@ -11561,10 +11658,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-13.1673263763946,42.1736847008424"
               Start="0,0"
               End="-13.1673263763946,34.6736847008424">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,17.0868423504212" />
                   <mssgle:CubicBezierSegment
                     Point1="0,17.0868423504212"
@@ -11578,11 +11677,13 @@ where [refTable].[CODE] = ?</property>
                     Point3="-13.1673263763946,25.0868423504212" />
                   <mssgle:LineSegment
                     End="-13.1673263763946,34.6736847008424" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-77.2925694381973,26.0868423504212,141.4178125,11.609375"
               RelativePosition="Any" />
@@ -11597,16 +11698,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,42.8978477078421"
               Start="0,0"
               End="0,35.3978477078421">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,35.3978477078421" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-55.80638671875,11.894236353921,111.6127734375,11.609375"
               RelativePosition="Any" />
@@ -11621,16 +11726,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,39.8640223084768"
               Start="0,0"
               End="0,32.3640223084768">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,32.3640223084768" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-55.80638671875,10.3773236542384,111.6127734375,11.609375"
               RelativePosition="Any" />
@@ -11645,10 +11754,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-127.648247968728,36.3286656344602"
               Start="0,0"
               End="-127.648247968728,28.8286656344602">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,14.1643328172301" />
                   <mssgle:CubicBezierSegment
                     Point1="0,14.1643328172301"
@@ -11662,11 +11773,13 @@ where [refTable].[CODE] = ?</property>
                     Point3="-127.648247968728,22.1643328172301" />
                   <mssgle:LineSegment
                     End="-127.648247968728,28.8286656344602" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-119.630510703114,23.1643328172301,111.6127734375,11.609375"
               RelativePosition="Any" />
@@ -11681,16 +11794,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,44.1495278069257"
               Start="0,0"
               End="0,36.6495278069257">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,36.6495278069257" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-55.80638671875,12.5200764034628,111.6127734375,11.609375"
               RelativePosition="Any" />
@@ -11705,16 +11822,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,42.6263152991576"
               Start="0,0"
               End="0,35.1263152991576">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,35.1263152991576" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-55.80638671875,11.7584701495788,111.6127734375,11.609375"
               RelativePosition="Any" />
@@ -11729,16 +11850,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="51.392305559707,0"
               Start="0,0"
               End="43.892305559707,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="43.892305559707,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-26.2452339388965,5,96.3827734375,11.609375"
               RelativePosition="Any" />
@@ -11753,10 +11878,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="21.1722636103154,34.9394224960735"
               Start="0,0"
               End="21.1722636103154,27.4394224960735">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,10.1462052057273" />
                   <mssgle:CubicBezierSegment
                     Point1="0,10.1462052057273"
@@ -11770,11 +11897,13 @@ where [refTable].[CODE] = ?</property>
                     Point3="21.1722636103154,18.1462052057273" />
                   <mssgle:LineSegment
                     End="21.1722636103154,27.4394224960735" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-37.6052549135923,19.1462052057273,96.3827734375,11.609375"
               RelativePosition="Any" />
@@ -11789,16 +11918,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-43.6205102646837,0"
               Start="0,0"
               End="-36.1205102646837,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="-36.1205102646837,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-66.2516418510918,5,96.3827734375,11.609375"
               RelativePosition="Any" />
@@ -11813,16 +11946,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,35.6705472813952"
               Start="0,0"
               End="0,28.1705472813952">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,28.1705472813952" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-45.54134765625,9.3084181719476,91.0826953125,9.5537109375"
               RelativePosition="Any" />
@@ -11837,11 +11974,14 @@ where [refTable].[CODE] = ?</property>
               EndConnector="36.8205115790432,0"
               Start="0,0"
               End="29.3205115790432,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="29.3205115790432,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -11851,6 +11991,7 @@ where [refTable].[CODE] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output5]"
           TopLeft="438.315383378617,441.150100562545">
           <EdgeLayout.Curve>
@@ -11859,16 +12000,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,29.7505420723189"
               Start="0,0"
               End="0,22.2505420723189">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,22.2505420723189" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11903,16 +12048,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,33.9741890911249"
               Start="0,0"
               End="0,26.4741890911249">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,26.4741890911249" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11925,16 +12074,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,39.9268788897538"
               Start="0,0"
               End="0,32.4268788897538">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,32.4268788897538" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11947,16 +12100,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,31.1359776915231"
               Start="0,0"
               End="0,23.6359776915231">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,23.6359776915231" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11969,16 +12126,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,38.9268788897538"
               Start="0,0"
               End="0,31.4268788897538">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,31.4268788897538" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11991,16 +12152,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,34.7333333333333"
               Start="0,0"
               End="0,27.2333333333333">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,27.2333333333333" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -12013,31 +12178,39 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,49.5795532811498"
               Start="0,0"
               End="0,42.0795532811498">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,42.0795532811498" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
+
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
+
           type="q2:string">Table</Value>
       </Property>
     </Properties>
@@ -12045,13 +12218,16 @@ where [refTable].[CODE] = ?</property>
   <PipelineComponentMetadata
     design-time-name="Package\Load PIMS_PRODUCT\PAIMS_PRODUCT">
     <Properties>
+
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -12061,7 +12237,9 @@ where [refTable].[CODE] = ?</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
+
           type="q3:string">[dbo].[PIMS_PRODUCT]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -12074,7 +12252,9 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -12084,7 +12264,9 @@ where [refTable].[CODE] = ?</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
+
           type="q3:string">[dbo].[PIMS_PRODUCT]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -12097,17 +12279,23 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
+
           type="q2:string">false</Value>
+
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
+
           type="q3:string">[dbo].[PIMS_PRODUCT_HIST]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -12120,7 +12308,9 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT_HIST">
+
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -12132,12 +12322,15 @@ where [refTable].[CODE] = ?</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+
   <TaskHost
     design-time-name="Package\Load PIMS_PROJECT">
+
     <LayoutInfo>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+
           Size="130.4,41.6"
           Id="Package\Load PIMS_PROJECT\Union All 1"
           TopLeft="277.03847039804,484.296056850345" />
@@ -12230,22 +12423,28 @@ where [refTable].[CODE] = ?</property>
               EndConnector="107.238463428882,0"
               Start="0,0"
               End="99.7384634288824,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="99.7384634288824,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="1.67784499569118,5,96.3827734375,11.609375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Lookup Match Output2]"
           TopLeft="347.397443205177,262.133193219616">
           <EdgeLayout.Curve>
@@ -12254,16 +12453,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,50.3345439941386"
               Start="0,0"
               End="0,42.8345439941386">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,42.8345439941386" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-48.19138671875,15.6125844970693,96.3827734375,11.609375"
               RelativePosition="Any" />
@@ -12278,16 +12481,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,53.8080279721149"
               Start="0,0"
               End="0,46.3080279721149">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,46.3080279721149" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-48.19138671875,17.3493264860575,96.3827734375,11.609375"
               RelativePosition="Any" />
@@ -12302,16 +12509,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,45.0015784943105"
               Start="0,0"
               End="0,37.5015784943105">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,37.5015784943105" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-48.19138671875,12.9461017471553,96.3827734375,11.609375"
               RelativePosition="Any" />
@@ -12326,11 +12537,14 @@ where [refTable].[CODE] = ?</property>
               EndConnector="23.2769288751501,0"
               Start="0,0"
               End="15.7769288751501,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="15.7769288751501,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12340,6 +12554,7 @@ where [refTable].[CODE] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output3]"
           TopLeft="234.146155087624,330.445156842737">
           <EdgeLayout.Curve>
@@ -12348,11 +12563,14 @@ where [refTable].[CODE] = ?</property>
               EndConnector="52.5077013788845,0"
               Start="0,0"
               End="45.0077013788845,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="45.0077013788845,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12362,6 +12580,7 @@ where [refTable].[CODE] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output2]"
           TopLeft="246.838464345876,504.354121147158">
           <EdgeLayout.Curve>
@@ -12370,16 +12589,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="30.2000060521642,0"
               Start="0,0"
               End="22.7000060521642,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="22.7000060521642,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -12392,16 +12615,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,37.9806423682453"
               Start="0,0"
               End="0,30.4806423682453">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,30.4806423682453" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -12414,16 +12641,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,32.4741890911241"
               Start="0,0"
               End="0,24.9741890911241">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,24.9741890911241" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -12436,11 +12667,14 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,28.3642563313999"
               Start="0,0"
               End="0,20.8642563313999">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,20.8642563313999" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12449,6 +12683,7 @@ where [refTable].[CODE] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[Union All Output 12]"
           TopLeft="340.079491447039,692.573475179562">
@@ -12458,16 +12693,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,51.5953357807026"
               Start="0,0"
               End="0,44.0953357807026">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,44.0953357807026" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -12480,10 +12719,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-37.015388452654,34.8202916644756"
               Start="0,0"
               End="-37.015388452654,27.3202916644756">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,13.4101458322378" />
                   <mssgle:CubicBezierSegment
                     Point1="0,13.4101458322378"
@@ -12497,6 +12738,7 @@ where [refTable].[CODE] = ?</property>
                     Point3="-37.015388452654,21.4101458322378" />
                   <mssgle:LineSegment
                     End="-37.015388452654,27.3202916644756" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12505,6 +12747,7 @@ where [refTable].[CODE] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[Union All Output 1]"
           TopLeft="342.23847039804,525.896056850345">
@@ -12514,10 +12757,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-30.5692324480361,38.4758398349067"
               Start="0,0"
               End="-30.5692324480361,30.9758398349067">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,15.2379199174533" />
                   <mssgle:CubicBezierSegment
                     Point1="0,15.2379199174533"
@@ -12531,6 +12776,7 @@ where [refTable].[CODE] = ?</property>
                     Point3="-30.5692324480361,23.2379199174533" />
                   <mssgle:LineSegment
                     End="-30.5692324480361,30.9758398349067" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12539,6 +12785,7 @@ where [refTable].[CODE] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[Sort Output]"
           TopLeft="307.138467555357,185.668556722921">
@@ -12548,16 +12795,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,34.8646364966942"
               Start="0,0"
               End="0,27.3646364966942">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,27.3646364966942" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -12570,16 +12821,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,30.1956978217042"
               Start="0,0"
               End="0,22.6956978217042">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,22.6956978217042" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -12592,17 +12847,21 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,36.3516126194063"
               Start="0,0"
               End="0,28.8516126194063">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,28.8516126194063" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-73.20890625,8.70900943470315,146.4178125,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
@@ -12616,17 +12875,21 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,34.9795682218059"
               Start="0,0"
               End="0,27.4795682218059">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,27.4795682218059" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-70.70890625,7.93509661090297,141.4178125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
@@ -12640,10 +12903,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-107.917952950231,43.0983522556787"
               Start="0,0"
               End="-107.917952950231,35.5983522556787">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,13.4253769551737" />
                   <mssgle:CubicBezierSegment
                     Point1="0,13.4253769551737"
@@ -12657,17 +12922,21 @@ where [refTable].[CODE] = ?</property>
                     Point3="-107.917952950231,21.4253769551737" />
                   <mssgle:LineSegment
                     End="-107.917952950231,35.5983522556787" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-109.765363193865,22.4253769551737,111.6127734375,11.609375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output3]"
           TopLeft="278.971801347187,430.48802887823">
           <EdgeLayout.Curve>
@@ -12676,10 +12945,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-114.533337001312,52.3241565657423"
               Start="0,0"
               End="-114.533337001312,44.8241565657423">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,17.1828440290344" />
                   <mssgle:CubicBezierSegment
                     Point1="0,17.1828440290344"
@@ -12693,17 +12964,21 @@ where [refTable].[CODE] = ?</property>
                     Point3="-114.533337001312,25.1828440290344" />
                   <mssgle:LineSegment
                     End="-114.533337001312,44.8241565657423" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-113.073055219406,26.1828440290344,111.6127734375,11.609375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output2]"
           TopLeft="341.987177787213,941.961287935914">
           <EdgeLayout.Curve>
@@ -12712,16 +12987,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,50.3978477078427"
               Start="0,0"
               End="0,42.8978477078427">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,42.8978477078427" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-55.80638671875,15.6442363539214,111.6127734375,11.609375"
               RelativePosition="Any" />
@@ -12736,22 +13015,28 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,51.1775618659805"
               Start="0,0"
               End="0,43.6775618659805">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,43.6775618659805" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-55.80638671875,16.0340934329902,111.6127734375,11.609375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output]"
           TopLeft="267.07436327718,262.133193219616">
           <EdgeLayout.Curve>
@@ -12760,10 +13045,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-115.328208189556,44.6893832521043"
               Start="0,0"
               End="-115.328208189556,37.1893832521043">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,14.0470863995718" />
                   <mssgle:CubicBezierSegment
                     Point1="0,14.0470863995718"
@@ -12777,17 +13064,21 @@ where [refTable].[CODE] = ?</property>
                     Point3="-115.328208189556,22.0470863995718" />
                   <mssgle:LineSegment
                     End="-115.328208189556,37.1893832521043" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-113.470490813528,23.0470863995718,111.6127734375,11.609375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output5]"
           TopLeft="341.679485669973,785.768810960265">
           <EdgeLayout.Curve>
@@ -12796,11 +13087,14 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,114.592476975649"
               Start="0,0"
               End="0,107.092476975649">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,107.092476975649" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12813,6 +13107,7 @@ where [refTable].[CODE] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\PIMS_PROJECT records to be updated">
     <Properties>
       <Property>
@@ -12831,27 +13126,36 @@ where [refTable].[CODE] = ?</property>
           type="q4:string">0</Value>
       </Property>
       <Property>
+
         <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\BUSINESS_FUNCTION_CODE_ID">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
+
           type="q2:string">false</Value>
+
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
+
           type="q3:string">[dbo].[PIMS_BUSINESS_FUNCTION_CODE]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
+
           type="q4:string">0</Value>
+
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -12859,11 +13163,14 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\PAIMS_PROJECT">
+
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
+
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
@@ -12886,26 +13193,35 @@ where [refTable].[CODE] = ?</property>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+
       </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\Existing PIMS_PROJECT records">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
+
           type="q2:string">false</Value>
+
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
+
           type="q3:string">[dbo].[PIMS_PROJECT]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
+
           type="q4:string">0</Value>
+
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -12913,7 +13229,9 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\Insert PIMS_PROJECT">
+
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -12926,22 +13244,30 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\WORK_ACTIVITY_CODE_ID">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
+
           type="q2:string">false</Value>
+
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
+
           type="q3:string">[dbo].[PIMS_WORK_ACTIVITY_CODE]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
+
           type="q4:string">0</Value>
+
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

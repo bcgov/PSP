@@ -4,8 +4,6 @@ export * from './Check';
 export * from './DisplayError';
 export * from './FastCurrencyInput';
 export * from './FastDatePicker';
-export * from './FastInput';
-export * from './FastSelect';
 export * from './Form';
 export * from './Input';
 export * from './InputGroup';

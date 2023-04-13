@@ -179,6 +179,7 @@ exports[`Edit Lease Insurance renders as expected 1`] = `
                   <input
                     checked=""
                     class="form-check-input position-static"
+                    data-testid="radio-insurances.0.isinsuranceinplaceradio-yes"
                     id="input-yes"
                     name="insurances.0.isInsuranceInPlaceRadio"
                     type="radio"
@@ -187,7 +188,7 @@ exports[`Edit Lease Insurance renders as expected 1`] = `
                 </div>
                 <label
                   class="form-check-label form-label"
-                  for="input-insurances.0.isInsuranceInPlaceRadio"
+                  for="insurances.0.isInsuranceInPlaceRadio"
                 >
                   Yes
                 </label>
@@ -200,6 +201,7 @@ exports[`Edit Lease Insurance renders as expected 1`] = `
                 >
                   <input
                     class="form-check-input position-static"
+                    data-testid="radio-insurances.0.isinsuranceinplaceradio-no"
                     id="input-no"
                     name="insurances.0.isInsuranceInPlaceRadio"
                     type="radio"
@@ -208,7 +210,7 @@ exports[`Edit Lease Insurance renders as expected 1`] = `
                 </div>
                 <label
                   class="form-check-label form-label"
-                  for="input-insurances.0.isInsuranceInPlaceRadio"
+                  for="insurances.0.isInsuranceInPlaceRadio"
                 >
                   No
                 </label>

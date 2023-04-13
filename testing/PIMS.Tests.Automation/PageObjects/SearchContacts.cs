@@ -184,9 +184,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchContactPaginationList).Displayed);
         }
 
-        public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province)
+        public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province, string country)
         {
-            Wait(1500);
+            Wait(5000);
 
             Assert.True(webDriver.FindElement(searchContactFirstResultLink).Text.Equals(summary));
             Assert.True(webDriver.FindElement(searchContactFirstNameDiv).Text.Equals(firstName));
@@ -195,8 +195,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchContactFirstEmailDiv).Text.Equals(email));
             Assert.True(webDriver.FindElement(searchContactFirstMailAddressDiv).Text.Equals(address));
             Assert.True(webDriver.FindElement(searchContactFirstCityDiv).Text.Equals(city));
-            Assert.True(webDriver.FindElement(searchContactFirstProvinceDiv).Text.Equals(province));
-
+            if (country == "Canada")
+            {
+                Assert.True(webDriver.FindElement(searchContactFirstProvinceDiv).Text.Equals(province));
+            }
+            else
+            {
+                Assert.True(webDriver.FindElement(searchContactFirstProvinceDiv).Text.Equals(""));
+            }
             Assert.True(webDriver.FindElement(searchContactUpdateBttn).Displayed);
             Assert.True(webDriver.FindElement(searchContactViewBttn).Displayed);
             

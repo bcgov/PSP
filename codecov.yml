@@ -29,3 +29,8 @@ comment:
 
 ignore:
   - "*.ignore.*"
+  - "PimsContext.cs"
+  - "PimsBaseContext.cs"
+  - "source/backend/entities"
+  - "source/backend/api/Helpers/Swagger"
+  - "source/backend/api/Helpers/Healthchecks"

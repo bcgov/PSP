@@ -90,6 +90,14 @@ namespace Pims.Api.Services
 
                     result = _mapper.Map<EntityNoteModel>(createdNote);
                     break;
+                case NoteType.Research_File:
+                    PimsResearchFileNote researchNoteEntity = _mapper.Map<PimsResearchFileNote>(model);
+
+                    PimsResearchFileNote createdResesearchEntity = _entityNoteRepository.Add<PimsResearchFileNote>(researchNoteEntity);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdResesearchEntity);
+                    break;
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }
@@ -132,6 +140,7 @@ namespace Pims.Api.Services
                 NoteType.Acquisition_File => _entityNoteRepository.DeleteAcquisitionFileNotes(noteId),
                 NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
                 NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
+                NoteType.Research_File => _entityNoteRepository.DeleteResearchNotes(noteId),
                 _ => deleted
             };
 
@@ -160,13 +169,14 @@ namespace Pims.Api.Services
                 NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
                 NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
                 NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),
+                NoteType.Research_File => _entityNoteRepository.GetAllResearchNotesById(entityId).ToList(),
                 _ => new List<PimsNote>()
             };
 
             return notes;
         }
 
-        private void ValidateVersion(long noteId, long noteVersion)
+        private void ValidateVersion(long noteId, long? noteVersion)
         {
             long currentRowVersion = _noteRepository.GetRowVersion(noteId);
             if (currentRowVersion != noteVersion)

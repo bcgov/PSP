@@ -150,10 +150,6 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
   flex-wrap: nowrap;
 }
 
-.c5 {
-  font-weight: bold;
-}
-
 .c0 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
@@ -312,11 +308,9 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
-                <span
-                  class="c5"
-                >
+                <strong>
                   Lease Seed Data
-                </span>
+                </strong>
               </span>
             </span>
           </div>
@@ -340,11 +334,9 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 data-testid="tooltip-icon-userNameTooltip"
                 id="userNameTooltip"
               >
-                <span
-                  class="c5"
-                >
+                <strong>
                   Lease Seed Data
-                </span>
+                </strong>
               </span>
             </span>
           </div>

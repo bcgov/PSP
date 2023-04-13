@@ -88,7 +88,7 @@ const StyleSmallText = styled.span`
   line-height: 1.9;
 `;
 
-function formatMinistryProject(projectNumber?: string, projectName?: string) {
+function formatMinistryProject(projectNumber?: string | null, projectName?: string | null) {
   const formattedValue = [projectNumber, projectName].filter(x => x).join(' - ');
   return formattedValue;
 }

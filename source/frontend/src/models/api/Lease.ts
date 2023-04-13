@@ -39,6 +39,7 @@ export interface Api_Lease extends Api_ConcurrentVersion {
   project?: Api_Project;
   properties?: Api_PropertyLease[];
   securityDeposits?: Api_SecurityDeposit[];
+  consultations: Api_LeaseConsultation[] | null;
 }
 
 export const defaultApiLease: Api_Lease = {
@@ -60,4 +61,12 @@ export const defaultApiLease: Api_Lease = {
   isCommercialBuilding: false,
   isOtherImprovement: false,
   returnNotes: '',
+  consultations: null,
 };
+
+export interface Api_LeaseConsultation extends Api_ConcurrentVersion {
+  id: number | null;
+  consultationType: Api_TypeCode<string> | null;
+  consultationStatusType: Api_TypeCode<string> | null;
+  parentLeaseId: number | null;
+}

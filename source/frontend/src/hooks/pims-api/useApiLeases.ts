@@ -31,7 +31,7 @@ export const useApiLeases = () => {
           lease,
         ),
       exportLeases: (filter: IPaginateLeases, outputFormat: 'csv' | 'excel' = 'excel') =>
-        api.get(
+        api.get<Blob>(
           `/reports/leases?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
           {
             responseType: 'blob',
@@ -41,7 +41,7 @@ export const useApiLeases = () => {
           },
         ),
       exportAggregatedLeases: (fiscalYearStart: number) =>
-        api.get(`/reports/leases/aggregated?fiscalYearStart=${fiscalYearStart}`, {
+        api.get<Blob>(`/reports/leases/aggregated?fiscalYearStart=${fiscalYearStart}`, {
           responseType: 'blob',
           headers: {
             Accept: 'application/vnd.ms-excel',

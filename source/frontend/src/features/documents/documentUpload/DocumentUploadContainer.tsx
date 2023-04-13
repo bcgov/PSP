@@ -1,7 +1,11 @@
+import { SelectOption } from 'components/common/form';
+import * as API from 'constants/API';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { DocumentStatusType } from 'constants/documentStatusType';
 import { DocumentTypeName } from 'constants/documentType';
 import { FormikProps } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
@@ -14,7 +18,7 @@ import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshi
 import DocumentUploadForm from './DocumentUploadForm';
 
 export interface IDocumentUploadContainerProps {
-  parentId: number;
+  parentId: string;
   relationshipType: DocumentRelationshipType;
   onUploadSuccess: () => void;
   onCancel: () => void;
@@ -24,6 +28,8 @@ export const DocumentUploadContainer: React.FunctionComponent<
   React.PropsWithChildren<IDocumentUploadContainerProps>
 > = props => {
   const deleteModalProps = getCancelModalProps();
+
+  const { getOptionsByType } = useLookupCodeHelpers();
 
   const { setDisplayModal } = useModalContext({
     ...deleteModalProps,
@@ -58,6 +64,8 @@ export const DocumentUploadContainer: React.FunctionComponent<
   const [documentTypes, setDocumentTypes] = useState<Api_DocumentType[]>([]);
   const [documentType, setDocumentType] = useState<string>('');
 
+  const [documentStatusOptions, setDocumentStatusOptions] = useState<SelectOption[]>([]);
+
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
     Api_Storage_DocumentTypeMetadataType[]
   >([]);
@@ -87,20 +95,31 @@ export const DocumentUploadContainer: React.FunctionComponent<
   );
 
   useEffect(() => {
+    const retrievedDocumentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
     const fetch = async () => {
       const axiosResponse = await retrieveDocumentTypes();
       if (axiosResponse && isMounted()) {
         if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
           setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
           updateDocumentType(axiosResponse.find(x => x.documentType === DocumentTypeName.CDOGS));
+          setDocumentStatusOptions(
+            retrievedDocumentStatusTypes.filter(x => x.value === DocumentStatusType.Final),
+          );
         } else {
           setDocumentTypes(axiosResponse);
+          setDocumentStatusOptions(retrievedDocumentStatusTypes);
         }
       }
     };
 
     fetch();
-  }, [props.relationshipType, retrieveDocumentTypes, isMounted, updateDocumentType]);
+  }, [
+    props.relationshipType,
+    retrieveDocumentTypes,
+    isMounted,
+    updateDocumentType,
+    getOptionsByType,
+  ]);
 
   const onUploadDocument = async (uploadRequest: Api_DocumentUploadRequest) => {
     await uploadDocument(props.relationshipType, props.parentId, uploadRequest);
@@ -113,6 +132,7 @@ export const DocumentUploadContainer: React.FunctionComponent<
       isLoading={retrieveDocumentMetadataLoading || uploadDocumentLoading}
       initialDocumentType={documentType}
       documentTypes={documentTypes}
+      documentStatusOptions={documentStatusOptions}
       mayanMetadataTypes={documentTypeMetadataTypes}
       onDocumentTypeChange={onDocumentTypeChange}
       onUploadDocument={onUploadDocument}

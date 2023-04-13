@@ -1,15 +1,5 @@
 import * as Yup from 'yup';
 
-Yup.addMethod(Yup.string, 'optional', function optional() {
-  return this.transform(value => {
-    return (typeof value == 'string' && !value) ||
-      (value instanceof Array && !value.length) ||
-      value === null // allow to skip "nullable"
-      ? undefined
-      : value;
-  });
-});
-
 export const AccessRequestSchema = Yup.object().shape({
   showOrganization: Yup.boolean(),
   roleId: Yup.number().min(0, 'Invalid Role').required('Required'),

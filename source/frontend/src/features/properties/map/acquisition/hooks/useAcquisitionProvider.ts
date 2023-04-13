@@ -3,6 +3,7 @@ import { useApiAcquisitionFile } from 'hooks/pims-api/useApiAcquisitionFile';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import {
   Api_AcquisitionFile,
+  Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
@@ -22,6 +23,8 @@ export const useAcquisitionProvider = () => {
     putAcquisitionFileProperties,
     getAcquisitionFileProperties,
     getAcquisitionFileOwners,
+    getAcquisitionFileChecklist,
+    putAcquisitionFileChecklist,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -96,6 +99,29 @@ export const useAcquisitionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owners'),
   });
 
+  const getAcquisitionChecklistApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileChecklistItem[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionFileChecklist(acqFileId),
+      [getAcquisitionFileChecklist],
+    ),
+    requestName: 'GetAcquisitionFileChecklist',
+    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Checklist'),
+  });
+
+  const updateAcquisitionChecklistApi = useApiRequestWrapper<
+    (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFile: Api_AcquisitionFile) => await putAcquisitionFileChecklist(acqFile),
+      [putAcquisitionFileChecklist],
+    ),
+    requestName: 'UpdateAcquisitionFileChecklist',
+    onError: useAxiosErrorHandler('Failed to update Acquisition File Checklist'),
+    throwError: true,
+  });
+
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
@@ -104,6 +130,8 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
       getAcquisitionProperties: getAcquisitionPropertiesApi,
       getAcquisitionOwners: getAcquisitionOwnersApi,
+      getAcquisitionFileChecklist: getAcquisitionChecklistApi,
+      updateAcquisitionChecklist: updateAcquisitionChecklistApi,
     }),
     [
       addAcquisitionFileApi,
@@ -112,6 +140,8 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionPropertiesApi,
       getAcquisitionPropertiesApi,
       getAcquisitionOwnersApi,
+      getAcquisitionChecklistApi,
+      updateAcquisitionChecklistApi,
     ],
   );
 };

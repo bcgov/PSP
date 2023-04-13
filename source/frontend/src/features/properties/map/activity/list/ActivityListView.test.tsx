@@ -6,7 +6,6 @@ import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks';
 import { mockActivitiesResponse } from 'mocks/mockActivities';
-import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   act,
@@ -97,7 +96,7 @@ describe('Activity List View', () => {
       claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
-    const link = getAllByText('Survey')[1];
+    const link = getAllByText('Survey')[0];
 
     act(() => userEvent.click(link));
 

@@ -6,6 +6,7 @@ import {
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import PropertyResearchTabView from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
 import { FormikProps } from 'formik';
+import noop from 'lodash/noop';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 
@@ -96,6 +97,7 @@ const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>((pro
             props.setEditKey(FormKeys.propertyDetails);
             props.setEditMode(true);
           }}
+          setEditTakes={noop}
           defaultTab={InventoryTabNames.research}
           customTabs={[researchPropertyTab]}
           View={InventoryTabs}
