@@ -363,10 +363,10 @@ namespace Pims.Dal.Repositories
             }
 
             // update direct relationships - anomalies, tenures, etc
-            Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType, long>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType, long>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType, long>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType, long>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
 
             return existingProperty;
         }

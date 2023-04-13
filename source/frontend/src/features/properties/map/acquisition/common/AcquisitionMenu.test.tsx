@@ -1,7 +1,7 @@
 import { Claims } from 'constants/index';
 import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
-import { EditFormNames } from '../EditFormNames';
+import { EditFormType } from '../EditFormNames';
 import AcquisitionMenu, { IAcquisitionMenuProps } from './AcquisitionMenu';
 
 // mock auth library
@@ -111,7 +111,7 @@ describe('AcquisitionMenu component', () => {
 
     expect(setContainerState).toHaveBeenCalledWith({
       isEditing: true,
-      activeEditForm: EditFormNames.propertySelector,
+      activeEditForm: EditFormType.PROPERTY_SELECTOR,
     });
   });
 

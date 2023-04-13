@@ -28,7 +28,7 @@ export const useAcquisitionProvider = () => {
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
-    (...args: any[]) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
       async (acqFile: Api_AcquisitionFile) => await postAcquisitionFile(acqFile),
@@ -40,7 +40,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionFileApi = useApiRequestWrapper<
-    (...args: any[]) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFile(acqFileId),
@@ -51,7 +51,10 @@ export const useAcquisitionProvider = () => {
   });
 
   const updateAcquisitionFileApi = useApiRequestWrapper<
-    (...args: any[]) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    (
+      acqFile: Api_AcquisitionFile,
+      userOverride: boolean,
+    ) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
       async (acqFile: Api_AcquisitionFile, userOverride = false) =>

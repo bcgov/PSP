@@ -17,12 +17,8 @@ import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
 import { Section } from '../../Section';
 import { SectionField } from '../../SectionField';
-import {
-  StyledBorderSection,
-  StyledEditWrapper,
-  StyledNoTabSection,
-  StyledSummarySection,
-} from '../styles';
+import { StyledEditWrapper, StyledSummarySection } from '../../SectionStyles';
+import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 export interface ITakesDetailViewProps {
   takes: Api_Take[];

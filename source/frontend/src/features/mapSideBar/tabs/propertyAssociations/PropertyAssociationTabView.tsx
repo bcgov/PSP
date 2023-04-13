@@ -6,9 +6,9 @@ import {
   MdOutlineRealEstateAgent,
   MdTopic,
 } from 'react-icons/md';
-import styled from 'styled-components';
 
 import { Section } from '../Section';
+import { StyledSummarySection } from '../SectionStyles';
 import AssociationContent from './AssociationContent';
 import AssociationHeader from './AssociationHeader';
 
@@ -93,7 +93,3 @@ const PropertyAssociationTabView: React.FunctionComponent<
 };
 
 export default PropertyAssociationTabView;
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;

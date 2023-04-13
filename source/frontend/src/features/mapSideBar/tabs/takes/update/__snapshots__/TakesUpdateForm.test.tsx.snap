@@ -145,32 +145,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c3 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c2 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c9.form-section {
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.c10 {
-  border: 0.1rem solid lightgrey;
-  border-radius: 0.5rem;
-}
-
 .c16.c16.form-control.is-valid {
   background-image: none;
 }
@@ -289,6 +263,20 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   max-width: 9rem;
 }
 
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c8.required::before {
   content: '*';
   position: absolute;
@@ -298,6 +286,18 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
 
 .c7 {
   font-weight: bold;
+}
+
+.c9.form-section {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.c10 {
+  border: 0.1rem solid lightgrey;
+  border-radius: 0.5rem;
 }
 
 .c1 {

@@ -2,6 +2,7 @@ import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
@@ -10,7 +11,6 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, renderAsync, RenderOptions, screen, userEvent } from 'utils/test-utils';
 
 import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
-import { useAcquisitionProvider } from '../hooks/useAcquisitionProvider';
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import { AcquisitionForm } from './models';
 
@@ -62,7 +62,7 @@ jest.mock('components/maps/hooks/useMapSearch');
   search: jest.fn().mockResolvedValue({}),
 } as any);
 
-jest.mock('../hooks/useAcquisitionProvider');
+jest.mock('hooks/repositories/useAcquisitionProvider');
 const addAcquisitionFile = jest.fn();
 (useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
   addAcquisitionFile: {

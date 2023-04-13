@@ -363,9 +363,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c21 {
+.c20 {
   float: right;
   cursor: pointer;
+}
+
+.c13 {
+  text-align: right;
 }
 
 .c15 {
@@ -451,14 +455,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
 .c7 {
   font-size: 1.4rem;
   line-height: 2.2rem;
-}
-
-.c20 {
-  text-align: right;
-}
-
-.c13 {
-  text-align: right;
 }
 
 .c18 {
@@ -1095,7 +1091,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                     class=""
                   >
                     <div
-                      class="c20 mr-3 my-1"
+                      class="c13 mr-3 my-1"
                     />
                     <div
                       class="c14 form-section"
@@ -1115,7 +1111,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1160,7 +1156,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1205,7 +1201,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1250,7 +1246,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1295,7 +1291,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"

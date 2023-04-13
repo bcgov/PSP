@@ -78,6 +78,10 @@ exports[`ResearchContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
+.c19 {
+  text-align: right;
+}
+
 .c21 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -192,10 +196,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
 .c13 {
   font-size: 1.4rem;
   line-height: 2.2rem;
-}
-
-.c19 {
-  text-align: right;
 }
 
 .c16 {
