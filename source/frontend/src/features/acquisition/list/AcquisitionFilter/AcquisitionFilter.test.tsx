@@ -47,12 +47,12 @@ describe('Acquisition Filter', () => {
   it('searches by acquisition file status', async () => {
     const { container, searchButton } = setup();
 
-    fillInput(container, 'acquisitionFileStatusTypeCode', 'CLOSED', 'select');
+    fillInput(container, 'acquisitionFileStatusTypeCode', 'CANCEL', 'select');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
-        acquisitionFileStatusTypeCode: 'CLOSED',
+        acquisitionFileStatusTypeCode: 'CANCEL',
         acquisitionFileNameOrNumber: '',
         projectNameOrNumber: '',
       }),

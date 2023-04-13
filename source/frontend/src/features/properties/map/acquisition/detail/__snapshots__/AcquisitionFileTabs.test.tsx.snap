@@ -6,7 +6,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c13.btn {
+  .c14.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c13.btn:hover {
+.c14.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c13.btn:focus {
+.c14.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c13.btn.btn-primary {
+.c14.btn.btn-primary {
   border: none;
 }
 
-.c13.btn.btn-secondary {
+.c14.btn.btn-secondary {
   background: none;
 }
 
-.c13.btn.btn-info {
+.c14.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c13.btn.btn-info:hover,
-.c13.btn.btn-info:active,
-.c13.btn.btn-info:focus {
+.c14.btn.btn-info:hover,
+.c14.btn.btn-info:active,
+.c14.btn.btn-info:focus {
   background: none;
 }
 
-.c13.btn.btn-light {
+.c14.btn.btn-light {
   border: none;
 }
 
-.c13.btn.btn-dark {
+.c14.btn.btn-dark {
   border: none;
 }
 
-.c13.btn.btn-link {
+.c14.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   padding: 0;
 }
 
-.c13.btn.btn-link:hover,
-.c13.btn.btn-link:active,
-.c13.btn.btn-link:focus {
+.c14.btn.btn-link:hover,
+.c14.btn.btn-link:active,
+.c14.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   outline: none;
 }
 
-.c13.btn.btn-link:disabled,
-.c13.btn.btn-link.disabled {
+.c14.btn.btn-link:disabled,
+.c14.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c13.btn:disabled,
-.c13.btn:disabled:hover {
+.c14.btn:disabled,
+.c14.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,53 +128,19 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c13.Button .Button__icon {
+.c14.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c13.Button--icon-only:focus {
+.c14.Button--icon-only:focus {
   outline: none;
 }
 
-.c13.Button--icon-only .Button__icon {
+.c14.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c17.c17.btn {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c17.c17.btn .text {
-  display: none;
-}
-
-.c17.c17.btn:hover,
-.c17.c17.btn:active,
-.c17.c17.btn:focus {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c17.c17.btn:hover .text,
-.c17.c17.btn:active .text,
-.c17.c17.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
-}
-
-.c14 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -193,12 +159,12 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c16 {
+.c17 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c15 {
+.c16 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -245,7 +211,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   position: relative;
 }
 
-.c9 {
+.c10 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -257,11 +223,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   min-height: 4.5rem;
 }
 
-.c9 .btn {
+.c10 .btn {
   margin: 0;
 }
 
-.c10 {
+.c11 {
   float: right;
   cursor: pointer;
 }
@@ -277,6 +243,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c8 {
@@ -316,20 +283,15 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c18 {
-  position: -webkit-sticky;
-  position: sticky;
-  padding-top: 2rem;
-  bottom: 0;
-  background: white;
-  z-index: 10;
-}
-
-.c11 {
-  border-radius: 0.5rem 0.5rem 0rem 0rem;
+.c9 {
+  text-align: right;
 }
 
 .c12 {
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
+}
+
+.c13 {
   border-left: 0.2rem solid white;
 }
 
@@ -367,20 +329,20 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
       <a
         aria-selected="false"
         class="nav-item nav-link"
+        data-rb-event-key="checklist"
+        href="#"
+        role="tab"
+      >
+        Checklist
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
         data-rb-event-key="documents"
         href="#"
         role="tab"
       >
         Documents
-      </a>
-      <a
-        aria-selected="false"
-        class="nav-item nav-link"
-        data-rb-event-key="forms"
-        href="#"
-        role="tab"
-      >
-        Forms
       </a>
     </nav>
     <div
@@ -813,6 +775,19 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
         role="tabpanel"
       >
         <div
+          class=""
+        >
+          <div
+            class="c9 mr-3 my-1"
+          />
+        </div>
+      </div>
+      <div
+        aria-hidden="true"
+        class="fade tab-pane"
+        role="tabpanel"
+      >
+        <div
           class="c3 form-section"
         >
           <h2
@@ -825,7 +800,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                 class="col"
               >
                 <div
-                  class="c9 no-gutters row"
+                  class="c10 no-gutters row"
                 >
                   <div
                     class="px-2 my-1 col-auto"
@@ -841,7 +816,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c11"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -868,7 +843,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
             class="collapse show"
           >
             <form
-              class="c11 p-3"
+              class="c12 p-3"
               novalidate=""
             >
               <div
@@ -950,13 +925,13 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                   class="col-lg-auto"
                 >
                   <div
-                    class="c12 no-gutters pl-2 row"
+                    class="c13 no-gutters pl-2 row"
                   >
                     <div
                       class="col"
                     >
                       <button
-                        class="c13 Button Button--icon-only primary btn btn-primary"
+                        class="c14 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -985,7 +960,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                       class="col"
                     >
                       <button
-                        class="c13 Button Button--icon-only btn btn-info"
+                        class="c14 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -1038,11 +1013,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Document type
                       <div
-                        class="c14"
+                        class="c15"
                         data-testid="sort-column-documentType"
                       >
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1057,7 +1032,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c16"
+                          class="c17"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1084,11 +1059,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       File name
                       <div
-                        class="c14"
+                        class="c15"
                         data-testid="sort-column-fileName"
                       >
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1103,7 +1078,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c16"
+                          class="c17"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1130,11 +1105,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Uploaded
                       <div
-                        class="c14"
+                        class="c15"
                         data-testid="sort-column-appCreateTimestamp"
                       >
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1149,7 +1124,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c16"
+                          class="c17"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1176,11 +1151,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                     >
                       Status
                       <div
-                        class="c14"
+                        class="c15"
                         data-testid="sort-column-statusTypeCode"
                       >
                         <svg
-                          class="c15"
+                          class="c16"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1195,7 +1170,7 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c16"
+                          class="c17"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1253,896 +1228,6 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
         <div />
         <div />
         <div />
-      </div>
-      <div
-        aria-hidden="true"
-        class="fade tab-pane"
-        role="tabpanel"
-      >
-        <div
-          class="c3 form-section"
-        >
-          <h2
-            class="c4"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                Project
-              </div>
-              <div
-                class="col-1"
-              />
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
-            <div
-              class="pb-2 row"
-            >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c5"
-                >
-                  Project name:
-                </label>
-              </div>
-              <div
-                class="c6 text-left col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-project_name"
-                    name="project_name"
-                    title="TEST PROJECT"
-                    value="TEST PROJECT"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="pb-2 row"
-            >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c5"
-                >
-                  Project number:
-                </label>
-              </div>
-              <div
-                class="c6 text-left col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-project_number"
-                    name="project_number"
-                    title="005"
-                    value="005"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="pb-2 row"
-            >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c5"
-                >
-                  Product name:
-                </label>
-              </div>
-              <div
-                class="c6 text-left col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-road"
-                    name="road"
-                    title="AUTOPLAN"
-                    value="AUTOPLAN"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="pb-2 row"
-            >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c5"
-                >
-                  PS file number:
-                </label>
-              </div>
-              <div
-                class="c6 text-left col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-ps_file_no"
-                    name="ps_file_no"
-                    title="1234"
-                    value="1234"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="c3 form-section"
-        >
-          <h2
-            class="c4"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                Price (in CAD)
-              </div>
-              <div
-                class="col-1"
-              />
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
-            <div
-              class="pb-2 row"
-            >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c5"
-                >
-                  Purchase price:
-                </label>
-              </div>
-              <div
-                class="c6 text-left col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-purchase_price"
-                    name="purchase_price"
-                    title="$10,000"
-                    value="$10,000"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="pb-2 row"
-            >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c5"
-                >
-                  Deposit amount:
-                </label>
-              </div>
-              <div
-                class="c6 text-left col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-deposit_amount"
-                    name="deposit_amount"
-                    title="$1,000"
-                    value="$1,000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="c3 form-section"
-        >
-          <h2
-            class="c4"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                Participants
-              </div>
-              <div
-                class="col-1"
-              />
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
-            <div
-              class="c3 form-section"
-            >
-              <h2
-                class="c4"
-              >
-                <div
-                  class="no-gutters row"
-                >
-                  <div
-                    class="col"
-                  >
-                    Owners
-                  </div>
-                  <div
-                    class="col-1"
-                  />
-                </div>
-              </h2>
-              <div
-                class="collapse show"
-              >
-                <div
-                  class="c3 form-section"
-                >
-                  <h2
-                    class="c4"
-                  >
-                    <div
-                      class="no-gutters row"
-                    >
-                      <div
-                        class="col"
-                      >
-                        <div
-                          class="d-flex justify-content-between"
-                        >
-                          Owner #1
-                          <button
-                            class="c13 Button c17 btn btn-link"
-                            type="button"
-                          >
-                            <div
-                              class="Button__value"
-                            >
-                              <svg
-                                data-testid="remove-button"
-                                fill="currentColor"
-                                height="2rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="2rem"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <title>
-                                  remove
-                                </title>
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                               
-                              <span
-                                class="text"
-                              >
-                                Remove
-                              </span>
-                            </div>
-                          </button>
-                        </div>
-                      </div>
-                      <div
-                        class="col-1"
-                      />
-                    </div>
-                  </h2>
-                  <div
-                    class="collapse show"
-                  >
-                    <div
-                      class="pb-2 row"
-                    >
-                      <div
-                        class="pr-0 text-left col-4"
-                      >
-                        <label
-                          class="c5"
-                        >
-                          First name:
-                        </label>
-                      </div>
-                      <div
-                        class="c6 text-left col"
-                      >
-                        <div
-                          class="input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-owners.0.firstname"
-                            name="owners.0.firstname"
-                            title="owner"
-                            value="owner"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="pb-2 row"
-                    >
-                      <div
-                        class="pr-0 text-left col-4"
-                      >
-                        <label
-                          class="c5"
-                        >
-                          Last name:
-                        </label>
-                      </div>
-                      <div
-                        class="c6 text-left col"
-                      >
-                        <div
-                          class="input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-owners.0.lastname"
-                            name="owners.0.lastname"
-                            title="one"
-                            value="one"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="pb-2 row"
-                    >
-                      <div
-                        class="pr-0 text-left col-4"
-                      >
-                        <label
-                          class="c5"
-                        >
-                          Organization name:
-                        </label>
-                      </div>
-                      <div
-                        class="c6 text-left col"
-                      >
-                        <div
-                          class="input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-owners.0.organization_name"
-                            name="owners.0.organization_name"
-                            title="test organization"
-                            value="test organization"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="pb-2 row"
-                    >
-                      <div
-                        class="pr-0 text-left col-4"
-                      >
-                        <label
-                          class="c5"
-                        >
-                          Incorporation number:
-                        </label>
-                      </div>
-                      <div
-                        class="c6 text-left col"
-                      >
-                        <div
-                          class="input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-owners.0.incorporation_number"
-                            name="owners.0.incorporation_number"
-                            title="5678"
-                            value="5678"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="pb-2 row"
-                    >
-                      <div
-                        class="pr-0 text-left col-4"
-                      >
-                        <label
-                          class="c5"
-                        >
-                          Reg number:
-                        </label>
-                      </div>
-                      <div
-                        class="c6 text-left col"
-                      >
-                        <div
-                          class="input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-owners.0.reg_no"
-                            name="owners.0.reg_no"
-                            title="910"
-                            value="910"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  class="c13 Button btn btn-link"
-                  type="button"
-                >
-                  <div
-                    class="Button__value"
-                  >
-                    + Add another owner
-                  </div>
-                </button>
-              </div>
-            </div>
-            <div
-              class="c3 form-section"
-            >
-              <h2
-                class="c4"
-              >
-                <div
-                  class="no-gutters row"
-                >
-                  <div
-                    class="col"
-                  >
-                    Agents
-                  </div>
-                  <div
-                    class="col-1"
-                  />
-                </div>
-              </h2>
-              <div
-                class="collapse show"
-              >
-                <div
-                  class="c3 form-section"
-                >
-                  <h2
-                    class="c4"
-                  >
-                    <div
-                      class="no-gutters row"
-                    >
-                      <div
-                        class="col"
-                      >
-                        <div
-                          class="d-flex justify-content-between"
-                        >
-                          Agent #1
-                          <button
-                            class="c13 Button c17 btn btn-link"
-                            type="button"
-                          >
-                            <div
-                              class="Button__value"
-                            >
-                              <svg
-                                data-testid="remove-button"
-                                fill="currentColor"
-                                height="2rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="2rem"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <title>
-                                  remove
-                                </title>
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                               
-                              <span
-                                class="text"
-                              >
-                                Remove
-                              </span>
-                            </div>
-                          </button>
-                        </div>
-                      </div>
-                      <div
-                        class="col-1"
-                      />
-                    </div>
-                  </h2>
-                  <div
-                    class="collapse show"
-                  >
-                    <div
-                      class="pb-2 row"
-                    >
-                      <div
-                        class="pr-0 text-left col-4"
-                      >
-                        <label
-                          class="c5"
-                        >
-                          Phone # (work landline):
-                        </label>
-                      </div>
-                      <div
-                        class="c6 text-left col"
-                      >
-                        <div
-                          class="input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-agents.0.workphone"
-                            name="agents.0.workphone"
-                            title="250-812-4261"
-                            value="250-812-4261"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="pb-2 row"
-                    >
-                      <div
-                        class="pr-0 text-left col-4"
-                      >
-                        <label
-                          class="c5"
-                        >
-                          Phone # (work mobile):
-                        </label>
-                      </div>
-                      <div
-                        class="c6 text-left col"
-                      >
-                        <div
-                          class="input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-agents.0.mobilephone"
-                            name="agents.0.mobilephone"
-                            title="778-921-6221"
-                            value="778-921-6221"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="pb-2 row"
-                    >
-                      <div
-                        class="pr-0 text-left col-4"
-                      >
-                        <label
-                          class="c5"
-                        >
-                          Organization name:
-                        </label>
-                      </div>
-                      <div
-                        class="c6 text-left col"
-                      >
-                        <div
-                          class="input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-agents.0.name"
-                            name="agents.0.name"
-                            title="test agent"
-                            value="test agent"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  class="c13 Button btn btn-link"
-                  type="button"
-                >
-                  <div
-                    class="Button__value"
-                  >
-                    + Add another agent
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="c3 form-section"
-        >
-          <h2
-            class="c4"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                Dates
-              </div>
-              <div
-                class="col-1"
-              />
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
-            <div
-              class="pb-2 row"
-            >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c5"
-                >
-                  Sale completion date:
-                </label>
-              </div>
-              <div
-                class="c6 text-left col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-completion_date"
-                    name="completion_date"
-                    title="Feb 10, 2023"
-                    value="Feb 10, 2023"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="c3 form-section"
-        >
-          <h2
-            class="c4"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                Properties
-              </div>
-              <div
-                class="col-1"
-              />
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
-            <div
-              class="c3 form-section"
-            >
-              <h2
-                class="c4"
-              >
-                <div
-                  class="no-gutters row"
-                >
-                  <div
-                    class="col"
-                  >
-                    <div
-                      class="d-flex justify-content-between"
-                    >
-                      Property #1
-                      <button
-                        class="c13 Button c17 btn btn-link"
-                        type="button"
-                      >
-                        <div
-                          class="Button__value"
-                        >
-                          <svg
-                            data-testid="remove-button"
-                            fill="currentColor"
-                            height="2rem"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="2rem"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <title>
-                              remove
-                            </title>
-                            <path
-                              d="M0 0h24v24H0z"
-                              fill="none"
-                            />
-                            <path
-                              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="text"
-                          >
-                            Remove
-                          </span>
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    class="col-1"
-                  />
-                </div>
-              </h2>
-              <div
-                class="collapse show"
-              >
-                <div
-                  class="pb-2 row"
-                >
-                  <div
-                    class="pr-0 text-left col-4"
-                  >
-                    <label
-                      class="c5"
-                    >
-                      PID:
-                    </label>
-                  </div>
-                  <div
-                    class="c6 text-left col"
-                  >
-                    <div
-                      class="input form-group"
-                    >
-                      <input
-                        class="form-control"
-                        id="input-properties.0.pid"
-                        name="properties.0.pid"
-                        title="016-272-622"
-                        value="016-272-622"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="pb-2 row"
-                >
-                  <div
-                    class="pr-0 text-left col-4"
-                  >
-                    <label
-                      class="c5"
-                    >
-                      Legal description:
-                    </label>
-                  </div>
-                  <div
-                    class="c6 text-left col"
-                  >
-                    <div
-                      class="input form-group"
-                    >
-                      <input
-                        class="form-control"
-                        id="input-properties.0.full_legal"
-                        name="properties.0.full_legal"
-                        title="A fake legal description for testing purposes."
-                        value="A fake legal description for testing purposes."
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button
-              class="c13 Button btn btn-link"
-              type="button"
-            >
-              <div
-                class="Button__value"
-              >
-                + Add another property
-              </div>
-            </button>
-          </div>
-        </div>
-        <div
-          class="c18 justify-content-end mt-auto no-gutters row"
-        >
-          <div
-            class="col-auto"
-          >
-            <button
-              class="c13 Button btn btn-primary"
-              type="button"
-            >
-              <div
-                class="Button__value"
-              >
-                Generate
-              </div>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>

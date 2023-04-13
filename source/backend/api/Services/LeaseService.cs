@@ -3,11 +3,9 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
-using MoreLinq;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Repositories;
@@ -98,6 +96,8 @@ namespace Pims.Api.Services
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverride);
             _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
 
+            _leaseRepository.UpdateLeaseConsultations(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseConsultations);
+
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
@@ -114,7 +114,6 @@ namespace Pims.Api.Services
                     }
                 }
             }
-
 
             _leaseRepository.CommitTransaction();
             return _leaseRepository.GetNoTracking(lease.LeaseId);

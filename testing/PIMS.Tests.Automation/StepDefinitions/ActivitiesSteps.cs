@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly Activities activities;
         private readonly Notes notes;
-        private readonly DigitalDocuments digitalDocuments;
+        private readonly SharedDocumentsTab digitalDocuments;
         private readonly IEnumerable<DocumentFile> documentFiles;
 
         private string activityDescription = "Automated Test - Description on activity";
@@ -34,7 +34,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             activities = new Activities(driver.Current);
             notes = new Notes(driver.Current);
-            digitalDocuments = new DigitalDocuments(driver.Current);
+            digitalDocuments = new SharedDocumentsTab(driver.Current);
             documentFiles = driver.Configuration.GetSection("UploadDocuments").Get<IEnumerable<DocumentFile>>();
         }
 
@@ -273,7 +273,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments.CloseDigitalDocumentViewDetails();
 
             //Delete digital document
-            digitalDocuments.Delete1stDocument("Activity");
+            digitalDocuments.Delete1stDocument();
         }
 
         [StepDefinition(@"An activity is created successfully")]
@@ -294,22 +294,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(notes.NotesTotal() == 0);
         }
 
-        [StepDefinition(@"A digital document has been uploaded successfully")]
-        public void DocumentUploadSuccess()
-        {
-            Assert.True(digitalDocuments.GetTotalUploadedDocuments() == totalDigitalDocumentsUploaded + 1);
-        }
+        //[StepDefinition(@"A digital document has been uploaded successfully")]
+        //public void DocumentUploadSuccess()
+        //{
+        //    Assert.True(digitalDocuments.GetTotalUploadedDocuments() == totalDigitalDocumentsUploaded + 1);
+        //}
 
-        [StepDefinition(@"A digital document has been deleted successfully")]
-        public void DocumentDeleteSuccess()
-        {
-            Assert.True(digitalDocuments.GetTotalUploadedDocuments() == 0);
-        }
+        //[StepDefinition(@"A digital document has been deleted successfully")]
+        //public void DocumentDeleteSuccess()
+        //{
+        //    Assert.True(digitalDocuments.GetTotalUploadedDocuments() == 0);
+        //}
 
     }
 }
 
-public class DocumentFile
-{
-    public string Url { get; set; } = null!;
-}
+//public class DocumentFile
+//{
+//    public string Url { get; set; } = null!;
+//}

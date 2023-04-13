@@ -55,7 +55,7 @@ const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
     tabViews.push({
       content: (
         <DocumentListContainer
-          parentId={project?.id}
+          parentId={project?.id.toString()}
           relationshipType={DocumentRelationshipType.PROJECTS}
         />
       ),

@@ -6,11 +6,7 @@ exports[`ResearchHeader component renders as expected when provided no research 
     class="Toastify"
   />
   <div />
-  .c2 {
-  font-weight: bold;
-}
-
-.c0 {
+  .c0 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -146,11 +142,9 @@ exports[`ResearchHeader component renders as expected when provided no research 
               data-testid="tooltip-icon-userNameTooltip"
               id="userNameTooltip"
             >
-              <span
-                class="c2"
-              >
+              <strong>
                 USER
-              </span>
+              </strong>
             </span>
           </span>
         </div>
@@ -172,11 +166,9 @@ exports[`ResearchHeader component renders as expected when provided no research 
               data-testid="tooltip-icon-userNameTooltip"
               id="userNameTooltip"
             >
-              <span
-                class="c2"
-              >
+              <strong>
                 USER
-              </span>
+              </strong>
             </span>
           </span>
         </div>

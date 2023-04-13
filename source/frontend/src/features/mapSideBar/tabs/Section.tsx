@@ -13,11 +13,16 @@ interface SectionProps {
 }
 
 export const Section: React.FC<
-  React.PropsWithChildren<SectionProps & React.HTMLAttributes<HTMLDivElement>>
-> = ({ header, children, title, isCollapsable, initiallyExpanded, className }) => {
+  React.PropsWithChildren<SectionProps & React.HTMLAttributes<HTMLDivElement>> & {
+    'data-testid'?: string;
+  }
+> = ({ header, children, title, isCollapsable, initiallyExpanded, className, ...rest }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
   return (
-    <StyledFormSection className={clsx('form-section', className)}>
+    <StyledFormSection
+      className={clsx('form-section', className)}
+      data-testid={rest['data-testid']}
+    >
       {header && (
         <StyledSectionHeader>
           <Row className="no-gutters">
@@ -63,4 +68,5 @@ const StyledFormSection = styled.div`
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 `;

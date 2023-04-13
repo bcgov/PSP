@@ -45,7 +45,6 @@ namespace Pims.Core.Test
             var config = new TypeAdapterConfig();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.FullName.StartsWith("Pims"));
 
-            // TODO: PSP-4430 Use Singleton pattern to speed up initialization of this.
             var serializerOptions = Options.Create(new JsonSerializerOptions());
             var pimsOptions = Options.Create(new PimsOptions());
             var registers = assemblies.Select(assembly => assembly.GetTypes()

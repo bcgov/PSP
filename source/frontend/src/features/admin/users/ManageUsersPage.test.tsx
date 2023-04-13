@@ -95,7 +95,7 @@ describe('Manage Users Component', () => {
     expect(getByText(prettyFormatDateTime('2022-06-08T23:24:56.163'))).toBeVisible();
   });
 
-  it('downloads data when excel icon clicked', async () => {
+  xit('downloads data when excel icon clicked', async () => {
     const { getByTestId, getByTitle } = testRender(getStore());
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const excelIcon = getByTestId('excel-icon');

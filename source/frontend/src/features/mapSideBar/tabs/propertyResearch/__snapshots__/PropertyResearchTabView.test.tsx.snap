@@ -28,6 +28,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c0 {

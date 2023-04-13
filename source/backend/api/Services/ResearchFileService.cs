@@ -154,7 +154,7 @@ namespace Pims.Api.Services
             return _researchFileRepository.GetPage(filter);
         }
 
-        public PimsResearchFile UpdateProperty(long researchFileId, long researchFileVersion, PimsPropertyResearchFile propertyResearchFile)
+        public PimsResearchFile UpdateProperty(long researchFileId, long? researchFileVersion, PimsPropertyResearchFile propertyResearchFile)
         {
             _logger.LogInformation("Updating property research file...");
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
@@ -239,7 +239,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateVersion(long researchFileId, long researchFileVersion)
+        private void ValidateVersion(long researchFileId, long? researchFileVersion)
         {
             long currentRowVersion = _researchFileRepository.GetRowVersion(researchFileId);
             if (currentRowVersion != researchFileVersion)

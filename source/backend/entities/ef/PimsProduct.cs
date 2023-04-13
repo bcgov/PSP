@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_PRODUCT")]
-    [Index(nameof(Code), nameof(Description), Name = "PRODCT_CODE_DESC_UK_IDX", IsUnique = true)]
+    [Index(nameof(CodeDescUpper), Name = "PRODCT_CODE_DESC_UK_IDX", IsUnique = true)]
     [Index(nameof(Code), Name = "PRODCT_CODE_IDX")]
     [Index(nameof(ParentProjectId), Name = "PRODCT_PARENT_PROJECT_ID_IDX")]
     public partial class PimsProduct
@@ -82,6 +82,9 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("CODE_DESC_UPPER")]
+        [StringLength(220)]
+        public string CodeDescUpper { get; set; }
 
         [ForeignKey(nameof(ParentProjectId))]
         [InverseProperty(nameof(PimsProject.PimsProducts))]

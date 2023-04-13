@@ -14,14 +14,14 @@ interface ITooltipWrapperProps extends Partial<OverlayTriggerProps> {
    * @type {string}
    * @memberof ITooltipWrapperProps
    */
-  toolTip?: string | React.ReactElement; // TODO: PSP-4389 Rename 'toolTip' with 'tooltip'
+  toolTip?: string | React.ReactElement;
   /**
    * The tooltip element 'id'.
    *
    * @type {string}
    * @memberof ITooltipWrapperProps
    */
-  toolTipId: string; // TODO: PSP-4389 Rename 'toolTipId' with 'tooltipId'
+  toolTipId: string;
   className?: string;
 }
 

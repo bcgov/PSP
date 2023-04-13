@@ -22,6 +22,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c4.required::before {
@@ -372,6 +373,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c4.required::before {
