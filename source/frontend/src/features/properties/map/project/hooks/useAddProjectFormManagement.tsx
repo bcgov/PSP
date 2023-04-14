@@ -1,5 +1,7 @@
+import * as API from 'constants/API';
 import { FormikHelpers } from 'formik';
 import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_Project } from 'models/api/Project';
 import { useCallback } from 'react';
 
@@ -14,6 +16,14 @@ export interface IUseAddProjectFormProps {
 export function useAddProjectForm(props: IUseAddProjectFormProps) {
   const { onSuccess } = props;
   const { addProject } = useProjectProvider();
+  const { getPublicByType } = useLookupCodeHelpers();
+  const initialValues = props.initialForm ?? new ProjectForm();
+  if (!initialValues.projectStatusType) {
+    initialValues.projectStatusType =
+      getPublicByType(API.PROJECT_STATUS_TYPES)
+        .find(s => s.id === 'AC')
+        ?.id?.toString() ?? '';
+  }
 
   // save handler
   const handleSubmit = useCallback(
@@ -33,7 +43,7 @@ export function useAddProjectForm(props: IUseAddProjectFormProps) {
 
   return {
     handleSubmit,
-    initialValues: props.initialForm ?? new ProjectForm(),
+    initialValues: initialValues,
     validationSchema: AddProjectYupSchema,
   };
 }

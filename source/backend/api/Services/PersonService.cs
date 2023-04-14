@@ -42,7 +42,7 @@ namespace Pims.Api.Services
             return GetPerson(createdPerson.Internal_Id);
         }
 
-        public PimsPerson UpdatePerson(PimsPerson person, long rowVersion)
+        public PimsPerson UpdatePerson(PimsPerson person, long? rowVersion)
         {
             person.ThrowIfNull(nameof(person));
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
@@ -54,7 +54,7 @@ namespace Pims.Api.Services
             return GetPerson(updatedPerson.Internal_Id);
         }
 
-        public void ValidateRowVersion(long personId, long rowVersion)
+        public void ValidateRowVersion(long personId, long? rowVersion)
         {
             if (_personRepository.GetRowVersion(personId) != rowVersion)
             {
