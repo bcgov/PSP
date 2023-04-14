@@ -1158,6 +1158,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
       >
         <div
           class="py-3 row"
+          data-testid="teamMemberRow[0]"
         >
           <div
             class="col-xl-5 col-auto"
@@ -1223,6 +1224,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
           <div
             class="pl-0 col-xl-5 col-auto"
+            data-testid="contact-input"
           >
             <div
               class="input form-group"
@@ -1352,6 +1354,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
         </div>
         <div
           class="py-3 row"
+          data-testid="teamMemberRow[1]"
         >
           <div
             class="col-xl-5 col-auto"
@@ -1417,6 +1420,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
           <div
             class="pl-0 col-xl-5 col-auto"
+            data-testid="contact-input"
           >
             <div
               class="input form-group"
