@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Mayan.Sync;
@@ -39,41 +38,41 @@ namespace Pims.Api.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Synchronizes the mayan document types directly with Mayan.
+        /// Synchronizes incoming json document types with the PIMS db.
         /// </summary>
-        [HttpPatch("sync/mayan/documenttype")]
+        [HttpPatch("sync/documenttype")]
         [HasPermission(Permissions.DocumentAdmin)]
         [ProducesResponseType(typeof(ExternalBatchResult), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
-        public IActionResult SyncMayanDocumentTypes([FromBody] SyncModel model)
+        public IActionResult SyncDocumentTypes([FromBody] SyncModel model)
         {
-            var result = _documentSyncService.SyncMayanDocumentTypes(model);
+            var result = _documentSyncService.SyncPimsDocumentTypes(model);
             return new JsonResult(result);
         }
 
         /// <summary>
-        /// Synchronizes the mayan metadata directly with Mayan.
+        /// Synchronizes incoming json document metadata with the PIMS db.
         /// </summary>
         [HttpPatch("sync/mayan/metadatatype")]
         [HasPermission(Permissions.DocumentAdmin)]
         [ProducesResponseType(typeof(ExternalBatchResult), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
-        public IActionResult SyncMayanMetadataTypes([FromBody] SyncModel model)
+        public IActionResult SyncMetadataTypes([FromBody] SyncModel model)
         {
             var result = _documentSyncService.SyncMayanMetadataTypes(model);
             return new JsonResult(result);
         }
 
         /// <summary>
-        /// Synchronizes the document types from Mayan to PIMS.
+        /// Synchronizes the pims db with Mayan.
         /// </summary>
-        [HttpPatch("sync/backend/documenttype")]
+        [HttpPatch("sync/mayan")]
         [HasPermission(Permissions.DocumentAdmin)]
         [ProducesResponseType(typeof(PimsDocumentTyp), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
-        public async Task<IActionResult> SyncDocumentTypes([FromBody] SyncModel model)
+        public IActionResult SyncMayan([FromBody] SyncModel model)
         {
-            var result = await _documentSyncService.SyncBackendDocumentTypes(model);
+            var result = _documentSyncService.SyncPimsToMayan(model);
             return new JsonResult(result);
         }
 

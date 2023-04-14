@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Mayan.Sync;
 
 namespace Pims.Api.Services
@@ -9,10 +7,10 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentSyncService
     {
-        ExternalBatchResult SyncMayanDocumentTypes(SyncModel model);
+        DocumentSyncResponse SyncPimsDocumentTypes(SyncModel model);
 
         ExternalBatchResult SyncMayanMetadataTypes(SyncModel model);
 
-        Task<DocumentTypeSyncResponse> SyncBackendDocumentTypes(SyncModel model);
+        ExternalBatchResult SyncPimsToMayan(SyncModel model);
     }
 }

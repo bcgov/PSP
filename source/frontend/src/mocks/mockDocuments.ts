@@ -17,6 +17,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
         id: 12,
         mayanId: undefined,
         documentType: 'Gazette',
+        documentTypeDescription: 'GAZE',
         appCreateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateUserid: 'service',
@@ -52,6 +53,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
       documentType: {
         id: 8,
         documentType: 'MoTI Plan',
+        documentTypeDescription: 'MOTIPLAN',
         mayanId: 24,
         appCreateTimestamp: '2022-09-08T21:18:09.01',
         appLastUpdateTimestamp: '2022-09-08T21:18:09.01',
@@ -88,7 +90,8 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
 
 export const mockDocumentTypesResponse = (): Api_DocumentType[] => [
   {
-    documentType: 'Survey',
+    documentType: 'SURV',
+    documentTypeDescription: 'Survey',
     id: 1,
     mayanId: 8,
     appCreateUserid: 'James Bond',
@@ -96,7 +99,8 @@ export const mockDocumentTypesResponse = (): Api_DocumentType[] => [
   },
   {
     id: 2,
-    documentType: 'Privy Council',
+    documentType: 'PRIVCOUN',
+    documentTypeDescription: 'Privy Council',
     mayanId: 7,
     appCreateUserid: 'James Bond',
     appCreateTimestamp: '10-Jan-2022',

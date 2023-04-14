@@ -1,7 +1,7 @@
 import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
+import { mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { mockLookups } from 'mocks/mockLookups';
-import { Api_DocumentType } from 'models/api/Document';
 import { Api_Storage_DocumentMetadata, Api_Storage_MetadataType } from 'models/api/DocumentStorage';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
@@ -14,18 +14,6 @@ jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 
-const documentTypes: Api_DocumentType[] = [
-  {
-    id: 1,
-    documentType: 'BC Assessment Search',
-    mayanId: 17,
-  },
-  {
-    id: 2,
-    documentType: 'Privy Council',
-    mayanId: 7,
-  },
-];
 const metadataTypes: Api_Storage_MetadataType[] = [
   { id: 1, label: 'Tag Foo', name: 'tag-foo' },
   { id: 2, label: 'Tag Bar', name: 'tag-bar' },
@@ -61,7 +49,7 @@ const mockDocument: ComposedDocument = {
     id: 1,
     document: {
       mayanDocumentId: 15,
-      documentType: documentTypes[0],
+      documentType: mockDocumentTypesResponse()[0],
       statusTypeCode: { id: 'AMEND', description: 'Amended' },
       fileName: 'NewFile.doc',
     },
@@ -119,7 +107,7 @@ describe('DocumentDetailForm component', () => {
 
   it('renders the document type', () => {
     const { getAllByText } = setup({});
-    const textarea = getAllByText('BC Assessment Search')[0];
+    const textarea = getAllByText('Survey')[0];
 
     expect(textarea).toBeVisible();
   });

@@ -1,7 +1,7 @@
 import { SelectOption } from 'components/common/form';
 import { createMemoryHistory } from 'history';
+import { mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { mockLookups } from 'mocks/mockLookups';
-import { Api_DocumentType } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fireEvent, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
@@ -17,18 +17,6 @@ const handleSubmit = jest.fn();
 const handleCancelClick = jest.fn();
 const onUploadDocument = jest.fn();
 const onDocumentTypeChange = jest.fn();
-const documentTypes: Api_DocumentType[] = [
-  {
-    id: 1,
-    documentType: 'BC Assessment Search',
-    mayanId: 17,
-  },
-  {
-    id: 2,
-    documentType: 'Privy Council',
-    mayanId: 7,
-  },
-];
 
 const documentStatusOptions: SelectOption[] = [
   { label: '', value: 'NONE' },
@@ -68,7 +56,7 @@ describe('DocumentUploadView component', () => {
   const setup = (renderOptions: RenderOptions & { initialValues: DocumentUploadFormData }) => {
     const utils = render(
       <DocumentUploadForm
-        documentTypes={documentTypes}
+        documentTypes={mockDocumentTypesResponse()}
         isLoading={false}
         mayanMetadataTypes={documentTypeMetadataType}
         onDocumentTypeChange={onDocumentTypeChange}

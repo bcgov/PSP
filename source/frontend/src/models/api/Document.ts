@@ -17,6 +17,7 @@ export interface Api_Document extends Api_ConcurrentVersion, Api_AuditFields {
 export interface Api_DocumentType extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   documentType: string | undefined;
+  documentTypeDescription: string | undefined;
   mayanId: number | undefined;
 }
 
