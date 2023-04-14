@@ -164,18 +164,18 @@ namespace Pims.Api.Services
             // Add the document types not in mayan
             IList<Task<ExternalResult<DocumentType>>> createTasks = new List<Task<ExternalResult<DocumentType>>>();
             IList<Task<ExternalResult<DocumentType>>> updateTasks = new List<Task<ExternalResult<DocumentType>>>();
-            foreach (var mayanDocumentType in mayanDocumentTypes.Payload.Results)
+            foreach (var pimsDocumentTyp in pimsDocumentTypes)
             {
-                var matchingTypeFromDb = pimsDocumentTypes.FirstOrDefault(x => x.MayanId == mayanDocumentType.Id);
-                if (matchingTypeFromDb == null)
+                var matchingTypeFromMayan = mayanDocumentTypes.Payload.Results.FirstOrDefault(x => x.Id == pimsDocumentTyp.MayanId);
+                if (matchingTypeFromMayan == null)
                 {
-                    createTasks.Add(mayanDocumentRepository.TryCreateDocumentTypeAsync(new DocumentType() { Label = mayanDocumentType.Label }));
+                    createTasks.Add(mayanDocumentRepository.TryCreateDocumentTypeAsync(new DocumentType() { Label = pimsDocumentTyp.DocumentTypeDescription }));
                 }
-                else if (matchingTypeFromDb.DocumentTypeDescription != mayanDocumentType.Label)
+                else if (matchingTypeFromMayan.Label != pimsDocumentTyp.DocumentTypeDescription)
                 {
                     // if the Mayan id is the same but the label or display order has changed, update the document type in PIMS.
-                    mayanDocumentType.Label = matchingTypeFromDb.DocumentTypeDescription;
-                    updateTasks.Add(mayanDocumentRepository.TryUpdateDocumentTypeAsync(mayanDocumentType));
+                    matchingTypeFromMayan.Label = pimsDocumentTyp.DocumentTypeDescription;
+                    updateTasks.Add(mayanDocumentRepository.TryUpdateDocumentTypeAsync(matchingTypeFromMayan));
                 }
             }
             Task.WaitAll(createTasks.ToArray());
@@ -243,59 +243,62 @@ namespace Pims.Api.Services
             ExternalBatchResult batchResult = new ExternalBatchResult();
 
             var documentType = retrievedDocumentTypes.FirstOrDefault(x => x.Id == pimsDocumentTyp.MayanId);
-            ExternalResult<QueryResult<DocumentTypeMetadataType>> documentTypeMetadataTypes = await mayanDocumentRepository.TryGetDocumentTypeMetadataTypesAsync(documentType.Id, pageSize: 5000);
-
-            // Update the document type's metadata types
-            IList<Task<ExternalResult<DocumentTypeMetadataType>>> documentTypeMetadataTypeTasks = new List<Task<ExternalResult<DocumentTypeMetadataType>>>();
-            var retrievedLinks = documentTypeMetadataTypes.Payload.Results;
-            foreach (var metadataTypeModel in documentTypeModel.MetadataTypes)
+            if (documentType?.Id != null)
             {
-                DocumentTypeMetadataType existingDocumentTypeMetadaType = retrievedLinks.FirstOrDefault(x => x.MetadataType.Name == metadataTypeModel.Name);
-                if (existingDocumentTypeMetadaType == null)
+                ExternalResult<QueryResult<DocumentTypeMetadataType>> documentTypeMetadataTypes = await mayanDocumentRepository.TryGetDocumentTypeMetadataTypesAsync(documentType.Id, pageSize: 5000);
+
+                // Update the document type's metadata types
+                IList<Task<ExternalResult<DocumentTypeMetadataType>>> documentTypeMetadataTypeTasks = new List<Task<ExternalResult<DocumentTypeMetadataType>>>();
+                var retrievedLinks = documentTypeMetadataTypes.Payload.Results;
+                foreach (var metadataTypeModel in documentTypeModel.MetadataTypes)
                 {
-                    MetadataType metadataType = retrievedMetadataTypes.FirstOrDefault(x => x.Name == metadataTypeModel.Name);
-                    if (metadataType != null)
+                    DocumentTypeMetadataType existingDocumentTypeMetadaType = retrievedLinks.FirstOrDefault(x => x.MetadataType.Name == metadataTypeModel.Name);
+                    if (existingDocumentTypeMetadaType == null)
                     {
-                        documentTypeMetadataTypeTasks.Add(mayanDocumentRepository.TryCreateDocumentTypeMetadataTypeAsync(documentType.Id, metadataType.Id, metadataTypeModel.Required));
+                        MetadataType metadataType = retrievedMetadataTypes.FirstOrDefault(x => x.Name == metadataTypeModel.Name);
+                        if (metadataType != null)
+                        {
+                            documentTypeMetadataTypeTasks.Add(mayanDocumentRepository.TryCreateDocumentTypeMetadataTypeAsync(documentType.Id, metadataType.Id, metadataTypeModel.Required));
+                        }
+                        else
+                        {
+                            batchResult.LinkedDocumentMetadataTypes.Add(
+                                new ExternalResult<DocumentTypeMetadataType>()
+                                {
+                                    Message = $"Metadata with name [{metadataTypeModel.Name}] does not exist in Mayan",
+                                    Status = ExternalResultStatus.Error,
+                                });
+                        }
                     }
                     else
                     {
-                        batchResult.LinkedDocumentMetadataTypes.Add(
-                            new ExternalResult<DocumentTypeMetadataType>()
-                            {
-                                Message = $"Metadata with name [{metadataTypeModel.Name}] does not exist in Mayan",
-                                Status = ExternalResultStatus.Error,
-                            });
+                        if (existingDocumentTypeMetadaType.Required != metadataTypeModel.Required)
+                        {
+                            documentTypeMetadataTypeTasks.Add(mayanDocumentRepository.TryUpdateDocumentTypeMetadataTypeAsync(documentType.Id, existingDocumentTypeMetadaType.Id, metadataTypeModel.Required));
+                        }
                     }
                 }
-                else
+                Task.WaitAll(documentTypeMetadataTypeTasks.ToArray());
+                foreach (var task in documentTypeMetadataTypeTasks)
                 {
-                    if (existingDocumentTypeMetadaType.Required != metadataTypeModel.Required)
+                    batchResult.LinkedDocumentMetadataTypes.Add(task.Result);
+                }
+
+                // Get metadata types not on sync model
+                IList<Task<ExternalResult<string>>> deleteTasks = new List<Task<ExternalResult<string>>>();
+                foreach (var documentTypeMetadataType in documentTypeMetadataTypes.Payload.Results)
+                {
+                    if (documentTypeModel.MetadataTypes.FirstOrDefault(x => x.Name == documentTypeMetadataType.MetadataType.Name) == null)
                     {
-                        documentTypeMetadataTypeTasks.Add(mayanDocumentRepository.TryUpdateDocumentTypeMetadataTypeAsync(documentType.Id, existingDocumentTypeMetadaType.Id, metadataTypeModel.Required));
+                        deleteTasks.Add(mayanDocumentRepository.TryDeleteDocumentTypeMetadataTypeAsync(documentType.Id, documentTypeMetadataType.Id));
                     }
                 }
-            }
-            Task.WaitAll(documentTypeMetadataTypeTasks.ToArray());
-            foreach (var task in documentTypeMetadataTypeTasks)
-            {
-                batchResult.LinkedDocumentMetadataTypes.Add(task.Result);
-            }
 
-            // Get metadata types not on sync model
-            IList<Task<ExternalResult<string>>> deleteTasks = new List<Task<ExternalResult<string>>>();
-            foreach (var documentTypeMetadataType in documentTypeMetadataTypes.Payload.Results)
-            {
-                if (documentTypeModel.MetadataTypes.FirstOrDefault(x => x.Name == documentTypeMetadataType.MetadataType.Name) == null)
+                Task.WaitAll(deleteTasks.ToArray());
+                foreach (var task in deleteTasks)
                 {
-                    deleteTasks.Add(mayanDocumentRepository.TryDeleteDocumentTypeMetadataTypeAsync(documentType.Id, documentTypeMetadataType.Id));
+                    batchResult.DeletedDocumentTypeMetadataType.Add(task.Result);
                 }
-            }
-
-            Task.WaitAll(deleteTasks.ToArray());
-            foreach (var task in deleteTasks)
-            {
-                batchResult.DeletedDocumentTypeMetadataType.Add(task.Result);
             }
 
             return batchResult;
