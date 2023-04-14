@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 13.0.3                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S51.00.dez                                 */
+/* Project file:          PIMS S52.00.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-04-05 15:21                                */
+/* Created on:            2023-04-14 11:31                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -1561,6 +1561,14 @@ DROP TRIGGER [dbo].[PIMS_AQOWSO_A_S_IUD_TR]
 GO
 
 
+DROP TRIGGER [dbo].[PIMS_ARQSTT_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_ARQSTT_I_S_I_TR]
+GO
+
+
 /* ---------------------------------------------------------------------- */
 /* Drop views                                                             */
 /* ---------------------------------------------------------------------- */
@@ -1753,6 +1761,10 @@ ALTER TABLE [dbo].[PIMS_USER] DROP CONSTRAINT [PIM_PERSON_PIM_USER_FK]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_USER] DROP CONSTRAINT [PIM_USERTY_PIM_USER_FK]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_ADDRESS] DROP CONSTRAINT [PIM_DSTRCT_PIM_ADDRSS_FK]
 GO
 
@@ -1838,6 +1850,10 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACCESS_REQUEST] DROP CONSTRAINT [PIM_REGION_PIM_ACRQST_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACCESS_REQUEST] DROP CONSTRAINT [PIM_USERTY_PIM_ACRQST_FK]
 GO
 
 
@@ -5723,6 +5739,10 @@ ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_CONSULTATION
 GO
 
 
+ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_IS_DISABLED_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_APP_CREATE_TIMESTAMP_DEF]
 GO
 
@@ -5767,15 +5787,15 @@ ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_DB_LAST_UPDA
 GO
 
 
-ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_IS_DISABLED_DEF]
-GO
-
-
 ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_PK]
 GO
 
 
 ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_LEASE_CONSULTATION_TUC]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LEASE_CONSULTATION', 'COLUMN', N'OTHER_DESCRIPTION'
 GO
 
 
@@ -6334,18 +6354,6 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'REGION_CODE'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'MINISTRY_PROJECT_NUMBER'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'MINISTRY_PROJECT_NAME'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'CPS_PRODUCT_CODE'
 GO
 
 
@@ -8054,6 +8062,72 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_PROPERTY_SERVICE_FILE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_USER_TYPE"                                        */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_USER_TYPE_CODE_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_DESCRIPTION_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_USER_TYPE] DROP CONSTRAINT [USERTY_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_USER_TYPE', 'COLUMN', N'USER_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_USER_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_USER_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_USER_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_USER_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_USER_TYPE]
 GO
 
 
@@ -10369,6 +10443,10 @@ ALTER TABLE [dbo].[PIMS_DOCUMENT_TYP] DROP CONSTRAINT [DOCTYP_DOCUMENT_TYPE_DESC
 GO
 
 
+ALTER TABLE [dbo].[PIMS_DOCUMENT_TYP] DROP CONSTRAINT [DOCTYP_IS_DISABLED_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_DOCUMENT_TYP] DROP CONSTRAINT [DOCTYP_CONCURRENCY_CONTROL_NUMBER_DEF]
 GO
 
@@ -10426,6 +10504,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_TYP', 'COLUMN', N'DOCUMENT_TYPE_DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_TYP', 'COLUMN', N'IS_DISABLED'
 GO
 
 
@@ -12891,14 +12973,6 @@ DROP SEQUENCE [dbo].[PIMS_OWNER_SOLICITOR_ID_SEQ]
 GO
 
 
-DROP SEQUENCE [dbo].[PIMS_ACQUISITION_OWNER_SOLICITOR_H_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_AGREEMENT_H_ID_SEQ]
-GO
-
-
 DROP SEQUENCE [dbo].[PIMS_PROJECT_PERSON_ID_SEQ]
 GO
 
@@ -13384,5 +13458,9 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_PROPERTY_SERVICE_FILE_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_COMPENSATION_REQUISITION_ID_SEQ]
 GO
 

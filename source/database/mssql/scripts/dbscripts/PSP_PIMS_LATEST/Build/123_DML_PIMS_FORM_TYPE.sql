@@ -14,5 +14,7 @@ VALUES
   (N'H179P', N'Offer agreement - Partial (H179 P)'),
   (N'H179T', N'Offer agreement - Total (H179 T)'),
   (N'H179A', N'Offer agreement - Section 3 (H179 A)'),
-  (N'H120',  N'Payment requisition (H120)');
+  (N'H120',  N'Payment requisition (H120)'),
+  (N'H0074', N'License of Occupation for Construction Access (H0074)'),
+  (N'H0443', N'Conditions of Entry (H0443)');
 GO
