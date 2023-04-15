@@ -67,9 +67,10 @@ namespace Pims.Dal.Repositories
             }
 
             var existingDocumentType =
-                this.Context.PimsDocumentTyps.FirstOrDefault(dt => documentType.MayanId == dt.MayanId) ?? throw new KeyNotFoundException($"Failed to find documentType for mayan ID: {documentType.MayanId}");
+                this.Context.PimsDocumentTyps.FirstOrDefault(dt => documentType.DocumentTypeId == dt.DocumentTypeId) ?? throw new KeyNotFoundException($"Failed to find documentType for mayan ID: {documentType.MayanId}");
 
             existingDocumentType.DocumentTypeDescription = documentType.DocumentTypeDescription;
+            existingDocumentType.MayanId = documentType.MayanId;
             existingDocumentType.DisplayOrder = documentType.DisplayOrder;
             this.Context.Update(existingDocumentType);
             return existingDocumentType;
