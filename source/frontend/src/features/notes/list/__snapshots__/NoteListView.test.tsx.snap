@@ -273,11 +273,13 @@ exports[`Note List View renders as expected 1`] = `
                   class="th"
                   colspan="1"
                   role="columnheader"
-                  style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                  style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 >
                   <div
                     class="sortable-column"
-                  />
+                  >
+                    Actions
+                  </div>
                 </div>
               </div>
             </div>

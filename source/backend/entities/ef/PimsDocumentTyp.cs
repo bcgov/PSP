@@ -23,8 +23,12 @@ namespace Pims.Dal.Entities
         public long MayanId { get; set; }
         [Required]
         [Column("DOCUMENT_TYPE")]
-        [StringLength(200)]
+        [StringLength(20)]
         public string DocumentType { get; set; }
+        [Required]
+        [Column("DOCUMENT_TYPE_DESCRIPTION")]
+        [StringLength(200)]
+        public string DocumentTypeDescription { get; set; }
         [Column("DISPLAY_ORDER")]
         public int? DisplayOrder { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]

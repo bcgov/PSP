@@ -11,6 +11,7 @@ export class DetailAcquisitionFile {
   legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
+  completionDate?: string;
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
   regionDescription?: string;
@@ -22,6 +23,7 @@ export class DetailAcquisitionFile {
     detail.legacyFileNumber = model?.legacyFileNumber;
     detail.assignedDate = model?.assignedDate;
     detail.deliveryDate = model?.deliveryDate;
+    detail.completionDate = model?.completionDate;
     detail.acquisitionPhysFileStatusTypeDescription =
       model?.acquisitionPhysFileStatusTypeCode?.description;
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description;
@@ -49,6 +51,7 @@ export class DetailAcquisitionFilePerson {
 }
 
 export class DetailAcquisitionFileOwner {
+  isPrimary?: boolean;
   ownerName?: string;
   ownerOtherName?: string;
   ownerDisplayAddress?: string;
@@ -57,6 +60,7 @@ export class DetailAcquisitionFileOwner {
 
   static fromApi(owner: Api_AcquisitionFileOwner): DetailAcquisitionFileOwner {
     return {
+      isPrimary: owner.isPrimaryContact,
       ownerName: getOwnerDisplayName(owner),
       ownerOtherName: owner.otherName?.trim() || '',
       ownerDisplayAddress: getFormattedAddress(owner.address),

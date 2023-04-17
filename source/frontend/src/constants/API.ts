@@ -105,6 +105,7 @@ export const TAKE_SITE_CONTAM_TYPES = 'PimsTakeSiteContamType';
 export const ACQUISITION_CHECKLIST_SECTION_TYPES = 'PimsAcqChklstSectionType';
 export const ACQUISITION_CHECKLIST_ITEM_TYPES = 'PimsAcqChklstItemType';
 export const ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsAcqChklstItemStatusType';
+export const AGREEMENT_TYPES = 'PimsAgreementType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

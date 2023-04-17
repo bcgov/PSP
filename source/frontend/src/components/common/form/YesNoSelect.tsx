@@ -25,6 +25,8 @@ export interface IYesNoSelectProps {
   onChange?: React.FormEventHandler;
   /** (Optional) Whether this field is disabled */
   disabled?: boolean;
+  /** (Optional) Whether the Unknown will show */
+  notNullable?: boolean;
 }
 
 export const YesNoSelect: React.FC<React.PropsWithChildren<IYesNoSelectProps>> = props => {
@@ -33,6 +35,11 @@ export const YesNoSelect: React.FC<React.PropsWithChildren<IYesNoSelectProps>> =
 
   const { values, errors, touched, handleBlur, setFieldValue } = useFormikContext();
   const value = getIn(values, field) as boolean | null;
+
+  if (props.notNullable === true && value === null) {
+    setFieldValue(field, false);
+  }
+
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
@@ -58,7 +65,7 @@ export const YesNoSelect: React.FC<React.PropsWithChildren<IYesNoSelectProps>> =
           onChange={handleChange}
           disabled={disabled}
         >
-          <option value="null">Unknown</option>
+          {props.notNullable !== true ? <option value="null">Unknown</option> : <></>}
           <option value="true">Yes</option>
           <option value="false">No</option>
         </Form.Control>

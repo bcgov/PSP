@@ -1,12 +1,12 @@
 import GenericModal from 'components/common/GenericModal';
 import { FormikHelpers, FormikProps } from 'formik';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { useAxiosErrorHandlerWithConfirmation } from 'utils';
 
-import { useAcquisitionProvider } from '../../hooks/useAcquisitionProvider';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
 import { UpdateAcquisitionForm } from './UpdateAcquisitionForm';

@@ -1,4 +1,5 @@
 using Pims.Dal.Entities;
+using System.Collections.Generic;
 
 namespace Pims.Dal.Repositories
 {
@@ -9,5 +10,11 @@ namespace Pims.Dal.Repositories
         long GetRowVersion(long fileFormId);
 
         PimsAcquisitionFileForm Add(PimsAcquisitionFileForm fileForm);
+
+        IEnumerable<PimsAcquisitionFileForm> GetAllByAcquisitionFileId(long acquisitionFileId);
+
+        PimsAcquisitionFileForm GetByAcquisitionFileFormId(long acquisitionFileFormId);
+
+        bool TryDelete(long acquisitionFileFormId);
     }
 }

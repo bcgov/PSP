@@ -48,6 +48,7 @@ export enum Claims {
   FORM_VIEW = 'form-view',
   FORM_ADD = 'form-add',
   FORM_DELETE = 'form-delete',
+  AGREEMENT_VIEW = 'agreement-view',
 }
 
 export default Claims;

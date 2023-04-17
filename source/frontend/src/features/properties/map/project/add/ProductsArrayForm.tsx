@@ -70,16 +70,11 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
               <>
                 {products.map((product, index, array) => (
                   <div key={`product-create-${index}`}>
-                    <ProductSubForm
-                      index={index}
-                      nameSpace={`${field}.${index}`}
-                      formikProps={formikProps}
-                    />
-                    <Row className="align-items-end">
+                    <Row className="align-items-end pb-4">
                       <Col />
                       <Col xs="auto">
                         <StyledRemoveLinkButton
-                          title="Delete Note"
+                          title="Delete Project"
                           variant="light"
                           onClick={() => handleRemove(index)}
                         >
@@ -87,6 +82,11 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
                         </StyledRemoveLinkButton>
                       </Col>
                     </Row>
+                    <ProductSubForm
+                      index={index}
+                      nameSpace={`${field}.${index}`}
+                      formikProps={formikProps}
+                    />
                     {index !== products.length - 1 && <StyledSpacer className="my-5" />}
                   </div>
                 ))}

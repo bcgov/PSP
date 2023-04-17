@@ -2,13 +2,13 @@ import { Input, Select, SelectOption, TextArea } from 'components/common/form';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import { FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
 import * as React from 'react';
 import { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
-import styled from 'styled-components';
 
 import { PropertyResearchFilePurposeFormModel, UpdatePropertyFormModel } from './models';
 
@@ -117,7 +117,3 @@ const UpdatePropertyForm: React.FunctionComponent<
 };
 
 export default UpdatePropertyForm;
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;

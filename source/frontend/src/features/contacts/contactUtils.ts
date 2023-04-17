@@ -208,7 +208,7 @@ export function formAddressToApiAddress(
   return {
     ...formAddress,
     countryId: parseInt(formAddress?.countryId.toString()) || 0,
-    provinceId: isEmpty(formAddress?.provinceId)
+    provinceId: isEmpty(formAddress?.provinceId.toString())
       ? undefined
       : parseInt(formAddress?.provinceId.toString()),
     addressTypeId: toTypeCode(formAddress?.addressTypeId),

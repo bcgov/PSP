@@ -14,8 +14,10 @@
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
   DTS:TransactionOption="0"
-  DTS:VersionBuild="1329"
-  DTS:VersionGUID="{3F8A938F-8535-44C0-A97E-8EF9C9A3F04C}">
+
+  DTS:VersionBuild="1346"
+  DTS:VersionGUID="{6AFC5657-973D-486E-BFAB-E14DEF6CABE0}">
+
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -28,7 +30,9 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/dev03;User ID=prisharm;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+
+          DTS:ConnectionString="Data Source=musket.th.gov.bc.ca:20208/prd11;User ID=prisharm;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"></DTS:Password>
@@ -3674,30 +3678,13 @@ where [refTable].[COST_ESTIMATE_DATE] = ? and [refTable].[COST_ESTIMATE] = ? and
      , SUB.OBJECTIVES                        PRODUCT_OBJECTIVE
      ,ROW_NUMBER() over (partition by cast(PRJ.PRODUCT_CODE as nvarchar2(20)),cast(PRJ.PRODUCT_DESC as nvarchar2(200)) 
      order by VER.ORIGINAL_ESTIMATE_DATE desc) as rownum1
-FROM   APP_HWY.HWY_MINISTRY_PROJECT MIN                                                      JOIN
-       APP_HWY.HWY_PROJECT_REGION   REG ON REG.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID LEFT JOIN
-       APP_PAM.PAM_PROJECT_VERSION  VER ON VER.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID JOIN
-       (SELECT NVL(ftr.FIN_CODE, pub.PROJECT_UNIT_CODE) PROJECT_CODE
-             , pub.DESCRIPTION                          PROJECT_DESC
-             , pub.STATUS_CODE                          PROJECT_STATUS_CODE
-             , prd.PRODUCT_CODE                         PRODUCT_CODE
-             , prd.DESCRIPTION                          PRODUCT_DESC
-             , ppr.EFFECTIVE_DATE                       PRODUCT_EFFECTIVE_DATE
-        FROM   CPS_PROJECT_UNITS_BASE     pub                                                  JOIN
-               CPS_PRODUCT_PROJECT_RELTNS ppr ON ppr.PROJECT_UNIT_CODE = pub.PROJECT_UNIT_CODE JOIN
-               CPS_PRODUCTS               prd ON prd.PRODUCT_CODE      = ppr.PRODUCT_CODE      LEFT OUTER JOIN
-               (SELECT DISTINCT ftr1.PROJECT_UNIT_CODE
-                     , CASE WHEN SUBSTR(ftr1.FINANCIAL_PA_CODE, 1, 2) = '55' THEN SUBSTR(ftr1.FINANCIAL_PA_CODE, 3)
-                            ELSE ftr1.FINANCIAL_PA_CODE
-                            END  fin_code
-                FROM   CPS_FIN_TRANSACTION_RULES ftr1) ftr ON ftr.PROJECT_UNIT_CODE = pub.PROJECT_UNIT_CODE) PRJ
-                                        ON LTRIM(TO_CHAR(MIN.FMIS_NO , '00009')) = PRJ.PROJECT_CODE LEFT JOIN
-       APP_PAM.PAM_SUB_PROJECT      SUB ON SUB.PRODUCT_CODE                      = PRJ.PRODUCT_CODE        
-WHERE  VER.PROJECT_VERSION_NO = (SELECT MAX(VER.PROJECT_VERSION_NO)
-                                 FROM   APP_PAM.PAM_PROJECT_VERSION
-                                 WHERE  MINISTRY_PROJECT_ID = VER.MINISTRY_PROJECT_ID)
-order by cast(PRJ.PRODUCT_CODE as nvarchar2(20)), cast(PRJ.PRODUCT_DESC as nvarchar2(200)), 
-VER.ORIGINAL_ESTIMATE_AMOUNT , VER.ORIGINAL_ESTIMATE_DATE desc</property>
+
+FROM APP_HWY.HWY_MINISTRY_PROJECT MIN JOIN
+APP_HWY.HWY_PROJECT_REGION REG ON REG.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID LEFT JOIN
+APP_PAM.PAM_PROJECT_VERSION VER ON VER.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID JOIN
+APP_PAM.PAM_CPS_PRODUCT_PROJECT_V PRJ on PRJ.PROJECT_CODE = LTRIM(TO_CHAR(MIN.FMIS_NO , '00009')) LEFT JOIN
+APP_PAM.PAM_SUB_PROJECT SUB ON SUB.PRODUCT_CODE = PRJ.PRODUCT_CODE</property>
+
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -4403,7 +4390,9 @@ where [refTable].[COST_ESTIMATE_DATE] = ? and [refTable].[COST_ESTIMATE] = ? and
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\Load PIMS_PRODUCT\1196:invalid};#{Package\Load PIMS_PRODUCT\1211:invalid};#{Package\Load PIMS_PRODUCT\1226:invalid};#{Package\Load PIMS_PRODUCT\1236:invalid};#{Package\Load PIMS_PRODUCT\1241:invalid};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]};</property>
+
+                  name="ParameterMap">#{Package\Load PIMS_PRODUCT\889:invalid};#{Package\Load PIMS_PRODUCT\890:invalid};#{Package\Load PIMS_PRODUCT\891:invalid};#{Package\Load PIMS_PRODUCT\892:invalid};#{Package\Load PIMS_PRODUCT\893:invalid};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]};#{Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]};</property>
+
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -5724,37 +5713,51 @@ and	APP_CREATE_USER_DIRECTORY=?
               name="Data Conversion Output"
               startId="Package\Load PIMS_PRODUCT\Data Conversion.Outputs[Data Conversion Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output5]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output]"
+
               endId="Package\Load PIMS_PRODUCT\ETL Error Log 1 1 2.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column 1 2.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output4]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output1]"
+
               endId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Audit Trail 1.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output3]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output2]"
+
               endId="Package\Load PIMS_PRODUCT\ETL Error Log 1 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column 1.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output2]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output3]"
+
               endId="Package\Load PIMS_PRODUCT\ETL Error Log 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output6]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output4]"
+
               endId="Package\Load PIMS_PRODUCT\ETL Error Log 1 1 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column 1 1.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output5]"
+
               endId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Audit Trail.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output1]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Derived Column Output6]"
+
               endId="Package\Load PIMS_PRODUCT\Union All.Inputs[Union All Input 1]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PRODUCT\Derived Column 2.Outputs[Derived Column Output]" />
@@ -5764,7 +5767,9 @@ and	APP_CREATE_USER_DIRECTORY=?
               name="Latest Cost Estimate"
               startId="Package\Load PIMS_PRODUCT\Conditional Split.Outputs[Latest Cost Estimate]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output1]"
+
               endId="Package\Load PIMS_PRODUCT\Union All.Inputs[Union All Input 2]"
               name="Lookup Match Output"
               startId="Package\Load PIMS_PRODUCT\PARENT_PROJECT_ID.Outputs[Lookup Match Output]" />
@@ -5774,42 +5779,58 @@ and	APP_CREATE_USER_DIRECTORY=?
               name="Lookup Match Output"
               startId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output1]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output]"
+
               endId="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output4]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output]"
+
               endId="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT_HIST.Inputs[OLE DB Command Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\PIMS_PRODUCT_HIST records to be updated.Outputs[Lookup No Match Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output3]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output1]"
+
               endId="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT.Inputs[OLE DB Command Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated.Outputs[Lookup No Match Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output2]"
+
               endId="Package\Load PIMS_PRODUCT\Derived Column 2.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\PARENT_PROJECT_ID.Outputs[Lookup No Match Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output2]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output3]"
+
               endId="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT_HIST.Inputs[OLE DB Destination Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST.Outputs[Lookup No Match Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output1]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output4]"
+
               endId="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT.Inputs[OLE DB Destination Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records.Outputs[Lookup No Match Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output1]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output]"
+
               endId="Package\Load PIMS_PRODUCT\Derived Column 1 1.Inputs[Derived Column Input]"
               name="OLE DB Command Error Output"
               startId="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT_HIST.Outputs[OLE DB Command Error Output]" />
             <path
-              refId="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output]"
+
+              refId="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output1]"
+
               endId="Package\Load PIMS_PRODUCT\Derived Column 1 2.Inputs[Derived Column Input]"
               name="OLE DB Command Error Output"
               startId="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT.Outputs[OLE DB Command Error Output]" />
@@ -7977,40 +7998,25 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[APP
                   description="The SQL command to be executed."
                   name="SqlCommand"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT LTRIM(TO_CHAR(MIN.FMIS_NO , '00009')) PROJECT_CODE
-     , MIN.NAME                              PROJECT_DESCRIPTION
-     , MIN.PROJECT_STATUS_CODE               PROJECT_STATUS_TYPE_CODE
-     , cast(MIN.BUSINESS_FUNCTION_CODE as nvarchar2(8))            PROJECT_BUSINESS_FUNCTION_CODE
-     , cast(MIN.COST_TYPE_CODE   as nvarchar2(8))                 PROJECT_COST_TYPE_CODE
-     , cast(MIN.WORK_ACTIVITY_CODE  as nvarchar2(10))              PROJECT_WORK_ACTIVITY_CODE
-     , cast(REG.REGION_NUMBER    as nvarchar2(20))                 PROJECT_REGION_CODE
-     , VER.COMMENTS                          PROJECT_NOTE
-     , PRJ.PRODUCT_CODE                      PRODUCT_CODE
-     , PRJ.PRODUCT_DESC                      PRODUCT_DESC
-     , VER.ORIGINAL_ESTIMATE_AMOUNT          PRODUCT_COST_ESTIMATE
-     , VER.ORIGINAL_ESTIMATE_DATE            PRODUCT_ESTIMATE_DATE
-     , SUB.OBJECTIVES                        PRODUCT_OBJECTIVE
-FROM   APP_HWY.HWY_MINISTRY_PROJECT MIN                                                      JOIN
-       APP_HWY.HWY_PROJECT_REGION   REG ON REG.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID LEFT JOIN
-       APP_PAM.PAM_PROJECT_VERSION  VER ON VER.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID JOIN
-       (SELECT NVL(ftr.FIN_CODE, pub.PROJECT_UNIT_CODE) PROJECT_CODE
-             , pub.DESCRIPTION                          PROJECT_DESC
-             , pub.STATUS_CODE                          PROJECT_STATUS_CODE
-             , prd.PRODUCT_CODE                         PRODUCT_CODE
-             , prd.DESCRIPTION                          PRODUCT_DESC
-             , ppr.EFFECTIVE_DATE                       PRODUCT_EFFECTIVE_DATE
-        FROM   CPS_PROJECT_UNITS_BASE     pub                                                  JOIN
-               CPS_PRODUCT_PROJECT_RELTNS ppr ON ppr.PROJECT_UNIT_CODE = pub.PROJECT_UNIT_CODE JOIN
-               CPS_PRODUCTS               prd ON prd.PRODUCT_CODE      = ppr.PRODUCT_CODE      LEFT OUTER JOIN
-               (SELECT DISTINCT ftr1.PROJECT_UNIT_CODE
-                     , CASE WHEN SUBSTR(ftr1.FINANCIAL_PA_CODE, 1, 2) = '55' THEN SUBSTR(ftr1.FINANCIAL_PA_CODE, 3)
-                            ELSE ftr1.FINANCIAL_PA_CODE
-                            END  fin_code
-                FROM   CPS_FIN_TRANSACTION_RULES ftr1) ftr ON ftr.PROJECT_UNIT_CODE = pub.PROJECT_UNIT_CODE) PRJ
-                                        ON LTRIM(TO_CHAR(MIN.FMIS_NO , '00009')) = PRJ.PROJECT_CODE LEFT JOIN
-       APP_PAM.PAM_SUB_PROJECT      SUB ON SUB.PRODUCT_CODE                      = PRJ.PRODUCT_CODE        
-WHERE  VER.PROJECT_VERSION_NO = (SELECT MAX(VER.PROJECT_VERSION_NO)
-                                 FROM   APP_PAM.PAM_PROJECT_VERSION
-                                 WHERE  MINISTRY_PROJECT_ID = VER.MINISTRY_PROJECT_ID)</property>
+
+, MIN.NAME PROJECT_DESCRIPTION
+, PRJ.PRODUCT_CODE PRODUCT_CODE
+, PRJ.PRODUCT_DESC PRODUCT_DESC
+, MIN.PROJECT_STATUS_CODE PROJECT_STATUS_TYPE_CODE
+, cast(MIN.BUSINESS_FUNCTION_CODE as nvarchar2(8)) PROJECT_BUSINESS_FUNCTION_CODE
+, cast(MIN.COST_TYPE_CODE   as nvarchar2(8))  PROJECT_COST_TYPE_CODE
+, cast(MIN.WORK_ACTIVITY_CODE  as nvarchar2(10)) PROJECT_WORK_ACTIVITY_CODE
+, cast(REG.REGION_NUMBER    as nvarchar2(20)) PROJECT_REGION_CODE
+, VER.COMMENTS PROJECT_NOTE
+, VER.ORIGINAL_ESTIMATE_AMOUNT PRODUCT_COST_ESTIMATE
+, VER.ORIGINAL_ESTIMATE_DATE PRODUCT_ESTIMATE_DATE
+, SUB.OBJECTIVES PRODUCT_OBJECTIVE
+FROM APP_HWY.HWY_MINISTRY_PROJECT MIN JOIN
+APP_HWY.HWY_PROJECT_REGION REG ON REG.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID LEFT JOIN
+APP_PAM.PAM_PROJECT_VERSION VER ON VER.MINISTRY_PROJECT_ID = MIN.MINISTRY_PROJECT_ID JOIN
+APP_PAM.PAM_CPS_PRODUCT_PROJECT_V PRJ on PRJ.PROJECT_CODE = LTRIM(TO_CHAR(MIN.FMIS_NO , '00009')) LEFT JOIN
+APP_PAM.PAM_SUB_PROJECT SUB ON SUB.PRODUCT_CODE = PRJ.PRODUCT_CODE</property>
+
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -8743,11 +8749,13 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[PRO
                         <property
                           dataType="System.Int32"
                           description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">3</property>
+
+                          name="NewComparisonFlags">0</property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">8</property>
+                          name="NewSortKeyPosition">0</property>
+
                       </properties>
                     </inputColumn>
                     <inputColumn
@@ -8956,12 +8964,12 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[PRO
                     </outputColumn>
                     <outputColumn
                       refId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output].Columns[PROJECT_NOTE]"
-                      comparisonFlags="3"
+
                       dataType="wstr"
                       length="2000"
                       lineageId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output].Columns[PROJECT_NOTE]"
-                      name="PROJECT_NOTE"
-                      sortKeyPosition="8">
+                      name="PROJECT_NOTE">
+
                       <properties>
                         <property
                           containsID="true"
@@ -9168,11 +9176,11 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[PRO
                     </inputColumn>
                     <inputColumn
                       refId="Package\Load PIMS_PROJECT\Union All.Inputs[Union All Input 1].Columns[PROJECT_NOTE]"
-                      cachedComparisonFlags="3"
+
                       cachedDataType="wstr"
                       cachedLength="2000"
                       cachedName="PROJECT_NOTE"
-                      cachedSortKeyPosition="8"
+
                       lineageId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output].Columns[PROJECT_NOTE]">
                       <properties>
                         <property
@@ -9466,11 +9474,11 @@ where [refTable].[CODE] = ? and [refTable].[DESCRIPTION] = ? and [refTable].[PRO
                     </inputColumn>
                     <inputColumn
                       refId="Package\Load PIMS_PROJECT\Union All.Inputs[Union All Input 2].Columns[PROJECT_NOTE]"
-                      cachedComparisonFlags="3"
+
                       cachedDataType="wstr"
                       cachedLength="2000"
                       cachedName="PROJECT_NOTE"
-                      cachedSortKeyPosition="8"
+
                       lineageId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output].Columns[PROJECT_NOTE]">
                       <properties>
                         <property
@@ -11194,36 +11202,43 @@ where [refTable].[CODE] = ?</property>
               name="Data Conversion Output"
               startId="Package\Load PIMS_PROJECT\Data Conversion.Outputs[Data Conversion Output]" />
             <path
-              refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output]"
-              endId="Package\Load PIMS_PROJECT\ETL Error Log 1.Inputs[OLE DB Destination Input]"
+
+              refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output4]"
+              endId="Package\Load PIMS_PROJECT\Union All 2.Inputs[Union All Input 2]"
               name="Derived Column Output"
-              startId="Package\Load PIMS_PROJECT\Derived Column.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output1]"
-              endId="Package\Load PIMS_PROJECT\Existing PIMS_PROJECT records.Inputs[Lookup Input]"
-              name="Derived Column Output"
-              startId="Package\Load PIMS_PROJECT\Audit Trail.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output2]"
-              endId="Package\Load PIMS_PROJECT\ETL Error Log 1 1.Inputs[OLE DB Destination Input]"
-              name="Derived Column Output"
-              startId="Package\Load PIMS_PROJECT\Derived Column 1.Outputs[Derived Column Output]" />
+              startId="Package\Load PIMS_PROJECT\Derived Column 4.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output3]"
-              endId="Package\Load PIMS_PROJECT\Union All 1.Inputs[Union All Input 2]"
-              name="Derived Column Output"
-              startId="Package\Load PIMS_PROJECT\Derived Column 3.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output4]"
               endId="Package\Load PIMS_PROJECT\Union All.Inputs[Union All Input 2]"
               name="Derived Column Output"
               startId="Package\Load PIMS_PROJECT\Derived Column 2.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output5]"
-              endId="Package\Load PIMS_PROJECT\Union All 2.Inputs[Union All Input 2]"
+
+              endId="Package\Load PIMS_PROJECT\Existing PIMS_PROJECT records.Inputs[Lookup Input]"
               name="Derived Column Output"
-              startId="Package\Load PIMS_PROJECT\Derived Column 4.Outputs[Derived Column Output]" />
+              startId="Package\Load PIMS_PROJECT\Audit Trail.Outputs[Derived Column Output]" />
             <path
+
+              refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output1]"
+
+              endId="Package\Load PIMS_PROJECT\ETL Error Log 1 1.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load PIMS_PROJECT\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+
+              refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output]"
+              endId="Package\Load PIMS_PROJECT\ETL Error Log 1.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load PIMS_PROJECT\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load PIMS_PROJECT.Paths[Derived Column Output2]"
+
+              endId="Package\Load PIMS_PROJECT\Union All 1.Inputs[Union All Input 2]"
+              name="Derived Column Output"
+              startId="Package\Load PIMS_PROJECT\Derived Column 3.Outputs[Derived Column Output]" />
+            <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Lookup Match Output]"
               endId="Package\Load PIMS_PROJECT\Union All 2.Inputs[Union All Input 1]"
               name="Lookup Match Output"
@@ -11250,25 +11265,30 @@ where [refTable].[CODE] = ?</property>
               startId="Package\Load PIMS_PROJECT\WORK_ACTIVITY_CODE_ID.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output3]"
-              endId="Package\Load PIMS_PROJECT\UPDATE PIMS PROJECT.Inputs[OLE DB Command Input]"
+
+              endId="Package\Load PIMS_PROJECT\Derived Column 3.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
-              startId="Package\Load PIMS_PROJECT\PIMS_PROJECT records to be updated.Outputs[Lookup No Match Output]" />
+              startId="Package\Load PIMS_PROJECT\COST_TYPE_CODE_ID.Outputs[Lookup No Match Output]" />
+
             <path
               refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output]"
               endId="Package\Load PIMS_PROJECT\Derived Column 2.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PROJECT\BUSINESS_FUNCTION_CODE_ID.Outputs[Lookup No Match Output]" />
             <path
-              refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output1]"
-              endId="Package\Load PIMS_PROJECT\Derived Column 3.Inputs[Derived Column Input]"
-              name="Lookup No Match Output"
-              startId="Package\Load PIMS_PROJECT\COST_TYPE_CODE_ID.Outputs[Lookup No Match Output]" />
-            <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output2]"
               endId="Package\Load PIMS_PROJECT\Insert PIMS_PROJECT.Inputs[OLE DB Destination Input]"
               name="Lookup No Match Output"
               startId="Package\Load PIMS_PROJECT\Existing PIMS_PROJECT records.Outputs[Lookup No Match Output]" />
             <path
+
+              refId="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output1]"
+              endId="Package\Load PIMS_PROJECT\UPDATE PIMS PROJECT.Inputs[OLE DB Command Input]"
+              name="Lookup No Match Output"
+              startId="Package\Load PIMS_PROJECT\PIMS_PROJECT records to be updated.Outputs[Lookup No Match Output]" />
+            <path
+
               refId="Package\Load PIMS_PROJECT.Paths[OLE DB Command Error Output]"
               endId="Package\Load PIMS_PROJECT\Derived Column 1.Inputs[Derived Column Input]"
               name="OLE DB Command Error Output"
@@ -11289,20 +11309,24 @@ where [refTable].[CODE] = ?</property>
               name="Sort Output"
               startId="Package\Load PIMS_PROJECT\To remove duplicates.Outputs[Sort Output]" />
             <path
-              refId="Package\Load PIMS_PROJECT.Paths[Union All Output 11]"
-              endId="Package\Load PIMS_PROJECT\WORK_ACTIVITY_CODE_ID.Inputs[Lookup Input]"
-              name="Union All Output 1"
-              startId="Package\Load PIMS_PROJECT\Union All 1.Outputs[Union All Output 1]" />
-            <path
-              refId="Package\Load PIMS_PROJECT.Paths[Union All Output 1]"
-              endId="Package\Load PIMS_PROJECT\COST_TYPE_CODE_ID.Inputs[Lookup Input]"
-              name="Union All Output 1"
-              startId="Package\Load PIMS_PROJECT\Union All.Outputs[Union All Output 1]" />
-            <path
+
               refId="Package\Load PIMS_PROJECT.Paths[Union All Output 12]"
               endId="Package\Load PIMS_PROJECT\Audit Trail.Inputs[Derived Column Input]"
               name="Union All Output 1"
               startId="Package\Load PIMS_PROJECT\Union All 2.Outputs[Union All Output 1]" />
+            <path
+              refId="Package\Load PIMS_PROJECT.Paths[Union All Output 1]"
+
+              endId="Package\Load PIMS_PROJECT\WORK_ACTIVITY_CODE_ID.Inputs[Lookup Input]"
+              name="Union All Output 1"
+              startId="Package\Load PIMS_PROJECT\Union All 1.Outputs[Union All Output 1]" />
+            <path
+
+              refId="Package\Load PIMS_PROJECT.Paths[Union All Output 11]"
+              endId="Package\Load PIMS_PROJECT\COST_TYPE_CODE_ID.Inputs[Lookup Input]"
+              name="Union All Output 1"
+              startId="Package\Load PIMS_PROJECT\Union All.Outputs[Union All Output 1]" />
+
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -11331,13 +11355,15 @@ where [refTable].[CODE] = ?</property>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="188,41.6"
-          Id="Package\Load PIMS_PROJECT"
-          TopLeft="248.958934293364,94.067758409933" />
-        <NodeLayout
+
           Size="191.2,41.6"
           Id="Package\Load PIMS_PRODUCT"
           TopLeft="250.769239967392,193.741932503763" />
+        <NodeLayout
+          Size="188,41.6"
+          Id="Package\Load PIMS_PROJECT"
+          TopLeft="248.958934293364,94.067758409933" />
+
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="344.664087130378,135.667758409933">
@@ -11364,11 +11390,947 @@ where [refTable].[CODE] = ?</property>
     </LayoutInfo>
   </Package>
   <TaskHost
-    design-time-name="Package\Load PIMS_PROJECT">
+
+    design-time-name="Package\Load PIMS_PRODUCT">
+
     <LayoutInfo>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+
+          Size="164.8,41.6"
+          Id="Package\Load PIMS_PRODUCT\Derived Column 2"
+          TopLeft="197.679488420957,232.489243138387" />
+        <NodeLayout
+          Size="164.8,41.6"
+          Id="Package\Load PIMS_PRODUCT\Derived Column 1"
+          TopLeft="652.271812565088,638.996333618014" />
+        <NodeLayout
+          Size="194.4,41.6"
+          Id="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT"
+          TopLeft="345.671794530861,555.398490342706" />
+        <NodeLayout
+          Size="155.2,42"
+          Id="Package\Load PIMS_PRODUCT\ETL Error Log 1 1 1"
+          TopLeft="981.629478227033,718.050091397522" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Load PIMS_PRODUCT\PAIMS_PRODUCT"
+          TopLeft="323.038469297647,2.3086025698169" />
+        <NodeLayout
+          Size="302.4,41.6"
+          Id="Package\Load PIMS_PRODUCT\PIMS_PRODUCT_HIST records to be updated"
+          TopLeft="910,468.523212507768" />
+        <NodeLayout
+          Size="272,41.6"
+          Id="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated"
+          TopLeft="1.13686837721616E-13,473" />
+        <NodeLayout
+          Size="164.8,41.6"
+          Id="Package\Load PIMS_PRODUCT\Derived Column 1 1"
+          TopLeft="971.6,636.523212507768" />
+        <NodeLayout
+          Size="159.2,41.6"
+          Id="Package\Load PIMS_PRODUCT\Data Conversion"
+          TopLeft="329.127736389685,78.2272441705932" />
+        <NodeLayout
+          Size="202.4,41.6"
+          Id="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT"
+          TopLeft="39.7673263763945,558.749527806926" />
+        <NodeLayout
+          Size="244,41.6"
+          Id="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records"
+          TopLeft="315.620510264684,470.900642634864" />
+        <NodeLayout
+          Size="236,41.6"
+          Id="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST"
+          TopLeft="622.607694440293,470.235977691523" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Load PIMS_PRODUCT\Derived Column"
+          TopLeft="365.351288453785,644.350102962113" />
+        <NodeLayout
+          Size="224.8,41.6"
+          Id="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT_HIST"
+          TopLeft="621.5,551.7" />
+        <NodeLayout
+          Size="156.8,41.6"
+          Id="Package\Load PIMS_PRODUCT\Conditional Split"
+          TopLeft="386.5,322.27955328115" />
+        <NodeLayout
+          Size="155.2,42"
+          Id="Package\Load PIMS_PRODUCT\ETL Error Log 1 1 2"
+          TopLeft="64.0294782270332,721.550091397522" />
+        <NodeLayout
+          Size="232.8,41.6"
+          Id="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT_HIST"
+          TopLeft="950.767326376395,552.749527806925" />
+        <NodeLayout
+          Size="164.8,41.6"
+          Id="Package\Load PIMS_PRODUCT\Derived Column 1 2"
+          TopLeft="56.0000000000001,641.023212507768" />
+        <NodeLayout
+          Size="155.2,42"
+          Id="Package\Load PIMS_PRODUCT\ETL Error Log 1"
+          TopLeft="367.262833415403,719.924292053238" />
+        <NodeLayout
+          Size="136,41.6"
+          Id="Package\Load PIMS_PRODUCT\Audit Trail 1"
+          TopLeft="665.5,397.5" />
+        <NodeLayout
+          Size="195.2,41.6"
+          Id="Package\Load PIMS_PRODUCT\PARENT_PROJECT_ID"
+          TopLeft="310.127736389685,154.560577503927" />
+        <NodeLayout
+          Size="127.2,41.6"
+          Id="Package\Load PIMS_PRODUCT\Audit Trail"
+          TopLeft="375.410256492551,399.550100562545" />
+        <NodeLayout
+          Size="121.6,41.6"
+          Id="Package\Load PIMS_PRODUCT\Union All"
+          TopLeft="399.3,231.1" />
+        <NodeLayout
+          Size="155.2,42"
+          Id="Package\Load PIMS_PRODUCT\ETL Error Log 1 1"
+          TopLeft="662.301290792121,720.523212507768" />
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Other Records]"
+          TopLeft="489.7,363.87955328115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="243.8,33.6204467188501"
+              Start="0,0"
+              End="243.8,26.1204467188501">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,9.6519389706846" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.6519389706846"
+                    Point2="0,13.6519389706846"
+                    Point3="4,13.6519389706846" />
+                  <mssgle:LineSegment
+                    End="239.8,13.6519389706846" />
+                  <mssgle:CubicBezierSegment
+                    Point1="239.8,13.6519389706846"
+                    Point2="243.8,13.6519389706846"
+                    Point3="243.8,17.6519389706846" />
+                  <mssgle:LineSegment
+                    End="243.8,26.1204467188501" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+
+              BoundingBox="89.60990234375,18.6519389706846,64.5801953125,9.7490234375"
+
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+
+          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Source Output]"
+          TopLeft="408.683102843666,43.9086025698169">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.3186416007763"
+              Start="0,0"
+              End="0,26.8186416007763">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,26.8186416007763" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Destination Error Output1]"
+          TopLeft="734.285906282544,593.3">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.6963336180141"
+              Start="0,0"
+              End="0,38.1963336180141">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,38.1963336180141" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+
+              BoundingBox="-73.20890625,13.3813699340071,146.4178125,11.43359375"
+
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+
+          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Destination Error Output]"
+          TopLeft="443.111541492323,596.998490342706">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.3516126194071"
+              Start="0,0"
+              End="0,39.8516126194071">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,39.8516126194071" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+
+              BoundingBox="-73.20890625,14.2090094347035,146.4178125,11.43359375"
+
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+
+          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output1]"
+          TopLeft="139.683663188197,600.349527806926">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.6736847008422"
+              Start="0,0"
+              End="0,33.1736847008422">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,33.1736847008422" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-70.70890625,10.7821548504211,141.4178125,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output]"
+          TopLeft="1067.16732637639,594.349527806925">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-13.1673263763946,42.1736847008424"
+              Start="0,0"
+              End="-13.1673263763946,34.6736847008424">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,17.0868423504212" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.0868423504212"
+                    Point2="0,21.0868423504212"
+                    Point3="-4,21.0868423504212" />
+                  <mssgle:LineSegment
+                    End="-9.16732637639461,21.0868423504212" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9.16732637639461,21.0868423504212"
+                    Point2="-13.1673263763946,21.0868423504212"
+                    Point3="-13.1673263763946,25.0868423504212" />
+                  <mssgle:LineSegment
+                    End="-13.1673263763946,34.6736847008424" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-77.2925694381973,26.0868423504212,141.4178125,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output4]"
+          TopLeft="440.246152397772,512.500642634864">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.8978477078421"
+              Start="0,0"
+              End="0,35.3978477078421">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,35.3978477078421" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,11.894236353921,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output3]"
+          TopLeft="737.253847220146,511.835977691523">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.8640223084768"
+              Start="0,0"
+              End="0,32.3640223084768">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,32.3640223084768" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,10.3773236542384,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output2]"
+          TopLeft="407.727736389685,196.160577503927">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-127.648247968728,36.3286656344602"
+              Start="0,0"
+              End="-127.648247968728,28.8286656344602">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,14.1643328172301" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.1643328172301"
+                    Point2="0,18.1643328172301"
+                    Point3="-4,18.1643328172301" />
+                  <mssgle:LineSegment
+                    End="-123.648247968728,18.1643328172301" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-123.648247968728,18.1643328172301"
+                    Point2="-127.648247968728,18.1643328172301"
+                    Point3="-127.648247968728,22.1643328172301" />
+                  <mssgle:LineSegment
+                    End="-127.648247968728,28.8286656344602" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-119.630510703114,23.1643328172301,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output1]"
+          TopLeft="138.483663188197,514.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.1495278069257"
+              Start="0,0"
+              End="0,36.6495278069257">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,36.6495278069257" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,12.5200764034628,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output]"
+          TopLeft="1064.1836631882,510.123212507768">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.6263152991576"
+              Start="0,0"
+              End="0,35.1263152991576">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,35.1263152991576" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,11.7584701495788,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output2]"
+          TopLeft="858.607694440293,490.179595099645">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="51.392305559707,0"
+              Start="0,0"
+              End="43.892305559707,0">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="43.892305559707,0" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-26.2452339388965,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output1]"
+          TopLeft="438.927736389685,196.160577503927">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="21.1722636103154,34.9394224960735"
+              Start="0,0"
+              End="21.1722636103154,27.4394224960735">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,10.1462052057273" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.1462052057273"
+                    Point2="0,14.1462052057273"
+                    Point3="4,14.1462052057273" />
+                  <mssgle:LineSegment
+                    End="17.1722636103154,14.1462052057273" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.1722636103154,14.1462052057273"
+                    Point2="21.1722636103154,14.1462052057273"
+                    Point3="21.1722636103154,18.1462052057273" />
+                  <mssgle:LineSegment
+                    End="21.1722636103154,27.4394224960735" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-37.6052549135923,19.1462052057273,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output]"
+          TopLeft="315.620510264684,492.750321317432">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43.6205102646837,0"
+              Start="0,0"
+              End="-36.1205102646837,0">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="-36.1205102646837,0" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-66.2516418510918,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Latest Cost Estimate]"
+          TopLeft="439.555128246276,363.87955328115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.6705472813952"
+              Start="0,0"
+              End="0,28.1705472813952">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,28.1705472813952" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-45.54134765625,9.3084181719476,91.0826953125,9.5537109375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output6]"
+          TopLeft="362.479488420957,252.594621569193">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="36.8205115790432,0"
+              Start="0,0"
+              End="29.3205115790432,0">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="29.3205115790432,0" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+
+          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output5]"
+          TopLeft="438.315383378617,441.150100562545">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.7505420723189"
+              Start="0,0"
+              End="0,22.2505420723189">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,22.2505420723189" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output4]"
+          TopLeft="1056.61473911352,678.123212507768">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.9268788897538"
+              Start="0,0"
+              End="0,32.4268788897538">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.4268788897538" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output3]"
+          TopLeft="444.107060934594,685.950102962113">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.9741890911249"
+              Start="0,0"
+              End="0,26.4741890911249">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,26.4741890911249" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output2]"
+          TopLeft="737.286551678604,680.596333618014">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.9268788897538"
+              Start="0,0"
+              End="0,32.4268788897538">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,32.4268788897538" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output1]"
+          TopLeft="737.053847220147,439.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31.1359776915231"
+              Start="0,0"
+              End="0,23.6359776915231">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,23.6359776915231" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output]"
+          TopLeft="140.014739113517,682.623212507768">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.9268788897538"
+              Start="0,0"
+              End="0,31.4268788897538">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,31.4268788897538" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Data Conversion Output]"
+          TopLeft="408.227736389685,119.827244170593">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.7333333333333"
+              Start="0,0"
+              End="0,27.2333333333333">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,27.2333333333333" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PRODUCT.Paths[Union All Output 1]"
+          TopLeft="462.5,272.7">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.5795532811498"
+              Start="0,0"
+              End="0,42.0795532811498">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,42.0795532811498" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <EdgeLabelCollection />
+
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+
+    design-time-name="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load PIMS_PRODUCT\PAIMS_PRODUCT">
+    <Properties>
+
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+
+    design-time-name="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated">
+
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+
+          type="q3:string">[dbo].[PIMS_PRODUCT]</Value>
+
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+
+    design-time-name="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records">
+
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+
+          type="q3:string">[dbo].[PIMS_PRODUCT]</Value>
+
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+
+    design-time-name="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST">
+
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+
+          type="q2:string">false</Value>
+
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+
+          type="q3:string">[dbo].[PIMS_PRODUCT_HIST]</Value>
+
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+
+    design-time-name="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT_HIST">
+
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+
+  <TaskHost
+    design-time-name="Package\Load PIMS_PROJECT">
+
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+
           Size="130.4,41.6"
           Id="Package\Load PIMS_PROJECT\Union All 1"
           TopLeft="277.03847039804,484.296056850345" />
@@ -11383,19 +12345,19 @@ where [refTable].[CODE] = ?</property>
         <NodeLayout
           Size="268.8,41.6"
           Id="Package\Load PIMS_PROJECT\PIMS_PROJECT records to be updated"
-          TopLeft="568.846152886837,812.704150449459" />
+          TopLeft="569.999999083006,902.046085352789" />
         <NodeLayout
           Size="204.8,41.6"
           Id="Package\Load PIMS_PROJECT\UPDATE PIMS PROJECT"
-          TopLeft="595.692309258253,905.481712315441" />
+          TopLeft="596.846155454423,994.823647218771" />
         <NodeLayout
           Size="156,41.6"
           Id="Package\Load PIMS_PROJECT\Derived Column"
-          TopLeft="263.038467647056,980.968813359835" />
+          TopLeft="264.192313843225,1070.31074826317" />
         <NodeLayout
           Size="155.2,42"
           Id="Package\Load PIMS_PROJECT\ETL Error Log 1"
-          TopLeft="260.950012608674,1055.04300245096" />
+          TopLeft="262.103858804843,1144.38493735429" />
         <NodeLayout
           Size="248.8,41.6"
           Id="Package\Load PIMS_PROJECT\BUSINESS_FUNCTION_CODE_ID"
@@ -11407,7 +12369,7 @@ where [refTable].[CODE] = ?</property>
         <NodeLayout
           Size="155.2,42"
           Id="Package\Load PIMS_PROJECT\ETL Error Log 1 1"
-          TopLeft="621.488469985392,1061.64192290549" />
+          TopLeft="622.642316181562,1150.98385780882" />
         <NodeLayout
           Size="181.6,41.6"
           Id="Package\Load PIMS_PROJECT\To remove duplicates"
@@ -11423,11 +12385,11 @@ where [refTable].[CODE] = ?</property>
         <NodeLayout
           Size="240.8,41.6"
           Id="Package\Load PIMS_PROJECT\Existing PIMS_PROJECT records"
-          TopLeft="220.807689457955,811.019353032584" />
+          TopLeft="221.961535654124,900.361287935914" />
         <NodeLayout
           Size="164.8,41.6"
           Id="Package\Load PIMS_PROJECT\Derived Column 1"
-          TopLeft="621.2538579337,982.061280537248" />
+          TopLeft="622.40770412987,1071.40321544058" />
         <NodeLayout
           Size="121.6,41.6"
           Id="Package\Load PIMS_PROJECT\Union All"
@@ -11439,7 +12401,7 @@ where [refTable].[CODE] = ?</property>
         <NodeLayout
           Size="191.2,41.6"
           Id="Package\Load PIMS_PROJECT\Insert PIMS_PROJECT"
-          TopLeft="244.858973724132,903.017200740427" />
+          TopLeft="246.012819920301,992.359135643757" />
         <NodeLayout
           Size="164.8,41.6"
           Id="Package\Load PIMS_PROJECT\Derived Column 3"
@@ -11454,29 +12416,35 @@ where [refTable].[CODE] = ?</property>
           TopLeft="201.269237950004,564.371896685251" />
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[Lookup Match Output3]"
-          TopLeft="461.607689457955,832.661751741021">
+          TopLeft="462.761535654124,922.003686644352">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="107.238463428881,0"
+              EndConnector="107.238463428882,0"
               Start="0,0"
-              End="99.7384634288809,0">
+              End="99.7384634288824,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="99.7384634288809,0" />
+
+                    End="99.7384634288824,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="1.67784499569045,5,96.3827734375,11.609375"
+
+              BoundingBox="1.67784499569118,5,96.3827734375,11.609375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Lookup Match Output2]"
           TopLeft="347.397443205177,262.133193219616">
           <EdgeLayout.Curve>
@@ -11485,16 +12453,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,50.3345439941386"
               Start="0,0"
               End="0,42.8345439941386">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,42.8345439941386" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-48.19138671875,15.6125844970693,96.3827734375,11.609375"
               RelativePosition="Any" />
@@ -11509,16 +12481,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,53.8080279721149"
               Start="0,0"
               End="0,46.3080279721149">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,46.3080279721149" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-48.19138671875,17.3493264860575,96.3827734375,11.609375"
               RelativePosition="Any" />
@@ -11533,23 +12509,27 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,45.0015784943105"
               Start="0,0"
               End="0,37.5015784943105">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,37.5015784943105" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <mssgm:EdgeLabel
               BoundingBox="-48.19138671875,12.9461017471553,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output5]"
+          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output4]"
           TopLeft="250.684618333106,670.821862060246">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -11557,11 +12537,14 @@ where [refTable].[CODE] = ?</property>
               EndConnector="23.2769288751501,0"
               Start="0,0"
               End="15.7769288751501,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="15.7769288751501,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -11571,7 +12554,8 @@ where [refTable].[CODE] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output4]"
+
+          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output3]"
           TopLeft="234.146155087624,330.445156842737">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -11579,11 +12563,14 @@ where [refTable].[CODE] = ?</property>
               EndConnector="52.5077013788845,0"
               Start="0,0"
               End="45.0077013788845,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="45.0077013788845,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -11593,7 +12580,8 @@ where [refTable].[CODE] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output3]"
+
+          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output2]"
           TopLeft="246.838464345876,504.354121147158">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -11601,82 +12589,72 @@ where [refTable].[CODE] = ?</property>
               EndConnector="30.2000060521642,0"
               Start="0,0"
               End="22.7000060521642,0">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="22.7000060521642,0" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output2]"
-          TopLeft="701.371163959546,1023.66128053725">
+          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output1]"
+          TopLeft="702.525010155715,1113.00321544058">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
               EndConnector="0,37.9806423682453"
               Start="0,0"
               End="0,30.4806423682453">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,30.4806423682453" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output1]"
-          TopLeft="341.102562571888,785.768810960265">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,25.2505420723191"
-              Start="0,0"
-              End="0,17.7505420723191">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,17.7505420723191" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output]"
-          TopLeft="339.794240127865,1022.56881335983">
+          TopLeft="340.948086324034,1111.91074826316">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,32.4741890911239"
+              EndConnector="0,32.4741890911241"
               Start="0,0"
-              End="0,24.9741890911239">
+              End="0,24.9741890911241">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,24.9741890911239" />
+
+                    End="0,24.9741890911241" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11689,11 +12667,14 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,28.3642563313999"
               Start="0,0"
               End="0,20.8642563313999">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,20.8642563313999" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -11702,6 +12683,7 @@ where [refTable].[CODE] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[Union All Output 12]"
           TopLeft="340.079491447039,692.573475179562">
@@ -11711,55 +12693,25 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,51.5953357807026"
               Start="0,0"
               End="0,44.0953357807026">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,44.0953357807026" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[Union All Output 11]"
-          TopLeft="342.23847039804,525.896056850345">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-30.5692324480361,38.4758398349067"
-              Start="0,0"
-              End="-30.5692324480361,30.9758398349067">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,15.2379199174533" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,15.2379199174533"
-                    Point2="0,19.2379199174533"
-                    Point3="-4,19.2379199174533" />
-                  <mssgle:LineSegment
-                    End="-26.5692324480361,19.2379199174533" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-26.5692324480361,19.2379199174533"
-                    Point2="-30.5692324480361,19.2379199174533"
-                    Point3="-30.5692324480361,23.2379199174533" />
-                  <mssgle:LineSegment
-                    End="-30.5692324480361,30.9758398349067" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PROJECT.Paths[Union All Output 1]"
           TopLeft="347.453856466508,354.067737213754">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -11767,10 +12719,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-37.015388452654,34.8202916644756"
               Start="0,0"
               End="-37.015388452654,27.3202916644756">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,13.4101458322378" />
                   <mssgle:CubicBezierSegment
                     Point1="0,13.4101458322378"
@@ -11784,6 +12738,7 @@ where [refTable].[CODE] = ?</property>
                     Point3="-37.015388452654,21.4101458322378" />
                   <mssgle:LineSegment
                     End="-37.015388452654,27.3202916644756" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -11792,6 +12747,45 @@ where [refTable].[CODE] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+
+        <EdgeLayout
+          Id="Package\Load PIMS_PROJECT.Paths[Union All Output 1]"
+          TopLeft="342.23847039804,525.896056850345">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-30.5692324480361,38.4758398349067"
+              Start="0,0"
+              End="-30.5692324480361,30.9758398349067">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,15.2379199174533" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.2379199174533"
+                    Point2="0,19.2379199174533"
+                    Point3="-4,19.2379199174533" />
+                  <mssgle:LineSegment
+                    End="-26.5692324480361,19.2379199174533" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-26.5692324480361,19.2379199174533"
+                    Point2="-30.5692324480361,19.2379199174533"
+                    Point3="-30.5692324480361,23.2379199174533" />
+                  <mssgle:LineSegment
+                    End="-30.5692324480361,30.9758398349067" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[Sort Output]"
           TopLeft="307.138467555357,185.668556722921">
@@ -11801,16 +12795,20 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,34.8646364966942"
               Start="0,0"
               End="0,27.3646364966942">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,27.3646364966942" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11823,63 +12821,75 @@ where [refTable].[CODE] = ?</property>
               EndConnector="0,30.1956978217042"
               Start="0,0"
               End="0,22.6956978217042">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,22.6956978217042" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[OLE DB Destination Error Output]"
-          TopLeft="340.748720685594,944.617200740428">
+          TopLeft="341.902566881763,1033.95913564376">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
               EndConnector="0,36.3516126194063"
               Start="0,0"
               End="0,28.8516126194063">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,28.8516126194063" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-73.20890625,8.70900943470315,146.4178125,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load PIMS_PROJECT.Paths[OLE DB Command Error Output]"
-          TopLeft="700.873083595976,947.081712315442">
+          TopLeft="702.026929792146,1036.42364721877">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
               EndConnector="0,34.9795682218059"
               Start="0,0"
               End="0,27.4795682218059">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,27.4795682218059" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-70.70890625,7.93509661090297,141.4178125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
@@ -11893,10 +12903,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-107.917952950231,43.0983522556787"
               Start="0,0"
               End="-107.917952950231,35.5983522556787">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,13.4253769551737" />
                   <mssgle:CubicBezierSegment
                     Point1="0,13.4253769551737"
@@ -11910,66 +12922,22 @@ where [refTable].[CODE] = ?</property>
                     Point3="-107.917952950231,21.4253769551737" />
                   <mssgle:LineSegment
                     End="-107.917952950231,35.5983522556787" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-109.765363193865,22.4253769551737,111.6127734375,11.609375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output3]"
-          TopLeft="700.669231072545,854.304150449459">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,51.1775618659805"
-              Start="0,0"
-              End="0,43.6775618659805">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,43.6775618659805" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,16.0340934329902,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output2]"
-          TopLeft="340.833331591044,852.619353032584">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,50.3978477078427"
-              Start="0,0"
-              End="0,42.8978477078427">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,42.8978477078427" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,15.6442363539214,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output1]"
           TopLeft="278.971801347187,430.48802887823">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -11977,10 +12945,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-114.533337001312,52.3241565657423"
               Start="0,0"
               End="-114.533337001312,44.8241565657423">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,17.1828440290344" />
                   <mssgle:CubicBezierSegment
                     Point1="0,17.1828440290344"
@@ -11994,17 +12964,79 @@ where [refTable].[CODE] = ?</property>
                     Point3="-114.533337001312,25.1828440290344" />
                   <mssgle:LineSegment
                     End="-114.533337001312,44.8241565657423" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-113.073055219406,26.1828440290344,111.6127734375,11.609375"
+
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+
+          Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output2]"
+          TopLeft="341.987177787213,941.961287935914">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.3978477078427"
+              Start="0,0"
+              End="0,42.8978477078427">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,42.8978477078427" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,15.6442363539214,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output1]"
+          TopLeft="701.823077268714,943.646085352789">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51.1775618659805"
+              Start="0,0"
+              End="0,43.6775618659805">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,43.6775618659805" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+
+              BoundingBox="-55.80638671875,16.0340934329902,111.6127734375,11.609375"
+
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+
           Id="Package\Load PIMS_PROJECT.Paths[Lookup No Match Output]"
           TopLeft="267.07436327718,262.133193219616">
           <EdgeLayout.Curve>
@@ -12013,10 +13045,12 @@ where [refTable].[CODE] = ?</property>
               EndConnector="-115.328208189556,44.6893832521043"
               Start="0,0"
               End="-115.328208189556,37.1893832521043">
+
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
+
                     End="0,14.0470863995718" />
                   <mssgle:CubicBezierSegment
                     Point1="0,14.0470863995718"
@@ -12030,20 +13064,50 @@ where [refTable].[CODE] = ?</property>
                     Point3="-115.328208189556,22.0470863995718" />
                   <mssgle:LineSegment
                     End="-115.328208189556,37.1893832521043" />
+
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
+
               BoundingBox="-113.470490813528,23.0470863995718,111.6127734375,11.609375"
+
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+
+          Id="Package\Load PIMS_PROJECT.Paths[Derived Column Output5]"
+          TopLeft="341.679485669973,785.768810960265">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,114.592476975649"
+              Start="0,0"
+              End="0,107.092476975649">
+
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+
+                    End="0,107.092476975649" />
+
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\PIMS_PROJECT records to be updated">
     <Properties>
       <Property>
@@ -12062,27 +13126,36 @@ where [refTable].[CODE] = ?</property>
           type="q4:string">0</Value>
       </Property>
       <Property>
+
         <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\BUSINESS_FUNCTION_CODE_ID">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
+
           type="q2:string">false</Value>
+
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
+
           type="q3:string">[dbo].[PIMS_BUSINESS_FUNCTION_CODE]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
+
           type="q4:string">0</Value>
+
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -12090,11 +13163,14 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\PAIMS_PROJECT">
+
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
+
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
@@ -12117,801 +13193,35 @@ where [refTable].[CODE] = ?</property>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+
       </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+
     design-time-name="Package\Load PIMS_PROJECT\Existing PIMS_PROJECT records">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_PROJECT]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load PIMS_PROJECT\Insert PIMS_PROJECT">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load PIMS_PROJECT\WORK_ACTIVITY_CODE_ID">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
+
           type="q2:string">false</Value>
+
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[PIMS_WORK_ACTIVITY_CODE]</Value>
+
+          type="q3:string">[dbo].[PIMS_PROJECT]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
+
           type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Load PIMS_PRODUCT">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="195.2,41.6"
-          Id="Package\Load PIMS_PRODUCT\PARENT_PROJECT_ID"
-          TopLeft="310.127736389685,154.560577503927" />
-        <NodeLayout
-          Size="155.2,42"
-          Id="Package\Load PIMS_PRODUCT\ETL Error Log 1"
-          TopLeft="367.262833415403,719.924292053238" />
-        <NodeLayout
-          Size="171.2,41.6"
-          Id="Package\Load PIMS_PRODUCT\PAIMS_PRODUCT"
-          TopLeft="323.038469297647,2.3086025698169" />
-        <NodeLayout
-          Size="121.6,41.6"
-          Id="Package\Load PIMS_PRODUCT\Union All"
-          TopLeft="399.3,231.1" />
-        <NodeLayout
-          Size="164.8,41.6"
-          Id="Package\Load PIMS_PRODUCT\Derived Column 2"
-          TopLeft="197.679488420957,232.489243138387" />
-        <NodeLayout
-          Size="159.2,41.6"
-          Id="Package\Load PIMS_PRODUCT\Data Conversion"
-          TopLeft="329.127736389685,78.2272441705932" />
-        <NodeLayout
-          Size="244,41.6"
-          Id="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records"
-          TopLeft="315.620510264684,470.900642634864" />
-        <NodeLayout
-          Size="194.4,41.6"
-          Id="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT"
-          TopLeft="345.671794530861,555.398490342706" />
-        <NodeLayout
-          Size="156,41.6"
-          Id="Package\Load PIMS_PRODUCT\Derived Column"
-          TopLeft="365.351288453785,644.350102962113" />
-        <NodeLayout
-          Size="127.2,41.6"
-          Id="Package\Load PIMS_PRODUCT\Audit Trail"
-          TopLeft="375.410256492551,399.550100562545" />
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output]"
-          TopLeft="438.927736389685,196.160577503927">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="21.1722636103154,34.9394224960735"
-              Start="0,0"
-              End="21.1722636103154,27.4394224960735">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,10.1462052057273" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,10.1462052057273"
-                    Point2="0,14.1462052057273"
-                    Point3="4,14.1462052057273" />
-                  <mssgle:LineSegment
-                    End="17.1722636103154,14.1462052057273" />
-                  <mssgle:CubicBezierSegment
-                    Point1="17.1722636103154,14.1462052057273"
-                    Point2="21.1722636103154,14.1462052057273"
-                    Point3="21.1722636103154,18.1462052057273" />
-                  <mssgle:LineSegment
-                    End="21.1722636103154,27.4394224960735" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-37.6052549135923,19.1462052057273,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output1]"
-          TopLeft="362.479488420957,252.594621569193">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="36.8205115790432,0"
-              Start="0,0"
-              End="29.3205115790432,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="29.3205115790432,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output]"
-          TopLeft="438.315383378617,441.150100562545">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,29.7505420723189"
-              Start="0,0"
-              End="0,22.2505420723189">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.2505420723189" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output2]"
-          TopLeft="444.107060934594,685.950102962113">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,33.9741890911249"
-              Start="0,0"
-              End="0,26.4741890911249">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.4741890911249" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Data Conversion Output]"
-          TopLeft="408.227736389685,119.827244170593">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,34.7333333333333"
-              Start="0,0"
-              End="0,27.2333333333333">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.2333333333333" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Source Output]"
-          TopLeft="408.683102843666,43.9086025698169">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,34.3186416007763"
-              Start="0,0"
-              End="0,26.8186416007763">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.8186416007763" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Destination Error Output]"
-          TopLeft="443.111541492323,596.998490342706">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,47.3516126194071"
-              Start="0,0"
-              End="0,39.8516126194071">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,39.8516126194071" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-73.20890625,14.2090094347035,146.4178125,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output]"
-          TopLeft="407.727736389685,196.160577503927">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-127.648247968728,36.3286656344602"
-              Start="0,0"
-              End="-127.648247968728,28.8286656344602">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,14.1643328172301" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,14.1643328172301"
-                    Point2="0,18.1643328172301"
-                    Point3="-4,18.1643328172301" />
-                  <mssgle:LineSegment
-                    End="-123.648247968728,18.1643328172301" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-123.648247968728,18.1643328172301"
-                    Point2="-127.648247968728,18.1643328172301"
-                    Point3="-127.648247968728,22.1643328172301" />
-                  <mssgle:LineSegment
-                    End="-127.648247968728,28.8286656344602" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-119.630510703114,23.1643328172301,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output1]"
-          TopLeft="440.246152397772,512.500642634864">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,42.8978477078421"
-              Start="0,0"
-              End="0,35.3978477078421">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,35.3978477078421" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,11.894236353921,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="164.8,41.6"
-          Id="Package\Load PIMS_PRODUCT\Derived Column 1"
-          TopLeft="652.271812565088,638.996333618014" />
-        <NodeLayout
-          Size="236,41.6"
-          Id="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST"
-          TopLeft="622.607694440293,470.235977691523" />
-        <NodeLayout
-          Size="155.2,42"
-          Id="Package\Load PIMS_PRODUCT\ETL Error Log 1 1"
-          TopLeft="662.301290792121,720.523212507768" />
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output3]"
-          TopLeft="737.286551678604,680.596333618014">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,39.9268788897538"
-              Start="0,0"
-              End="0,32.4268788897538">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,32.4268788897538" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="224.8,41.6"
-          Id="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT_HIST"
-          TopLeft="621.5,551.7" />
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output2]"
-          TopLeft="737.253847220146,511.835977691523">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,39.8640223084768"
-              Start="0,0"
-              End="0,32.3640223084768">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,32.3640223084768" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,10.3773236542384,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Destination Error Output1]"
-          TopLeft="734.285906282544,593.3">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,45.6963336180141"
-              Start="0,0"
-              End="0,38.1963336180141">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.1963336180141" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-73.20890625,13.3813699340071,146.4178125,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="136,41.6"
-          Id="Package\Load PIMS_PRODUCT\Audit Trail 1"
-          TopLeft="665.5,397.5" />
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output4]"
-          TopLeft="737.053847220147,439.1">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,31.1359776915231"
-              Start="0,0"
-              End="0,23.6359776915231">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,23.6359776915231" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="156.8,41.6"
-          Id="Package\Load PIMS_PRODUCT\Conditional Split"
-          TopLeft="386.5,322.27955328115" />
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Union All Output 1]"
-          TopLeft="462.5,272.7">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,49.5795532811498"
-              Start="0,0"
-              End="0,42.0795532811498">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,42.0795532811498" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Latest Cost Estimate]"
-          TopLeft="439.555128246276,363.87955328115">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,35.6705472813952"
-              Start="0,0"
-              End="0,28.1705472813952">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28.1705472813952" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-45.54134765625,9.30841817194758,91.0826953125,9.5537109375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Other Records]"
-          TopLeft="489.7,363.87955328115">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="243.8,33.6204467188501"
-              Start="0,0"
-              End="243.8,26.1204467188501">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,9.6519389706846" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,9.6519389706846"
-                    Point2="0,13.6519389706846"
-                    Point3="4,13.6519389706846" />
-                  <mssgle:LineSegment
-                    End="239.8,13.6519389706846" />
-                  <mssgle:CubicBezierSegment
-                    Point1="239.8,13.6519389706846"
-                    Point2="243.8,13.6519389706846"
-                    Point3="243.8,17.6519389706846" />
-                  <mssgle:LineSegment
-                    End="243.8,26.1204467188501" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="89.60990234375,18.6519389706846,64.5801953125,9.7490234375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="272,41.6"
-          Id="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated"
-          TopLeft="1.13686837721616E-13,473" />
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output1]"
-          TopLeft="315.620510264684,492.750321317432">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-43.6205102646837,0"
-              Start="0,0"
-              End="-36.1205102646837,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-36.1205102646837,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-66.2516418510919,5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="302.4,41.6"
-          Id="Package\Load PIMS_PRODUCT\PIMS_PRODUCT_HIST records to be updated"
-          TopLeft="910,468.523212507768" />
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Lookup Match Output2]"
-          TopLeft="858.607694440293,490.179595099645">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="51.392305559707,0"
-              Start="0,0"
-              End="43.892305559707,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="43.892305559707,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-26.2452339388965,5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="202.4,41.6"
-          Id="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT"
-          TopLeft="39.7673263763945,558.749527806926" />
-        <NodeLayout
-          Size="232.8,41.6"
-          Id="Package\Load PIMS_PRODUCT\Update PIMS_PRODUCT_HIST"
-          TopLeft="950.767326376395,552.749527806925" />
-        <NodeLayout
-          Size="164.8,41.6"
-          Id="Package\Load PIMS_PRODUCT\Derived Column 1 1"
-          TopLeft="971.6,636.523212507768" />
-        <NodeLayout
-          Size="155.2,42"
-          Id="Package\Load PIMS_PRODUCT\ETL Error Log 1 1 1"
-          TopLeft="981.629478227033,718.050091397522" />
-        <NodeLayout
-          Size="164.8,41.6"
-          Id="Package\Load PIMS_PRODUCT\Derived Column 1 2"
-          TopLeft="56.0000000000001,641.023212507768" />
-        <NodeLayout
-          Size="155.2,42"
-          Id="Package\Load PIMS_PRODUCT\ETL Error Log 1 1 2"
-          TopLeft="64.0294782270332,721.550091397522" />
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output3]"
-          TopLeft="138.483663188197,514.6">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,44.1495278069257"
-              Start="0,0"
-              End="0,36.6495278069257">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.6495278069257" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,12.5200764034628,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output]"
-          TopLeft="139.683663188197,600.349527806926">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,40.6736847008422"
-              Start="0,0"
-              End="0,33.1736847008422">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.1736847008422" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-70.70890625,10.7821548504211,141.4178125,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output5]"
-          TopLeft="140.014739113517,682.623212507768">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,38.9268788897538"
-              Start="0,0"
-              End="0,31.4268788897538">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31.4268788897538" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Lookup No Match Output4]"
-          TopLeft="1064.1836631882,510.123212507768">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,42.6263152991576"
-              Start="0,0"
-              End="0,35.1263152991576">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,35.1263152991576" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,11.7584701495788,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[OLE DB Command Error Output1]"
-          TopLeft="1067.16732637639,594.349527806925">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-13.1673263763946,42.1736847008424"
-              Start="0,0"
-              End="-13.1673263763946,34.6736847008424">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,17.0868423504212" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,17.0868423504212"
-                    Point2="0,21.0868423504212"
-                    Point3="-4,21.0868423504212" />
-                  <mssgle:LineSegment
-                    End="-9.16732637639461,21.0868423504212" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-9.16732637639461,21.0868423504212"
-                    Point2="-13.1673263763946,21.0868423504212"
-                    Point3="-13.1673263763946,25.0868423504212" />
-                  <mssgle:LineSegment
-                    End="-13.1673263763946,34.6736847008424" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-77.2925694381973,26.0868423504212,141.4178125,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load PIMS_PRODUCT.Paths[Derived Column Output6]"
-          TopLeft="1056.61473911352,678.123212507768">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,39.9268788897538"
-              Start="0,0"
-              End="0,32.4268788897538">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,32.4268788897538" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load PIMS_PRODUCT\PAIMS_PRODUCT">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT records">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_PRODUCT]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
+
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -12919,7 +13229,9 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT">
+
+    design-time-name="Package\Load PIMS_PROJECT\Insert PIMS_PROJECT">
+
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -12932,58 +13244,30 @@ where [refTable].[CODE] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load PIMS_PRODUCT\Existing PIMS_PRODUCT_HIST">
+
+    design-time-name="Package\Load PIMS_PROJECT\WORK_ACTIVITY_CODE_ID">
+
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+
+          type="q2:string">false</Value>
+
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[PIMS_PRODUCT_HIST]</Value>
+
+          type="q3:string">[dbo].[PIMS_WORK_ACTIVITY_CODE]</Value>
+
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load PIMS_PRODUCT\Insert PIMS_PRODUCT_HIST">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load PIMS_PRODUCT\PIMS_PRODUCT records to be updated">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_PRODUCT]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
+
+          type="q4:string">0</Value>
+
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

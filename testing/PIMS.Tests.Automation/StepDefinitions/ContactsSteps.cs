@@ -6,20 +6,13 @@ using PIMS.Tests.Automation.Classes;
 namespace PIMS.Tests.Automation.StepDefinitions
 {
     [Binding]
-    public sealed class ContactsSteps
+    public class ContactsSteps
     {
         private readonly LoginSteps loginSteps;
         private readonly Contacts contacts;
         private readonly SearchContacts searchContacts;
-        //private readonly IEnumerable<IndividualContact> individualContacts;
-        //private readonly IEnumerable<OrganizationContact> organizationContacts;
 
         private readonly string userName = "TRANPSP1";
-        //private readonly string userName = "sutairak";
-
-        //private readonly string nonExistingContact = "A non existing contact";
-        //private readonly string legacyOrganizationName = "BC Hydro and Telus";
-        //private readonly string comments = "Automated Test for Contacts";
 
         private IndividualContact individualContact;
         private OrganizationContact organizationContact;
@@ -31,31 +24,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts = new SearchContacts(driver.Current);
             individualContact = new IndividualContact();
             organizationContact = new OrganizationContact();
-            //individualContacts = driver.Configuration.GetSection("IndividualContacts").Get<IEnumerable<IndividualContact>>();
-            //organizationContacts = driver.Configuration.GetSection("OrganizationContacts").Get<IEnumerable<OrganizationContact>>();
         }
-
-        //[StepDefinition(@"I create a new Individual Contact with minimum fields (.*)")]
-        //public void MinimumIndividualContact(string lastName)
-        //{
-        //    /* TEST COVERAGE: PSP-2705, PSP-2797, PSP-4559 */
-
-        //    //Login to PIMS
-        //    loginSteps.Idir(userName);
-
-        //    var contact = individualContacts.SingleOrDefault(u => u.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase));
-        //    if (contact == null) throw new InvalidOperationException($"Contact {lastName} not found in the test configuration");
-
-        //    //Navigate to Create new contact form
-        //    contacts.NavigateToCreateNewContact();
-
-        //    //Create new Individual Contact with minimum fields
-        //    contacts.CreateIndividualContactMinFields(contact.FirstName, contact.LastName, contact.Organization, contact.Email, contact.MailCountry, contact.MailAddressLine1, contact.MailProvince, contact.MailProvince, contact.MailPostalCode);
-
-        //    //Save Contact
-        //    contacts.SaveContact();
-
-        //}
 
         [StepDefinition(@"I create a new Individual Contact from row number (.*)")]
         public void IndividualContact(int rowNumber)
@@ -314,11 +283,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (contactType == "Individual")
             {
-                searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.Email1, individualContact.MailAddressLine1, individualContact.MailCity, individualContact.MailProvDisplay);
+                searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.Email1, individualContact.MailAddressLine1, individualContact.MailCity, individualContact.MailProvDisplay, individualContact.MailCountry);
             }
             else
             {
-                searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.Email1, organizationContact.MailAddressLine1, organizationContact.MailCity, organizationContact.MailProvDisplay);
+                searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.Email1, organizationContact.MailAddressLine1, organizationContact.MailCity, organizationContact.MailProvDisplay, organizationContact.MailCountry);
             }
         }
 

@@ -7,6 +7,7 @@ import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
 jest.mock('@react-keycloak/web');
 
 const ownerPerson: DetailAcquisitionFileOwner = {
+  isPrimary: true,
   ownerName: 'JOHN DOE',
   ownerOtherName: 'SR.',
   ownerDisplayAddress: `456 Souris Street \n
@@ -17,6 +18,7 @@ const ownerPerson: DetailAcquisitionFileOwner = {
 };
 
 const ownerOrganization: DetailAcquisitionFileOwner = {
+  isPrimary: false,
   ownerName: 'FORTIS BC (9999)',
   ownerOtherName: 'LTD.',
   ownerDisplayAddress: `123 Main Street \n
@@ -46,6 +48,13 @@ describe('Acquisition File Owners View component', () => {
     );
     return {
       ...utils,
+      getIsPrymaryContactRadioButton: (index = 0) => {
+        const radio = utils.container.querySelector(
+          `input[name="${index}-is-primary-contact"]`,
+        ) as HTMLInputElement;
+
+        return radio;
+      },
     };
   };
 
@@ -59,18 +68,21 @@ describe('Acquisition File Owners View component', () => {
   });
 
   it('Display the Person Owner data', () => {
-    const result = setup();
+    const { getByText, getIsPrymaryContactRadioButton, findAllByDisplayValue } = setup();
 
-    expect(result.getByText(ownerPerson.ownerName as string)).toBeVisible();
-    expect(result.getByText(ownerPerson.ownerOtherName as string)).toBeVisible();
-    expect(result.findAllByDisplayValue('North Podunk, British Columbia, IH8 B0B')).not.toBeNull();
+    expect(getIsPrymaryContactRadioButton()).toBeChecked();
+    expect(getByText(ownerPerson.ownerName as string)).toBeVisible();
+    expect(getByText(ownerPerson.ownerOtherName as string)).toBeVisible();
+
+    expect(findAllByDisplayValue('North Podunk, British Columbia, IH8 B0B')).not.toBeNull();
   });
 
   it('Display the Organization Owner data', () => {
-    const result = setup();
+    const { getByText, getIsPrymaryContactRadioButton, findAllByDisplayValue } = setup();
 
-    expect(result.getByText(ownerOrganization.ownerName as string)).toBeVisible();
-    expect(result.getByText(ownerOrganization.ownerOtherName as string)).toBeVisible();
-    expect(result.findAllByDisplayValue('East Podunk, British Columbia, I4M B0B')).not.toBeNull();
+    expect(getIsPrymaryContactRadioButton(1)).not.toBeChecked();
+    expect(getByText(ownerOrganization.ownerName as string)).toBeVisible();
+    expect(getByText(ownerOrganization.ownerOtherName as string)).toBeVisible();
+    expect(findAllByDisplayValue('East Podunk, British Columbia, I4M B0B')).not.toBeNull();
   });
 });

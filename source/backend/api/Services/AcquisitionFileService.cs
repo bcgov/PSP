@@ -30,6 +30,7 @@ namespace Pims.Api.Services
         private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IAcquisitionFileChecklistRepository _checklistRepository;
+        private readonly IAgreementRepository _agreementRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -41,7 +42,8 @@ namespace Pims.Api.Services
             ICoordinateTransformService coordinateService,
             ILookupRepository lookupRepository,
             IEntityNoteRepository entityNoteRepository,
-            IAcquisitionFileChecklistRepository checklistRepository)
+            IAcquisitionFileChecklistRepository checklistRepository,
+            IAgreementRepository agreementRepository)
         {
             _user = user;
             _logger = logger;
@@ -53,6 +55,7 @@ namespace Pims.Api.Services
             _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
             _checklistRepository = checklistRepository;
+            _agreementRepository = agreementRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -244,6 +247,22 @@ namespace Pims.Api.Services
 
             _checklistRepository.CommitTransaction();
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+        }
+
+        public IEnumerable<PimsAgreement> GetAgreements(long id)
+        {
+            _logger.LogInformation("Getting acquisition file agreements with AcquisitionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+
+            return _agreementRepository.GetAgreementsByAquisitionFile(id);
+        }
+
+        public IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements)
+        {
+            var updatedAgreements = _agreementRepository.UpdateAllForAcquisition(acquisitionFileId, agreements);
+            _agreementRepository.CommitTransaction();
+
+            return updatedAgreements;
         }
 
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)

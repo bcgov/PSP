@@ -26,6 +26,7 @@ export const getMockApiTakes = (): Api_Take[] => [
     areaUnitTypeCode: 'M2',
     ltcEndDt: '2020-01-01',
     landActEndDt: '2020-01-01',
+    landActDescription: 'NEW LAND',
     rowVersion: 2,
   },
 ];
