@@ -14,6 +14,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(RoleId), Name = "ACRQST_ROLE_ID_IDX")]
     [Index(nameof(UserId), Name = "ACRQST_USER_ID_IDX")]
     [Index(nameof(RegionCode), nameof(RoleId), nameof(UserId), Name = "ACRQST_USER_ROLE_REGION_TUC", IsUnique = true)]
+    [Index(nameof(UserTypeCode), Name = "ACRQST_USER_TYPE_CODE_IDX")]
     public partial class PimsAccessRequest
     {
         public PimsAccessRequest()
@@ -28,6 +29,9 @@ namespace Pims.Dal.Entities
         public long UserId { get; set; }
         [Column("ROLE_ID")]
         public long? RoleId { get; set; }
+        [Column("USER_TYPE_CODE")]
+        [StringLength(20)]
+        public string UserTypeCode { get; set; }
         [Required]
         [Column("ACCESS_REQUEST_STATUS_TYPE_CODE")]
         [StringLength(20)]
@@ -87,6 +91,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(UserId))]
         [InverseProperty(nameof(PimsUser.PimsAccessRequests))]
         public virtual PimsUser User { get; set; }
+        [ForeignKey(nameof(UserTypeCode))]
+        [InverseProperty(nameof(PimsUserType.PimsAccessRequests))]
+        public virtual PimsUserType UserTypeCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsAccessRequestOrganization.AccessRequest))]
         public virtual ICollection<PimsAccessRequestOrganization> PimsAccessRequestOrganizations { get; set; }
     }

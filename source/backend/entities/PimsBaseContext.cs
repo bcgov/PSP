@@ -249,6 +249,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsUserOrganizationHist> PimsUserOrganizationHists { get; set; }
         public virtual DbSet<PimsUserRole> PimsUserRoles { get; set; }
         public virtual DbSet<PimsUserRoleHist> PimsUserRoleHists { get; set; }
+        public virtual DbSet<PimsUserType> PimsUserTypes { get; set; }
         public virtual DbSet<PimsVolumeUnitType> PimsVolumeUnitTypes { get; set; }
         public virtual DbSet<PimsVolumetricType> PimsVolumetricTypes { get; set; }
         public virtual DbSet<PimsWorkActivityCode> PimsWorkActivityCodes { get; set; }
@@ -308,6 +309,11 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_USER_PIM_ACRQST_FK");
+
+                entity.HasOne(d => d.UserTypeCodeNavigation)
+                    .WithMany(p => p.PimsAccessRequests)
+                    .HasForeignKey(d => d.UserTypeCode)
+                    .HasConstraintName("PIM_USERTY_PIM_ACRQST_FK");
             });
 
             modelBuilder.Entity<PimsAccessRequestHist>(entity =>
@@ -673,8 +679,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.CpsProductCode).HasComment("CPS product code.");
-
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
@@ -698,10 +702,6 @@ namespace Pims.Dal
                 entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
 
                 entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
-
-                entity.Property(e => e.MinistryProjectName).HasComment("Ministry project name.");
-
-                entity.Property(e => e.MinistryProjectNumber).HasComment("Ministry project number.");
 
                 entity.Property(e => e.PaimsAcquisitionFileId).HasComment("Legacy Acquisition File ID from the PAIMS system.");
 
@@ -2435,6 +2435,10 @@ namespace Pims.Dal
                     .HasDefaultValueSql("('<Empty>')")
                     .HasComment("Description of the available document types.");
 
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is still in use.");
+
                 entity.Property(e => e.MayanId)
                     .HasDefaultValueSql("((-1))")
                     .HasComment("Mayan-generated document type number used for retrieval from Mayan EDMS.");
@@ -2938,6 +2942,8 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the relationship has been disabled.");
+
+                entity.Property(e => e.OtherDescription).HasComment("Placeholder for descriptive text when \"Describe Other\" selected.");
 
                 entity.HasOne(d => d.ConsultationStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsLeaseConsultations)
@@ -6882,6 +6888,11 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.PersonId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PERSON_PIM_USER_FK");
+
+                entity.HasOne(d => d.UserTypeCodeNavigation)
+                    .WithMany(p => p.PimsUsers)
+                    .HasForeignKey(d => d.UserTypeCode)
+                    .HasConstraintName("PIM_USERTY_PIM_USER_FK");
             });
 
             modelBuilder.Entity<PimsUserHist>(entity =>
@@ -6998,6 +7009,38 @@ namespace Pims.Dal
                 entity.Property(e => e.UserRoleHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsUserType>(entity =>
+            {
+                entity.HasKey(e => e.UserTypeCode)
+                    .HasName("USERTY_PK");
+
+                entity.HasComment("Table describing the type of user.  Currently the user types are Ministry Staff and Contractor.");
+
+                entity.Property(e => e.UserTypeCode)
+                    .HasDefaultValueSql("('CONTRACT')")
+                    .HasComment("Code value of the user type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description)
+                    .HasDefaultValueSql("('Contractor')")
+                    .HasComment("Code description of the user type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Specified display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the user type is active.");
             });
 
             modelBuilder.Entity<PimsVolumeUnitType>(entity =>
@@ -7401,6 +7444,10 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_CLAIM_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_COMPENSATION_REQUISITION_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
