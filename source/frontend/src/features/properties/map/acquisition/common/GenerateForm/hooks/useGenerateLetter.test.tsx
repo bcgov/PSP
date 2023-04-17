@@ -1,20 +1,27 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
+import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { useApiContacts } from './pims-api/useApiContacts';
-import { useGenerateLetter } from './useGenerateLetter';
+import { useGenerateLetter } from '../hooks/useGenerateLetter';
 
 const generateFn = jest.fn();
+const getAcquisitionFileFn = jest.fn();
 const getPersonConcept = jest.fn();
 
 jest.mock('features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
   generateDocumentDownloadWrappedRequest: generateFn,
+}));
+
+jest.mock('hooks/repositories/useAcquisitionProvider');
+(useAcquisitionProvider as jest.Mock).mockImplementation(() => ({
+  getAcquisitionFileWrappedRequest: getAcquisitionFileFn,
 }));
 
 jest.mock('./pims-api/useApiContacts');
@@ -42,14 +49,14 @@ describe('useGenerateLetter functions', () => {
   it('makes requests to expected api endpoints', async () => {
     const generate = setup();
     await act(async () => {
-      await generate(mockAcquisitionFileResponse());
+      await generate(0);
       expect(generateFn).toHaveBeenCalled();
     });
   });
   it('makes requests to expected api endpoints if a team member is a property coordinator', async () => {
     const generate = setup();
     await act(async () => {
-      await generate({
+      const response = {
         ...mockAcquisitionFileResponse(),
         acquisitionTeam: [
           {
@@ -78,7 +85,8 @@ describe('useGenerateLetter functions', () => {
             rowVersion: 2,
           },
         ],
-      });
+      };
+      await generate(0);
       expect(generateFn).toHaveBeenCalled();
       expect(getPersonConcept).toHaveBeenCalled();
     });
