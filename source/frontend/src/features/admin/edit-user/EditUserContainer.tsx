@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useUsers } from '../users/hooks/useUsers';
 import { FormUser } from '../users/models';
 import EditUserForm from './EditUserForm';
+import { UserTypeCodesEnum } from '../access-request/models';
 
 export interface IEditUserContainerProps {
   userId?: string;
@@ -50,6 +51,7 @@ const EditUserContainer: React.FunctionComponent<
     regions: [],
     note: '',
     position: '',
+    userTypeCode: '',
     lastLogin: '',
     toApi: () => ({} as Api_User),
   };
