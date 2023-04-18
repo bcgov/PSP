@@ -346,17 +346,20 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
                       <svg
                         class="c6"
                         height="97"
-                        title="select properties on the map"
+                        title="Click once to enter property selection mode."
                         width="97"
                       >
                         icon-draft.svg
                       </svg>
                       <ol>
                         <li>
-                          Click pin above
+                          Single-click pin above
                         </li>
                         <li>
-                          Position it on the map
+                          Mouse to a parcel on the map
+                        </li>
+                        <li>
+                          Single-click on parcel to select it
                         </li>
                       </ol>
                     </div>
