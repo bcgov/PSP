@@ -2,29 +2,28 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormDocumentType } from 'constants/formDocumentTypes';
 import { FileTypes } from 'constants/index';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
 import { SideBarContextProvider } from 'features/properties/map/context/sidebarContext';
-import {
-  mockAcquisitionFileOwnersResponse,
-  mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
+import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
-import { mockNotesResponse } from 'mocks/mockNoteResponses';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, waitFor, waitForElementToBeRemoved } from 'utils/test-utils';
+import { act, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import GenerateFormContainer, { IGenerateFormContainerProps } from './GenerateFormContainer';
 import { IGenerateFormViewProps } from './GenerateFormView';
+import { useGenerateH0443 } from './hooks/useGenerateH0443';
+import { useGenerateLetter } from './hooks/useGenerateLetter';
 
 const mockAxios = new MockAdapter(axios);
-const generateFn = jest.fn();
+const generateLetterFn = jest.fn();
+const generateH0443Fn = jest.fn();
 
 // mock auth library
 jest.mock('@react-keycloak/web');
-jest.mock('features/documents/hooks/useDocumentGenerationRepository');
-(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: generateFn,
-}));
+jest.mock('./hooks/useGenerateLetter');
+(useGenerateLetter as jest.Mock).mockImplementation(() => generateLetterFn);
+
+jest.mock('./hooks/useGenerateH0443');
+(useGenerateH0443 as jest.Mock).mockImplementation(() => generateH0443Fn);
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -46,7 +45,7 @@ const DEFAULT_PROPS: IGenerateFormContainerProps = {
   View: GenerateFormViewStub,
 };
 
-describe('AcquisitionContainer component', () => {
+describe('GenerateFormContainer component', () => {
   // render component under test
   const setup = (
     props: IGenerateFormContainerProps = { ...DEFAULT_PROPS },
@@ -73,21 +72,10 @@ describe('AcquisitionContainer component', () => {
 
     return {
       ...utils,
-      getCloseButton: () => utils.getByTitle('close'),
     };
   };
 
-  beforeEach(() => {
-    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
-    mockAxios
-      .onGet(new RegExp('acquisitionfiles/1/properties'))
-      .reply(200, mockAcquisitionFileResponse().fileProperties);
-    mockAxios
-      .onGet(new RegExp('acquisitionfiles/1/owners'))
-      .reply(200, mockAcquisitionFileOwnersResponse());
-    mockAxios.onGet(new RegExp('acquisitionfiles/*')).reply(200, mockAcquisitionFileResponse());
-    mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
-  });
+  beforeEach(() => {});
 
   afterEach(() => {
     mockAxios.resetHistory();
@@ -95,23 +83,28 @@ describe('AcquisitionContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment, getByTestId } = setup();
-
-    const spinner = getByTestId('filter-backdrop-loading');
-    await waitForElementToBeRemoved(spinner);
+    const { asFragment } = setup();
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('calls document generation endpoint when generate function called', async () => {
-    const { getByTestId } = setup(undefined, { claims: [] });
+  it('calls document letter generation', async () => {
     jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
-    const spinner = getByTestId('filter-backdrop-loading');
-    await waitForElementToBeRemoved(spinner);
-
     await act(async () => viewProps.onGenerateClick(FormDocumentType.LETTER));
+    await waitFor(async () => {
+      expect(generateLetterFn).toHaveBeenCalledTimes(1);
+      expect(generateH0443Fn).toHaveBeenCalledTimes(0);
+    });
+  });
 
-    await waitFor(async () => expect(generateFn).toHaveBeenCalledTimes(1));
+  it('calls document H0443 generation', async () => {
+    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+
+    await act(async () => viewProps.onGenerateClick(FormDocumentType.H0443));
+    await waitFor(async () => {
+      expect(generateLetterFn).toHaveBeenCalledTimes(0);
+      expect(generateH0443Fn).toHaveBeenCalledTimes(1);
+    });
   });
 });
