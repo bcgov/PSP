@@ -2,7 +2,6 @@ import { ContactMethodTypes } from 'constants/contactMethodType';
 import { FormDocumentType } from 'constants/formDocumentTypes';
 import { showFile } from 'features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useProperties } from 'hooks/repositories/useProperties';

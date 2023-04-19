@@ -4,12 +4,12 @@ import { useDocumentGenerationRepository } from 'features/documents/hooks/useDoc
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { useGenerateLetter } from '../hooks/useGenerateLetter';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 
 const generateFn = jest.fn();
 const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();

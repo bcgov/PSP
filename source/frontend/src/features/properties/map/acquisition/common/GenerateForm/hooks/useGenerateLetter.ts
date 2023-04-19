@@ -17,12 +17,9 @@ export const useGenerateLetter = () => {
   const generateLetter = async (acquisitionFileId: number) => {
     const file = await getAcquisitionFile(acquisitionFileId);
     if (file) {
-      var a = file;
-      console.log(a, typeof a);
       const coordinator = file.acquisitionTeam?.find(
         team => team.personProfileTypeCode === 'PROPCOORD',
       );
-      console.log('coordinator', coordinator);
       const coordinatorPerson = !!coordinator?.personId
         ? (await getPersonConcept(coordinator?.personId))?.data
         : null;

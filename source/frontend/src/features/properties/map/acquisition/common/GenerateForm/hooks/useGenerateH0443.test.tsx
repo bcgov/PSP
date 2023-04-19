@@ -1,18 +1,17 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-
-import { useProperties } from 'hooks/repositories/useProperties';
+import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import { useProperties } from 'hooks/repositories/useProperties';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { Api_Property } from 'models/api/Property';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { useGenerateH0443 } from './useGenerateH0443';
-import { Api_Property } from 'models/api/Property';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 
 const getPropertiesFn = jest.fn<Api_Property[], any[]>();
 const generateFn = jest.fn();

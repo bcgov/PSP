@@ -27,7 +27,6 @@ const GenerateFormContainer: React.FunctionComponent<
       default:
         console.error('Form Document type not recognized');
     }
-    console.log(formType);
   };
   return <View onGenerateClick={onGenerateClick} />;
 };
