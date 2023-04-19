@@ -28,6 +28,7 @@ export class FileForm {
           id: x.id,
           fileId: this.id,
           property: x.toApi(),
+          propertyId: x.apiId,
           file: { id: this.id },
           propertyName: x.name,
           rowVersion: x.rowVersion,
