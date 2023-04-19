@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-import { useApiProperties } from 'hooks/pims-api';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+
+import { useProperties } from 'hooks/repositories/useProperties';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { Provider } from 'react-redux';
@@ -10,11 +10,14 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { useGenerateH0443 } from './useGenerateH0443';
+import { Api_Property } from 'models/api/Property';
+import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 
+const getPropertiesFn = jest.fn<Api_Property[], any[]>();
 const generateFn = jest.fn();
-const getAcquisitionFileFn = jest.fn();
+const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();
 const getPersonConceptFn = jest.fn();
-const getPropertiesFn = jest.fn();
 
 jest.mock('features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
@@ -23,17 +26,17 @@ jest.mock('features/documents/hooks/useDocumentGenerationRepository');
 
 jest.mock('hooks/repositories/useAcquisitionProvider');
 (useAcquisitionProvider as jest.Mock).mockImplementation(() => ({
-  getAcquisitionFileWrappedRequest: getAcquisitionFileFn,
+  getAcquisitionFile: { execute: getAcquisitionFileFn },
+}));
+
+jest.mock('hooks/repositories/useProperties');
+(useProperties as jest.Mock).mockImplementation(() => ({
+  getMultiplePropertiesById: { execute: getPropertiesFn },
 }));
 
 jest.mock('hooks/pims-api/useApiContacts');
 (useApiContacts as jest.Mock).mockImplementation(() => ({
   getPersonConcept: getPersonConceptFn,
-}));
-
-jest.mock('hooks/pims-api/useApiProperties');
-(useApiProperties as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: getPropertiesFn,
 }));
 
 let currentStore: MockStoreEnhanced<any, {}>;
@@ -47,8 +50,17 @@ const getWrapper =
   ({ children }: any) =>
     <Provider store={store}>{children}</Provider>;
 
-const setup = (values?: any) => {
-  const { result } = renderHook(useGenerateH0443, { wrapper: getWrapper(getStore(values)) });
+const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_AcquisitionFile }) => {
+  var acquisitionResponse = mockAcquisitionFileResponse();
+  if (params?.acquisitionResponse !== undefined) {
+    acquisitionResponse = params.acquisitionResponse;
+  }
+
+  getAcquisitionFileFn.mockReturnValue(acquisitionResponse);
+
+  const { result } = renderHook(useGenerateH0443, {
+    wrapper: getWrapper(getStore(params?.storeValues)),
+  });
   return result.current;
 };
 
@@ -60,43 +72,54 @@ describe('useGenerateH0443 functions', () => {
       expect(generateFn).toHaveBeenCalled();
     });
   });
-  it('makes requests to expected api endpoints if a team member is a property coordinator', async () => {
-    const generate = setup();
+
+  it('makes requests to expected api endpoints for each required team member', async () => {
+    const responseWithTeam: Api_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      acquisitionTeam: [
+        {
+          id: 1,
+          personId: 1,
+          personProfileTypeCode: 'PROPCOORD',
+          isDisabled: false,
+          rowVersion: 2,
+        },
+        {
+          id: 2,
+          personId: 2,
+          personProfileTypeCode: 'PROPAGENT',
+          isDisabled: false,
+          rowVersion: 2,
+        },
+      ],
+    };
+    const generate = setup({ acquisitionResponse: responseWithTeam });
+
     await act(async () => {
-      const response = {
-        ...mockAcquisitionFileResponse(),
-        acquisitionTeam: [
-          {
-            id: 1,
-            personId: 1,
-            person: {
-              id: 1,
-              isDisabled: false,
-              surname: 'Smith',
-              firstName: 'Bob',
-              middleNames: 'Billy',
-              preferredName: 'Tester McTest',
-              personOrganizations: [],
-              personAddresses: [],
-              contactMethods: [],
-              comment: 'This is a test comment.',
-              rowVersion: 2,
-            },
-            personProfileTypeCode: 'PROPCOORD',
-            personProfileType: {
-              id: 'PROPCOORD',
-              description: 'Property Coordinator',
-              isDisabled: false,
-            },
-            isDisabled: false,
-            rowVersion: 2,
-          },
-        ],
-      };
       await generate(0);
       expect(generateFn).toHaveBeenCalled();
-      expect(getPersonConceptFn).toHaveBeenCalled();
-      expect(getPropertiesFn).toHaveBeenCalled();
+      expect(getPersonConceptFn).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  it('makes requests to expected api endpoints if there are properties', async () => {
+    const responseWithTeam: Api_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      fileProperties: [
+        {
+          propertyId: 1,
+        },
+        {
+          propertyId: 2,
+        },
+      ],
+    };
+    const generate = setup({ acquisitionResponse: responseWithTeam });
+
+    await act(async () => {
+      await generate(0);
+      expect(generateFn).toHaveBeenCalled();
+      expect(getPropertiesFn).toHaveBeenCalledWith([1, 2]);
     });
   });
 });
