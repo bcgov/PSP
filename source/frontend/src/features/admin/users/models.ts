@@ -5,6 +5,7 @@ import Api_TypeCode from 'models/api/TypeCode';
 import { Api_User } from 'models/api/User';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
+
 import { UserTypeCodesEnum } from '../access-request/models';
 
 export class FormUser {
