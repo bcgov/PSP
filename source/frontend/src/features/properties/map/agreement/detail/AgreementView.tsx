@@ -33,7 +33,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <EditButton title="Edit agreements file" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>
-      {agreements.length === 0 && <StyledNoData>No agreements on record</StyledNoData>}
+      {agreements.length === 0 && (
+        <StyledNoData>
+          <p>There are no agreements associated with this file.</p>
+          <p> To begin an agreement, click the edit button.</p>
+        </StyledNoData>
+      )}
       {agreements.map((agreement, index) => (
         <Section
           key={`agreement-section-${index}`}
@@ -89,6 +94,10 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
 export default AgreementView;
 
 export const StyledNoData = styled.div`
-  text-align: center;
   font-style: italic;
+  margin: 1.5rem;
+  padding: 1rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 `;
