@@ -421,7 +421,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             //TODO: mock and assert that the document types are being disabled.
-            result.Deleted.Should().BeEmpty();
+            result.Deleted.Should().HaveCount(1);
             result.Added.Should().BeEmpty();
             result.Updated.Should().BeEmpty();
         }
@@ -442,8 +442,7 @@ namespace Pims.Api.Test.Services
             var result = service.SyncPimsDocumentTypes(model);
 
             // Assert
-            //TODO: mock and assert that the document types are being disabled.
-            result.Deleted.Should().BeEmpty();
+            result.Deleted.Should().HaveCount(2);
             result.Added.Should().BeEmpty();
             result.Updated.Should().BeEmpty();
         }
