@@ -171,7 +171,7 @@ export const mockAcquisitionFileResponse = (
         rowVersion: 1,
       },
       personProfileType: {
-        id: 'NEGOTAGENT',
+        id: 'MOTILAWYER',
         description: 'Negotiation agent',
         isDisabled: false,
       },
