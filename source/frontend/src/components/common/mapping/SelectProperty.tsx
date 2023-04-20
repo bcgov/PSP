@@ -18,12 +18,13 @@ export const SelectProperty: React.FunctionComponent<
           width={97}
           height={97}
           onClick={onClick}
-          title="select properties on the map"
+          title="Click once to enter property selection mode."
         />
       </ClickAwayListener>
       <ol>
-        <li>Click pin above</li>
-        <li>Position it on the map</li>
+        <li>Single-click pin above</li>
+        <li>Mouse to a parcel on the map</li>
+        <li>Single-click on parcel to select it</li>
       </ol>
     </div>
   );
