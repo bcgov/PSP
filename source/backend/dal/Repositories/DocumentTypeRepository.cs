@@ -72,6 +72,7 @@ namespace Pims.Dal.Repositories
             existingDocumentType.DocumentTypeDescription = documentType.DocumentTypeDescription;
             existingDocumentType.MayanId = documentType.MayanId;
             existingDocumentType.DisplayOrder = documentType.DisplayOrder;
+            existingDocumentType.IsDisabled = documentType.IsDisabled;
             this.Context.Update(existingDocumentType);
             return existingDocumentType;
         }

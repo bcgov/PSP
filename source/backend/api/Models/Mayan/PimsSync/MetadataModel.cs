@@ -4,7 +4,6 @@ namespace Pims.Api.Models.Mayan.Sync
 {
     public class MetadataModel
     {
-
         [JsonPropertyName("name")]
         public string Name { get; set; }
 

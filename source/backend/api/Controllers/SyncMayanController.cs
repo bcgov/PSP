@@ -51,7 +51,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Synchronizes incoming json document metadata with the PIMS db.
+        /// Synchronizes incoming json document metadata with mayan.
         /// </summary>
         [HttpPatch("sync/mayan/metadatatype")]
         [HasPermission(Permissions.DocumentAdmin)]
@@ -60,6 +60,19 @@ namespace Pims.Api.Controllers
         public IActionResult SyncMetadataTypes([FromBody] SyncModel model)
         {
             var result = _documentSyncService.SyncMayanMetadataTypes(model);
+            return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// Migrate incoming json document metadata with the mayan.
+        /// </summary>
+        [HttpPatch("migrate/mayan/metadatatype")]
+        [HasPermission(Permissions.DocumentAdmin)]
+        [ProducesResponseType(typeof(ExternalBatchResult), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public IActionResult MigrateMetadataTypes([FromBody] SyncModel model)
+        {
+            var result = _documentSyncService.MigrateMayanMetadataTypes(model);
             return new JsonResult(result);
         }
 

@@ -62,6 +62,60 @@ namespace Pims.Api.Test.Services
             return new ExternalResult<QueryResult<DocumentTypeMetadataType>>() { Payload = new QueryResult<DocumentTypeMetadataType>() { Results = documentMetadataTypes, Count = documentMetadataTypes.Length }, HttpStatusCode = System.Net.HttpStatusCode.Created };
         }
 
+        #region MigrateMetadata
+        [Fact]
+        public void Update_MigrateMetadata_SingleLabelChange()
+        {
+            // Arrange
+            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+
+            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test metadata", Name = "TEST" } });
+
+            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
+                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[1] { new MetadataType() { Label = "test", Name = "TEST_METADATA" } })));
+            MetadataType updatedMetadataType = null;
+            mayanRepository.Setup(x => x.TryUpdateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
+                .Callback<MetadataType>(x => updatedMetadataType = x).Returns(Task.FromResult(new ExternalResult<MetadataType>() { HttpStatusCode = System.Net.HttpStatusCode.OK, Payload = new MetadataType() { Label = "testUpdated", Name = "TEST" } }));
+
+            // Act
+            var result = service.MigrateMayanMetadataTypes(model);
+
+            // Assert
+            mayanRepository.Verify(x => x.TryUpdateMetadataTypeAsync(It.IsAny<MetadataType>()), Times.Once());
+            updatedMetadataType.Should().BeEquivalentTo(new MetadataModel() { Label = "test metadata", Name = "TEST" });
+            result.UpdatedMetadata.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void Update_MigrateMetadata_MultipleLabelChange()
+        {
+            // Arrange
+            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+
+            SyncModel model = CreateSyncModel(new List<MetadataModel>() { new MetadataModel() { Label = "test metadata", Name = "TEST" }, new MetadataModel() { Label = "test metadata two", Name = "TEST_METADATA_TWO" } });
+
+            var mayanRepository = _helper.GetService<Mock<IEdmsMetadataRepository>>();
+            mayanRepository.Setup(x => x.TryGetMetadataTypesAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
+                .Returns(Task.FromResult(CreateMetadataResult(new MetadataType[2] { new MetadataType() { Label = "test", Name = "TEST_METADATA" }, new MetadataType() { Label = "testTwo", Name = "test_metadata_two" } })));
+            MetadataType updatedMetadataTypeOne = null;
+            MetadataType updatedMetadataTypeTwo = null;
+            mayanRepository.Setup(x => x.TryUpdateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST")))
+                .Callback<MetadataType>(x => updatedMetadataTypeOne = x).Returns(Task.FromResult(new ExternalResult<MetadataType>() { HttpStatusCode = System.Net.HttpStatusCode.OK, Payload = new MetadataType() { Label = "testUpdated", Name = "TEST" } }));
+            mayanRepository.Setup(x => x.TryUpdateMetadataTypeAsync(It.Is<MetadataType>(x => x.Name == "TEST_METADATA_TWO")))
+                .Callback<MetadataType>(x => updatedMetadataTypeTwo = x).Returns(Task.FromResult(new ExternalResult<MetadataType>() { HttpStatusCode = System.Net.HttpStatusCode.OK, Payload = new MetadataType() { Label = "testTwoUpdated", Name = "TESTTWO" } }));
+
+            // Act
+            var result = service.MigrateMayanMetadataTypes(model);
+
+            // Assert
+            mayanRepository.Verify(x => x.TryUpdateMetadataTypeAsync(It.IsAny<MetadataType>()), Times.Exactly(2));
+            updatedMetadataTypeOne.Should().BeEquivalentTo(new MetadataModel() { Label = "test metadata", Name = "TEST" });
+            updatedMetadataTypeTwo.Should().BeEquivalentTo(new MetadataModel() { Label = "test metadata two", Name = "TEST_METADATA_TWO" });
+            result.UpdatedMetadata.Should().HaveCount(2);
+        }
+        #endregion
+
         #region SyncMetadata
         [Fact]
         public void Add_SyncMetadata_Single()

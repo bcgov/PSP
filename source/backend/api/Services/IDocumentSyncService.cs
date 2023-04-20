@@ -11,6 +11,8 @@ namespace Pims.Api.Services
 
         ExternalBatchResult SyncMayanMetadataTypes(SyncModel model);
 
+        ExternalBatchResult MigrateMayanMetadataTypes(SyncModel model);
+
         ExternalBatchResult SyncPimsToMayan(SyncModel model);
     }
 }

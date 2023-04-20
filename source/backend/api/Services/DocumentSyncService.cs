@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -106,6 +107,40 @@ namespace Pims.Api.Services
             return batchResult;
         }
 
+        public ExternalBatchResult MigrateMayanMetadataTypes(SyncModel model)
+        {
+            this.Logger.LogInformation("Migrating Pims metadata types");
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentAdmin, this.keycloakOptions);
+
+            ExternalBatchResult batchResult = new ExternalBatchResult();
+
+            Task<ExternalResult<QueryResult<MetadataType>>> retrieveTask = mayanMetadataRepository.TryGetMetadataTypesAsync(pageSize: 5000);
+            retrieveTask.Wait();
+            var metadata = retrieveTask.Result;
+
+            // Add the metadata types not in mayan
+            IList<Task<ExternalResult<MetadataType>>> updateTasks = new List<Task<ExternalResult<MetadataType>>>();
+            foreach (var metadataTypeLabel in model.MetadataTypes)
+            {
+                var oldMetadataName = metadataTypeLabel.Label.Replace(' ', '_');
+                var matchingMetadataResult = metadata.Payload.Results.FirstOrDefault(x => x.Name.Equals(oldMetadataName, StringComparison.CurrentCultureIgnoreCase));
+                if (matchingMetadataResult?.Label != null)
+                {
+                    matchingMetadataResult.Name = metadataTypeLabel.Name;
+                    matchingMetadataResult.Label = metadataTypeLabel.Label;
+                    updateTasks.Add(mayanMetadataRepository.TryUpdateMetadataTypeAsync(matchingMetadataResult));
+                }
+            }
+
+            Task.WaitAll(updateTasks.ToArray());
+            foreach (var task in updateTasks)
+            {
+                batchResult.UpdatedMetadata.Add(task.Result);
+            }
+
+            return batchResult;
+        }
+
         public DocumentSyncResponse SyncPimsDocumentTypes(SyncModel model)
         {
             this.Logger.LogInformation("Synchronizing PIMS document types");
@@ -113,7 +148,7 @@ namespace Pims.Api.Services
 
             IList<PimsDocumentTyp> pimsDocumentTypes = documentTypeRepository.GetAll();
 
-            // Add the document types not in mayan
+            // Add the document to the pims db, update any existing values with the same name.
             IList<PimsDocumentTyp> createdDocumentTypes = new List<PimsDocumentTyp>();
             IList<PimsDocumentTyp> updatedDocumentTypes = new List<PimsDocumentTyp>();
             foreach (var documentTypeModel in model.DocumentTypes)
@@ -139,7 +174,8 @@ namespace Pims.Api.Services
                 {
                     if (!model.DocumentTypes.Any(x => x.Name == documentType.DocumentType))
                     {
-                        // TODO: currently there is no is_disabled field available for document types.
+                        documentType.IsDisabled = true;
+                        deletedDocumentTypes.Add(documentTypeRepository.Update(documentType));
                     }
                 }
             }
@@ -163,38 +199,28 @@ namespace Pims.Api.Services
             IList<PimsDocumentTyp> pimsDocumentTypes = documentTypeRepository.GetAll();
 
             // Add the document types not in mayan
-            IList<AddDocumentToMayanWithNameResponseModel> createResponseTasks = new List<AddDocumentToMayanWithNameResponseModel>();
+            IList<AddDocumentToMayanWithNameResponseModel> createMayanDocumentTypeTasks = new List<AddDocumentToMayanWithNameResponseModel>();
             IList<Task<ExternalResult<DocumentType>>> updateTasks = new List<Task<ExternalResult<DocumentType>>>();
             foreach (var pimsDocumentTyp in pimsDocumentTypes)
             {
                 var matchingTypeFromMayan = mayanDocumentTypes.Payload.Results.FirstOrDefault(x => x.Id == pimsDocumentTyp.MayanId);
                 if (matchingTypeFromMayan == null)
                 {
-                    createResponseTasks.Add(new AddDocumentToMayanWithNameResponseModel() { AddDocumentTypeTask = mayanDocumentRepository.TryCreateDocumentTypeAsync(new DocumentType() { Label = pimsDocumentTyp.DocumentTypeDescription }), Name = pimsDocumentTyp.DocumentType });
+                    createMayanDocumentTypeTasks.Add(new AddDocumentToMayanWithNameResponseModel() { AddDocumentTypeTask = mayanDocumentRepository.TryCreateDocumentTypeAsync(new DocumentType() { Label = pimsDocumentTyp.DocumentTypeDescription }), Name = pimsDocumentTyp.DocumentType });
                 }
                 else if (matchingTypeFromMayan.Label != pimsDocumentTyp.DocumentTypeDescription)
                 {
-                    // if the Mayan id is the same but the label or display order has changed, update the document type in PIMS.
+                    // if the label has changed, updated the label in mayan.
                     matchingTypeFromMayan.Label = pimsDocumentTyp.DocumentTypeDescription;
                     updateTasks.Add(mayanDocumentRepository.TryUpdateDocumentTypeAsync(matchingTypeFromMayan));
                 }
             }
-            Task.WaitAll(createResponseTasks.Select(x => x.AddDocumentTypeTask).Concat(updateTasks).ToArray());
+            Task.WaitAll(createMayanDocumentTypeTasks.Select(x => x.AddDocumentTypeTask).Concat(updateTasks).ToArray());
             foreach (var task in updateTasks)
             {
                 batchResult.UpdatedDocumentType.Add(task.Result);
             }
-            foreach (var task in createResponseTasks)
-            {
-                if (task != null && task.AddDocumentTypeTask.Result.HttpStatusCode == System.Net.HttpStatusCode.Created)
-                {
-                    var matchingPimsType = pimsDocumentTypes.FirstOrDefault(x => x.DocumentType == task.Name);
-                    matchingPimsType.MayanId = task.AddDocumentTypeTask.Result.Payload.Id;
-                    documentTypeRepository.Update(matchingPimsType);
-                }
-                batchResult.CreatedDocumentType.Add(task.AddDocumentTypeTask.Result);
-            }
-            documentTypeRepository.CommitTransaction();
+            AddMayanIdToPimsDocumentTypes(createMayanDocumentTypeTasks, pimsDocumentTypes, ref batchResult);
 
             pimsDocumentTypes = documentTypeRepository.GetAll(); // re-retrieve the document list from pims as it may have been updated.
             IList<Task<ExternalResult<string>>> deleteTasks = new List<Task<ExternalResult<string>>>();
@@ -219,6 +245,21 @@ namespace Pims.Api.Services
             SyncDocumentTypeMetadataTypes(model, pimsDocumentTypes, ref batchResult);
 
             return batchResult;
+        }
+
+        private void AddMayanIdToPimsDocumentTypes(IList<AddDocumentToMayanWithNameResponseModel> createMayanDocumentTypeTasks, IList<PimsDocumentTyp> pimsDocumentTypes, ref ExternalBatchResult batchResult)
+        {
+            foreach (var task in createMayanDocumentTypeTasks)
+            {
+                if (task != null && task.AddDocumentTypeTask.Result.HttpStatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    var matchingPimsType = pimsDocumentTypes.FirstOrDefault(x => x.DocumentType == task.Name);
+                    matchingPimsType.MayanId = task.AddDocumentTypeTask.Result.Payload.Id;
+                    documentTypeRepository.Update(matchingPimsType);
+                }
+                batchResult.CreatedDocumentType.Add(task.AddDocumentTypeTask.Result);
+            }
+            documentTypeRepository.CommitTransaction();
         }
 
         private void SyncDocumentTypeMetadataTypes(SyncModel model, IList<PimsDocumentTyp> pimsDocumentTypes, ref ExternalBatchResult batchResult)
@@ -252,10 +293,10 @@ namespace Pims.Api.Services
         {
             ExternalBatchResult batchResult = new ExternalBatchResult();
 
-            var documentType = retrievedDocumentTypes.FirstOrDefault(x => x.Id == pimsDocumentTyp.MayanId);
-            if (documentType?.Id != null)
+            var mayanDocumentType = retrievedDocumentTypes.FirstOrDefault(x => x.Id == pimsDocumentTyp.MayanId);
+            if (mayanDocumentType?.Id != null)
             {
-                ExternalResult<QueryResult<DocumentTypeMetadataType>> documentTypeMetadataTypes = await mayanDocumentRepository.TryGetDocumentTypeMetadataTypesAsync(documentType.Id, pageSize: 5000);
+                ExternalResult<QueryResult<DocumentTypeMetadataType>> documentTypeMetadataTypes = await mayanDocumentRepository.TryGetDocumentTypeMetadataTypesAsync(mayanDocumentType.Id, pageSize: 5000);
 
                 // Update the document type's metadata types
                 IList<Task<ExternalResult<DocumentTypeMetadataType>>> documentTypeMetadataTypeTasks = new List<Task<ExternalResult<DocumentTypeMetadataType>>>();
@@ -268,7 +309,7 @@ namespace Pims.Api.Services
                         MetadataType metadataType = retrievedMetadataTypes.FirstOrDefault(x => x.Name == metadataTypeModel.Name);
                         if (metadataType != null)
                         {
-                            documentTypeMetadataTypeTasks.Add(mayanDocumentRepository.TryCreateDocumentTypeMetadataTypeAsync(documentType.Id, metadataType.Id, metadataTypeModel.Required));
+                            documentTypeMetadataTypeTasks.Add(mayanDocumentRepository.TryCreateDocumentTypeMetadataTypeAsync(mayanDocumentType.Id, metadataType.Id, metadataTypeModel.Required));
                         }
                         else
                         {
@@ -284,7 +325,7 @@ namespace Pims.Api.Services
                     {
                         if (existingDocumentTypeMetadaType.Required != metadataTypeModel.Required)
                         {
-                            documentTypeMetadataTypeTasks.Add(mayanDocumentRepository.TryUpdateDocumentTypeMetadataTypeAsync(documentType.Id, existingDocumentTypeMetadaType.Id, metadataTypeModel.Required));
+                            documentTypeMetadataTypeTasks.Add(mayanDocumentRepository.TryUpdateDocumentTypeMetadataTypeAsync(mayanDocumentType.Id, existingDocumentTypeMetadaType.Id, metadataTypeModel.Required));
                         }
                     }
                 }
@@ -300,7 +341,7 @@ namespace Pims.Api.Services
                 {
                     if (documentTypeModel.MetadataTypes.FirstOrDefault(x => x.Name == documentTypeMetadataType.MetadataType.Name) == null)
                     {
-                        deleteTasks.Add(mayanDocumentRepository.TryDeleteDocumentTypeMetadataTypeAsync(documentType.Id, documentTypeMetadataType.Id));
+                        deleteTasks.Add(mayanDocumentRepository.TryDeleteDocumentTypeMetadataTypeAsync(mayanDocumentType.Id, documentTypeMetadataType.Id));
                     }
                 }
 

@@ -190,14 +190,14 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
                   data-testid="select-option-1"
                   value="1"
                 >
-                  SURV
+                  Survey
                 </option>
                 <option
                   class="option"
                   data-testid="select-option-2"
                   value="2"
                 >
-                  PRIVCOUN
+                  Privy Council
                 </option>
               </select>
             </div>
@@ -551,14 +551,14 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
                   data-testid="select-option-1"
                   value="1"
                 >
-                  SURV
+                  Survey
                 </option>
                 <option
                   class="option"
                   data-testid="select-option-2"
                   value="2"
                 >
-                  PRIVCOUN
+                  Privy Council
                 </option>
               </select>
             </div>

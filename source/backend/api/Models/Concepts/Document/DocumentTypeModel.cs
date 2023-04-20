@@ -28,6 +28,11 @@ namespace Pims.Api.Models.Concepts
         /// </summary>
         public long MayanId { get; set; }
 
+        /// <summary>
+        /// get/set - The document type is disabled and is maintained for reference only.
+        /// </summary>
+        public bool IsDisabled { get; set; }
+
         #endregion
     }
 }
