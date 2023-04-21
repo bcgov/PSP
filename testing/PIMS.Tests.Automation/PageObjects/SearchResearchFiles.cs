@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -82,13 +83,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchResearchFileResetButton).Click();
 
             Wait();
-            //ChooseSpecificSelectOption("input-researchFileStatusTypeCode", "All Status");
-            FocusAndClick(searchResearchFileButton);
+            webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
+            webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
 
             Wait();
-            webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
-            webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
-
+            ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
+            FocusAndClick(searchResearchFileButton);
         }
 
         public void SelectFirstResult()
@@ -136,19 +136,18 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchResearchPaginationList).Displayed);
         }
 
-        public void VerifyResearchFileTableContent(string name)
+        public void VerifyResearchFileTableContent(ResearchFile researchFile, string user)
         {
             Wait(1500);
 
             Assert.True(webDriver.FindElement(searchResearchFile1stResultLink).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultFileName).Text.Equals(name));
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultFileName).Text.Equals(researchFile.ResearchFileName));
             Assert.True(webDriver.FindElement(searchResearchFile1stResultRegion).Text != "");
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreator).Text.Equals("TRANPSP1"));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreateDate).Text != "");
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdatedBy).Text.Equals("TRANPSP1"));
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdateDate).Text != "");
-            Assert.True(webDriver.FindElement(searchResearchFile1stResultStatus).Text.Equals("Active"));
-
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreator).Text.Equals(user));
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultCreateDate).Text.Equals(GetTodayFormattedDate()));
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdatedBy).Text.Equals(user));
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultUpdateDate).Text.Equals(GetTodayFormattedDate()));
+            Assert.True(webDriver.FindElement(searchResearchFile1stResultStatus).Text.Equals(researchFile.Status));
         }
 
         public void FilterResearchFiles(string region, string name, string status, string roadName, string idir)

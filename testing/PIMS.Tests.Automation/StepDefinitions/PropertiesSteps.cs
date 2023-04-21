@@ -1,5 +1,10 @@
 ﻿
 
+using PIMS.Tests.Automation.Classes;
+using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
+using System.Data;
+
 namespace PIMS.Tests.Automation.StepDefinitions
 {
     [Binding]
@@ -8,6 +13,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LoginSteps loginSteps;
         private SearchProperties searchProperties;
         private PropertyInformation propertyInformation;
+        private readonly GenericSteps genericSteps;
 
         //private readonly string userName = "TRANPSP1";
         private readonly string userName = "sutairak";
@@ -26,12 +32,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private string cubeMts = "103.59";
         private string PropertyInfoNotes = "Automation Test - Properties Edit";
 
+        private Property property;
+
 
         public PropertiesSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
+            genericSteps = new GenericSteps(driver);
+            property = new Property();
         }
 
         [StepDefinition(@"I search for a Property in the Inventory by different filters")]
@@ -146,6 +156,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
+        [StepDefinition(@"I update a Property details from row number (.*)")]
+        public void UpdatePropertyDetailsFromFile(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-3460, PSP-3599, PSP-3600, PSP-3612, PSP-3722, PSP-3462, PSP-4791 */
+
+            //Navigate to Property Information Tab
+            propertyInformation.NavigatePropertyDetailsTab();
+
+            //Click on the Edit Property Information Button
+            propertyInformation.EditPropertyInfoResearchBttn();
+
+            //Insert some changes
+            PopulateProperty(rowNumber);
+            propertyInformation.UpdatePropertyDetails(property);
+
+            //Save changes
+            propertyInformation.SavePropertyDetails();
+        }
+
         [StepDefinition(@"LTSA Pop-up Information validation is successful")]
         public void ValidateLTSAPopUp()
         {
@@ -191,6 +220,46 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate correct tabs are displayed
             propertyInformation.VerifyNonInventoryPropertyTabs();
+        }
+
+        [StepDefinition(@"Property Information is displayed correctly")]
+        public void PropertyInformationViewDetailsSuccess()
+        {
+            /* TEST COVERAGE: PSP-4794 */
+            propertyInformation.NavigatePropertyDetailsTab();
+            propertyInformation.VerifyPropertyDetailsView("Research File");
+        }
+
+        private void PopulateProperty(int rowNumber)
+        {
+            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"];
+            ExcelDataContext.PopulateInCollection(propertiesSheet);
+
+            property.PropertyName = ExcelDataContext.ReadData(rowNumber, "PropertyName");
+            property.Address.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "AddressLine1");
+            property.Address.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "AddressLine2");
+            property.Address.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "AddressLine3");
+            property.Address.City = ExcelDataContext.ReadData(rowNumber, "City");
+            property.Address.PostalCode = ExcelDataContext.ReadData(rowNumber, "PostalCode");
+
+            property.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "MoTIRegion");
+            property.HighwaysDistrict = ExcelDataContext.ReadData(rowNumber, "HighwaysDistrict");
+            property.ElectoralDistrict = ExcelDataContext.ReadData(rowNumber, "ElectoralDistrict");
+            property.AgriculturalLandReserve = ExcelDataContext.ReadData(rowNumber, "AgriculturalLandReserve");
+            property.RailwayBelt = ExcelDataContext.ReadData(rowNumber, "RailwayBelt");
+            property.LandParcelType = ExcelDataContext.ReadData(rowNumber, "LandParcelType");
+            property.MunicipalZoning = ExcelDataContext.ReadData(rowNumber, "MunicipalZoning");
+            property.Anomalies = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "Anomalies"));
+
+            property.TenureStatus = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "TenureStatus"));
+            property.ProvincialPublicHwy = ExcelDataContext.ReadData(rowNumber, "ProvincialPublicHwy");
+            property.HighwayEstablishedBy = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "HighwayEstablishedBy"));
+            property.AdjacentLandType = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "AdjacentLandType"));
+            property.SqrMeters = ExcelDataContext.ReadData(rowNumber, "SqrMeters");
+            property.IsVolumetric = bool.Parse(ExcelDataContext.ReadData(rowNumber, "IsVolumetric"));
+            property.Volume = ExcelDataContext.ReadData(rowNumber, "Volume");
+            property.VolumeType = ExcelDataContext.ReadData(rowNumber, "VolumeType");
+            property.PropertyNotes = ExcelDataContext.ReadData(rowNumber, "Notes");
         }
     }
 }

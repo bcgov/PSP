@@ -1,6 +1,7 @@
 ﻿
 namespace PIMS.Tests.Automation.StepDefinitions
 {
+    [Binding]
     public class NotesSteps
     {
         private readonly SharedNotesTab sharedNotesTab;

@@ -111,6 +111,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void VerifyProjectsTableContent()
         {
             /* TEST COVERAGE: PSP-5319 */
+            searchProjects.VerifySearchView();
             searchProjects.VerifyViewSearchResult(project);
         }
 
@@ -132,6 +133,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             Assert.True(projects.duplicateProject());
         }
+
         private void PopulateProjectData(int rowNumber)
         {
             DataTable projectsSheet = ExcelDataContext.GetInstance().Sheets["Projects"];
@@ -145,8 +147,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             project.Summary = ExcelDataContext.ReadData(rowNumber, "Summary");
             project.CreatedBy = ExcelDataContext.ReadData(rowNumber, "CreatedBy");
             project.UpdatedBy = ExcelDataContext.ReadData(rowNumber, "UpdatedBy");
-            project.ProductsCount = Int32.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsCount"));
-            project.ProductsRowStart = Int32.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsRowStart"));
+            project.ProductsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsCount"));
+            project.ProductsRowStart = int.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsRowStart"));
             project.UpdateNumber = ExcelDataContext.ReadData(rowNumber, "UpdateNumber");
             project.UpdateName = ExcelDataContext.ReadData(rowNumber, "UpdateName");
             project.UpdateCodeName = ExcelDataContext.ReadData(rowNumber, "UpdateCodeName");
@@ -159,7 +161,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 PopulateProductCollection(project.ProductsRowStart, project.ProductsCount);
             }
         }
-        
+ 
         private void PopulateProductCollection(int startRow, int rowsCount)
         {
             DataTable projectProductsSheet = ExcelDataContext.GetInstance().Sheets["ProjectsProducts"];

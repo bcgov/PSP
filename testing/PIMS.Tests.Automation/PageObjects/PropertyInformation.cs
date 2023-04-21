@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Events;
+using PIMS.Tests.Automation.Classes;
 using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -49,8 +50,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyDetailsAddressNotAvailable = By.XPath("//b[contains(text(),'Property address not available')]");
         private By propertyDetailsAddressLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div/label");
         private By propertyDetailsAddressContent = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]");
+        private By propertyDetailsAddressContentDetails = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]");
         private By propertyDetailsAddressLine1Label = By.XPath("//label[contains(text(),'Address (line 1)')]");
-        private By propertyDetailsAddressLine1Content = By.XPath("//label[contains(text(),'Address')]/parent::div/following-sibling::div");
+       
         private By propertyDetailsCityLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[2]/div/label[contains(text(),'City')]");
         private By propertyDetailsCityContent = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[2]/div/label[contains(text(),'City')]/parent::div/following-sibling::div");
         private By propertyDetailsEditCityLabel = By.XPath("//Label[contains(text(),'City')]");
@@ -71,12 +73,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyDetailsAttrAgriLandDiv = By.XPath("//label[contains(text(),'Agricultural Land Reserve')]/parent::div/following-sibling::div");
         private By propertyDetailsAttrRailwayLabel = By.XPath("//label[contains(text(),'Railway belt / Dominion patent')]");
         private By propertyDetailsAttrRailwayDiv = By.XPath("//label[contains(text(),'Railway belt / Dominion patent')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrLandParcelLabel = By.XPath("//label[contains(text(),'Land parcel type')]");
-        private By propertyDetailsAttrLandParcelDiv = By.XPath("//label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
+        private By propertyDetailsAttrLandParcelLabel = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Land parcel type')]");
+        private By propertyDetailsAttrLandParcelDiv = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
         private By propertyDetailsAttrMunicipalLabel = By.XPath("//label[contains(text(),'Municipal zoning')]");
         private By propertyDetailsAttrMunicipalDiv = By.XPath("//label[contains(text(),'Municipal zoning')]/parent::div/following-sibling::div");
         private By propertyDetailsAttrAnomaliesLabel = By.XPath("//label[contains(text(),'Anomalies')]");
-        private By propertyDetailsAttrAnomaliesDiv = By.XPath("//label[contains(text(),'Anomalies')]/parent::div/following-sibling::div");
+        private By propertyDetailsAttrAnomaliesDiv = By.XPath("//label[contains(text(),'Anomalies')]/parent::div/following-sibling::div/div/div");
         private By propertyDetailsAttrCoordinatesLabel = By.XPath("//label[contains(text(),'Coordinates')]");
         private By propertyDetailsAttrCoordinatesDiv = By.XPath("//label[contains(text(),'Coordinates')]/parent::div/following-sibling::div");
 
@@ -116,6 +118,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyDetailsAddressAddLineBttn = By.XPath("//div[contains(text(),'Add an address line')]/parent::button");
         private By propertyDetailsAddressLine1Input = By.Id("input-address.streetAddress1");
         private By propertyDetailsAddressLine2Input = By.Id("input-address.streetAddress2");
+        private By propertyDetailsAddressLine3Input = By.Id("input-address.streetAddress3");
+        private By propertyDetailsAddressLineDeleteBttn = By.XPath("//*[@data-testid='remove-button']/parent::div/parent::button");
         private By propertyDetailsAddressCityInput = By.Id("input-address.municipality");
         private By propertyDetailsPostalCodeInput = By.Id("input-address.postal");
 
@@ -246,6 +250,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(propertyDetailsNotesTextarea).SendKeys(notes);
         }
 
+        //To-Do - Erase after updating AcquisitionFiles
         public void UpdateMaxPropertyDetails(string addressLine1, string addressLine2, string city, string postalCode, string municipalZoning, string sqMts, string cubeMts, string notes)
         {
 
@@ -254,10 +259,11 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(propertyDetailsAddressLine1Input).SendKeys(addressLine1);
 
             Wait();
-            if (webDriver.FindElements(propertyDetailsAddressLine2Input).Count > 1)
+            while (webDriver.FindElements(propertyDetailsAddressLineDeleteBttn).Count > 0)
             {
-                ClearInput(propertyDetailsAddressLine2Input);
+                webDriver.FindElement(propertyDetailsAddressLineDeleteBttn).Click();
             }
+           
             webDriver.FindElement(propertyDetailsAddressAddLineBttn).Click();
             webDriver.FindElement(propertyDetailsAddressLine2Input).SendKeys(addressLine2);
 
@@ -297,7 +303,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(propertyDetailsAdjacentLandTypeLabel).Click();
             }
 
-            ClearInput(propertyDetailsAreaSqMtsInput);
+            ClearDigitsInput(propertyDetailsAreaSqMtsInput);
             webDriver.FindElement(propertyDetailsAreaSqMtsInput).SendKeys(sqMts);
             FocusAndClick(propertyDetailsIsVolumeRadioYes);
 
@@ -307,6 +313,133 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseRandomSelectOption(propertyDetailsVolTypeSelect, 1);
             ClearInput(propertyDetailsNotesTextarea);
             webDriver.FindElement(propertyDetailsNotesTextarea).SendKeys(notes);
+        }
+
+        public void UpdatePropertyDetails(Property property)
+        {
+            Wait(5000);
+            if (property.Address.AddressLine1 != "")
+            {
+                ClearInput(propertyDetailsAddressLine1Input);
+                webDriver.FindElement(propertyDetailsAddressLine1Input).SendKeys(property.Address.AddressLine1);
+            }
+            if (property.Address.AddressLine2 != "")
+            {
+                if (webDriver.FindElements(propertyDetailsAddressLine2Input).Count > 0)
+                {
+                    ClearInput(propertyDetailsAddressLine2Input);
+                }
+                webDriver.FindElement(propertyDetailsAddressAddLineBttn).Click();
+                webDriver.FindElement(propertyDetailsAddressLine2Input).SendKeys(property.Address.AddressLine2);
+            }
+            if (property.Address.AddressLine3 != "")
+            {
+                if (webDriver.FindElements(propertyDetailsAddressLine3Input).Count > 0)
+                {
+                    ClearInput(propertyDetailsAddressLine3Input);
+                }
+                webDriver.FindElement(propertyDetailsAddressAddLineBttn).Click();
+                webDriver.FindElement(propertyDetailsAddressLine3Input).SendKeys(property.Address.AddressLine3);
+            }
+            if (property.Address.City != "")
+            {
+                ClearInput(propertyDetailsAddressCityInput);
+                webDriver.FindElement(propertyDetailsAddressCityInput).SendKeys(property.Address.City);
+            }
+            if (property.Address.PostalCode != "")
+            {
+                ClearInput(propertyDetailsPostalCodeInput);
+                webDriver.FindElement(propertyDetailsPostalCodeInput).SendKeys(property.Address.PostalCode);
+            }
+            if (property.MOTIRegion != "")
+            {
+                ChooseSpecificSelectOption(propertyDetailsMotiRegionSelect, property.MOTIRegion);
+            }
+            if (property.HighwaysDistrict != "")
+            {
+                ChooseSpecificSelectOption(propertyDetailsHighwayDistrictSelect, property.HighwaysDistrict);
+            }
+            if (property.RailwayBelt != "")
+            {
+                ChooseSpecificSelectOption(propertyDetailsRailwaySelect, property.RailwayBelt);
+            }
+            if (property.LandParcelType != "")
+            {
+                ChooseSpecificSelectOption(propertyDetailsLandTypeSelect, property.LandParcelType);
+            }
+            if (property.MunicipalZoning != "")
+            {
+                ClearInput(propertyDetailsMunicipalZoneInput);
+                webDriver.FindElement(propertyDetailsMunicipalZoneInput).SendKeys(property.MunicipalZoning);
+            }
+            if (!property.Anomalies.Any())
+            {
+                foreach (string anomaly in property.Anomalies)
+                {
+                    webDriver.FindElement(propertyDetailsAnomaliesInput).Click();
+                    ChooseMultiSelectSpecificOption(propertyDetailsAnomaliesOptions, anomaly);
+                    webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Click();
+                }
+            }
+            if (!property.TenureStatus.Any())
+            {
+                foreach (string status in property.TenureStatus)
+                {
+                    FocusAndClick(propertyDetailsTenureStatusInput);
+                    ChooseMultiSelectSpecificOption(propertyDetailsTenureOptions, status);
+                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
+                }
+            }
+            if (property.ProvincialPublicHwy != "")
+            {
+                ChooseSpecificSelectOption(propertyDetailsProvPublicHwy, property.ProvincialPublicHwy);
+            }
+            if (!property.HighwayEstablishedBy.Any())
+            {
+                foreach (string status in property.TenureStatus)
+                {
+                    webDriver.FindElement(propertyDetailsRoadEstablishInput).Click();
+                    ChooseMultiSelectSpecificOption(propertyDetailsRoadEstablishOptions, status);
+                    webDriver.FindElement(propertyDetailsHighwayRoadEstablishLabel).Click();
+                }
+            }
+            if (!property.AdjacentLandType.Any())
+            {
+                foreach (string status in property.TenureStatus)
+                {
+                    webDriver.FindElement(propertyDetailsAdjacentLandInput).Click();
+                    ChooseMultiSelectSpecificOption(propertyDetailsAdjacentLandOptions, status);
+                    webDriver.FindElement(propertyDetailsAdjacentLandTypeLabel).Click();
+                }               
+            }
+            if (property.SqrMeters != "")
+            {
+                ClearDigitsInput(propertyDetailsAreaSqMtsInput);
+                webDriver.FindElement(propertyDetailsAreaSqMtsInput).SendKeys(property.SqrMeters);
+            }
+            if (property.IsVolumetric)
+            {
+                FocusAndClick(propertyDetailsIsVolumeRadioYes);
+            }
+            else
+            {
+                FocusAndClick(propertyDetailsIsVolumeRadioNo);
+            }
+            Wait();
+            if (property.Volume != "")
+            {
+                ClearInput(propertyDetailsVolCubeMtsInput);
+                webDriver.FindElement(propertyDetailsVolCubeMtsInput).SendKeys(property.Volume);
+            }
+            if (property.VolumeType != "")
+            {
+                ChooseSpecificSelectOption(propertyDetailsVolTypeSelect, property.VolumeType);
+            }
+            if (property.PropertyNotes != "")
+            {
+                ClearInput(propertyDetailsNotesTextarea);
+                webDriver.FindElement(propertyDetailsNotesTextarea).SendKeys(property.PropertyNotes);
+            }
         }
 
         public void VerifyPropertyMapPopUpView()
@@ -353,7 +486,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
             }
 
-            
             if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
             {
                 Assert.True(webDriver.FindElement(propertyDetailsAddressNotAvailable).Displayed);
@@ -408,7 +540,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(webDriver.FindElement(propertyDetailsAdjacentLandTypeDiv).Displayed);
             }
 
-
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
             {
                 Assert.True(webDriver.FindElement(propertyDetailsFirstNationTitle).Displayed);
@@ -444,6 +575,125 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        public void VerifyUpdatePropertyDetailsView(string feature, Property property)
+        {
+            Wait();
+
+            if (feature == "Research File")
+            {
+                WaitUntil(propertyDetailsResearchEditBttn);
+                Assert.True(webDriver.FindElement(propertyDetailsResearchTitle).Displayed);
+            }
+            else
+            {
+                WaitUntil(propertyDetailsEditBttn);
+                Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
+            }
+
+            if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsAddressNotAvailable).Displayed);
+            }
+            else
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsAddressLabel).Displayed);
+                //To-Do: Address
+                Assert.True(webDriver.FindElement(propertyDetailsCityLabel).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsCityContent).Text.Equals(property.Address.City));
+                Assert.True(webDriver.FindElement(propertyDetailsProvinceLabel).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsProvinceContent).Text.Equals(property.Address.Province));
+                Assert.True(webDriver.FindElement(propertyDetailsPostalCodeLabel).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsPostalCodeContent).Text.Equals(property.Address.PostalCode));
+            }
+
+            Assert.True(webDriver.FindElement(propertyDetailsAttributesTitle).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAttrRegionLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAttrRegionDiv).Text.Equals(property.MOTIRegion));
+            Assert.True(webDriver.FindElement(propertyDetailsAttrHighwayLabel).Displayed);
+
+            var highWayDistrictText = webDriver.FindElement(propertyDetailsAttrHighwayDiv).Text;
+            Assert.True(GetSubstring(highWayDistrictText, 2, highWayDistrictText.Length).Equals(property.HighwaysDistrict));
+
+            Assert.True(webDriver.FindElement(propertyDetailsAttrElectoralLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAttrElectoralDiv).Text.Equals(property.ElectoralDistrict));
+            Assert.True(webDriver.FindElement(propertyDetailsAttrAgriLandLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAttrAgriLandDiv).Text.Equals(property.AgriculturalLandReserve));
+            Assert.True(webDriver.FindElement(propertyDetailsAttrRailwayLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAttrRailwayDiv).Text.Equals(property.RailwayBelt));
+            Assert.True(webDriver.FindElement(propertyDetailsAttrLandParcelLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAttrLandParcelDiv).Text.Equals(property.LandParcelType));
+            Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalDiv).Text.Equals(property.MunicipalZoning));
+            Assert.True(webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Displayed);
+            if (!property.Anomalies.Any())
+            {
+                var anomaliesUI = GetViewFieldListContent(propertyDetailsAttrAnomaliesDiv);
+                Assert.True(Enumerable.SequenceEqual(anomaliesUI, property.Anomalies));
+            }
+            Assert.True(webDriver.FindElement(propertyDetailsAttrCoordinatesLabel).Displayed);
+
+            Assert.True(webDriver.FindElement(propertyDetailsTenureTitle).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsTenureStatusLabel).Displayed);
+
+            if (!property.TenureStatus.Any())
+            {
+                var tenureStatusUI = GetViewFieldListContent(propertyDetailsTenureStatusDiv);
+                Assert.True(Enumerable.SequenceEqual(tenureStatusUI, property.TenureStatus));
+            }
+            Assert.True(webDriver.FindElement(propertyDetailsPublicHwyLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsPublicHwyDiv).Text.Equals(property.ProvincialPublicHwy));
+
+            if (webDriver.FindElements(propertyDetailsHighwayRoadEstablishLabel).Count() > 0)
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsHighwayRoadEstablishLabel).Displayed);
+                
+                var highwayEstablishedUI = GetViewFieldListContent(propertyDetailsHighwayRoadEstablisDiv);
+                Assert.True(Enumerable.SequenceEqual(highwayEstablishedUI, property.HighwayEstablishedBy));
+            }
+
+            if (webDriver.FindElements(propertyDetailsAdjacentLandTypeLabel).Count() > 0)
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsAdjacentLandTypeLabel).Displayed);
+
+                var adjacentLandTypeUI = GetViewFieldListContent(propertyDetailsAdjacentLandTypeDiv);
+                Assert.True(Enumerable.SequenceEqual(adjacentLandTypeUI, property.AdjacentLandType));
+            }
+
+            if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsFirstNationTitle).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsFirstNationBandNameLabel).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsFirstNationBandNameDiv).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsFirstNationReserveLabel).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsFirstNationReserveDiv).Displayed);
+            }
+
+            Assert.True(webDriver.FindElement(propertyDetailsMeasurementsTitle).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsMeasurementsAreaLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsMeasurementVolumeParcelLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAreaSqMtsLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAreaHtsLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAreaSqFeetLabel).Displayed);
+            Assert.True(webDriver.FindElement(propertyDetailsAreaAcresLabel).Displayed);
+
+            if (webDriver.FindElements(propertyDetailsMeasurementVolumeLabel).Count() > 0)
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsMeasurementVolumeLabel).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsMeasurementTypeLabel).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsAreaMtsCubeLabel).Displayed);
+                Assert.True(webDriver.FindElement(propertyDetailsAreaFeetCubeLabel).Displayed);
+            }
+
+            if (feature == "Research File")
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsResearchNotesTitle).Displayed);
+            }
+            else
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsViewNotesTitle).Displayed);
+            }
+        }
+
         public void VerifyPropertyDetailsEditForm(string feature)
         {
             Wait();
@@ -451,7 +701,10 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(propertyDetailsEditAddressTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsAddressLine1Label).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsAddressLine1Input).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAddressAddLineBttn).Displayed);
+            if (webDriver.FindElements(propertyDetailsAddressLine3Input).Count == 0)
+            {
+                Assert.True(webDriver.FindElement(propertyDetailsAddressAddLineBttn).Displayed);
+            }
             Assert.True(webDriver.FindElement(propertyDetailsEditCityLabel).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsAddressCityInput).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsEditPostalCodeLabel).Displayed);
@@ -528,7 +781,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(webDriver.FindElement(propertyDetailsVolCubeMtsInput).Displayed);
                 Assert.True(webDriver.FindElement(propertyDetailsAreaFeetCubeLabel).Displayed);
                 Assert.True(webDriver.FindElement(propertyDetailsVolCubeFeetInput).Displayed);
-                
             }
 
             if (feature == "Property Information")

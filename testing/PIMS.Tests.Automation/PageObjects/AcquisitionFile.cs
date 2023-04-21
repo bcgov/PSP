@@ -22,10 +22,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileHeaderProjectContent = By.XPath("//label[contains(text(), 'Ministry project')]/parent::div/following-sibling::div[1]/strong");
         private By acquisitionFileHeaderCreatedDateLabel = By.XPath("//span[contains(text(), 'Created')]");
         private By acquisitionFileHeaderCreatedDateContent = By.XPath("//span[contains(text(), 'Created')]/strong");
-        private By acquisitionFileHeaderCreatedByContent = By.XPath("//span[contains(text(),'Created')]/span[@id='userNameTooltip']/span");
+        private By acquisitionFileHeaderCreatedByContent = By.XPath("//span[contains(text(),'Created')]/span[@id='userNameTooltip']/strong");
         private By acquisitionFileHeaderLastUpdateLabel = By.XPath("//span[contains(text(), 'Last updated')]");
         private By acquisitionFileHeaderLastUpdateContent = By.XPath("//span[contains(text(), 'Last updated')]/strong");
-        private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//span[contains(text(), 'Last updated')]//span[@id='userNameTooltip']/span");
+        private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//span[contains(text(), 'Last updated')]//span[@id='userNameTooltip']/strong");
         private By acquisitionFileHeaderStatusLabel = By.XPath("//label[contains(text(),'Status')]");
         private By acquisitionFileHeaderStatusContent = By.XPath("//label[contains(text(),'Status')]/parent::div/following-sibling::div[1]/strong");
 
@@ -147,9 +147,9 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionFileProjectInput).SendKeys(project);
             FocusAndClick(acquisitionFileProject1stOption);
 
-            Wait();
-            ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, product);
-            ChooseRandomSelectOption(acquisitionFileProjectFundingInput, 1);
+            //Wait();
+            //ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, product);
+            //ChooseRandomSelectOption(acquisitionFileProjectFundingInput, 1);
 
             if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
             {
@@ -250,7 +250,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
                 {
                     Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-                    Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this acquisition file will not be saved."));
+                    Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this form will not be saved."));
                     Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
                     sharedModals.ModalClickOKBttn();
                 }

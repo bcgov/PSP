@@ -8,28 +8,17 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         protected readonly IWebDriver webDriver;
 
-        protected By toastifyMessage = By.CssSelector("div[class='Toastify__toast-body']");
-
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
         }
 
-        public virtual string CurrentLocation => new Uri(webDriver.Url).AbsolutePath;
-
         public virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
-
 
         public void WaitUntil(By element)
         {
             var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
             wait.Until(ExpectedConditions.ElementIsVisible(element));
-        }
-
-        public void WaitUntilInteractable(By element)
-        {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
-            wait.Until(ExpectedConditions.ElementToBeClickable(element));
         }
 
         protected void ButtonElement(string btnContent)
@@ -124,10 +113,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void ChooseMultiSelectSpecificOption(By element, string option)
         {
-            
             var js = (IJavaScriptExecutor)webDriver;
 
-            
             var parentElement = webDriver.FindElement(element);
             var childrenElements = parentElement.FindElements(By.TagName("li"));
             var selectedOption = childrenElements.Should().ContainSingle(o => o.Text.Equals(option)).Subject;
@@ -136,7 +123,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
              Wait();
              selectedOption.Click();
-            
         }
 
         protected void ChooseMultiSelectRandomOptions(By element, int options)
@@ -168,10 +154,37 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        protected void ClearDigitsInput(By elementBy)
+        {
+            var element = webDriver.FindElement(elementBy);
+            while (!element.GetAttribute("value").Equals("0"))
+            {
+                element.SendKeys(Keys.Backspace);
+            }
+        }
+
+        protected void ClearMultiSelectInput(By elementBy)
+        {
+            var parentElement = webDriver.FindElement(elementBy);
+            var childrenElement = parentElement.FindElements(By.TagName("span"));
+
+            foreach (var element in childrenElement)
+            {
+                element.FindElement(By.TagName("i")).Click();
+            }
+        }
+
         protected string TransformDateFormat(string date)
         {
-            var dateObject = DateTime.Parse(date);
-            return dateObject.ToString("MMM dd, yyyy");
+            if (date == "")
+            {
+                return "";
+            }
+            else
+            {
+                var dateObject = DateTime.Parse(date);
+                return dateObject.ToString("MMM d, yyyy");
+            }
         }
 
         protected string TransformCurrencyFormat(string amount)
@@ -179,6 +192,41 @@ namespace PIMS.Tests.Automation.PageObjects
             decimal value = decimal.Parse(amount);
             return "$" + value.ToString("#,##0.00");
         }
-    }
 
+        protected List<string> GetProjects(By element)
+        {
+            var result = new List<string>();
+            var projectNames = webDriver.FindElements(element);
+            foreach (var projectName in projectNames)
+            {
+                result.Add(projectName.Text);
+            }
+            result.Sort();
+            return result;
+        }
+
+        protected List<string> GetViewFieldListContent(By element)
+        {
+            var result = new List<string>();
+            var parentElement = webDriver.FindElement(element);
+            var childrenElements = parentElement.FindElements(By.TagName("span"));
+            foreach (var childElement in childrenElements)
+            {
+                result.Add(childElement.Text);
+            }
+            result.Sort();
+            return result;
+        }
+
+        protected string GetTodayFormattedDate()
+        {
+            DateTime thisDay = DateTime.Today;
+            return thisDay.ToString("MMM d, yyyy");
+        }
+
+        protected string GetSubstring(string input, int startIndex, int endIndex)
+        {
+            return input.Substring(startIndex, endIndex);
+        }
+    }
 }

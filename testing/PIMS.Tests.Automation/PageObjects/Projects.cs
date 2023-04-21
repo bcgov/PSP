@@ -40,7 +40,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By productObjectiveInput = By.Id("input-products.0.objective");
         private By productScopeLabel = By.XPath("//label[contains(text(),'Scope')]");
         private By productScopeInput = By.Id("input-products.0.scope");
-        private By productDeleteButton = By.CssSelector("button[title='Delete Note']");
+        private By productDeleteButton = By.CssSelector("button[title='Delete Project']");
 
         //View Project Form Elements
         private By projectViewTitle = By.XPath("//h1[contains(text(),'Project')]");
@@ -213,7 +213,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void DeleteProduct(int productIndex)
         {
             Wait();
-            By deleteButtonElement = By.XPath("//div[@class='collapse show']/div["+ productIndex +"]/div/div/button[@title='Delete Note']");
+            By deleteButtonElement = By.XPath("//div[@class='collapse show']/div["+ productIndex +"]/div/div/button[@title='Delete Project']");
             webDriver.FindElement(deleteButtonElement).Click();
 
             if (webDriver.FindElements(deleteProductModal).Count > 0)
@@ -287,6 +287,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             DateTime thisDay = DateTime.Today;
             string today = thisDay.ToString("MMM dd, yyyy");
+
+            Wait();
 
             //Header
             Assert.True(webDriver.FindElement(projectViewTitle).Displayed);
