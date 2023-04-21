@@ -65,3 +65,18 @@ export const ArrowDropUpIcon = styled(MdArrowDropUp)`
   float: right;
   cursor: pointer;
 `;
+
+export const StyledSummarySection = styled.div`
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+`;
+
+export const StyledEditWrapper = styled.div`
+  color: ${props => props.theme.css.primary};
+
+  text-align: right;
+`;
+
+export const StyledSubtleText = styled.p`
+  color: ${props => props.theme.css.subtleColor};
+  text-align: left;
+`;

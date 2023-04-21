@@ -93,18 +93,19 @@ namespace Pims.Dal.Helpers.Extensions
         /// Expects to be passed a complete list of child entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children passed to this method.
         /// </summary>
-        /// <typeparam name="T_Entity">The parent entity type.</typeparam>
-        /// <typeparam name="T_Id">The type of the id property.</typeparam>
+        /// <typeparam name="T_ParentEntity">The parent entity type.</typeparam>
+        /// <typeparam name="T_ParentId">The type of the parent id property.</typeparam>
         /// <typeparam name="T_ChildEntity">The type of the child navigation property being targeted for updates.</typeparam>
+        /// <typeparam name="T_ChildId">The type of the child id property.</typeparam>
         /// <param name="context"></param>
         /// <param name="childNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="children"></param>
-        public static void UpdateChild<T_Entity, T_Id, T_ChildEntity>(this PimsContext context, Expression<Func<T_Entity, object>> childNavigation, T_Id parentId, T_ChildEntity[] children, bool updateChildValues = true)
-            where T_Entity : StandardIdentityBaseAppEntity<T_Id>
-            where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
+        public static void UpdateChild<T_ParentEntity, T_ParentId, T_ChildEntity, T_ChildId>(this PimsContext context, Expression<Func<T_ParentEntity, object>> childNavigation, T_ParentId parentId, T_ChildEntity[] children, bool updateChildValues = true)
+            where T_ParentEntity : StandardIdentityBaseAppEntity<T_ParentId>
+            where T_ChildEntity : StandardIdentityBaseAppEntity<T_ChildId>
         {
-            var dbEntity = context.Find<T_Entity>(parentId);
+            var dbEntity = context.Find<T_ParentEntity>(parentId);
 
             var dbEntry = context.Entry(dbEntity);
 
@@ -113,12 +114,12 @@ namespace Pims.Dal.Helpers.Extensions
             var accessor = dbItemsEntry.Metadata.GetCollectionAccessor();
 
             dbItemsEntry.Load();
-            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<StandardIdentityBaseAppEntity<T_Id>>()
+            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<StandardIdentityBaseAppEntity<T_ChildId>>()
                 .ToDictionary(e => e.Internal_Id);
 
             foreach (var item in children)
             {
-                if (!dbItemsMap.TryGetValue(item.Internal_Id, out var oldItem))
+                if (item.Internal_Id == null || !dbItemsMap.TryGetValue(item.Internal_Id, out var oldItem))
                 {
                     accessor.Add(dbEntity, item, false);
                 }

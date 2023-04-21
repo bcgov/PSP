@@ -6,7 +6,11 @@ exports[`ResearchSummaryView component renders as expected when research file is
     class="Toastify"
   />
   <div />
-  .c2 {
+  .c0 {
+  text-align: right;
+}
+
+.c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -29,10 +33,6 @@ exports[`ResearchSummaryView component renders as expected when research file is
 
 .c3 {
   font-weight: bold;
-}
-
-.c0 {
-  text-align: right;
 }
 
 <div

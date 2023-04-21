@@ -2,7 +2,7 @@ import { SelectOption } from 'components/common/form';
 import { mapLookupCode } from 'utils/mapLookupCode';
 
 import { ILookupCode } from './../store/slices/lookupCodes/interfaces/ILookupCode';
-export const mockLookups: Partial<ILookupCode>[] = [
+export const mockLookups: ILookupCode[] = [
   {
     id: 'ACRE',
     name: 'Acres',
@@ -2123,7 +2123,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 6,
-    key: 'e157eb8b-8122-4b0f-9176-ae74682d7f5c',
+    key: '2d098937-aad4-480b-a092-7923aba45a4e',
     name: 'Finance',
     description: 'Finance team members.',
     isDisabled: false,
@@ -2134,7 +2134,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 7,
-    key: 'e963e11f-3c82-4710-8151-9db8997994ba',
+    key: '1e47d281-eba3-447f-b967-236ae053df34',
     name: 'Functional',
     description: 'PLMB staff (includes team members from HQ, regions and districts).',
     isDisabled: false,
@@ -2145,7 +2145,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 8,
-    key: 'd9adc114-8d6a-496c-9f95-77de4e1dc6b2',
+    key: '04e9e670-61a0-4b99-9142-980032bf0ced',
     name: 'Functional (Restricted)',
     description: 'Contractors, Internal ministry staff.',
     isDisabled: false,
@@ -2156,7 +2156,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 2,
-    key: 'fe89354a-ee69-4af7-a167-d7271c6ace05',
+    key: 'a9a8c78f-551c-4d70-a8dd-f8a55e4acfa9',
     name: 'Organization Administrator',
     description: "Administrator of the user's organization.",
     isDisabled: true,
@@ -2167,7 +2167,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 9,
-    key: '0b4f9a8a-d8fc-4873-842a-718908ee6437',
+    key: '041c49bb-eb77-4904-b5a2-3fbf4f7d1c24',
     name: 'Read Only',
     description: 'Other ministries (e.g. Attorney General).',
     isDisabled: false,
@@ -2178,7 +2178,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 5,
-    key: 'ad47d199-ff34-4a81-92ec-cae43bdf391c',
+    key: 'e141ba9e-b00a-4af4-b56a-05956a443955',
     name: 'Real Estate Analyst',
     description: 'Real Estate Analyst can manage properties within their organization.',
     isDisabled: true,
@@ -2189,7 +2189,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 4,
-    key: '7acce397-c69d-416b-807f-cfd5e55db51b',
+    key: 'fdba3768-8f34-4467-9815-3be9258d7487',
     name: 'Real Estate Manager',
     description: 'Real Estate Manager can manage properties within their agency.',
     isDisabled: true,
@@ -2200,7 +2200,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 1,
-    key: '669b521a-f949-40c5-96ea-1fc81f8f3c5b',
+    key: '7dfd7a98-4043-4ff8-8d2c-b1bb92c09d95',
     name: 'System Administrator',
     description: 'System Administrator of the PIMS solution.',
     isDisabled: false,
@@ -2211,7 +2211,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 3,
-    key: 'e1aeb98c-e24e-49bb-8412-09a7ceaced7a',
+    key: 'aabcb931-6585-428d-af12-349bcbdb5ae2',
     name: 'Undetermined',
     description: 'The user has an undetermined role with their organization.',
     isDisabled: true,
@@ -3373,6 +3373,14 @@ export const mockLookups: Partial<ILookupCode>[] = [
     rowVersion: 0,
   },
   {
+    id: 'MOTILAWYER',
+    name: 'MoTI Solicitor',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsAcqFlPersonProfileType',
+    rowVersion: 0,
+  },
+  {
     id: 'NEGOTAGENT',
     name: 'Negotiation agent',
     isDisabled: false,
@@ -3578,7 +3586,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsFormType',
-    rowVersion: 0,
+    rowVersion: 1,
   },
   {
     id: 'H179A',
@@ -3586,7 +3594,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsFormType',
-    rowVersion: 0,
+    rowVersion: 1,
   },
   {
     id: 'H179P',
@@ -3594,7 +3602,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsFormType',
-    rowVersion: 0,
+    rowVersion: 1,
   },
   {
     id: 'H179T',
@@ -3602,7 +3610,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsFormType',
-    rowVersion: 0,
+    rowVersion: 1,
   },
   {
     id: '1STNATION',
@@ -3818,6 +3826,38 @@ export const mockLookups: Partial<ILookupCode>[] = [
     isDisabled: false,
     displayOrder: 3,
     type: 'PimsAcqChklstItemStatusType',
+    rowVersion: 0,
+  },
+  {
+    id: 'H179T',
+    name: 'Total Agreement (H179T)',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsAgreementType',
+    rowVersion: 0,
+  },
+  {
+    id: 'H179P',
+    name: 'Partial Agreement (H179P)',
+    isDisabled: false,
+    displayOrder: 2,
+    type: 'PimsAgreementType',
+    rowVersion: 0,
+  },
+  {
+    id: 'H179A',
+    name: 'Section 3 Agreement (H179A)',
+    isDisabled: false,
+    displayOrder: 3,
+    type: 'PimsAgreementType',
+    rowVersion: 0,
+  },
+  {
+    id: 'H0074',
+    name: 'License Of Occupation (H0074)',
+    isDisabled: false,
+    displayOrder: 4,
+    type: 'PimsAgreementType',
     rowVersion: 0,
   },
 ];

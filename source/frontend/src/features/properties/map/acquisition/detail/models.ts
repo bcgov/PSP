@@ -51,6 +51,7 @@ export class DetailAcquisitionFilePerson {
 }
 
 export class DetailAcquisitionFileOwner {
+  isPrimary?: boolean;
   ownerName?: string;
   ownerOtherName?: string;
   ownerDisplayAddress?: string;
@@ -59,6 +60,7 @@ export class DetailAcquisitionFileOwner {
 
   static fromApi(owner: Api_AcquisitionFileOwner): DetailAcquisitionFileOwner {
     return {
+      isPrimary: owner.isPrimaryContact,
       ownerName: getOwnerDisplayName(owner),
       ownerOtherName: owner.otherName?.trim() || '',
       ownerDisplayAddress: getFormattedAddress(owner.address),

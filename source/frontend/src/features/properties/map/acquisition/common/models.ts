@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
 import { Api_Address } from 'models/api/Address';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { fromTypeCode, toTypeCode } from 'utils/formUtils';
+import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
 
 export interface WithAcquisitionTeam {
   team: AcquisitionTeamFormModel[];
@@ -44,6 +44,7 @@ export class AcquisitionOwnerFormModel {
   id?: number;
   rowVersion?: number;
   acquisitionFileId?: number;
+  isPrimaryContact: string = 'false';
   isOrganization: string = 'false';
   lastNameAndCorpName: string | '' = '';
   otherName: string | '' = '';
@@ -55,18 +56,18 @@ export class AcquisitionOwnerFormModel {
   address?: OwnerAddressFormModel;
 
   isEmpty(): boolean {
-    if (this.isOrganization) {
+    if (this.isOrganization === 'true') {
       return (
-        this.lastNameAndCorpName?.trim() === '' &&
-        this.otherName?.trim() === '' &&
-        this.incorporationNumber?.trim() === '' &&
-        this.registrationNumber?.trim() === ''
+        this.lastNameAndCorpName.trim() === '' &&
+        this.otherName.trim() === '' &&
+        this.incorporationNumber.trim() === '' &&
+        this.registrationNumber.trim() === ''
       );
     } else {
       return (
-        this.givenName?.trim() === '' &&
-        this.lastNameAndCorpName?.trim() === '' &&
-        this.otherName?.trim() === ''
+        this.givenName.trim() === '' &&
+        this.lastNameAndCorpName.trim() === '' &&
+        this.otherName.trim() === ''
       );
     }
   }
@@ -76,10 +77,17 @@ export class AcquisitionOwnerFormModel {
       id: this.id,
       rowVersion: this.rowVersion,
       acquisitionFileId: this.acquisitionFileId,
+      isPrimaryContact: stringToBoolean(this.isPrimaryContact),
       isOrganization: this.isOrganization === 'true' ? true : false,
-      lastNameAndCorpName: this.lastNameAndCorpName,
-      otherName: this.otherName,
-      givenName: this.isOrganization === 'true' ? null : this.givenName.trim(),
+      lastNameAndCorpName:
+        this.lastNameAndCorpName.trim() === '' ? null : this.lastNameAndCorpName.trim(),
+      otherName: this.otherName.trim() === '' ? null : this.otherName.trim(),
+      givenName:
+        this.isOrganization === 'true'
+          ? null
+          : this.givenName.trim() === ''
+          ? null
+          : this.givenName.trim(),
       incorporationNumber:
         this.isOrganization === 'true'
           ? this.incorporationNumber.trim() === ''
@@ -105,6 +113,7 @@ export class AcquisitionOwnerFormModel {
     newForm.id = model.id;
     newForm.rowVersion = model.rowVersion;
     newForm.acquisitionFileId = model.acquisitionFileId;
+    newForm.isPrimaryContact = model.isPrimaryContact ? 'true' : '';
     newForm.isOrganization = model.isOrganization ? 'true' : 'false';
     newForm.lastNameAndCorpName = model.lastNameAndCorpName || '';
     newForm.otherName = model.otherName || '';
@@ -174,8 +183,8 @@ export class OwnerAddressFormModel {
       id: model.id,
       rowVersion: model.rowVersion,
       streetAddress1: model.streetAddress1,
-      streetAddress2: model.streetAddress2,
-      streetAddress3: model.streetAddress3,
+      streetAddress2: stringToNull(model.streetAddress2),
+      streetAddress3: stringToNull(model.streetAddress3),
       municipality: model.municipality,
       postal: model.postal,
       provinceStateId: isEmpty(model.provinceId) ? undefined : Number(model.provinceId),

@@ -75,6 +75,31 @@ exports[`AcquisitionHeader component renders as expected when no data is provide
           </div>
         </div>
       </div>
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label>
+                Ministry product:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+              data-testid="acq-header-product-val"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div
       class="col-5"

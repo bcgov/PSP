@@ -176,7 +176,7 @@ namespace Pims.Api.Services
             return notes;
         }
 
-        private void ValidateVersion(long noteId, long noteVersion)
+        private void ValidateVersion(long noteId, long? noteVersion)
         {
             long currentRowVersion = _noteRepository.GetRowVersion(noteId);
             if (currentRowVersion != noteVersion)

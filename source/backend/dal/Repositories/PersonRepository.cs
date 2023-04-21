@@ -135,8 +135,8 @@ namespace Pims.Dal.Repositories
             this.Context.Entry(existingPerson).CurrentValues.SetValues(person);
 
             // update direct relationships - contact_methods, organizations
-            this.Context.UpdateChild<PimsPerson, long, PimsContactMethod>(p => p.PimsContactMethods, personId, person.PimsContactMethods.ToArray());
-            this.Context.UpdateChild<PimsPerson, long, PimsPersonOrganization>(p => p.PimsPersonOrganizations, personId, person.PimsPersonOrganizations.ToArray());
+            this.Context.UpdateChild<PimsPerson, long, PimsContactMethod, long>(p => p.PimsContactMethods, personId, person.PimsContactMethods.ToArray());
+            this.Context.UpdateChild<PimsPerson, long, PimsPersonOrganization, long>(p => p.PimsPersonOrganizations, personId, person.PimsPersonOrganizations.ToArray());
 
             // Can only delete an associated address if not shared with an organization. Only applies to MAILING address.
             Func<PimsContext, PimsPersonAddress, bool> canDeleteGrandchild = (context, pa) => !context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId);

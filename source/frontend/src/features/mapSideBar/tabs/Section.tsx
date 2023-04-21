@@ -7,7 +7,6 @@ import { ArrowDropDownIcon, ArrowDropUpIcon } from './SectionStyles';
 
 interface SectionProps {
   header?: React.ReactNode;
-  title?: string;
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
 }

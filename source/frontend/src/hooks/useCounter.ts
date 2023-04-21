@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface ICounterProps {
   initial?: number; // default = 0
@@ -18,6 +18,10 @@ export default function useCounter({ initial = 0, min, max }: ICounterProps) {
   //   1. if no "range" passed to this hook, it will increment/decrement the counter indefinitely
   //   2. if "range [min, max]" was provided, it will increment/decrement the counter until it reaches the maximum.
   const [count, setCount] = useState(initial);
+
+  useEffect(() => {
+    setCount(initial);
+  }, [initial]);
 
   const increment = useCallback(() => {
     if (max === undefined) {
