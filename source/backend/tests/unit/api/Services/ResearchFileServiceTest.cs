@@ -33,7 +33,7 @@ namespace Pims.Api.Test.Services
         private ResearchFileService CreateResearchFileServiceWithPermissions(params Permissions[] permissions)
         {
             ClaimsPrincipal user = PrincipalHelper.CreateForPermission(permissions);
-            //user.("idir_username", "Test_User_Name");
+            user.AddClaim("idir_username", "TestIdirUsername@domain");
             _helper.CreatePimsContext(user, true);
             return _helper.Create<ResearchFileService>();
         }

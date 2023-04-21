@@ -63,7 +63,6 @@ namespace Pims.Core.Test
             {
                 new Claim("idir_user_guid", Guid.NewGuid().ToString().Replace("-", string.Empty)),
                 new Claim(ClaimTypes.Email, "test@test.com"),
-                new Claim("idir_username", "TestIdirUsername@testdomain"),
             };
 
             foreach (var claim in permission)
