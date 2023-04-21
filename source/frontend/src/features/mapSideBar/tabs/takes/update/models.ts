@@ -28,6 +28,10 @@ export const TakesYupSchema = Yup.object().shape({
           .required('Required when flag is true')
           .moreThan(0, 'Must be greater than 0 when flag is true'),
       }),
+      ltcEndDt: Yup.string().when('isLicenseToConstruct', {
+        is: (isLicenseToConstruct: boolean) => isLicenseToConstruct,
+        then: Yup.string().required('End Date is required'),
+      }),
       newRightOfWayArea: Yup.number().when('isNewRightOfWay', {
         is: (isNewRightOfWay: boolean) => isNewRightOfWay,
         then: Yup.number()
@@ -40,6 +44,11 @@ export const TakesYupSchema = Yup.object().shape({
           .required('Required when flag is true')
           .moreThan(0, 'Must be greater than 0 when flag is true'),
       }),
+      landActEndDt: Yup.string().when('isLandAct', {
+        is: (isLandAct: boolean) => isLandAct,
+        then: Yup.string().required('End Date is required'),
+      }),
+      landActDescription: Yup.string().max(4000, 'Description must be at most ${max} characters'),
       statutoryRightOfWayArea: Yup.number().when('isStatutoryRightOfWay', {
         is: (isStatutoryRightOfWay: boolean) => isStatutoryRightOfWay,
         then: Yup.number()
@@ -65,13 +74,14 @@ export class TakeModel {
   newRightOfWayAreaUnitTypeCode: string;
   landActArea: number;
   landActAreaUnitTypeCode: string;
+  landActEndDt: string;
+  landActDescription: string;
   statutoryRightOfWayArea: number;
   statutoryRightOfWayAreaUnitTypeCode: string;
   surplusArea: number;
   surplusAreaUnitTypeCode: string;
-  landActEndDt: string;
   propertyAcquisitionFileId: number | null;
-  takeSiteContamTypeCode: string | null;
+  takeSiteContamTypeCode: string | null = 'UNK';
   takeTypeCode: string | null;
   takeStatusTypeCode: string | null;
   rowVersion?: number;
@@ -100,10 +110,11 @@ export class TakeModel {
       base.areaUnitTypeCode ?? AreaUnitTypes.SquareMeters.toString();
     this.takeTypeCode = base.takeTypeCode;
     this.takeStatusTypeCode = base.takeStatusTypeCode;
-    this.takeSiteContamTypeCode = base.takeSiteContamTypeCode;
+    this.takeSiteContamTypeCode = base.takeSiteContamTypeCode ? base.takeSiteContamTypeCode : 'UNK';
     this.propertyAcquisitionFileId = base.propertyAcquisitionFileId;
     this.landActEndDt = base.landActEndDt ?? '';
     this.ltcEndDt = base.ltcEndDt ?? '';
+    this.landActDescription = base.landActDescription ?? '';
   }
 
   toApi(): Api_Take {
@@ -145,6 +156,7 @@ export class TakeModel {
         ) || null,
       ltcEndDt: stringToNull(this.ltcEndDt),
       landActEndDt: stringToNull(this.landActEndDt),
+      landActDescription: stringToNull(this.landActDescription),
       isSurplus: this.isSurplus === 'true',
       isNewRightOfWay: this.isNewRightOfWay === 'true',
       isLandAct: this.isLandAct === 'true',

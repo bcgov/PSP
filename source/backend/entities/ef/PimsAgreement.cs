@@ -15,8 +15,7 @@ namespace Pims.Dal.Entities
     {
         [Key]
         [Column("AGREEMENT_ID")]
-        [StringLength(40)]
-        public string AgreementId { get; set; }
+        public long AgreementId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
         [Required]

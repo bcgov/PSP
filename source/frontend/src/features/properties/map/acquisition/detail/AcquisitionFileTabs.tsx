@@ -1,24 +1,26 @@
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
 import { NoteTypes } from 'constants/noteTypes';
-import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
+import { FileTabs, FileTabType, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
 import NoteListView from 'features/notes/list/NoteListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
 
 import { ActivityListView } from '../../activity/list/ActivityListView';
+import AgreementContainer from '../../agreement/detail/AgreementContainer';
+import AgreementView from '../../agreement/detail/AgreementView';
 import { FormListView } from '../../form/list/FormListView';
 import FormListViewContainer from '../../form/list/FormListViewContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
-import { EditFormNames } from '../EditFormNames';
+import { EditFormType } from '../EditFormNames';
 import { AcquisitionChecklistView } from './checklist/AcquisitionChecklistView';
 import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
 import AcquisitionSummaryView from './fileDetails/AcquisitionSummaryView';
 
 export interface IAcquisitionFileTabsProps {
   acquisitionFile?: Api_AcquisitionFile;
-  defaultTab: FileTabNames;
+  defaultTab: FileTabType;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
@@ -37,13 +39,13 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
         onEdit={() =>
           setContainerState({
             isEditing: true,
-            activeEditForm: EditFormNames.acquisitionSummary,
-            defaultFileTab: FileTabNames.fileDetails,
+            activeEditForm: EditFormType.ACQUISITION_SUMMARY,
+            defaultFileTab: FileTabType.FILE_DETAILS,
           })
         }
       />
     ),
-    key: FileTabNames.fileDetails,
+    key: FileTabType.FILE_DETAILS,
     name: 'File details',
   });
 
@@ -54,13 +56,13 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
         onEdit={() =>
           setContainerState({
             isEditing: true,
-            activeEditForm: EditFormNames.acquisitionChecklist,
-            defaultFileTab: FileTabNames.checklist,
+            activeEditForm: EditFormType.ACQUISITION_CHECKLIST,
+            defaultFileTab: FileTabType.CHECKLIST,
           })
         }
       />
     ),
-    key: FileTabNames.checklist,
+    key: FileTabType.CHECKLIST,
     name: 'Checklist',
   });
 
@@ -72,7 +74,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           fileType={FileTypes.Acquisition}
         ></ActivityListView>
       ),
-      key: FileTabNames.activities,
+      key: FileTabType.ACTIVITIES,
       name: 'Activities',
     });
   }
@@ -86,7 +88,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           fileType={FileTypes.Acquisition}
         ></FormListViewContainer>
       ),
-      key: FileTabNames.forms,
+      key: FileTabType.FORMS,
       name: 'Forms',
     });
   }
@@ -94,7 +96,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   if (acquisitionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: <AcquisitionDocumentsTab acquisitionFileId={acquisitionFile.id} />,
-      key: FileTabNames.documents,
+      key: FileTabType.DOCUMENTS,
       name: 'Documents',
     });
   }
@@ -102,19 +104,42 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   if (acquisitionFile?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: <NoteListView type={NoteTypes.Acquisition_File} entityId={acquisitionFile?.id} />,
-      key: FileTabNames.notes,
+      key: FileTabType.NOTES,
       name: 'Notes',
     });
   }
 
-  const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
+  if (acquisitionFile?.id && hasClaim(Claims.AGREEMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <AgreementContainer
+          acquisitionFileId={acquisitionFile.id}
+          View={AgreementView}
+          onEdit={() =>
+            setContainerState({
+              isEditing: true,
+              activeEditForm: EditFormType.AGREEMENTS,
+              defaultFileTab: FileTabType.AGREEMENTS,
+            })
+          }
+        ></AgreementContainer>
+      ),
+      key: FileTabType.AGREEMENTS,
+      name: 'Agreements',
+    });
+  }
+
+  const [activeTab, setActiveTab] = useState<FileTabType>(defaultTab);
 
   return (
     <FileTabs
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab}
-      setActiveTab={setActiveTab}
+      setActiveTab={(tab: FileTabType) => {
+        setActiveTab(tab);
+        setContainerState({ defaultFileTab: tab });
+      }}
     />
   );
 };

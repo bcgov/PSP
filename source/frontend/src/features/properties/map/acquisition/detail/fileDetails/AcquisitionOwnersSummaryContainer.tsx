@@ -1,6 +1,6 @@
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useAcquisitionProvider } from '../../hooks/useAcquisitionProvider';
 import { DetailAcquisitionFileOwner } from '../models';
 
 export interface IAcquisitionOwnersContainerProps {

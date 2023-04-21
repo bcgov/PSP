@@ -94,6 +94,10 @@ describe('UpdateAcquisitionForm component', () => {
         utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,
       getFileCompletionDatePicker: () =>
         utils.container.querySelector(`input[name="completionDate"]`) as HTMLInputElement,
+      getTeamMemberProfileDropDownList: (index: number = 0) =>
+        utils.container.querySelector(
+          `select[name="team[${index}].contactTypeCode"]`,
+        ) as HTMLSelectElement,
     };
   };
 
@@ -174,6 +178,28 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getEmailTextbox(1).value).toEqual('fake@email.ca');
     expect(getPhoneTextbox(1).value).toEqual('');
+  });
+
+  it('it validates that only profile is not repeated on another team member', async () => {
+    const { getTeamMemberProfileDropDownList, getByTestId, queryByTestId } = setup({
+      initialValues,
+    });
+
+    // Set duplicate should fail
+    await act(async () => {
+      userEvent.selectOptions(getTeamMemberProfileDropDownList(1), 'NEGOTAGENT');
+    });
+
+    expect(validationSchema).toBeCalled();
+    expect(getByTestId('team-profile-dup-error')).toBeVisible();
+
+    // Set unique should pass
+    await act(async () => {
+      userEvent.selectOptions(getTeamMemberProfileDropDownList(1), 'EXPRAGENT');
+    });
+
+    expect(validationSchema).toBeCalled();
+    expect(queryByTestId(/team-profile-dup-error/i)).toBeNull();
   });
 
   it('should disable file completion date until the user marks the file as COMPLETED', async () => {

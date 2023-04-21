@@ -7,7 +7,7 @@ export const AddProjectYupSchema = Yup.object().shape({
   projectName: Yup.string()
     .required('Name is required.')
     .max(200, 'Project name must be at most ${max} characters'),
-  projectStatusType: Yup.string(),
+  projectStatusType: Yup.string().required('Project status is required.'),
   region: Yup.string().required('Region is required.'),
   summary: Yup.string().max(2000, 'Project summary must be at most ${max} characters'),
   products: Yup.array().of(
@@ -23,7 +23,7 @@ export const AddProjectYupSchema = Yup.object().shape({
           ? Yup.string()
           : Yup.number().typeError('Cost estimate must be a number').max(MAX_SQL_MONEY_SIZE),
       ),
-      startDate: Yup.date(),
+      startDate: Yup.string(),
       objective: Yup.string().max(2000, 'Product objective must be at most ${max} characters'),
       scope: Yup.string().max(2000, 'Product scope must be at most ${max} characters'),
     }),

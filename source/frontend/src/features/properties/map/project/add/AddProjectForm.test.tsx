@@ -90,6 +90,7 @@ describe('AddProjectForm component', () => {
 
   beforeEach(() => {
     initialValues = new ProjectForm();
+    initialValues.projectStatusType = 'AC';
   });
 
   afterEach(() => {

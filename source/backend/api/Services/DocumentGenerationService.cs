@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -74,33 +75,39 @@ namespace Pims.Api.Services
 
             // TODO: This needs to retrieve by the passed template type. At this point that is not possible.
             PimsDocument document = _documentRepository.GetAllByDocumentType("CDOGS Template").LastOrDefault();
-            ExternalResult<FileDownload> templateFileResult = await _documentService.DownloadFileLatestAsync(document.MayanId);
-            if (templateFileResult.Status == ExternalResultStatus.Success)
+            if (document?.MayanId != null)
             {
-                FileDownload templateFile = templateFileResult.Payload;
-                RenderRequest renderRequest = new RenderRequest()
+                ExternalResult<FileDownload> templateFileResult = await _documentService.DownloadFileLatestAsync(document.MayanId);
+                if (templateFileResult.Status == ExternalResultStatus.Success)
                 {
-                    Template = new RenderTemplate()
+                    FileDownload templateFile = templateFileResult.Payload;
+                    RenderRequest renderRequest = new RenderRequest()
                     {
-                        Content = templateFile.FilePayload,
-                        EncodingType = templateFile.EncodingType,
-                        FileType = templateFile.FileNameExtension,
-                    },
-                    Options = new RenderOptions()
-                    {
-                        ReportName = templateFile.FileNameWithoutExtension + '-' + DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture),
-                        Overwrite = true,
-                    },
-                    Data = templateData,
-                };
+                        Template = new RenderTemplate()
+                        {
+                            Content = templateFile.FilePayload,
+                            EncodingType = templateFile.EncodingType,
+                            FileType = templateFile.FileNameExtension,
+                        },
+                        Options = new RenderOptions()
+                        {
+                            ReportName = templateFile.FileNameWithoutExtension + '-' + DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture),
+                            Overwrite = true,
+                        },
+                        Data = templateData,
+                    };
 
-                var renderedFile = await _documentGenerationRepository.UploadAndGenerate(renderRequest);
-                return renderedFile;
-            }
-            else
+                    var renderedFile = await _documentGenerationRepository.UploadAndGenerate(renderRequest);
+                    return renderedFile;
+                }
+                else
+                {
+                    this.Logger.LogError("Error Generating document");
+                    return templateFileResult;
+                }
+            } else
             {
-                this.Logger.LogError("Error Generating document");
-                return templateFileResult;
+                throw new KeyNotFoundException("Unable to find matching template for PIMS document template"); //TODO: this should trigger the warning to the user to ask their admin to upload a template.
             }
         }
     }

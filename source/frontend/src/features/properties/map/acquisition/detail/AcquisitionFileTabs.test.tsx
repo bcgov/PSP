@@ -1,5 +1,5 @@
 import Claims from 'constants/claims';
-import { FileTabNames } from 'features/mapSideBar/tabs/FileTabs';
+import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { act } from 'react-test-renderer';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
@@ -37,7 +37,7 @@ describe('AcquisitionFileTabs component', () => {
     const { asFragment } = setup(
       {
         acquisitionFile: mockAcquisitionFileResponse(),
-        defaultTab: FileTabNames.fileDetails,
+        defaultTab: FileTabType.FILE_DETAILS,
         setContainerState,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
@@ -49,7 +49,7 @@ describe('AcquisitionFileTabs component', () => {
     const { getByText } = setup(
       {
         acquisitionFile: mockAcquisitionFileResponse(),
-        defaultTab: FileTabNames.fileDetails,
+        defaultTab: FileTabType.FILE_DETAILS,
         setContainerState,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
@@ -63,7 +63,7 @@ describe('AcquisitionFileTabs component', () => {
     const { getByText } = setup(
       {
         acquisitionFile: mockAcquisitionFileResponse(),
-        defaultTab: FileTabNames.fileDetails,
+        defaultTab: FileTabType.FILE_DETAILS,
         setContainerState,
       },
       { claims: [Claims.DOCUMENT_VIEW] },

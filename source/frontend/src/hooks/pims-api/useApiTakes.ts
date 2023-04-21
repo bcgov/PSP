@@ -14,6 +14,8 @@ export const useApiTakes = () => {
   return React.useMemo(
     () => ({
       getTakesByAcqFileId: (fileId: number) => api.get<Api_Take[]>(`/takes/acquisition/${fileId}`),
+      getTakesByPropertyId: (fileId: number, propertyId: number) =>
+        api.get<Api_Take[]>(`/takes/acquisition/${fileId}/property/${propertyId}`),
       getTakesCountByPropertyId: (propertyId: number) =>
         api.get<number>(`/takes/property/${propertyId}/count`),
       updateTakesCountByPropertyId: (acquisitionFilePropertyId: number, takes: Api_Take[]) =>

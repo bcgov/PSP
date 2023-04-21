@@ -1,13 +1,13 @@
 import { AxiosError } from 'axios';
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import { IApiError } from 'interfaces/IApiError';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 import { toast } from 'react-toastify';
 
-import { useAcquisitionProvider } from '../../hooks/useAcquisitionProvider';
 import { AcquisitionChecklistFormModel } from './models';
 import { IUpdateAcquisitionChecklistFormProps } from './UpdateAcquisitionChecklistForm';
 

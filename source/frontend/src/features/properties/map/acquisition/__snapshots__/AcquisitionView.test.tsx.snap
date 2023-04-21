@@ -153,6 +153,33 @@ exports[`AcquisitionView component renders as expected 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label>
+                  Ministry product:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+                data-testid="acq-header-product-val"
+              >
+                <strong>
+                  00048 - MISCELLANEOUS CLAIMS
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="col-5"
@@ -336,9 +363,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c21 {
+.c20 {
   float: right;
   cursor: pointer;
+}
+
+.c13 {
+  text-align: right;
 }
 
 .c15 {
@@ -426,14 +457,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
   line-height: 2.2rem;
 }
 
-.c20 {
-  text-align: right;
-}
-
-.c13 {
-  text-align: right;
-}
-
 .c18 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -474,7 +497,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
         class="c2 no-gutters row"
       >
         <div
-          class="c3 col-3"
+          class="c3 d-flex flex-column col-3"
         >
           <div
             class="c4"
@@ -661,7 +684,9 @@ exports[`AcquisitionView component renders as expected 1`] = `
                           </div>
                           <div
                             class="c17 text-left col"
-                          />
+                          >
+                            00048 MISCELLANEOUS CLAIMS
+                          </div>
                         </div>
                         <div
                           class="pb-2 row"
@@ -1066,7 +1091,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                     class=""
                   >
                     <div
-                      class="c20 mr-3 my-1"
+                      class="c13 mr-3 my-1"
                     />
                     <div
                       class="c14 form-section"
@@ -1086,7 +1111,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1131,7 +1156,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1176,7 +1201,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1221,7 +1246,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1266,7 +1291,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c21"
+                              class="c20"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"

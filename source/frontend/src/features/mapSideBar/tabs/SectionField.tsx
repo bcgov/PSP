@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 interface ISectionFieldProps {
-  label: string;
+  label: string | null;
   /** It accepts either a string or a custom React tooltip component  */
   tooltip?: React.ReactNode;
   className?: string;
@@ -20,10 +20,12 @@ export const SectionField: React.FunctionComponent<
   return (
     <Row className={props.className ?? cx('pb-2', { 'no-gutters': props.noGutters })}>
       <Col xs={props.labelWidth ?? '4'} className="pr-0 text-left">
-        <StyledFieldLabel>
-          {props.label}:
-          {props.tooltip && <span className="ml-2">{renderTooltip(props.tooltip)}</span>}
-        </StyledFieldLabel>
+        {props.label && (
+          <StyledFieldLabel>
+            {props.label}:
+            {props.tooltip && <span className="ml-2">{renderTooltip(props.tooltip)}</span>}
+          </StyledFieldLabel>
+        )}
       </Col>
       <StyledCol
         xs={props.contentWidth ?? true}
