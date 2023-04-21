@@ -2,10 +2,10 @@ import EditButton from 'components/common/EditButton';
 import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import styled from 'styled-components';
 import { formatApiProjectName, prettyFormatDate } from 'utils';
 import { formatApiPersonNames } from 'utils/personUtils';
 
@@ -141,13 +141,3 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
 };
 
 export default ResearchSummaryView;
-
-const StyledEditWrapper = styled.div`
-  color: ${props => props.theme.css.primary};
-
-  text-align: right;
-`;
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;

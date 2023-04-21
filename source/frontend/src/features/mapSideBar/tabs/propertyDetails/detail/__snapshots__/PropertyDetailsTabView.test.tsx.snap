@@ -38,6 +38,14 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   gap: 0.8rem;
 }
 
+.c0 {
+  text-align: right;
+}
+
+.c3 {
+  text-align: left;
+}
+
 .c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -49,6 +57,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c5.required::before {
@@ -60,14 +69,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
 
 .c4 {
   font-weight: bold;
-}
-
-.c0 {
-  text-align: right;
-}
-
-.c3 {
-  text-align: left;
 }
 
 <div

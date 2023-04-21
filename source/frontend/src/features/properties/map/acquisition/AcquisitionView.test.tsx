@@ -2,6 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/index';
+import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
+import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNotesResponse } from 'mocks/mockNoteResponses';
@@ -27,6 +29,7 @@ const onCancelConfirm = jest.fn();
 const onUpdateProperties = jest.fn();
 const canRemove = jest.fn();
 const setContainerState = jest.fn();
+const onGenerateLetter = jest.fn();
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -48,11 +51,14 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   onUpdateProperties,
   canRemove,
   setContainerState,
+  onGenerateLetter,
   containerState: {
     acquisitionFile: mockAcquisitionFileResponse(),
     isEditing: false,
     selectedMenuIndex: 0,
     showConfirmModal: false,
+    defaultFileTab: FileTabType.FILE_DETAILS,
+    defaultPropertyTab: InventoryTabNames.property,
   },
   formikRef: React.createRef(),
 };

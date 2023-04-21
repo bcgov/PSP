@@ -23,8 +23,17 @@ namespace Pims.Dal.Entities
         public long MayanId { get; set; }
         [Required]
         [Column("DOCUMENT_TYPE")]
-        [StringLength(200)]
+        [StringLength(20)]
         public string DocumentType { get; set; }
+        [Required]
+        [Column("DOCUMENT_TYPE_DESCRIPTION")]
+        [StringLength(200)]
+        public string DocumentTypeDescription { get; set; }
+        [Required]
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
+        [Column("DISPLAY_ORDER")]
+        public int? DisplayOrder { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -63,8 +72,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
 
         [InverseProperty(nameof(PimsDocument.DocumentType))]
         public virtual ICollection<PimsDocument> PimsDocuments { get; set; }

@@ -13,7 +13,7 @@ import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
-import { EditFormNames } from './EditFormNames';
+import { EditFormType } from './EditFormNames';
 import ViewSelector from './ViewSelector';
 
 export interface IAcquisitionViewProps {
@@ -24,6 +24,7 @@ export interface IAcquisitionViewProps {
   onSuccess: () => void;
   onCancelConfirm: () => void;
   onUpdateProperties: (file: Api_File) => Promise<Api_File | undefined>;
+  onGenerateLetter: () => Promise<void>;
   canRemove: (propertyId: number) => Promise<boolean>;
   containerState: AcquisitionContainerState;
   setContainerState: React.Dispatch<Partial<AcquisitionContainerState>>;
@@ -38,19 +39,23 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onSuccess,
   onCancelConfirm,
   onUpdateProperties,
+  onGenerateLetter,
   canRemove,
   containerState,
   setContainerState,
   formikRef,
 }) => {
-  const formTitle = containerState.isEditing ? 'Update Acquisition File' : 'Acquisition File';
+  const formTitle =
+    containerState.isEditing && containerState.activeEditForm
+      ? getEditTitle(containerState.activeEditForm)
+      : 'Acquisition File';
 
   const menuItems =
     containerState.acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
   if (
-    containerState.activeEditForm === EditFormNames.propertySelector &&
+    containerState.activeEditForm === EditFormType.PROPERTY_SELECTOR &&
     containerState.acquisitionFile
   ) {
     return (
@@ -99,6 +104,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               selectedIndex={containerState.selectedMenuIndex}
               onChange={onMenuChange}
               setContainerState={setContainerState}
+              onGenerateLetter={onGenerateLetter}
             />
           </>
         }
@@ -110,6 +116,8 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               isEditing={containerState.isEditing}
               activeEditForm={containerState.activeEditForm}
               selectedMenuIndex={containerState.selectedMenuIndex}
+              defaultFileTab={containerState.defaultFileTab}
+              defaultPropertyTab={containerState.defaultPropertyTab}
               setContainerState={setContainerState}
               onSuccess={onSuccess}
             />
@@ -119,7 +127,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               title={'Confirm changes'}
               message={
                 <>
-                  <div>If you cancel now, this acquisition file will not be saved.</div>
+                  <div>If you cancel now, this form will not be saved.</div>
                   <br />
                   <strong>Are you sure you want to Cancel?</strong>
                 </>
@@ -135,6 +143,25 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
       ></FileLayout>
     </MapSideBarLayout>
   );
+};
+
+const getEditTitle = (editFormName: EditFormType) => {
+  switch (editFormName) {
+    case EditFormType.ACQUISITION_SUMMARY:
+      return 'Update Acquisition File';
+    case EditFormType.PROPERTY_DETAILS:
+      return 'Update Property File Data';
+    case EditFormType.TAKES:
+      return 'Update Takes';
+    case EditFormType.ACQUISITION_CHECKLIST:
+      return 'Update Checklist';
+    case EditFormType.PROPERTY_SELECTOR:
+      return 'Updating Acquisition Properties';
+    case EditFormType.AGREEMENTS:
+      return 'Updating Agreements';
+    default:
+      throw Error('Cannot edit this type of form');
+  }
 };
 
 const StyledFormWrapper = styled.div`

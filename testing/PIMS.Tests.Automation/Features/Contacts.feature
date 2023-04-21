@@ -3,36 +3,44 @@
 A short summary of the feature
 
 @Regression-Contacts
-Scenario: Verify Contacts List View
-	Given I verify the Contacts List View
-	Then Expected Content is displayed on Contacts Table Individual Lee
+Scenario Outline: 01. Create new Organization Complete Contact
+	Given I create a new Organization Contact from row number <RowNumber>
+	And I search for an existing contact from type "<ContactType>" row number <RowNumber>
+	Then  Expected Content is displayed on Contacts Table from contact type "<ContactType>"
+	Examples: 
+	| ContactType	| RowNumber |
+	| Organization  | 1         |
+	| Organization  | 3         |
 
-Scenario: Create new Organization Complete Contact
-	Given I create a new Organization Contact with maximum fields Automation Test Corp II
-	Then A new Organization contact is successfully created
+Scenario Outline: 02. Create new Individual Complete Contact
+	Given I create a new Individual Contact from row number <RowNumber>
+	And I search for an existing contact from type "<ContactType>" row number <RowNumber>
+	Then Expected Content is displayed on Contacts Table from contact type "<ContactType>"
+	Examples:
+	| ContactType	| RowNumber |
+	| Individual	| 1         |
+	| Individual	| 3         |
+	| Individual	| 4         |
 
-Scenario: Create new Individual Complete Contact
-	Given I create a new Individual Contact with maximum fields Lee
-	Then A new Individual contact is successfully created
-
-Scenario: Cancel creating a new contact
-	Given I cancel creating a new contact
+Scenario: 03. Cancel creating a new contact
+	Given I cancel creating a new contact from row number 2
 	Then Search Contacts screen is correctly rendered
 
-Scenario: Update an Existing Organization Contact
-	Given I update an existing Organization Contact
-	Then A new Organization contact is successfully created
+Scenario: 04. Update an Existing Organization Contact
+	Given I update an existing Organization Contact from row number 3
+	Then An Organization contact is successfully updated
 
-Scenario: Update an Existing Individual Contact
-	Given I update an existing Individual Contact
-	Then A new Individual contact is successfully created
+Scenario: 05. Update an Existing Individual Contact
+	Given I update an existing Individual Contact from row number 4
+	Then An Individual contact is successfully updated
 
-Scenario: Search for an Existing Contact
-	Given I search for an existing contact Lee
-	Then Search Contacts screen is correctly rendered
-
-Scenario: Search for a non-existing Contact
-	Given I search for an non-existing contact
+Scenario Outline: 07. Search for a non-existing Contact
+	Given I search for an non-existing contact from type "<ContactType>" row number <RowNumber>
 	Then No contacts results are found
+	Examples:
+	| ContactType	| RowNumber |
+	| Individual	| 5         |
+	| Organization	| 4         |
+
 
 

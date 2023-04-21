@@ -11,6 +11,7 @@ export class DetailAcquisitionFile {
   legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
+  completionDate?: string;
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
   regionDescription?: string;
@@ -22,6 +23,7 @@ export class DetailAcquisitionFile {
     detail.legacyFileNumber = model?.legacyFileNumber;
     detail.assignedDate = model?.assignedDate;
     detail.deliveryDate = model?.deliveryDate;
+    detail.completionDate = model?.completionDate;
     detail.acquisitionPhysFileStatusTypeDescription =
       model?.acquisitionPhysFileStatusTypeCode?.description;
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description;
@@ -49,28 +51,34 @@ export class DetailAcquisitionFilePerson {
 }
 
 export class DetailAcquisitionFileOwner {
+  isPrimary?: boolean;
   ownerName?: string;
   ownerOtherName?: string;
   ownerDisplayAddress?: string;
+  ownerContactEmail?: string;
+  ownerContactPhone?: string;
 
   static fromApi(owner: Api_AcquisitionFileOwner): DetailAcquisitionFileOwner {
     return {
+      isPrimary: owner.isPrimaryContact,
       ownerName: getOwnerDisplayName(owner),
-      ownerOtherName: owner.lastNameOrCorp2?.trim(),
+      ownerOtherName: owner.otherName?.trim() || '',
       ownerDisplayAddress: getFormattedAddress(owner.address),
+      ownerContactEmail: owner.contactEmailAddr || '',
+      ownerContactPhone: owner.contactPhoneNum || '',
     };
   }
 }
 
 const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
-  let nameDisplay = concatValues([owner.givenName, owner.lastNameOrCorp1]);
+  let nameDisplay = concatValues([owner.givenName, owner.lastNameAndCorpName]);
   if (owner.incorporationNumber && owner.incorporationNumber.trim() !== '') {
     nameDisplay = nameDisplay.concat(` (${owner.incorporationNumber})`);
   }
   return nameDisplay;
 };
 
-const getFormattedAddress = (address?: Api_Address): string => {
+const getFormattedAddress = (address?: Api_Address | null): string => {
   if (address === null || address === undefined) {
     return '';
   }

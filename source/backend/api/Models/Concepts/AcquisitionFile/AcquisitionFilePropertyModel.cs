@@ -42,7 +42,7 @@ namespace Pims.Api.Models.Concepts
         public long FileId { get; set; }
 
         /// <summary>
-        /// get/set - A list of activity instance properties
+        /// get/set - A list of activity instance properties.
         /// </summary>
         public IList<ActivityInstancePropertyFileModel> ActivityInstanceProperties { get; set; }
 

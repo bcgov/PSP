@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 
@@ -34,7 +35,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IList<PimsDocumentTyp> GetAll()
         {
-            return this.Context.PimsDocumentTyps.OrderBy(dt => dt.DocumentTypeId).ToList();
+            return this.Context.PimsDocumentTyps.AsNoTracking().OrderBy(dt => dt.DisplayOrder).ToList();
         }
 
         /// <summary>
@@ -51,6 +52,26 @@ namespace Pims.Dal.Repositories
 
             var newDocumentType = this.Context.PimsDocumentTyps.Add(documentType);
             return newDocumentType.Entity;
+        }
+
+        /// <summary>
+        /// Updates the passed document type within the database.
+        /// </summary>
+        /// <param name="documentType"></param>
+        /// <returns></returns>
+        public PimsDocumentTyp Update(PimsDocumentTyp documentType)
+        {
+            if (documentType == null)
+            {
+                throw new ArgumentNullException(nameof(documentType), "document type cannot be null.");
+            }
+
+            var existingDocumentType =
+                this.Context.PimsDocumentTyps.FirstOrDefault(dt => documentType.MayanId == dt.MayanId) ?? throw new KeyNotFoundException($"Failed to find documentType for mayan ID: {documentType.MayanId}");
+
+            existingDocumentType.DocumentType = documentType.DocumentType;
+            existingDocumentType.DisplayOrder = documentType.DisplayOrder;
+            return existingDocumentType;
         }
         #endregion
     }

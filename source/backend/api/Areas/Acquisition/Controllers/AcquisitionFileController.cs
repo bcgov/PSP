@@ -152,7 +152,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
                 return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
             }
-            catch(BusinessRuleViolationException e)
+            catch (BusinessRuleViolationException e)
             {
                 return Conflict(e.Message);
             }
@@ -189,7 +189,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
         }
-
         #endregion
     }
 }

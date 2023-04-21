@@ -3,28 +3,24 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { Section } from 'features/mapSideBar/tabs/Section';
-import { Api_ActivityTemplate } from 'models/api/Activity';
+import { Api_FormDocumentType } from 'models/api/FormDocument';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 
 export interface IDocumentTemplateManagementViewProp {
   isLoading: boolean;
-  activityTypes?: Api_ActivityTemplate[];
-  activityTypeId?: number;
-  setActivityTemplateId: (templateId?: number) => void;
+  formDocumentTypes: Api_FormDocumentType[] | undefined;
+  selectedFormDocumentTypeCode: string | undefined;
+  setSelectedFormDocumentTypeCode: (formTypeCode: string) => void;
 }
 
 export const DocumentTemplateManagementView: React.FunctionComponent<
   React.PropsWithChildren<IDocumentTemplateManagementViewProp>
 > = props => {
   const onSelectChange = (selectedType: React.ChangeEvent<HTMLInputElement>) => {
-    var typeId = Number.parseInt(selectedType.target.value);
-    if (!Number.isNaN(typeId)) {
-      props.setActivityTemplateId(typeId);
-    } else {
-      props.setActivityTemplateId(undefined);
-    }
+    var formDocumentTypeCode = selectedType.target.value;
+    props.setSelectedFormDocumentTypeCode(formDocumentTypeCode);
   };
 
   return (
@@ -35,15 +31,15 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
         <StyledPageHeader>PIMS Document Template Management</StyledPageHeader>
         <Section>
           <Row>
-            <Col xs="auto">Activity Type:</Col>
+            <Col xs="auto">Form Type:</Col>
             <Col xs="auto">
               <Form.Group aria-label="Select activity type">
                 <Form.Control as="select" onChange={onSelectChange}>
-                  <option>Select an Activity type</option>
-                  {props.activityTypes?.map(types => {
+                  <option>Select a form type</option>
+                  {props.formDocumentTypes?.map(types => {
                     return (
-                      <option value={types.id} key={'activity-type-' + types.id}>
-                        {types.activityTemplateTypeCode?.description}
+                      <option value={types.formTypeCode} key={'form-type-' + types.formTypeCode}>
+                        {types.description}
                       </option>
                     );
                   })}
@@ -52,10 +48,10 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
             </Col>
           </Row>
         </Section>
-        {props.activityTypeId !== undefined && (
+        {props.selectedFormDocumentTypeCode !== undefined && (
           <DocumentListContainer
-            parentId={props.activityTypeId}
-            addButtonText="Add a Template"
+            parentId={props.selectedFormDocumentTypeCode}
+            addButtonText="Add a Form Document Template"
             relationshipType={DocumentRelationshipType.TEMPLATES}
           />
         )}

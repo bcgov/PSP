@@ -9,7 +9,6 @@ namespace Pims.Api.Models.Concepts.Document
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsActivityInstanceDocument, DocumentRelationshipModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ActivityInstanceDocumentId)
                 .Map(dest => dest.ParentId, src => src.ActivityInstanceId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
@@ -25,25 +24,7 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.Document, src => src.Document)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
 
-            config.NewConfig<Entity.PimsActivityTemplateDocument, DocumentRelationshipModel>()
-                .PreserveReference(true)
-                .Map(dest => dest.Id, src => src.ActivityTemplateDocumentId)
-                .Map(dest => dest.ParentId, src => src.ActivityTemplateId)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Document, src => src.Document)
-                .Map(dest => dest.RelationshipType, src => DocumentRelationType.Templates)
-                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
-
-            config.NewConfig<DocumentRelationshipModel, Entity.PimsActivityTemplateDocument>()
-                .Map(dest => dest.ActivityTemplateDocumentId, src => src.Id)
-                .Map(dest => dest.ActivityTemplateId, src => src.ParentId)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.DocumentId, src => src.Document.Id)
-                .Map(dest => dest.Document, src => src.Document)
-                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
-
             config.NewConfig<Entity.PimsAcquisitionFileDocument, DocumentRelationshipModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
@@ -59,7 +40,6 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.Document, src => src.Document);
 
             config.NewConfig<Entity.PimsResearchFileDocument, DocumentRelationshipModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
@@ -75,7 +55,6 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.Document, src => src.Document);
 
             config.NewConfig<Entity.PimsProjectDocument, DocumentRelationshipModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
@@ -90,8 +69,19 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocumentId, src => src.Document.Id)
                 .Map(dest => dest.Document, src => src.Document);
 
+            config.NewConfig<Entity.PimsFormType, DocumentRelationshipModel>()
+                .Map(dest => dest.ParentId, src => src.FormTypeCode)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.Document, src => src.Document)
+                .Map(dest => dest.RelationshipType, src => DocumentRelationType.Templates);
+
+            config.NewConfig<DocumentRelationshipModel, Entity.PimsFormType>()
+                .Map(dest => dest.FormTypeCode, src => src.ParentId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DocumentId, src => src.Document.Id)
+                .Map(dest => dest.Document, src => src.Document);
+
             config.NewConfig<Entity.PimsLeaseDocument, DocumentRelationshipModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)

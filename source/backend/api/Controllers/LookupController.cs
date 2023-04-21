@@ -134,6 +134,15 @@ namespace Pims.Api.Controllers
                 var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTenantTypes());
                 var acqFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFundingTypes());
                 var projectStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllProjectStatusTypes());
+                var formTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllFormTypes());
+                var consultationTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllConsultationTypes());
+                var consultationStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllConsultationStatusTypes());
+                var takeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTakeTypes());
+                var takeStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTakeStatusTypes());
+                var takeSiteContamTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTakeSiteContamTypes());
+                var acqChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistSectionTypes());
+                var acqChecklistItemStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistItemStatusTypes());
+                var agreementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -182,6 +191,15 @@ namespace Pims.Api.Controllers
                 codes.AddRange(tenantTypes);
                 codes.AddRange(acqFundingTypes);
                 codes.AddRange(projectStatusTypes);
+                codes.AddRange(formTypes);
+                codes.AddRange(consultationTypes);
+                codes.AddRange(consultationStatusTypes);
+                codes.AddRange(takeTypes);
+                codes.AddRange(takeStatusTypes);
+                codes.AddRange(takeSiteContamTypes);
+                codes.AddRange(acqChecklistSectionTypes);
+                codes.AddRange(acqChecklistItemStatusTypes);
+                codes.AddRange(agreementTypes);
 
                 var response = new JsonResult(codes);
 

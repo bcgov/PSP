@@ -3,7 +3,6 @@ import { getIn, useFormikContext } from 'formik';
 import { isArray } from 'lodash';
 import React from 'react';
 
-import { FastInput } from '.';
 import { Input, InputProps } from './Input';
 
 // only "field" is required for <Input>, the rest are optional
@@ -26,7 +25,6 @@ export const TextArea: React.FC<React.PropsWithChildren<TextAreaProps>> = ({
   required,
   disabled,
   custom,
-  fast,
   innerClassName,
   mapFunction,
   ...rest
@@ -40,23 +38,7 @@ export const TextArea: React.FC<React.PropsWithChildren<TextAreaProps>> = ({
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
 
-  return fast ? (
-    <FastInput
-      formikProps={formikProps}
-      label={label}
-      as="textarea"
-      field={field}
-      className={clsx(className, 'textarea')}
-      required={required}
-      disabled={disabled}
-      custom={custom}
-      isInvalid={!!touch && !!error}
-      {...rest}
-      value={value}
-      placeholder={placeholder}
-      onChange={handleChange}
-    />
-  ) : (
+  return (
     <Input
       label={label}
       innerClassName={innerClassName}

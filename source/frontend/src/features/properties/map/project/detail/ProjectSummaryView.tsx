@@ -2,9 +2,9 @@ import EditButton from 'components/common/EditButton';
 import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Project } from 'models/api/Project';
-import styled from 'styled-components';
 
 import ProjectProductView from './ProjectProductView';
 
@@ -36,13 +36,3 @@ const ProjectSummaryView: React.FunctionComponent<
 };
 
 export default ProjectSummaryView;
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;
-
-const StyledEditWrapper = styled.div`
-  color: ${props => props.theme.css.primary};
-
-  text-align: right;
-`;

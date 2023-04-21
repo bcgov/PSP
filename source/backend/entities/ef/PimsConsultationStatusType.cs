@@ -13,12 +13,12 @@ namespace Pims.Dal.Entities
     {
         public PimsConsultationStatusType()
         {
-            PimsConsultationTypes = new HashSet<PimsConsultationType>();
+            PimsLeaseConsultations = new HashSet<PimsLeaseConsultation>();
         }
 
         [Key]
         [Column("CONSULTATION_STATUS_TYPE_CODE")]
-        [StringLength(20)]
+        [StringLength(40)]
         public string ConsultationStatusTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsConsultationType.ConsultationStatusTypeCodeNavigation))]
-        public virtual ICollection<PimsConsultationType> PimsConsultationTypes { get; set; }
+        [InverseProperty(nameof(PimsLeaseConsultation.ConsultationStatusTypeCodeNavigation))]
+        public virtual ICollection<PimsLeaseConsultation> PimsLeaseConsultations { get; set; }
     }
 }

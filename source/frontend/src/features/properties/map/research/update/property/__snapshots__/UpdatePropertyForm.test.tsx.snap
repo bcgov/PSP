@@ -17,6 +17,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c3.required::before {

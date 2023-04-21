@@ -35,7 +35,6 @@ using Pims.Api.Helpers.Healthchecks;
 using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
-using Pims.Api.Helpers.Routes.Constraints;
 using Pims.Api.Helpers.Swagger;
 using Pims.Api.Models.Config;
 using Pims.Api.Repositories.Cdogs;
@@ -103,6 +102,7 @@ namespace Pims.Api
                 options.Default.IgnoreNullValues(true);
                 options.AllowImplicitDestinationInheritance = true;
                 options.AllowImplicitSourceInheritance = true;
+                options.Default.PreserveReference(true);
                 options.Default.UseDestinationValue(member =>
                     member.SetterModifier == AccessModifier.None &&
                     member.Type.IsGenericType &&
@@ -149,11 +149,6 @@ namespace Pims.Api
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
                 });
-
-            services.AddRouting(options =>
-            {
-                options.ConstraintMap.Add("pid", typeof(PidConstraint));
-            });
 
             services.AddAuthentication(options =>
                 {
@@ -407,6 +402,8 @@ namespace Pims.Api
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IFinancialCodeService, FinancialCodeService>();
             services.AddScoped<IDocumentFileService, DocumentFileService>();
+            services.AddScoped<ITakeService, TakeService>();
+            services.AddScoped<IFormDocumentService, FormDocumentService>();
         }
 
         /// <summary>

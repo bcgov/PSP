@@ -9,7 +9,6 @@ namespace Pims.Api.Models.Concepts
         {
             // PimsActivityInstanceNote -> EntityNoteModel
             config.NewConfig<Entity.PimsActivityInstanceNote, EntityNoteModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PimsActivityInstanceNoteId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Parent, src => src)
@@ -27,7 +26,6 @@ namespace Pims.Api.Models.Concepts
 
             // PimsAcquisitionFileNote -> EntityNoteModel
             config.NewConfig<Entity.PimsAcquisitionFileNote, EntityNoteModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.AcquisitionFileNoteId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Parent, src => src)
@@ -42,7 +40,6 @@ namespace Pims.Api.Models.Concepts
 
             // PimsLeaseNote -> EntityNoteModel
             config.NewConfig<Entity.PimsLeaseNote, EntityNoteModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.LeaseNoteId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Parent, src => src)
@@ -56,7 +53,6 @@ namespace Pims.Api.Models.Concepts
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
 
             config.NewConfig<Entity.PimsProjectNote, EntityNoteModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ProjectNoteId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Parent, src => src)
@@ -66,6 +62,20 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ProjectNoteId, src => src.Id)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.ProjectId, src => src.Parent.Id)
+                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
+
+            // PimsResearchFileNote -> EntityNoteModel
+            config.NewConfig<Entity.PimsResearchFileNote, EntityNoteModel>()
+                .Map(dest => dest.Id, src => src.ResearchFileNoteId)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.Parent, src => src)
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
+
+            // PimsResearchFileNote <- EntityNoteModel
+            config.NewConfig<EntityNoteModel, Entity.PimsResearchFileNote>()
+                .Map(dest => dest.ResearchFileNoteId, src => src.Id)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.ResearchFileId, src => src.Parent.Id)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
 
             config.NewConfig<Entity.PimsProjectNote, NoteParentModel>()

@@ -1,3 +1,4 @@
+import { SelectOption } from 'components/common/form';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_DocumentType } from 'models/api/Document';
@@ -27,6 +28,16 @@ const documentTypes: Api_DocumentType[] = [
     documentType: 'Privy Council',
     mayanId: 7,
   },
+];
+
+const documentStatusOptions: SelectOption[] = [
+  { label: '', value: 'NONE' },
+  { label: '', value: 'DRAFT' },
+  { label: '', value: 'APPROVD' },
+  { label: '', value: 'SIGND' },
+  { label: '', value: 'FINAL' },
+  { label: '', value: 'AMENDD' },
+  { label: '', value: 'CNCLD' },
 ];
 
 const documentTypeMetadataType: Api_Storage_DocumentTypeMetadataType[] = [
@@ -65,6 +76,7 @@ describe('DocumentUploadView component', () => {
         onCancel={handleCancelClick}
         initialDocumentType={'AMMEND'}
         formikRef={{ current: { submitForm, dirty: true } } as any}
+        documentStatusOptions={documentStatusOptions}
       />,
       {
         ...renderOptions,

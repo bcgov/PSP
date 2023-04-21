@@ -41,9 +41,9 @@ export function createTableColumns(
     },
 
     {
-      Header: '',
+      Header: 'Actions',
       accessor: 'controls' as any, // this column is not part of the data model
-      align: 'right',
+      align: 'center',
       sortable: false,
       width: 10,
       maxWidth: 10,

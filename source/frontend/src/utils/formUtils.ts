@@ -42,11 +42,11 @@ export function emptyStringToNull(value: any, originalValue: any) {
   return value;
 }
 
-export function toTypeCode<T = string>(value?: T): Api_TypeCode<T> | undefined {
+export function toTypeCode<T = string>(value?: T | null): Api_TypeCode<T> | undefined {
   return !!value ? { id: value } : undefined;
 }
 
-export function fromTypeCode<T = string>(value?: Api_TypeCode<T>): T | undefined {
+export function fromTypeCode<T = string>(value?: Api_TypeCode<T> | null): T | undefined {
   return value?.id;
 }
 
@@ -57,8 +57,8 @@ export function stringToBoolean(value: string | boolean): boolean {
   return value;
 }
 
-export function booleanToString(value?: boolean): string {
-  if (typeof value === 'undefined') {
+export function booleanToString(value?: boolean | null): string {
+  if (typeof value === 'undefined' || value === null) {
     return 'false';
   }
   return value.toString();
@@ -66,6 +66,13 @@ export function booleanToString(value?: boolean): string {
 
 export function stringToNullableBoolean(value: string): boolean | null {
   if (value === 'null') {
+    return null;
+  }
+  return value === 'true';
+}
+
+export function stringToBooleanOrNull(value: string): boolean | null {
+  if (value === '') {
     return null;
   }
   return value === 'true';

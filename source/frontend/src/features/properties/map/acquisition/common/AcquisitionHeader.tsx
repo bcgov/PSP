@@ -36,6 +36,22 @@ export const AcquisitionHeader: React.FunctionComponent<
             </HeaderField>
           </Col>
         </Row>
+        <Row className="no-gutters">
+          <Col>
+            <HeaderField
+              label="Ministry product:"
+              labelWidth={leftColumnLabel}
+              valueTestId={'acq-header-product-val'}
+              contentWidth="9"
+            >
+              {acquisitionFile?.product && (
+                <>
+                  {acquisitionFile.product.code} - {acquisitionFile.product.description}
+                </>
+              )}
+            </HeaderField>
+          </Col>
+        </Row>
       </Col>
       <Col xs="5">
         <Row className="no-gutters">
@@ -88,7 +104,7 @@ const StyleSmallText = styled.span`
   line-height: 1.9;
 `;
 
-function formatMinistryProject(projectNumber?: string, projectName?: string) {
+function formatMinistryProject(projectNumber?: string | null, projectName?: string | null) {
   const formattedValue = [projectNumber, projectName].filter(x => x).join(' - ');
   return formattedValue;
 }

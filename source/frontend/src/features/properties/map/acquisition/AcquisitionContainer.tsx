@@ -1,14 +1,17 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
+import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
+import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import { useGenerateLetter } from 'hooks/useGenerateLetter';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { IAcquisitionViewProps } from './AcquisitionView';
-import { EditFormNames } from './EditFormNames';
-import { useAcquisitionProvider } from './hooks/useAcquisitionProvider';
+import { EditFormType } from './EditFormNames';
 
 export interface IAcquisitionContainerProps {
   acquisitionFileId: number;
@@ -19,10 +22,12 @@ export interface IAcquisitionContainerProps {
 // Interface for our internal state
 export interface AcquisitionContainerState {
   isEditing: boolean;
-  activeEditForm?: EditFormNames;
+  activeEditForm?: EditFormType;
   selectedMenuIndex: number;
   showConfirmModal: boolean;
   acquisitionFile: Api_AcquisitionFile | undefined;
+  defaultFileTab: FileTabType;
+  defaultPropertyTab: InventoryTabNames;
 }
 
 const initialState: AcquisitionContainerState = {
@@ -31,14 +36,14 @@ const initialState: AcquisitionContainerState = {
   selectedMenuIndex: 0,
   showConfirmModal: false,
   acquisitionFile: undefined,
+  defaultFileTab: FileTabType.FILE_DETAILS,
+  defaultPropertyTab: InventoryTabNames.property,
 };
 
-export const AcquisitionContainer: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionContainerProps>
-> = props => {
+export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
-  const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
+  const { setFile, setFileLoading, staleFile, setStaleFile, file } = useContext(SideBarContext);
   const { search } = useMapSearch();
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
@@ -47,7 +52,9 @@ export const AcquisitionContainer: React.FunctionComponent<
       execute: retrieveAcquisitionFileProperties,
       loading: loadingAcquisitionFileProperties,
     },
+    getAcquisitionFileChecklist: { execute: retrieveAcquisitionFileChecklist },
   } = useAcquisitionProvider();
+  const generateLetter = useGenerateLetter();
 
   const formikRef = useRef<FormikProps<any>>(null);
 
@@ -67,9 +74,15 @@ export const AcquisitionContainer: React.FunctionComponent<
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
     var retrieved = await retrieveAcquisitionFile(acquisitionFileId);
-    var acquisitionProperties = await retrieveAcquisitionFileProperties(acquisitionFileId);
+    // retrieve related entities (ie properties, checklist items) in parallel
+    const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
+    const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
+    const acquisitionProperties = await acquisitionPropertiesTask;
+    const acquisitionChecklist = await acquisitionChecklistTask;
+
     if (retrieved) {
       retrieved.fileProperties = acquisitionProperties;
+      retrieved.acquisitionFileChecklist = acquisitionChecklist;
     }
 
     setContainerState({ acquisitionFile: retrieved });
@@ -79,6 +92,7 @@ export const AcquisitionContainer: React.FunctionComponent<
     acquisitionFileId,
     retrieveAcquisitionFileProperties,
     retrieveAcquisitionFile,
+    retrieveAcquisitionFileChecklist,
     setFile,
     setStaleFile,
   ]);
@@ -164,7 +178,7 @@ export const AcquisitionContainer: React.FunctionComponent<
   if (
     loadingAcquisitionFile ||
     (loadingAcquisitionFileProperties &&
-      containerState.activeEditForm !== EditFormNames.propertySelector)
+      containerState.activeEditForm !== EditFormType.PROPERTY_SELECTOR)
   ) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
@@ -182,6 +196,7 @@ export const AcquisitionContainer: React.FunctionComponent<
       onSuccess={onSuccess}
       canRemove={canRemove}
       formikRef={formikRef}
+      onGenerateLetter={() => (!!file ? generateLetter(file) : Promise.resolve())}
     ></View>
   );
 };

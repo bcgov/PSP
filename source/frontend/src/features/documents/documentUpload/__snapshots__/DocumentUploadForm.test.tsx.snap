@@ -337,74 +337,39 @@ exports[`DocumentUploadView component renders as expected 1`] = `
               >
                 <option
                   class="option"
-                  data-testid="select-option-AMENDD"
-                  value="AMENDD"
-                >
-                  Amended
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-APPROVD"
-                  value="APPROVD"
-                >
-                  Approved
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-CNCLD"
-                  value="CNCLD"
-                >
-                  Cancelled
-                </option>
+                  data-testid="select-option-NONE"
+                  value="NONE"
+                />
                 <option
                   class="option"
                   data-testid="select-option-DRAFT"
                   value="DRAFT"
-                >
-                  Draft
-                </option>
+                />
                 <option
                   class="option"
-                  data-testid="select-option-FINAL"
-                  value="FINAL"
-                >
-                  Final
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NONE"
-                  value="NONE"
-                >
-                  None
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RGSTRD"
-                  value="RGSTRD"
-                >
-                  Registered
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-SENT"
-                  value="SENT"
-                >
-                  Sent
-                </option>
+                  data-testid="select-option-APPROVD"
+                  value="APPROVD"
+                />
                 <option
                   class="option"
                   data-testid="select-option-SIGND"
                   value="SIGND"
-                >
-                  Signed
-                </option>
+                />
                 <option
                   class="option"
-                  data-testid="select-option-UNREGD"
-                  value="UNREGD"
-                >
-                  Unregistered
-                </option>
+                  data-testid="select-option-FINAL"
+                  value="FINAL"
+                />
+                <option
+                  class="option"
+                  data-testid="select-option-AMENDD"
+                  value="AMENDD"
+                />
+                <option
+                  class="option"
+                  data-testid="select-option-CNCLD"
+                  value="CNCLD"
+                />
               </select>
             </div>
           </div>

@@ -7,7 +7,7 @@ const DocumentsPage: React.FunctionComponent = () => {
   return (
     <>
       <DocumentListContainer
-        parentId={lease?.id || -1}
+        parentId={lease?.id?.toString() || ''}
         relationshipType={DocumentRelationshipType.LEASES}
       />
     </>

@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsResearchFilePurpose, ResearchFilePurposeModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ResearchFilePurposeId)
                 .Map(dest => dest.ResearchPurposeTypeCode, src => src.ResearchPurposeTypeCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();

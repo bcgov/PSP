@@ -23,7 +23,7 @@ export const AddProjectYupSchema = Yup.object().shape({
           ? Yup.string()
           : Yup.number().typeError('Cost estimate must be a number').max(MAX_SQL_MONEY_SIZE),
       ),
-      startDate: Yup.date(),
+      startDate: Yup.string(),
       objective: Yup.string().max(2000, 'Product objective must be at most ${max} characters'),
       scope: Yup.string().max(2000, 'Product scope must be at most ${max} characters'),
     }),

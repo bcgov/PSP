@@ -109,7 +109,7 @@ namespace Pims.Dal.Repositories
             {
                 var currentPurpose = currentPurposes.FirstOrDefault(x => x.ResearchPurposeTypeCode == selectedPurpose.ResearchPurposeTypeCode);
 
-                // If the code is already on the list, add the existing one, otherwise add the incomming one
+                // If the code is already on the list, add the existing one, otherwise add the incoming one
                 if (currentPurpose != null)
                 {
                     purposes.Add(currentPurpose);
@@ -133,7 +133,7 @@ namespace Pims.Dal.Repositories
             existingResearchFile.PimsResearchFilePurposes = purposes;
 
             Context.Entry(existingResearchFile).CurrentValues.SetValues(researchFile);
-            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject>(p => p.PimsResearchFileProjects, researchFile.Internal_Id, researchFile.PimsResearchFileProjects.ToArray());
+            Context.UpdateChild<PimsResearchFile, long, PimsResearchFileProject, long>(p => p.PimsResearchFileProjects, researchFile.Internal_Id, researchFile.PimsResearchFileProjects.ToArray());
 
             return researchFile;
         }

@@ -136,7 +136,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     tabViews.push({
       content: (
         <DocumentListContainer
-          parentId={lease?.id}
+          parentId={lease?.id.toString()}
           relationshipType={DocumentRelationshipType.LEASES}
         />
       ),

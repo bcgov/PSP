@@ -1,6 +1,8 @@
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
-import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
+import { NoteTypes } from 'constants/noteTypes';
+import { FileTabs, FileTabType, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
+import NoteListView from 'features/notes/list/NoteListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
@@ -40,7 +42,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
         }}
       />
     ),
-    key: FileTabNames.fileDetails,
+    key: FileTabType.FILE_DETAILS,
     name: 'File Details',
   });
 
@@ -49,7 +51,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
       content: (
         <ActivityListView fileId={researchFile.id} fileType={FileTypes.Research}></ActivityListView>
       ),
-      key: FileTabNames.activities,
+      key: FileTabType.ACTIVITIES,
       name: 'Activities',
     });
   }
@@ -57,14 +59,22 @@ export const ResearchTabsContainer: React.FunctionComponent<
   if (researchFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: <ResearchDocumentsTab researchFileId={researchFile.id} />,
-      key: FileTabNames.documents,
+      key: FileTabType.DOCUMENTS,
       name: 'Documents',
     });
   }
 
-  var defaultTab = FileTabNames.fileDetails;
+  if (researchFile?.id && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: <NoteListView type={NoteTypes.Research_File} entityId={researchFile?.id} />,
+      key: FileTabType.NOTES,
+      name: 'Notes',
+    });
+  }
 
-  const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
+  var defaultTab = FileTabType.FILE_DETAILS;
+
+  const [activeTab, setActiveTab] = useState<FileTabType>(defaultTab);
 
   return (
     <FileTabs

@@ -148,7 +148,10 @@ export function createAxiosError(
     toJSON: noop as any,
     response: {
       status,
-      data,
+      data: {
+        ...data,
+        error: message,
+      },
     } as AxiosResponse<IApiError>,
   };
 }

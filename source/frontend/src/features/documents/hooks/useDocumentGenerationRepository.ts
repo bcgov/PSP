@@ -30,9 +30,15 @@ export const useDocumentGenerationRepository = () => {
       [generate],
     ),
     requestName: 'GenerateDocumentDownloadWrapped',
+    throwError: true,
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+      } else if (axiosError?.response?.status === 404) {
+        toast.error(
+          'The requested document template was not found. This indicates that the PIMS administrator needs to add a template to the system for this document type. Please contact your system administrator, and ask them to add a template for this document type.',
+          { autoClose: false },
+        );
       }
     }, []),
   });

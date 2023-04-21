@@ -186,6 +186,16 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
 .c11 {
   font-size: 1.6rem;
   -webkit-text-decoration: none;
@@ -203,6 +213,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c3.required::before {
@@ -216,7 +227,55 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c15 {
+.c13.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c13.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c13.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c13.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c13.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c13 .form-label {
+  margin-bottom: unset;
+}
+
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -236,8 +295,12 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: flex-end;
 }
 
-.c14 {
+.c17 {
   background-color: none;
+}
+
+.c16 {
+  margin: 1.5rem;
 }
 
 .c12 {
@@ -254,7 +317,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: end;
 }
 
-.c13 {
+.c15 {
   font-size: 2rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -391,10 +454,10 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-CLOSED"
-                  value="CLOSED"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
                 >
-                  Closed
+                  Complete
                 </option>
                 <option
                   class="option"
@@ -742,6 +805,69 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Acquisition completed date:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container"
+                >
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    disabled=""
+                    id="datepicker-completionDate"
+                    name="completionDate"
+                    placeholder="--/--/----"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -969,7 +1095,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
             class="c3 required text-left col"
           >
             <div
-              class="required form-group"
+              class="required d-flex form-group"
             >
               <span
                 class="tooltip-icon"
@@ -1032,6 +1158,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
       >
         <div
           class="py-3 row"
+          data-testid="teamMemberRow[0]"
         >
           <div
             class="col-xl-5 col-auto"
@@ -1056,6 +1183,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value="EXPRAGENT"
                 >
                   Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
                 </option>
                 <option
                   class="option"
@@ -1090,6 +1224,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
           <div
             class="pl-0 col-xl-5 col-auto"
+            data-testid="contact-input"
           >
             <div
               class="input form-group"
@@ -1219,6 +1354,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
         </div>
         <div
           class="py-3 row"
+          data-testid="teamMemberRow[1]"
         >
           <div
             class="col-xl-5 col-auto"
@@ -1243,6 +1379,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value="EXPRAGENT"
                 >
                   Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
                 </option>
                 <option
                   class="option"
@@ -1277,6 +1420,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
           <div
             class="pl-0 col-xl-5 col-auto"
+            data-testid="contact-input"
           >
             <div
               class="input form-group"
@@ -1463,7 +1607,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="Button__value"
                 >
                   <svg
-                    data-testid="remove-button"
+                    data-testid="owners[0]-remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -1492,11 +1636,127 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </button>
             </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Is this owner an individual / corporation ?:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="c13 form-group"
+                >
+                  <div
+                    class="radio-group"
+                  >
+                    <div
+                      class="c14"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          checked=""
+                          class="form-check-input position-static"
+                          data-testid="radio-owners[0].isorganization-individual"
+                          id="input-false"
+                          name="owners[0].isOrganization"
+                          type="radio"
+                          value="false"
+                        />
+                      </div>
+                      <label
+                        class="form-check-label form-label"
+                        for="owners[0].isOrganization"
+                      >
+                        Individual
+                      </label>
+                    </div>
+                    <div
+                      class="c14"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input position-static"
+                          data-testid="radio-owners[0].isorganization-corporation"
+                          id="input-true"
+                          name="owners[0].isOrganization"
+                          type="radio"
+                          value="true"
+                        />
+                      </div>
+                      <label
+                        class="form-check-label form-label"
+                        for="owners[0].isOrganization"
+                      >
+                        Corporation
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <h3
-              class="c13"
+              class="c15"
             >
               Name
             </h3>
+            <div
+              class="c16"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                />
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="c13 form-group"
+                  >
+                    <div
+                      class="radio-group"
+                    >
+                      <div
+                        class="c14"
+                      >
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input position-static"
+                            data-testid="radio-owners[0].isprimarycontact-primary contact"
+                            id="input-true"
+                            name="owners[0].isPrimaryContact"
+                            type="radio"
+                            value="true"
+                          />
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="owners[0].isPrimaryContact"
+                        >
+                          Primary Contact
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div
               class="pb-2 row"
             >
@@ -1520,8 +1780,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     id="input-owners[0].givenName"
                     name="owners[0].givenName"
                     placeholder="First name Middle name (individuals only)"
-                    title="Sr."
-                    value="Sr."
+                    title="John"
+                    value="John"
                   />
                 </div>
               </div>
@@ -1535,7 +1795,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 <label
                   class="c2"
                 >
-                  Last name/Corporation name:
+                  Last name:
                 </label>
               </div>
               <div
@@ -1546,11 +1806,11 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   <input
                     class="form-control"
-                    id="input-owners[0].lastNameOrCorp1"
-                    name="owners[0].lastNameOrCorp1"
-                    placeholder="Individual's Last name / Corporation's name"
-                    title="john"
-                    value="john"
+                    id="input-owners[0].lastNameAndCorpName"
+                    name="owners[0].lastNameAndCorpName"
+                    placeholder="Individual's last name"
+                    title="Doe"
+                    value="Doe"
                   />
                 </div>
               </div>
@@ -1599,48 +1859,20 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   <input
                     class="form-control"
-                    id="input-owners[0].lastNameOrCorp2"
-                    name="owners[0].lastNameOrCorp2"
+                    id="input-owners[0].otherName"
+                    name="owners[0].otherName"
                     placeholder="Alias/Doing business as etc."
-                    title="Doe"
-                    value="Doe"
+                    title="Jr."
+                    value="Jr."
                   />
                 </div>
               </div>
             </div>
             <div
-              class="pb-2 row"
-            >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c2"
-                >
-                  Incorporation number:
-                </label>
-              </div>
-              <div
-                class="c3 text-left col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-owners[0].incorporationNumber"
-                    name="owners[0].incorporationNumber"
-                    placeholder="Incorporation number"
-                    value=""
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="c14"
+              class="c17"
             >
               <h3
-                class="c13"
+                class="c15"
               >
                 Mailing Address
               </h3>
@@ -1707,7 +1939,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   style="padding-left: 0px; padding-bottom: 2rem;"
                 >
                   <div
-                    class="c15 h-100"
+                    class="c18 h-100"
                   >
                     <button
                       class="c8 Button c10 btn btn-link"
@@ -1976,6 +2208,68 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
             </div>
+            <h3
+              class="c15"
+            >
+              Contact Information
+            </h3>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Email:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].contactEmailAddress"
+                    name="owners[0].contactEmailAddress"
+                    title="jonh.doe@gmail.com"
+                    value="jonh.doe@gmail.com"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Phone:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].contactPhoneNumber"
+                    name="owners[0].contactPhoneNumber"
+                    title="775-111-1111"
+                    value="775-111-1111"
+                  />
+                </div>
+              </div>
+            </div>
+            <hr />
           </div>
         </div>
         <div
@@ -1995,7 +2289,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   class="Button__value"
                 >
                   <svg
-                    data-testid="remove-button"
+                    data-testid="owners[1]-remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -2024,11 +2318,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </button>
             </div>
-            <h3
-              class="c13"
-            >
-              Name
-            </h3>
             <div
               class="pb-2 row"
             >
@@ -2038,22 +2327,114 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 <label
                   class="c2"
                 >
-                  Given names:
+                  Is this owner an individual / corporation ?:
                 </label>
               </div>
               <div
                 class="c3 text-left col"
               >
                 <div
-                  class="input form-group"
+                  class="c13 form-group"
                 >
-                  <input
-                    class="form-control"
-                    id="input-owners[1].givenName"
-                    name="owners[1].givenName"
-                    placeholder="First name Middle name (individuals only)"
-                    value=""
-                  />
+                  <div
+                    class="radio-group"
+                  >
+                    <div
+                      class="c14"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input position-static"
+                          data-testid="radio-owners[1].isorganization-individual"
+                          id="input-false"
+                          name="owners[1].isOrganization"
+                          type="radio"
+                          value="false"
+                        />
+                      </div>
+                      <label
+                        class="form-check-label form-label"
+                        for="owners[1].isOrganization"
+                      >
+                        Individual
+                      </label>
+                    </div>
+                    <div
+                      class="c14"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          checked=""
+                          class="form-check-input position-static"
+                          data-testid="radio-owners[1].isorganization-corporation"
+                          id="input-true"
+                          name="owners[1].isOrganization"
+                          type="radio"
+                          value="true"
+                        />
+                      </div>
+                      <label
+                        class="form-check-label form-label"
+                        for="owners[1].isOrganization"
+                      >
+                        Corporation
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="c15"
+            >
+              Name
+            </h3>
+            <div
+              class="c16"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                />
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="c13 form-group"
+                  >
+                    <div
+                      class="radio-group"
+                    >
+                      <div
+                        class="c14"
+                      >
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            class="form-check-input position-static"
+                            data-testid="radio-owners[1].isprimarycontact-primary contact"
+                            id="input-true"
+                            name="owners[1].isPrimaryContact"
+                            type="radio"
+                            value="true"
+                          />
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="owners[1].isPrimaryContact"
+                        >
+                          Primary Contact
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2066,7 +2447,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 <label
                   class="c2"
                 >
-                  Last name/Corporation name:
+                  Corporation name :
                 </label>
               </div>
               <div
@@ -2077,9 +2458,9 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   <input
                     class="form-control"
-                    id="input-owners[1].lastNameOrCorp1"
-                    name="owners[1].lastNameOrCorp1"
-                    placeholder="Individual's Last name / Corporation's name"
+                    id="input-owners[1].lastNameAndCorpName"
+                    name="owners[1].lastNameAndCorpName"
+                    placeholder="Business' legal name"
                     title="FORTIS BC"
                     value="FORTIS BC"
                   />
@@ -2130,8 +2511,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 >
                   <input
                     class="form-control"
-                    id="input-owners[1].lastNameOrCorp2"
-                    name="owners[1].lastNameOrCorp2"
+                    id="input-owners[1].otherName"
+                    name="owners[1].otherName"
                     placeholder="Alias/Doing business as etc."
                     title="LTD"
                     value="LTD"
@@ -2161,7 +2542,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[1].incorporationNumber"
                     name="owners[1].incorporationNumber"
-                    placeholder="Incorporation number"
+                    placeholder="Incorporation #"
                     title="9999"
                     value="9999"
                   />
@@ -2169,10 +2550,63 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c14"
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Registration number:
+                  <span
+                    class="ml-2"
+                  >
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-section-field-tooltip"
+                      id="section-field-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].registrationNumber"
+                    name="owners[1].registrationNumber"
+                    placeholder="If no Incorporation #"
+                    title="12345"
+                    value="12345"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="c17"
             >
               <h3
-                class="c13"
+                class="c15"
               >
                 Mailing Address
               </h3>
@@ -2239,7 +2673,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   style="padding-left: 0px; padding-bottom: 2rem;"
                 >
                   <div
-                    class="c15 h-100"
+                    class="c18 h-100"
                   >
                     <button
                       class="c8 Button c10 btn btn-link"
@@ -2505,6 +2939,67 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                       value="I4M B0B"
                     />
                   </div>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="c15"
+            >
+              Contact Information
+            </h3>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Email:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].contactEmailAddress"
+                    name="owners[1].contactEmailAddress"
+                    title="fake@email.ca"
+                    value="fake@email.ca"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Phone:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].contactPhoneNumber"
+                    name="owners[1].contactPhoneNumber"
+                    title=""
+                    value=""
+                  />
                 </div>
               </div>
             </div>

@@ -19,5 +19,13 @@ namespace Pims.Api.Services
         IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id);
 
         IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
+
+        IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
+
+        PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);
+
+        IEnumerable<PimsAgreement> GetAgreements(long id);
+
+        IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
     }
 }

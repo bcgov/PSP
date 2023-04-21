@@ -1,10 +1,10 @@
 import { FormikHelpers } from 'formik';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { useCallback } from 'react';
 
 import { AddAcquisitionFileYupSchema } from '../add/AddAcquisitionFileYupSchema';
 import { AcquisitionForm } from '../add/models';
-import { useAcquisitionProvider } from './useAcquisitionProvider';
 
 export interface IUseAddAcquisitionFormManagementProps {
   /** Optional - callback to execute after acquisition file has been added to the datastore */

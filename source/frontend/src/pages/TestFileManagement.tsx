@@ -14,7 +14,7 @@ export const TestFileManagement: React.FunctionComponent<React.PropsWithChildren
       <Row className="py-5 no-gutters w-100">
         <Col>
           <DocumentListContainer
-            parentId={1}
+            parentId={'1'}
             relationshipType={DocumentRelationshipType.ACTIVITIES}
           />
         </Col>

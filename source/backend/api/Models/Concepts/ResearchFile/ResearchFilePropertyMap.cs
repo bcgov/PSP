@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPropertyResearchFile, ResearchFilePropertyModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PropertyResearchFileId)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)

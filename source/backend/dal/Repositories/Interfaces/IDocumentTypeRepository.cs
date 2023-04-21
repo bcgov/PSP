@@ -11,5 +11,7 @@ namespace Pims.Dal.Repositories
         IList<PimsDocumentTyp> GetAll();
 
         PimsDocumentTyp Add(PimsDocumentTyp documentType);
+
+        PimsDocumentTyp Update(PimsDocumentTyp documentType);
     }
 }

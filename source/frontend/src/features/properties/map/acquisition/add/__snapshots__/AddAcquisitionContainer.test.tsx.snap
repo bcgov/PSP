@@ -307,6 +307,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c7.required::before {
@@ -839,17 +840,20 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                   <svg
                                     class="c15"
                                     height="97"
-                                    title="select properties on the map"
+                                    title="Click once to enter property selection mode."
                                     width="97"
                                   >
                                     icon-draft.svg
                                   </svg>
                                   <ol>
                                     <li>
-                                      Click pin above
+                                      Single-click pin above
                                     </li>
                                     <li>
-                                      Position it on the map
+                                      Mouse to a parcel on the map
+                                    </li>
+                                    <li>
+                                      Single-click on parcel to select it
                                     </li>
                                   </ol>
                                 </div>
@@ -1558,7 +1562,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="c7 required text-left col"
                 >
                   <div
-                    class="required form-group"
+                    class="required d-flex form-group"
                   >
                     <select
                       class="form-select form-control"

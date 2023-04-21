@@ -39,6 +39,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
                 .Map(dest => dest.Note, src => src.LeaseNotes)
                 .Map(dest => dest.Description, src => src.LeaseDescription)
+                .Map(dest => dest.Consultations, src => src.PimsLeaseConsultations)
                 .Map(dest => dest.IsResidential, src => src.IsSubjectToRta)
                 .Map(dest => dest.IsCommercialBuilding, src => src.IsCommBldg)
                 .Map(dest => dest.IsOtherImprovement, src => src.IsOtherImprovement)
@@ -50,8 +51,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense)
-                .Map(dest => dest.Project, src => src.Project)
-                .PreserveReference(true);
+                .Map(dest => dest.Project, src => src.Project);
 
             config.NewConfig<LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)
@@ -82,13 +82,13 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
                 .Map(dest => dest.LeaseNotes, src => src.Note)
                 .Map(dest => dest.LeaseDescription, src => src.Description)
+                .Map(dest => dest.PimsLeaseConsultations, src => src.Consultations)
                 .Map(dest => dest.IsExpired, src => src.IsExpired)
                 .Map(dest => dest.HasPhysicalFile, src => src.HasPhysicalFile)
                 .Map(dest => dest.HasPhysicialLicense, src => src.HasPhysicalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
-                .PreserveReference(true)
                 .IgnoreNullValues(true);
         }
     }

@@ -6,14 +6,24 @@ namespace Pims.Api.Models.Concepts
 
         public long AcquisitionFileId { get; set; }
 
-        public AddressModel Address { get; set; }
+        public bool IsOrganization { get; set; }
 
-        public string LastNameOrCorp1 { get; set; }
+        public bool IsPrimaryContact { get; set; }
 
-        public string LastNameOrCorp2 { get; set; }
+        public string LastNameAndCorpName { get; set; }
+
+        public string OtherName { get; set; }
 
         public string GivenName { get; set; }
 
         public string IncorporationNumber { get; set; }
+
+        public string RegistrationNumber { get; set; }
+
+        public string ContactEmailAddr { get; set; }
+
+        public string ContactPhoneNum { get; set; }
+
+        public AddressModel Address { get; set; }
     }
 }

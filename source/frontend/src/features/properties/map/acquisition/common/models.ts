@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
 import { Api_Address } from 'models/api/Address';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
+import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
 
 export interface WithAcquisitionTeam {
   team: AcquisitionTeamFormModel[];
@@ -44,19 +44,32 @@ export class AcquisitionOwnerFormModel {
   id?: number;
   rowVersion?: number;
   acquisitionFileId?: number;
-  lastNameOrCorp1?: string;
-  lastNameOrCorp2?: string;
-  givenName?: string;
-  incorporationNumber?: string;
+  isPrimaryContact: string = 'false';
+  isOrganization: string = 'false';
+  lastNameAndCorpName: string | '' = '';
+  otherName: string | '' = '';
+  givenName: string | '' = '';
+  incorporationNumber: string | '' = '';
+  registrationNumber: string | '' = '';
+  contactEmailAddress: string | '' = '';
+  contactPhoneNumber: string | '' = '';
   address?: OwnerAddressFormModel;
 
   isEmpty(): boolean {
-    return (
-      this.lastNameOrCorp1?.trim() === '' &&
-      this.lastNameOrCorp2?.trim() === '' &&
-      this.givenName?.trim() === '' &&
-      this.incorporationNumber?.trim() === ''
-    );
+    if (this.isOrganization === 'true') {
+      return (
+        this.lastNameAndCorpName.trim() === '' &&
+        this.otherName.trim() === '' &&
+        this.incorporationNumber.trim() === '' &&
+        this.registrationNumber.trim() === ''
+      );
+    } else {
+      return (
+        this.givenName.trim() === '' &&
+        this.lastNameAndCorpName.trim() === '' &&
+        this.otherName.trim() === ''
+      );
+    }
   }
 
   toApi(): Api_AcquisitionFileOwner {
@@ -64,10 +77,33 @@ export class AcquisitionOwnerFormModel {
       id: this.id,
       rowVersion: this.rowVersion,
       acquisitionFileId: this.acquisitionFileId,
-      lastNameOrCorp1: this.lastNameOrCorp1,
-      lastNameOrCorp2: this.lastNameOrCorp2,
-      givenName: this.givenName,
-      incorporationNumber: this.incorporationNumber,
+      isPrimaryContact: stringToBoolean(this.isPrimaryContact),
+      isOrganization: this.isOrganization === 'true' ? true : false,
+      lastNameAndCorpName:
+        this.lastNameAndCorpName.trim() === '' ? null : this.lastNameAndCorpName.trim(),
+      otherName: this.otherName.trim() === '' ? null : this.otherName.trim(),
+      givenName:
+        this.isOrganization === 'true'
+          ? null
+          : this.givenName.trim() === ''
+          ? null
+          : this.givenName.trim(),
+      incorporationNumber:
+        this.isOrganization === 'true'
+          ? this.incorporationNumber.trim() === ''
+            ? null
+            : this.incorporationNumber.trim()
+          : null,
+      registrationNumber:
+        this.isOrganization === 'true'
+          ? this.registrationNumber.trim() === ''
+            ? null
+            : this.registrationNumber.trim()
+          : null,
+      contactEmailAddr:
+        this.contactEmailAddress.trim() === '' ? null : this.contactEmailAddress.trim(),
+      contactPhoneNum:
+        this.contactPhoneNumber.trim() === '' ? null : this.contactPhoneNumber.trim(),
       address: OwnerAddressFormModel.toApi(this.address),
     };
   }
@@ -77,10 +113,15 @@ export class AcquisitionOwnerFormModel {
     newForm.id = model.id;
     newForm.rowVersion = model.rowVersion;
     newForm.acquisitionFileId = model.acquisitionFileId;
-    newForm.lastNameOrCorp1 = model.lastNameOrCorp1;
-    newForm.lastNameOrCorp2 = model.lastNameOrCorp2;
-    newForm.givenName = model.givenName;
-    newForm.incorporationNumber = model.incorporationNumber;
+    newForm.isPrimaryContact = model.isPrimaryContact ? 'true' : '';
+    newForm.isOrganization = model.isOrganization ? 'true' : 'false';
+    newForm.lastNameAndCorpName = model.lastNameAndCorpName || '';
+    newForm.otherName = model.otherName || '';
+    newForm.givenName = model.givenName || '';
+    newForm.incorporationNumber = model.incorporationNumber || '';
+    newForm.registrationNumber = model.registrationNumber || '';
+    newForm.contactEmailAddress = model.contactEmailAddr || '';
+    newForm.contactPhoneNumber = model.contactPhoneNum || '';
     newForm.address = model.address ? OwnerAddressFormModel.fromApi(model.address!) : undefined;
 
     return newForm;
@@ -130,12 +171,12 @@ export class OwnerAddressFormModel {
     return model;
   }
 
-  static toApi(model: OwnerAddressFormModel | undefined): Api_Address | undefined {
+  static toApi(model: OwnerAddressFormModel | undefined): Api_Address | null {
     if (
       !model ||
       (isEmpty(model.streetAddress1) && isEmpty(model.municipality) && isEmpty(model.postal))
     ) {
-      return undefined;
+      return null;
     }
 
     return {

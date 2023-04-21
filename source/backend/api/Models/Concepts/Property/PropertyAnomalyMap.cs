@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPropPropAnomalyType, PropertyAnomalyModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PropPropAnomalyTypeId)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.PropertyAnomalyTypeCode, src => src.PropertyAnomalyTypeCodeNavigation)

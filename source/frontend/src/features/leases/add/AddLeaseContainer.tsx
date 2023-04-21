@@ -48,7 +48,7 @@ export const AddLeaseContainer: React.FunctionComponent<
     formikHelpers: FormikHelpers<LeaseFormModel>,
   ) => {
     const leaseApi = leaseFormModel.toApi();
-    const response = await addLease(leaseFormModel.toApi(), (userOverrideMessage?: string) =>
+    const response = await addLease(leaseApi, (userOverrideMessage?: string) =>
       setAddLeaseParams({ lease: leaseApi, userOverride: userOverrideMessage }),
     );
     formikHelpers.setSubmitting(false);
@@ -59,7 +59,6 @@ export const AddLeaseContainer: React.FunctionComponent<
           { autoClose: 15000 },
         );
       }
-      formikHelpers.resetForm();
       await search();
       history.replace(`/mapview/sidebar/lease/${response.id}`);
     }

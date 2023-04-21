@@ -44,6 +44,11 @@ export enum Claims {
   PROJECT_VIEW = 'project-view',
   PROJECT_ADD = 'project-add',
   PROJECT_DELETE = 'project-delete',
+  FORM_EDIT = 'form-edit',
+  FORM_VIEW = 'form-view',
+  FORM_ADD = 'form-add',
+  FORM_DELETE = 'form-delete',
+  AGREEMENT_VIEW = 'agreement-view',
 }
 
 export default Claims;

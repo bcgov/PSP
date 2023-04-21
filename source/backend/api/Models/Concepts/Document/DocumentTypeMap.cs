@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts.Document
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsDocumentTyp, DocumentTypeModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.DocumentTypeId)
                 .Map(dest => dest.DocumentType, src => src.DocumentType)
                 .Map(dest => dest.MayanId, src => src.MayanId)

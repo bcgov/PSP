@@ -25,8 +25,17 @@ namespace Pims.Dal.Entities
         public long LeaseId { get; set; }
         [Required]
         [Column("CONSULTATION_TYPE_CODE")]
-        [StringLength(20)]
+        [StringLength(40)]
         public string ConsultationTypeCode { get; set; }
+        [Required]
+        [Column("CONSULTATION_STATUS_TYPE_CODE")]
+        [StringLength(40)]
+        public string ConsultationStatusTypeCode { get; set; }
+        [Column("OTHER_DESCRIPTION")]
+        [StringLength(2000)]
+        public string OtherDescription { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppCreateTimestamp { get; set; }
         [Required]
@@ -64,7 +73,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
     }
 }

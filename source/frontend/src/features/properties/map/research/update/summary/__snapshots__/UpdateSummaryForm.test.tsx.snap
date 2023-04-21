@@ -269,6 +269,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   padding: 1.5rem;
   background-color: white;
   text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c3.required::before {
@@ -1137,6 +1138,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                     <input
                       checked=""
                       class="form-check-input position-static"
+                      data-testid="radio-isexpropriation-no"
                       id="input-false"
                       name="isExpropriation"
                       type="radio"
@@ -1145,7 +1147,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   </div>
                   <label
                     class="form-check-label form-label"
-                    for="input-isExpropriation"
+                    for="isExpropriation"
                   >
                     No
                   </label>
@@ -1158,6 +1160,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   >
                     <input
                       class="form-check-input position-static"
+                      data-testid="radio-isexpropriation-yes"
                       id="input-true"
                       name="isExpropriation"
                       type="radio"
@@ -1166,7 +1169,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   </div>
                   <label
                     class="form-check-label form-label"
-                    for="input-isExpropriation"
+                    for="isExpropriation"
                   >
                     Yes
                   </label>

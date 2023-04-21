@@ -38,7 +38,6 @@ import {
 } from 'react-table';
 
 import { TablePagination } from '.';
-import ColumnFilter from './ColumnFilter';
 import ColumnSort from './ColumnSort';
 import { DEFAULT_PAGE_SELECTOR_OPTIONS, DEFAULT_PAGE_SIZE } from './constants';
 import { TablePageSizeSelector } from './PageSizeSelector';
@@ -233,7 +232,7 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 export interface IIdentifiedObject {
-  id?: number | string;
+  id?: number | string | null;
 }
 
 const validateProps = <T extends IIdentifiedObject, TFilter extends object = {}>(
@@ -463,20 +462,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const renderHeaderCell = (column: ColumnInstanceWithProps<T>) => {
     return (
       <div className="sortable-column">
-        {filterable ? (
-          <ColumnFilter
-            onFilter={values => {
-              if (filterFormRef.current?.dirty) {
-                filterFormRef.current.submitForm();
-              }
-            }}
-            column={column}
-          >
-            {column.render('Header')}
-          </ColumnFilter>
-        ) : (
-          column.render('Header')
-        )}
+        {column.render('Header')}
         <ColumnSort<T>
           onSort={() => {
             const next = getNextSortDirection(column);

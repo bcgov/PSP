@@ -18,16 +18,6 @@ namespace Pims.Api.Models.Concepts
         public string LegacyFileNumber { get; set; }
 
         /// <summary>
-        /// get/set - The ministry project number.
-        /// </summary>
-        public string MinistryProjectNumber { get; set; }
-
-        /// <summary>
-        /// get/set - The ministry project name.
-        /// </summary>
-        public string MinistryProjectName { get; set; }
-
-        /// <summary>
         /// The assigned date.
         /// </summary>
         public DateTime? AssignedDate { get; set; }
@@ -36,6 +26,11 @@ namespace Pims.Api.Models.Concepts
         /// The date for delivery of the property to the project.
         /// </summary>
         public DateTime? DeliveryDate { get; set; }
+
+        /// <summary>
+        /// The date of acquisition file completion.
+        /// </summary>
+        public DateTime? CompletionDate { get; set; }
 
         /// <summary>
         /// get/set - The acquisition physical file status type.
@@ -86,6 +81,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - A list of acquisition file person relationships.
         /// </summary>
         public IList<AcquisitionFileOwnerModel> AcquisitionFileOwners { get; set; }
+
+        /// <summary>
+        /// get/set - A list of acquisition file checklist items.
+        /// </summary>
+        public IList<AcquisitionFileChecklistItemModel> AcquisitionFileChecklist { get; set; }
         #endregion
     }
 }
