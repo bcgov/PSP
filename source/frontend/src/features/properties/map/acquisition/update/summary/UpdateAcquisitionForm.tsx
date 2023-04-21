@@ -245,6 +245,11 @@ const AcquisitionDetailSubForm: React.FC<{
 
       <Section header="Acquisition Team">
         <UpdateAcquisitionTeamSubForm />
+        {formikProps.errors?.team && typeof formikProps.errors?.team === 'string' && (
+          <div className="invalid-feedback" data-testid="team-profile-dup-error">
+            {formikProps.errors.team.toString()}
+          </div>
+        )}
       </Section>
 
       <Section header="Owners">
