@@ -81,6 +81,20 @@ describe('User Region Select', () => {
     expect(option2).toBeVisible();
   });
 
+  it('displays all region option if specified in props', async () => {
+    const { findByTestId } = await setup({ includeAll: true, field: 'region' });
+    const option1 = await findByTestId('select-option-');
+
+    expect(option1).toBeVisible();
+  });
+
+  it('does not display all region option by default', async () => {
+    const { queryByTestId } = await setup({ includeAll: false, field: 'region' });
+    const option1 = await queryByTestId('select-option-');
+
+    expect(option1).toBeNull();
+  });
+
   it('displays a tooltip if user has no regions', async () => {
     jest.resetAllMocks();
     (useUserInfoRepository as jest.Mock).mockReturnValue({
