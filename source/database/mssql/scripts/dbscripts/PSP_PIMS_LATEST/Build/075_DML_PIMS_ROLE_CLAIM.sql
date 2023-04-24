@@ -3,7 +3,7 @@ DECLARE @dbUserGuid uniqueidentifier = null;
 DECLARE @appUserId nvarchar(30) = N'SEED';
 DECLARE @appUserGuid uniqueidentifier = '1b93f614-91da-4b32-b36e-bd2c6ebd12e2';
 DECLARE @appUserDirectory nvarchar(30) = N'';
-DECLARE @seedTime DateTime = CAST(N'2021-11-10T02:17:49.920' AS DateTime)
+DECLARE @seedTime DateTime = GETDATE();
 
 DECLARE @finance BIGINT;
 DECLARE @functional BIGINT;
