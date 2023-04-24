@@ -1,4 +1,4 @@
-﻿using Mapster;
+using Mapster;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Keycloak.Models.AccessRequest;
@@ -14,6 +14,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.AccessRequest
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)
                 .Map(dest => dest.Surname, src => src.Person.Surname)
                 .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
+                .Map(dest => dest.UserTypeCode, src => src.UserTypeCode)
                 .Inherits<Entity.IDisableBaseAppEntity, Api.Models.BaseAppModel>();
         }
     }

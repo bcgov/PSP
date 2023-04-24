@@ -15,6 +15,7 @@ export interface Api_User extends Api_ConcurrentVersion, Api_AuditFields {
   isDisabled?: boolean;
   issueDate?: string;
   lastLogin?: string;
+  userTypeCode?: string;
   userRoles: Api_UserRole[];
   userRegions: Api_RegionUser[];
   person?: Api_Person;

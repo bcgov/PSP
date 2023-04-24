@@ -5,6 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
+import { Api_Lease } from 'models/api/Lease';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
@@ -95,10 +96,10 @@ describe('AddLeaseContainer component', () => {
       userEvent.click(getByText(/Save/i));
     });
     await waitFor(() => {
-      expect(mockAxios.history.post[0].data).toEqual(expectedFormData);
+      expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
     });
 
-    expect(mockAxios.history.post[0].data).toEqual(expectedFormData);
+    expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
   });
 
   it('triggers the confirm popup', async () => {
@@ -140,16 +141,82 @@ describe('AddLeaseContainer component', () => {
     mockAxios.onPost().reply(409, { error: 'test message' });
     act(() => userEvent.click(getByText(/Save/i)));
     await waitFor(() => {
-      expect(mockAxios.history.post[0].data).toEqual(expectedFormData);
+      expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
     });
 
     await act(async () => {
       userEvent.click(await findByText('Save Anyways'));
     });
 
-    expect(mockAxios.history.post[1].data).toEqual(expectedFormData);
+    expect(mockAxios.history.post[1].data).toEqual(JSON.stringify(leaseData));
   });
 });
 
-const expectedFormData =
-  '{"expiryDate":"2020-01-02","startDate":"2020-01-01","amount":0,"paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"statusType":{"id":"DRAFT"},"type":{"id":"LICONSTRC"},"region":{"id":1},"programType":{"id":"BCFERRIES"},"returnNotes":"","motiName":"","properties":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"consultations":[{"id":0,"consultationType":{"id":"1STNATION"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0},{"id":0,"consultationType":{"id":"STRATRE"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0},{"id":0,"consultationType":{"id":"REGPLANG"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0},{"id":0,"consultationType":{"id":"REGPRPSVC"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0},{"id":0,"consultationType":{"id":"DISTRICT"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0},{"id":0,"consultationType":{"id":"HQ"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0},{"id":0,"consultationType":{"id":"OTHER"},"consultationStatusType":{"id":"UNKNOWN"},"parentLeaseId":0}]}';
+const leaseData: Api_Lease = {
+  expiryDate: '2020-01-02',
+  startDate: '2020-01-01',
+  amount: 0,
+  paymentReceivableType: { id: 'RCVBL' },
+  purposeType: { id: 'BCFERRIES' },
+  statusType: { id: 'DRAFT' },
+  type: { id: 'LICONSTRC' },
+  region: { id: 1 },
+  programType: { id: 'BCFERRIES' },
+  returnNotes: '',
+  motiName: '',
+  properties: [],
+  isResidential: false,
+  isCommercialBuilding: false,
+  isOtherImprovement: false,
+  consultations: [
+    {
+      id: 0,
+      consultationType: { id: '1STNATION' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'STRATRE' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'REGPLANG' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'REGPRPSVC' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'DISTRICT' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'HQ' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+    {
+      id: 0,
+      consultationType: { id: 'OTHER' },
+      consultationStatusType: { id: 'UNKNOWN' },
+      parentLeaseId: 0,
+      otherDescription: null,
+    },
+  ],
+};
