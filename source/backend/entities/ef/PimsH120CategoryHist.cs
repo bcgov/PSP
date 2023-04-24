@@ -8,33 +8,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_COST_TYPE_CODE")]
-    [Index(nameof(Code), Name = "COSTYP_CODE_IDX")]
-    public partial class PimsCostTypeCode
+    [Table("PIMS_H120_CATEGORY_HIST")]
+    [Index(nameof(H120CategoryHistId), nameof(EndDateHist), Name = "PIMS_H120CT_H_UK", IsUnique = true)]
+    public partial class PimsH120CategoryHist
     {
-        public PimsCostTypeCode()
-        {
-            PimsH120Categories = new HashSet<PimsH120Category>();
-            PimsProjects = new HashSet<PimsProject>();
-        }
-
         [Key]
-        [Column("ID")]
-        public long Id { get; set; }
-        [Required]
-        [Column("CODE")]
-        [StringLength(20)]
-        public string Code { get; set; }
+        [Column("_H120_CATEGORY_HIST_ID")]
+        public long H120CategoryHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("H120_CATEGORY_ID")]
+        public long H120CategoryId { get; set; }
+        [Column("FINANCIAL_ACTIVITY_ID")]
+        public long FinancialActivityId { get; set; }
+        [Column("WORK_ACTIVITY_ID")]
+        public long? WorkActivityId { get; set; }
+        [Column("COST_TYPE_ID")]
+        public long? CostTypeId { get; set; }
+        [Column("H120_CATEGORY_NO")]
+        public int? H120CategoryNo { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
         public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
-        public DateTime EffectiveDate { get; set; }
         [Column("EXPIRY_DATE", TypeName = "datetime")]
         public DateTime? ExpiryDate { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -73,10 +75,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [InverseProperty(nameof(PimsH120Category.CostType))]
-        public virtual ICollection<PimsH120Category> PimsH120Categories { get; set; }
-        [InverseProperty(nameof(PimsProject.CostTypeCode))]
-        public virtual ICollection<PimsProject> PimsProjects { get; set; }
     }
 }
