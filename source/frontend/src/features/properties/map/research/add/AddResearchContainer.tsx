@@ -5,7 +5,7 @@ import { Formik, FormikProps } from 'formik';
 import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useEffect, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { Prompt, useHistory } from 'react-router-dom';
