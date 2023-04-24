@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.Claims;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
@@ -31,7 +32,8 @@ namespace Pims.Api.Test.Services
 
         private ResearchFileService CreateResearchFileServiceWithPermissions(params Permissions[] permissions)
         {
-            var user = PrincipalHelper.CreateForPermission(permissions);
+            ClaimsPrincipal user = PrincipalHelper.CreateForPermission(permissions);
+            user.AddClaim("idir_username", "TestIdirUsername@domain");
             _helper.CreatePimsContext(user, true);
             return _helper.Create<ResearchFileService>();
         }
@@ -324,6 +326,77 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Update_StatusChange_CreatesNote()
+        {
+            // Arrange
+            const long researchFileId = 1;
+            PimsResearchFileStatusType newStatusType = new PimsResearchFileStatusType() { ResearchFileStatusTypeCode = "STATUS_B", Description = "Status B Description" };
+            PimsResearchFileStatusType oldStatusType = new PimsResearchFileStatusType() { ResearchFileStatusTypeCode = "STATUS_A", Description = "Status A Description" };
+            var updatedResearchFileRequest = new PimsResearchFile()
+            {
+                ResearchFileId = researchFileId,
+                ResearchFileStatusTypeCode = newStatusType.ResearchFileStatusTypeCode,
+            };
+
+            var existingResearchFile = new PimsResearchFile()
+            {
+                ResearchFileId = researchFileId,
+                ResearchFileStatusTypeCode = oldStatusType.ResearchFileStatusTypeCode,
+                ResearchFileStatusTypeCodeNavigation = oldStatusType,
+            };
+
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var researchRepositoryMock = _helper.GetService<Mock<IResearchFileRepository>>();
+            researchRepositoryMock.Setup(x => x.GetById(researchFileId)).Returns(existingResearchFile);
+            researchRepositoryMock.Setup(x => x.Update(updatedResearchFileRequest)).Returns(updatedResearchFileRequest);
+
+            var lookupRepositoryMock = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { newStatusType, oldStatusType });
+            var noteEntityRepositoryMock = _helper.GetService<Mock<IEntityNoteRepository>>();
+
+            // Act
+            var updatedResearchFile = service.Update(updatedResearchFileRequest);
+
+            // Assert
+            noteEntityRepositoryMock.Verify(x => x.Add(It.IsAny<PimsResearchFileNote>()), Times.Once());
+        }
+
+        [Fact]
+        public void Update_NoStatusChange_DoesNotCreateNote()
+        {
+            // Arrange
+            const long researchFileId = 1;
+            PimsResearchFileStatusType sameStatusType = new PimsResearchFileStatusType() { ResearchFileStatusTypeCode = "STATUS_A", Description = "Status B Description" };
+            var updatedResearchFileRequest = new PimsResearchFile()
+            {
+                ResearchFileId = researchFileId,
+                ResearchFileStatusTypeCode = sameStatusType.ResearchFileStatusTypeCode,
+            };
+
+            var existingResearchFile = new PimsResearchFile()
+            {
+                ResearchFileId = researchFileId,
+                ResearchFileStatusTypeCode = sameStatusType.ResearchFileStatusTypeCode,
+                ResearchFileStatusTypeCodeNavigation = sameStatusType,
+            };
+
+            var service = CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var researchRepositoryMock = _helper.GetService<Mock<IResearchFileRepository>>();
+            researchRepositoryMock.Setup(x => x.GetById(researchFileId)).Returns(existingResearchFile);
+            researchRepositoryMock.Setup(x => x.Update(updatedResearchFileRequest)).Returns(updatedResearchFileRequest);
+
+            var lookupRepositoryMock = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { sameStatusType });
+            var noteEntityRepositoryMock = _helper.GetService<Mock<IEntityNoteRepository>>();
+
+            // Act
+            var updatedResearchFile = service.Update(updatedResearchFileRequest);
+
+            // Assert
+            noteEntityRepositoryMock.Verify(x => x.Add(It.IsAny<PimsResearchFileNote>()), Times.Never());
         }
         #endregion
 

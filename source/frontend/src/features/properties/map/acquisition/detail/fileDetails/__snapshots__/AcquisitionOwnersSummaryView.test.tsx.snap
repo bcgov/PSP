@@ -68,7 +68,9 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
       >
         Each property in this file should be owned by the owner(s) in this section
       </p>
-      <span>
+      <span
+        data-testid="owner[0]"
+      >
         <div
           class="pb-2 row"
         >
@@ -114,7 +116,7 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
           <div
             class="c3 text-left col"
           >
-            JOHN DOE
+            John Doe
           </div>
         </div>
         <div
@@ -156,7 +158,7 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
           <div
             class="c3 text-left col"
           >
-            SR.
+            Jr.
           </div>
         </div>
         <div
@@ -177,15 +179,11 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             <div
               class="c5"
             >
-              456 Souris Street 
+              456 Souris Street
+PO Box 250
+A Hoot and a holler from the A&W
+North Podunk, IH8 B0B
 
-    PO Box 250 
-
-    A Hoot and a holler from the A&W 
-
-    North Podunk, British Columbia, IH8 B0B 
-
-    Canada
             </div>
           </div>
         </div>
@@ -203,7 +201,9 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
           </div>
           <div
             class="c3 text-left col"
-          />
+          >
+            jonh.doe@gmail.com
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -219,11 +219,15 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
           </div>
           <div
             class="c3 text-left col"
-          />
+          >
+            775-111-1111
+          </div>
         </div>
         <hr />
       </span>
-      <span>
+      <span
+        data-testid="owner[1]"
+      >
         <div
           class="pb-2 row"
         >
@@ -268,7 +272,7 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
           <div
             class="c3 text-left col"
           >
-            FORTIS BC (9999)
+            FORTIS BC (Inc#:9999 / Reg#:12345)
           </div>
         </div>
         <div
@@ -310,7 +314,7 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
           <div
             class="c3 text-left col"
           >
-            LTD.
+            LTD
           </div>
         </div>
         <div
@@ -331,15 +335,11 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             <div
               class="c5"
             >
-              123 Main Street 
+              123 Main Street
+PO Box 123
+Next to the Dairy Queen
+East Podunk, I4M B0B
 
-    PO Box 123 
-
-    Next to the Dairy Queen 
-
-    East Podunk, British Columbia, I4M B0B 
-
-    Canada
             </div>
           </div>
         </div>
@@ -357,7 +357,9 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
           </div>
           <div
             class="c3 text-left col"
-          />
+          >
+            fake@email.ca
+          </div>
         </div>
         <div
           class="pb-2 row"
