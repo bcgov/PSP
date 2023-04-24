@@ -35,6 +35,7 @@ export const DetailConsultation: React.FunctionComponent<
           description: consultationType.name,
         },
         consultationStatusType: { id: 'UNKNOWN', description: 'Unknown' },
+        otherDescription: null,
         rowVersion: 0,
       };
 
@@ -52,12 +53,21 @@ export const DetailConsultation: React.FunctionComponent<
     setFieldValue('consultations', newConsultations);
   }
 
+  const generateLabel = (consultation: Api_LeaseConsultation): string => {
+    var label = consultation.consultationType?.description || '';
+    if (consultation.otherDescription !== undefined && consultation.otherDescription !== null) {
+      label += ' | ' + consultation.otherDescription;
+    }
+
+    return label;
+  };
+
   return (
     <Section header="Consultation" initiallyExpanded isCollapsable>
       {values.consultations.map((consultation, index) => (
         <SectionField
           key={`consultations-${consultation.consultationType?.id}`}
-          label={consultation.consultationType?.description || ''}
+          label={generateLabel(consultation)}
           labelWidth="4"
           contentWidth="8"
         >
