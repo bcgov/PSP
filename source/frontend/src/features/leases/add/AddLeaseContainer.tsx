@@ -6,6 +6,7 @@ import { IMapProperty } from 'components/propertySelector/models';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FormikHelpers, FormikProps } from 'formik';
+import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
 import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
 import { useMemo, useState } from 'react';
@@ -42,6 +43,11 @@ export const AddLeaseContainer: React.FunctionComponent<
     }
     return null;
   }, [selectedFileFeature]);
+  const { initialProperty: initialFormProperty, bcaLoading } =
+    useInitialMapSelectorProperties(selectedFileFeature);
+  if (!!initialProperty && !!initialFormProperty) {
+    initialProperty.address = initialFormProperty?.formattedAddress;
+  }
 
   const saveLeaseFile = async (
     leaseFormModel: LeaseFormModel,
@@ -81,7 +87,7 @@ export const AddLeaseContainer: React.FunctionComponent<
       icon={<Fence />}
       footer={
         <SidebarFooter
-          isOkDisabled={formikRef.current?.isSubmitting}
+          isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}
           onSave={handleSave}
           onCancel={handleCancel}
         />
