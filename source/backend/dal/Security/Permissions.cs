@@ -164,5 +164,17 @@ namespace Pims.Dal.Security
 
         [Display(GroupName = "agreement", Name = "agreement-view", Description = "Can view agreements.")]
         AgreementView = 53,
+
+        [Display(GroupName = "compensationRequisition", Name = "compensation-requisition-view", Description = "Ability to view Acquisition File compensation requisitions.")]
+        CompensationRequisitionView = 54,
+
+        [Display(GroupName = "compensationRequisition", Name = "compensation-requisition-add", Description = "Ability to add new Acquisition File compensation requisitions.")]
+        CompensationRequisitionAdd = 55,
+
+        [Display(GroupName = "compensationRequisition", Name = "compensation-requisition-edit", Description = "Ability to edit existing fAcquisition File compensation requisitions.")]
+        CompensationRequisitionEdit = 56,
+
+        [Display(GroupName = "compensationRequisition", Name = "compensation-requisition-delete", Description = "Ability to delete Acquisition File compensation requisitions.")]
+        CompensationRequisitionDelete = 57,
     }
 }
