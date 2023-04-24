@@ -31,6 +31,13 @@ export const phoneFormatter = (phoneNumber?: string) => {
   return '';
 };
 
+export function emptyStringtoNullable(value: string): string | null {
+  if (typeof value === 'string' && value === '') {
+    return null;
+  }
+  return value;
+}
+
 export function stringToNull(value: any) {
   return emptyStringToNull(value, value);
 }

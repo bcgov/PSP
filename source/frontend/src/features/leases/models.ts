@@ -6,7 +6,7 @@ import { Api_Lease, Api_LeaseConsultation } from 'models/api/Lease';
 import { Api_PropertyLease } from 'models/api/PropertyLease';
 import { ILookupCode } from 'store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
+import { emptyStringtoNullable, fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 
 export class LeaseFormModel {
   id?: number;
@@ -204,6 +204,7 @@ export class FormLeaseConsultation {
   public consultationTypeDescription: string = '';
   public consultationStatusType: string = '';
   public consultationStatusTypeDescription: string = '';
+  public consultationTypeOtherDescription: string = '';
   public parentLeaseId: number = 0;
   public rowVersion: number | undefined = undefined;
 
@@ -214,6 +215,7 @@ export class FormLeaseConsultation {
     model.consultationTypeDescription = apiModel.consultationType?.description || '';
     model.consultationStatusType = fromTypeCode(apiModel.consultationStatusType) || '';
     model.consultationStatusTypeDescription = apiModel.consultationStatusType?.description || '';
+    model.consultationTypeOtherDescription = apiModel.otherDescription || '';
     model.parentLeaseId = apiModel.parentLeaseId || 0;
     model.rowVersion = apiModel.rowVersion || 0;
     return model;
@@ -237,6 +239,7 @@ export class FormLeaseConsultation {
       consultationType: toTypeCode(this.consultationType) || null,
       consultationStatusType: toTypeCode(this.consultationStatusType) || null,
       parentLeaseId: this.parentLeaseId,
+      otherDescription: emptyStringtoNullable(this.consultationTypeOtherDescription),
       rowVersion: this.rowVersion,
     };
   }
