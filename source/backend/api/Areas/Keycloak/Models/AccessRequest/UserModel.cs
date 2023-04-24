@@ -30,6 +30,11 @@ namespace Pims.Api.Areas.Keycloak.Models.AccessRequest
         public string Surname { get; set; }
 
         /// <summary>
+        /// get/set - The user's Type.
+        /// </summary>
+        public string UserTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The user's email.
         /// </summary>
         public string Email { get; set; }

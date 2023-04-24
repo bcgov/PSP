@@ -1,5 +1,6 @@
 import { Button } from 'components/common/buttons';
 import { Form, Input, Select, TextArea } from 'components/common/form';
+import { RadioGroup } from 'components/common/form/RadioGroup';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';
 import { DISCLAIMER_URL, PRIVACY_POLICY_URL } from 'constants/strings';
@@ -14,7 +15,7 @@ import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 import { AccessRequestSchema } from 'utils/YupSchema';
 
-import { FormAccessRequest as AccessRequestFormModel } from './models';
+import { FormAccessRequest as AccessRequestFormModel, userTypeCodeValues } from './models';
 import RolesToolTip from './RolesToolTip';
 
 interface IAccessRequestFormProps {
@@ -74,6 +75,13 @@ export const AccessRequestForm: React.FunctionComponent<
             placeholder="e.g. Property Analyst, Integrated Transportation & Infrastructure Services"
             type="text"
           />
+        </SectionField>
+        <SectionField label="Internal staff / Contractor" labelWidth="2" className="mb-4" required>
+          <RadioGroup
+            field="userTypeCode"
+            radioValues={userTypeCodeValues}
+            flexDirection="row"
+          ></RadioGroup>
         </SectionField>
         <SectionField label="Role" labelWidth="2" required>
           <Select field="roleId" options={selectRoles} placeholder="Select..." />
