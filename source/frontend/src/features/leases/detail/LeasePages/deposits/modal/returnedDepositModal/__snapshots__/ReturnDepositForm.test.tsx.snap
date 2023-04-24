@@ -420,6 +420,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
           <a
             class="c4"
             href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Returning deposits in BC
@@ -1000,6 +1001,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
           <a
             class="c4"
             href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Returning deposits in BC

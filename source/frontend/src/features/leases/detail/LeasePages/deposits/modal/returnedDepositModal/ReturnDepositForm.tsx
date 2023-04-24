@@ -105,6 +105,7 @@ export const ReturnDepositForm: React.FunctionComponent<
                 <StyledReturnInfoContainer>
                   <StyledReturningDepositLink
                     target="_blank"
+                    rel="noopener noreferrer"
                     href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
                   >
                     Returning deposits in BC
