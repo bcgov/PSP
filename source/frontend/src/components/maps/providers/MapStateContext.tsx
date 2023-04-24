@@ -123,9 +123,6 @@ export const MapStateContextProvider: React.FC<
           return produce(prevState, draft => {
             draft.loading = action.loading;
             if (action.loading === true) {
-              draft.selectedInventoryProperty = null;
-              draft.selectedFileFeature = null;
-              draft.selectedLeaseProperty = null;
               draft.selectedFeature = null;
             }
           });

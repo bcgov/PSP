@@ -31,7 +31,8 @@ describe('useAddAcquisitionFormManagement hook', () => {
 
   const setup = (hookProps: IUseAddAcquisitionFormManagementProps) => {
     const { result } = renderHook(
-      () => useAddAcquisitionFormManagement({ onSuccess: hookProps.onSuccess }),
+      () =>
+        useAddAcquisitionFormManagement({ onSuccess: hookProps.onSuccess, selectedFeature: null }),
       {
         wrapper: Wrapper,
       },
@@ -50,13 +51,13 @@ describe('useAddAcquisitionFormManagement hook', () => {
   });
 
   it('should return valid initial values', async () => {
-    const { initialValues } = setup({ onSuccess });
+    const { initialValues } = setup({ onSuccess, selectedFeature: null });
     expect(initialValues).toEqual(new AcquisitionForm());
   });
 
   it('should provide form validation schema', async () => {
     expect.assertions(3);
-    const { validationSchema } = setup({ onSuccess });
+    const { validationSchema } = setup({ onSuccess, selectedFeature: null });
 
     const validForm = new AcquisitionForm();
     validForm.fileName = 'Lorem ipsum';
@@ -72,7 +73,7 @@ describe('useAddAcquisitionFormManagement hook', () => {
   });
 
   it('should provide form submission handler', async () => {
-    const { handleSubmit } = setup({ onSuccess });
+    const { handleSubmit } = setup({ onSuccess, selectedFeature: null });
 
     const formValues = new AcquisitionForm();
     formValues.fileName = 'Test Note';
