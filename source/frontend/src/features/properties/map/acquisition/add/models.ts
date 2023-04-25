@@ -1,4 +1,4 @@
-import { IAutocompletePrediction, IContactSearchResult } from 'interfaces';
+import { IAutocompletePrediction } from 'interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileOwner,

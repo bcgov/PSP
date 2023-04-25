@@ -1,6 +1,5 @@
 import { StyledSectionParagraph } from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Form } from 'react-bootstrap';
 import styled from 'styled-components';

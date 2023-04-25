@@ -5,7 +5,6 @@ import {
   Select,
   SelectOption,
 } from 'components/common/form/';
-import { ContactInput } from 'components/common/form/ContactInput';
 import { ContactInputContainer } from 'components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from 'components/common/form/ContactInput/ContactInputView';
 import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
