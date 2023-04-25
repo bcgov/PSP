@@ -64,4 +64,19 @@ export const AddLeaseYupSchema = Yup.object().shape({
       name: Yup.string().max(250, 'Property name must be at most ${max} characters'),
     }),
   ),
+  consultations: Yup.array().of(
+    Yup.object().shape({
+      consultationTypeOtherDescription: Yup.string()
+        .when(['consultationType', 'consultationStatusType'], {
+          is: (consultationType: string, consultationStatusType: string) =>
+            consultationType &&
+            consultationType === 'OTHER' &&
+            consultationStatusType &&
+            consultationStatusType !== 'UNKNOWN',
+          then: Yup.string().required('Other Description required'),
+          otherwise: Yup.string().nullable(),
+        })
+        .max(2000, 'Other Description must be at most ${max} characters'),
+    }),
+  ),
 });

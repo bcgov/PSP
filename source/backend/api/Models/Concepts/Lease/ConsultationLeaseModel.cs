@@ -12,6 +12,8 @@ namespace Pims.Api.Models.Concepts
 
         public long ParentLeaseId { get; set; }
 
+        public string OtherDescription { get; set; }
+
         #endregion
     }
 }

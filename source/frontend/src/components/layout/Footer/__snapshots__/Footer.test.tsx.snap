@@ -62,21 +62,29 @@ exports[`Footer renders correctly 1`] = `
 >
   <a
     href="http://www.gov.bc.ca/gov/content/home/disclaimer"
+    rel="noopener noreferrer"
+    target="_blank"
   >
     Disclaimer
   </a>
   <a
     href="http://www.gov.bc.ca/gov/content/home/privacy"
+    rel="noopener noreferrer"
+    target="_blank"
   >
     Privacy
   </a>
   <a
     href="http://www.gov.bc.ca/gov/content/home/accessible-government"
+    rel="noopener noreferrer"
+    target="_blank"
   >
     Accessibility
   </a>
   <a
     href="http://www.gov.bc.ca/gov/content/home/copyright"
+    rel="noopener noreferrer"
+    target="_blank"
   >
     Copyright
   </a>

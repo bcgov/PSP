@@ -14,6 +14,11 @@ namespace Pims.Dal.Entities
     [Index(nameof(LastNameAndCorpName), Name = "ACQOWN_LAST_NAME_OR_CORP_NAME_1_IDX")]
     public partial class PimsAcquisitionOwner
     {
+        public PimsAcquisitionOwner()
+        {
+            PimsAcqOwnerCompReqChqs = new HashSet<PimsAcqOwnerCompReqChq>();
+        }
+
         [Key]
         [Column("ACQUISITION_OWNER_ID")]
         public long AcquisitionOwnerId { get; set; }
@@ -93,5 +98,7 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AddressId))]
         [InverseProperty(nameof(PimsAddress.PimsAcquisitionOwners))]
         public virtual PimsAddress Address { get; set; }
+        [InverseProperty(nameof(PimsAcqOwnerCompReqChq.AcquisitionOwner))]
+        public virtual ICollection<PimsAcqOwnerCompReqChq> PimsAcqOwnerCompReqChqs { get; set; }
     }
 }
