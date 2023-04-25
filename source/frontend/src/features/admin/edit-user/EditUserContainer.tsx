@@ -50,6 +50,7 @@ const EditUserContainer: React.FunctionComponent<
     regions: [],
     note: '',
     position: '',
+    userTypeCode: '',
     lastLogin: '',
     toApi: () => ({} as Api_User),
   };
