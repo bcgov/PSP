@@ -107,7 +107,14 @@ namespace PIMS.Tests.Automation.PageObjects
             //Search Bar Elements
             Assert.True(webDriver.FindElement(searchResearchRegionInput).Displayed);
             Assert.True(webDriver.FindElement(searchResearchBySelect).Displayed);
-            Assert.True(webDriver.FindElement(searchResearchNameInput).Displayed);
+            if (webDriver.FindElements(searchResearchFileNbrInput).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(searchResearchFileNbrInput).Displayed);
+            }
+            else
+            {
+                Assert.True(webDriver.FindElement(searchResearchNameInput).Displayed);
+            }
             Assert.True(webDriver.FindElement(searchResearchStatusSelect).Displayed);
             Assert.True(webDriver.FindElement(searchResearchRoadInput).Displayed);
             Assert.True(webDriver.FindElement(searchResearchCreateUpdateDateSelect).Displayed);

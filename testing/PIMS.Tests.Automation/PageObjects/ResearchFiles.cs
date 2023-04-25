@@ -88,6 +88,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileDetailsResearchRequestSubtitle = By.XPath("//div[contains(text(),'Research Request')]");
         private By researchFileDetailsRequestPurposeLabel = By.XPath("//label[contains(text(),'Research purpose')]");
         private By researchFileDetailsRequestPurposeInput = By.XPath("//label[contains(text(),'Research purpose')]/parent::div/following-sibling::div");
+        private By researchFileDetailsRequestPurposeRemoveBttn = By.CssSelector("i[class='custom-close']");
         private By researchFileDetailsRequestDateLabel = By.XPath("//label[contains(text(),'Request date')]");
         private By researchFileDetailsRequestDateInput = By.XPath("//label[contains(text(),'Request date')]/parent::div/following-sibling::div");
         private By researchFileDetailsRequestSourceLabel = By.XPath("//label[contains(text(),'Source of request')]");
@@ -204,7 +205,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Projects
-            if (!researchFile.Projects.Any())
+            if (researchFile.Projects.First() != "")
             {
                 for (int i = 0; i < researchFile.Projects.Count; i++)
                 {
@@ -230,7 +231,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Research Request
-            if (!researchFile.ResearchPurpose.Any())
+            if (researchFile.ResearchPurpose.First() != "")
             {
                 foreach (string purpose in researchFile.ResearchPurpose)
                 {
@@ -330,18 +331,16 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(researchFileEditButton).Click();
 
             //Projects
-            if (!researchFile.Projects.Any())
+            //Delete previous projects if any
+            if (webDriver.FindElements(researchFileDetailsProjectsRemoveBttn).Count > 0)
             {
-                //Delete previous projects if any
-                if (webDriver.FindElements(researchFileDetailsProjectsRemoveBttn).Count > 0)
+                while (webDriver.FindElements(researchFileDetailsProjectsRemoveBttn).Count > 0)
                 {
-                    var deleteProjectBttns = webDriver.FindElements(researchFileDetailsProjectsRemoveBttn);
-                    foreach (var element in deleteProjectBttns)
-                    {
-                        element.Click();
-                    }
+                    webDriver.FindElements(researchFileDetailsProjectsRemoveBttn)[0].Click();
                 }
-
+            }
+            if (researchFile.Projects.First() != "")
+            {
                 //Add new projects
                 for (int i = 0; i < researchFile.Projects.Count; i++)
                 {
@@ -350,6 +349,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     By projectInput = By.Id("typeahead-researchFileProjects[" + i + "].project");
                     webDriver.FindElement(projectInput).SendKeys(researchFile.Projects[i]);
 
+                    Wait();
                     By projectOptions = By.Id("typeahead-researchFileProjects[" + i + "].project-item-0");
                     webDriver.FindElement(projectOptions).Click();
                 }
@@ -368,7 +368,16 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Research Request
-            if (!researchFile.ResearchPurpose.Any())
+
+            //Delete previous research purposes if any
+            if (webDriver.FindElements(researchFileDetailsRequestPurposeRemoveBttn).Count > 0)
+            {
+                while (webDriver.FindElements(researchFileDetailsRequestPurposeRemoveBttn).Count > 0)
+                {
+                    webDriver.FindElements(researchFileDetailsRequestPurposeRemoveBttn)[0].Click();
+                }
+            }
+            if (researchFile.ResearchPurpose.First() != "")
             {
                 //Add new Research Purpose
                 foreach (string purpose in researchFile.ResearchPurpose)
@@ -545,12 +554,6 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(researchFileHeaderCode).Text;
         }
 
-        public Boolean PropertiesCountChange()
-        {
-            var currentPropsCount = webDriver.FindElements(researchFilePropertyCountProps).Count() - 1;
-            return !currentPropsCount.Equals(totalAssociatedProps);
-        }
-
         //Verify Create Research Init Form
         public void VerifyResearchFileCreateInitForm()
         {
@@ -627,7 +630,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(researchFileDetailsProjectSubtitle).Displayed);
             Assert.True(webDriver.FindElement(reserachFileDetailsProjectLabel).Displayed);
 
-            if (!researchFile.Projects.Any())
+            if (researchFile.Projects.First() != "")
             {
                 var projectsUI = GetProjects(researchFileDetailsProjectsCount);
                 Assert.True(Enumerable.SequenceEqual(projectsUI, researchFile.Projects));
@@ -643,7 +646,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Research Request
             Assert.True(webDriver.FindElement(researchFileDetailsResearchRequestSubtitle).Displayed);
             Assert.True(webDriver.FindElement(researchFileDetailsRequestPurposeLabel).Displayed);
-            if (!researchFile.ResearchPurpose.Any())
+            if (researchFile.ResearchPurpose.First() != "")
             {
                 var purposesUI = GetProjects(researchFileDetailsProjectsCount);
                 Assert.True(Enumerable.SequenceEqual(purposesUI, researchFile.Projects));

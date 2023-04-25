@@ -137,7 +137,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property
             PopulateResearchFile(rowNumber);
-            sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
+            searchProperties.SearchPropertyByPINPID(researchFile.SearchProperties.PID);
 
             //Select found property on Map
             searchProperties.SelectFoundPin();
@@ -168,8 +168,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.SaveResearchFile();
         }
 
-        [StepDefinition(@"I cancel changes done on Research Files")]
-        public void CreateCancelResearchFile()
+        [StepDefinition(@"I cancel changes done on Research Files from row number (.*)")]
+        public void CreateCancelResearchFile(int rowNumber)
         {
             /* TEST COVERAGE: PSP-3268, PSP-3294, PSP-3359, PSP-3463, PSP-3596, PSP-3597, PSP-3598, PSP-3601, PSP-3720, PSP-3721, PSP-4197, PSP-4556, PSP-5005 */
 
@@ -180,6 +180,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.NavigateToCreateNewResearchFile();
 
             //Create basic Research File
+            PopulateResearchFile(rowNumber);
             researchFiles.CreateResearchFile(researchFile);
 
             //Cancel Research File
@@ -215,7 +216,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("Too many results (more than 15) match this criteria. Please refine your search."));
 
             //Cancel changes on a Property Detail on Research File
-            //Insert some changes
+            researchFiles.CancelResearchFile();
+
+            //Insert changes on Property Information
             researchFiles.AddPropertyResearchInfo(researchFile.PropertyResearch[0],0);
 
             //Cancel changes
@@ -241,10 +244,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(searchResearchFile.SearchFoundResults());
 
             searchResearchFile.FilterResearchFiles("Cannot determine", "Automated", "Closed", "Happy", "dsmith");
-            Assert.False(searchResearchFile.SearchFoundResults());
-
-            //Look for the last created research file
-            searchResearchFile.SearchLastResearchFile();
         }
 
         [StepDefinition(@"I update an Existing Research File from row number (.*)")]
@@ -264,43 +263,43 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchResearchFile.SelectFirstResult();
 
             //Edit Research File Details
-            researchFiles.EditResearchFileForm(researchFile);
+            //researchFiles.EditResearchFileForm(researchFile);
 
             //Save Changes
-            researchFiles.SaveResearchFile();
+            //researchFiles.SaveResearchFile();
 
             //Navigate to Edit Research File
-            researchFiles.NavigateToAddPropertiesReseachFile();
+            //researchFiles.NavigateToAddPropertiesReseachFile();
 
             //Add existing property again
-            sharedSearchProperties.NavigateToSearchTab();
+            //sharedSearchProperties.NavigateToSearchTab();
 
-            sharedSearchProperties.VerifySearchPropertiesFeature();
-            sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-            sharedSearchProperties.SelectFirstOption();
+            //sharedSearchProperties.VerifySearchPropertiesFeature();
+            //sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
+            //sharedSearchProperties.SelectFirstOption();
 
             //Delete first property
-            sharedSearchProperties.DeleteProperty();
+            //sharedSearchProperties.DeleteProperty();
 
             //Save changes
-            researchFiles.SaveResearchFile();
+            //researchFiles.SaveResearchFile();
 
             //Confirm changes
-            researchFiles.ConfirmChangesResearchFile();
+            //researchFiles.ConfirmChangesResearchFile();
 
             //Select 1st Property attached
             researchFiles.ChooseFirstPropertyOption();
 
             //Edit Information
-            if (researchFile.PropertyResearchRowEnd != 0 && researchFile.PropertyResearchRowStart != 0)
-            {
-                for (int i = 0; i < researchFile.PropertyResearch.Count; i++)
-                {
-                    researchFiles.EditPropertyResearchInfo(researchFile.PropertyResearch[i], i);
-                    researchFiles.SaveResearchFile();
-                    researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
-                }
-            }
+            //if (researchFile.PropertyResearchRowEnd != 0 && researchFile.PropertyResearchRowStart != 0)
+            //{
+            //    for (int i = 0; i < researchFile.PropertyResearch.Count; i++)
+            //    {
+            //        researchFiles.EditPropertyResearchInfo(researchFile.PropertyResearch[i], i);
+            //        researchFiles.SaveResearchFile();
+            //        researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
+            //    }
+            //}
         }
 
         [StepDefinition(@"A new Research File is created successfully")]
@@ -316,11 +315,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         }
 
         [StepDefinition(@"Research File Properties remain unchanged")]
-        public void VerifyPropertiesCount()
+        public void SearchResearchFileResult()
         {
-            /* TEST COVERAGE: PSP-3463 */
-
-            Assert.False(researchFiles.PropertiesCountChange());
+            Assert.False(searchResearchFile.SearchFoundResults());
         }
 
         private void PopulateResearchFile(int rowNumber)

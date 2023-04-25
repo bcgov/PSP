@@ -130,13 +130,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyDetailsMunicipalZoneInput = By.Id("input-municipalZoning");
         private By propertyDetailsAnomaliesInput = By.Id("multiselect-anomalies_input");
         private By propertyDetailsAnomaliesOptions = By.XPath("//input[@id='multiselect-anomalies_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private By propertyDetailsAttrAnomaliesDeleteBttns = By.CssSelector("div[id='multiselect-anomalies'] i[class='custom-close']");
         private By propertyDetailsTenureStatusInput = By.Id("multiselect-tenures_input");
         private By propertyDetailsTenureOptions = By.XPath("//input[@id='multiselect-tenures_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private By propertyDetailsTenureDeleteBttns = By.CssSelector("div[id='multiselect-tenures'] i[class='custom-close']");
         private By propertyDetailsProvPublicHwy = By.Id("input-pphStatusTypeCode");
         private By propertyDetailsRoadEstablishInput = By.Id("multiselect-roadTypes_input");
         private By propertyDetailsRoadEstablishOptions = By.XPath("//input[@id='multiselect-roadTypes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private By propertyDetailsAdjacentLandInput = By.Id("multiselect-adjacentLands_input");
         private By propertyDetailsAdjacentLandOptions = By.XPath("//input[@id='multiselect-adjacentLands_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private By propertyDetailsAdjacentLandDeleteBttns = By.CssSelector("div[id='multiselect-adjacentLands'] i[class='custom-close']");
         private By propertyDetailsAreaSqMtsInput = By.Name("area-sq-meters");
         private By propertyDetailsAreaHctInput = By.Name("area-hectares");
         private By propertyDetailsAreaSqFtInput = By.Name("area-sq-feet");
@@ -318,6 +321,13 @@ namespace PIMS.Tests.Automation.PageObjects
         public void UpdatePropertyDetails(Property property)
         {
             Wait(5000);
+
+            //Delete previous Line 2 or Line 3 if existing
+            while (webDriver.FindElements(propertyDetailsAddressLineDeleteBttn).Count > 0)
+            {
+                webDriver.FindElements(propertyDetailsAddressLineDeleteBttn)[0].Click();
+            }
+
             if (property.Address.AddressLine1 != "")
             {
                 ClearInput(propertyDetailsAddressLine1Input);
@@ -325,19 +335,11 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.Address.AddressLine2 != "")
             {
-                if (webDriver.FindElements(propertyDetailsAddressLine2Input).Count > 0)
-                {
-                    ClearInput(propertyDetailsAddressLine2Input);
-                }
                 webDriver.FindElement(propertyDetailsAddressAddLineBttn).Click();
                 webDriver.FindElement(propertyDetailsAddressLine2Input).SendKeys(property.Address.AddressLine2);
             }
             if (property.Address.AddressLine3 != "")
             {
-                if (webDriver.FindElements(propertyDetailsAddressLine3Input).Count > 0)
-                {
-                    ClearInput(propertyDetailsAddressLine3Input);
-                }
                 webDriver.FindElement(propertyDetailsAddressAddLineBttn).Click();
                 webDriver.FindElement(propertyDetailsAddressLine3Input).SendKeys(property.Address.AddressLine3);
             }
@@ -372,44 +374,70 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(propertyDetailsMunicipalZoneInput);
                 webDriver.FindElement(propertyDetailsMunicipalZoneInput).SendKeys(property.MunicipalZoning);
             }
-            if (!property.Anomalies.Any())
+
+            //Delete Annomalies previously selected if any
+            if (webDriver.FindElements(propertyDetailsAttrAnomaliesDeleteBttns).Count > 0)
+            {
+                while (webDriver.FindElements(propertyDetailsAttrAnomaliesDeleteBttns).Count > 0)
+                {
+                    webDriver.FindElements(propertyDetailsAttrAnomaliesDeleteBttns)[0].Click();
+                }
+            }
+            if (property.Anomalies.First() != "")
             {
                 foreach (string anomaly in property.Anomalies)
                 {
-                    webDriver.FindElement(propertyDetailsAnomaliesInput).Click();
+                    Wait();
+                    FocusAndClick(propertyDetailsAnomaliesInput);
                     ChooseMultiSelectSpecificOption(propertyDetailsAnomaliesOptions, anomaly);
-                    webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Click();
                 }
             }
-            if (!property.TenureStatus.Any())
+
+            //Delete Tenure status previously selected if any
+            if (webDriver.FindElements(propertyDetailsTenureDeleteBttns).Count > 0)
+            {
+                while (webDriver.FindElements(propertyDetailsTenureDeleteBttns).Count > 0)
+                {
+                    webDriver.FindElements(propertyDetailsTenureDeleteBttns)[0].Click();
+                }
+            }
+            if (property.TenureStatus.First() != "")
             {
                 foreach (string status in property.TenureStatus)
                 {
                     FocusAndClick(propertyDetailsTenureStatusInput);
                     ChooseMultiSelectSpecificOption(propertyDetailsTenureOptions, status);
-                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
                 }
             }
+
             if (property.ProvincialPublicHwy != "")
             {
                 ChooseSpecificSelectOption(propertyDetailsProvPublicHwy, property.ProvincialPublicHwy);
             }
-            if (!property.HighwayEstablishedBy.Any())
+
+            if (property.HighwayEstablishedBy.First() != "")
             {
                 foreach (string status in property.TenureStatus)
                 {
-                    webDriver.FindElement(propertyDetailsRoadEstablishInput).Click();
+                    FocusAndClick(propertyDetailsRoadEstablishInput);
                     ChooseMultiSelectSpecificOption(propertyDetailsRoadEstablishOptions, status);
-                    webDriver.FindElement(propertyDetailsHighwayRoadEstablishLabel).Click();
                 }
             }
-            if (!property.AdjacentLandType.Any())
+
+            //Delete Adjacent Land previously selected if any
+            if (webDriver.FindElements(propertyDetailsAdjacentLandDeleteBttns).Count > 0)
             {
-                foreach (string status in property.TenureStatus)
+                while (webDriver.FindElements(propertyDetailsAdjacentLandDeleteBttns).Count > 0)
                 {
-                    webDriver.FindElement(propertyDetailsAdjacentLandInput).Click();
-                    ChooseMultiSelectSpecificOption(propertyDetailsAdjacentLandOptions, status);
-                    webDriver.FindElement(propertyDetailsAdjacentLandTypeLabel).Click();
+                    webDriver.FindElements(propertyDetailsAdjacentLandDeleteBttns)[0].Click();
+                }
+            }
+            if (property.AdjacentLandType.First() != "")
+            {
+                foreach (string type in property.AdjacentLandType)
+                {
+                    FocusAndClick(propertyDetailsAdjacentLandInput);
+                    ChooseMultiSelectSpecificOption(propertyDetailsAdjacentLandOptions, type);
                 }               
             }
             if (property.SqrMeters != "")
@@ -625,7 +653,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalLabel).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalDiv).Text.Equals(property.MunicipalZoning));
             Assert.True(webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Displayed);
-            if (!property.Anomalies.Any())
+            if (property.Anomalies.First() != "")
             {
                 var anomaliesUI = GetViewFieldListContent(propertyDetailsAttrAnomaliesDiv);
                 Assert.True(Enumerable.SequenceEqual(anomaliesUI, property.Anomalies));
@@ -635,7 +663,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(propertyDetailsTenureTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsTenureStatusLabel).Displayed);
 
-            if (!property.TenureStatus.Any())
+            if (property.TenureStatus.First() != "")
             {
                 var tenureStatusUI = GetViewFieldListContent(propertyDetailsTenureStatusDiv);
                 Assert.True(Enumerable.SequenceEqual(tenureStatusUI, property.TenureStatus));
