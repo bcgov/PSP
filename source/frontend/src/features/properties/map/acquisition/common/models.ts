@@ -40,6 +40,27 @@ export class AcquisitionTeamFormModel {
   }
 }
 
+export class AcquisitionSolicitorFormModel {
+  contact?: IContactSearchResult;
+
+  constructor(contact?: IContactSearchResult) {
+    this.contact = contact;
+  }
+
+  toApi(): Api_AcquisitionFilePerson {
+    return {
+      personId: this.contact?.personId || 0,
+    };
+  }
+
+  static fromApi(model: Api_AcquisitionFilePerson): AcquisitionSolicitorFormModel {
+    const newForm = new AcquisitionSolicitorFormModel(
+      model.person !== undefined ? fromApiPerson(model.person) : undefined,
+    );
+    return newForm;
+  }
+}
+
 export class AcquisitionOwnerFormModel {
   id?: number;
   rowVersion?: number;

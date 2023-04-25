@@ -19,7 +19,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
   }
 
   return (
-    <Section header="Owners">
+    <>
       <StyledSectionParagraph>
         Each property in this file should be owned by the owner(s) in this section
       </StyledSectionParagraph>
@@ -53,7 +53,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
           </span>
         );
       })}
-    </Section>
+    </>
   );
 };
 

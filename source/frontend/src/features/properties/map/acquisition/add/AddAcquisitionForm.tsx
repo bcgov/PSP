@@ -5,6 +5,9 @@ import {
   Select,
   SelectOption,
 } from 'components/common/form/';
+import { ContactInput } from 'components/common/form/ContactInput';
+import { ContactInputContainer } from 'components/common/form/ContactInput/ContactInputContainer';
+import ContactInputView from 'components/common/form/ContactInput/ContactInputView';
 import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { StyledSectionParagraph } from 'components/common/styles';
 import * as API from 'constants/API';
@@ -195,6 +198,12 @@ export const AddAcquisitionForm = React.forwardRef<
                 Each property in this file should be owned by the owner(s) in this section
               </StyledSectionParagraph>
               <UpdateAcquisitionOwnersSubForm />
+              <SectionField label="Owner's Solicitor" className="mt-4">
+                <ContactInputContainer
+                  field="ownerSolicitor.contact"
+                  View={ContactInputView}
+                ></ContactInputContainer>
+              </SectionField>
             </Section>
           </Container>
 
