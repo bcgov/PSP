@@ -2709,6 +2709,7 @@ exports[`Update lease container component renders as expected 1`] = `
                     id="input-consultations.6.consultationTypeOtherDescription"
                     name="consultations.6.consultationTypeOtherDescription"
                     placeholder="Describe other"
+                    title=""
                     value=""
                   />
                 </div>
