@@ -263,43 +263,43 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchResearchFile.SelectFirstResult();
 
             //Edit Research File Details
-            //researchFiles.EditResearchFileForm(researchFile);
+            researchFiles.EditResearchFileForm(researchFile);
 
             //Save Changes
-            //researchFiles.SaveResearchFile();
+            researchFiles.SaveResearchFile();
 
             //Navigate to Edit Research File
-            //researchFiles.NavigateToAddPropertiesReseachFile();
+            researchFiles.NavigateToAddPropertiesReseachFile();
 
             //Add existing property again
-            //sharedSearchProperties.NavigateToSearchTab();
+            sharedSearchProperties.NavigateToSearchTab();
 
-            //sharedSearchProperties.VerifySearchPropertiesFeature();
-            //sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-            //sharedSearchProperties.SelectFirstOption();
+            sharedSearchProperties.VerifySearchPropertiesFeature();
+            sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
+            sharedSearchProperties.SelectFirstOption();
 
             //Delete first property
-            //sharedSearchProperties.DeleteProperty();
+            sharedSearchProperties.DeleteProperty();
 
             //Save changes
-            //researchFiles.SaveResearchFile();
+            researchFiles.SaveResearchFile();
 
             //Confirm changes
-            //researchFiles.ConfirmChangesResearchFile();
+            researchFiles.ConfirmChangesResearchFile();
 
             //Select 1st Property attached
             researchFiles.ChooseFirstPropertyOption();
 
             //Edit Information
-            //if (researchFile.PropertyResearchRowEnd != 0 && researchFile.PropertyResearchRowStart != 0)
-            //{
-            //    for (int i = 0; i < researchFile.PropertyResearch.Count; i++)
-            //    {
-            //        researchFiles.EditPropertyResearchInfo(researchFile.PropertyResearch[i], i);
-            //        researchFiles.SaveResearchFile();
-            //        researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
-            //    }
-            //}
+            if (researchFile.PropertyResearchRowEnd != 0 && researchFile.PropertyResearchRowStart != 0)
+            {
+                for (int i = 0; i < researchFile.PropertyResearch.Count; i++)
+                {
+                    researchFiles.EditPropertyResearchInfo(researchFile.PropertyResearch[i], i);
+                    researchFiles.SaveResearchFile();
+                    researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
+                }
+            }
         }
 
         [StepDefinition(@"A new Research File is created successfully")]
