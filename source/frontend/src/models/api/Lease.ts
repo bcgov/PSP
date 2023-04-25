@@ -69,4 +69,5 @@ export interface Api_LeaseConsultation extends Api_ConcurrentVersion {
   consultationType: Api_TypeCode<string> | null;
   consultationStatusType: Api_TypeCode<string> | null;
   parentLeaseId: number | null;
+  otherDescription: string | null;
 }

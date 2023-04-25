@@ -15,4 +15,4 @@ VALUES
   (N'GST',       N'5.0'),
   (N'FYSTART',   N'01/04/2020'),
   (N'FYEND',     N'31/03/2021'),
-  (N'CLIENT',    N'CL');
+  (N'CLIENT',    N'034');
