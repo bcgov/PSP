@@ -229,6 +229,13 @@ exports[`Project Filter matches snapshot 1`] = `
               >
                 <option
                   class="option"
+                  data-testid="select-option-"
+                  value=""
+                >
+                  All Regions
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-1"
                   value="1"
                 >
