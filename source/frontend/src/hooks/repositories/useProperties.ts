@@ -13,16 +13,17 @@ import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { logRequest, logSuccess } from 'store/slices/network/networkSlice';
 
-import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
 
 const ignoreErrorCodes = [404];
 
 export const useProperties = () => {
   const dispatch = useDispatch();
   const {
-    getPropertiesPaged,
-    getPropertyConceptWithId,
-    exportProperties: rawApiExportProperties,
+    getPropertiesPagedApi,
+    getPropertiesApi,
+    getPropertyConceptWithIdApi,
+    exportPropertiesApi: rawApiExportProperties,
   } = useApiProperties();
 
   const { getPropertyWfs } = useGeoServer();
@@ -31,8 +32,8 @@ export const useProperties = () => {
     (propertyBounds: IPropertyFilter | null) => Promise<AxiosResponse<IPagedItems<IProperty>>>
   >({
     requestFunction: useCallback(
-      async (propertyBounds: IPropertyFilter | null) => await getPropertiesPaged(propertyBounds),
-      [getPropertiesPaged],
+      async (propertyBounds: IPropertyFilter | null) => await getPropertiesPagedApi(propertyBounds),
+      [getPropertiesPagedApi],
     ),
     requestName: actionTypes.GET_PARCELS,
     skipErrorLogCodes: ignoreErrorCodes,
@@ -43,10 +44,22 @@ export const useProperties = () => {
     (id: number) => Promise<AxiosResponse<Api_Property>>
   >({
     requestFunction: useCallback(
-      async (id: number) => await getPropertyConceptWithId(id),
-      [getPropertyConceptWithId],
+      async (id: number) => await getPropertyConceptWithIdApi(id),
+      [getPropertyConceptWithIdApi],
     ),
     requestName: actionTypes.GET_PARCELS,
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
+  const getProperties = useApiRequestWrapper<
+    (propertyIds: number[]) => Promise<AxiosResponse<Api_Property[]>>
+  >({
+    requestFunction: useCallback(
+      async (propertyIds: number[]) => await getPropertiesApi(propertyIds),
+      [getPropertiesApi],
+    ),
+    requestName: 'getProperties',
     skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
@@ -112,6 +125,7 @@ export const useProperties = () => {
     getProperty: fetchPropertyWithId,
     getPropertyLoading: getPropertyLoading,
     getProperties: fetchProperties,
+    getMultiplePropertiesById: getProperties,
     exportProperties,
   };
 };

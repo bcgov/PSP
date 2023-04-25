@@ -73,12 +73,27 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet("{id}")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Pims.Api.Models.Concepts.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetConceptPropertyWithId(long id)
         {
             var property = _propertyService.GetById(id);
             return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(property));
+        }
+
+        /// <summary>
+        /// Get the properties for the specified set of ids.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Pims.Api.Models.Concepts.PropertyModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        public IActionResult GetMultipleConceptPropertyWithId([FromQuery] long[] ids)
+        {
+            var property = _propertyService.GetMultipleById(new List<long>(ids));
+            return new JsonResult(_mapper.Map<List<Pims.Api.Models.Concepts.PropertyModel>>(property));
         }
 
         /// <summary>

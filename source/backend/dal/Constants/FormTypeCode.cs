@@ -1,6 +1,6 @@
 namespace Pims.Dal.Constants
 {
-    public static class DocumentFormType
+    public static class FormTypeCode
     {
         public const string H120 = "H120";
         public const string H179A = "H179A";
