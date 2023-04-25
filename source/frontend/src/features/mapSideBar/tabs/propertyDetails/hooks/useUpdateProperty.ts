@@ -10,12 +10,12 @@ import { toast } from 'react-toastify';
  * hook that updates a property from the inventory.
  */
 export const useUpdateProperty = () => {
-  const { putPropertyConcept } = useApiProperties();
+  const { putPropertyConceptApi } = useApiProperties();
 
   const { execute, loading } = useApiRequestWrapper({
     requestFunction: useCallback(
-      async (property: Api_Property) => await putPropertyConcept(property),
-      [putPropertyConcept],
+      async (property: Api_Property) => await putPropertyConceptApi(property),
+      [putPropertyConceptApi],
     ),
     requestName: 'updatePropertyConcept',
     onSuccess: useCallback(() => toast.success('Property information updated'), []),

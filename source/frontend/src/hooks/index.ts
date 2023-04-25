@@ -1,1 +1,1 @@
-export * from './useProperties';
+export * from './repositories/useProperties';

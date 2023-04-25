@@ -75,6 +75,7 @@ describe('UpdateProperties component', () => {
           {
             id: 3,
             isDisabled: false,
+            propertyId: 443,
             property: {
               id: 443,
               anomalies: [],

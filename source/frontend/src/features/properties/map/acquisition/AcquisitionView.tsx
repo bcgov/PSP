@@ -24,7 +24,6 @@ export interface IAcquisitionViewProps {
   onSuccess: () => void;
   onCancelConfirm: () => void;
   onUpdateProperties: (file: Api_File) => Promise<Api_File | undefined>;
-  onGenerateLetter: () => Promise<void>;
   canRemove: (propertyId: number) => Promise<boolean>;
   containerState: AcquisitionContainerState;
   setContainerState: React.Dispatch<Partial<AcquisitionContainerState>>;
@@ -39,7 +38,6 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onSuccess,
   onCancelConfirm,
   onUpdateProperties,
-  onGenerateLetter,
   canRemove,
   containerState,
   setContainerState,
@@ -100,11 +98,11 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
         leftComponent={
           <>
             <AcquisitionMenu
+              acquisitionFileId={containerState.acquisitionFile?.id || 0}
               items={menuItems}
               selectedIndex={containerState.selectedMenuIndex}
               onChange={onMenuChange}
               setContainerState={setContainerState}
-              onGenerateLetter={onGenerateLetter}
             />
           </>
         }
