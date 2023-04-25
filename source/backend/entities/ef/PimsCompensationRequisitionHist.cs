@@ -8,33 +8,42 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_COST_TYPE_CODE")]
-    [Index(nameof(Code), Name = "COSTYP_CODE_IDX")]
-    public partial class PimsCostTypeCode
+    [Table("PIMS_COMPENSATION_REQUISITION_HIST")]
+    [Index(nameof(CompensationRequisitionHistId), nameof(EndDateHist), Name = "PIMS_CMPREQ_H_UK", IsUnique = true)]
+    public partial class PimsCompensationRequisitionHist
     {
-        public PimsCostTypeCode()
-        {
-            PimsH120Categories = new HashSet<PimsH120Category>();
-            PimsProjects = new HashSet<PimsProject>();
-        }
-
         [Key]
-        [Column("ID")]
-        public long Id { get; set; }
-        [Required]
-        [Column("CODE")]
-        [StringLength(20)]
-        public string Code { get; set; }
-        [Required]
-        [Column("DESCRIPTION")]
-        [StringLength(200)]
-        public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
-        public DateTime EffectiveDate { get; set; }
-        [Column("EXPIRY_DATE", TypeName = "datetime")]
-        public DateTime? ExpiryDate { get; set; }
+        [Column("_COMPENSATION_REQUISITION_HIST_ID")]
+        public long CompensationRequisitionHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("COMPENSATION_REQUISITION_ID")]
+        public long CompensationRequisitionId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
+        [Column("IS_DRAFT")]
+        public bool? IsDraft { get; set; }
+        [Column("FISCAL_YEAR")]
+        [StringLength(9)]
+        public string FiscalYear { get; set; }
+        [Column("AGREEMENT_DT", TypeName = "date")]
+        public DateTime? AgreementDt { get; set; }
+        [Column("EXPROP_NOTICE_SERVED_DT", TypeName = "date")]
+        public DateTime? ExpropNoticeServedDt { get; set; }
+        [Column("EXPROP_VESTING_DT", TypeName = "date")]
+        public DateTime? ExpropVestingDt { get; set; }
+        [Column("GENERATION_DT", TypeName = "date")]
+        public DateTime? GenerationDt { get; set; }
+        [Column("SPECIAL_INSTRUCTION")]
+        [StringLength(2000)]
+        public string SpecialInstruction { get; set; }
+        [Column("DETAILED_REMARKS")]
+        [StringLength(2000)]
+        public string DetailedRemarks { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -73,10 +82,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [InverseProperty(nameof(PimsH120Category.CostType))]
-        public virtual ICollection<PimsH120Category> PimsH120Categories { get; set; }
-        [InverseProperty(nameof(PimsProject.CostTypeCode))]
-        public virtual ICollection<PimsProject> PimsProjects { get; set; }
     }
 }

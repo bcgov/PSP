@@ -8,33 +8,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_COST_TYPE_CODE")]
-    [Index(nameof(Code), Name = "COSTYP_CODE_IDX")]
-    public partial class PimsCostTypeCode
+    [Table("PIMS_ACQ_OWNER_COMP_REQ_CHQ_HIST")]
+    [Index(nameof(AcqOwnerCompReqChqHistId), nameof(EndDateHist), Name = "PIMS_AOCRCQ_H_UK", IsUnique = true)]
+    public partial class PimsAcqOwnerCompReqChqHist
     {
-        public PimsCostTypeCode()
-        {
-            PimsH120Categories = new HashSet<PimsH120Category>();
-            PimsProjects = new HashSet<PimsProject>();
-        }
-
         [Key]
-        [Column("ID")]
-        public long Id { get; set; }
-        [Required]
-        [Column("CODE")]
-        [StringLength(20)]
-        public string Code { get; set; }
-        [Required]
-        [Column("DESCRIPTION")]
-        [StringLength(200)]
-        public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
-        public DateTime EffectiveDate { get; set; }
-        [Column("EXPIRY_DATE", TypeName = "datetime")]
-        public DateTime? ExpiryDate { get; set; }
+        [Column("_ACQ_OWNER_COMP_REQ_CHQ_HIST_ID")]
+        public long AcqOwnerCompReqChqHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("ACQ_OWNER_COMP_REQ_CHQ_ID")]
+        public long AcqOwnerCompReqChqId { get; set; }
+        [Column("ACQUISITION_OWNER_ID")]
+        public long AcquisitionOwnerId { get; set; }
+        [Column("PRETAX_AMT", TypeName = "money")]
+        public decimal? PretaxAmt { get; set; }
+        [Column("TAX_AMT", TypeName = "money")]
+        public decimal? TaxAmt { get; set; }
+        [Column("TOTAL_AMT", TypeName = "money")]
+        public decimal? TotalAmt { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -73,10 +67,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [InverseProperty(nameof(PimsH120Category.CostType))]
-        public virtual ICollection<PimsH120Category> PimsH120Categories { get; set; }
-        [InverseProperty(nameof(PimsProject.CostTypeCode))]
-        public virtual ICollection<PimsProject> PimsProjects { get; set; }
     }
 }
