@@ -14,7 +14,6 @@ namespace PIMS.Tests.Automation.Data
         //Creating the collection we will use to store data 
         private static List<DataCollection> dataCollection = new List<DataCollection>();
 
-        // no instantiated available
         private ExcelDataContext()
         {
             FileStream stream = File.Open(".\\Data\\PIMS_Testing_Data.xlsx", FileMode.Open, FileAccess.Read);
