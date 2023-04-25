@@ -7,7 +7,7 @@ export interface Api_Agreement extends Api_ConcurrentVersion, Api_AuditFields {
   acquisitionFileId: number;
   agreementType: Api_TypeCode<string>;
   agreementDate: string | null;
-  agreementStatus: boolean | null;
+  isDraft: boolean | null;
   completionDate: string | null;
   terminationDate: string | null;
   commencementDate: string | null;

@@ -7,7 +7,7 @@ export class SingleAgreementFormModel {
   public agreementTypeCode: string = '';
   public agreementTypeDescription: string = '';
   public agreementDate: string = '';
-  public agreementStatus: string = '';
+  public isDraft: string = '';
   public completionDate: string = '';
   public terminationDate: string = '';
   public commencementDate: string = '';
@@ -29,8 +29,7 @@ export class SingleAgreementFormModel {
     agreement.agreementTypeCode = apiModel.agreementType.id || '';
     agreement.agreementTypeDescription = apiModel.agreementType.description || '';
     agreement.agreementDate = apiModel.agreementDate || '';
-    agreement.agreementStatus =
-      apiModel.agreementStatus !== null ? booleanToString(apiModel.agreementStatus) : '';
+    agreement.isDraft = apiModel.isDraft !== null ? booleanToString(apiModel.isDraft) : '';
     agreement.completionDate = apiModel.completionDate || '';
     agreement.terminationDate = apiModel.terminationDate || '';
     agreement.commencementDate = apiModel.commencementDate || '';
@@ -53,7 +52,7 @@ export class SingleAgreementFormModel {
       acquisitionFileId: acquisitionFileId,
       agreementType: toTypeCode(this.agreementTypeCode) || {},
       agreementDate: stringToNull(this.agreementDate),
-      agreementStatus: stringToBooleanOrNull(this.agreementStatus),
+      isDraft: stringToBooleanOrNull(this.isDraft),
       completionDate: stringToNull(this.completionDate),
       terminationDate: stringToNull(this.terminationDate),
       commencementDate: stringToNull(this.commencementDate),

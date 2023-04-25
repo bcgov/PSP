@@ -8,33 +8,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_COST_TYPE_CODE")]
-    [Index(nameof(Code), Name = "COSTYP_CODE_IDX")]
-    public partial class PimsCostTypeCode
+    [Table("PIMS_COMP_REQ_H120")]
+    [Index(nameof(CompensationRequisitionId), Name = "CRH120_COMPENSATION_REQUISITION_ID_IDX")]
+    [Index(nameof(H120CategoryId), Name = "CRH120_H120_CATEGORY_ID_IDX")]
+    public partial class PimsCompReqH120
     {
-        public PimsCostTypeCode()
-        {
-            PimsH120Categories = new HashSet<PimsH120Category>();
-            PimsProjects = new HashSet<PimsProject>();
-        }
-
         [Key]
-        [Column("ID")]
-        public long Id { get; set; }
-        [Required]
-        [Column("CODE")]
-        [StringLength(20)]
-        public string Code { get; set; }
-        [Required]
-        [Column("DESCRIPTION")]
-        [StringLength(200)]
-        public string Description { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
-        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
-        public DateTime EffectiveDate { get; set; }
-        [Column("EXPIRY_DATE", TypeName = "datetime")]
-        public DateTime? ExpiryDate { get; set; }
+        [Column("COMP_REQ_FIN_ACTIVITY")]
+        public long CompReqFinActivity { get; set; }
+        [Column("COMPENSATION_REQUISITION_ID")]
+        public long CompensationRequisitionId { get; set; }
+        [Column("H120_CATEGORY_ID")]
+        public long? H120CategoryId { get; set; }
+        [Column("PRETAX_AMT", TypeName = "money")]
+        public decimal? PretaxAmt { get; set; }
+        [Column("TAX_AMT", TypeName = "money")]
+        public decimal? TaxAmt { get; set; }
+        [Column("TOTAL_AMT", TypeName = "money")]
+        public decimal? TotalAmt { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -74,9 +67,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsH120Category.CostType))]
-        public virtual ICollection<PimsH120Category> PimsH120Categories { get; set; }
-        [InverseProperty(nameof(PimsProject.CostTypeCode))]
-        public virtual ICollection<PimsProject> PimsProjects { get; set; }
+        [ForeignKey(nameof(CompensationRequisitionId))]
+        [InverseProperty(nameof(PimsCompensationRequisition.PimsCompReqH120s))]
+        public virtual PimsCompensationRequisition CompensationRequisition { get; set; }
+        [ForeignKey(nameof(H120CategoryId))]
+        [InverseProperty(nameof(PimsH120Category.PimsCompReqH120s))]
+        public virtual PimsH120Category H120Category { get; set; }
     }
 }

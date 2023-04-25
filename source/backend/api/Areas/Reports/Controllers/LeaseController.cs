@@ -105,16 +105,16 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException("Lease filter must contain valid values.");
             }
 
-            var accept = (string)this.Request.Headers["Accept"];
+            var acceptHeader = (string)this.Request.Headers["Accept"];
 
-            if (accept != ContentTypes.CONTENTTYPECSV && accept != ContentTypes.CONTENTTYPEEXCEL && accept != ContentTypes.CONTENTTYPEEXCELX)
+            if (acceptHeader != ContentTypes.CONTENTTYPECSV && acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
-                throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
+                throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
             }
 
             var flatLeases = GetCrossJoinLeases(filter, all);
 
-            return accept.ToString() switch
+            return acceptHeader.ToString() switch
             {
                 ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(flatLeases),
                 _ => ReportHelper.GenerateExcel(flatLeases, "PIMS")
