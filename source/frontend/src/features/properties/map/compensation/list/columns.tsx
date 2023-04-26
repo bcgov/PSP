@@ -80,7 +80,8 @@ export function createCompensationTableColumns(
         const { hasClaim } = useKeycloakWrapper();
         return (
           <StyledDiv>
-            {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) ? (
+            {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
+            cellProps.row.original.isDraft !== false ? (
               <StyledRemoveIconButton
                 onClick={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
                 title="Delete Compensation"
