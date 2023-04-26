@@ -24,6 +24,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionTeam?: Api_AcquisitionFilePerson[];
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
   acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
+  acquisitionFileOwnerSolicitors?: Api_AcquisitionFileSolicitor[];
 
   project?: Api_Project;
   product?: Api_Product;
