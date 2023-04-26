@@ -9,6 +9,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Agreement } from 'models/api/Agreement';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { FaMailBulk } from 'react-icons/fa';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
@@ -48,15 +49,16 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           key={`agreement-section-${index}`}
           header={
             <Row>
-              <Col md={9}>{`Agreement ${index + 1}`}</Col>
-              <Col md={3}>
+              <Col md={6}>{`Agreement ${index + 1}`}</Col>
+              <Col md={6}>
                 {agreement.agreementType !== null && (
                   <StyledAddButton
                     onClick={() => {
                       onGenerate(agreement);
                     }}
                   >
-                    Generate
+                    <FaMailBulk className="mr-2" />
+                    Generate document
                   </StyledAddButton>
                 )}
               </Col>
