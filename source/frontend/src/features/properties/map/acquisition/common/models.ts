@@ -47,7 +47,9 @@ export class AcquisitionTeamFormModel {
 export class AcquisitionSolicitorFormModel {
   contact: IContactSearchResult | null;
   id: number | null = null;
+  acquisitionFileId: number | null = null;
   isDisabled: boolean | null = null;
+  rowVersion: number | null = null;
 
   constructor(contact: IContactSearchResult | null) {
     this.contact = contact;
@@ -59,6 +61,8 @@ export class AcquisitionSolicitorFormModel {
       id: this.id ?? null,
       person: null,
       isDisabled: this.isDisabled,
+      rowVersion: this.rowVersion ?? undefined,
+      acquisitionFileId: this.acquisitionFileId ?? null,
     };
   }
 
@@ -68,6 +72,8 @@ export class AcquisitionSolicitorFormModel {
     );
     newForm.id = model.id;
     newForm.isDisabled = model.isDisabled;
+    newForm.rowVersion = model.rowVersion ?? null;
+    newForm.acquisitionFileId = model.acquisitionFileId ?? null;
     return newForm;
   }
 }
