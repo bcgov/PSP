@@ -28,7 +28,9 @@ export const useGenerateAgreement = () => {
     const provincialSolicitor = file.acquisitionTeam?.find(
       team => team.personProfileTypeCode === 'MOTILAWYER',
     );
-    const ownerSolicitor = file.acquisitionFileOwnerSolicitor;
+    const ownerSolicitor = file.acquisitionFileOwnerSolicitors?.length
+      ? file.acquisitionFileOwnerSolicitors[0]
+      : undefined;
 
     const coordinatorConcept = coordinator?.personId
       ? getPersonConcept(coordinator?.personId)

@@ -16,8 +16,8 @@ export class Api_GenerateAgreement {
   survey_plan_number: string;
   no_later_than_days: string;
 
-  constructor(agreement: Api_Agreement, file: Api_GenerateFile) {
-    this.file = file;
+  constructor(agreement: Api_Agreement, generateFile: Api_GenerateFile) {
+    this.file = generateFile;
     this.current_year = moment().format('YYYY');
     this.date = moment(agreement.agreementDate).format('MMM DD, YYYY') ?? '';
     this.status = agreement.isDraft ? 'DRAFT' : '';

@@ -1,5 +1,6 @@
 import { getApiPersonOrOrgMailingAddress } from 'features/contacts/contactUtils';
 import { Api_Person } from 'models/api/Person';
+import { formatNames } from 'utils/personUtils';
 
 import { GenerateAddress } from './GenerateAddress';
 export class GeneratePerson {
@@ -30,8 +31,6 @@ export class GeneratePerson {
     this.address = person
       ? new GenerateAddress(getApiPersonOrOrgMailingAddress(person) ?? null)
       : null;
-    this.full_name_string = [this.given_name, this.middle_names, this.last_name]
-      .filter(x => !!x)
-      .join(' ');
+    this.full_name_string = formatNames([this.given_name, this.middle_names, this.last_name]);
   }
 }
