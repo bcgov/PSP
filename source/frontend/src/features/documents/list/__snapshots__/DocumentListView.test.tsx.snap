@@ -702,7 +702,7 @@ exports[`Document List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Gazette
+                GAZE
               </div>
               <div
                 class="td"
@@ -793,7 +793,7 @@ exports[`Document List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                MoTI Plan
+                MOTIPLAN
               </div>
               <div
                 class="td"

@@ -69,6 +69,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
           displayOrder: ap.displayOrder,
           rowVersion: ap.rowVersion,
           property: ap.toApi(),
+          propertyId: ap.apiId,
           acquisitionFile: { id: this.id },
         };
       }),

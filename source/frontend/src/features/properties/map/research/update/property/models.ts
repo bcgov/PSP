@@ -81,6 +81,7 @@ export class UpdatePropertyFormModel {
   public toApi(): Api_ResearchFileProperty {
     return {
       id: this.id,
+      propertyId: this.propertyId,
       propertyName: this.propertyName,
       isDisabled: this.isDisabled,
       displayOrder: this.displayOrder,

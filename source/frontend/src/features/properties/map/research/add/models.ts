@@ -24,6 +24,7 @@ export class ResearchForm {
         return {
           id: x.id,
           property: x.toApi(),
+          propertyId: x.apiId,
           researchFile: { id: this.id },
           propertyName: x.name,
           rowVersion: x.rowVersion,

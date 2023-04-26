@@ -61,6 +61,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 1,
       isDisabled: false,
+      propertyId: 442,
       property: {
         id: 442,
         anomalies: [],
@@ -98,6 +99,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 2,
       isDisabled: false,
+      propertyId: 443,
       property: {
         id: 443,
         anomalies: [],
@@ -171,7 +173,7 @@ export const mockAcquisitionFileResponse = (
         rowVersion: 1,
       },
       personProfileType: {
-        id: 'NEGOTAGENT',
+        id: 'MOTILAWYER',
         description: 'Negotiation agent',
         isDisabled: false,
       },

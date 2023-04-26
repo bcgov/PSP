@@ -18,16 +18,6 @@ namespace Pims.Api.Models.Concepts
         public string LegacyFileNumber { get; set; }
 
         /// <summary>
-        /// get/set - The ministry project number.
-        /// </summary>
-        public string MinistryProjectNumber { get; set; }
-
-        /// <summary>
-        /// get/set - The ministry project name.
-        /// </summary>
-        public string MinistryProjectName { get; set; }
-
-        /// <summary>
         /// The assigned date.
         /// </summary>
         public DateTime? AssignedDate { get; set; }

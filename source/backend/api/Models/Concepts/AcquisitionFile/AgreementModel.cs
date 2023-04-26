@@ -12,7 +12,7 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime? AgreementDate { get; set; }
 
-        public bool? AgreementStatus { get; set; }
+        public bool? IsDraft { get; set; }
 
         public DateTime? CompletionDate { get; set; }
 

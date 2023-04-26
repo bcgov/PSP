@@ -1,3 +1,3 @@
 export enum DocumentTypeName {
-  CDOGS = 'CDOGS template',
+  CDOGS = 'CDOGTEMP',
 }

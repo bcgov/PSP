@@ -41,15 +41,6 @@ namespace Pims.Dal.Entities
         public string AcqPhysFileStatusTypeCode { get; set; }
         [Column("REGION_CODE")]
         public short RegionCode { get; set; }
-        [Column("MINISTRY_PROJECT_NUMBER")]
-        [StringLength(20)]
-        public string MinistryProjectNumber { get; set; }
-        [Column("MINISTRY_PROJECT_NAME")]
-        [StringLength(100)]
-        public string MinistryProjectName { get; set; }
-        [Column("CPS_PRODUCT_CODE")]
-        [StringLength(12)]
-        public string CpsProductCode { get; set; }
         [Required]
         [Column("FILE_NAME")]
         [StringLength(500)]

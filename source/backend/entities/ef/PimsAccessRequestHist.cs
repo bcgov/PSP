@@ -25,6 +25,9 @@ namespace Pims.Dal.Entities
         public long UserId { get; set; }
         [Column("ROLE_ID")]
         public long? RoleId { get; set; }
+        [Column("USER_TYPE_CODE")]
+        [StringLength(20)]
+        public string UserTypeCode { get; set; }
         [Required]
         [Column("ACCESS_REQUEST_STATUS_TYPE_CODE")]
         [StringLength(20)]
