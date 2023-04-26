@@ -1,0 +1,89 @@
+import { showFile } from 'features/documents/DownloadDocumentButton';
+import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
+import { FormTemplateTypes } from 'features/properties/map/shared/content/models';
+import { useApiAcquisitionFile } from 'hooks/pims-api/useApiAcquisitionFile';
+import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { AgreementTypes, Api_Agreement } from 'models/api/Agreement';
+import { ExternalResultStatus } from 'models/api/ExternalResult';
+import { Api_GenerateAgreement } from 'models/generate/GenerateAgreement';
+import { Api_GenerateFile } from 'models/generate/GenerateFile';
+
+export const useGenerateAgreement = () => {
+  const { getPersonConcept } = useApiContacts();
+  const { getAcquisitionFile, getAcquisitionFileProperties } = useApiAcquisitionFile();
+  const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
+  const generateLetter = async (agreement: Api_Agreement) => {
+    if (agreement.agreementType?.id === undefined) {
+      throw Error('user must choose agreement type in order to generate a document');
+    }
+    const file = (await getAcquisitionFile(agreement.acquisitionFileId)).data;
+    const properties = (await getAcquisitionFileProperties(agreement.acquisitionFileId)).data;
+    file.fileProperties = properties;
+    const coordinator = file.acquisitionTeam?.find(
+      team => team.personProfileTypeCode === 'PROPCOORD',
+    );
+    const negotiatingAgent = file.acquisitionTeam?.find(
+      team => team.personProfileTypeCode === 'NEGOTAGENT',
+    );
+    const provincialSolicitor = file.acquisitionTeam?.find(
+      team => team.personProfileTypeCode === 'MOTILAWYER',
+    );
+    const ownerSolicitor = file.acquisitionFileOwnerSolicitor;
+
+    const coordinatorConcept = coordinator?.personId
+      ? getPersonConcept(coordinator?.personId)
+      : Promise.resolve(null);
+    const negotiatingAgentConcept = negotiatingAgent?.personId
+      ? getPersonConcept(negotiatingAgent?.personId)
+      : Promise.resolve(null);
+    const provincialSolicitorConcept = provincialSolicitor?.personId
+      ? getPersonConcept(provincialSolicitor?.personId)
+      : Promise.resolve(null);
+    const ownerSolicitorConcept = ownerSolicitor?.personId
+      ? getPersonConcept(ownerSolicitor?.personId)
+      : Promise.resolve(null);
+
+    const persons = await Promise.all([
+      coordinatorConcept,
+      negotiatingAgentConcept,
+      provincialSolicitorConcept,
+      ownerSolicitorConcept,
+    ]);
+
+    const fileData = new Api_GenerateFile(
+      file,
+      persons[0]?.data,
+      persons[1]?.data,
+      persons[2]?.data,
+      persons[3]?.data,
+    );
+    const agreementData = new Api_GenerateAgreement(agreement, fileData);
+    const generatedFile = await generate({
+      templateType: getTemplateTypeFromAgreementType(agreement.agreementType.id),
+      templateData: agreementData,
+    });
+    generatedFile?.status === ExternalResultStatus.Success!! &&
+      generatedFile?.payload &&
+      showFile(generatedFile?.payload);
+  };
+  return generateLetter;
+};
+
+/**
+ * Get the form type based on the corresponding agreement type.
+ * Note that while currently those string values match that is not a safe general assumption that they will always match
+ * @param agreementType
+ * @returns
+ */
+const getTemplateTypeFromAgreementType = (agreementType: string) => {
+  switch (agreementType) {
+    case AgreementTypes.H179A:
+      return FormTemplateTypes.H179A;
+    case AgreementTypes.H179P:
+      return FormTemplateTypes.H179P;
+    case AgreementTypes.H179T:
+      return FormTemplateTypes.H179T;
+    default:
+      throw Error(`Unable to find form type for agreement type: ${agreementType}`);
+  }
+};

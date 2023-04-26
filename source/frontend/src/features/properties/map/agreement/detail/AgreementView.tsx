@@ -1,4 +1,5 @@
 import EditButton from 'components/common/EditButton';
+import { StyledAddButton } from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
@@ -7,6 +8,7 @@ import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tab
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Agreement } from 'models/api/Agreement';
 import * as React from 'react';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
@@ -16,12 +18,14 @@ export interface IAgreementViewProps {
   loading: boolean;
   agreements: Api_Agreement[];
   onEdit: () => void;
+  onGenerate: (agreement: Api_Agreement) => void;
 }
 
 export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   loading,
   agreements,
   onEdit,
+  onGenerate,
 }) => {
   const keycloak = useKeycloakWrapper();
 
@@ -42,7 +46,22 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
       {agreements.map((agreement, index) => (
         <Section
           key={`agreement-section-${index}`}
-          header={`Agreement ${index + 1}`}
+          header={
+            <Row>
+              <Col md={9}>{`Agreement ${index + 1}`}</Col>
+              <Col md={3}>
+                {agreement.agreementType !== null && (
+                  <StyledAddButton
+                    onClick={() => {
+                      onGenerate(agreement);
+                    }}
+                  >
+                    Generate
+                  </StyledAddButton>
+                )}
+              </Col>
+            </Row>
+          }
           isCollapsable
           initiallyExpanded
         >

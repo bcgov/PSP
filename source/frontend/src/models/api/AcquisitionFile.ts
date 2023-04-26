@@ -23,9 +23,9 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   regionCode?: Api_TypeCode<number>;
   acquisitionTeam?: Api_AcquisitionFilePerson[];
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
+  acquisitionFileOwnerSolicitor?: Api_AcquisitionFileOwnerSolicitor;
   acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
   acquisitionFileOwnerSolicitors?: Api_AcquisitionFileSolicitor[];
-
   project?: Api_Project;
   product?: Api_Product;
   fundingTypeCode?: Api_TypeCode<string>;
@@ -43,6 +43,14 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
   person?: Api_Person;
   personProfileTypeCode?: string;
   personProfileType?: Api_TypeCode<string>;
+  isDisabled?: boolean;
+}
+
+export interface Api_AcquisitionFileOwnerSolicitor extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  acquisitionFileId?: number;
+  personId?: number;
+  person?: Api_Person;
   isDisabled?: boolean;
 }
 
