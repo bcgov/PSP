@@ -40,7 +40,7 @@ export class UpdateAcquisitionSummaryFormModel
   product?: number;
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
-  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel();
+  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -106,7 +106,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.product = model.product?.id ?? undefined;
     newForm.ownerSolicitor = model.acquisitionFileOwnerSolicitors?.length
       ? AcquisitionSolicitorFormModel.fromApi(model.acquisitionFileOwnerSolicitors[0])
-      : new AcquisitionSolicitorFormModel();
+      : new AcquisitionSolicitorFormModel(null);
 
     return newForm;
   }

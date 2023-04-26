@@ -47,10 +47,10 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
 }
 
 export interface Api_AcquisitionFileSolicitor extends Api_ConcurrentVersion, Api_AuditFields {
-  id?: number;
-  personId?: number;
-  person?: Api_Person;
-  isDisabled?: boolean;
+  id: number | null;
+  personId: number | null;
+  person: Api_Person | null;
+  isDisabled: boolean | null;
 }
 
 export interface Api_AcquisitionFileOwner extends Api_ConcurrentVersion, Api_AuditFields {

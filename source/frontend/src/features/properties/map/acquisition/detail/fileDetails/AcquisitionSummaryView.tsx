@@ -115,7 +115,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
               to={`/contact/P${acquisitionFile?.acquisitionFileOwnerSolicitors[0].personId}`}
             >
               <span>
-                {formatApiPersonNames(acquisitionFile?.acquisitionFileOwnerSolicitors[0].person)}
+                {formatApiPersonNames(
+                  acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.person ?? undefined,
+                )}
               </span>
               <FaExternalLinkAlt className="ml-2" size="1rem" />
             </StyledLink>

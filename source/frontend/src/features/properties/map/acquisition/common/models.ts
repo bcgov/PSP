@@ -1,6 +1,10 @@
 import { fromApiPerson, IContactSearchResult } from 'interfaces';
 import { isEmpty } from 'lodash';
-import { Api_AcquisitionFileOwner, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
+import {
+  Api_AcquisitionFileOwner,
+  Api_AcquisitionFilePerson,
+  Api_AcquisitionFileSolicitor,
+} from 'models/api/AcquisitionFile';
 import { Api_Address } from 'models/api/Address';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
@@ -41,22 +45,29 @@ export class AcquisitionTeamFormModel {
 }
 
 export class AcquisitionSolicitorFormModel {
-  contact?: IContactSearchResult;
+  contact: IContactSearchResult | null;
+  id: number | null = null;
+  isDisabled: boolean | null = null;
 
-  constructor(contact?: IContactSearchResult) {
+  constructor(contact: IContactSearchResult | null) {
     this.contact = contact;
   }
 
-  toApi(): Api_AcquisitionFilePerson {
+  toApi(): Api_AcquisitionFileSolicitor {
     return {
-      personId: this.contact?.personId || 0,
+      personId: this.contact?.personId ?? null,
+      id: this.id ?? null,
+      person: null,
+      isDisabled: this.isDisabled,
     };
   }
 
-  static fromApi(model: Api_AcquisitionFilePerson): AcquisitionSolicitorFormModel {
+  static fromApi(model: Api_AcquisitionFileSolicitor): AcquisitionSolicitorFormModel {
     const newForm = new AcquisitionSolicitorFormModel(
-      model.person !== undefined ? fromApiPerson(model.person) : undefined,
+      model.person !== null ? fromApiPerson(model.person) ?? null : null,
     );
+    newForm.id = model.id;
+    newForm.isDisabled = model.isDisabled;
     return newForm;
   }
 }

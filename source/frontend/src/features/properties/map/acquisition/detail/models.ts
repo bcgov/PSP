@@ -18,7 +18,7 @@ export class DetailAcquisitionFile {
   acquisitionTypeDescription?: string;
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFilePerson[] = [];
-  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel();
+  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
 
   static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
@@ -35,7 +35,7 @@ export class DetailAcquisitionFile {
       model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
     detail.ownerSolicitor = model?.acquisitionFileOwnerSolicitors?.length
       ? AcquisitionSolicitorFormModel.fromApi(model?.acquisitionFileOwnerSolicitors[0])
-      : new AcquisitionSolicitorFormModel();
+      : new AcquisitionSolicitorFormModel(null);
 
     return detail;
   }
