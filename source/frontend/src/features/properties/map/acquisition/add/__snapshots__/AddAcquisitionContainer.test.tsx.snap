@@ -1725,8 +1725,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                         >
                           Select from contacts
                           <button
-                            class="c20 Button Button--disabled c26 btn btn-link"
-                            disabled=""
+                            class="c20 Button c26 btn btn-link"
                             title="remove"
                             type="button"
                           >

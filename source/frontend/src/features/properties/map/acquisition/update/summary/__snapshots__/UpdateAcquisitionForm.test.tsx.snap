@@ -3046,8 +3046,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   >
                     Select from contacts
                     <button
-                      class="c8 Button Button--disabled c9 btn btn-link"
-                      disabled=""
+                      class="c8 Button c9 btn btn-link"
                       title="remove"
                       type="button"
                     >

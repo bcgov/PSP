@@ -1620,8 +1620,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                   >
                     Select from contacts
                     <button
-                      class="c17 Button Button--disabled c23 btn btn-link"
-                      disabled=""
+                      class="c17 Button c23 btn btn-link"
                       title="remove"
                       type="button"
                     >
