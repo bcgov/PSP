@@ -149,7 +149,7 @@ describe('compensation list view', () => {
     const deleteButton = (await findAllByTitle('Delete Compensation'))[0];
     act(() => userEvent.click(deleteButton));
     await waitFor(() => {
-      expect(onDelete).toHaveBeenCalledWith(1);
+      expect(onDelete).toHaveBeenCalledWith(4);
     });
   });
 
