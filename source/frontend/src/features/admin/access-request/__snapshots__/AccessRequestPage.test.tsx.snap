@@ -6,7 +6,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
     class="Toastify"
   />
   <div />
-  .c5.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`AccessRequestPage renders correctly 1`] = `
   cursor: pointer;
 }
 
-.c5.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c7.btn.btn-primary {
   border: none;
 }
 
-.c5.btn.btn-secondary {
+.c7.btn.btn-secondary {
   background: none;
 }
 
-.c5.btn.btn-info {
+.c7.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
   background: none;
 }
 
-.c5.btn.btn-light {
+.c7.btn.btn-light {
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c7.btn.btn-dark {
   border: none;
 }
 
-.c5.btn.btn-link {
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`AccessRequestPage renders correctly 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`AccessRequestPage renders correctly 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,16 +128,26 @@ exports[`AccessRequestPage renders correctly 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c1 {
@@ -147,6 +157,54 @@ exports[`AccessRequestPage renders correctly 1`] = `
   width: 100%;
   text-align: left;
   margin-bottom: 2rem;
+}
+
+.c4.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c4.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c4.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c4.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c4.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c4 .form-label {
+  margin-bottom: unset;
 }
 
 .c3.required::before {
@@ -160,7 +218,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
   font-weight: bold;
 }
 
-.c4 {
+.c6 {
   position: absolute;
   top: 1rem;
   right: -0.5rem;
@@ -378,6 +436,76 @@ exports[`AccessRequestPage renders correctly 1`] = `
             </div>
           </div>
           <div
+            class="mb-4 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                Internal staff / Contractor:
+              </label>
+            </div>
+            <div
+              class="c3 required text-left col"
+            >
+              <div
+                class="c4 form-group"
+              >
+                <div
+                  class="radio-group"
+                >
+                  <div
+                    class="c5"
+                  >
+                    <div
+                      class="form-check"
+                    >
+                      <input
+                        class="form-check-input position-static"
+                        data-testid="radio-usertypecode-ministry staff"
+                        id="input-MINSTAFF"
+                        name="userTypeCode"
+                        type="radio"
+                        value="MINSTAFF"
+                      />
+                    </div>
+                    <label
+                      class="form-check-label form-label"
+                      for="userTypeCode"
+                    >
+                      Ministry staff
+                    </label>
+                  </div>
+                  <div
+                    class="c5"
+                  >
+                    <div
+                      class="form-check"
+                    >
+                      <input
+                        checked=""
+                        class="form-check-input position-static"
+                        data-testid="radio-usertypecode-contractor"
+                        id="input-CONTRACT"
+                        name="userTypeCode"
+                        type="radio"
+                        value="CONTRACT"
+                      />
+                    </div>
+                    <label
+                      class="form-check-label form-label"
+                      for="userTypeCode"
+                    >
+                      Contractor
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
             class="pb-2 row"
           >
             <div
@@ -415,7 +543,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
                 </select>
               </div>
               <svg
-                class="c4 tooltip-icon"
+                class="c6 tooltip-icon"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -528,7 +656,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
               role="toolbar"
             >
               <button
-                class="c5 Button btn btn-primary"
+                class="c7 Button btn btn-primary"
                 type="submit"
               >
                 <div

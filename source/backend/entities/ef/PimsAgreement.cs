@@ -24,8 +24,8 @@ namespace Pims.Dal.Entities
         public string AgreementTypeCode { get; set; }
         [Column("AGREEMENT_DATE", TypeName = "date")]
         public DateTime? AgreementDate { get; set; }
-        [Column("AGREEMENT_STATUS")]
-        public bool? AgreementStatus { get; set; }
+        [Column("IS_DRAFT")]
+        public bool? IsDraft { get; set; }
         [Column("COMPLETION_DATE", TypeName = "date")]
         public DateTime? CompletionDate { get; set; }
         [Column("TERMINATION_DATE", TypeName = "date")]

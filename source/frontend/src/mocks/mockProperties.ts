@@ -171,6 +171,7 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
     id: 1,
     fileId: 1,
     propertyName: 'test property name',
+    propertyId: 1,
     property: {
       id: 1,
       anomalies: [],
@@ -207,6 +208,7 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
   },
   {
     id: 2,
+    propertyId: 2,
     property: {
       id: 2,
       anomalies: [],
