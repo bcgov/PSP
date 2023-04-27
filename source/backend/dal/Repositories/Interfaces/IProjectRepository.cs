@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter);
+        Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions);
 
         IList<PimsProject> SearchProjects(string filter, HashSet<short> regions, int maxResults);
 

@@ -9,6 +9,7 @@ import { Select, SelectProps } from '../Select';
 
 export interface IUserRegionSelectContainerProps {
   field: string;
+  includeAll?: boolean;
 }
 
 /** display a list of all regions filtered by the current user's regions. */
@@ -42,6 +43,9 @@ export const UserRegionSelectContainer: React.FunctionComponent<
         field={field}
       ></Select>
     );
+  }
+  if (rest.includeAll) {
+    userRegionTypes.unshift({ label: 'All Regions', value: '' });
   }
 
   return (
