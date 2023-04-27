@@ -33,7 +33,7 @@ export const mockAgreementsResponse = (): Api_Agreement[] => [
     agreementId: 2,
     acquisitionFileId: 1,
     agreementType: {
-      id: 'ABCD',
+      id: 'H179T',
       description: 'Test type 2 (ABCD)',
       isDisabled: false,
       displayOrder: 4,

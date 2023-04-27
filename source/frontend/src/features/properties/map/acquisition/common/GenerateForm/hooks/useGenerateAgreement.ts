@@ -1,8 +1,8 @@
 import { showFile } from 'features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
 import { FormTemplateTypes } from 'features/properties/map/shared/content/models';
-import { useApiAcquisitionFile } from 'hooks/pims-api/useApiAcquisitionFile';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { AgreementTypes, Api_Agreement } from 'models/api/Agreement';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { Api_GenerateAgreement } from 'models/generate/GenerateAgreement';
@@ -10,14 +10,17 @@ import { Api_GenerateFile } from 'models/generate/GenerateFile';
 
 export const useGenerateAgreement = () => {
   const { getPersonConcept } = useApiContacts();
-  const { getAcquisitionFile, getAcquisitionFileProperties } = useApiAcquisitionFile();
+  const { getAcquisitionFile, getAcquisitionProperties } = useAcquisitionProvider();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
-  const generateLetter = async (agreement: Api_Agreement) => {
-    if (agreement.agreementType?.id === undefined) {
+  const generateAgreement = async (agreement: Api_Agreement) => {
+    if (agreement?.agreementType?.id === undefined) {
       throw Error('user must choose agreement type in order to generate a document');
     }
-    const file = (await getAcquisitionFile(agreement.acquisitionFileId)).data;
-    const properties = (await getAcquisitionFileProperties(agreement.acquisitionFileId)).data;
+    const file = await getAcquisitionFile.execute(agreement.acquisitionFileId);
+    const properties = await getAcquisitionProperties.execute(agreement.acquisitionFileId);
+    if (!file) {
+      throw Error('Acquisition file not found');
+    }
     file.fileProperties = properties;
     const coordinator = file.acquisitionTeam?.find(
       team => team.personProfileTypeCode === 'PROPCOORD',
@@ -68,7 +71,7 @@ export const useGenerateAgreement = () => {
       generatedFile?.payload &&
       showFile(generatedFile?.payload);
   };
-  return generateLetter;
+  return generateAgreement;
 };
 
 /**
