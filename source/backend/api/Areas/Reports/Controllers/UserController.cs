@@ -87,18 +87,18 @@ namespace Pims.Api.Areas.Reports.Controllers
         public IActionResult ExportUsers([FromBody] EModel.UserFilter filter, bool all = false)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
-            var accept = (string)this.Request.Headers["Accept"];
+            var acceptHeader = (string)this.Request.Headers["Accept"];
 
-            if (accept != ContentTypes.CONTENTTYPECSV && accept != ContentTypes.CONTENTTYPEEXCEL && accept != ContentTypes.CONTENTTYPEEXCELX)
+            if (acceptHeader != ContentTypes.CONTENTTYPECSV && acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
-                throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
+                throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
             }
 
             filter.Quantity = all ? _userRepository.Count() : filter.Quantity;
             var page = _userRepository.GetAllByFilter(filter);
             var report = _mapper.Map<Api.Models.PageModel<Models.User.UserModel>>(page);
 
-            return accept.ToString() switch
+            return acceptHeader.ToString() switch
             {
                 ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(report.Items),
                 _ => ReportHelper.GenerateExcel(report.Items, "PIMS")

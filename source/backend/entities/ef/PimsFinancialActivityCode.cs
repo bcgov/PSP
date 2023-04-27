@@ -12,6 +12,11 @@ namespace Pims.Dal.Entities
     [Index(nameof(Code), Name = "FINACT_CODE_IDX")]
     public partial class PimsFinancialActivityCode
     {
+        public PimsFinancialActivityCode()
+        {
+            PimsH120Categories = new HashSet<PimsH120Category>();
+        }
+
         [Key]
         [Column("ID")]
         public long Id { get; set; }
@@ -67,5 +72,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [InverseProperty(nameof(PimsH120Category.FinancialActivity))]
+        public virtual ICollection<PimsH120Category> PimsH120Categories { get; set; }
     }
 }

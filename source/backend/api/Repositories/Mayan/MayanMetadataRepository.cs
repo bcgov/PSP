@@ -75,6 +75,28 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResult<MetadataType>> TryUpdateMetadataTypeAsync(MetadataType metadataType)
+        {
+            _logger.LogDebug("Updating metadata type {id}...", metadataType.Id);
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            JsonSerializerOptions serializerOptions = new()
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            };
+            string serializedMetadataType = JsonSerializer.Serialize(metadataType, serializerOptions);
+            using HttpContent content = new StringContent(serializedMetadataType);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            Uri endpoint = new($"{this._config.BaseUri}/metadata_types/{metadataType.Id}/");
+
+            var response = await PutAsync<MetadataType>(endpoint, content, authenticationToken).ConfigureAwait(true);
+
+            this._logger.LogDebug($"Finished updating a metadata type", metadataType.Id);
+            return response;
+        }
+
         public async Task<ExternalResult<string>> TryDeleteMetadataTypeAsync(long metadataTypeId)
         {
             _logger.LogDebug("Deleting metadata type...");

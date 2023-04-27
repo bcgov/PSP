@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useContext } from 'react';
 
+import { useGenerateAgreement } from '../../acquisition/common/GenerateForm/hooks/useGenerateAgreement';
 import { IAgreementViewProps } from './AgreementView';
 
 export interface IAgreementContainerProps {
@@ -19,6 +20,7 @@ export const AgreementContainer: React.FunctionComponent<
   const {
     getAcquisitionAgreements: { execute: getAgreements, response, loading },
   } = useAgreementProvider();
+  const generateAgreement = useGenerateAgreement();
 
   const { file, fileLoading } = useContext(SideBarContext);
   if (!!file && file?.id === undefined && fileLoading === false) {
@@ -35,7 +37,12 @@ export const AgreementContainer: React.FunctionComponent<
 
   return !!file?.id ? (
     <>
-      <View loading={loading} agreements={response || []} onEdit={onEdit}></View>
+      <View
+        loading={loading}
+        agreements={response || []}
+        onEdit={onEdit}
+        onGenerate={generateAgreement}
+      ></View>
     </>
   ) : null;
 };

@@ -46,17 +46,22 @@ namespace Pims.Dal.Repositories
         {
             var key = this.User.GetUserKey();
             var accessRequest = this.Context.PimsAccessRequests
+                .Include(a => a.UserTypeCodeNavigation)
                 .Include(a => a.User)
                 .ThenInclude(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
                 .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                .Include(x => x.User)
+                .ThenInclude(u => u.UserTypeCodeNavigation)
                 .Include(a => a.Role)
+                .Include(a => a.UserTypeCodeNavigation)
                 .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .AsNoTracking()
                 .OrderByDescending(a => a.AppCreateTimestamp)
                 .FirstOrDefault(a => a.User.GuidIdentifierValue == key);
+
             return accessRequest;
         }
 
@@ -73,6 +78,7 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(p => p.PimsContactMethods)
                 .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(a => a.Role)
+                .Include(a => a.UserTypeCodeNavigation)
                 .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
@@ -166,8 +172,11 @@ namespace Pims.Dal.Repositories
 
             var key = this.User.GetUserKey();
             var position = addRequest.User.Position;
+            var userTypeCode = addRequest.User.UserTypeCode;
             addRequest.User = this.Context.PimsUsers.FirstOrDefault(u => u.GuidIdentifierValue == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
             addRequest.User.Position = position;
+            addRequest.User.UserTypeCode = userTypeCode;
+            addRequest.UserTypeCode = userTypeCode;
             addRequest.UserId = addRequest.User.UserId;
             addRequest.AccessRequestStatusTypeCodeNavigation = this.Context.PimsAccessRequestStatusTypes.FirstOrDefault(a => a.AccessRequestStatusTypeCode == "RECEIVED");
 
@@ -191,6 +200,7 @@ namespace Pims.Dal.Repositories
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
             var position = updateRequest.User.Position;
+            var userTypeCode = updateRequest.User.UserTypeCode;
             if (!isAdmin && updateRequest.User.GuidIdentifierValue != key)
             {
                 throw new NotAuthorizedException(); // Not allowed to update someone elses request.
@@ -203,6 +213,7 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(p => p.PimsContactMethods)
                 .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(a => a.Role)
+                .Include(a => a.UserTypeCodeNavigation)
                 .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
@@ -215,6 +226,8 @@ namespace Pims.Dal.Repositories
             accessRequest.AccessRequestStatusTypeCode = updateRequest.AccessRequestStatusTypeCode;
             accessRequest.RegionCode = updateRequest.RegionCode;
             accessRequest.User.Position = position;
+            accessRequest.UserTypeCode = userTypeCode;
+            accessRequest.User.UserTypeCode = userTypeCode;
 
             this.Context.PimsAccessRequests.Update(accessRequest);
             this.Context.CommitTransaction();

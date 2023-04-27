@@ -9,13 +9,15 @@ import styled from 'styled-components';
 
 import { AcquisitionContainerState } from '../AcquisitionContainer';
 import { EditFormType } from '../EditFormNames';
+import GenerateFormContainer from './GenerateForm/GenerateFormContainer';
+import GenerateFormView from './GenerateForm/GenerateFormView';
 
 export interface IAcquisitionMenuProps {
+  acquisitionFileId: number;
   items: string[];
   selectedIndex: number;
   onChange: (index: number) => void;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
-  onGenerateLetter: () => Promise<void>;
 }
 
 const AcquisitionMenu: React.FunctionComponent<
@@ -64,21 +66,7 @@ const AcquisitionMenu: React.FunctionComponent<
           </StyledRow>
         ))}
       </StyledMenuWrapper>
-      {hasClaim(Claims.FORM_ADD) && (
-        <StyledMenuGenerateWrapper>
-          <StyledMenuHeaderWrapper>
-            <StyledMenuHeader>Generate a form:</StyledMenuHeader>
-          </StyledMenuHeaderWrapper>
-          <StyledRow
-            className="no-gutters"
-            onClick={() => {
-              props.onGenerateLetter();
-            }}
-          >
-            <Col>Generate Letter</Col>
-          </StyledRow>
-        </StyledMenuGenerateWrapper>
-      )}
+      <GenerateFormContainer acquisitionFileId={props.acquisitionFileId} View={GenerateFormView} />
     </>
   );
 };
@@ -91,11 +79,6 @@ const StyledMenuWrapper = styled.div`
   margin: 0px;
   width: 100%;
   color: ${props => props.theme.css.linkColor};
-`;
-
-const StyledMenuGenerateWrapper = styled(StyledMenuWrapper)`
-  margin-top: auto;
-  margin-bottom: 4rem;
 `;
 
 const StyledRow = styled(Row)`

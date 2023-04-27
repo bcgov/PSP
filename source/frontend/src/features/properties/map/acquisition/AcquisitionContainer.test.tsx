@@ -261,16 +261,4 @@ describe('AcquisitionContainer component', () => {
 
     await waitFor(async () => viewProps.formikRef.current?.submitCount === 1);
   });
-
-  it('calls document generation endpoint when generate function called', async () => {
-    const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
-
-    const spinner = getByTestId('filter-backdrop-loading');
-    await waitForElementToBeRemoved(spinner);
-
-    await act(async () => viewProps.onGenerateLetter());
-
-    await waitFor(async () => expect(generateFn).toHaveBeenCalledTimes(1));
-  });
 });

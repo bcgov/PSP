@@ -42,7 +42,11 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
         render={arrayHelpers => (
           <>
             {values.team.map((person, index) => (
-              <Row key={`team-parent-${index}`} className="py-3">
+              <Row
+                key={`team-parent-${index}`}
+                className="py-3"
+                data-testid={`teamMemberRow[${index}]`}
+              >
                 <Col xs="auto" xl="5">
                   <Select
                     data-testid="select-profile"
@@ -52,9 +56,8 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
                     value={person.contactTypeCode}
                   />
                 </Col>
-                <Col xs="auto" xl="5" className="pl-0">
+                <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
                   <ContactInput
-                    data-testid="contact-input"
                     setShowContactManager={() => {
                       setContactIndex(index);
                       setShowContactManager(true);

@@ -12,6 +12,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(BusinessIdentifierValue), Name = "USER_BUSINESS_IDENTIFIER_VALUE_IDX")]
     [Index(nameof(GuidIdentifierValue), Name = "USER_GUID_IDENTIFIER_VALUE_IDX")]
     [Index(nameof(PersonId), Name = "USER_PERSON_ID_IDX")]
+    [Index(nameof(UserTypeCode), Name = "USER_USER_TYPE_CODE_IDX")]
     public partial class PimsUser
     {
         public PimsUser()
@@ -27,6 +28,9 @@ namespace Pims.Dal.Entities
         public long UserId { get; set; }
         [Column("PERSON_ID")]
         public long PersonId { get; set; }
+        [Column("USER_TYPE_CODE")]
+        [StringLength(20)]
+        public string UserTypeCode { get; set; }
         [Required]
         [Column("BUSINESS_IDENTIFIER_VALUE")]
         [StringLength(30)]
@@ -92,6 +96,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(PersonId))]
         [InverseProperty(nameof(PimsPerson.PimsUsers))]
         public virtual PimsPerson Person { get; set; }
+        [ForeignKey(nameof(UserTypeCode))]
+        [InverseProperty(nameof(PimsUserType.PimsUsers))]
+        public virtual PimsUserType UserTypeCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsAccessRequest.User))]
         public virtual ICollection<PimsAccessRequest> PimsAccessRequests { get; set; }
         [InverseProperty(nameof(PimsRegionUser.User))]

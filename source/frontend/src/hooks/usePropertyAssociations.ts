@@ -8,14 +8,14 @@ import { toast } from 'react-toastify';
 import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
 
 export const usePropertyAssociations = () => {
-  const { getPropertyAssociations } = useApiProperties();
+  const { getPropertyAssociationsApi } = useApiProperties();
 
   const getPropertyAssociationsWrapper = useApiRequestWrapper<
     (id: number) => Promise<AxiosResponse<Api_PropertyAssociations>>
   >({
     requestFunction: useCallback(
-      async (id: number) => await getPropertyAssociations(id),
-      [getPropertyAssociations],
+      async (id: number) => await getPropertyAssociationsApi(id),
+      [getPropertyAssociationsApi],
     ),
     requestName: 'getPropertyAssociations',
     onError: useCallback((axiosError: AxiosError<IApiError>) => {

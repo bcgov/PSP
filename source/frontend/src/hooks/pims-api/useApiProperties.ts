@@ -16,13 +16,13 @@ export const useApiProperties = () => {
 
   return React.useMemo(
     () => ({
-      getPropertiesPaged: (params: IPropertyFilter | null) =>
+      getPropertiesPagedApi: (params: IPropertyFilter | null) =>
         api.get<IPagedItems<IProperty>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      getPropertyAssociations: (id: number) =>
+      getPropertyAssociationsApi: (id: number) =>
         api.get<Api_PropertyAssociations>(`/properties/${id}/associations`),
-      exportProperties: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
+      exportPropertiesApi: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
         api.get<Blob>(
           `/reports/properties?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
           {
@@ -32,8 +32,10 @@ export const useApiProperties = () => {
             },
           },
         ),
-      getPropertyConceptWithId: (id: number) => api.get<Api_Property>(`/properties/${id}`),
-      putPropertyConcept: (property: Api_Property) =>
+      getPropertiesApi: (ids: number[]) =>
+        api.get<Api_Property[]>(`/properties?${ids.map(x => `ids=${x}`).join('&')}`),
+      getPropertyConceptWithIdApi: (id: number) => api.get<Api_Property>(`/properties/${id}`),
+      putPropertyConceptApi: (property: Api_Property) =>
         api.put<Api_Property>(`/properties/${property.id}`, property),
     }),
     [api],
