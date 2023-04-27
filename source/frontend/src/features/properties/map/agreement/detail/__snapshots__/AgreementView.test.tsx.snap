@@ -286,7 +286,7 @@ exports[`AgreementView component renders as expected 1`] = `
           <div
             class="c7 text-left col"
           >
-            Yes
+            Draft
           </div>
         </div>
         <div
@@ -546,7 +546,7 @@ exports[`AgreementView component renders as expected 1`] = `
           <div
             class="c7 text-left col"
           >
-            Yes
+            Draft
           </div>
         </div>
         <div

@@ -1,5 +1,11 @@
-import { FastCurrencyInput, FastDatePicker, Input, Select, TextArea } from 'components/common/form';
-import { YesNoSelect } from 'components/common/form/YesNoSelect';
+import {
+  FastCurrencyInput,
+  FastDatePicker,
+  Input,
+  Select,
+  SelectOption,
+  TextArea,
+} from 'components/common/form';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
 import React from 'react';
@@ -25,11 +31,15 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
   agreementTypes,
 }) => {
   const H0074Type = 'H0074';
+  const options: SelectOption[] = [
+    { label: 'Draft', value: 'true' },
+    { label: 'Final', value: 'false' },
+  ];
   return (
     <>
       <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
       <SectionField labelWidth="5" label="Agreement status">
-        <YesNoSelect field={withNameSpace(nameSpace, 'agreementStatus')} notNullable />
+        <Select options={options} field={withNameSpace(nameSpace, 'isDraft')} />
       </SectionField>
       <SectionField labelWidth="5" label="Legal survey plan">
         <Input field={withNameSpace(nameSpace, 'legalSurveyPlanNum')} />
