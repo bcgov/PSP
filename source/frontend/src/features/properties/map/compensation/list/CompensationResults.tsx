@@ -16,7 +16,7 @@ export function CompensationResults(props: ICompensationResultProps) {
 
   return (
     <Table<Api_Compensation>
-      name="AcqusitionCompensationTable"
+      name="AcquisitionCompensationTable"
       manualSortBy={false}
       lockPageSize={true}
       manualPagination={false}

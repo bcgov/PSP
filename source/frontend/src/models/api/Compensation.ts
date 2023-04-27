@@ -6,8 +6,8 @@ export interface Api_Compensation extends Api_ConcurrentVersion {
   isDraft: boolean | null;
   fiscalYear: string | null;
   agreementDateTime: string | null;
-  expropiationNoticeServedDatetTime: string | null;
-  expropiationVestingDateTime: string | null;
+  expropriationNoticeServedDateTime: string | null;
+  expropriationVestingDateTime: string | null;
   generationDatetTime: string | null;
   specialInstruction: string | null;
   detailedRemarks: string | null;
