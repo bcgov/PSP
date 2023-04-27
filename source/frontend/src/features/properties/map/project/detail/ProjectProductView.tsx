@@ -1,5 +1,6 @@
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
@@ -45,10 +46,6 @@ const ProjectProductView: React.FunctionComponent<
 };
 
 export default ProjectProductView;
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;
 
 const StyledProductDescription = styled.div`
   font-weight: bold;

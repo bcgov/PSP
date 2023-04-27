@@ -454,7 +454,7 @@ namespace Pims.Dal.Repositories
                 throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
             }
 
-            this.Context.UpdateChild<PimsLease, long, PimsLeaseTenant>(l => l.PimsLeaseTenants, leaseId, pimsLeaseTenants.ToArray());
+            this.Context.UpdateChild<PimsLease, long, PimsLeaseTenant, long>(l => l.PimsLeaseTenants, leaseId, pimsLeaseTenants.ToArray());
             this.Context.CommitTransaction();
 
             return Get(existingLease.LeaseId);
@@ -477,7 +477,7 @@ namespace Pims.Dal.Repositories
                 throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
             }
 
-            this.Context.UpdateChild<PimsLease, long, PimsPropertyImprovement>(l => l.PimsPropertyImprovements, leaseId, pimsPropertyImprovements.ToArray());
+            this.Context.UpdateChild<PimsLease, long, PimsPropertyImprovement, long>(l => l.PimsPropertyImprovements, leaseId, pimsPropertyImprovements.ToArray());
             this.Context.CommitTransaction();
 
             return Get(existingLease.LeaseId);
@@ -500,7 +500,7 @@ namespace Pims.Dal.Repositories
                 throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
             }
 
-            this.Context.UpdateChild<PimsLease, long, PimsPropertyLease>(l => l.PimsPropertyLeases, leaseId, pimsPropertyLeases.ToArray());
+            this.Context.UpdateChild<PimsLease, long, PimsPropertyLease, long>(l => l.PimsPropertyLeases, leaseId, pimsPropertyLeases.ToArray());
 
             return GetNoTracking(existingLease.LeaseId);
         }
@@ -521,7 +521,7 @@ namespace Pims.Dal.Repositories
                 throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
             }
 
-            this.Context.UpdateChild<PimsLease, long, PimsLeaseConsultation>(l => l.PimsLeaseConsultations, leaseId, pimsLeaseConsultations.ToArray());
+            this.Context.UpdateChild<PimsLease, long, PimsLeaseConsultation, long>(l => l.PimsLeaseConsultations, leaseId, pimsLeaseConsultations.ToArray());
 
             return GetNoTracking(existingLease.LeaseId);
         }

@@ -2,6 +2,7 @@ import EditButton from 'components/common/EditButton';
 import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
@@ -60,6 +61,12 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         >
           {prettyFormatDate(detail.deliveryDate)}
         </SectionField>
+        <SectionField
+          label="Acquisition completed date"
+          tooltip={`This will be enabled when the file status is set to "Completed"`}
+        >
+          {prettyFormatDate(detail.completionDate)}
+        </SectionField>
       </Section>
       <Section header="Acquisition Details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>
@@ -103,15 +110,6 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
 };
 
 export default AcquisitionSummaryView;
-
-const StyledEditWrapper = styled.div`
-  color: ${props => props.theme.css.primary};
-  text-align: right;
-`;
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;
 
 const StyledLink = styled(Link)`
   display: flex;

@@ -6,13 +6,13 @@ import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import { FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from 'interfaces';
 import Multiselect from 'multiselect-react-dropdown';
 import * as React from 'react';
 import { FaTimes } from 'react-icons/fa';
-import styled from 'styled-components';
 
 import { ResearchFileNameGuide } from '../../common/ResearchFileNameGuide';
 import { UpdateProjectsSubForm } from '../../common/updateProjects/UpdateProjectsSubForm';
@@ -211,7 +211,3 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
 };
 
 export default UpdateSummaryForm;
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;

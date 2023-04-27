@@ -124,39 +124,6 @@ namespace Pims.Api.Test.Controllers
             result.Should().BeAssignableTo<ConflictObjectResult>();
         }
 
-        /// <summary>
-        /// Make a successful request to get an acquisition file checklist.
-        /// </summary>
-        [Fact]
-        public void GetAcquisitionFileChecklist_Success()
-        {
-            // Arrange
-            _service.Setup(m => m.GetChecklistItems(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
-
-            // Act
-            var result = _controller.GetAcquisitionFileChecklist(1);
-
-            // Assert
-            _service.Verify(m => m.GetChecklistItems(It.IsAny<long>()), Times.Once());
-        }
-
-        /// <summary>
-        /// Make a successful request to get an acquisition file checklist.
-        /// </summary>
-        [Fact]
-        public void UpdateAcquisitionFileChecklist_Success()
-        {
-            // Arrange
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.UpdateChecklistItems(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-
-            // Act
-            var result = _controller.UpdateAcquisitionFileChecklist(_mapper.Map<AcquisitionFileModel>(acqFile));
-
-            // Assert
-            _service.Verify(m => m.UpdateChecklistItems(It.IsAny<PimsAcquisitionFile>()), Times.Once());
-        }
-
         #endregion
     }
 }

@@ -5,7 +5,7 @@ import {
   Api_AcquisitionFilePerson,
 } from 'models/api/AcquisitionFile';
 import { defaultProduct, defaultProject } from 'models/api/Project';
-import { fromTypeCode, toTypeCode } from 'utils/formUtils';
+import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 
 import {
   AcquisitionOwnerFormModel,
@@ -24,6 +24,7 @@ export class UpdateAcquisitionSummaryFormModel
   legacyFileNumber?: string = '';
   assignedDate?: string;
   deliveryDate?: string;
+  completionDate?: string;
   rowVersion?: number;
   // Code Tables
   fileStatusTypeCode?: string;
@@ -47,19 +48,20 @@ export class UpdateAcquisitionSummaryFormModel
       legacyFileNumber: this.legacyFileNumber,
       fileName: this.fileName,
       rowVersion: this.rowVersion,
-      assignedDate: this.assignedDate,
-      deliveryDate: this.deliveryDate,
+      assignedDate: stringToNull(this.assignedDate),
+      deliveryDate: stringToNull(this.deliveryDate),
+      completionDate: stringToNull(this.completionDate),
       fileStatusTypeCode: toTypeCode(this.fileStatusTypeCode),
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
       project:
         this.project?.id !== undefined && this.project?.id !== 0
-          ? { ...defaultProject, id: this.project?.id }
+          ? { ...defaultProject, id: this.project?.id, rowVersion: 0 } // TODO: Fix this workaround when bug PSP-5871 gets fixed
           : undefined,
       product:
         this.product !== undefined && this.product !== 0
-          ? { ...defaultProduct, id: Number(this.product) }
+          ? { ...defaultProduct, id: Number(this.product), rowVersion: 0 } // TODO: Fix this workaround when bug PSP-5871 gets fixed
           : undefined,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
@@ -82,6 +84,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
+    newForm.completionDate = model.completionDate;
     newForm.fileStatusTypeCode = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);

@@ -454,7 +454,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="c6 required text-left col"
                 >
                   <div
-                    class="form-group"
+                    class="d-flex form-group"
                   >
                     <select
                       class="form-select form-control"

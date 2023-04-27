@@ -4,24 +4,25 @@ import { Tab } from 'react-bootstrap';
 
 export interface TabFileView {
   content: React.ReactNode;
-  key: FileTabNames;
+  key: FileTabType;
   name: string;
 }
 
 interface IFileTabsProps {
-  defaultTabKey: FileTabNames;
+  defaultTabKey: FileTabType;
   tabViews: TabFileView[];
-  activeTab: FileTabNames;
-  setActiveTab: (tab: FileTabNames) => void;
+  activeTab: FileTabType;
+  setActiveTab: (tab: FileTabType) => void;
 }
 
-export enum FileTabNames {
-  fileDetails = 'fileDetails',
-  checklist = 'checklist',
-  activities = 'activities',
-  documents = 'documents',
-  notes = 'notes',
-  forms = 'forms',
+export enum FileTabType {
+  FILE_DETAILS = 'fileDetails',
+  CHECKLIST = 'checklist',
+  ACTIVITIES = 'activities',
+  DOCUMENTS = 'documents',
+  NOTES = 'notes',
+  FORMS = 'forms',
+  AGREEMENTS = 'agreements',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
@@ -38,7 +39,7 @@ export const FileTabs: React.FunctionComponent<React.PropsWithChildren<IFileTabs
       defaultActiveKey={defaultTabKey}
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
-        const tab = Object.values(FileTabNames).find(value => value === eventKey);
+        const tab = Object.values(FileTabType).find(value => value === eventKey);
         tab && setActiveTab(tab);
       }}
     >

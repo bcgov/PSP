@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
-    public class ProductModel : BaseModel
+    public class ProductModel : BaseAppModel
     {
         #region Properties
 
         /// <summary>
         /// get/set - The product id.
         /// </summary>
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// get/set - The project id.

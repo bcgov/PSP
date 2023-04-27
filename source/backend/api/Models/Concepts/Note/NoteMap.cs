@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsNote, NoteModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.Note, src => src.NoteTxt)
                 .Map(dest => dest.IsSystemGenerated, src => src.IsSystemGenerated ?? false)

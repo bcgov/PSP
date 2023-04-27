@@ -9,7 +9,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsLeaseConsultation, Model.ConsultationLeaseModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.LeaseConsultationId)
                 .Map(dest => dest.ConsultationType, src => src.ConsultationTypeCodeNavigation)
                 .Map(dest => dest.ConsultationStatusType, src => src.ConsultationStatusTypeCodeNavigation)

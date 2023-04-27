@@ -11,8 +11,8 @@ namespace Pims.Dal.Entities
     [Table("PIMS_ACQUISITION_FILE_PERSON")]
     [Index(nameof(AcquisitionFileId), Name = "ACQPER_ACQUISITION_FILE_ID_IDX")]
     [Index(nameof(AcqFlPersonProfileTypeCode), Name = "ACQPER_ACQ_FL_PERSON_PROFILE_TYPE_CODE_IDX")]
+    [Index(nameof(AcquisitionFileId), nameof(AcqFlPersonProfileTypeCode), Name = "ACQPER_FILE_PROFILE_TUC", IsUnique = true)]
     [Index(nameof(PersonId), Name = "ACQPER_PERSON_ID_IDX")]
-    [Index(nameof(AcqFlPersonProfileTypeCode), nameof(PersonId), nameof(AcquisitionFileId), Name = "ACQPER_PERSON_PROFILE_TUC", IsUnique = true)]
     public partial class PimsAcquisitionFilePerson
     {
         [Key]

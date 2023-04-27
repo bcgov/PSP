@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPropPropTenureType, PropertyTenureModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PropPropTenureTypeId)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.PropertyTenureTypeCode, src => src.PropertyTenureTypeCodeNavigation)

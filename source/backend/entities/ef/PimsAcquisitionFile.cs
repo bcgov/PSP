@@ -28,7 +28,9 @@ namespace Pims.Dal.Entities
             PimsAcquisitionFileForms = new HashSet<PimsAcquisitionFileForm>();
             PimsAcquisitionFileNotes = new HashSet<PimsAcquisitionFileNote>();
             PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
+            PimsAcquisitionOwnerSolicitors = new HashSet<PimsAcquisitionOwnerSolicitor>();
             PimsAcquisitionOwners = new HashSet<PimsAcquisitionOwner>();
+            PimsAgreements = new HashSet<PimsAgreement>();
             PimsPropertyAcquisitionFiles = new HashSet<PimsPropertyAcquisitionFile>();
         }
 
@@ -160,8 +162,12 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAcquisitionFileNote> PimsAcquisitionFileNotes { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFilePerson.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionFilePerson> PimsAcquisitionFilePeople { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionOwnerSolicitor.AcquisitionFile))]
+        public virtual ICollection<PimsAcquisitionOwnerSolicitor> PimsAcquisitionOwnerSolicitors { get; set; }
         [InverseProperty(nameof(PimsAcquisitionOwner.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionOwner> PimsAcquisitionOwners { get; set; }
+        [InverseProperty(nameof(PimsAgreement.AcquisitionFile))]
+        public virtual ICollection<PimsAgreement> PimsAgreements { get; set; }
         [InverseProperty(nameof(PimsPropertyAcquisitionFile.AcquisitionFile))]
         public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; }
     }

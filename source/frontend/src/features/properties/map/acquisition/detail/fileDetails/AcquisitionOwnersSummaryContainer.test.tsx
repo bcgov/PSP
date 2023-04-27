@@ -18,7 +18,7 @@ const mockApi = {
 
 const mockAcquisitionFile = mockAcquisitionFileResponse();
 
-jest.mock('../../hooks/useAcquisitionProvider', () => ({
+jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionOwners: mockApi,
@@ -55,6 +55,8 @@ describe('Acquisition Owners Summary container', () => {
 
   it('renders the underlying form', () => {
     const { getByText } = setup();
+
+    expect(mockApi.execute).toHaveBeenCalled();
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 });

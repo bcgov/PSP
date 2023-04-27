@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsProject, ProjectModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ProjectStatusTypeCode, src => src.ProjectStatusTypeCodeNavigation)
                 .Map(dest => dest.BusinessFunctionCode, src => src.BusinessFunctionCode)

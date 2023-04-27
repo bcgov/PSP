@@ -52,6 +52,20 @@ namespace Pims.Api.Test.Controllers
         }
 
         [Fact]
+        public void GetTakesByPropertyId_Success()
+        {
+            // Arrange
+            _service.Setup(m => m.GetByPropertyId(It.IsAny<long>(), It.IsAny<long>()));
+
+            // Act
+            var result = _controller.GetTakesByPropertyId(1, 2);
+
+            // Assert
+            result.Should().BeOfType<JsonResult>();
+            _service.Verify(m => m.GetByPropertyId(It.IsAny<long>(), It.IsAny<long>()), Times.Once());
+        }
+
+        [Fact]
         public void GetTakesCountByPropertyId_Success()
         {
             // Arrange

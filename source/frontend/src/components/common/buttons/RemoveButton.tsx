@@ -7,16 +7,18 @@ import { LinkButton } from './LinkButton';
 
 interface IRemoveButtonProps {
   label?: string;
+  dataTestId?: string | null;
   onRemove: () => void;
 }
 
 export const RemoveButton: React.FunctionComponent<React.PropsWithChildren<IRemoveButtonProps>> = ({
   label,
+  dataTestId,
   onRemove,
 }) => {
   return (
     <StyledRemoveLinkButton onClick={onRemove}>
-      <MdClose data-testid="remove-button" size="2rem" title="remove" />{' '}
+      <MdClose data-testid={dataTestId ?? 'remove-button'} size="2rem" title="remove" />{' '}
       <span className="text">{label ?? 'Remove'}</span>
     </StyledRemoveLinkButton>
   );

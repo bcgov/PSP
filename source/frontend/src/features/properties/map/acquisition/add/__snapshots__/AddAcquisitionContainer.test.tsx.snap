@@ -1559,7 +1559,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                   class="c7 required text-left col"
                 >
                   <div
-                    class="required form-group"
+                    class="required d-flex form-group"
                   >
                     <select
                       class="form-select form-control"

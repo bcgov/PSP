@@ -18,9 +18,39 @@ import {
 interface IUpdateAcquisitionOwnersSubFormProps {}
 
 const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormProps> = () => {
-  const { values } = useFormikContext<WithAcquisitionOwners>();
+  const { values, setFieldValue, handleChange } = useFormikContext<WithAcquisitionOwners>();
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);
+
+  const updatePrimaryContacts = (newPrimaryIndex: number) => {
+    if (values.owners.length > 1) {
+      for (let i = 0; i < values.owners.length; i++) {
+        if (i !== newPrimaryIndex) {
+          setFieldValue(`owners[${i}].isPrimaryContact`, '');
+        }
+      }
+    }
+  };
+
+  const onPrimaryContactUpdated = (updateFunction: () => void) => {
+    return (e: React.ChangeEvent<any>) => {
+      updateFunction();
+      handleChange(e);
+    };
+  };
+
+  const onRemovedPrimaryContact = (index: number) => {
+    if (values.owners.length > 1) {
+      const isPrimary = values.owners[index].isPrimaryContact === 'true';
+      if (isPrimary) {
+        if (index === 0) {
+          values.owners[++index].isPrimaryContact = 'true';
+        } else {
+          values.owners[0].isPrimaryContact = 'true';
+        }
+      }
+    }
+  };
 
   return (
     <>
@@ -34,6 +64,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
                   <ButtonDiv>
                     <RemoveButton
                       label="Remove Owner"
+                      dataTestId={`owners[${index}]-remove-button`}
                       onRemove={() => {
                         setRemoveIndex(index);
                         setShowRemoveModal(true);
@@ -59,6 +90,25 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
                     />
                   </SectionField>
                   <H3>Name</H3>
+
+                  <StyledRadioWrap>
+                    <SectionField label={null}>
+                      <RadioGroup
+                        field={`owners[${index}].isPrimaryContact`}
+                        flexDirection="row"
+                        handleChange={onPrimaryContactUpdated(() => {
+                          updatePrimaryContacts(index);
+                          setFieldValue(`owners[${index}].isPrimaryContact`, 'true');
+                        })}
+                        radioValues={[
+                          {
+                            radioValue: 'true',
+                            radioLabel: 'Primary Contact',
+                          },
+                        ]}
+                      />
+                    </SectionField>
+                  </StyledRadioWrap>
 
                   {owner.isOrganization === 'false' && (
                     <SectionField label="Given names">
@@ -135,6 +185,9 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
               data-testid="add-file-owner"
               onClick={() => {
                 const owner = new AcquisitionOwnerFormModel();
+                if (values.owners.length === 0) {
+                  owner.isPrimaryContact = 'true';
+                }
                 arrayHelpers.push(owner);
               }}
             >
@@ -146,6 +199,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormPr
               title="Remove Owner"
               display={showRemoveModal}
               handleOk={() => {
+                onRemovedPrimaryContact(removeIndex);
                 setShowRemoveModal(false);
                 arrayHelpers.remove(removeIndex);
                 setRemoveIndex(-1);
@@ -166,6 +220,10 @@ export default UpdateAcquisitionOwnersSubForm;
 
 export const StyledDiv = styled.div`
   background-color: none;
+`;
+
+export const StyledRadioWrap = styled.div`
+  margin: 1.5rem;
 `;
 
 export const ButtonDiv = styled.div`

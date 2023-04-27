@@ -9,13 +9,17 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
-import styled from 'styled-components';
 import { booleanToYesNoUnknownString, stringToBoolean } from 'utils/formUtils';
 import { getPrettyLatLng } from 'utils/mapPropertyUtils';
 
 import { Section } from '../../Section';
 import { SectionField } from '../../SectionField';
-import { InlineContainer } from '../../SectionStyles';
+import {
+  InlineContainer,
+  StyledEditWrapper,
+  StyledSubtleText,
+  StyledSummarySection,
+} from '../../SectionStyles';
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
 
 export interface IPropertyDetailsTabView {
@@ -230,18 +234,3 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
     </StyledSummarySection>
   );
 };
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;
-
-const StyledEditWrapper = styled.div`
-  color: ${props => props.theme.css.primary};
-
-  text-align: right;
-`;
-
-const StyledSubtleText = styled.p`
-  color: ${props => props.theme.css.subtleColor};
-  text-align: left;
-`;
