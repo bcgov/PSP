@@ -11,7 +11,7 @@ const setSelectedRows = jest.fn();
 const setShowContactManager = jest.fn();
 const clear = jest.fn();
 
-describe('ContactInputContainer component', () => {
+describe('ContactInputView component', () => {
   // render component under test
   const setup = (
     props: IContactInputViewProps & { initialValues?: { test: Partial<IContactSearchResult> } },

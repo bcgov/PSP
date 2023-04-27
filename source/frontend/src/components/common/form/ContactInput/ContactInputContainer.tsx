@@ -27,30 +27,28 @@ export const ContactInputContainer: React.FC<
   };
 
   return (
-    <>
-      <View
-        field={field}
-        onClear={() => setFieldValue(field, null)}
-        label={label}
-        displayErrorTooltips={true}
-        setShowContactManager={() => {
-          setShowContactManager(true);
-        }}
-        contactManagerProps={{
-          selectedRows: selectedContacts,
-          setSelectedRows: setSelectedContacts,
-          display: showContactManager,
-          setDisplay: setShowContactManager,
-          isSingleSelect: true,
-          handleModalOk: handleContactManagerOk,
-          handleModalCancel: () => {
-            setShowContactManager(false);
-            setSelectedContacts([]);
-          },
-          showActiveSelector: true,
-          showOnlyIndividuals: true,
-        }}
-      />
-    </>
+    <View
+      field={field}
+      onClear={() => setFieldValue(field, null)}
+      label={label}
+      displayErrorTooltips={true}
+      setShowContactManager={() => {
+        setShowContactManager(true);
+      }}
+      contactManagerProps={{
+        selectedRows: selectedContacts,
+        setSelectedRows: setSelectedContacts,
+        display: showContactManager,
+        setDisplay: setShowContactManager,
+        isSingleSelect: true,
+        handleModalOk: handleContactManagerOk,
+        handleModalCancel: () => {
+          setShowContactManager(false);
+          setSelectedContacts([]);
+        },
+        showActiveSelector: true,
+        showOnlyIndividuals: true,
+      }}
+    />
   );
 };
