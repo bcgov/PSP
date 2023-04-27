@@ -1,4 +1,5 @@
 import clsx from 'classnames';
+import * as Styled from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Api_Activity } from 'models/api/Activity';
 import React from 'react';
@@ -7,10 +8,9 @@ import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
+import { IFormContent } from '../../shared/content/models';
 import { ActivityFile } from '../detail/ActivityContainer';
 import { ActivityForm } from '../detail/ActivityForm';
-import { IActivityFormContent } from '../detail/content/models';
-import * as Styled from './styles';
 
 export interface IActivityTrayProps {
   activity?: Api_Activity;
@@ -23,7 +23,7 @@ export interface IActivityTrayProps {
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
   onEditRelatedProperties: () => void;
-  currentFormContent?: IActivityFormContent;
+  currentFormContent?: IFormContent;
 }
 
 export const ActivityTray: React.FunctionComponent<React.PropsWithChildren<IActivityTrayProps>> = ({
@@ -72,7 +72,7 @@ export const ActivityTray: React.FunctionComponent<React.PropsWithChildren<IActi
         !isVisible && setShow(true);
       }}
     >
-      <Styled.ActivityTray className={clsx({ show: show })} data-testid="activity-tray">
+      <Styled.PopupTray className={clsx({ show: show })} data-testid="activity-tray">
         <Styled.TrayHeader>
           Activity&nbsp;-&nbsp;
           {loading
@@ -89,7 +89,7 @@ export const ActivityTray: React.FunctionComponent<React.PropsWithChildren<IActi
           ></Styled.CloseButton>
         </Styled.TrayHeader>
         <Styled.ActivityTrayPage>{trayContent}</Styled.ActivityTrayPage>
-      </Styled.ActivityTray>
+      </Styled.PopupTray>
     </ReactVisibilitySensor>
   );
 };

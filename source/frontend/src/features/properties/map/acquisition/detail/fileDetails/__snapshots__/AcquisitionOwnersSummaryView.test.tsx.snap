@@ -26,14 +26,14 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c3.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
@@ -68,23 +68,37 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
       >
         Each property in this file should be owned by the owner(s) in this section
       </p>
-      <span>
+      <span
+        data-testid="owner[0]"
+      >
         <div
           class="pb-2 row"
         >
           <div
             class="pr-0 text-left col-4"
-          >
-            <label
-              class="c3"
-            >
-              Name:
-            </label>
-          </div>
+          />
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
-            JOHN DOE
+            <div
+              class="form-check form-check-inline"
+            >
+              <input
+                checked=""
+                class="form-check-input"
+                disabled=""
+                id="0-is-primary-contact"
+                name="0-is-primary-contact"
+                type="radio"
+              />
+              <label
+                class="form-check-label"
+                for="0-is-primary-contact"
+                title=""
+              >
+                Primary Contact
+              </label>
+            </div>
           </div>
         </div>
         <div
@@ -94,7 +108,25 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
+            >
+              Name:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            John Doe
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
             >
               Other name:
               <span
@@ -124,9 +156,9 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
-            SR.
+            Jr.
           </div>
         </div>
         <div
@@ -136,26 +168,22 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Mailing address:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c5"
             >
-              456 Souris Street 
+              456 Souris Street
+PO Box 250
+A Hoot and a holler from the A&W
+North Podunk, IH8 B0B
 
-    PO Box 250 
-
-    A Hoot and a holler from the A&W 
-
-    North Podunk, British Columbia, IH8 B0B 
-
-    Canada
             </div>
           </div>
         </div>
@@ -166,14 +194,16 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Email:
             </label>
           </div>
           <div
-            class="c4 text-left col"
-          />
+            class="c3 text-left col"
+          >
+            jonh.doe@gmail.com
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -182,34 +212,49 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Phone:
             </label>
           </div>
           <div
-            class="c4 text-left col"
-          />
+            class="c3 text-left col"
+          >
+            775-111-1111
+          </div>
         </div>
         <hr />
       </span>
-      <span>
+      <span
+        data-testid="owner[1]"
+      >
         <div
           class="pb-2 row"
         >
           <div
             class="pr-0 text-left col-4"
-          >
-            <label
-              class="c3"
-            >
-              Name:
-            </label>
-          </div>
+          />
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
-            FORTIS BC (9999)
+            <div
+              class="form-check form-check-inline"
+            >
+              <input
+                class="form-check-input"
+                disabled=""
+                id="1-is-primary-contact"
+                name="1-is-primary-contact"
+                type="radio"
+              />
+              <label
+                class="form-check-label"
+                for="1-is-primary-contact"
+                title=""
+              >
+                Primary Contact
+              </label>
+            </div>
           </div>
         </div>
         <div
@@ -219,7 +264,25 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
+            >
+              Name:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            FORTIS BC (Inc#:9999 / Reg#:12345)
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
             >
               Other name:
               <span
@@ -249,9 +312,9 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
-            LTD.
+            LTD
           </div>
         </div>
         <div
@@ -261,26 +324,22 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Mailing address:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c5"
             >
-              123 Main Street 
+              123 Main Street
+PO Box 123
+Next to the Dairy Queen
+East Podunk, I4M B0B
 
-    PO Box 123 
-
-    Next to the Dairy Queen 
-
-    East Podunk, British Columbia, I4M B0B 
-
-    Canada
             </div>
           </div>
         </div>
@@ -291,14 +350,16 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Email:
             </label>
           </div>
           <div
-            class="c4 text-left col"
-          />
+            class="c3 text-left col"
+          >
+            fake@email.ca
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -307,13 +368,13 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Phone:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           />
         </div>
       </span>

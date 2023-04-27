@@ -1,7 +1,8 @@
 import { ResetButton, SearchButton } from 'components/common/buttons';
 import { Input, Select } from 'components/common/form';
+import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { FilterBoxForm } from 'components/common/styles';
-import { PROJECT_STATUS_TYPES, REGION_TYPES } from 'constants/API';
+import { PROJECT_STATUS_TYPES } from 'constants/API';
 import { ProjectStatusTypes } from 'constants/projectStatusTypes';
 import { IProjectFilter } from 'features/projects/interfaces';
 import { Formik } from 'formik';
@@ -41,7 +42,6 @@ export const ProjectFilter: React.FunctionComponent<
   };
 
   const lookupCodes = useLookupCodeHelpers();
-  const regionOptions = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
   const projectStatusOptions = lookupCodes
     .getByType(PROJECT_STATUS_TYPES)
     .map(c => mapLookupCode(c));
@@ -76,11 +76,7 @@ export const ProjectFilter: React.FunctionComponent<
             <Col xl="4">
               <Row>
                 <Col xl="4">
-                  <Select
-                    field="projectRegionCode"
-                    options={regionOptions}
-                    placeholder="All Regions"
-                  />
+                  <UserRegionSelectContainer field="projectRegionCode" includeAll />
                 </Col>
                 <Col xl="4">
                   <Select

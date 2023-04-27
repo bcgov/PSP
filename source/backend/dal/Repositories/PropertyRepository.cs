@@ -143,6 +143,45 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get all of the properties for the specified primary keys 'ids' value.
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public PimsProperty GetAllByIds(IEnumerable<long> ids)
+        {
+            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+
+            var property = this.Context.PimsProperties
+                .Include(p => p.DistrictCodeNavigation)
+                .Include(p => p.RegionCodeNavigation)
+                .Include(p => p.PropertyTypeCodeNavigation)
+                .Include(p => p.PropertyStatusTypeCodeNavigation)
+                .Include(p => p.PropertyDataSourceTypeCodeNavigation)
+                .Include(p => p.PropertyClassificationTypeCodeNavigation)
+                .Include(p => p.PimsPropPropAnomalyTypes)
+                    .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
+                .Include(p => p.PimsPropPropRoadTypes)
+                    .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
+                .Include(p => p.PimsPropPropAdjacentLandTypes)
+                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
+                .Include(p => p.PimsPropPropTenureTypes)
+                    .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(p => p.VolumetricTypeCodeNavigation)
+                .Include(p => p.VolumeUnitTypeCodeNavigation)
+                .Include(p => p.Address)
+                    .ThenInclude(a => a.RegionCodeNavigation)
+                .Include(p => p.Address)
+                    .ThenInclude(a => a.DistrictCodeNavigation)
+                .Include(p => p.Address)
+                    .ThenInclude(a => a.ProvinceState)
+                .Include(p => p.Address)
+                    .ThenInclude(a => a.Country)
+                .FirstOrDefault(p => ids.Contains(p.PropertyId)) ?? throw new KeyNotFoundException();
+            return property;
+        }
+
+        /// <summary>
         /// Get the property for the specified PID string value.
         /// </summary>
         /// <param name="pid"></param>
@@ -324,10 +363,10 @@ namespace Pims.Dal.Repositories
             }
 
             // update direct relationships - anomalies, tenures, etc
-            Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType, long>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType, long>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType, long>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType, long>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
 
             return existingProperty;
         }

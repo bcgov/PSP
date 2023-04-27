@@ -13,7 +13,9 @@ const FileLayout: React.FunctionComponent<React.PropsWithChildren<IFileLayoutPro
 }) => {
   return (
     <StyledRowContent className="no-gutters">
-      <StyledColSidebar xs="3">{leftComponent}</StyledColSidebar>
+      <StyledColSidebar xs="3" className="d-flex flex-column">
+        {leftComponent}
+      </StyledColSidebar>
       <StyledColContent xs="9">{bodyComponent}</StyledColContent>
     </StyledRowContent>
   );

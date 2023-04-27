@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPersonOrganization, OrganizationPersonModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Person, src => src.Person)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)

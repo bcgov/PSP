@@ -1,43 +1,35 @@
+import {
+  mockAcquisitionFileOwnersResponse,
+  mockAcquisitionFileResponse,
+} from 'mocks/mockAcquisitionFiles';
+import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { DetailAcquisitionFileOwner } from '../models';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
 
 jest.mock('@react-keycloak/web');
 
-const ownerPerson: DetailAcquisitionFileOwner = {
-  ownerName: 'JOHN DOE',
-  ownerOtherName: 'SR.',
-  ownerDisplayAddress: `456 Souris Street \n
-    PO Box 250 \n
-    A Hoot and a holler from the A&W \n
-    North Podunk, British Columbia, IH8 B0B \n
-    Canada`,
-};
-
-const ownerOrganization: DetailAcquisitionFileOwner = {
-  ownerName: 'FORTIS BC (9999)',
-  ownerOtherName: 'LTD.',
-  ownerDisplayAddress: `123 Main Street \n
-    PO Box 123 \n
-    Next to the Dairy Queen \n
-    East Podunk, British Columbia, I4M B0B \n
-    Canada`,
-};
+const mockAcquisitionFile = mockAcquisitionFileResponse(1);
 
 const mockViewProps: IAcquisitionOwnersSummaryViewProps = {
-  ownersList: [ownerPerson, ownerOrganization],
+  ownersList: mockAcquisitionFile.acquisitionFileOwners,
   isLoading: false,
 };
 
+const ownerIndividual = mockAcquisitionFileOwnersResponse(1)[0];
+const ownerCorporate = mockAcquisitionFileOwnersResponse(1)[1];
+
 describe('Acquisition File Owners View component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions = {}) => {
+  const setup = (
+    renderOptions: RenderOptions & { props?: Partial<IAcquisitionOwnersSummaryViewProps> },
+  ) => {
     const utils = render(
       <AcquisitionOwnersSummaryView
-        ownersList={mockViewProps.ownersList}
-        isLoading={mockViewProps.isLoading}
+        {...renderOptions.props}
+        ownersList={renderOptions.props?.ownersList ?? mockViewProps.ownersList}
+        isLoading={renderOptions.props?.isLoading ?? false}
       />,
       {
         ...renderOptions,
@@ -46,6 +38,13 @@ describe('Acquisition File Owners View component', () => {
     );
     return {
       ...utils,
+      getIsPrymaryContactRadioButton: (index = 0) => {
+        const radio = utils.container.querySelector(
+          `input[name="${index}-is-primary-contact"]`,
+        ) as HTMLInputElement;
+
+        return radio;
+      },
     };
   };
 
@@ -54,23 +53,69 @@ describe('Acquisition File Owners View component', () => {
   });
 
   it('Renders Component as expected', () => {
-    const { asFragment } = setup();
+    const { asFragment } = setup({});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('Display the Person Owner data', () => {
-    const result = setup();
+    const { getByText, getIsPrymaryContactRadioButton, findAllByDisplayValue } = setup({
+      props: { ownersList: [ownerIndividual], isLoading: false },
+    });
 
-    expect(result.getByText(ownerPerson.ownerName as string)).toBeVisible();
-    expect(result.getByText(ownerPerson.ownerOtherName as string)).toBeVisible();
-    expect(result.findAllByDisplayValue('North Podunk, British Columbia, IH8 B0B')).not.toBeNull();
+    expect(getIsPrymaryContactRadioButton()).toBeChecked();
+    expect(getByText('JOHH DOE')).toBeVisible();
+    expect(getByText('Sr.')).toBeVisible();
+    expect(getByText('jonh@doe.ca')).toBeVisible();
+    expect(getByText('111-111-1111')).toBeVisible();
+    expect(findAllByDisplayValue('North Podunk, British Columbia, IH8 B0B')).not.toBeNull();
   });
 
-  it('Display the Organization Owner data', () => {
-    const result = setup();
+  it('Display the Organization Owner data with Incorporation and Registration Number', () => {
+    const { getByText, getIsPrymaryContactRadioButton } = setup({
+      props: { ownersList: [ownerCorporate], isLoading: false },
+    });
 
-    expect(result.getByText(ownerOrganization.ownerName as string)).toBeVisible();
-    expect(result.getByText(ownerOrganization.ownerOtherName as string)).toBeVisible();
-    expect(result.findAllByDisplayValue('East Podunk, British Columbia, I4M B0B')).not.toBeNull();
+    expect(getIsPrymaryContactRadioButton()).not.toBeChecked();
+
+    expect(getByText('FORTIS BC (Inc#:9999 / Reg#:12345)')).toBeVisible();
+    expect(
+      getByText(
+        /123 Main Street PO Box 123 Next to the Dairy Queen East Podunk, British Columbia, I4M B0B Canada/,
+      ),
+    ).toBeVisible();
+  });
+
+  it('Display the Organization Owner data with Incorporation and NO Registration Number', () => {
+    const ownerTest = { ...ownerCorporate, registrationNumber: null } as Api_AcquisitionFileOwner;
+    const { getByText, getIsPrymaryContactRadioButton } = setup({
+      props: { ownersList: [ownerTest], isLoading: false },
+    });
+
+    expect(getIsPrymaryContactRadioButton()).not.toBeChecked();
+    expect(getByText('FORTIS BC (Inc#:9999)')).toBeVisible();
+    expect(
+      getByText(
+        /123 Main Street PO Box 123 Next to the Dairy Queen East Podunk, British Columbia, I4M B0B Canada/,
+      ),
+    ).toBeVisible();
+    expect(getByText('contact@fortis.ca')).toBeVisible();
+    expect(getByText('775-111-1111')).toBeVisible();
+  });
+
+  it('Display the Organization Owner data with NO Incorporation and Registration Number', () => {
+    const ownerTest = { ...ownerCorporate, incorporationNumber: null } as Api_AcquisitionFileOwner;
+    const { getByText, getIsPrymaryContactRadioButton } = setup({
+      props: { ownersList: [ownerTest], isLoading: false },
+    });
+
+    expect(getIsPrymaryContactRadioButton()).not.toBeChecked();
+    expect(getByText('FORTIS BC (Reg#:12345)')).toBeVisible();
+    expect(getByText('contact@fortis.ca')).toBeVisible();
+    expect(getByText('775-111-1111')).toBeVisible();
+    expect(
+      getByText(
+        /123 Main Street PO Box 123 Next to the Dairy Queen East Podunk, British Columbia, I4M B0B Canada/,
+      ),
+    ).toBeVisible();
   });
 });

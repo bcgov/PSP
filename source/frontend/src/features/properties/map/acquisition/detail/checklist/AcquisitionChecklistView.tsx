@@ -4,6 +4,7 @@ import * as API from 'constants/API';
 import { Claims } from 'constants/index';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import {
@@ -13,9 +14,12 @@ import {
   sortByDisplayOrder,
 } from 'models/api/AcquisitionFile';
 import React from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { FiCheck, FiMinus, FiX } from 'react-icons/fi';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
+
+import { StyledChecklistItemStatus, StyledSectionCentered } from './styles';
 
 export interface IAcquisitionChecklistViewProps {
   acquisitionFile?: Api_AcquisitionFile;
@@ -72,27 +76,33 @@ export const AcquisitionChecklistView: React.FC<IAcquisitionChecklistViewProps> 
                 labelWidth="6"
                 noGutters
               >
-                <StyledChecklistItem>
-                  <StyledChecklistItemAudit>
-                    {!isDefaultState(checklistItem) && (
-                      <>
-                        <UserNameTooltip
-                          userName={checklistItem.appLastUpdateUserid}
-                          userGuid={checklistItem.appLastUpdateUserGuid}
-                        />
-                        <em> {prettyFormatDate(checklistItem.appLastUpdateTimestamp)}</em>
-                      </>
-                    )}
-                  </StyledChecklistItemAudit>
-                  <StyledChecklistItemStatus
-                    color={mapStatusToColor(checklistItem.statusTypeCode?.id)}
-                  >
-                    {checklistItem.statusTypeCode?.description}
-                  </StyledChecklistItemStatus>
-                  <StyledChecklistItemIcon>
-                    <StatusIcon status={checklistItem.statusTypeCode?.id} />
-                  </StyledChecklistItemIcon>
-                </StyledChecklistItem>
+                <Row className="no-gutters">
+                  <Col xs="6">
+                    <StyledChecklistItemAudit>
+                      {!isDefaultState(checklistItem) && (
+                        <>
+                          <UserNameTooltip
+                            userName={checklistItem.appLastUpdateUserid}
+                            userGuid={checklistItem.appLastUpdateUserGuid}
+                          />
+                          <em> {prettyFormatDate(checklistItem.appLastUpdateTimestamp)}</em>
+                        </>
+                      )}
+                    </StyledChecklistItemAudit>
+                  </Col>
+                  <Col xs="5">
+                    <StyledChecklistItemStatus
+                      color={mapStatusToColor(checklistItem.statusTypeCode?.id)}
+                    >
+                      {checklistItem.statusTypeCode?.description}
+                    </StyledChecklistItemStatus>
+                  </Col>
+                  <Col xs="1">
+                    <StyledChecklistItemIcon>
+                      <StatusIcon status={checklistItem.statusTypeCode?.id} />
+                    </StyledChecklistItemIcon>
+                  </Col>
+                </Row>
               </SectionField>
             ))}
         </Section>
@@ -129,29 +139,6 @@ const StatusIcon: React.FC<{ status?: string }> = ({ status }) => {
   }
 };
 
-const StyledEditWrapper = styled.div`
-  color: ${props => props.theme.css.primary};
-  text-align: right;
-`;
-
-const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;
-
-const StyledSectionCentered = styled(Section)`
-  font-size: 1.4rem;
-  text-align: center;
-`;
-
-const StyledChecklistItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  line-height: 2.4rem;
-  width: 100%;
-  gap: 0.2rem;
-`;
-
 const StyledChecklistItemAudit = styled.span`
   min-width: 13rem;
   font-size: 1.1rem;
@@ -162,11 +149,6 @@ const StyledChecklistItemAudit = styled.span`
   .tooltip-icon {
     color: ${props => props.theme.css.discardedColor};
   }
-`;
-
-const StyledChecklistItemStatus = styled.span<{ color?: string }>`
-  color: ${props => props.color ?? props.theme.css.textColor};
-  min-width: 11rem;
 `;
 
 const StyledChecklistItemIcon = styled.span`

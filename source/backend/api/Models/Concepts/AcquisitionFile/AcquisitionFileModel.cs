@@ -38,6 +38,11 @@ namespace Pims.Api.Models.Concepts
         public DateTime? DeliveryDate { get; set; }
 
         /// <summary>
+        /// The date of acquisition file completion.
+        /// </summary>
+        public DateTime? CompletionDate { get; set; }
+
+        /// <summary>
         /// get/set - The acquisition physical file status type.
         /// </summary>
         public TypeModel<string> AcquisitionPhysFileStatusTypeCode { get; set; }

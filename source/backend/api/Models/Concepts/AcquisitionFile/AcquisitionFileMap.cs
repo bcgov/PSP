@@ -8,7 +8,6 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsAcquisitionFile, AcquisitionFileModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.AcquisitionFileId)
                 .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
@@ -22,6 +21,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FundingOther, src => src.FundingOther)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
                 .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
+                .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.FileStatusTypeCode, src => src.AcquisitionFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionPhysFileStatusTypeCode, src => src.AcqPhysFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCodeNavigation)
@@ -46,6 +46,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FundingOther, src => src.FundingOther)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
                 .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
+                .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
                 .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode.Id)

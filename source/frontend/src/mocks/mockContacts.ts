@@ -1,4 +1,5 @@
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
+import { Api_Person } from 'models/api/Person';
 export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult => ({
   id: 'O3',
   organizationId: 3,
@@ -66,7 +67,7 @@ export const getMockPerson = ({
   id: number;
   surname: string;
   firstName: string;
-}) => ({
+}): Api_Person => ({
   id: id,
   isDisabled: false,
   surname: surname,
@@ -99,7 +100,6 @@ export const getMockPerson = ({
     {
       id: 3,
       isDisabled: false,
-      personId: 3,
       address: {
         id: 3,
         streetAddress1: '123 Main Street',

@@ -109,7 +109,7 @@ describe('TakesUpdateForm component', () => {
     expect(confirmModal).toBeVisible();
   });
 
-  it('resets isnewrightofway values if radio button toggled from yes to no', async () => {
+  it('resets is new rightofway values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
     const noButton = getByTestId('radio-takes.0.isnewrightofway-no');
     await act(async () => userEvent.click(noButton));
