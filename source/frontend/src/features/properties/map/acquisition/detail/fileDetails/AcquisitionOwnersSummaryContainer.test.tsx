@@ -55,6 +55,8 @@ describe('Acquisition Owners Summary container', () => {
 
   it('renders the underlying form', () => {
     const { getByText } = setup();
+
+    expect(mockApi.execute).toHaveBeenCalled();
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 });

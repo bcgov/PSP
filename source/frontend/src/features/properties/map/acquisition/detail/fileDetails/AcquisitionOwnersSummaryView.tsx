@@ -5,12 +5,15 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { DetailAcquisitionFileOwner } from '../models';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
 
 const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps> = ({
   isLoading,
   ownersList,
 }) => {
+  const onwerDetailList = ownersList?.map(o => DetailAcquisitionFileOwner.fromApi(o));
+
   if (isLoading) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
@@ -20,9 +23,9 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
       <StyledSectionParagraph>
         Each property in this file should be owned by the owner(s) in this section
       </StyledSectionParagraph>
-      {ownersList?.map((owner, index) => {
+      {onwerDetailList?.map((owner, index) => {
         return (
-          <span key={`owner-${index}-${owner.ownerName}`}>
+          <span key={`owner-${index}-${owner.ownerName}`} data-testid={`owner[${index}]`}>
             <SectionField label={null}>
               <Form.Check
                 inline
@@ -46,7 +49,7 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
             </SectionField>
             <SectionField label="Email">{owner.ownerContactEmail}</SectionField>
             <SectionField label="Phone">{owner.ownerContactPhone}</SectionField>
-            {index < ownersList.length - 1 && <hr></hr>}
+            {index < onwerDetailList.length - 1 && <hr></hr>}
           </span>
         );
       })}
