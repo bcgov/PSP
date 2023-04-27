@@ -76,13 +76,17 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching for projects ...");
             _logger.LogDebug("Project search with filter", filter);
 
+            // Limit search results to user's assigned region(s), but always include "Cannot determine" region
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid())
             {
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            return GetPageAsync(filter);
+            return GetPageAsync(filter, userRegions);
         }
 
         public PimsProject GetById(long projectId)
@@ -154,9 +158,9 @@ namespace Pims.Api.Services
             }
         }
 
-        private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
+        private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions)
         {
-            return await _projectRepository.GetPageAsync(filter);
+            return await _projectRepository.GetPageAsync(filter, userRegions);
         }
 
         private void AddNoteIfStatusChanged(PimsProject updatedProject)
