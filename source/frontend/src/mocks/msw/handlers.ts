@@ -1,17 +1,14 @@
 import {
   getMockAddresses,
+  getMockDescription,
   getMockLandChars,
   getMockLegalDescriptions,
+  getMockSales,
   getMockValues,
 } from 'mocks/bcAssessmentMock';
-// src/mocks.js
-// 1. Import the library.
-import { rest, setupWorker } from 'msw';
+import { rest } from 'msw';
 
-import { getMockDescription, getMockSales } from './bcAssessmentMock';
-
-// 2. Describe network behavior with request handlers.
-export const worker = setupWorker(
+export const handlers = [
   rest.get('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca', (req, res, ctx) => {
     if (req.url.search.includes('BCA_FOLIO_ADDRESSES_SV')) {
       return res(ctx.delay(500), ctx.status(200), ctx.json(getMockAddresses()));
@@ -27,4 +24,4 @@ export const worker = setupWorker(
       return res(ctx.delay(500), ctx.status(200), ctx.json(getMockLandChars()));
     }
   }),
-);
+];
