@@ -11,6 +11,7 @@ import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 import { PropertyForm } from '../../shared/models';
 import {
   AcquisitionOwnerFormModel,
+  AcquisitionSolicitorFormModel,
   AcquisitionTeamFormModel,
   WithAcquisitionOwners,
   WithAcquisitionTeam,
@@ -37,6 +38,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   product?: number;
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
+  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -79,6 +81,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi()),
+      acquisitionFileOwnerSolicitors: this.ownerSolicitor.contact
+        ? [this.ownerSolicitor.toApi()]
+        : [],
     };
   }
 
@@ -103,6 +108,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       model.project !== undefined
         ? { id: model.project?.id || 0, text: model.project?.description || '' }
         : undefined;
+    newForm.ownerSolicitor = model.acquisitionFileOwnerSolicitors?.length
+      ? AcquisitionSolicitorFormModel.fromApi(model.acquisitionFileOwnerSolicitors[0])
+      : new AcquisitionSolicitorFormModel(null);
 
     return newForm;
   }
