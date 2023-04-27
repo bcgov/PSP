@@ -202,31 +202,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   text-decoration: none;
 }
 
-.c4 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c3.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c2 {
-  font-weight: bold;
-}
-
 .c13.form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -295,6 +270,17 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   justify-content: flex-end;
 }
 
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
 .c17 {
   background-color: none;
 }
@@ -359,6 +345,20 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c0 .react-datepicker-wrapper {
@@ -1158,6 +1158,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
       >
         <div
           class="py-3 row"
+          data-testid="teamMemberRow[0]"
         >
           <div
             class="col-xl-5 col-auto"
@@ -1223,6 +1224,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
           <div
             class="pl-0 col-xl-5 col-auto"
+            data-testid="contact-input"
           >
             <div
               class="input form-group"
@@ -1352,6 +1354,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
         </div>
         <div
           class="py-3 row"
+          data-testid="teamMemberRow[1]"
         >
           <div
             class="col-xl-5 col-auto"
@@ -1417,6 +1420,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
           <div
             class="pl-0 col-xl-5 col-auto"
+            data-testid="contact-input"
           >
             <div
               class="input form-group"
@@ -3013,6 +3017,106 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           </div>
         </button>
         <div />
+        <div
+          class="mt-4 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Owner's Solicitor:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="c17"
+                  >
+                    Select from contacts
+                    <button
+                      class="c8 Button c9 btn btn-link"
+                      title="remove"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                  <div
+                    class="d-none input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-ownerSolicitor.contact.id"
+                      name="ownerSolicitor.contact.id"
+                      placeholder="Select from Contacts"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="pl-0 col-auto"
+                >
+                  <button
+                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    title="Select Contact"
+                    type="button"
+                  >
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
       </div>
     </div>
   </div>

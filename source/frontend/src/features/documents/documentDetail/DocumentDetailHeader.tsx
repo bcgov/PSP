@@ -12,7 +12,7 @@ const DocumentDetailHeader: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailHeaderProps>
 > = props => {
   const documentTypeLabel =
-    props.document.pimsDocumentRelationship?.document?.documentType?.documentType;
+    props.document.pimsDocumentRelationship?.document?.documentType?.documentTypeDescription;
   const documentFileName = props.document.pimsDocumentRelationship?.document?.fileName;
   const mayanDocumentId = props.document.pimsDocumentRelationship?.document?.mayanDocumentId || -1;
 

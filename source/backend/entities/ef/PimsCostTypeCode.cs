@@ -14,6 +14,7 @@ namespace Pims.Dal.Entities
     {
         public PimsCostTypeCode()
         {
+            PimsH120Categories = new HashSet<PimsH120Category>();
             PimsProjects = new HashSet<PimsProject>();
         }
 
@@ -73,6 +74,8 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [InverseProperty(nameof(PimsH120Category.CostType))]
+        public virtual ICollection<PimsH120Category> PimsH120Categories { get; set; }
         [InverseProperty(nameof(PimsProject.CostTypeCode))]
         public virtual ICollection<PimsProject> PimsProjects { get; set; }
     }

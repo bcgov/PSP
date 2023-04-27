@@ -6,6 +6,8 @@ import { Api_User } from 'models/api/User';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
 
+import { UserTypeCodesEnum } from '../access-request/models';
+
 export class FormUser {
   id?: number;
   approvedById?: NumberFieldValue;
@@ -16,6 +18,7 @@ export class FormUser {
   surname?: string;
   isDisabled?: boolean;
   position?: string;
+  userTypeCode?: string;
   lastLogin?: string;
   appCreateTimestamp?: string;
   issueDate?: string;
@@ -41,6 +44,7 @@ export class FormUser {
     this.surname = user?.person?.surname ?? '';
     this.isDisabled = user.isDisabled;
     this.position = user.position ?? '';
+    this.userTypeCode = user.userTypeCode ?? UserTypeCodesEnum.CONTRACT;
     this.lastLogin = user.lastLogin;
     this.appCreateTimestamp = user.appCreateTimestamp;
     this.note = user.note;
@@ -57,6 +61,7 @@ export class FormUser {
       guidIdentifierValue: this.keycloakUserId,
       approvedById: this.approvedById ? this.approvedById : undefined,
       position: this.position,
+      userTypeCode: this.userTypeCode,
       note: this.note,
       isDisabled: this.isDisabled,
       issueDate: this.issueDate,

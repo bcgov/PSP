@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -22,7 +21,7 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AcquisitionFileFormRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ActivityRepository> logger, IMapper mapper)
+        public AcquisitionFileFormRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileFormRepository> logger)
             : base(dbContext, user, logger)
         {
         }

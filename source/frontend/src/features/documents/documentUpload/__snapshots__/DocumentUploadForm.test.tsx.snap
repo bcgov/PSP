@@ -230,7 +230,7 @@ exports[`DocumentUploadView component renders as expected 1`] = `
                 data-testid="select-option-1"
                 value="1"
               >
-                BC Assessment Search
+                Survey
               </option>
               <option
                 class="option"

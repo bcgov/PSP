@@ -29,7 +29,6 @@ const onCancelConfirm = jest.fn();
 const onUpdateProperties = jest.fn();
 const canRemove = jest.fn();
 const setContainerState = jest.fn();
-const onGenerateLetter = jest.fn();
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -51,7 +50,6 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   onUpdateProperties,
   canRemove,
   setContainerState,
-  onGenerateLetter,
   containerState: {
     acquisitionFile: mockAcquisitionFileResponse(),
     isEditing: false,

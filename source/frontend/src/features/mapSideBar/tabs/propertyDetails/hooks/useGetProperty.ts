@@ -7,12 +7,12 @@ import { useAxiosErrorHandler } from 'utils';
  * hook that retrieves a property from the inventory.
  */
 export const useGetProperty = () => {
-  const { getPropertyConceptWithId } = useApiProperties();
+  const { getPropertyConceptWithIdApi } = useApiProperties();
 
   const getApiPropertyWrapper = useApiRequestWrapper({
     requestFunction: useCallback(
-      async (id: number) => await getPropertyConceptWithId(id),
-      [getPropertyConceptWithId],
+      async (id: number) => await getPropertyConceptWithIdApi(id),
+      [getPropertyConceptWithIdApi],
     ),
     requestName: 'getPropertyApiById',
     onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),

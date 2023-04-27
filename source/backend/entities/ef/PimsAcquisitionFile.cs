@@ -31,6 +31,7 @@ namespace Pims.Dal.Entities
             PimsAcquisitionOwnerSolicitors = new HashSet<PimsAcquisitionOwnerSolicitor>();
             PimsAcquisitionOwners = new HashSet<PimsAcquisitionOwner>();
             PimsAgreements = new HashSet<PimsAgreement>();
+            PimsCompensationRequisitions = new HashSet<PimsCompensationRequisition>();
             PimsPropertyAcquisitionFiles = new HashSet<PimsPropertyAcquisitionFile>();
         }
 
@@ -57,15 +58,6 @@ namespace Pims.Dal.Entities
         public string AcqPhysFileStatusTypeCode { get; set; }
         [Column("REGION_CODE")]
         public short RegionCode { get; set; }
-        [Column("MINISTRY_PROJECT_NUMBER")]
-        [StringLength(20)]
-        public string MinistryProjectNumber { get; set; }
-        [Column("MINISTRY_PROJECT_NAME")]
-        [StringLength(100)]
-        public string MinistryProjectName { get; set; }
-        [Column("CPS_PRODUCT_CODE")]
-        [StringLength(12)]
-        public string CpsProductCode { get; set; }
         [Required]
         [Column("FILE_NAME")]
         [StringLength(500)]
@@ -168,6 +160,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAcquisitionOwner> PimsAcquisitionOwners { get; set; }
         [InverseProperty(nameof(PimsAgreement.AcquisitionFile))]
         public virtual ICollection<PimsAgreement> PimsAgreements { get; set; }
+        [InverseProperty(nameof(PimsCompensationRequisition.AcquisitionFile))]
+        public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
         [InverseProperty(nameof(PimsPropertyAcquisitionFile.AcquisitionFile))]
         public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; }
     }

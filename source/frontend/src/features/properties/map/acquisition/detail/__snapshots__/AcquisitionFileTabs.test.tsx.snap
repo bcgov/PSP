@@ -798,12 +798,36 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c3 form-section"
           >
+            <h2
+              class="c4"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Owner Information
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
             <div
-              class="spinner-border text-warning"
-              data-testid="filter-backdrop-loading"
-            />
+              class="collapse show"
+            >
+              <div
+                class="c8"
+              >
+                <div
+                  class="spinner-border text-warning"
+                  data-testid="filter-backdrop-loading"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ export const getUserMock = (): Api_User => ({
   businessIdentifierValue: 'desmith@idir',
   approvedById: 0,
   position: 'pos',
+  userTypeCode: 'CONTRACT',
   note: '',
   isDisabled: false,
   lastLogin: '2022-06-14T16:49:27.127',

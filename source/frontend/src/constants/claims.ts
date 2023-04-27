@@ -49,6 +49,10 @@ export enum Claims {
   FORM_ADD = 'form-add',
   FORM_DELETE = 'form-delete',
   AGREEMENT_VIEW = 'agreement-view',
+  COMPENSATION_REQUISITION_VIEW = 'compensation-requisition-view',
+  COMPENSATION_REQUISITION_ADD = 'compensation-requisition-add',
+  COMPENSATION_REQUISITION_EDIT = 'compensation-requisition-edit',
+  COMPENSATION_REQUISITION_DELETE = 'compensation-requisition-delete',
 }
 
 export default Claims;

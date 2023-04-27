@@ -36,7 +36,7 @@ const DocumentUploadForm: React.FunctionComponent<
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const documentTypes = props.documentTypes.map<SelectOption>(x => {
-    return { label: x.documentType || '', value: x.id?.toString() || '' };
+    return { label: x.documentTypeDescription || '', value: x.id?.toString() || '' };
   });
 
   const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
