@@ -1,11 +1,11 @@
 using System;
 
-namespace Pims.Dal.Entities.Helpers.Extensions
+namespace Pims.Dal.Entities.Extensions
 {
-    public static class TypeCodeExtensions
+    public static class ExpiringTypeEntity
     {
         /// <summary>
-        /// Determines whether a given type is currently expired, based on its EffectiveDate and ExpiryDate values
+        /// Determines whether a given type is currently expired, based on its EffectiveDate and ExpiryDate values.
         /// </summary>
         /// <param name="type">The type code.</param>
         /// <param name="currentDate">The current date.</param>
