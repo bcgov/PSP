@@ -27,5 +27,9 @@ namespace Pims.Api.Services
         IEnumerable<PimsAgreement> GetAgreements(long id);
 
         IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
+
+        IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId);
+
+        PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition);
     }
 }

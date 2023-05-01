@@ -3,4 +3,5 @@ export enum FormKeys {
   researchSummary = 'researchSummary',
   propertyResearch = 'propertyResearch',
   propertyDetails = 'propertyDetails',
+  addCompensation = 'addCompensation',
 }

@@ -1,5 +1,7 @@
-import { useRequisitionCompensationRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
+import { Api_Compensation } from 'models/api/Compensation';
 import React, { useCallback, useContext } from 'react';
 
 import { SideBarContext } from '../../context/sidebarContext';
@@ -17,16 +19,48 @@ export const CompensationListContainer: React.FunctionComponent<
   React.PropsWithChildren<ICompensationListContainerProps>
 > = ({ fileId, View }: ICompensationListContainerProps) => {
   const {
-    getFileCompensations: { execute: getCompensations, response: compensations },
+    getAcquisitionCompensationRequisitions: {
+      execute: getAcquisitionCompensationRequisitions,
+      response: compensations,
+    },
+    postAcquisitionCompensationRequisition: { execute: postAcquisitionCompensationRequisition },
+  } = useAcquisitionProvider();
+
+  const {
     deleteCompensation: { execute: deleteCompensation },
-  } = useRequisitionCompensationRepository();
+  } = useCompensationRequisitionRepository();
 
   const { staleFile, setStaleFile } = useContext(SideBarContext);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const fetchData = useCallback(async () => {
-    await getCompensations(fileId);
-  }, [getCompensations, fileId]);
+    await getAcquisitionCompensationRequisitions(fileId);
+  }, [getAcquisitionCompensationRequisitions, fileId]);
+
+  const onAddCompensationRequistion = (fileId: number) => {
+    const defaultCompensationRequisition: Api_Compensation = {
+      id: null,
+      acquisitionFileId: fileId,
+      isDraft: true,
+      fiscalYear: null,
+      agreementDateTime: null,
+      expropriationNoticeServedDateTime: null,
+      expropriationVestingDateTime: null,
+      generationDatetTime: null,
+      specialInstruction: null,
+      detailedRemarks: null,
+      isDisabled: null,
+      financials: [],
+    };
+
+    postAcquisitionCompensationRequisition(fileId, defaultCompensationRequisition).then(
+      async newCompensationReq => {
+        if (newCompensationReq?.id) {
+          setStaleFile(true);
+        }
+      },
+    );
+  };
 
   React.useEffect(() => {
     if (compensations === undefined || staleFile) {
@@ -37,6 +71,7 @@ export const CompensationListContainer: React.FunctionComponent<
   return (
     <View
       compensations={compensations || []}
+      onAdd={async () => onAddCompensationRequistion(fileId)}
       onDelete={async (compensationId: number) => {
         setModalContent({
           ...getDeleteModalProps(),

@@ -1,20 +1,28 @@
+import { SectionListHeader } from 'components/common/SectionListHeader';
+import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
 import * as React from 'react';
+import { useHistory, useRouteMatch } from 'react-router';
 import { formatMoney } from 'utils';
 
 import { CompensationResults } from './CompensationResults';
 
 export interface ICompensationListViewProps {
   compensations: Api_Compensation[];
+  onAdd: () => void;
   onDelete: (compensationId: number) => void;
 }
 
 export const CompensationListView: React.FunctionComponent<ICompensationListViewProps> = ({
   compensations,
+  onAdd,
   onDelete,
 }) => {
+  const history = useHistory();
+  const match = useRouteMatch();
+
   const fileCompensationTotal = compensations
     .filter(x => !x.isDraft)
     .reduce((fileTotal: number, current: Api_Compensation) => {
@@ -26,9 +34,19 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
       );
       return fileTotal + compensationTotal;
     }, 0);
+
   return (
     <>
-      <Section header="Compensation">
+      <Section
+        header={
+          <SectionListHeader
+            claims={[Claims.COMPENSATION_REQUISITION_ADD]}
+            title="Compensation"
+            addButtonText="Add a requistion"
+            onAdd={onAdd}
+          />
+        }
+      >
         <SectionField label={'Total compensation for this file'} labelWidth="9">
           {formatMoney(fileCompensationTotal)}
         </SectionField>
@@ -37,7 +55,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
         <CompensationResults
           results={compensations}
           onShow={(compensationId: number) => {
-            // TODO;
+            history.push(`${match.url}/compensation-requisition/${compensationId}`);
           }}
           onDelete={onDelete}
         />

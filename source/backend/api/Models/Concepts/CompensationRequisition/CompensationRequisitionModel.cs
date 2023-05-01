@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
-    public class CompensationModel : BaseAppModel
+    public class CompensationRequisitionModel : BaseAppModel
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         public long AcquisitionFileId { get; set; }
 
@@ -13,13 +13,13 @@ namespace Pims.Api.Models.Concepts
 
         public string FiscalYear { get; set; }
 
-        public DateTime? AgreementDateTime { get; set; }
+        public DateTime? AgreementDate { get; set; }
 
-        public DateTime? ExpropriationNoticeServedDateTime { get; set; }
+        public DateTime? ExpropiationNoticeServedDate { get; set; }
 
-        public DateTime? ExpropriationVestingDateTime { get; set; }
+        public DateTime? ExpropiationVestingDate { get; set; }
 
-        public DateTime? GenerationDatetTime { get; set; }
+        public DateTime? GenerationDate { get; set; }
 
         public string SpecialInstruction { get; set; }
 

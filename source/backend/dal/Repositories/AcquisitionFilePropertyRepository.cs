@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -106,6 +108,19 @@ namespace Pims.Dal.Repositories
             Context.Entry(propertyAcquisitionFile).CurrentValues.SetValues(propertyAcquisitionFile);
             Context.Entry(propertyAcquisitionFile).State = EntityState.Modified;
             return propertyAcquisitionFile;
+        }
+
+        public List<PimsCompensationRequisition> GetCompensationRequisitionsByAcquisitionFileId(long acquisitionFileId)
+        {
+            User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            var acquisitionFile = Context.PimsAcquisitionFiles
+                .Where(x => x.Internal_Id == acquisitionFileId)
+                .Include(y => y.PimsCompensationRequisitions)
+                .AsNoTracking()
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+
+            return acquisitionFile.PimsCompensationRequisitions.ToList();
         }
 
         #endregion

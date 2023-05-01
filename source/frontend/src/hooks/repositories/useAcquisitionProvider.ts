@@ -7,6 +7,7 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
+import { Api_Compensation } from 'models/api/Compensation';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
@@ -25,6 +26,8 @@ export const useAcquisitionProvider = () => {
     getAcquisitionFileOwners,
     getAcquisitionFileChecklist,
     putAcquisitionFileChecklist,
+    getFileCompensationRequisitions,
+    postFileCompensationRequisition,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -125,6 +128,35 @@ export const useAcquisitionProvider = () => {
     throwError: true,
   });
 
+  const getAcquisitionCompensationRequisitionsApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_Compensation[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getFileCompensationRequisitions(acqFileId),
+      [getFileCompensationRequisitions],
+    ),
+    requestName: 'GetAcquisitionCompensationRequisitions',
+    onError: useAxiosErrorHandler(
+      'Failed to load requisition compensations. Refresh the page to try again.',
+    ),
+  });
+
+  const postFileCompensationRequisitionApi = useApiRequestWrapper<
+    (
+      acqFileId: number,
+      compRequisition: Api_Compensation,
+    ) => Promise<AxiosResponse<Api_Compensation, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number, compRequisition: Api_Compensation) =>
+        await postFileCompensationRequisition(acqFileId, compRequisition),
+      [postFileCompensationRequisition],
+    ),
+    requestName: 'PostFileCompensationRequisition',
+    onSuccess: useAxiosSuccessHandler('Compensation requisition saved'),
+    onError: useAxiosErrorHandler('Failed to save Compensation requisition'),
+  });
+
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
@@ -135,6 +167,8 @@ export const useAcquisitionProvider = () => {
       getAcquisitionOwners: getAcquisitionOwnersApi,
       getAcquisitionFileChecklist: getAcquisitionChecklistApi,
       updateAcquisitionChecklist: updateAcquisitionChecklistApi,
+      getAcquisitionCompensationRequisitions: getAcquisitionCompensationRequisitionsApi,
+      postAcquisitionCompensationRequisition: postFileCompensationRequisitionApi,
     }),
     [
       addAcquisitionFileApi,
@@ -145,6 +179,8 @@ export const useAcquisitionProvider = () => {
       getAcquisitionOwnersApi,
       getAcquisitionChecklistApi,
       updateAcquisitionChecklistApi,
+      getAcquisitionCompensationRequisitionsApi,
+      postFileCompensationRequisitionApi,
     ],
   );
 };

@@ -70,7 +70,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IAcquisitionFileChecklistRepository, Repositories.AcquisitionFileChecklistRepository>();
             repositories.AddScoped<Repositories.IFormTypeRepository, Repositories.FormTypeRepository>();
             repositories.AddScoped<Repositories.IAgreementRepository, Repositories.AgreementRepository>();
-            repositories.AddScoped<Repositories.ICompensationRepository, Repositories.CompensationRepository>();
+            repositories.AddScoped<Repositories.ICompensationRequisitionRepository, Repositories.CompensationRequisitionRepository>();
             return repositories; // TODO: PSP-4424 Use reflection to find all Repositories.
         }
 

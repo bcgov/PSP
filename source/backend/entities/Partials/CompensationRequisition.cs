@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsCompensationRequisition class, provides an entity for the datamodel to compensation requisition information.
+    /// PimsCompensationRequisition class, provides an entity for the datamodel to manage Compensation requisitions.
     /// </summary>
     public partial class PimsCompensationRequisition : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {

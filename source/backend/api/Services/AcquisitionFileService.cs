@@ -31,6 +31,7 @@ namespace Pims.Api.Services
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IAcquisitionFileChecklistRepository _checklistRepository;
         private readonly IAgreementRepository _agreementRepository;
+        private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -43,7 +44,8 @@ namespace Pims.Api.Services
             ILookupRepository lookupRepository,
             IEntityNoteRepository entityNoteRepository,
             IAcquisitionFileChecklistRepository checklistRepository,
-            IAgreementRepository agreementRepository)
+            IAgreementRepository agreementRepository,
+            ICompensationRequisitionRepository compensationRequisitionRepository)
         {
             _user = user;
             _logger = logger;
@@ -56,6 +58,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _checklistRepository = checklistRepository;
             _agreementRepository = agreementRepository;
+            _compensationRequisitionRepository = compensationRequisitionRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -263,6 +266,32 @@ namespace Pims.Api.Services
             _agreementRepository.CommitTransaction();
 
             return updatedAgreements;
+        }
+
+        public IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId)
+        {
+            _logger.LogInformation("Getting compensations for acquisition file id ...", acquisitionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
+
+            return _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFileId);
+        }
+
+        public PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
+
+            compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
+
+            var acquisitionFileParent = _acqFileRepository.GetById(acquisitionFileId);
+            if(acquisitionFileId != compensationRequisition.AcquisitionFileId || acquisitionFileParent is null)
+            {
+                throw new BadRequestException("Invalid acquisitionFileId.");
+            }
+
+            var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
+            _compensationRequisitionRepository.CommitTransaction();
+
+            return newCompensationRequisition;
         }
 
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)

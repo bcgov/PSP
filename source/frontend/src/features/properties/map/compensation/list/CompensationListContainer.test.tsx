@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import { useRequisitionCompensationRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
+import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { mockLookups } from 'mocks';
 import { getMockApiCompensationList } from 'mocks/mockCompensations';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -62,7 +62,7 @@ describe('compensation list view container', () => {
   };
 
   beforeEach(() => {
-    (useRequisitionCompensationRepository as jest.Mock).mockImplementation(() => ({
+    (useCompensationRequisitionRepository as jest.Mock).mockImplementation(() => ({
       getFileCompensations: mockGetApi,
       deleteCompensation: mockApi,
     }));
@@ -98,7 +98,7 @@ describe('compensation list view container', () => {
   });
 
   it('fetchs data when no data is currently available in container', async () => {
-    (useRequisitionCompensationRepository as jest.Mock).mockImplementation(() => ({
+    (useCompensationRequisitionRepository as jest.Mock).mockImplementation(() => ({
       getFileCompensations: mockApi,
       deleteCompensation: mockApi,
     }));

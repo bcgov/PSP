@@ -4,11 +4,13 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Areas.CompensationRequisition.Controllers;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -189,6 +191,52 @@ namespace Pims.Api.Areas.Acquisition.Controllers
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
         }
+
+        /// <summary>
+        /// Get all the compensations corresponding to the passed file id.
+        /// </summary>
+        /// <param name="id">The file to retrieve compensations for.</param>
+        /// <returns></returns>
+        [HttpGet("{id:long}/compensation-requisitions")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<CompensationRequisitionModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetFileCompensations(long id)
+        {
+            var pimsCompensations = _acquisitionService.GetAcquisitionCompensations(id);
+            var compensations = _mapper.Map<List<CompensationRequisitionModel>>(pimsCompensations);
+            return new JsonResult(compensations);
+        }
+
+        /// <summary>
+        /// Add a Compensation Requisition to an Acquisition File
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="compensationRequisition"></param>
+        /// <returns></returns>
+        [HttpPost("{id:long}/compensation-requisitions")]
+        [HasPermission(Permissions.CompensationRequisitionAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(CompensationRequisitionModel), 201)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        public IActionResult AddCompensationRequisition([FromRoute]long id, [FromBody] CompensationRequisitionModel compensationRequisition)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(CompensationRequisitionController),
+                nameof(AddCompensationRequisition),
+                User.GetUsername(),
+                DateTime.Now);
+            _logger.LogInformation($"Dispatching to service: {_acquisitionService.GetType()}");
+
+            var compensationReqEntity = _mapper.Map<Dal.Entities.PimsCompensationRequisition>(compensationRequisition);
+            var newCompensationRequisition = _acquisitionService.AddCompensationRequisition(id, compensationReqEntity);
+
+            return new JsonResult(_mapper.Map<CompensationRequisitionModel>(newCompensationRequisition));
+        }
+
         #endregion
     }
 }

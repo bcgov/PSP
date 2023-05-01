@@ -1,7 +1,7 @@
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 
 export interface Api_Compensation extends Api_ConcurrentVersion {
-  id: number;
+  id: number | null;
   acquisitionFileId: number;
   isDraft: boolean | null;
   fiscalYear: string | null;

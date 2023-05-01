@@ -750,6 +750,26 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        #region CompensationRequisition
+
+        [Fact]
+        public void GetCompensationsRequisitions()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [Fact]
+        public void AddCompensationsRequisitions()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
+
+
+
         #endregion
     }
 }
