@@ -76,7 +76,7 @@ export const ProjectFilter: React.FunctionComponent<
             <Col xl="4">
               <Row>
                 <Col xl="4">
-                  <UserRegionSelectContainer field="projectRegionCode" />
+                  <UserRegionSelectContainer field="projectRegionCode" includeAll />
                 </Col>
                 <Col xl="4">
                   <Select

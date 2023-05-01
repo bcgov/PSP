@@ -65,7 +65,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         /// </summary>
         /// <param name="input"></param>
         /// <param name="top"></param>
-        /// <returns>An array of contacts matching the filter.</returns>
+        /// <returns>An array of projects matching the filter.</returns>
         [HttpGet("search={input}&top={top}")]
         [HasPermission(Permissions.ProjectView)]
         [Produces("application/json")]
