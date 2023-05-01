@@ -291,16 +291,17 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsUser GetById(long id)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
+            User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            return this.Context.PimsUsers
+            return Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
-                .ThenInclude(r => r.Role)
+                    .ThenInclude(r => r.Role)
                 .Include(u => u.Person)
-                .ThenInclude(p => p.PimsContactMethods)
-                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                    .ThenInclude(p => p.PimsContactMethods)
+                    .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(u => u.PimsRegionUsers)
-                .ThenInclude(ru => ru.RegionCodeNavigation)
+                    .ThenInclude(ru => ru.RegionCodeNavigation)
+                .Include(u => u.UserTypeCodeNavigation)
                 .AsNoTracking()
                 .SingleOrDefault(u => u.UserId == id) ?? throw new KeyNotFoundException();
         }
@@ -313,15 +314,16 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsUser GetTrackingById(long id)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
+            User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            return this.Context.PimsUsers
+            return Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
-                .ThenInclude(r => r.Role)
+                    .ThenInclude(r => r.Role)
                 .Include(u => u.Person)
-                .ThenInclude(p => p.PimsContactMethods)
+                    .ThenInclude(p => p.PimsContactMethods)
                 .Include(u => u.PimsRegionUsers)
-                .ThenInclude(ru => ru.RegionCodeNavigation)
+                    .ThenInclude(ru => ru.RegionCodeNavigation)
+                .Include(u => u.UserTypeCodeNavigation)
                 .SingleOrDefault(u => u.UserId == id) ?? throw new KeyNotFoundException();
         }
 
