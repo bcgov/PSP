@@ -139,14 +139,14 @@ namespace Pims.Api.Services
 
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
-            DocumentUploadRelationshipResponse relationshipResponse = new ()
+            DocumentUploadRelationshipResponse relationshipResponse = new()
             {
                 UploadResponse = uploadResult,
             };
 
             if (uploadResult.Document.Id != 0)
             {
-                PimsProjectDocument newProjectDocument = new ()
+                PimsProjectDocument newProjectDocument = new()
                 {
                     ProjectId = projectId,
                     DocumentId = uploadResult.Document.Id,

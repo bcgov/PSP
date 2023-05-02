@@ -1,4 +1,4 @@
-﻿using Mapster;
+using Mapster;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts

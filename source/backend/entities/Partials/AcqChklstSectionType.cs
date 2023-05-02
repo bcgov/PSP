@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Pims.Dal.Entities.Helpers.Extensions;
+using Pims.Dal.Entities.Extensions;
 
 namespace Pims.Dal.Entities
 {

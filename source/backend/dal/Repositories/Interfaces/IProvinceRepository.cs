@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
