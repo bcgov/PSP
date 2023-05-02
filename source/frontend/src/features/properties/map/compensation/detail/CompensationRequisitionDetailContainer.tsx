@@ -20,7 +20,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
 
-  const [display, setDisplay] = useState(false);
+  // const [display, setDisplay] = useState(false);
   const {
     getCompensationRequisition: { execute: getCompensationRequisition, response, error, loading },
   } = useCompensationRequisitionRepository();
