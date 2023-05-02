@@ -189,18 +189,19 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public Paged<PimsUser> GetAllByFilter(UserFilter filter = null)
         {
-            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminUsers, _keycloakOptions);
+            User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.AdminUsers, _keycloakOptions);
 
-            var query = this.Context.PimsUsers
+            var query = Context.PimsUsers
                 .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
+                    .ThenInclude(o => o.Organization)
                 .Include(u => u.PimsUserRoles)
-                .ThenInclude(r => r.Role)
+                    .ThenInclude(r => r.Role)
                 .Include(u => u.Person)
-                .ThenInclude(p => p.PimsContactMethods)
-                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                    .ThenInclude(p => p.PimsContactMethods)
+                    .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(u => u.PimsRegionUsers)
-                .ThenInclude(ru => ru.RegionCodeNavigation)
+                    .ThenInclude(ru => ru.RegionCodeNavigation)
+                .Include(u => u.UserTypeCodeNavigation)
                 .AsNoTracking();
 
             if (filter != null)
@@ -480,6 +481,7 @@ namespace Pims.Dal.Repositories
             user.Position = update.Position;
             user.LastLogin = update.LastLogin;
             user.ExpiryDate = update.ExpiryDate;
+            user.UserTypeCode = update.UserTypeCode;
             this.Context.PimsUsers.Update(user);
             return user;
         }
