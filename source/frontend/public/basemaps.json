@@ -5,7 +5,7 @@
       "urls": [
         "https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/{z}/{y}/{x}"
       ],
-      "attribution": "&copy; Government of British Columbia, DataBC, GeoBC",
+      "attribution": "&copy; Government of British Columbia, DataBC, GeoBC, Powered by <a href=\"https://ltsa.ca/products-services/parcelmap-bc\">ParcelMap</a> BC",
       "thumbnail": "/streets.jpg"
     },
     {
