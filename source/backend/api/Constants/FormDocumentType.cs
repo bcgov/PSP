@@ -29,5 +29,9 @@ namespace Pims.Api.Constants
         // Conditions of Entry (H0443)
         [EnumMember(Value = "H0443")]
         H0443,
+
+        // License of Occupation (H0074)
+        [EnumMember(Value = "H0074")]
+        H0074,
     }
 }

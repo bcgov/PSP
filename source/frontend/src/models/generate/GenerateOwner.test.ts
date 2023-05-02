@@ -22,4 +22,12 @@ describe('GenerateOwner tests', () => {
     );
     expect(owner.owner_string).toBe(`FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345)`);
   });
+
+  it('Can Generate an owner phone number', () => {
+    const acqFile = mockAcquisitionFileResponse(1, 'test', 1);
+    const owner = new GenerateOwner(
+      acqFile?.acquisitionFileOwners ? acqFile?.acquisitionFileOwners[1] : null,
+    );
+    expect(owner.phone).toBe(`775-111-1111`);
+  });
 });
