@@ -9,6 +9,8 @@ import styled from 'styled-components';
 
 export interface CompensationRequisitionDetailViewProps {
   compensation?: Api_Compensation;
+  clientConstant: string;
+  gstConstant: number | undefined;
   onClose: () => void;
   loading: boolean;
   error: boolean;
@@ -43,6 +45,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       )}
     </HalfHeightDiv>
   );
+
   if (error) {
     trayContent = (
       <b>
@@ -62,8 +65,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     >
       <Styled.PopupTray className={clsx({ show: show })}>
         <Styled.TrayHeader>
-          Compensation requisition&nbsp;-&nbsp;
-          {loading ? '' : compensation?.id ?? 'Unknown'}
+          Compensation Requisition (H120)
           <Styled.CloseButton
             id="close-tray"
             icon={<MdClose size={20} />}

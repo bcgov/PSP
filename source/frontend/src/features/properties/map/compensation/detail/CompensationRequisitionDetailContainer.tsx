@@ -1,5 +1,6 @@
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { useCallback, useEffect, useState } from 'react';
+import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
 
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
@@ -12,17 +13,22 @@ export interface ICompensationRequisitionDetailContainerProps {
 export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<ICompensationRequisitionDetailContainerProps>
 > = ({ compensationRequisitionId, onClose, View }) => {
+  const { getSystemConstant } = useSystemConstants();
+
   const [editMode, setEditMode] = useState(false);
+  const clientConstant = getSystemConstant(SystemConstants.CLIENT);
+  const gstConstant = getSystemConstant(SystemConstants.GST);
+  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
+
   const [display, setDisplay] = useState(false);
   const {
     getCompensationRequisition: { execute: getCompensationRequisition, response, error, loading },
   } = useCompensationRequisitionRepository();
 
   const fetchCompensationReq = useCallback(async () => {
-    console.log(compensationRequisitionId);
     if (!!compensationRequisitionId) {
-      const activity = await getCompensationRequisition(compensationRequisitionId);
-      return activity;
+      const compensationReq = await getCompensationRequisition(compensationRequisitionId);
+      return compensationReq;
     }
   }, [compensationRequisitionId, getCompensationRequisition]);
 
@@ -32,10 +38,12 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
 
   return !!compensationRequisitionId ? (
     <View
+      compensation={response}
+      clientConstant={clientConstant?.value ?? ''}
+      gstConstant={gstDecimal}
       onClose={onClose}
       loading={loading}
       error={!!error}
-      compensation={response}
       editMode={editMode}
       setEditMode={setEditMode}
     ></View>

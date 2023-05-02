@@ -6,7 +6,6 @@ import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_Activity } from 'models/api/Activity';
-import * as React from 'react';
 import * as Yup from 'yup';
 
 import { IFormContent } from '../../shared/content/models';
