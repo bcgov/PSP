@@ -12,15 +12,13 @@ export interface ICompensationRequisitionFormProps {
   onSave: (compensation: Api_Compensation) => Promise<Api_Compensation | undefined>;
 }
 
-export const CompensationRequisitionForm = ({
-  compensation,
-  acquisitionFile,
-  editMode,
-  isEditable,
-  setEditMode,
-  onSave,
-}: ICompensationRequisitionFormProps) => {
+// export const CompensationRequisitionForm = ({
+//   compensation,
+//   acquisitionFile,
+//   editMode,
+//   isEditable,
+//   setEditMode,
+//   onSave,
+// }: ICompensationRequisitionFormProps) => {
 
-
-
-};
+// };
