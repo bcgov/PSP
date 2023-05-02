@@ -22,7 +22,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The GUID that identifies this Role in Keycloak.
         /// </summary>
-        public string? KeycloakRoleId { get; set; }
+        public string KeycloakRoleId { get; set; }
 
         /// <summary>
         /// get/set - The claims first name.
