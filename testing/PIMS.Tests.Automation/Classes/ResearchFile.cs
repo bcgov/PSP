@@ -17,7 +17,6 @@ namespace PIMS.Tests.Automation.Classes
         public string? RequestResult { get; set; } = null;
         public Boolean Expropriation { get; set; } = false;
         public string? ExpropriationNotes { get; set; } = null;
-        public List<string>? NotesTab { get; set; } = new List<string>();
         public int SearchPropertiesIndex { get; set; } = 0;
         public SearchProperty? SearchProperties { get; set; } = new SearchProperty();
         public int PropertyResearchRowStart { get; set; } = 0;

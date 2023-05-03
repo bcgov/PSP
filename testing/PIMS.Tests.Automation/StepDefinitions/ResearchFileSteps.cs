@@ -15,6 +15,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchResearchFiles searchResearchFile;
         private readonly PropertyInformation propertyInformation;
         private readonly SearchProperties searchProperties;
+        private readonly Notes notes;
         private readonly GenericSteps genericSteps;
 
         private readonly string userName = "TRANPSP1";
@@ -32,6 +33,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation = new PropertyInformation(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             genericSteps = new GenericSteps(driver);
+            notes = new Notes(driver.Current);
             researchFile = new ResearchFile();
         }
 
@@ -39,7 +41,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void CreateResearchFile(int rowNumber)
         {
             /* TEST COVERAGE: PSP-3266, PSP-3267, PSP-3357, PSP-3358, PSP-3367, PSP-3595, PSP-3596, PSP-3597, PSP-3598, PSP-3600, 
-             * PSP-3721, PSP-3849, PSP-4333, PSP-4556, PSP-5541, PSP-5545 */
+             * PSP-3721, PSP-3849, PSP-4333, PSP-4556, PSP-5360, PSP-5541, PSP-5545 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -68,6 +70,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify Research File Details View Form
             researchFiles.VerifyResearchFileMainFormView(researchFile, userName);
 
+            //Verify automatic note created when
+            if (researchFile.Status != "Active")
+            {
+                notes.NavigateNotesTab();
+                notes.VerifyAutomaticNotes("Research File", "Active", researchFile.Status);
+            }
+            
             //Navigate to Edit Research File
             researchFiles.NavigateToAddPropertiesReseachFile();
 
@@ -219,7 +228,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.CancelResearchFile();
 
             //Insert changes on Property Information
-            researchFiles.AddPropertyResearchInfo(researchFile.PropertyResearch[0],0);
+            researchFiles.AddPropertyResearchInfo(researchFile.PropertyResearch[0], 0);
 
             //Cancel changes
             researchFiles.CancelResearchFile();
@@ -240,10 +249,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchResearchFile.NavigateToSearchResearchFile();
 
             //Filter research Files
-            searchResearchFile.FilterResearchFiles("South Coast Region", "Automated", "Active", "Happy", "Tranpsp1");
+            searchResearchFile.FilterResearchFiles("South Coast Region", "Automated", "Inactive", "Happy", "TRANPSP1");
             Assert.True(searchResearchFile.SearchFoundResults());
 
-            searchResearchFile.FilterResearchFiles("Cannot determine", "Automated", "Closed", "Happy", "dsmith");
+            searchResearchFile.FilterResearchFiles("Southern Interior Region", "Automated", "Closed", "Happy", "TRANPSP1");
         }
 
         [StepDefinition(@"I update an Existing Research File from row number (.*)")]
@@ -302,10 +311,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
         }
 
-        [StepDefinition(@"A new Research File is created successfully")]
-        public void NewResearchFileCreated()
+        [StepDefinition(@"I navigate back to the Research File Summary")]
+        public void NavigateMainResearchFileSection()
         {
-            /* TEST COVERAGE: PSP-4556, PSP-3294 */
+            //Navigate back to File Summary
+            researchFiles.NavigateToFileSummary();
+        }
+
+       [StepDefinition(@"A new Research File is created successfully")]
+       public void NewResearchFileCreated()
+       {
+           /* TEST COVERAGE: PSP-4556, PSP-3294 */
 
             searchResearchFile.NavigateToSearchResearchFile();
             searchResearchFile.SearchResearchFileByRFile(researchFileCode);
@@ -344,7 +360,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFile.Expropriation = bool.Parse(ExcelDataContext.ReadData(rowNumber, "Expropriation"));
             researchFile.ExpropriationNotes = ExcelDataContext.ReadData(rowNumber, "ExpropriationNotes");
 
-            researchFile.NotesTab = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "NotesTab"));
             researchFile.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "SearchPropertiesIndex"));
             researchFile.PropertyResearchRowStart = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyReasearchRowStart"));
             researchFile.PropertyResearchRowEnd = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyResearchRowEnd"));

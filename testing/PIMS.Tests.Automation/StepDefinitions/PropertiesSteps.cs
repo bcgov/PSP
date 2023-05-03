@@ -18,21 +18,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         //private readonly string userName = "TRANPSP1";
         private readonly string userName = "sutairak";
 
-        private string motiPropertyPID = "004-537-360";
-        private string motiPropertyPIN = "90054791";
-        private string propertyAddress = "2889 E 12th Ave";
-        private string invalidPID = "000-000-000";
-
-        private readonly string propertyDetailsAddressLine1 = "8989 Fake St.";
-        private readonly string propertyDetailsAddressLine2 = "Apt 2305";
-        private readonly string propertyDetailsCity = "Vancouver";
-        private readonly string propertyDetailsPostalCode = "V6Z 8H9";
-        private string municipalZone = "The Automated Zone";
-        private string sqMts = "65";
-        private string cubeMts = "103.59";
-        private string PropertyInfoNotes = "Automation Test - Properties Edit";
-
         private Property property;
+        private SearchProperty searchProperty;
 
 
         public PropertiesSteps(BrowserDriver driver)
@@ -42,10 +29,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation = new PropertyInformation(driver.Current);
             genericSteps = new GenericSteps(driver);
             property = new Property();
+            searchProperty = new SearchProperty();
         }
 
-        [StepDefinition(@"I search for a Property in the Inventory by different filters")]
-        public void SearchInventoryPropertyOnMap()
+        [StepDefinition(@"I search for a Property in the Inventory by different filters from row number (.*)")]
+        public void SearchInventoryPropertyOnMap(int rowNumber)
         {
             /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092 */
 
@@ -53,27 +41,28 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Search for a valid Address with the Search Bar
-            searchProperties.SearchPropertyByAddress(propertyAddress);
+            PopulateSearchProperty(rowNumber);
+            searchProperties.SearchPropertyByAddress(searchProperty.Address);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid PIN in Inventory
-            searchProperties.SearchPropertyByPINPID(motiPropertyPIN);
+            searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid PID in Inventory
-            searchProperties.SearchPropertyByPINPID(motiPropertyPID);
+            searchProperties.SearchPropertyByPINPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
         }
 
-        [StepDefinition(@"I search for an Invalid Property")]
-        public void SearchInvalidPropertyOnMap()
+        [StepDefinition(@"I search for an Invalid Property from row number (.*)")]
+        public void SearchInvalidPropertyOnMap(int rowNumber)
         {
             /* TEST COVERAGE: PSP-5004 */
 
@@ -81,7 +70,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Search for an invalid Address with the Search Bar
-            searchProperties.SearchPropertyByPINPID(invalidPID);
+            PopulateSearchProperty(rowNumber);
+            searchProperties.SearchPropertyByPINPID(searchProperty.PID);
 
         }
 
@@ -110,8 +100,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
-        [StepDefinition(@"I search for a non MOTI property")]
-        public void NonInventoryProperty()
+        [StepDefinition(@"I search for a non MOTI property from row number (.*)")]
+        public void NonInventoryProperty(int rowNumber)
         {
             /* TEST COVERAGE: PSP-3414 */
 
@@ -119,7 +109,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Look for a non-inventory property
-            searchProperties.SearchPropertyByAddress(propertyAddress);
+            PopulateSearchProperty(rowNumber);
+            searchProperties.SearchPropertyByAddress(searchProperty.Address);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
@@ -128,19 +119,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
         }
 
-        [StepDefinition(@"I make some changes on the selected property information")]
-        public void EditPropertyInformationDetails()
+        [StepDefinition(@"I make changes on the selected property information from row number (.*)")]
+        public void EditPropertyInformationDetails(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-3591, PSP-3590, PSP-5165, PSP-5163, PSP-5162, PSP-5164 */
+            /* TEST COVERAGE: PSP-3591, PSP-3590, PSP-5165, PSP-5163, PSP-5162, PSP-5164, PSP-4794 */
 
             //Click on the Edit Property Information Button
+            PopulateProperty(rowNumber);
             propertyInformation.EditPropertyInfoBttn();
 
             //Verify Property Information Edit Form
             propertyInformation.VerifyPropertyDetailsEditForm("Property Information");
 
             //Apply changes on the Property Information Form
-            propertyInformation.UpdateMinPropertyDetails(PropertyInfoNotes);
+            propertyInformation.UpdatePropertyDetails(property);
 
             //Cancel changes
             propertyInformation.CancelPropertyDetails();
@@ -149,10 +141,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.EditPropertyInfoBttn();
 
             //Apply changes on the Property Information Form
-            propertyInformation.UpdateMaxPropertyDetails(propertyDetailsAddressLine1, propertyDetailsAddressLine2, propertyDetailsCity, propertyDetailsPostalCode, municipalZone, sqMts, cubeMts, PropertyInfoNotes);
+            propertyInformation.UpdatePropertyDetails(property);
 
             //Save changes
             propertyInformation.SavePropertyDetails();
+
+            //Verify changes
+            propertyInformation.NavigatePropertyDetailsTab();
+            propertyInformation.VerifyPropertyDetailsView("Property Information");
 
         }
 
@@ -222,14 +218,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.VerifyNonInventoryPropertyTabs();
         }
 
-        [StepDefinition(@"Property Information is displayed correctly")]
-        public void PropertyInformationViewDetailsSuccess()
-        {
-            /* TEST COVERAGE: PSP-4794 */
-            propertyInformation.NavigatePropertyDetailsTab();
-            propertyInformation.VerifyPropertyDetailsView("Research File");
-        }
-
         private void PopulateProperty(int rowNumber)
         {
             DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"];
@@ -260,6 +248,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
             property.Volume = ExcelDataContext.ReadData(rowNumber, "Volume");
             property.VolumeType = ExcelDataContext.ReadData(rowNumber, "VolumeType");
             property.PropertyNotes = ExcelDataContext.ReadData(rowNumber, "Notes");
+        }
+
+        private void PopulateSearchProperty(int rowNumber)
+        {
+            DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+            ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
+
+            searchProperty.PID = ExcelDataContext.ReadData(rowNumber, "PID");
+            searchProperty.PIN = ExcelDataContext.ReadData(rowNumber, "PIN");
+            searchProperty.Address = ExcelDataContext.ReadData(rowNumber, "Address");
+            searchProperty.PlanNumber = ExcelDataContext.ReadData(rowNumber, "PlanNumber");
+            searchProperty.LegalDescription = ExcelDataContext.ReadData(rowNumber, "LegalDescription");
         }
     }
 }

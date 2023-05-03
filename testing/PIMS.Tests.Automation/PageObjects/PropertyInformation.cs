@@ -396,8 +396,10 @@ namespace PIMS.Tests.Automation.PageObjects
             //Delete Tenure status previously selected if any
             if (webDriver.FindElements(propertyDetailsTenureDeleteBttns).Count > 0)
             {
+                FocusAndClick(propertyDetailsTenureStatusInput);
                 while (webDriver.FindElements(propertyDetailsTenureDeleteBttns).Count > 0)
                 {
+                    Wait();
                     webDriver.FindElements(propertyDetailsTenureDeleteBttns)[0].Click();
                 }
             }
@@ -406,6 +408,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 foreach (string status in property.TenureStatus)
                 {
                     FocusAndClick(propertyDetailsTenureStatusInput);
+
+                    Wait();
                     ChooseMultiSelectSpecificOption(propertyDetailsTenureOptions, status);
                 }
             }

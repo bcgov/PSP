@@ -6,7 +6,7 @@ A short summary of the feature
 Scenario: Create a new complete Research File
 	Given I create a new complete Research File from row number <RowNumber>
 	#When I manage Documents Tab within a Research File
-	#And I create a new Note on the Notes Tab
+	And I create a new Note on the Notes Tab from row number 1
 	Then A new Research File is created successfully
 	Examples:
 	| RowNumber |
@@ -15,7 +15,9 @@ Scenario: Create a new complete Research File
 Scenario: Update a Research File
 	Given I update an Existing Research File from row number 2
 	When I update a Property details from row number 2
-	Then Property Information is displayed correctly
+	And I navigate back to the Research File Summary
+	And I edit a Note on the Notes Tab from row number 2
+	Then Notes update have been done successfully
 
 Scenario: Create a new research file from Property pop-up
 	Given I create a Research File from a pin on map and from row number 3

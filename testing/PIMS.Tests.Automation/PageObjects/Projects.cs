@@ -142,22 +142,27 @@ namespace PIMS.Tests.Automation.PageObjects
         public void UpdateProject(Project project)
         {
             Wait();
-            if (project.UpdateName != "")
+            webDriver.FindElement(projectEditButton).Click();
+
+            //Cleaning previous Project Data
+            ClearInput(projectNameInput);
+            ClearInput(projectNumberInput);
+            ClearInput(projectSummaryTextarea);
+
+            Wait();
+            if (project.Name != "")
             {
-                ClearInput(projectNameInput);
-                webDriver.FindElement(projectNameInput).SendKeys(project.UpdateName);
+                webDriver.FindElement(projectNameInput).SendKeys(project.Name);
             }
-            if (project.UpdateNumber != "")
+            if (project.Number != "")
             {
-                ClearInput(projectNumberInput);
-                webDriver.FindElement(projectNumberInput).SendKeys(project.UpdateNumber);
+                webDriver.FindElement(projectNumberInput).SendKeys(project.Number);
             }
-            if (project.UpdateStatus != "") { ChooseSpecificSelectOption(projectStatusSelect, project.UpdateStatus); }
-            if (project.UpdateMOTIRegion != "") { ChooseSpecificSelectOption(projectMOTIRegionInput, project.UpdateMOTIRegion); }
-            if (project.UpdateSummary != "")
+            if (project.Status != "") { ChooseSpecificSelectOption(projectStatusSelect, project.Status); }
+            if (project.MOTIRegion != "") { ChooseSpecificSelectOption(projectMOTIRegionInput, project.MOTIRegion); }
+            if (project.Summary != "")
             {
-                ClearInput(projectSummaryTextarea);
-                webDriver.FindElement(projectSummaryTextarea).SendKeys(project.UpdateSummary);
+                webDriver.FindElement(projectSummaryTextarea).SendKeys(project.Summary);
             }
         }
 
@@ -172,41 +177,45 @@ namespace PIMS.Tests.Automation.PageObjects
             By productScopeDynamicInput = By.Id("input-products."+ index +".scope");
 
             Wait();
+            //Cleaning previous input
+            if (webDriver.FindElements(productEstimateDateDynamicInput).Count > 0) { ClearInput(productEstimateDateDynamicInput); }
+            ClearInput(productCodeDynamicInput);
+            ClearInput(productCodeDynamicInput);
+            ClearInput(productNameDynamicInput);
+            ClearInput(productStartDateDynamicInput);
+            ClearInput(productCostEstimateDynamicInput);
+            ClearInput(productObjectiveDynamicInput);
+            ClearInput(productScopeDynamicInput);
+           
 
-            if (product.UpdateProductCode != "")
+            if (product.ProductCode != "")
             {
-                ClearInput(productCodeDynamicInput);
-                webDriver.FindElement(productCodeDynamicInput).SendKeys(product.UpdateProductCode);
+                webDriver.FindElement(productCodeDynamicInput).SendKeys(product.ProductCode);
             }
-            if (product.UpdateProductName != "")
+            if (product.ProductName != "")
             {
-                ClearInput(productNameDynamicInput);
-                webDriver.FindElement(productNameDynamicInput).SendKeys(product.UpdateProductName);
+                webDriver.FindElement(productNameDynamicInput).SendKeys(product.ProductName);
             }
-            if (product.UpdateStartDate != "")
+            if (product.StartDate != "")
             {
-                ClearInput(productStartDateDynamicInput);
-                webDriver.FindElement(productStartDateDynamicInput).SendKeys(product.UpdateStartDate);
+                webDriver.FindElement(productStartDateDynamicInput).SendKeys(product.StartDate);
+                webDriver.FindElement(productStartDateLabel).Click();
             }
-            if (product.UpdateCostEstimate != "")
+            if (product.CostEstimate != "")
             {
-                ClearInput(productCostEstimateDynamicInput);
-                webDriver.FindElement(productCostEstimateDynamicInput).SendKeys(product.UpdateCostEstimate);
+                webDriver.FindElement(productCostEstimateDynamicInput).SendKeys(product.CostEstimate);
             }
-            if (product.UpdateEstimateDate != "")
+            if (product.EstimateDate != "")
             {
-                ClearInput(productEstimateDateDynamicInput);
-                webDriver.FindElement(productEstimateDateDynamicInput).SendKeys(product.UpdateEstimateDate);
+                webDriver.FindElement(productEstimateDateDynamicInput).SendKeys(product.EstimateDate);
             }
-            if (product.UpdateObjectives != "")
+            if (product.Objectives != "")
             {
-                ClearInput(productObjectiveDynamicInput);
-                webDriver.FindElement(productObjectiveDynamicInput).SendKeys(product.UpdateObjectives);
+                webDriver.FindElement(productObjectiveDynamicInput).SendKeys(product.Objectives);
             }
-            if (product.UpdateScope != "")
+            if (product.Scope != "")
             {
-                ClearInput(productScopeDynamicInput);
-                webDriver.FindElement(productScopeDynamicInput).SendKeys(product.UpdateScope);
+                webDriver.FindElement(productScopeDynamicInput).SendKeys(product.Scope);
             }
         }
 
@@ -318,17 +327,19 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             DateTime thisDay = DateTime.Today;
             string today = thisDay.ToString("MMM dd, yyyy");
+            int child = index + 1;
 
-            By productHeader = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div[1]");
-            By productStartDateLabel = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div/div/label[contains(text(),'Start Date')]");
-            By productStartDateContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div/div/label[contains(text(),'Start Date')]/parent::div/following-sibling::div");
-            By productCostEstimateLabel = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div/div/label[contains(text(),'Cost estimate')]");
-            By productCostEstimateContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div/div/label[contains(text(),'Cost estimate')]/parent::div/following-sibling::div");
-            By productObjectivesLabel = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div/div/label[contains(text(),'Objectives')]");
-            By productObjectivesContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div/div/label[contains(text(),'Objectives')]/parent::div/following-sibling::div");
-            By productScopeLabel = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div/div/label[contains(text(),'Scope')]");
-            By productScopeContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" +index+ "]/div/div/label[contains(text(),'Scope')]/parent::div/following-sibling::div");
+            By productHeader = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child + "]/div[1]");
+            By productStartDateLabel = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child + "]/div/div/label[contains(text(),'Start Date')]");
+            By productStartDateContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child  + "]/div/div/label[contains(text(),'Start Date')]/parent::div/following-sibling::div");
+            By productCostEstimateLabel = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child  + "]/div/div/label[contains(text(),'Cost estimate')]");
+            By productCostEstimateContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child  + "]/div/div/label[contains(text(),'Cost estimate')]/parent::div/following-sibling::div");
+            By productObjectivesLabel = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child  + "]/div/div/label[contains(text(),'Objectives')]");
+            By productObjectivesContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child  + "]/div/div/label[contains(text(),'Objectives')]/parent::div/following-sibling::div");
+            By productScopeLabel = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child  + "]/div/div/label[contains(text(),'Scope')]");
+            By productScopeContent = By.XPath("//div[contains(text(),'Associated Products')]/parent::div/parent::h2/following-sibling::div/div[" + child + "]/div/div/label[contains(text(),'Scope')]/parent::div/following-sibling::div");
 
+            Wait();
             if (validationType == "Create")
             {
                 Assert.True(webDriver.FindElement(productHeader).Displayed);
@@ -366,20 +377,20 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(webDriver.FindElement(productHeader).Displayed);
                 Assert.True(webDriver.FindElement(productStartDateLabel).Displayed);
-                Assert.True(webDriver.FindElement(productStartDateContent).Text.Equals(TransformDateFormat(product.UpdateStartDate)));
+                Assert.True(webDriver.FindElement(productStartDateContent).Text.Equals(TransformDateFormat(product.StartDate)));
                 Assert.True(webDriver.FindElement(productCostEstimateLabel).Displayed);
                 if (product.EstimateDate != "")
                 {
-                    Assert.True(webDriver.FindElement(productCostEstimateContent).Text.Equals(TransformCurrencyFormat(product.UpdateCostEstimate) + " as of " + TransformDateFormat(product.UpdateEstimateDate)));
+                    Assert.True(webDriver.FindElement(productCostEstimateContent).Text.Equals(TransformCurrencyFormat(product.CostEstimate) + " as of " + TransformDateFormat(product.EstimateDate)));
                 }
                 else
                 {
-                    Assert.True(webDriver.FindElement(productCostEstimateContent).Text.Equals(TransformCurrencyFormat(product.UpdateCostEstimate) + " no estimate date entered"));
+                    Assert.True(webDriver.FindElement(productCostEstimateContent).Text.Equals(TransformCurrencyFormat(product.CostEstimate) + " no estimate date entered"));
                 }
                 Assert.True(webDriver.FindElement(productObjectivesLabel).Displayed);
-                if (product.UpdateObjectives != "")
+                if (product.Objectives != "")
                 {
-                    Assert.True(webDriver.FindElement(productObjectivesContent).Text.Equals(product.UpdateObjectives));
+                    Assert.True(webDriver.FindElement(productObjectivesContent).Text.Equals(product.Objectives));
                 }
                 else if (product.Objectives != "")
                 {
@@ -390,9 +401,9 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.True(webDriver.FindElement(productObjectivesContent).Text.Equals("no objective entered"));
                 }
                 Assert.True(webDriver.FindElement(productScopeLabel).Displayed);
-                if (product.UpdateScope != "")
+                if (product.Scope != "")
                 {
-                    Assert.True(webDriver.FindElement(productScopeContent).Text.Equals(product.UpdateScope));
+                    Assert.True(webDriver.FindElement(productScopeContent).Text.Equals(product.Scope));
                 }
                 else if (product.Scope != "")
                 {
@@ -407,6 +418,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean duplicateProject()
         {
+            Wait(500);
             return webDriver.FindElements(duplicateProjectToast).Count > 0;
         }
     }

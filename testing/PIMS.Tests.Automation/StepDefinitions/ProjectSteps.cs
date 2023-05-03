@@ -52,8 +52,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Save Project
-            projects.SaveProject();
+            projects.SaveProject();  
+        }
 
+        [StepDefinition(@"I verify The Project View Form")]
+        public void VerifyCreatedProject()
+        {
             //Verify Project View
             projects.VerifyProjectViewForm(project);
 
@@ -131,6 +135,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Duplicate Project Alert is displayed")]
         public void DuplicateProject()
         {
+            /* TEST COVERAGE:  PSP-5670 */
+
             Assert.True(projects.duplicateProject());
         }
 
@@ -149,12 +155,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             project.UpdatedBy = ExcelDataContext.ReadData(rowNumber, "UpdatedBy");
             project.ProductsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsCount"));
             project.ProductsRowStart = int.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsRowStart"));
-            project.UpdateNumber = ExcelDataContext.ReadData(rowNumber, "UpdateNumber");
-            project.UpdateName = ExcelDataContext.ReadData(rowNumber, "UpdateName");
-            project.UpdateCodeName = ExcelDataContext.ReadData(rowNumber, "UpdateCodeName");
-            project.UpdateStatus = ExcelDataContext.ReadData(rowNumber, "UpdateStatus");
-            project.UpdateMOTIRegion = ExcelDataContext.ReadData(rowNumber, "UpdateMOTIRegion");
-            project.UpdateSummary = ExcelDataContext.ReadData(rowNumber, "UpdateSummary");
             
             if (project.ProductsCount != 0 && project.ProductsRowStart != 0)
             {
@@ -167,7 +167,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable projectProductsSheet = ExcelDataContext.GetInstance().Sheets["ProjectsProducts"];
             ExcelDataContext.PopulateInCollection(projectProductsSheet);
 
-            for (int i = startRow; i <= rowsCount; i++)
+            for (int i = startRow; i <= startRow + rowsCount; i++)
             {
                 Product product = new Product();
                 product.ProductCode = ExcelDataContext.ReadData(i, "ProductCode");
@@ -178,14 +178,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 product.StartDate = ExcelDataContext.ReadData(i, "StartDate");
                 product.Objectives = ExcelDataContext.ReadData(i, "Objectives");
                 product.Scope = ExcelDataContext.ReadData(i, "Scope");
-                product.UpdateProductCode = ExcelDataContext.ReadData(i, "UpdateProductCode");
-                product.UpdateProductName = ExcelDataContext.ReadData(i, "UpdateProductName");
-                product.UpdateProductCodeName = ExcelDataContext.ReadData(i, "UpdateProductCodeName");
-                product.UpdateCostEstimate = ExcelDataContext.ReadData(i, "UpdateCostEstimate");
-                product.UpdateEstimateDate = ExcelDataContext.ReadData(i, "UpdateEstimateDate");
-                product.UpdateStartDate = ExcelDataContext.ReadData(i, "UpdateStartDate");
-                product.UpdateObjectives = ExcelDataContext.ReadData(i, "UpdateObjectives");
-                product.UpdateScope = ExcelDataContext.ReadData(i, "UpdateScope");
 
                 project.Products.Add(product);
             }

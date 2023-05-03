@@ -185,10 +185,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 20
- testRunner.Given("I create a Financial Code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a Financial Code from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 21
- testRunner.And("I update a Financial Code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I update a Financial Code from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 22
  testRunner.Then("Financial Codes rendered successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -216,7 +216,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 25
- testRunner.Given("I attempt to duplicate a Financial Code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I attempt to duplicate a Financial Code from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 26
  testRunner.Then("Financial Code cannot be duplicated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

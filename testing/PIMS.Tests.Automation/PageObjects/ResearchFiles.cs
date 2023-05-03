@@ -199,7 +199,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(researchFileEditButton).Click();
 
             //Status
-            if (researchFile.Status != null)
+            if (researchFile.Status != "")
             {
                 ChooseSpecificSelectOption(researchFileStatusSelect, researchFile.Status);
             }
