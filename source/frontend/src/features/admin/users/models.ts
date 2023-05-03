@@ -1,12 +1,11 @@
 import { ContactMethodTypes } from 'constants/contactMethodType';
+import { UserTypes } from 'constants/index';
 import { Api_Person } from 'models/api/Person';
 import { Api_Role } from 'models/api/Role';
 import Api_TypeCode from 'models/api/TypeCode';
 import { Api_User } from 'models/api/User';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
-
-import { UserTypeCodesEnum } from '../access-request/models';
 
 export class FormUser {
   id?: number;
@@ -18,7 +17,7 @@ export class FormUser {
   surname?: string;
   isDisabled?: boolean;
   position?: string;
-  userTypeCode?: string;
+  userTypeCode?: Api_TypeCode<string>;
   lastLogin?: string;
   appCreateTimestamp?: string;
   issueDate?: string;
@@ -44,7 +43,10 @@ export class FormUser {
     this.surname = user?.person?.surname ?? '';
     this.isDisabled = user.isDisabled;
     this.position = user.position ?? '';
-    this.userTypeCode = user.userTypeCode ?? UserTypeCodesEnum.CONTRACT;
+    this.userTypeCode = {
+      id: user?.userTypeCode?.id ?? UserTypes.Contractor,
+      description: user?.userTypeCode?.description ?? '',
+    };
     this.lastLogin = user.lastLogin;
     this.appCreateTimestamp = user.appCreateTimestamp;
     this.note = user.note;
@@ -90,3 +92,14 @@ export class FormUser {
     };
   }
 }
+
+export const userTypeCodeValues = [
+  {
+    radioValue: UserTypes.MinistryStaff,
+    radioLabel: 'Ministry staff',
+  },
+  {
+    radioValue: UserTypes.Contractor,
+    radioLabel: 'Contractor',
+  },
+];
