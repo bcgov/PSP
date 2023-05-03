@@ -17,19 +17,19 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<string> ProjectStatusTypeCode { get; set; }
 
         /// <summary>
-        /// get/set - Bussiness function code.
+        /// get/set - Business function code.
         /// </summary>
-        public CodeTypeModel BusinessFunctionCode { get; set; }
+        public FinancialCodeModel BusinessFunctionCode { get; set; }
 
         /// <summary>
         /// get/set - Cost type code.
         /// </summary>
-        public CodeTypeModel CostTypeCode { get; set; }
+        public FinancialCodeModel CostTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Work activity code.
         /// </summary>
-        public CodeTypeModel WorkActivityCode { get; set; }
+        public FinancialCodeModel WorkActivityCode { get; set; }
 
         /// <summary>
         /// get/set - The region code.
