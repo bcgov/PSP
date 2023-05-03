@@ -7,6 +7,8 @@ namespace Pims.Api.Services
     {
         IList<FinancialCodeModel> GetAllFinancialCodes();
 
+        IList<FinancialCodeModel> GetFinancialCodesByType(FinancialCodeTypes type);
+
         FinancialCodeModel GetById(FinancialCodeTypes type, long codeId);
 
         FinancialCodeModel Add(FinancialCodeTypes type, FinancialCodeModel model);

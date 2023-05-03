@@ -74,6 +74,24 @@ namespace Pims.Api.Services
             return financialCodes;
         }
 
+        public IList<FinancialCodeModel> GetFinancialCodesByType(FinancialCodeTypes type)
+        {
+            _logger.LogInformation("Getting financial codes with type {type}", type);
+            User.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            return type switch
+            {
+                FinancialCodeTypes.BusinessFunction => _mapper.Map<FinancialCodeModel[]>(_businessFunctionRepository.GetAllBusinessFunctionCodes()),
+                FinancialCodeTypes.ChartOfAccounts => _mapper.Map<FinancialCodeModel[]>(_chartOfAccountsRepository.GetAllChartOfAccountCodes()),
+                FinancialCodeTypes.YearlyFinancial => _mapper.Map<FinancialCodeModel[]>(_yearlyFinancialRepository.GetAllYearlyFinancialCodes()),
+                FinancialCodeTypes.CostType => _mapper.Map<FinancialCodeModel[]>(_costTypeRepository.GetAllCostTypeCodes()),
+                FinancialCodeTypes.FinancialActivity => _mapper.Map<FinancialCodeModel[]>(_financialActivityRepository.GetAllFinancialActivityCodes()),
+                FinancialCodeTypes.WorkActivity => _mapper.Map<FinancialCodeModel[]>(_workActivityRepository.GetAllWorkActivityCodes()),
+                FinancialCodeTypes.Responsibility => _mapper.Map<FinancialCodeModel[]>(_responsibilityRepository.GetAllResponsibilityCodes()),
+                _ => throw new BadRequestException("Financial code type must be a known type"),
+            };
+        }
+
         public FinancialCodeModel GetById(FinancialCodeTypes type, long codeId)
         {
             _logger.LogInformation("Retrieving financial code with type {type} and Id {codeId}", type, codeId);
