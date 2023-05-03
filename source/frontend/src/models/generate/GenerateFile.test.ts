@@ -2,8 +2,8 @@ import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 
 import { Api_GenerateFile } from './GenerateFile';
 
-describe('GenerateOwner tests', () => {
-  it('Can Generate an empty owner without throwing an error', () => {
+describe('GenerateFile tests', () => {
+  it('Can Generate an empty file without throwing an error', () => {
     const file = new Api_GenerateFile(null);
     expect(file.file_name).toBe('');
     expect(file.file_number).toBe('');
