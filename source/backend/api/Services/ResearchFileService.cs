@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -23,6 +24,7 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
         public ResearchFileService(
             ClaimsPrincipal user,
@@ -31,7 +33,8 @@ namespace Pims.Api.Services
             IResearchFilePropertyRepository researchFilePropertyRepository,
             IPropertyRepository propertyRepository,
             ICoordinateTransformService coordinateService,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            IEntityNoteRepository entityNoteRepository)
         {
             _user = user;
             _logger = logger;
@@ -40,6 +43,7 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public PimsResearchFile GetById(long id)
@@ -86,6 +90,8 @@ namespace Pims.Api.Services
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
             var newResearchFile = _researchFileRepository.Update(researchFile);
+            AddNoteIfStatusChanged(newResearchFile);
+
             _researchFileRepository.CommitTransaction();
             return newResearchFile;
         }
@@ -248,24 +254,6 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ReprojectPropertyLocationsToWgs84(PimsResearchFile researchFile)
-        {
-            if (researchFile == null)
-            {
-                return;
-            }
-
-            foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
-            {
-                if (researchProperty.Property.Location != null)
-                {
-                    var oldCoords = researchProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
-            }
-        }
-
         private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyResearchFile> propertyResearchFiles)
         {
             foreach (var researchProperty in propertyResearchFiles)
@@ -277,6 +265,35 @@ namespace Pims.Api.Services
                     researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
+        }
+
+        private void AddNoteIfStatusChanged(PimsResearchFile updateResearchFile)
+        {
+            var currentResearchFile = _researchFileRepository.GetById(updateResearchFile.Internal_Id);
+            bool statusChanged = currentResearchFile.ResearchFileStatusTypeCode != updateResearchFile.ResearchFileStatusTypeCode;
+            if (!statusChanged)
+            {
+                return;
+            }
+
+            var newStatus = _lookupRepository.GetAllResearchFileStatusTypes()
+                .FirstOrDefault(x => x.ResearchFileStatusTypeCode == updateResearchFile.ResearchFileStatusTypeCode);
+
+            PimsResearchFileNote fileNoteInstance = new()
+            {
+                ResearchFileId = updateResearchFile.Internal_Id,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Research File status changed from {currentResearchFile.ResearchFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
         }
     }
 }

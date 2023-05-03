@@ -9,7 +9,7 @@ using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Helpers.Extensions;
+using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;

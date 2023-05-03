@@ -1,4 +1,5 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { UserTypes } from 'constants/index';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_User } from 'models/api/User';
 import * as React from 'react';
@@ -12,9 +13,7 @@ export interface IEditUserContainerProps {
   userId?: string;
 }
 
-const EditUserContainer: React.FunctionComponent<
-  React.PropsWithChildren<IEditUserContainerProps>
-> = ({ userId }) => {
+const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ userId }) => {
   const history = useHistory();
   const [user, setUser] = React.useState<Api_User>();
   const isMounted = useIsMounted();
@@ -50,7 +49,7 @@ const EditUserContainer: React.FunctionComponent<
     regions: [],
     note: '',
     position: '',
-    userTypeCode: '',
+    userTypeCode: { id: UserTypes.Contractor },
     lastLogin: '',
     toApi: () => ({} as Api_User),
   };

@@ -6,8 +6,8 @@ import { Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
 import * as API from 'constants/API';
 import { Form, Formik, FormikProps } from 'formik';
-import { useProperties } from 'hooks';
 import { useApiProperties } from 'hooks/pims-api';
+import { useProperties } from 'hooks/repositories/useProperties';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useRouterFilter } from 'hooks/useRouterFilter';
@@ -82,7 +82,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
     [setPageIndex],
   );
 
-  const { getPropertiesPaged } = useApiProperties();
+  const { getPropertiesPagedApi } = useApiProperties();
 
   const fetchData = useCallback(
     async ({
@@ -106,7 +106,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
         filter,
       );
-      const { data } = await getPropertiesPaged(queryParams);
+      const { data } = await getPropertiesPagedApi(queryParams);
 
       setTotalItems(data.total);
 
@@ -117,7 +117,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         setPageCount(Math.ceil(data.total / pageSize));
       }
     },
-    [setData, setPageCount, getPropertiesPaged],
+    [setData, setPageCount, getPropertiesPagedApi],
   );
 
   // Listen for changes in pagination and use the state to fetch our new data

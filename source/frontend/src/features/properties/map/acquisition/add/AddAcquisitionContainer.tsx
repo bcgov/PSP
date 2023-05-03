@@ -67,7 +67,11 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     formikRef.current?.resetForm({ values: AcquisitionForm.fromApi(acqFile) });
   };
 
-  const helper = useAddAcquisitionFormManagement({ onSuccess, initialForm });
+  const helper = useAddAcquisitionFormManagement({
+    onSuccess,
+    initialForm,
+    selectedFeature: selectedFileFeature,
+  });
 
   return (
     <MapSideBarLayout

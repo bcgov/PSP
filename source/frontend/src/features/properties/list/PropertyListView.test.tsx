@@ -16,9 +16,9 @@ import PropertyListView from './PropertyListView';
 jest.mock('@react-keycloak/web');
 jest.mock('hooks/pims-api');
 
-const mockApiGetPropertiesPaged = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
+const mockApiGetPropertiesPagedApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
 (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-  getPropertiesPaged: mockApiGetPropertiesPaged,
+  getPropertiesPagedApi: mockApiGetPropertiesPagedApi,
 });
 
 const mockAxios = new MockAdapter(axios);
@@ -51,7 +51,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
 const setupMockApi = (properties?: IProperty[]) => {
   const mockProperties = properties ?? [];
   const len = mockProperties.length;
-  mockApiGetPropertiesPaged.mockResolvedValue({
+  mockApiGetPropertiesPagedApi.mockResolvedValue({
     data: {
       quantity: len,
       total: len,
@@ -68,7 +68,7 @@ describe('Property list view', () => {
     mockAxios.reset();
     mockAxios.onAny().reply(200, {});
 
-    mockApiGetPropertiesPaged.mockClear();
+    mockApiGetPropertiesPagedApi.mockClear();
   });
   afterEach(() => {
     history.push({ search: '' });

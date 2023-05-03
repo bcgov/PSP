@@ -1,4 +1,5 @@
 import EditButton from 'components/common/EditButton';
+import { StyledAddButton } from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
@@ -7,6 +8,8 @@ import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tab
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Agreement } from 'models/api/Agreement';
 import * as React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { FaMailBulk } from 'react-icons/fa';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
@@ -16,12 +19,14 @@ export interface IAgreementViewProps {
   loading: boolean;
   agreements: Api_Agreement[];
   onEdit: () => void;
+  onGenerate: (agreement: Api_Agreement) => void;
 }
 
 export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   loading,
   agreements,
   onEdit,
+  onGenerate,
 }) => {
   const keycloak = useKeycloakWrapper();
 
@@ -33,17 +38,38 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <EditButton title="Edit agreements file" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>
-      {agreements.length === 0 && <StyledNoData>No agreements on record</StyledNoData>}
+      {agreements.length === 0 && (
+        <StyledNoData>
+          <p>There are no agreements associated with this file.</p>
+          <p> To begin an agreement, click the edit button.</p>
+        </StyledNoData>
+      )}
       {agreements.map((agreement, index) => (
         <Section
           key={`agreement-section-${index}`}
-          header={`Agreement ${index + 1}`}
+          header={
+            <Row>
+              <Col md={6}>{`Agreement ${index + 1}`}</Col>
+              <Col md={6}>
+                {agreement.agreementType !== null && (
+                  <StyledAddButton
+                    onClick={() => {
+                      onGenerate(agreement);
+                    }}
+                  >
+                    <FaMailBulk className="mr-2" />
+                    Generate document
+                  </StyledAddButton>
+                )}
+              </Col>
+            </Row>
+          }
           isCollapsable
           initiallyExpanded
         >
           <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
           <SectionField labelWidth="5" label="Agreement status">
-            {agreement.isDraft === true ? 'Yes' : 'No'}
+            {agreement.isDraft === true ? 'Draft' : 'Final'}
           </SectionField>
           <SectionField labelWidth="5" label="Legal survey plan">
             {agreement.legalSurveyPlanNum}
@@ -89,6 +115,10 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
 export default AgreementView;
 
 export const StyledNoData = styled.div`
-  text-align: center;
   font-style: italic;
+  margin: 1.5rem;
+  padding: 1rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 `;

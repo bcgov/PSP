@@ -2,6 +2,7 @@ import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { Formik, FormikProps } from 'formik';
+import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useMemo } from 'react';
@@ -29,6 +30,7 @@ export const AddResearchContainer: React.FunctionComponent<
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const { selectedFileFeature } = React.useContext(MapStateContext);
+
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
     if (!!selectedFileFeature) {
@@ -40,15 +42,17 @@ export const AddResearchContainer: React.FunctionComponent<
   }, [selectedFileFeature]);
   const { addResearchFile } = useAddResearch();
   const { search } = useMapSearch();
+  const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFileFeature);
+  if (initialForm?.properties.length && initialProperty) {
+    initialForm.properties[0].address = initialProperty.address;
+  }
 
   useEffect(() => {
-    if (!!selectedFileFeature && !!formikRef.current) {
+    if (!!initialForm && !!formikRef.current) {
       formikRef.current.resetForm();
-      formikRef.current?.setFieldValue('properties', [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
-      ]);
+      formikRef.current?.setFieldValue('properties', initialForm.properties);
     }
-  }, [initialForm, selectedFileFeature]);
+  }, [initialForm]);
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
@@ -82,7 +86,7 @@ export const AddResearchContainer: React.FunctionComponent<
       icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
       footer={
         <SidebarFooter
-          isOkDisabled={formikRef.current?.isSubmitting}
+          isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}
           onSave={handleSave}
           onCancel={handleCancel}
         />

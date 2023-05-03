@@ -30,8 +30,8 @@ describe('useApiProperties api hook', () => {
       total: 10,
     } as IPagedItems);
 
-    const { getPropertiesPaged } = setup();
-    const response = await getPropertiesPaged({} as any);
+    const { getPropertiesPagedApi } = setup();
+    const response = await getPropertiesPagedApi({} as any);
 
     expect(response.status).toBe(200);
     expect(response.data).toStrictEqual({
@@ -46,8 +46,8 @@ describe('useApiProperties api hook', () => {
   it('Gets detailed parcels', async () => {
     mockAxios.onGet(`/properties/search?`).reply(200, mockParcel);
 
-    const { getPropertiesPaged } = setup();
-    const response = await getPropertiesPaged({} as any);
+    const { getPropertiesPagedApi } = setup();
+    const response = await getPropertiesPagedApi({} as any);
 
     expect(response.status).toBe(200);
     expect(response.data).toEqual(mockParcel);
@@ -55,8 +55,8 @@ describe('useApiProperties api hook', () => {
   it('Gets a detailed parcel', async () => {
     mockAxios.onGet(`/properties/${mockParcel.id}`).reply(200, mockParcel);
 
-    const { getPropertyConceptWithId } = setup();
-    const response = await getPropertyConceptWithId(mockParcel.id as number);
+    const { getPropertyConceptWithIdApi } = setup();
+    const response = await getPropertyConceptWithIdApi(mockParcel.id as number);
 
     expect(response.status).toBe(200);
     expect(response.data).toEqual(mockParcel);

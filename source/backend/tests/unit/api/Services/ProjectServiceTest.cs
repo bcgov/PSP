@@ -91,13 +91,15 @@ namespace Pims.Api.Test.Services
             var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
             var repository = _helper.GetService<Mock<IProjectRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             // Act
             Action result = () => service.GetPage(null);
 
             // Assert
             result.Should().Throw<ArgumentException>();
-            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Never);
+            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()), Times.Never);
         }
 
         [Fact]
@@ -107,13 +109,15 @@ namespace Pims.Api.Test.Services
             var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
             var repository = _helper.GetService<Mock<IProjectRepository>>();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             // Act
             Action result = () => service.GetPage(new ProjectFilter { Page = 0 });
 
             // Assert
             result.Should().Throw<ArgumentException>();
-            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Never);
+            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()), Times.Never);
         }
 
         [Fact]
@@ -123,11 +127,13 @@ namespace Pims.Api.Test.Services
             var service = CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
             var repository = _helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.GetPageAsync(It.IsAny<ProjectFilter>()))
+            repository.Setup(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()))
                 .ReturnsAsync(new Paged<PimsProject>()
                 {
                     Page = 1,
                 });
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
 
             // Act
@@ -135,7 +141,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>()), Times.Once);
+            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()), Times.Once);
         }
 
         [Fact]
@@ -207,7 +213,7 @@ namespace Pims.Api.Test.Services
 
             var productRepository = helper.GetService<Mock<IProductRepository>>();
             productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>(), It.IsAny<long>())).Returns(new List<PimsProduct>() { duplicateCode });
-            
+
             // Act
             Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
 

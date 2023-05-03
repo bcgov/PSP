@@ -20,3 +20,10 @@ export interface Api_Agreement extends Api_ConcurrentVersion, Api_AuditFields {
   signedDate: string | null;
   inspectionDate: string | null;
 }
+
+export enum AgreementTypes {
+  H0074 = 'H0074',
+  H179A = 'H179A',
+  H179P = 'H179P',
+  H179T = 'H179T',
+}

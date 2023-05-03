@@ -1,4 +1,6 @@
-export const getMockAccessRequest = () => ({
+import { Api_AccessRequest } from 'models/api/AccessRequest';
+
+export const getMockAccessRequest = (): Api_AccessRequest => ({
   id: 8,
   regionCode: {
     id: 1,
@@ -12,7 +14,7 @@ export const getMockAccessRequest = () => ({
     businessIdentifierValue: 'desmith@idir',
     approvedById: 0,
     position: 'pos',
-    userTypeCode: 'CONTRACT',
+    userTypeCode: { id: 'CONTRACT' },
     note: '',
     isDisabled: false,
     lastLogin: '2022-06-14T16:49:27.127',

@@ -1073,12 +1073,36 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       </div>
                     </div>
                     <div
-                      class="c19"
+                      class="c14 form-section"
                     >
+                      <h2
+                        class="c15"
+                      >
+                        <div
+                          class="no-gutters row"
+                        >
+                          <div
+                            class="col"
+                          >
+                            Owner Information
+                          </div>
+                          <div
+                            class="col-1"
+                          />
+                        </div>
+                      </h2>
                       <div
-                        class="spinner-border text-warning"
-                        data-testid="filter-backdrop-loading"
-                      />
+                        class="collapse show"
+                      >
+                        <div
+                          class="c19"
+                        >
+                          <div
+                            class="spinner-border text-warning"
+                            data-testid="filter-backdrop-loading"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

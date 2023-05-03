@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Pims.Api.Constants;
 
 namespace Pims.Api.Models.DocumentGeneration
 {
@@ -15,6 +16,6 @@ namespace Pims.Api.Models.DocumentGeneration
         /// <summary>
         /// get/set - The template type to use for generation.
         /// </summary>
-        public string TemplateType { get; set; }
+        public FormDocumentType TemplateType { get; set; }
     }
 }

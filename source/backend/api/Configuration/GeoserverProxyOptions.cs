@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Pims.Core.Exceptions;
 
 namespace Pims.Core.Http.Configuration
 {

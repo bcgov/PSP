@@ -214,7 +214,7 @@ exports[`DocumentDetailView component renders as expected 1`] = `
         <div
           class="c2 text-left col"
         >
-          BC Assessment Search
+          Survey
         </div>
       </div>
       <div
