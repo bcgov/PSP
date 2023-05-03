@@ -20,7 +20,7 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
 
   const typeOptions: SelectOption[] = props.documentTypes.map(dt => {
     return {
-      label: dt.documentType || '',
+      label: dt.documentTypeDescription || '',
       value: dt.id ? dt.id.toString() : '',
     };
   });

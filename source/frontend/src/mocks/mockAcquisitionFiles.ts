@@ -61,6 +61,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 1,
       isDisabled: false,
+      propertyId: 442,
       property: {
         id: 442,
         anomalies: [],
@@ -98,6 +99,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 2,
       isDisabled: false,
+      propertyId: 443,
       property: {
         id: 443,
         anomalies: [],
@@ -257,8 +259,8 @@ export const mockAcquisitionFileOwnersResponse = (
     rowVersion: 3,
     isPrimaryContact: true,
     isOrganization: false,
-    lastNameAndCorpName: 'JOHH',
-    givenName: 'DOE',
+    lastNameAndCorpName: 'DOE',
+    givenName: 'JOHH',
     otherName: 'Sr.',
     incorporationNumber: null,
     registrationNumber: null,

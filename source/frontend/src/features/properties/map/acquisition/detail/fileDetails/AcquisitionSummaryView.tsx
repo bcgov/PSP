@@ -10,6 +10,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
+import { formatApiPersonNames } from 'utils/personUtils';
 
 import { DetailAcquisitionFile } from '../models';
 import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
@@ -99,12 +100,30 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           </SectionField>
         ))}
       </Section>
-      {acquisitionFile !== undefined && (
-        <AcquisitionOwnersSummaryContainer
-          acquisitionFileId={acquisitionFile.id!}
-          View={AcquisitionOwnersSummaryView}
-        ></AcquisitionOwnersSummaryContainer>
-      )}
+      <Section header="Owner Information">
+        {acquisitionFile !== undefined && (
+          <AcquisitionOwnersSummaryContainer
+            acquisitionFileId={acquisitionFile.id!}
+            View={AcquisitionOwnersSummaryView}
+          ></AcquisitionOwnersSummaryContainer>
+        )}
+        {!!acquisitionFile?.acquisitionFileOwnerSolicitors?.length && (
+          <SectionField label="Owner Solicitor">
+            <StyledLink
+              target="_blank"
+              rel="noopener noreferrer"
+              to={`/contact/P${acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.personId}`}
+            >
+              <span>
+                {formatApiPersonNames(
+                  acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.person ?? undefined,
+                )}
+              </span>
+              <FaExternalLinkAlt className="ml-2" size="1rem" />
+            </StyledLink>
+          </SectionField>
+        )}
+      </Section>
     </StyledSummarySection>
   );
 };

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Pims.Api.Constants;
 using Pims.Api.Models;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.Download;
@@ -16,6 +17,6 @@ namespace Pims.Api.Services
 
         Task<ExternalResult<string>> UploadFileTemplate(IFormFile fileRaw);
 
-        Task<ExternalResult<FileDownload>> GenerateDocument(string templateType, JsonElement templateData);
+        Task<ExternalResult<FileDownload>> GenerateDocument(FormDocumentType templateType, JsonElement templateData);
     }
 }

@@ -32,6 +32,11 @@ namespace Pims.Api.Models.Concepts
         public PropertyModel Property { get; set; }
 
         /// <summary>
+        /// get/set - The relationship's property id.
+        /// </summary>
+        public long PropertyId { get; set; }
+
+        /// <summary>
         /// get/set - The relationship's acquisition file.
         /// </summary>
         public FileModel File { get; set; }

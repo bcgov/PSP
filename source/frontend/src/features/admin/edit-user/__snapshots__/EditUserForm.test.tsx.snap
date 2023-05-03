@@ -6,7 +6,7 @@ exports[`EditUserForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c4.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`EditUserForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c4.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c4.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c4.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c4.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c4.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c4.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`EditUserForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`EditUserForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,21 +128,79 @@ exports[`EditUserForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c4.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c2 {
+.c4 {
   margin-left: 0.5rem;
   cursor: pointer;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c2.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c2.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c2.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c2.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c2.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c2 .form-label {
+  margin-bottom: unset;
 }
 
 .c1.required::before {
@@ -156,7 +214,7 @@ exports[`EditUserForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c3 {
+.c5 {
   position: absolute;
   top: 1rem;
   right: -0.5rem;
@@ -330,6 +388,76 @@ exports[`EditUserForm component renders as expected 1`] = `
         <label
           class="c0"
         >
+          Internal staff / Contractor:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
+      >
+        <div
+          class="c2 form-group"
+        >
+          <div
+            class="radio-group"
+          >
+            <div
+              class="c3"
+            >
+              <div
+                class="form-check"
+              >
+                <input
+                  class="form-check-input position-static"
+                  data-testid="radio-usertypecode.id-ministry staff"
+                  id="input-MINSTAFF"
+                  name="userTypeCode.id"
+                  type="radio"
+                  value="MINSTAFF"
+                />
+              </div>
+              <label
+                class="form-check-label form-label"
+                for="userTypeCode.id"
+              >
+                Ministry staff
+              </label>
+            </div>
+            <div
+              class="c3"
+            >
+              <div
+                class="form-check"
+              >
+                <input
+                  checked=""
+                  class="form-check-input position-static"
+                  data-testid="radio-usertypecode.id-contractor"
+                  id="input-CONTRACT"
+                  name="userTypeCode.id"
+                  type="radio"
+                  value="CONTRACT"
+                />
+              </div>
+              <label
+                class="form-check-label form-label"
+                for="userTypeCode.id"
+              >
+                Contractor
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="pb-2 row"
+    >
+      <div
+        class="pr-0 text-left col-2"
+      >
+        <label
+          class="c0"
+        >
           Role(s):
         </label>
       </div>
@@ -358,7 +486,7 @@ exports[`EditUserForm component renders as expected 1`] = `
                     class="custom-close"
                   >
                     <svg
-                      class="c2"
+                      class="c4"
                       fill="currentColor"
                       height="16"
                       stroke="currentColor"
@@ -382,7 +510,7 @@ exports[`EditUserForm component renders as expected 1`] = `
                     class="custom-close"
                   >
                     <svg
-                      class="c2"
+                      class="c4"
                       fill="currentColor"
                       height="16"
                       stroke="currentColor"
@@ -434,7 +562,7 @@ exports[`EditUserForm component renders as expected 1`] = `
           </div>
         </div>
         <svg
-          class="c3 tooltip-icon"
+          class="c5 tooltip-icon"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -486,7 +614,7 @@ exports[`EditUserForm component renders as expected 1`] = `
                     class="custom-close"
                   >
                     <svg
-                      class="c2"
+                      class="c4"
                       fill="currentColor"
                       height="16"
                       stroke="currentColor"
@@ -609,7 +737,7 @@ exports[`EditUserForm component renders as expected 1`] = `
         role="toolbar"
       >
         <button
-          class="c4 Button mr-5 btn btn-secondary"
+          class="c6 Button mr-5 btn btn-secondary"
           type="button"
         >
           <div
@@ -619,7 +747,7 @@ exports[`EditUserForm component renders as expected 1`] = `
           </div>
         </button>
         <button
-          class="c4 Button mr-5 btn btn-primary"
+          class="c6 Button mr-5 btn btn-primary"
           type="submit"
         >
           <div

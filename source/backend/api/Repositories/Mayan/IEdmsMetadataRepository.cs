@@ -12,6 +12,8 @@ namespace Pims.Api.Repositories.Mayan
     {
         Task<ExternalResult<MetadataType>> TryCreateMetadataTypeAsync(MetadataType metadataType);
 
+        Task<ExternalResult<MetadataType>> TryUpdateMetadataTypeAsync(MetadataType metadataType);
+
         Task<ExternalResult<string>> TryDeleteMetadataTypeAsync(long metadataTypeId);
 
         Task<ExternalResult<QueryResult<MetadataType>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null);

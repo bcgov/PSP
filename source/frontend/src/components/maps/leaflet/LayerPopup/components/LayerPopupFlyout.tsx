@@ -40,9 +40,7 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
       )}
       {keycloak.hasClaim(Claims.LEASE_ADD) && (
         <ListGroup.Item>
-          <LinkButton disabled={!pimsPropertyId} onClick={onCreateLeaseLicense ?? noop}>
-            Lease/License - Create new
-          </LinkButton>
+          <LinkButton onClick={onCreateLeaseLicense ?? noop}>Lease/License - Create new</LinkButton>
         </ListGroup.Item>
       )}
     </ListGroup>

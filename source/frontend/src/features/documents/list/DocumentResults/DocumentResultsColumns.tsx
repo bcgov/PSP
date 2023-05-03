@@ -56,7 +56,7 @@ export const getDocumentColumns = ({
 };
 
 function renderDocumentType({ value }: CellProps<DocumentRow, Api_DocumentType | undefined>) {
-  return stringToFragment(value?.documentType ?? '');
+  return stringToFragment(value?.documentTypeDescription ?? '');
 }
 
 const renderFileName = (onViewDetails: (values: Api_DocumentRelationship) => void) => {
