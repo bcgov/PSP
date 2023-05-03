@@ -1,89 +1,45 @@
-import clsx from 'classnames';
-import * as Styled from 'components/common/styles';
+import EditButton from 'components/common/EditButton';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import Claims from 'constants/claims';
+import { Section } from 'features/mapSideBar/tabs/Section';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Compensation } from 'models/api/Compensation';
-import { useState } from 'react';
-import { MdClose } from 'react-icons/md';
-import ReactVisibilitySensor from 'react-visibility-sensor';
-import styled from 'styled-components';
 
 export interface CompensationRequisitionDetailViewProps {
-  compensation?: Api_Compensation;
+  compensation: Api_Compensation;
   clientConstant: string;
   gstConstant: number | undefined;
-  onClose: () => void;
   loading: boolean;
-  error: boolean;
-  editMode: boolean;
   setEditMode: (editMode: boolean) => void;
 }
 
 export const CompensationRequisitionDetailView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailViewProps>
-> = ({ compensation, onClose, loading, error }) => {
-  const [show, setShow] = useState(true);
-
-  let trayContent = (
-    <HalfHeightDiv>
-      {!!compensation?.id && (
-        <b>{compensation.id}</b>
-        // <ActivityForm
-        //   activity={{ ...activity, id: +activity.id }}
-        //   file={file}
-        //   isEditable={
-        //     !(
-        //       activity.activityStatusTypeCode?.id === 'CANCELLED' ||
-        //       activity.activityStatusTypeCode?.id === 'COMPLETE'
-        //     )
-        //   }
-        //   editMode={editMode}
-        //   setEditMode={setEditMode}
-        //   onSave={onSave}
-        //   onEditRelatedProperties={onEditRelatedProperties}
-        //   formContent={currentFormContent}
-        // />
-      )}
-    </HalfHeightDiv>
-  );
-
-  if (error) {
-    trayContent = (
-      <b>
-        Failed to load Compensation requisition. Refresh the page or load another compensation
-        requisition.
-      </b>
-    );
-  } else if (loading) {
-    trayContent = <LoadingBackdrop parentScreen show={loading} />;
-  }
+> = ({ compensation, loading, setEditMode }) => {
+  const { hasClaim } = useKeycloakWrapper();
 
   return (
-    <ReactVisibilitySensor
-      onChange={(isVisible: boolean) => {
-        !isVisible && setShow(true);
-      }}
-    >
-      <Styled.PopupTray className={clsx({ show: show })}>
-        <Styled.TrayHeader>
-          Compensation Requisition (H120)
-          <Styled.CloseButton
-            id="close-tray"
-            icon={<MdClose size={20} />}
-            title="close"
+    <StyledSummarySection>
+      <LoadingBackdrop show={loading} parentScreen={true} />
+      <StyledEditWrapper>
+        {setEditMode !== undefined && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) && (
+          <EditButton
+            title="Edit compensation requisition"
             onClick={() => {
-              setShow(false);
-              onClose();
+              setEditMode(true);
             }}
-          ></Styled.CloseButton>
-        </Styled.TrayHeader>
-        <Styled.ActivityTrayPage>{trayContent}</Styled.ActivityTrayPage>
-      </Styled.PopupTray>
-    </ReactVisibilitySensor>
+          />
+        )}
+      </StyledEditWrapper>
+      <Section header="Requisition Details">
+        <SectionField label="Status" labelWidth={'4'}>
+          {compensation.isDraft ? 'Draft' : 'Final'}
+        </SectionField>
+      </Section>
+    </StyledSummarySection>
   );
 };
 
-const HalfHeightDiv = styled.div`
-  flex-direction: column;
-  display: flex;
-  height: 50%;
-`;
+export default CompensationRequisitionDetailView;

@@ -1,8 +1,9 @@
 import { AxiosResponse } from 'axios';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import {
-  deleteRequisitionCompensationApi,
-  getRequisitionCompensationApi,
+  deleteCompensationRequisitionApi,
+  getCompensationRequisitionApi,
+  putCompensationRequisitionApi,
 } from 'hooks/pims-api/useApiRequisitionCompensations';
 import { Api_Compensation } from 'models/api/Compensation';
 import { useCallback, useMemo } from 'react';
@@ -16,7 +17,7 @@ export const useCompensationRequisitionRepository = () => {
     (compensationId: number) => Promise<AxiosResponse<Api_Compensation, any>>
   >({
     requestFunction: useCallback(
-      async (compensationId: number) => await getRequisitionCompensationApi(compensationId),
+      async (compensationId: number) => await getCompensationRequisitionApi(compensationId),
       [],
     ),
     requestName: 'getCompensation',
@@ -24,11 +25,23 @@ export const useCompensationRequisitionRepository = () => {
     onError: useAxiosErrorHandler('Failed to load Compensation requisition.'),
   });
 
+  const updateCompensationRequisition = useApiRequestWrapper<
+    (compensation: Api_Compensation) => Promise<AxiosResponse<Api_Compensation, any>>
+  >({
+    requestFunction: useCallback(
+      async (compensation: Api_Compensation) => await putCompensationRequisitionApi(compensation),
+      [],
+    ),
+    requestName: 'updateCompensation',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to update Compensation requisition.'),
+  });
+
   const deleteCompensation = useApiRequestWrapper<
     (compensationId: number) => Promise<AxiosResponse<boolean, any>>
   >({
     requestFunction: useCallback(
-      async (compensationId: number) => await deleteRequisitionCompensationApi(compensationId),
+      async (compensationId: number) => await deleteCompensationRequisitionApi(compensationId),
       [],
     ),
     requestName: 'deleteCompensation',
@@ -41,8 +54,9 @@ export const useCompensationRequisitionRepository = () => {
   return useMemo(
     () => ({
       deleteCompensation: deleteCompensation,
+      updateCompensationRequisition: updateCompensationRequisition,
       getCompensationRequisition: getCompensationRequisition,
     }),
-    [deleteCompensation, getCompensationRequisition],
+    [deleteCompensation, getCompensationRequisition, updateCompensationRequisition],
   );
 };

@@ -55,9 +55,9 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
                 DateTime.Now);
             _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
 
-            var compenstionRequisition = _compensationRequisitionService.GetById(id);
+            var compensationRequisition = _compensationRequisitionService.GetById(id);
 
-            return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compenstionRequisition));
+            return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compensationRequisition));
         }
 
         [HttpPut("{id:long}")]
@@ -76,9 +76,9 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
 
             var compensationReqEntity = _mapper.Map<Dal.Entities.PimsCompensationRequisition>(compensationRequisition);
-            var compenstionRequisition = _compensationRequisitionService.Update(id, compensationReqEntity);
+            var compensation = _compensationRequisitionService.Update(id, compensationReqEntity);
 
-            return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compenstionRequisition));
+            return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compensation));
         }
 
         /// <summary>

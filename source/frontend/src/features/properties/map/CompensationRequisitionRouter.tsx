@@ -3,8 +3,8 @@ import React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router';
 import AppRoute from 'utils/AppRoute';
 
-import { CompensationRequisitionDetailContainer } from './compensation/detail/CompensationRequisitionDetailContainer';
-import { CompensationRequisitionDetailView } from './compensation/detail/CompensationRequisitionDetailView';
+import { CompensationRequisitionTrayContainer } from './compensation/CompensationRequisitionTrayContainer';
+import { CompensationRequisitionTrayView } from './compensation/CompensationRequisitionTrayView';
 
 interface ICompensationRequisitionRouterProps {
   setShowActionBar: (show: boolean) => void;
@@ -41,11 +41,11 @@ export const CompensationRequisitionRouter: React.FunctionComponent<
       <AppRoute
         path={`/mapview/sidebar/acquisition/*/compensation-requisition/:id`}
         customRender={({ match }) => (
-          <CompensationRequisitionDetailContainer
+          <CompensationRequisitionTrayContainer
             compensationRequisitionId={Number(match.params.id)}
             onClose={onClose}
-            View={CompensationRequisitionDetailView}
-          ></CompensationRequisitionDetailContainer>
+            View={CompensationRequisitionTrayView}
+          ></CompensationRequisitionTrayContainer>
         )}
         claim={Claims.COMPENSATION_REQUISITION_VIEW}
         exact
