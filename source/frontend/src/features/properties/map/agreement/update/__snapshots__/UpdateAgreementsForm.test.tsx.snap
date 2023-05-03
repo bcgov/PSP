@@ -1079,7 +1079,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                     name="agreements.1.purchasePrice"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$2,000.00"
                   />
                 </div>
               </div>
@@ -1141,7 +1141,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                     name="agreements.1.depositAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$1,000.00"
                   />
                 </div>
               </div>
