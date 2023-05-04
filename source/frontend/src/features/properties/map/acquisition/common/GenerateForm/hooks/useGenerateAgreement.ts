@@ -88,6 +88,8 @@ const getTemplateTypeFromAgreementType = (agreementType: string) => {
       return FormTemplateTypes.H179P;
     case AgreementTypes.H179T:
       return FormTemplateTypes.H179T;
+    case AgreementTypes.H0074:
+      return FormTemplateTypes.H0074;
     default:
       throw Error(`Unable to find form type for agreement type: ${agreementType}`);
   }
