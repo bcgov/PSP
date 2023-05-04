@@ -720,7 +720,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                                   </svg>
                                   <ol>
                                     <li>
-                                      Single-click pin above
+                                      Single-click blue marker above
                                     </li>
                                     <li>
                                       Mouse to a parcel on the map

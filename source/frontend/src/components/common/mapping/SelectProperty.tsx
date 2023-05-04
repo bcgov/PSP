@@ -18,7 +18,7 @@ export const SelectProperty: React.FunctionComponent<
         title="Click once to enter property selection mode."
       />
       <ol>
-        <li>Single-click pin above</li>
+        <li>Single-click blue marker above</li>
         <li>Mouse to a parcel on the map</li>
         <li>Single-click on parcel to select it</li>
       </ol>

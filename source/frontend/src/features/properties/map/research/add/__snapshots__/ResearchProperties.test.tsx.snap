@@ -459,7 +459,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                           </svg>
                           <ol>
                             <li>
-                              Single-click pin above
+                              Single-click blue marker above
                             </li>
                             <li>
                               Mouse to a parcel on the map
