@@ -20,7 +20,7 @@ export class Api_GenerateFile {
   neg_agent?: GeneratePerson;
 
   constructor(
-    file: Api_AcquisitionFile,
+    file: Api_AcquisitionFile | null,
     coordinatorContact: Api_Person | null | undefined = null,
     negotiatingAgent: Api_Person | null | undefined = null,
     provincialSolicitor: Api_Person | null | undefined = null,
@@ -35,7 +35,7 @@ export class Api_GenerateFile {
     this.project_name = file?.project?.description ?? '';
     this.project_number = file?.project?.code ?? '';
     this.primary_owner = new GenerateOwner(
-      file.acquisitionFileOwners?.find(owner => owner.isPrimaryContact) ?? null,
+      file?.acquisitionFileOwners?.find(owner => owner.isPrimaryContact) ?? null,
     );
     this.prov_solicitor = new GeneratePerson(provincialSolicitor);
     this.owner_solicitor = new GeneratePerson(ownerSolicitor);

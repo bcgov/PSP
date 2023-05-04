@@ -11,6 +11,7 @@ export class GenerateOwner {
   is_corporation: boolean;
   owner_string: string;
   email: string;
+  phone: string;
   is_primary_contact: boolean;
 
   constructor(owner: Api_AcquisitionFileOwner | null) {
@@ -22,6 +23,7 @@ export class GenerateOwner {
     this.address = new GenerateAddress(owner?.address ?? null);
     this.is_corporation = owner?.isOrganization ?? false;
     this.email = owner?.contactEmailAddr ?? '';
+    this.phone = owner?.contactPhoneNum ?? '';
     this.is_primary_contact = this.is_primary_contact = owner?.isPrimaryContact ?? false;
     this.owner_string = this.is_corporation
       ? `${this.last_name_or_corp_name}, Inc. No. ${this.incorporation_number} (OR Reg. No. ${this.registration_number})`
