@@ -16,6 +16,9 @@ export interface IAddProjectFormProps {
   /** Initial values of the form */
   initialValues: ProjectForm;
   projectStatusOptions: SelectOption[];
+  businessFunctionOptions: SelectOption[];
+  costTypeOptions: SelectOption[];
+  workActivityOptions: SelectOption[];
   /** A Yup Schema or a function that returns a Yup schema */
   validationSchema?: any | (() => any);
   /** Submission handler */
@@ -24,7 +27,15 @@ export interface IAddProjectFormProps {
 
 const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
   (props, formikRef) => {
-    const { initialValues, projectStatusOptions, validationSchema, onSubmit } = props;
+    const {
+      initialValues,
+      projectStatusOptions,
+      businessFunctionOptions,
+      costTypeOptions,
+      workActivityOptions,
+      validationSchema,
+      onSubmit,
+    } = props;
 
     const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
       await onSubmit(values, formikHelpers);
@@ -42,7 +53,7 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
         {formikProps => (
           <StyledFormWrapper>
             <Form>
-              <Section>
+              <Section header="Project Details">
                 {props.isCreating === true && (
                   <StyledRow className="no-gutters py-4 mb-5">
                     <Col>
@@ -71,6 +82,25 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
                 </SectionField>
                 <SectionField label="Project summary" labelWidth="12">
                   <MediumTextArea field="summary" />
+                </SectionField>
+              </Section>
+              <Section header="Associated Codes">
+                <SectionField label="Cost type" labelWidth="2">
+                  <Select field="costTypeCode" options={costTypeOptions} placeholder="Select..." />
+                </SectionField>
+                <SectionField label="Work activity" labelWidth="2">
+                  <Select
+                    field="workActivityCode"
+                    options={workActivityOptions}
+                    placeholder="Select..."
+                  />
+                </SectionField>
+                <SectionField label="Business function" labelWidth="2">
+                  <Select
+                    field="businessFunctionCode"
+                    options={businessFunctionOptions}
+                    placeholder="Select..."
+                  />
                 </SectionField>
               </Section>
               <ProductsArrayForm formikProps={formikProps} field="products" />
