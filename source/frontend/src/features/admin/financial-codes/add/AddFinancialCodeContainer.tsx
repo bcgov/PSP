@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { H1 } from 'components/common/styles';
 import { FinancialCodeTypes } from 'constants/index';
+import { useFinancialCodeRepository } from 'hooks/repositories/useFinancialCodeRepository';
 import { IApiError } from 'interfaces/IApiError';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 import React, { useState } from 'react';
@@ -9,7 +10,6 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-import { useFinancialCodeRepository } from '../hooks/useFinancialCodeRepository';
 import { AddFinancialCodeYupSchema } from './AddFinancialCodeYupSchema';
 
 export interface IAddFinancialCodeFormProps {
