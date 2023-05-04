@@ -1,5 +1,4 @@
-DELETE FROM PIMS_ROLE_CLAIM;
-GO
+-- assign claims to all new roles.
 
 DECLARE @appUserGuid uniqueidentifier = NEWID();
 
@@ -150,58 +149,6 @@ SELECT @compensationDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'compensation
 
 INSERT INTO [dbo].[PIMS_ROLE_CLAIM] ([ROLE_ID], [CLAIM_ID], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_USER_DIRECTORY])
 VALUES
-    -- Administrator
-    (@sysadmn,    @adminUsers,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @adminProjects,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @adminProperties,     N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @systemAdministrator, N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @leaseView,           N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @leaseEdit,           N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @leaseAdd,            N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @leaseDelete,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @researchView,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @researchEdit,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @researchAdd,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @researchDelete,      N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @propertyView,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @propertyEdit,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @propertyAdd,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @propertyDelete,      N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @rolePimsR,           N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @contactView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @contactEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @contactDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @contactAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @acquisitionView,     N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @acquisitionEdit,     N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @acquisitionAdd,      N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @acquisitionDelete,   N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @noteView,            N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @noteEdit,            N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @noteAdd,             N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @noteDelete,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @documentView,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @documentEdit,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @documentAdd,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @documentDelete,      N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @documentAdmin,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @activityView,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @activityEdit,        N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @activityAdd,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @activityDelete,      N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @projectView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @projectEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @projectAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @projectDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @formView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @formEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @formAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @formDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @agreementView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @compensationView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @compensationEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @compensationAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    (@sysadmn,    @compensationDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Acquisition Functional
     (@acqfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@acqfunc, @propertyAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
@@ -282,7 +229,7 @@ VALUES
     (@prjfunc, @projectAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@prjfunc, @projectEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@prjfunc, @projectDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
-    -- Project Functional
+        -- Project Functional
     (@prjrdon, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Research Functional
     (@resfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
