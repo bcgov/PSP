@@ -8,10 +8,10 @@ import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
-import UpdateCompensationRequisitionForm from './CompensationRequisitionForm';
 import { CompensationRequisitionDetailContainer } from './detail/CompensationRequisitionDetailContainer';
 import CompensationRequisitionDetailView from './detail/CompensationRequisitionDetailView';
 import UpdateCompensationRequisitionContainer from './update/UpdateCompensationRequisitionContainer';
+import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequisitionForm';
 
 export interface CompensationRequisitionTrayViewProps {
   compensation?: Api_Compensation;
@@ -22,6 +22,7 @@ export interface CompensationRequisitionTrayViewProps {
   error: boolean;
   editMode: boolean;
   setEditMode: (editMode: boolean) => void;
+  onUpdate: () => void;
 }
 
 export const CompensationRequisitionTrayView: React.FunctionComponent<
@@ -35,6 +36,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   loading,
   error,
   onClose,
+  onUpdate,
 }) => {
   const [show, setShow] = useState(true);
 
@@ -61,9 +63,13 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
           compensation={compensation}
           formikRef={React.createRef()}
           onSuccess={() => {
-            setShow(false);
+            //setShow(false);
             setEditMode(false);
-            onClose();
+            onUpdate();
+            //onClose();
+          }}
+          onCancel={() => {
+            setEditMode(false);
           }}
           View={UpdateCompensationRequisitionForm}
         ></UpdateCompensationRequisitionContainer>

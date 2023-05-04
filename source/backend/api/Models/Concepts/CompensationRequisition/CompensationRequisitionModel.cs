@@ -15,9 +15,9 @@ namespace Pims.Api.Models.Concepts
 
         public DateTime? AgreementDate { get; set; }
 
-        public DateTime? ExpropiationNoticeServedDate { get; set; }
+        public DateTime? ExpropriationNoticeServedDate { get; set; }
 
-        public DateTime? ExpropiationVestingDate { get; set; }
+        public DateTime? ExpropriationVestingDate { get; set; }
 
         public DateTime? GenerationDate { get; set; }
 

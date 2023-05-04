@@ -10,6 +10,7 @@ export const getCompensationRequisitionApi = (compensationId: number) =>
 export const putCompensationRequisitionApi = (compensation: Api_Compensation) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_Compensation>(
     `/compensation-requisitions/${compensation.id}`,
+    compensation,
   );
 
 export const deleteCompensationRequisitionApi = (compensationId: number) =>

@@ -2,19 +2,20 @@ import { FormikProps } from 'formik';
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { Api_Compensation } from 'models/api/Compensation';
 
-import { CompensationRequisitionFormProps } from '../CompensationRequisitionForm';
 import { CompensationRequisitionFormModel } from '../models';
+import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
 export interface UpdateCompensationRequisitionContainerProps {
   compensation: Api_Compensation;
   formikRef: React.Ref<FormikProps<CompensationRequisitionFormModel>>;
   onSuccess: () => void;
+  onCancel: () => void;
   View: React.FC<CompensationRequisitionFormProps>;
 }
 
 const UpdateCompensationRequisitionContainer: React.FC<
   UpdateCompensationRequisitionContainerProps
-> = ({ compensation, formikRef, onSuccess, View }) => {
+> = ({ compensation, formikRef, onSuccess, onCancel, View }) => {
   const {
     updateCompensationRequisition: { execute: updateCompensationRequisition, loading: isUpdating },
   } = useCompensationRequisitionRepository();
@@ -33,6 +34,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
       formikRef={formikRef}
       initialValues={CompensationRequisitionFormModel.fromApi(compensation)}
       onSave={udpateCompensation}
+      onCancel={onCancel}
     />
   );
 };

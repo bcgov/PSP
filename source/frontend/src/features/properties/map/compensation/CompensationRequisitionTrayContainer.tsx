@@ -1,4 +1,5 @@
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
+import { Api_Compensation } from 'models/api/Compensation';
 import { useCallback, useEffect, useState } from 'react';
 import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
 
@@ -16,18 +17,24 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   const { getSystemConstant } = useSystemConstants();
 
   const [editMode, setEditMode] = useState(false);
+  const [loadedCompensation, setLoadedCompensation] = useState<Api_Compensation | undefined>();
+
   const clientConstant = getSystemConstant(SystemConstants.CLIENT);
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
 
   // const [display, setDisplay] = useState(false);
   const {
-    getCompensationRequisition: { execute: getCompensationRequisition, response, error, loading },
+    getCompensationRequisition: { execute: getCompensationRequisition, error, loading },
   } = useCompensationRequisitionRepository();
 
   const fetchCompensationReq = useCallback(async () => {
     if (!!compensationRequisitionId) {
       const compensationReq = await getCompensationRequisition(compensationRequisitionId);
+      if (compensationReq) {
+        setLoadedCompensation(compensationReq);
+      }
+
       return compensationReq;
     }
   }, [compensationRequisitionId, getCompensationRequisition]);
@@ -36,9 +43,9 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
     fetchCompensationReq();
   }, [compensationRequisitionId, getCompensationRequisition, fetchCompensationReq]);
 
-  return !!compensationRequisitionId ? (
+  return loadedCompensation ? (
     <View
-      compensation={response}
+      compensation={loadedCompensation}
       clientConstant={clientConstant?.value ?? ''}
       gstConstant={gstDecimal}
       onClose={onClose}
@@ -46,6 +53,9 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
       error={!!error}
       editMode={editMode}
       setEditMode={setEditMode}
+      onUpdate={() => {
+        fetchCompensationReq();
+      }}
     ></View>
   ) : null;
 };

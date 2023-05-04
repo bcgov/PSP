@@ -4,7 +4,7 @@ import { booleanToString, stringToBoolean, stringToNull } from 'utils/formUtils'
 export class CompensationRequisitionFormModel {
   id: number | null = null;
   acquisitionFileId: number;
-  isDraft: string = '';
+  status: string = '' || 'draft' || 'final';
   fiscalYear: string = '';
   agreementDateTime: string = '';
   expropriationNoticeServedDateTime: string = '';
@@ -26,16 +26,17 @@ export class CompensationRequisitionFormModel {
       apiModel.acquisitionFileId,
     );
 
-    compensation.isDraft = booleanToString(apiModel.isDraft);
+    compensation.status =
+      apiModel.isDraft === true ? 'draft' : apiModel.isDraft === null ? '' : 'final';
     compensation.fiscalYear = apiModel.fiscalYear || '';
-    compensation.agreementDateTime = apiModel.agreementDateTime || '';
-    compensation.expropriationNoticeServedDateTime =
-      apiModel.expropriationNoticeServedDateTime || '';
-    compensation.expropriationVestingDateTime = apiModel.expropriationVestingDateTime || '';
-    compensation.generationDatetTime = apiModel.generationDatetTime || '';
+    compensation.agreementDateTime = apiModel.agreementDate || '';
+    compensation.expropriationNoticeServedDateTime = apiModel.expropriationNoticeServedDate || '';
+    compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
+    compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';
     compensation.isDisabled = booleanToString(apiModel.isDisabled);
+    compensation.rowVersion = apiModel.rowVersion ?? null;
 
     return compensation;
   }
@@ -44,12 +45,12 @@ export class CompensationRequisitionFormModel {
     return {
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
-      isDraft: stringToBoolean(this.isDraft),
+      isDraft: this.status === 'draft' ? true : false,
       fiscalYear: stringToNull(this.fiscalYear),
-      agreementDateTime: stringToNull(this.agreementDateTime),
-      expropriationNoticeServedDateTime: stringToNull(this.expropriationNoticeServedDateTime),
-      expropriationVestingDateTime: stringToNull(this.expropriationVestingDateTime),
-      generationDatetTime: stringToNull(this.generationDatetTime),
+      agreementDate: stringToNull(this.agreementDateTime),
+      expropriationNoticeServedDate: stringToNull(this.expropriationNoticeServedDateTime),
+      expropriationVestingDate: stringToNull(this.expropriationVestingDateTime),
+      generationDate: stringToNull(this.generationDatetTime),
       specialInstruction: stringToNull(this.specialInstruction),
       detailedRemarks: stringToNull(this.detailedRemarks),
       isDisabled: stringToBoolean(this.isDisabled),

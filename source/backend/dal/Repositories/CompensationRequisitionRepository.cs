@@ -67,7 +67,7 @@ namespace Pims.Dal.Repositories
         {
             User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             var existingCompensationRequisition = Context.PimsCompensationRequisitions
-                .FirstOrDefault(x => x.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
 
