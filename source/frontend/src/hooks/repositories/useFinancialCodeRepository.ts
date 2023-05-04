@@ -3,6 +3,7 @@ import { FinancialCodeTypes } from 'constants/index';
 import {
   getFinancialCode,
   getFinancialCodes,
+  getFinancialCodesByType,
   postFinancialCode,
   putFinancialCode,
 } from 'hooks/pims-api/useApiFinancialCodes';
@@ -22,6 +23,18 @@ export const useFinancialCodeRepository = () => {
   >({
     requestFunction: useCallback(async () => await getFinancialCodes(), []),
     requestName: 'GetFinancialCodes',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load financial codes. Refresh the page to try again.'),
+  });
+
+  const getFinancialCodesByTypeApi = useApiRequestWrapper<
+    (codeType: FinancialCodeTypes) => Promise<AxiosResponse<Api_FinancialCode[], any>>
+  >({
+    requestFunction: useCallback(
+      async (codeType: FinancialCodeTypes) => await getFinancialCodesByType(codeType),
+      [],
+    ),
+    requestName: 'GetFinancialCodesByType',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to load financial codes. Refresh the page to try again.'),
   });
@@ -69,10 +82,17 @@ export const useFinancialCodeRepository = () => {
   return useMemo(
     () => ({
       getFinancialCodes: getAllFinancialCodesApi,
+      getFinancialCodesByType: getFinancialCodesByTypeApi,
       getFinancialCode: getFinancialCodeByIdApi,
       addFinancialCode: addFinancialCodeApi,
       updateFinancialCode: updateFinancialCodeApi,
     }),
-    [getAllFinancialCodesApi, getFinancialCodeByIdApi, addFinancialCodeApi, updateFinancialCodeApi],
+    [
+      getAllFinancialCodesApi,
+      getFinancialCodesByTypeApi,
+      getFinancialCodeByIdApi,
+      addFinancialCodeApi,
+      updateFinancialCodeApi,
+    ],
   );
 };
