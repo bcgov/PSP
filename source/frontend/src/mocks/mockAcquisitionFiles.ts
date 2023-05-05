@@ -34,6 +34,7 @@ export const mockAcquisitionFileResponse = (
     description: 'MISCELLANEOUS CLAIMS',
     rowVersion: 1,
     parentProject: null,
+    parentProjectId: null,
     startDate: '2022-06-27T00:00:00',
     costEstimate: 10000,
     costEstimateDate: null,

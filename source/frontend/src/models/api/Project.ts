@@ -20,6 +20,7 @@ export interface Api_Project extends Api_ConcurrentVersion_Null, Api_AuditFields
 export interface Api_Product extends Api_ConcurrentVersion_Null, Api_AuditFields {
   id?: number | null;
   parentProject: Api_Project | null;
+  parentProjectId: number | null;
   code: string | null;
   description: string | null;
   startDate: string | null;

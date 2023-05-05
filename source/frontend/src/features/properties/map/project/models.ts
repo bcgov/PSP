@@ -16,21 +16,8 @@ export class ProductForm {
   toApi(parentId?: number | null): Api_Product {
     return {
       id: this.id,
-      parentProject: !!parentId
-        ? {
-            id: parentId,
-            projectStatusTypeCode: null,
-            businessFunctionCode: null,
-            workActivityCode: null,
-            code: null,
-            costTypeCode: null,
-            regionCode: null,
-            description: null,
-            note: null,
-            products: [],
-            rowVersion: null,
-          }
-        : null,
+      parentProject: null,
+      parentProjectId: !!parentId ? parentId : null,
       code: this.code,
       description: this.description,
       startDate: stringToNull(this.startDate),
