@@ -526,7 +526,7 @@ exports[`AccessRequestForm component renders as expected 1`] = `
         <label
           class="c0"
         >
-          Region:
+          MoTI Region:
         </label>
       </div>
       <div
@@ -543,7 +543,7 @@ exports[`AccessRequestForm component renders as expected 1`] = `
             <option
               value=""
             >
-              Select MotI Region
+              Select MoTI Region
             </option>
             <option
               class="option"

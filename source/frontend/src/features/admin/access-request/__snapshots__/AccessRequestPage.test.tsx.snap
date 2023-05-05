@@ -567,7 +567,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
               <label
                 class="c2"
               >
-                Region:
+                MoTI Region:
               </label>
             </div>
             <div
@@ -584,7 +584,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
                   <option
                     value=""
                   >
-                    Select MotI Region
+                    Select MoTI Region
                   </option>
                 </select>
               </div>
