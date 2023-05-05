@@ -26,6 +26,7 @@ export const mockAcquisitionFileResponse = (
     products: [],
     rowVersion: null,
   },
+  projectId: null,
   product: {
     id: 1,
     acquisitionFiles: [],
@@ -39,6 +40,7 @@ export const mockAcquisitionFileResponse = (
     objective: 'For Product',
     scope: null,
   },
+  productId: null,
   legacyFileNumber: 'legacy file number',
   assignedDate: '2022-06-27T00:00:00',
   deliveryDate: '2022-07-29T00:00:00',

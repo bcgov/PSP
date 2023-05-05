@@ -94,6 +94,7 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
         appCreateUserid: 'dbo',
         rowVersion: 1,
       },
+      projectId: 1,
       fileId: 109,
       rowVersion: 1,
     },
