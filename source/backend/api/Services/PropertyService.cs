@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using NetTopologySuite.Geometries;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers;
@@ -29,14 +31,29 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting property with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
-            // return property spatial location in lat/long (4326)
             var property = _propertyRepository.GetById(id);
             if (property?.Location != null)
             {
-                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
+                property.Location = TransformCoordiates(property.Location);
             }
             return property;
+        }
+
+        public List<PimsProperty> GetMultipleById(List<long> ids)
+        {
+            _logger.LogInformation("Getting multiple properies by id");
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            List<PimsProperty> properties = _propertyRepository.GetAllByIds(ids);
+            foreach (PimsProperty property in properties)
+            {
+                if (property?.Location != null)
+                {
+                    property.Location = TransformCoordiates(property.Location);
+                }
+            }
+
+            return properties;
         }
 
         public PimsProperty GetByPid(string pid)
@@ -71,6 +88,13 @@ namespace Pims.Api.Services
             _propertyRepository.CommitTransaction();
 
             return GetById(newProperty.Internal_Id);
+        }
+
+        private Point TransformCoordiates(Geometry location)
+        {
+            // return property spatial location in lat/long (4326)
+            var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, location.Coordinate);
+            return GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
         }
     }
 }

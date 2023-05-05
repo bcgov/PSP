@@ -15,8 +15,9 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
       mayanDocumentId: 13,
       documentType: {
         id: 12,
-        mayanId: undefined,
+        mayanId: null,
         documentType: 'Gazette',
+        documentTypeDescription: 'GAZE',
         appCreateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateUserid: 'service',
@@ -24,6 +25,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
         appLastUpdateUserGuid: '00000000-0000-0000-0000-000000000000',
         appCreateUserGuid: '00000000-0000-0000-0000-000000000000',
         rowVersion: 1,
+        isDisabled: false,
       },
       statusTypeCode: {
         id: 'SIGND',
@@ -52,6 +54,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
       documentType: {
         id: 8,
         documentType: 'MoTI Plan',
+        documentTypeDescription: 'MOTIPLAN',
         mayanId: 24,
         appCreateTimestamp: '2022-09-08T21:18:09.01',
         appLastUpdateTimestamp: '2022-09-08T21:18:09.01',
@@ -60,6 +63,7 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
         appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
         appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
         rowVersion: 1,
+        isDisabled: false,
       },
       statusTypeCode: {
         id: 'AMENDD',
@@ -88,18 +92,22 @@ export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
 
 export const mockDocumentTypesResponse = (): Api_DocumentType[] => [
   {
-    documentType: 'Survey',
+    documentType: 'SURV',
+    documentTypeDescription: 'Survey',
     id: 1,
     mayanId: 8,
     appCreateUserid: 'James Bond',
     appCreateTimestamp: '10-Jan-2022',
+    isDisabled: false,
   },
   {
     id: 2,
-    documentType: 'Privy Council',
+    documentType: 'PRIVCOUN',
+    documentTypeDescription: 'Privy Council',
     mayanId: 7,
     appCreateUserid: 'James Bond',
     appCreateTimestamp: '10-Jan-2022',
+    isDisabled: false,
   },
 ];
 

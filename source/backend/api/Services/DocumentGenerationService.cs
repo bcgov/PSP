@@ -7,14 +7,13 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
 using Pims.Api.Models;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.Download;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Av;
-using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 
 namespace Pims.Api.Services
@@ -25,8 +24,7 @@ namespace Pims.Api.Services
     public class DocumentGenerationService : BaseService, IDocumentGenerationService
     {
         private readonly IDocumentGenerationRepository _documentGenerationRepository;
-        private readonly IDocumentRepository _documentRepository;
-        private readonly IDocumentActivityTemplateRepository _documentActivityTemplateRepository;
+        private readonly IFormDocumentService _formDocumentService;
         private readonly IDocumentService _documentService;
         private readonly IAvService avService;
 
@@ -34,8 +32,7 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<DocumentGenerationService> logger,
             IDocumentGenerationRepository documentGenerationRepository,
-            IDocumentRepository documentRepository,
-            IDocumentActivityTemplateRepository documentActivityTemplateRepository,
+            IFormDocumentService formDocumentService,
             IDocumentService documentService,
             IAvService avService)
             : base(user, logger)
@@ -43,8 +40,7 @@ namespace Pims.Api.Services
             this._documentGenerationRepository = documentGenerationRepository;
             this.avService = avService;
 
-            this._documentRepository = documentRepository;
-            this._documentActivityTemplateRepository = documentActivityTemplateRepository;
+            this._formDocumentService = formDocumentService;
             this._documentService = documentService;
         }
 
@@ -67,17 +63,15 @@ namespace Pims.Api.Services
             return result;
         }
 
-        public async Task<ExternalResult<FileDownload>> GenerateDocument(string templateType, JsonElement templateData)
+        public async Task<ExternalResult<FileDownload>> GenerateDocument(FormDocumentType templateType, JsonElement templateData)
         {
             this.Logger.LogInformation("Generating document");
 
             // this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
-
-            // TODO: This needs to retrieve by the passed template type. At this point that is not possible.
-            PimsDocument document = _documentRepository.GetAllByDocumentType("CDOGS Template").LastOrDefault();
-            if (document?.MayanId != null)
+            var formTypeCode = _formDocumentService.GetFormDocumentTypes(templateType.ToString()).LastOrDefault();
+            if (formTypeCode?.Document?.MayanId != null)
             {
-                ExternalResult<FileDownload> templateFileResult = await _documentService.DownloadFileLatestAsync(document.MayanId);
+                ExternalResult<FileDownload> templateFileResult = await _documentService.DownloadFileLatestAsync(formTypeCode.Document.MayanId);
                 if (templateFileResult.Status == ExternalResultStatus.Success)
                 {
                     FileDownload templateFile = templateFileResult.Payload;
@@ -105,9 +99,10 @@ namespace Pims.Api.Services
                     this.Logger.LogError("Error Generating document");
                     return templateFileResult;
                 }
-            } else
+            }
+            else
             {
-                throw new KeyNotFoundException("Unable to find matching template for PIMS document template"); //TODO: this should trigger the warning to the user to ask their admin to upload a template.
+                throw new KeyNotFoundException("Unable to find matching template for PIMS document template"); // TODO: this should trigger the warning to the user to ask their admin to upload a template.
             }
         }
     }

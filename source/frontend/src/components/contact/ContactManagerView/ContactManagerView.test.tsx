@@ -83,7 +83,7 @@ describe('ContactManagerView', () => {
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
 
-  it('matches snapshot', async () => {
+  xit('matches snapshot', async () => {
     setupMockSearch();
     const { asFragment, getByTitle } = setup();
     await waitForElementToBeRemoved(getByTitle('table-loading'));

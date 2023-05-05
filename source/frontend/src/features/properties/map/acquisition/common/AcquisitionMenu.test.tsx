@@ -9,7 +9,6 @@ jest.mock('@react-keycloak/web');
 
 const onChange = jest.fn();
 const setContainerState = jest.fn();
-const onGenerateLetter = jest.fn();
 
 const testData = ['one', 'two', 'three'];
 
@@ -18,11 +17,11 @@ describe('AcquisitionMenu component', () => {
   const setup = (props: IAcquisitionMenuProps, renderOptions: RenderOptions = {}) => {
     const utils = render(
       <AcquisitionMenu
+        acquisitionFileId={props.acquisitionFileId}
         selectedIndex={props.selectedIndex}
         items={props.items}
         onChange={props.onChange}
         setContainerState={props.setContainerState}
-        onGenerateLetter={props.onGenerateLetter}
       />,
       {
         useMockAuthentication: true,
@@ -40,22 +39,22 @@ describe('AcquisitionMenu component', () => {
 
   it('matches snapshot', () => {
     const { asFragment } = setup({
+      acquisitionFileId: 1,
       items: testData,
       selectedIndex: 0,
       onChange,
       setContainerState,
-      onGenerateLetter,
     });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders the items ', () => {
     const { getByText } = setup({
+      acquisitionFileId: 1,
       items: testData,
       selectedIndex: 0,
       onChange,
       setContainerState,
-      onGenerateLetter,
     });
 
     expect(getByText('one')).toBeVisible();
@@ -65,11 +64,11 @@ describe('AcquisitionMenu component', () => {
 
   it('renders selected item with different style', () => {
     const { getByTestId } = setup({
+      acquisitionFileId: 1,
       items: testData,
       selectedIndex: 1,
       onChange,
       setContainerState,
-      onGenerateLetter,
     });
 
     expect(getByTestId('menu-item-row-0')).not.toHaveClass('selected');
@@ -79,11 +78,11 @@ describe('AcquisitionMenu component', () => {
 
   it('allows the selected item to be changed', () => {
     const { getByText } = setup({
+      acquisitionFileId: 1,
       items: testData,
       selectedIndex: 1,
       onChange,
       setContainerState,
-      onGenerateLetter,
     });
 
     const lastItem = getByText('three');
@@ -95,11 +94,11 @@ describe('AcquisitionMenu component', () => {
   it(`renders the edit button for users with property edit permissions`, () => {
     const { getByTitle } = setup(
       {
+        acquisitionFileId: 1,
         items: testData,
         selectedIndex: 1,
         onChange,
         setContainerState,
-        onGenerateLetter,
       },
       { claims: [Claims.ACQUISITION_EDIT] },
     );
@@ -118,11 +117,11 @@ describe('AcquisitionMenu component', () => {
   it(`doesn't render the edit button for users without edit permissions`, () => {
     const { queryByTitle } = setup(
       {
+        acquisitionFileId: 1,
         items: testData,
         selectedIndex: 1,
         onChange,
         setContainerState,
-        onGenerateLetter,
       },
       { claims: [Claims.ACQUISITION_VIEW] }, // no edit permissions, just view.
     );

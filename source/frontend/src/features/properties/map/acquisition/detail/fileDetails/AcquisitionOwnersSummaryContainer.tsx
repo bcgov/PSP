@@ -1,7 +1,6 @@
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 import { useCallback, useEffect, useState } from 'react';
-
-import { DetailAcquisitionFileOwner } from '../models';
 
 export interface IAcquisitionOwnersContainerProps {
   acquisitionFileId: number;
@@ -9,14 +8,14 @@ export interface IAcquisitionOwnersContainerProps {
 }
 
 export interface IAcquisitionOwnersSummaryViewProps {
-  ownersList?: DetailAcquisitionFileOwner[];
+  ownersList?: Api_AcquisitionFileOwner[];
   isLoading: boolean;
 }
 
 const AcquisitionOwnersSummaryContainer: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionOwnersContainerProps>
 > = ({ acquisitionFileId, View }) => {
-  const [ownersDetails, setOwnersDetails] = useState<DetailAcquisitionFileOwner[] | undefined>(
+  const [ownersDetails, setOwnersDetails] = useState<Api_AcquisitionFileOwner[] | undefined>(
     undefined,
   );
 
@@ -31,8 +30,7 @@ const AcquisitionOwnersSummaryContainer: React.FunctionComponent<
     if (acquisitionFileId) {
       const acquisitionOwners = await retrieveAcquisitionFileOwners(acquisitionFileId);
       if (acquisitionOwners !== undefined) {
-        const ownerDetailList = acquisitionOwners.map(o => DetailAcquisitionFileOwner.fromApi(o));
-        setOwnersDetails([...ownerDetailList]);
+        setOwnersDetails([...acquisitionOwners]);
       }
     }
   }, [acquisitionFileId, retrieveAcquisitionFileOwners]);

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -61,7 +60,7 @@ namespace Pims.Dal.Repositories
         /// Returns a Paged Result of Projects based on ProjectFilter params.
         /// </summary>
         /// <returns></returns>
-        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter)
+        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
             filter.ThrowIfNull(nameof(filter));
@@ -70,7 +69,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            return GetPage(filter);
+            return GetPage(filter, userRegions);
         }
 
         /// <summary>
@@ -197,9 +196,10 @@ namespace Pims.Dal.Repositories
             return;
         }
 
-        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter)
+        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, IEnumerable<short> userRegions)
         {
-            var query = Context.PimsProjects.AsNoTracking();
+            var query = Context.PimsProjects.AsNoTracking()
+                .Where(p => userRegions.Contains(p.RegionCode));
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNumber))
             {

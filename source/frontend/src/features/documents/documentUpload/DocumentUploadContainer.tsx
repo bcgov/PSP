@@ -106,7 +106,7 @@ export const DocumentUploadContainer: React.FunctionComponent<
             retrievedDocumentStatusTypes.filter(x => x.value === DocumentStatusType.Final),
           );
         } else {
-          setDocumentTypes(axiosResponse);
+          setDocumentTypes(axiosResponse.filter(x => x.isDisabled !== true));
           setDocumentStatusOptions(retrievedDocumentStatusTypes);
         }
       }

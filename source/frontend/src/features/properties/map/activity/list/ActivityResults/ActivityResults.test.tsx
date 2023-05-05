@@ -69,7 +69,10 @@ describe('Activity Results Table', () => {
   it('displays All when an activity has the same list of properties as a file', async () => {
     const { getByText } = setup({
       results: [getMockActivityResponse()],
-      fileProperties: [{ id: 1 }, { id: 2 }],
+      fileProperties: [
+        { id: 1, propertyId: 10 },
+        { id: 2, propertyId: 11 },
+      ],
     });
 
     expect(getByText('All')).toBeVisible();

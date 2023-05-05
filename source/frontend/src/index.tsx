@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'leaflet/dist/leaflet.css';
-import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
+import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
+import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
 
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import css from 'assets/scss/_variables.module.scss';
@@ -26,7 +26,7 @@ import * as serviceWorker from './serviceWorker.ignore';
 
 function prepare() {
   if (process.env.NODE_ENV === 'development') {
-    const { worker } = require('./mocks/msw');
+    const { worker } = require('./mocks/msw/browser');
     return worker.start({ onUnhandledRequest: 'bypass' });
   }
   return Promise.resolve();

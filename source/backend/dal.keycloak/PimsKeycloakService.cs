@@ -137,6 +137,7 @@ namespace Pims.Dal.Keycloak
             euser.Person.MiddleNames = update.Person.MiddleNames;
             euser.Person.Surname = update.Person.Surname;
             euser.Position = update.Position;
+            euser.UserTypeCode = update.UserTypeCode;
             euser.Note = update.Note;
             euser.IsDisabled = update.IsDisabled;
             euser.ConcurrencyControlNumber = update.ConcurrencyControlNumber;

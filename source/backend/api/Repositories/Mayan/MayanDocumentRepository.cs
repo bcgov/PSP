@@ -65,6 +65,28 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResult<DocumentType>> TryUpdateDocumentTypeAsync(DocumentType documentType)
+        {
+            _logger.LogDebug("Updating document type...");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+            JsonSerializerOptions serializerOptions = new()
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            };
+            string serializedDocumentType = JsonSerializer.Serialize(documentType, serializerOptions);
+            using HttpContent content = new StringContent(serializedDocumentType);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            Uri endpoint = new($"{_config.BaseUri}/document_types/{documentType.Id}/");
+
+            var response = await PutAsync<DocumentType>(endpoint, content, authenticationToken);
+
+            _logger.LogDebug($"Finished updating a document type");
+
+            return response;
+        }
+
         public async Task<ExternalResult<string>> TryDeleteDocumentTypeAsync(long documentTypeId)
         {
             _logger.LogDebug("Deleting document type...");
