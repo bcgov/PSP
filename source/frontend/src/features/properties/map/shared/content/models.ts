@@ -25,6 +25,7 @@ export enum FormTemplateTypes {
   H179P = 'H179P',
   H179T = 'H179T',
   GENERATE_LETTER = 'LETTER',
+  H0074 = 'H0074',
 }
 
 export enum ActivityTemplateTypes {
