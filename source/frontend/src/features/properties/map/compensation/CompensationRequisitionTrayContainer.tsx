@@ -1,3 +1,4 @@
+import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { Api_Compensation } from 'models/api/Compensation';
 import { useCallback, useEffect, useState } from 'react';
@@ -23,33 +24,60 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
 
-  // const [display, setDisplay] = useState(false);
   const {
     getCompensationRequisition: { execute: getCompensationRequisition, error, loading },
   } = useCompensationRequisitionRepository();
+
+  const {
+    getAcquisitionProject: {
+      execute: getAcquisitionProject,
+      response: acqFileProject,
+      loading: loadingProject,
+    },
+    getAcquisitionProduct: {
+      execute: getAcquisitionProduct,
+      response: acqFileProduct,
+      loading: loadingProduct,
+    },
+  } = useAcquisitionProvider();
 
   const fetchCompensationReq = useCallback(async () => {
     if (!!compensationRequisitionId) {
       const compensationReq = await getCompensationRequisition(compensationRequisitionId);
       if (compensationReq) {
         setLoadedCompensation(compensationReq);
+        getAcquisitionProject(compensationReq.acquisitionFileId);
+        getAcquisitionProduct(compensationReq.acquisitionFileId);
       }
 
       return compensationReq;
     }
-  }, [compensationRequisitionId, getCompensationRequisition]);
+  }, [
+    compensationRequisitionId,
+    getAcquisitionProduct,
+    getAcquisitionProject,
+    getCompensationRequisition,
+  ]);
 
   useEffect(() => {
     fetchCompensationReq();
-  }, [compensationRequisitionId, getCompensationRequisition, fetchCompensationReq]);
+  }, [
+    compensationRequisitionId,
+    getCompensationRequisition,
+    getAcquisitionProject,
+    getAcquisitionProduct,
+    fetchCompensationReq,
+  ]);
 
   return loadedCompensation ? (
     <View
       compensation={loadedCompensation}
+      acqFileProject={acqFileProject}
+      acqFileProduct={acqFileProduct}
       clientConstant={clientConstant?.value ?? ''}
       gstConstant={gstDecimal}
       onClose={onClose}
-      loading={loading}
+      loading={loading || loadingProject || loadingProduct}
       error={!!error}
       editMode={editMode}
       setEditMode={setEditMode}

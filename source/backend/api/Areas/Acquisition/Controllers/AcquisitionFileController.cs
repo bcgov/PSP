@@ -192,6 +192,30 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
         }
 
+        [HttpGet("{id:long}/project")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileProject([FromRoute] long id)
+        {
+            var project = _acquisitionService.GetProject(id);
+
+            return new JsonResult(_mapper.Map<ProjectModel>(project));
+        }
+
+        [HttpGet("{id:long}/product")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProductModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileProduct([FromRoute] long id)
+        {
+            var product = _acquisitionService.GetProduct(id);
+
+            return new JsonResult(_mapper.Map<ProductModel>(product));
+        }
+
         /// <summary>
         /// Get all the compensations corresponding to the passed file id.
         /// </summary>
@@ -211,7 +235,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         }
 
         /// <summary>
-        /// Add a Compensation Requisition to an Acquisition File
+        /// Add a Compensation Requisition to an Acquisition File.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="compensationRequisition"></param>

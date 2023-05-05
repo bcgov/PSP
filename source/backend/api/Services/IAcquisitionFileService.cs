@@ -20,6 +20,10 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
 
+        PimsProject GetProject(long id);
+
+        PimsProduct GetProduct(long id);
+
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 
         PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);

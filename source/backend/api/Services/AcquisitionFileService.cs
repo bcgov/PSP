@@ -103,6 +103,22 @@ namespace Pims.Api.Services
             return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
         }
 
+        public PimsProject GetProject(long id)
+        {
+            _logger.LogInformation("Getting acquisition file project with AcquisitionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acqFileRepository.GetAcquisitionFileProject(id);
+        }
+
+        public PimsProduct GetProduct(long id)
+        {
+            _logger.LogInformation("Getting acquisition file product with AcquisitionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            return _acqFileRepository.GetAcquisitionFileProduct(id);
+        }
+
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
         {
             _logger.LogInformation("Getting acquisition file checklist with AcquisitionFile id: {id}", id);

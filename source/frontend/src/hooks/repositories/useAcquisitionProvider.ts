@@ -8,6 +8,7 @@ import {
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
 import { Api_Compensation } from 'models/api/Compensation';
+import { Api_Product, Api_Project } from 'models/api/Project';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
@@ -24,6 +25,8 @@ export const useAcquisitionProvider = () => {
     putAcquisitionFileProperties,
     getAcquisitionFileProperties,
     getAcquisitionFileOwners,
+    getAcquisitionFileProject,
+    getAcquisitionFileProduct,
     getAcquisitionFileChecklist,
     putAcquisitionFileChecklist,
     getFileCompensationRequisitions,
@@ -105,6 +108,28 @@ export const useAcquisitionProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owners'),
   });
 
+  const getAcquisitionProjectApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_Project, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionFileProject(acqFileId),
+      [getAcquisitionFileProject],
+    ),
+    requestName: 'GetAcquisitionFileProject',
+    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Project'),
+  });
+
+  const getAcquisitionProductApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_Product, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionFileProduct(acqFileId),
+      [getAcquisitionFileProduct],
+    ),
+    requestName: 'GetAcquisitionFileProduct',
+    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Product'),
+  });
+
   const getAcquisitionChecklistApi = useApiRequestWrapper<
     (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileChecklistItem[], any>>
   >({
@@ -165,6 +190,8 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
       getAcquisitionProperties: getAcquisitionPropertiesApi,
       getAcquisitionOwners: getAcquisitionOwnersApi,
+      getAcquisitionProject: getAcquisitionProjectApi,
+      getAcquisitionProduct: getAcquisitionProductApi,
       getAcquisitionFileChecklist: getAcquisitionChecklistApi,
       updateAcquisitionChecklist: updateAcquisitionChecklistApi,
       getAcquisitionCompensationRequisitions: getAcquisitionCompensationRequisitionsApi,
@@ -177,6 +204,8 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionPropertiesApi,
       getAcquisitionPropertiesApi,
       getAcquisitionOwnersApi,
+      getAcquisitionProjectApi,
+      getAcquisitionProductApi,
       getAcquisitionChecklistApi,
       updateAcquisitionChecklistApi,
       getAcquisitionCompensationRequisitionsApi,

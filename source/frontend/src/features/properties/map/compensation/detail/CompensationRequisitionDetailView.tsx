@@ -7,12 +7,15 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Compensation } from 'models/api/Compensation';
+import { Api_Product, Api_Project } from 'models/api/Project';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
 export interface CompensationRequisitionDetailViewProps {
   compensation: Api_Compensation;
+  acqFileProject?: Api_Project;
+  acqFileProduct?: Api_Product;
   clientConstant: string;
   gstConstant: number | undefined;
   loading: boolean;
@@ -21,7 +24,7 @@ export interface CompensationRequisitionDetailViewProps {
 
 export const CompensationRequisitionDetailView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailViewProps>
-> = ({ compensation, clientConstant, loading, setEditMode }) => {
+> = ({ compensation, acqFileProject, acqFileProduct, clientConstant, loading, setEditMode }) => {
   const { hasClaim } = useKeycloakWrapper();
 
   return (
@@ -99,16 +102,16 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
         <SectionField label="Product" labelWidth={'4'}>
-          {'44444'}
+          {acqFileProduct?.code ?? ''}
         </SectionField>
         <SectionField label="Business function" labelWidth={'4'}>
-          {'5555'}
+          {acqFileProject?.code ?? ''}
         </SectionField>
         <SectionField label="Work activity" labelWidth={'4'}>
-          {'9999'}
+          {acqFileProject?.workActivityCode?.code ?? ''}
         </SectionField>
         <SectionField label="Cost type" labelWidth={'4'}>
-          {'1000'}
+          {acqFileProject?.costTypeCode?.code ?? ''}
         </SectionField>
         <SectionField label="Fiscal year" labelWidth={'4'}>
           {compensation.fiscalYear ?? ''}

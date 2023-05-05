@@ -2,6 +2,7 @@ import clsx from 'classnames';
 import * as Styled from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Api_Compensation } from 'models/api/Compensation';
+import { Api_Product, Api_Project } from 'models/api/Project';
 import { useState } from 'react';
 import React from 'react';
 import { MdClose } from 'react-icons/md';
@@ -15,6 +16,8 @@ import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequis
 
 export interface CompensationRequisitionTrayViewProps {
   compensation?: Api_Compensation;
+  acqFileProject?: Api_Project;
+  acqFileProduct?: Api_Product;
   clientConstant: string;
   gstConstant: number | undefined;
   onClose: () => void;

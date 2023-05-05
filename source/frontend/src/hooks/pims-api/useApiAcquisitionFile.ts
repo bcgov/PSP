@@ -7,6 +7,7 @@ import {
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
 import { Api_Compensation } from 'models/api/Compensation';
+import { Api_Product, Api_Project } from 'models/api/Project';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -40,6 +41,10 @@ export const useApiAcquisitionFile = () => {
         api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
       getAcquisitionFileOwners: (acqFileId: number) =>
         api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
+      getAcquisitionFileProject: (acqFileId: number) =>
+        api.get<Api_Project>(`/acquisitionfiles/${acqFileId}/project`),
+      getAcquisitionFileProduct: (acqFileId: number) =>
+        api.get<Api_Product>(`/acquisitionfiles/${acqFileId}/product`),
       getAcquisitionFileChecklist: (acqFileId: number) =>
         api.get<Api_AcquisitionFileChecklistItem[]>(`/acquisitionfiles/${acqFileId}/checklist`),
       putAcquisitionFileChecklist: (acqFile: Api_AcquisitionFile) =>
