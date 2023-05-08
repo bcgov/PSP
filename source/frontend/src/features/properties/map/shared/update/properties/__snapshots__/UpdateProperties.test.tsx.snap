@@ -144,6 +144,40 @@ exports[`UpdateProperties component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c25.c25.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c25.c25.btn .text {
+  display: none;
+}
+
+.c25.c25.btn:hover,
+.c25.c25.btn:active,
+.c25.c25.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c25.c25.btn:hover .text,
+.c25.c25.btn:active .text,
+.c25.c25.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
 .c15 {
   padding-right: 0;
 }
@@ -224,40 +258,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
   width: 100%;
   text-align: left;
   margin-bottom: 2rem;
-}
-
-.c25.c25.btn {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c25.c25.btn .text {
-  display: none;
-}
-
-.c25.c25.btn:hover,
-.c25.c25.btn:active,
-.c25.c25.btn:focus {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c25.c25.btn:hover .text,
-.c25.c25.btn:active .text,
-.c25.c25.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c19 {
