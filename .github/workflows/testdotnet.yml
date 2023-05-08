@@ -3,11 +3,11 @@
 
 name: smoke test (.NET)
 
-# on:
-#   push:
-#     branches: [master, dev, test]
-#   pull_request:
-#     branches: [master, dev, test]
+on:
+  push:
+    branches: [master, dev, test]
+  pull_request:
+    branches: [master, dev, test]
 
 jobs:
   smoke-test:
@@ -21,13 +21,20 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Installing Edge Browser (alternative step)
-      run: |
-        wget -O - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft.gpg
-        sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
+    #- name: Installing Edge Browser (alternative step)
+    #  run: |
+    #    wget -O - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft.gpg
+    #    sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
+    #    sudo apt update
+    #    sudo apt install -y microsoft-edge-stable
+
+    - name: Install Chrome Browser
+      run:  |
         sudo apt update
-        sudo apt install -y microsoft-edge-stable
-    
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo apt install -y ./google-chrome-stable_current_amd64.deb
+        
+
     # Edge Browser setup - missing dependencies
     #- uses: browser-actions/setup-edge@v1
     #- name: Print Edge version
@@ -38,4 +45,4 @@ jobs:
     - name: Build
       run: dotnet build ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.sln --no-restore
     - name: Test
-      run: dotnet test ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.csproj --no-build --verbosity normal
+      run: dotnet test ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.csproj --no-build --verbosity normal --filter Category=Smoke-Test
