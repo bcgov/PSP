@@ -111,8 +111,8 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: 'Update/View',
     accessor: 'controls' as any, // this column is not part of the data model
-    width: 40,
-    maxWidth: 40,
+    width: 50,
+    maxWidth: 50,
     Cell: (props: CellProps<IContactSearchResult>) => {
       const history = useHistory();
       const { hasClaim } = useKeycloakWrapper();
