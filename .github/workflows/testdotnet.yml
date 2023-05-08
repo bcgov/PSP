@@ -4,10 +4,10 @@
 name: smoke test (.NET)
 
 on:
-  push:
-    branches: [master, dev, test]
-  pull_request:
-    branches: [master, dev, test]
+  #push:
+  #  branches: [master, dev, test]
+  #pull_request:
+  #  branches: [master, dev, test]
 
 jobs:
   smoke-test:
