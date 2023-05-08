@@ -40,23 +40,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateIndividualContact(rowNumber);
 
             //Create new Individual Contact with maximum fields
-            contacts.CreateIndividualContact(individualContact.FirstName, individualContact.MiddleName, individualContact.LastName, individualContact.PreferableName, individualContact.Organization,
-            individualContact.Email1, individualContact.EmailType1, individualContact.Phone1, individualContact.PhoneType1,
-            individualContact.MailAddressLine1, individualContact.MailAddressLine2, individualContact.MailAddressLine3, individualContact.MailCity, individualContact.MailProvince, individualContact.MailPostalCode, individualContact.MailCountry, individualContact.MailOtherCountry,
-            individualContact.PropertyAddressLine1, individualContact.PropertyAddressLine2, individualContact.PropertyAddressLine3, individualContact.PropertyCity, individualContact.PropertyProvince, individualContact.PropertyPostalCode, individualContact.PropertyCountry, individualContact.PropertyOtherCountry,
-            individualContact.BillingAddressLine1, individualContact.BillingAddressLine2, individualContact.BillingAddressLine3, individualContact.BillingCity, individualContact.BillingProvince, individualContact.BillingPostalCode, individualContact.BillingCountry, individualContact.BillingOtherCountry,
-            individualContact.Comments);
+            contacts.CreateIndividualContact(individualContact);
 
             //Save Contact
             contacts.SaveContact();
 
             //Verify Individual Contact Details View
-            contacts.VerifyIndividualContactView(individualContact.FullName, individualContact.PreferableName, individualContact.Status, individualContact.Organization,
-            individualContact.Email1, individualContact.EmailTypeDisplay1, "", "", individualContact.Phone1, individualContact.PhoneTypeDisplay1, "", "",
-            individualContact.MailAddressLine1, individualContact.MailAddressLine2, individualContact.MailAddressLine3, individualContact.MailCityProvinceView, individualContact.MailPostalCode, individualContact.MailCountry, individualContact.MailOtherCountry,
-            individualContact.PropertyAddressLine1, individualContact.PropertyAddressLine2, individualContact.PropertyAddressLine3, individualContact.PropertyCityProvinceView, individualContact.PropertyPostalCode, individualContact.PropertyCountry, individualContact.PropertyOtherCountry,
-            individualContact.BillingAddressLine1, individualContact.BillingAddressLine2, individualContact.BillingAddressLine3, individualContact.BillingCityProvinceView, individualContact.BillingPostalCode, individualContact.BillingCountry, individualContact.BillingOtherCountry,
-            individualContact.Comments);
+            contacts.VerifyIndividualContactView(individualContact);
         }
 
         [StepDefinition(@"I create a new Organization Contact from row number (.*)")]
@@ -74,23 +64,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateOrganizationContact(rowNumber);
 
             //Create new Organization Contact with maximum fields
-            contacts.CreateOrganizationContact(organizationContact.OrganizationName, organizationContact.Alias, organizationContact.IncorporationNumber,
-            organizationContact.Email1, organizationContact.EmailType1, organizationContact.Email2, organizationContact.EmailType2, organizationContact.Phone1, organizationContact.PhoneType1, organizationContact.Phone2, organizationContact.PhoneType2,
-            organizationContact.MailAddressLine1, organizationContact.MailAddressLine2, organizationContact.MailAddressLine3, organizationContact.MailCity, organizationContact.MailProvince, organizationContact.MailPostalCode, organizationContact.MailCountry, organizationContact.MailOtherCountry,
-            organizationContact.PropertyAddressLine1, organizationContact.PropertyAddressLine2, organizationContact.PropertyAddressLine3, organizationContact.PropertyCity, organizationContact.PropertyProvince, organizationContact.PropertyPostalCode, organizationContact.PropertyCountry, organizationContact.PropertyOtherCountry,
-            organizationContact.BillingAddressLine1, organizationContact.BillingAddressLine2, organizationContact.BillingAddressLine3, organizationContact.BillingCity, organizationContact.BillingProvince, organizationContact.BillingPostalCode, organizationContact.BillingCountry, organizationContact.BillingOtherCountry,
-            organizationContact.Comments);
+            contacts.CreateOrganizationContact(organizationContact);
 
             //Save Contact
             contacts.SaveContact();
 
             //Verify Organization Contact View Form
-            contacts.VerifyOrganizationContactView(organizationContact.OrganizationName, organizationContact.Alias, organizationContact.Status, organizationContact.IncorporationNumber,
-            organizationContact.Email1, organizationContact.EmailTypeDisplay1, "", "", organizationContact.Phone1, organizationContact.PhoneTypeDisplay1, "", "",
-            organizationContact.MailAddressLine1, organizationContact.MailAddressLine2, organizationContact.MailAddressLine3, organizationContact.MailCityProvinceView, organizationContact.MailPostalCode, organizationContact.MailCountry, organizationContact.MailOtherCountry,
-            organizationContact.PropertyAddressLine1, organizationContact.PropertyAddressLine2, organizationContact.PropertyAddressLine3, organizationContact.PropertyCityProvinceView, organizationContact.PropertyPostalCode, organizationContact.PropertyCountry, organizationContact.PropertyOtherCountry,
-            organizationContact.BillingAddressLine1, organizationContact.BillingAddressLine2, organizationContact.BillingAddressLine3, organizationContact.BillingCityProvinceView, organizationContact.BillingPostalCode, organizationContact.BillingCountry, organizationContact.BillingOtherCountry,
-            organizationContact.Comments);
+            contacts.VerifyOrganizationContactView(organizationContact);
         }
 
         [StepDefinition(@"I update an existing Organization Contact from row number (.*)")]
@@ -205,12 +185,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateIndividualContact(rowNumber);
 
             //Create new Individual Contact with minimum fields
-            contacts.CreateIndividualContact(individualContact.FirstName, individualContact.MiddleName, individualContact.LastName, individualContact.PreferableName, individualContact.Organization,
-            individualContact.Email1, individualContact.EmailType1, individualContact.Phone1, individualContact.PhoneType1,
-            individualContact.MailAddressLine1, individualContact.MailAddressLine2, individualContact.MailAddressLine3, individualContact.MailCity, individualContact.MailProvince, individualContact.MailPostalCode, individualContact.MailCountry, individualContact.MailOtherCountry,
-            individualContact.PropertyAddressLine1, individualContact.PropertyAddressLine2, individualContact.PropertyAddressLine3, individualContact.PropertyCity, individualContact.PropertyProvince, individualContact.PropertyPostalCode, individualContact.PropertyCountry, individualContact.PropertyOtherCountry,
-            individualContact.BillingAddressLine1, individualContact.BillingAddressLine2, individualContact.BillingAddressLine3, individualContact.BillingCity, individualContact.BillingProvince, individualContact.BillingPostalCode, individualContact.BillingCountry, individualContact.BillingOtherCountry,
-            individualContact.Comments);
+            contacts.CreateIndividualContact(individualContact);
 
             //Cancel Contact
             contacts.CancelContact();
@@ -237,12 +212,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE: PSP-4208 */
 
-            contacts.VerifyOrganizationContactView(organizationContact.OrganizationName, organizationContact.Alias, organizationContact.Status, organizationContact.IncorporationNumber,
-            organizationContact.Email1, organizationContact.EmailTypeDisplay1, organizationContact.Email2, organizationContact.EmailTypeDisplay2, organizationContact.Phone1, organizationContact.PhoneTypeDisplay1, organizationContact.Phone2, organizationContact.PhoneTypeDisplay2,
-            organizationContact.MailAddressLine1, organizationContact.MailAddressLine2, organizationContact.MailAddressLine3, organizationContact.MailCityProvinceView, organizationContact.MailPostalCode, organizationContact.MailCountry, organizationContact.MailOtherCountry,
-            organizationContact.PropertyAddressLine1, organizationContact.PropertyAddressLine2, organizationContact.PropertyAddressLine3, organizationContact.PropertyCityProvinceView, organizationContact.PropertyPostalCode, organizationContact.PropertyCountry, organizationContact.PropertyOtherCountry,
-            organizationContact.BillingAddressLine1, organizationContact.BillingAddressLine2, organizationContact.BillingAddressLine3, organizationContact.BillingCityProvinceView, organizationContact.BillingPostalCode, organizationContact.BillingCountry, organizationContact.BillingOtherCountry,
-            organizationContact.Comments);
+            contacts.VerifyOrganizationContactView(organizationContact);
         }
 
         [StepDefinition(@"An Individual contact is successfully updated")]
@@ -250,12 +220,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE: PSP-2705 */
 
-            contacts.VerifyIndividualContactView(individualContact.FullName, individualContact.PreferableName, individualContact.Status, individualContact.Organization,
-            individualContact.Email1, individualContact.EmailTypeDisplay1, individualContact.Email2, individualContact.EmailTypeDisplay2, individualContact.Phone1, individualContact.PhoneTypeDisplay1, individualContact.Phone2, individualContact.PhoneTypeDisplay2,
-            individualContact.MailAddressLine1, individualContact.MailAddressLine2, individualContact.MailAddressLine3, individualContact.MailCityProvinceView, individualContact.MailPostalCode, individualContact.MailCountry, individualContact.MailOtherCountry,
-            individualContact.PropertyAddressLine1, individualContact.PropertyAddressLine2, individualContact.PropertyAddressLine3, individualContact.PropertyCityProvinceView, individualContact.PropertyPostalCode, individualContact.PropertyCountry, individualContact.PropertyOtherCountry,
-            individualContact.BillingAddressLine1, individualContact.BillingAddressLine2, individualContact.BillingAddressLine3, individualContact.BillingCityProvinceView, individualContact.BillingPostalCode, individualContact.BillingCountry, individualContact.BillingOtherCountry,
-            individualContact.Comments);
+            contacts.VerifyIndividualContactView(individualContact);
         }
 
         [StepDefinition(@"Search Contacts screen is correctly rendered")]
