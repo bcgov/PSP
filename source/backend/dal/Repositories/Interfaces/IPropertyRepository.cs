@@ -18,6 +18,8 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetById(long id);
 
+        List<PimsProperty> GetAllByIds(List<long> ids);
+
         PimsProperty GetByPid(string pid);
 
         PimsProperty GetByPid(int pid);

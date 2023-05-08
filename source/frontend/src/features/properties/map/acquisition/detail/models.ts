@@ -6,6 +6,8 @@ import {
 import { Api_Address } from 'models/api/Address';
 import { formatApiPersonNames } from 'utils/personUtils';
 
+import { AcquisitionSolicitorFormModel } from '../common/models';
+
 export class DetailAcquisitionFile {
   fileName?: string;
   legacyFileNumber?: string;
@@ -16,6 +18,7 @@ export class DetailAcquisitionFile {
   acquisitionTypeDescription?: string;
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFilePerson[] = [];
+  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
 
   static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
@@ -30,6 +33,9 @@ export class DetailAcquisitionFile {
     detail.regionDescription = model?.regionCode?.description;
     detail.acquisitionTeam =
       model?.acquisitionTeam?.map(x => DetailAcquisitionFilePerson.fromApi(x)) || [];
+    detail.ownerSolicitor = model?.acquisitionFileOwnerSolicitors?.length
+      ? AcquisitionSolicitorFormModel.fromApi(model?.acquisitionFileOwnerSolicitors[0])
+      : new AcquisitionSolicitorFormModel(null);
 
     return detail;
   }
@@ -71,11 +77,25 @@ export class DetailAcquisitionFileOwner {
 }
 
 const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
-  let nameDisplay = concatValues([owner.givenName, owner.lastNameAndCorpName]);
-  if (owner.incorporationNumber && owner.incorporationNumber.trim() !== '') {
-    nameDisplay = nameDisplay.concat(` (${owner.incorporationNumber})`);
+  let ownerDisplayName = '';
+  if (owner.isOrganization) {
+    let regNumber = owner.registrationNumber ? `Reg#:${owner.registrationNumber}` : null;
+    let incNumber = owner.incorporationNumber ? `Inc#:${owner.incorporationNumber}` : null;
+    let separator = owner.incorporationNumber && owner.registrationNumber ? ' / ' : null;
+
+    if (incNumber || regNumber) {
+      ownerDisplayName = concatValues(
+        [owner.lastNameAndCorpName, ' (', incNumber, separator, regNumber, ')'],
+        '',
+      );
+    } else {
+      ownerDisplayName = owner.lastNameAndCorpName ? owner.lastNameAndCorpName : '';
+    }
+  } else {
+    ownerDisplayName = concatValues([owner.givenName, owner.lastNameAndCorpName]);
   }
-  return nameDisplay;
+
+  return ownerDisplayName;
 };
 
 const getFormattedAddress = (address?: Api_Address | null): string => {

@@ -40,7 +40,7 @@ describe('PropertyResearchTabView component', () => {
 const fakePropertyResearch: Api_ResearchFileProperty = {
   id: 0,
   isDisabled: false,
-
+  propertyId: 1,
   property: {},
   file: {},
   propertyName: 'The Research Property name',

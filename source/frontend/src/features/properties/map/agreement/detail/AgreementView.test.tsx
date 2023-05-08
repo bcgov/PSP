@@ -11,6 +11,7 @@ jest.mock('@react-keycloak/web');
 const mockViewProps: IAgreementViewProps = {
   agreements: [],
   onEdit: jest.fn(),
+  onGenerate: jest.fn(),
   loading: false,
 };
 
@@ -20,6 +21,7 @@ describe('AgreementView component', () => {
       <AgreementView
         agreements={mockViewProps.agreements}
         onEdit={mockViewProps.onEdit}
+        onGenerate={mockViewProps.onGenerate}
         loading={mockViewProps.loading}
       />,
       {

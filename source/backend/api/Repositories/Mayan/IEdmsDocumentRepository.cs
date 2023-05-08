@@ -14,6 +14,8 @@ namespace Pims.Api.Repositories.Mayan
     {
         Task<ExternalResult<DocumentType>> TryCreateDocumentTypeAsync(DocumentType documentType);
 
+        Task<ExternalResult<DocumentType>> TryUpdateDocumentTypeAsync(DocumentType documentType);
+
         Task<ExternalResult<string>> TryDeleteDocumentTypeAsync(long documentTypeId);
 
         Task<ExternalResult<QueryResult<DocumentType>>> TryGetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);

@@ -86,6 +86,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - A list of acquisition file checklist items.
         /// </summary>
         public IList<AcquisitionFileChecklistItemModel> AcquisitionFileChecklist { get; set; }
+
+        /// <summary>
+        /// get/set - A list of acquisition file owner solicitors.
+        /// </summary>
+        public IList<AcquisitionFileOwnerSolicitorModel> AcquisitionFileOwnerSolicitors { get; set; }
         #endregion
     }
 }

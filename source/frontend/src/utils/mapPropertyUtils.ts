@@ -94,9 +94,11 @@ export const getApiPropertyName = (property?: Api_Property): PropertyName => {
 export const mapFeatureToProperty = (
   selectedFeature: Feature<Geometry, GeoJsonProperties>,
 ): IMapProperty => {
-  const latLng = geoJSON(selectedFeature.geometry).getBounds().getCenter();
-  const latitude = selectedFeature?.properties?.CLICK_LAT_LNG?.lat ?? latLng.lat ?? undefined;
-  const longitude = selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng.lng ?? undefined;
+  const latLng = selectedFeature?.geometry
+    ? geoJSON(selectedFeature.geometry).getBounds().getCenter()
+    : undefined;
+  const latitude = selectedFeature?.properties?.CLICK_LAT_LNG?.lat ?? latLng?.lat ?? undefined;
+  const longitude = selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng?.lng ?? undefined;
   return toMapProperty(selectedFeature, 'unknown', latitude, longitude);
 };
 

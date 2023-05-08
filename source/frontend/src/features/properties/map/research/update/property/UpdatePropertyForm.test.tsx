@@ -13,6 +13,7 @@ const testResearchFile: Api_ResearchFileProperty = {
   id: 1,
   propertyName: 'Corner of Nakya PL ',
   isDisabled: false,
+  propertyId: 495,
 
   purposeTypes: [
     {

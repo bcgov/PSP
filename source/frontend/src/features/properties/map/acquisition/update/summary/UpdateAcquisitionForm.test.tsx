@@ -177,7 +177,7 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getRegistrationTextbox(1).value).toEqual('12345');
 
     expect(getEmailTextbox(1).value).toEqual('fake@email.ca');
-    expect(getPhoneTextbox(1).value).toEqual('');
+    expect(getPhoneTextbox(1).value).toEqual('775-111-1111');
   });
 
   it('it validates that only profile is not repeated on another team member', async () => {

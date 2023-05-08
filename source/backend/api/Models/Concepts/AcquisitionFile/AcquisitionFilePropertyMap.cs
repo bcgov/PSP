@@ -13,6 +13,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Property, src => src.Property)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.File, src => src.AcquisitionFile)
                 .Map(dest => dest.FileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.ActivityInstanceProperties, src => src.PimsActInstPropAcqFiles)
