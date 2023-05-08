@@ -13,7 +13,7 @@ exports[`Update lease container component renders as expected 1`] = `
   z-index: 999;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.5);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
