@@ -278,6 +278,8 @@ namespace Pims.Api.Services
 
         public PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition)
         {
+            _logger.LogInformation("Adding compensation requisition for acquisition file id ...", acquisitionFileId);
+
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
 
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
