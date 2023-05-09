@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks';
 import { getMockApiCompensationList } from 'mocks/mockCompensations';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, findByText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 

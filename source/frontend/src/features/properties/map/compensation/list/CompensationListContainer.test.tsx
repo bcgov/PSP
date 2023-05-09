@@ -1,5 +1,4 @@
 import { createMemoryHistory } from 'history';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { mockLookups } from 'mocks';
 import { getMockApiCompensationList } from 'mocks/mockCompensations';
