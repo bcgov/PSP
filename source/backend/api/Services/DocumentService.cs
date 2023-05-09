@@ -279,7 +279,18 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResult<FileDownload> downloadResult = await documentStorageRepository.TryDownloadFileAsync(mayanDocumentId, mayanFileId);
-            return downloadResult;
+            if (isValidDocumentExtension(downloadResult.Payload.FileName))
+            {
+                return downloadResult;
+            }
+            else
+            {
+                return new ExternalResult<FileDownload>()
+                {
+                    Status = ExternalResultStatus.Error,
+                    Message = $"Document with id ${mayanDocumentId} has an invalid extension",
+                };
+            }
         }
 
         public async Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(long mayanDocumentId)
