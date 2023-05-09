@@ -7,7 +7,6 @@ import PropertyMapSelectorSubForm, {
   IPropertyMapSelectorSubFormProps,
 } from './PropertyMapSelectorSubForm';
 
-const onClickAway = jest.fn();
 const onClickDraftMarker = jest.fn();
 
 const testProperty: IMapProperty = {
@@ -31,7 +30,6 @@ describe('PropertySelectorSubForm component', () => {
     const component = render(
       <PropertyMapSelectorSubForm
         onClickDraftMarker={renderOptions.onClickDraftMarker}
-        onClickAway={renderOptions.onClickAway}
         selectedProperty={renderOptions.selectedProperty}
       />,
       {
@@ -53,7 +51,6 @@ describe('PropertySelectorSubForm component', () => {
   it('renders as expected when provided no properties', () => {
     const { component } = setup({
       selectedProperty: testProperty,
-      onClickAway,
       onClickDraftMarker,
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -64,7 +61,6 @@ describe('PropertySelectorSubForm component', () => {
       component: { getByText },
     } = await setup({
       selectedProperty: testProperty,
-      onClickAway,
       onClickDraftMarker,
     });
     expect(getByText(`${testProperty.pid}`)).toBeVisible();
