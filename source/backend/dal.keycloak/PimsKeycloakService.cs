@@ -123,7 +123,6 @@ namespace Pims.Dal.Keycloak
             if (resetRoles)
             {
                 euser.PimsUserRoles.ForEach(role => _userRepository.RemoveRole(euser, role.RoleId));
-                euser.PimsRegionUsers.ForEach(region => _userRepository.RemoveRegion(euser, region.Internal_Id));
             }
 
             // Update PIMS
@@ -140,8 +139,9 @@ namespace Pims.Dal.Keycloak
             euser.Note = update.Note;
             euser.IsDisabled = update.IsDisabled;
             euser.ConcurrencyControlNumber = update.ConcurrencyControlNumber;
-            euser.PimsUserRoles = update.PimsUserRoles;
-            euser.PimsRegionUsers = update.PimsRegionUsers;
+
+            _userRepository.UpdateAllRolesForUser(euser.Internal_Id, update.PimsUserRoles);
+            _userRepository.UpdateAllRegionsForUser(euser.Internal_Id, update.PimsRegionUsers);
 
             var newWorkEmail = update.Person.PimsContactMethods?.OrderByDescending(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.WorkEmail);
             if (newWorkEmail != null)
