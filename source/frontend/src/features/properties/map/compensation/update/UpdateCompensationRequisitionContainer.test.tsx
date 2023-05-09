@@ -1,5 +1,6 @@
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { mockLookups } from 'mocks';
+import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { getMockApiDefaultCompensation } from 'mocks/mockCompensations';
 import { Api_Compensation } from 'models/api/Compensation';
 import { createRef } from 'react';
@@ -39,6 +40,7 @@ describe('UpdateAgreementsContainer component', () => {
       <UpdateCompensationRequisitionContainer
         formikRef={createRef()}
         compensation={mockCompensation}
+        acquisitionFile={mockAcquisitionFileResponse()}
         onSuccess={onSuccess}
         onCancel={onCancel}
         View={TestView}

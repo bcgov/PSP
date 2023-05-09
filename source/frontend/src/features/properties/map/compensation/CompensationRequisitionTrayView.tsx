@@ -1,8 +1,8 @@
 import clsx from 'classnames';
 import * as Styled from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Compensation } from 'models/api/Compensation';
-import { Api_Product, Api_Project } from 'models/api/Project';
 import { useState } from 'react';
 import React from 'react';
 import { MdClose } from 'react-icons/md';
@@ -16,8 +16,7 @@ import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequis
 
 export interface CompensationRequisitionTrayViewProps {
   compensation?: Api_Compensation;
-  acqFileProject?: Api_Project;
-  acqFileProduct?: Api_Product;
+  acquistionFile: Api_AcquisitionFile;
   clientConstant: string;
   gstConstant: number | undefined;
   onClose: () => void;
@@ -32,6 +31,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionTrayViewProps>
 > = ({
   compensation,
+  acquistionFile,
   clientConstant,
   gstConstant,
   editMode,
@@ -49,6 +49,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
         {!!compensation?.id && (
           <CompensationRequisitionDetailContainer
             compensation={compensation}
+            acquisitionFile={acquistionFile}
             View={CompensationRequisitionDetailView}
             clientConstant={clientConstant}
             gstConstant={gstConstant ?? 0}
@@ -64,6 +65,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
       <HalfHeightDiv>
         <UpdateCompensationRequisitionContainer
           compensation={compensation}
+          acquisitionFile={acquistionFile}
           formikRef={React.createRef()}
           onSuccess={() => {
             //setShow(false);

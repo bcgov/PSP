@@ -5,6 +5,7 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikProps } from 'formik';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
+import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Compensation } from 'models/api/Compensation';
 import moment from 'moment';
 import { Prompt } from 'react-router-dom';
@@ -17,6 +18,7 @@ import { CompensationRequisitionFormModel } from '../models';
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
   formikRef: React.Ref<FormikProps<CompensationRequisitionFormModel>>;
+  acquisitionFile: Api_AcquisitionFile;
   initialValues: CompensationRequisitionFormModel;
   onSave: (compensation: CompensationRequisitionFormModel) => Promise<Api_Compensation | undefined>;
   onCancel: () => void;
@@ -25,6 +27,7 @@ export interface CompensationRequisitionFormProps {
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
   isLoading,
   formikRef,
+  acquisitionFile,
   initialValues,
   onSave,
   onCancel,
@@ -103,6 +106,18 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </SectionField>
             </Section>
             <Section header="Financial coding">
+              <SectionField label="Product" labelWidth={'4'}>
+                {acquisitionFile.product?.code ?? ''}
+              </SectionField>
+              <SectionField label="Business function" labelWidth={'4'}>
+                {acquisitionFile.project?.code ?? ''}
+              </SectionField>
+              <SectionField label="Work activity" labelWidth={'4'}>
+                {acquisitionFile.project?.workActivityCode?.code ?? ''}
+              </SectionField>
+              <SectionField label="Cost type" labelWidth={'4'}>
+                {acquisitionFile.project?.costTypeCode?.code ?? ''}
+              </SectionField>
               <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
                 <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
               </SectionField>

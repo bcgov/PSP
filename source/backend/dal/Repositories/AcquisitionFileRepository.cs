@@ -192,29 +192,6 @@ namespace Pims.Dal.Repositories
                 .Where(a => a.ProductId == productId).ToList();
         }
 
-        public PimsProject GetAcquisitionFileProject(long id)
-        {
-            var acqFile = Context.PimsAcquisitionFiles.AsNoTracking()
-                .Include(x => x.Project)
-                    .ThenInclude(y => y.BusinessFunctionCode)
-                .Include(x => x.Project)
-                    .ThenInclude(y => y.WorkActivityCode)
-                .Include(x => x.Project)
-                    .ThenInclude(y => y.CostTypeCode)
-                .FirstOrDefault(x => x.AcquisitionFileId == id);
-
-            return acqFile.Project;
-        }
-
-        public PimsProduct GetAcquisitionFileProduct(long id)
-        {
-            var acqFile = Context.PimsAcquisitionFiles.AsNoTracking()
-                .Include(x => x.Product)
-                .FirstOrDefault(x => x.AcquisitionFileId == id);
-
-            return acqFile.Product;
-        }
-
         /// <summary>
         /// Generates a new Acquisition Number in the following format.
         /// </summary>

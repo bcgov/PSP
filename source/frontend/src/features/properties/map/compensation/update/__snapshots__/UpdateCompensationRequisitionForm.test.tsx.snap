@@ -452,6 +452,74 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             <label
               class="c3"
             >
+              Product:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            00048
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Business function:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            001
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Work activity:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Cost type:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
               Fiscal year:
             </label>
           </div>

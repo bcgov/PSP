@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { getMockApiDefaultCompensation } from 'mocks/mockCompensations';
 import { mockLookups } from 'mocks/mockLookups';
 import { createRef } from 'react';
@@ -42,6 +43,7 @@ describe('TakesUpdateForm component', () => {
         onSave={onSave}
         onCancel={onCancel}
         initialValues={renderOptions.props?.initialValues ?? defaultCompensation}
+        acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
         formikRef={formikRef}
       />,

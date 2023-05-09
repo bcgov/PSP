@@ -19,9 +19,5 @@ namespace Pims.Dal.Repositories
         short GetRegion(long id);
 
         List<PimsAcquisitionFile> GetByProductId(long productId);
-
-        PimsProject GetAcquisitionFileProject(long id);
-
-        PimsProduct GetAcquisitionFileProduct(long id);
     }
 }
