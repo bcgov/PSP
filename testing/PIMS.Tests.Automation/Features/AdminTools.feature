@@ -17,10 +17,10 @@ Scenario: 03. CDOGS Templates
 	Then CDOGS rendered successfully
 
 Scenario: 04. Create and Edit Financial Codes
-	Given I create a Financial Code
-	And I update a Financial Code
+	Given I create a Financial Code from row number 1
+	And I update a Financial Code from row number 2
 	Then Financial Codes rendered successfully
 
 Scenario: 05. Duplicate existing Financial Code
-	Given I attempt to duplicate a Financial Code
+	Given I attempt to duplicate a Financial Code from row number 1
 	Then Financial Code cannot be duplicated successfully

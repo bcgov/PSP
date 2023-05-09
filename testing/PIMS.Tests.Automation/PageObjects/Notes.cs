@@ -6,20 +6,37 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class Notes : PageObjectBase
     {
+        //Notes Tab Elements
+        private By notesTabLink = By.XPath("//nav[@role='tablist']/a[contains(text(),'Notes')]");
+        private By notesTabTitle = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div/div/h2/div/div/div/div[contains(text(),'Notes')]");
+        private By notesTabAddBttn = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div/div/h2/div/div/div/div/button");
+
+        //Notes Tab Table Header
+        private By notesTabTableHeaderNoteColumn = By.XPath("//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Note')]");
+        private By notesTabTableHeaderCreatedDateColumn = By.XPath("//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Created date')]");
+        private By notesTabTableHeaderUpdatedByColumn = By.XPath("//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last updated by')]");
+        private By notesTabTableNoContent = By.XPath("//div[contains(text(),'No matching Notes found')]");
+        private By notesTabTableBody = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']");
+        private By notesTabTableContentTotal = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
+
+        private By notesTab1stResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='View Note']");
+        private By notesTab1stResultDeleteBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='Delete Note']");
+
         //Notes Add New button Element
-        private By notesAddNoteBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/h2/div/div/div/div[contains(text(),'Notes')]/following-sibling::div/button");
+        //private By notesAddNoteBttn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/h2/div/div/div/div[contains(text(),'Notes')]/following-sibling::div/button");
 
         //Notes List View Elements
-        private By notesTitle = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/h2/div/div/div/div[contains(text(),'Notes')]");
-        private By notesTable = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']");
-        private By notesNoteColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Note')]");
-        private By notesCreatedDateColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Created date')]");
-        private By notesCreatedByColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Last updated by')]");
-        private By notesBodyRows = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
+        //private By notesTitle = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/h2/div/div/div/div[contains(text(),'Notes')]");
+        //private By notesTable = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']");
+        //private By notesNoteColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Note')]");
+        //private By notesCreatedDateColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Created date')]");
+        //private By notesCreatedByColumn = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div/div/div/div[contains(text(),'Last updated by')]");
+        //private By notesBodyRows = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
         //Notes 1st result Elements
         private By note1stViewNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='View Note']");
         private By note1stDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='Delete Note']");
+        private By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(1)");
 
         //Notes Add new notes Details Elements
         private By notesAddDetailsHeader = By.XPath("//div[@class='modal-title h4']");
@@ -50,14 +67,24 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
         private By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/following-sibling::div[@class='modal-footer']/button[@title='ok-modal']");
 
+        //Notes Toast
+        private By notesToast = By.CssSelector("div[class='Toastify__toast-body']");
+
+
 
         public Notes(IWebDriver webDriver) : base(webDriver)
         {}
 
-        public void AddNewNote()
+        public void NavigateNotesTab()
         {
             Wait();
-            FocusAndClick(notesAddNoteBttn);
+            webDriver.FindElement(notesTabLink).Click();
+        }
+
+        public void CreateNotesTabButton()
+        {
+            Wait();
+            webDriver.FindElement(notesTabAddBttn).Click();
         }
 
         public void AddNewNoteDetails(string note)
@@ -66,10 +93,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesAddDetailsTextarea).SendKeys(note);
         }
 
-        public void ViewFirstNoteButton()
+        public void ViewFirstNoteDetails()
         {
             Wait();
-            webDriver.FindElement(note1stViewNoteBttn).Click();
+            webDriver.FindElement(notesTab1stResultViewBttn).Click();
         }
 
         public void EditNote(string note)
@@ -112,16 +139,16 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesDeleteOkBttn).Click();
         }
 
-        public void VerifyNotesListView()
-        {
-            Wait();
-            Assert.True(webDriver.FindElement(notesTitle).Displayed);
-            Assert.True(webDriver.FindElement(notesAddNoteBttn).Displayed);
-            Assert.True(webDriver.FindElement(notesTable).Displayed);
-            Assert.True(webDriver.FindElement(notesNoteColumn).Displayed);
-            Assert.True(webDriver.FindElement(notesCreatedDateColumn).Displayed);
-            Assert.True(webDriver.FindElement(notesCreatedByColumn).Displayed);
-        }
+        //public void VerifyNotesListView()
+        //{
+        //    Wait();
+        //    Assert.True(webDriver.FindElement(notesTitle).Displayed);
+        //    Assert.True(webDriver.FindElement(notesAddNoteBttn).Displayed);
+        //    Assert.True(webDriver.FindElement(notesTable).Displayed);
+        //    Assert.True(webDriver.FindElement(notesNoteColumn).Displayed);
+        //    Assert.True(webDriver.FindElement(notesCreatedDateColumn).Displayed);
+        //    Assert.True(webDriver.FindElement(notesCreatedByColumn).Displayed);
+        //}
 
         public void VerifyNotesAddNew()
         {
@@ -148,19 +175,44 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(notesAddDetailsSaveBttn).Displayed);
         }
 
-        public void VerifyAutomaticNotes(string fromStatus, string toStatus)
+        public void VerifyNotesTabListView()
         {
             Wait();
-            var lastNoteIndex = webDriver.FindElements(notesBodyRows).Count();
-            var lastNote = "//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[7]/div/div/div/div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+lastNoteIndex+"]/div[@class='tr']/div[@class='td'][1]";
-            //var lastNote = "div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastNoteIndex +") div[class='tr'] div[class='td']:nth-child(1)";
-            Assert.True(webDriver.FindElement(By.XPath(lastNote)).Text == "Activity status changed from "+ fromStatus +" to " + toStatus);
+
+            Assert.True(webDriver.FindElement(notesTabTitle).Displayed);
+            Assert.True(webDriver.FindElement(notesTabAddBttn).Displayed);
+            Assert.True(webDriver.FindElement(notesTabTableHeaderNoteColumn).Displayed);
+            Assert.True(webDriver.FindElement(notesTabTableHeaderCreatedDateColumn).Displayed);
+            Assert.True(webDriver.FindElement(notesTabTableHeaderUpdatedByColumn).Displayed);
+
+            if (webDriver.FindElements(notesTabTableContentTotal).Count > 0)
+            {
+                Assert.True(webDriver.FindElement(notesTabTableBody).Displayed);
+            }
+            else
+            {
+                Assert.True(webDriver.FindElement(notesTabTableNoContent).Displayed);
+            }
         }
 
-        public int NotesTotal()
+        public int NotesTabCount()
         {
             Wait();
-            return webDriver.FindElements(notesBodyRows).Count();
+            return webDriver.FindElements(notesTabTableContentTotal).Count();
+        }
+
+        public void VerifyAutomaticNotes(string fileType, string fromStatus, string toStatus)
+        {
+            Wait();
+            Assert.True(webDriver.FindElement(note1stNoteContent).Text == fileType + " status changed from "+ fromStatus +" to " + toStatus);
+        }
+
+        public Boolean NoteDeletedSuccessfully()
+        {
+            Wait(500);
+            Assert.True(webDriver.FindElement(notesToast).Text == "Deleted successfully.");
+            return webDriver.FindElements(notesToast).Count > 0;
+            
         }
     }
 }

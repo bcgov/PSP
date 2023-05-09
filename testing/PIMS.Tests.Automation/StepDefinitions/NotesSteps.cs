@@ -1,66 +1,92 @@
 ﻿
+using PIMS.Tests.Automation.Classes;
+using PIMS.Tests.Automation.Data;
+using System.Data;
+
 namespace PIMS.Tests.Automation.StepDefinitions
 {
+    [Binding]
     public class NotesSteps
     {
-        private readonly SharedNotesTab sharedNotesTab;
+        private readonly Notes notes;
+        private readonly GenericSteps genericSteps;
 
-        private readonly string notesTabNote1 = "Testing notes tab from Acquisition File";
-        private readonly string acquisitionFileNameNotes = "Automated Acquisition File - Testing Notes Tab";
-        private readonly string acquisitionFileNameNotes2 = "Automated Acquisition File - Testing Notes Tab Update";
+        private List<string> notesData; 
 
         public NotesSteps(BrowserDriver driver)
         {
-            sharedNotesTab = new SharedNotesTab(driver.Current);
+            notes = new Notes(driver.Current);
+            genericSteps = new GenericSteps(driver);
+            notesData = new List<string>();
         }
 
-        [StepDefinition(@"I create a new Note on the Notes Tab")]
-        public void CreateNotesTab()
+        [StepDefinition(@"I create a new Note on the Notes Tab from row number (.*)")]
+        public void CreateNotesTab(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-5332, PSP-5505, PSP-5506, PSP-5507  */
+            /* TEST COVERAGE: PSP-5332, PSP-5505 */
 
             //Navigate to the Notes Tab
-            sharedNotesTab.NavigateNotesTab();
+            notes.NavigateNotesTab();
+            notes.VerifyNotesTabListView();
 
             //Create a new note
-            sharedNotesTab.CreateNotesTabButton();
-            sharedNotesTab.AddNewNoteDetails(notesTabNote1);
+            PopulateNotes(rowNumber);
+            notes.CreateNotesTabButton();
+            notes.VerifyNotesAddNew();
+            notes.AddNewNoteDetails(notesData[0]);
 
             //Cancel new note
-            sharedNotesTab.CancelNote();
+            notes.CancelNote();
 
             //Create a new note
-            sharedNotesTab.CreateNotesTabButton();
-            sharedNotesTab.AddNewNoteDetails(notesTabNote1);
-
-            //Save note
-            sharedNotesTab.SaveNote();
-
-            //Edit note
-            sharedNotesTab.ViewFirstNoteDetails();
-            sharedNotesTab.EditNote(acquisitionFileNameNotes2);
-
-            //Cancel note's update
-            sharedNotesTab.CancelNote();
-
-            //Edit note
-            sharedNotesTab.ViewFirstNoteDetails();
-            sharedNotesTab.EditNote(acquisitionFileNameNotes2);
-
-            //Save changes
-            sharedNotesTab.SaveNote();
-
-            //Verify Notes quantity
-            Assert.True(sharedNotesTab.NotesTabCount() == 1);
-
-            //Delete Note
-            sharedNotesTab.DeleteFirstNote();
+            for (var i = 0; i < notesData.Count; i++)
+            {
+                notes.CreateNotesTabButton();
+                notes.AddNewNoteDetails(notesData[i]);
+                notes.SaveNote();
+            }
         }
 
-        [StepDefinition(@"The Notes Tab rendered successfully")]
-        public void NotesTanSuccessful()
+        [StepDefinition(@"I edit a Note on the Notes Tab from row number (.*)")]
+        public void EditNotesTab(int rowNumber)
         {
-            sharedNotesTab.VerifyNotesTabListView();
+            /* TEST COVERAGE: PSP-5506, PSP-5507 */
+
+            //Navigate to the Notes Tab
+            notes.NavigateNotesTab();
+
+            //Edit note
+            PopulateNotes(rowNumber);
+            notes.ViewFirstNoteDetails();
+            notes.VerifyNotesEditForm();
+            notes.EditNote(notesData[0]);
+
+            //Cancel note's update
+            notes.CancelNote();
+
+            //Edit note
+            notes.ViewFirstNoteDetails();
+            notes.EditNote(notesData[0]);
+
+            //Save changes
+            notes.SaveNote();
+
+            //Delete Note
+            notes.DeleteFirstNote();
+        }
+
+        [StepDefinition(@"Notes update have been done successfully")]
+        public void NoteUpdateSuccess()
+        {
+            Assert.True(notes.NoteDeletedSuccessfully());
+        }
+
+        private void PopulateNotes(int rowNumber)
+        {
+            DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"];
+            ExcelDataContext.PopulateInCollection(notesSheet);
+
+            notesData = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "Notes"));
         }
     }
 }
