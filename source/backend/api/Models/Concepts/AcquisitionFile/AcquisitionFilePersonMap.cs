@@ -9,6 +9,7 @@ namespace Pims.Api.Models.Concepts
         {
             config.NewConfig<Entity.PimsAcquisitionFilePerson, AcquisitionFilePersonModel>()
                 .Map(dest => dest.Id, src => src.AcquisitionFilePersonId)
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Person, src => src.Person)
                 .Map(dest => dest.PersonProfileType, src => src.AcqFlPersonProfileTypeCodeNavigation)
@@ -18,6 +19,7 @@ namespace Pims.Api.Models.Concepts
 
             config.NewConfig<AcquisitionFilePersonModel, Entity.PimsAcquisitionFilePerson>()
                 .Map(dest => dest.AcquisitionFilePersonId, src => src.Id)
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.AcqFlPersonProfileTypeCode, src => src.PersonProfileTypeCode)
