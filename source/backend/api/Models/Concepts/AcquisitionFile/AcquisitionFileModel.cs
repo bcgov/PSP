@@ -43,6 +43,11 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<string> AcquisitionTypeCode { get; set; }
 
         /// <summary>
+        /// get/set - The acquisition product's id.
+        /// </summary>
+        public long? ProductId { get; set; }
+
+        /// <summary>
         /// get/set - The acquisition product.
         /// </summary>
         public ProductModel Product { get; set; }
@@ -56,6 +61,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Description of funding type if Other.
         /// </summary>
         public string FundingOther { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition project's id.
+        /// </summary>
+        public long? ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The acquisition project.

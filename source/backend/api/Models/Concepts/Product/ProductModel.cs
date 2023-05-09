@@ -13,9 +13,14 @@ namespace Pims.Api.Models.Concepts
         public long? Id { get; set; }
 
         /// <summary>
-        /// get/set - The project id.
+        /// get/set - The project associated to this product.
         /// </summary>
         public virtual ProjectModel ParentProject { get; set; }
+
+        /// <summary>
+        /// get/set - The project's id.
+        /// </summary>
+        public long? ParentProjectId { get; set; }
 
         /// <summary>
         /// get/set - The product associated files.

@@ -44,6 +44,8 @@ export class AcquisitionChecklistFormModel {
       id: this.id,
       rowVersion: this.rowVersion,
       acquisitionFileChecklist: allChecklistItems.map(c => c.toApi()),
+      projectId: null,
+      productId: null,
     };
   }
 
