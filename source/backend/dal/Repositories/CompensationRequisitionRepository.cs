@@ -30,7 +30,10 @@ namespace Pims.Dal.Repositories
 
         public IList<PimsCompensationRequisition> GetAllByAcquisitionFileId(long acquisitionFileId)
         {
-            return Context.PimsCompensationRequisitions.Include(c => c.PimsCompReqH120s).AsNoTracking().Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
+            return Context.PimsCompensationRequisitions
+                .Include(c => c.PimsCompReqH120s)
+                .AsNoTracking()
+                .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
 
         public PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition)

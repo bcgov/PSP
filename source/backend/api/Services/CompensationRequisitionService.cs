@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;

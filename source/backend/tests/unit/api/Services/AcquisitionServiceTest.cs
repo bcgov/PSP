@@ -753,16 +753,95 @@ namespace Pims.Api.Test.Services
         #region CompensationRequisition
 
         [Fact]
-        public void GetCompensationsRequisitions()
+        public void GetCompensationsRequisitions_NoPermissions()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetAcquisitionCompensations(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
         }
 
+        [Fact]
+        public void GetCompensationsRequisitions_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            repository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsCompensationRequisition>()
+                {
+                    new PimsCompensationRequisition(),
+                });
+
+            // Act
+            var result = service.GetAcquisitionCompensations(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+        }
 
         [Fact]
-        public void AddCompensationsRequisitions()
+        public void AddCompensationsRequisitions_NoPermissions()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.AddCompensationRequisition(1, new PimsCompensationRequisition());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddCompensationsRequisitions_NullException()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+
+            // Act
+            Action act = () => service.AddCompensationRequisition(1, null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void AddCompensationsRequisitions_BadRequest_IdMissmatch()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+
+            // Act
+            Action act = () => service.AddCompensationRequisition(1, new PimsCompensationRequisition() {  Internal_Id = 2});
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void AddCompensationsRequisitions_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newCompensationReq = EntityHelper.CreateCompensationRequisition(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
+
+            // Act
+            var result = service.AddCompensationRequisition(1, newCompensationReq);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
 
 
