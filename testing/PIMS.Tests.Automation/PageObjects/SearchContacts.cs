@@ -195,7 +195,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchContactFirstEmailDiv).Text.Equals(email));
             Assert.True(webDriver.FindElement(searchContactFirstMailAddressDiv).Text.Equals(address));
             Assert.True(webDriver.FindElement(searchContactFirstCityDiv).Text.Equals(city));
-            if (country == "Canada")
+            if (country == "Canada" || country == "United States of America")
             {
                 Assert.True(webDriver.FindElement(searchContactFirstProvinceDiv).Text.Equals(province));
             }

@@ -23,7 +23,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private readonly string status1 = "Draft";
         private readonly string status2 = "Inactive";
-        private readonly string project = "Super Test Project";
+        private readonly string project = "Automation Project 04";
         private readonly string leaseStartDate = "02/22/2022";
         private readonly string leaseExpiryDate = "03/22/2024";
         private readonly string leaseExpiryPastDate = "12/24/2022";
@@ -39,6 +39,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string editNotes = "Automation Test Notes - Edited by automation";
 
         private readonly string PID = "001-192-396";
+        private readonly string PID2 = "010-598-103";
         private readonly string PIN = "553490";
         private readonly string address = "2525 Mill Bay Rd";
         private readonly string planNbr = "VAP7495";
@@ -743,7 +744,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.NavigateToSearchLicense();
 
             //Filter leases Files
-            searchLease.FilterLeasesFiles(PID, leaseExpiryDate, organizationTenant3,  status2);
+            searchLease.FilterLeasesFiles(PID2, leaseExpiryDate, organizationTenant3,  status2);
             Assert.True(searchLease.SearchFoundResults());
 
             searchLease.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Discarded");

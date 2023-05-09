@@ -24,5 +24,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             webDriver.Url = path;
             webDriver.Navigate();
         }
+
+        public List<string> PopulateLists(string stringToList)
+        {
+            List<string> result = stringToList.Split(',').ToList();
+            result.Sort();
+            return result;
+        }
     }
 }

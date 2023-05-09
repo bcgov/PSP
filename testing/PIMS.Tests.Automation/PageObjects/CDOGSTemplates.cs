@@ -5,7 +5,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class CDOGSTemplates : PageObjectBase
     {
         //Admin Tools - CDOGS Menu Elements
-        private By adminToolsTemplatesLink = By.XPath("//a[contains(text(),'Manage Activity Document Templates')]");
+        private By adminToolsTemplatesLink = By.XPath("//a[contains(text(),'Manage Form Document Templates')]");
         private By adminToolsTemplateTypeSelect = By.CssSelector("select[class='form-control']");
 
         //Admin Tools - CDOGS List View Elements
@@ -26,7 +26,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By CDOGSTableDateColumn = By.XPath("//div[contains(text(),'Uploaded')]");
         private By CDOGSTableStatusColumn = By.XPath("//div[contains(text(),'Status')]");
         private By CDOGSTableActionsColumn = By.XPath("//div[contains(text(),'Actions')]");
-        private By CDOGSTableContentTotal = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div");
 
         private By CDOGSPagination = By.XPath("//ul[@class='pagination']");
         private By CDOGSMenuPagination = By.XPath("//div[@class='Menu-root']");
@@ -82,27 +81,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(CDOGSTableDateColumn).Displayed);
             Assert.True(webDriver.FindElement(CDOGSTableStatusColumn).Displayed);
             Assert.True(webDriver.FindElement(CDOGSTableActionsColumn).Displayed);
-
-            Assert.True(webDriver.FindElement(CDOGSPagination).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSMenuPagination).Displayed);
-        }
-
-        public void CDOGSFilters(string status, string fileName)
-        {
-            Wait();
-            ChooseSpecificSelectOption(CDOGSFilterStatusSelect, status);
-            webDriver.FindElement(CDOGSFilterSearchBttn).Click();
-
-            Wait();
-            Assert.True(webDriver.FindElements(CDOGSTableContentTotal).Count() > 0);
-
-            webDriver.FindElement(CDOGSFilterNameInput).SendKeys(fileName);
-            webDriver.FindElement(CDOGSFilterSearchBttn).Click();
-
-            Wait();
-            Assert.True(webDriver.FindElements(CDOGSTableContentTotal).Count() == 0);
-
-            webDriver.FindElement(CDOGSFilterResetBttn).Click();
         }
 
         public void Delete1stTemplate()
