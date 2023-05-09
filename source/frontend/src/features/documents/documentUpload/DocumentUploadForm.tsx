@@ -2,6 +2,7 @@ import { Button } from 'components/common/buttons/Button';
 import { Select, SelectOption } from 'components/common/form';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import ValidDocumentExtensions from 'constants/ValidDocumentExtensions';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikProps } from 'formik';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
@@ -56,6 +57,7 @@ const DocumentUploadForm: React.FunctionComponent<
     props.initialDocumentType,
     props.mayanMetadataTypes,
   );
+
   useEffect(() => {
     const isTypeDirty =
       props.documentTypes.find(x => x.id?.toString() === props.initialDocumentType) !== undefined;
@@ -64,6 +66,8 @@ const DocumentUploadForm: React.FunctionComponent<
       props.formikRef.current?.setFieldValue('isDocumentTypeChanged', isTypeDirty);
     }
   }, [props.formikRef, props.documentTypes, props.initialDocumentType, props.mayanMetadataTypes]);
+
+  const validDocumentExtensions: string = ValidDocumentExtensions.map(x => `.${x}`).join(',');
 
   return (
     <StyledContainer>
@@ -113,6 +117,7 @@ const DocumentUploadForm: React.FunctionComponent<
                   id="uploadInput"
                   type="file"
                   name="documentFile"
+                  accept={validDocumentExtensions}
                   onChange={handleFileInput}
                 />
               </div>
