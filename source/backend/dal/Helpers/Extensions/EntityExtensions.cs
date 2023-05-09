@@ -226,13 +226,13 @@ namespace Pims.Dal.Helpers.Extensions
                     var grandchildValue = grandchildFunc(child);
                     if (updateGrandChildValues)
                     {
-                        if (grandchildReference?.TargetEntry == null)
+                        if(grandchildReference?.TargetEntry is null && grandchildValue is not null)
                         {
                             grandchildReference.CurrentValue = grandchildValue;
                         }
                         else
                         {
-                            grandchildReference.TargetEntry.CurrentValues.SetValues(grandchildValue);
+                            grandchildReference.TargetEntry?.CurrentValues.SetValues(grandchildValue);
                         }
                     }
 
