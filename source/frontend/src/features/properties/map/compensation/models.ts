@@ -20,6 +20,24 @@ export class CompensationRequisitionFormModel {
     this.acquisitionFileId = acquisitionFileId;
   }
 
+  toApi(): Api_Compensation {
+    return {
+      id: this.id,
+      acquisitionFileId: this.acquisitionFileId,
+      isDraft: this.status === 'draft' ? true : false,
+      fiscalYear: stringToNull(this.fiscalYear),
+      agreementDate: stringToNull(this.agreementDateTime),
+      expropriationNoticeServedDate: stringToNull(this.expropriationNoticeServedDateTime),
+      expropriationVestingDate: stringToNull(this.expropriationVestingDateTime),
+      generationDate: stringToNull(this.generationDatetTime),
+      specialInstruction: stringToNull(this.specialInstruction),
+      detailedRemarks: stringToNull(this.detailedRemarks),
+      isDisabled: stringToBoolean(this.isDisabled),
+      financials: [],
+      rowVersion: this.rowVersion ?? undefined,
+    };
+  }
+
   static fromApi(apiModel: Api_Compensation): CompensationRequisitionFormModel {
     const compensation = new CompensationRequisitionFormModel(
       apiModel.id,
@@ -39,23 +57,5 @@ export class CompensationRequisitionFormModel {
     compensation.rowVersion = apiModel.rowVersion ?? null;
 
     return compensation;
-  }
-
-  public toApi(): Api_Compensation {
-    return {
-      id: this.id,
-      acquisitionFileId: this.acquisitionFileId,
-      isDraft: this.status === 'draft' ? true : false,
-      fiscalYear: stringToNull(this.fiscalYear),
-      agreementDate: stringToNull(this.agreementDateTime),
-      expropriationNoticeServedDate: stringToNull(this.expropriationNoticeServedDateTime),
-      expropriationVestingDate: stringToNull(this.expropriationVestingDateTime),
-      generationDate: stringToNull(this.generationDatetTime),
-      specialInstruction: stringToNull(this.specialInstruction),
-      detailedRemarks: stringToNull(this.detailedRemarks),
-      isDisabled: stringToBoolean(this.isDisabled),
-      financials: [],
-      rowVersion: this.rowVersion ?? undefined,
-    };
   }
 }

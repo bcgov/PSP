@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks';
 import { getMockApiCompensationList } from 'mocks/mockCompensations';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, findByText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 
@@ -164,6 +164,20 @@ describe('compensation list view', () => {
     const deleteButton = queryByTitle('Delete Compensation');
     await waitFor(() => {
       expect(deleteButton).toBeNull();
+    });
+  });
+
+  it('can click the Add Compensation button', async () => {
+    const { getByText } = setup({
+      compensations: getMockApiCompensationList(),
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_ADD],
+    });
+
+    const addButton = getByText('Add a Requisition');
+    expect(addButton).toBeVisible();
+    act(() => userEvent.click(addButton));
+    await waitFor(() => {
+      expect(onAddCompensationRequisition).toHaveBeenCalled();
     });
   });
 });

@@ -3,6 +3,9 @@ import * as yup from 'yup';
 
 export const CompensationRequisitionYupSchema = yup.object().shape({
   agreementDate: yup.string(),
+  expropriationNoticeServedDateTime: yup.string(),
+  expropriationVestingDateTime: yup.string(),
+  generationDatetTime: yup.string(),
   status: yup.string(),
   fiscalYear: yup.string().when('status', {
     is: 'final',

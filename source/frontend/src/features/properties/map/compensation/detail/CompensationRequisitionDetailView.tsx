@@ -62,21 +62,21 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             <Row className="no-gutters">
               <Col>
                 <HeaderField label="Compensation amount:" contentWidth="4">
-                  {formatMoney(20000)}
+                  {formatMoney(0)}
                 </HeaderField>
               </Col>
             </Row>
             <Row className="no-gutters">
               <Col>
                 <HeaderField label="Applicable GST:" contentWidth="4">
-                  {formatMoney(2000)}
+                  {formatMoney(0)}
                 </HeaderField>
               </Col>
             </Row>
             <Row className="no-gutters">
               <Col>
                 <HeaderField label="Total cheque amount:" contentWidth="4">
-                  {formatMoney(22000)}
+                  {formatMoney(0)}
                 </HeaderField>
               </Col>
             </Row>

@@ -6,7 +6,23 @@ exports[`compensation list view renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c1 {
+  .c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
+}
+
+.c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -20,14 +36,14 @@ exports[`compensation list view renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
 }
 
@@ -43,7 +59,18 @@ exports[`compensation list view renders as expected 1`] = `
         <div
           class="col"
         >
-          Compensation
+          <div
+            class="c2 no-gutters row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Add Compensation
+            </div>
+            <div
+              class="my-1 col-auto"
+            />
+          </div>
         </div>
         <div
           class="col-1"
@@ -60,13 +87,13 @@ exports[`compensation list view renders as expected 1`] = `
           class="pr-0 text-left col-9"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Total compensation for this file:
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
         >
           $0.00
         </div>

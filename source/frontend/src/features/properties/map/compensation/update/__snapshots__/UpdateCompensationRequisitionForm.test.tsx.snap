@@ -1,0 +1,571 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TakesUpdateForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c8.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c8.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c8.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c8.btn.btn-primary {
+  border: none;
+}
+
+.c8.btn.btn-secondary {
+  background: none;
+}
+
+.c8.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
+  background: none;
+}
+
+.c8.btn.btn-light {
+  border: none;
+}
+
+.c8.btn.btn-dark {
+  border: none;
+}
+
+.c8.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c8.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c8.Button--icon-only:focus {
+  outline: none;
+}
+
+.c8.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5.c5.form-control.is-valid {
+  background-image: none;
+}
+
+.c5.c5.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c7 {
+  position: -webkit-sticky;
+  position: sticky;
+  padding-top: 2rem;
+  bottom: 0;
+  background: white;
+  z-index: 10;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+.c6 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Requisition details
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Status:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col-4"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-status"
+                name="status"
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-draft"
+                  value="draft"
+                >
+                  Draft
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-final"
+                  value="final"
+                >
+                  Final
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Agreement date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col-4"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container"
+                >
+                  <input
+                    autocomplete="off"
+                    class="c5 form-control date-picker"
+                    id="datepicker-agreementDateTime"
+                    name="agreementDateTime"
+                    placeholder="--/--/----"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Expropriation notice served date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col-4"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container"
+                >
+                  <input
+                    autocomplete="off"
+                    class="c5 form-control date-picker"
+                    id="datepicker-expropriationNoticeServedDateTime"
+                    name="expropriationNoticeServedDateTime"
+                    placeholder="--/--/----"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Expropriation vesting date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col-4"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container"
+                >
+                  <input
+                    autocomplete="off"
+                    class="c5 form-control date-picker"
+                    id="datepicker-expropriationVestingDateTime"
+                    name="expropriationVestingDateTime"
+                    placeholder="--/--/----"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c3"
+            >
+              Special instructions:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c6 textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-specialInstruction"
+                name="specialInstruction"
+                title=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Financial coding
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Fiscal year:
+            </label>
+          </div>
+          <div
+            class="c4 required text-left col-4"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-fiscalYear"
+                name="fiscalYear"
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-2022/2023"
+                  value="2022/2023"
+                >
+                  2022/2023
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-2023/2024"
+                  value="2023/2024"
+                >
+                  2023/2024
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-2024/2025"
+                  value="2024/2025"
+                >
+                  2024/2025
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c3"
+            >
+              Detailed remarks:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c6 textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-detailedRemarks"
+                name="detailedRemarks"
+                title=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7 justify-content-end mt-auto no-gutters row"
+    >
+      <div
+        class="pr-4 col-auto"
+      >
+        <button
+          class="c8 Button btn btn-secondary"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            Cancel
+          </div>
+        </button>
+      </div>
+      <div
+        class="col-auto"
+      >
+        <button
+          class="c8 Button Button--disabled btn btn-primary"
+          disabled=""
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            Save
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

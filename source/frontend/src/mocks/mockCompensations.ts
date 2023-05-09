@@ -1,5 +1,37 @@
 import { Api_Compensation } from 'models/api/Compensation';
 
+export const getMockApiDefaultCompensation = (): Api_Compensation => ({
+  id: 1,
+  acquisitionFileId: 2,
+  isDraft: true,
+  fiscalYear: null,
+  agreementDate: null,
+  expropriationNoticeServedDate: null,
+  expropriationVestingDate: null,
+  generationDate: null,
+  specialInstruction: null,
+  detailedRemarks: null,
+  isDisabled: false,
+  financials: [],
+  rowVersion: 1,
+});
+
+export const getMockApiCompensation = (): Api_Compensation => ({
+  id: 1,
+  acquisitionFileId: 2,
+  isDraft: true,
+  fiscalYear: null,
+  agreementDate: null,
+  expropriationNoticeServedDate: null,
+  expropriationVestingDate: null,
+  generationDate: null,
+  specialInstruction: null,
+  detailedRemarks: null,
+  isDisabled: false,
+  financials: [],
+  rowVersion: 1,
+});
+
 export const getMockApiCompensationList = (): Api_Compensation[] => [
   {
     id: 1,

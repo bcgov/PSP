@@ -41,8 +41,8 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
         header={
           <SectionListHeader
             claims={[Claims.COMPENSATION_REQUISITION_ADD]}
-            title="Compensation"
-            addButtonText="Add a Requistion"
+            title="Add Compensation"
+            addButtonText="Add a Requisition"
             addButtonIcon={'add'}
             onAdd={onAdd}
           />
