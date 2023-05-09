@@ -403,8 +403,26 @@ namespace Pims.Dal.Repositories
         {
             var userRegion = user.PimsRegionUsers.FirstOrDefault(r => r.Internal_Id == regionId);
             user.PimsRegionUsers.Remove(userRegion);
-            this.Context.PimsRegionUsers.Remove(userRegion);
+            Context.PimsRegionUsers.Remove(userRegion);
             return user;
+        }
+
+        public ICollection<PimsUserRole> UpdateAllRolesForUser(long userId, ICollection<PimsUserRole> roles)
+        {
+            Context.UpdateChild<PimsUser, long, PimsUserRole, long>(u => u.PimsUserRoles, userId, roles.ToArray());
+            return roles;
+        }
+
+        public ICollection<PimsRegionUser> UpdateAllRegionsForUser(long userId, ICollection<PimsRegionUser> regions)
+        {
+            foreach (var userRegion in regions)
+            {
+                var region = Context.Find<PimsRegion>(userRegion.RegionCode);
+                userRegion.RegionCodeNavigation = region;
+            }
+
+            Context.UpdateChild<PimsUser, long, PimsRegionUser, long>(u => u.PimsRegionUsers, userId, regions.ToArray());
+            return regions;
         }
 
         /// <summary>

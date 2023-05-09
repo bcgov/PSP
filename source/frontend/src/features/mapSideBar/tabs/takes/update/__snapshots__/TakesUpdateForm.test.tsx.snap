@@ -140,29 +140,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c4 {
-  float: right;
-  cursor: pointer;
-}
-
-.c16.c16.form-control.is-valid {
-  background-image: none;
-}
-
-.c16.c16.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c12 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
 .c6.c6.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -195,6 +172,29 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
 .c6.c6.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c16.c16.form-control.is-valid {
+  background-image: none;
+}
+
+.c16.c16.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c4 {
+  float: right;
+  cursor: pointer;
 }
 
 .c11.form-group {
