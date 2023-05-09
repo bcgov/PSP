@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -93,21 +94,21 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(financialCodeCreateNewBttn).Click();
         }
 
-        public void CreateNewFinancialCode(string type, string code, string description, string order)
+        public void CreateNewFinancialCode(FinancialCode financialCode)
         {
             Wait();
-            ChooseSpecificSelectOption(financialCodeFormTypeSelect, type);
-            webDriver.FindElement(financialCodeFormValueInput).SendKeys(code);
-            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(description);
-            webDriver.FindElement(financialCodeFormOrderInput).SendKeys(order);
+            ChooseSpecificSelectOption(financialCodeFormTypeSelect, financialCode.CodeType);
+            webDriver.FindElement(financialCodeFormValueInput).SendKeys(financialCode.CodeValue);
+            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.CodeDescription);
+            webDriver.FindElement(financialCodeFormOrderInput).SendKeys(financialCode.DisplayOrder);
         }
 
-        public void UpdateFinancialCode(string description, string expiryDate)
+        public void UpdateFinancialCode(FinancialCode financialCode)
         {
             Wait();
             ClearInput(financialCodeFormDescriptionInput);
-            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(description);
-            webDriver.FindElement(financialCodeFormExpiryDateInput).SendKeys(expiryDate);
+            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.CodeDescription);
+            webDriver.FindElement(financialCodeFormExpiryDateInput).SendKeys(financialCode.ExpiryDate);
             webDriver.FindElement(financialCodeFormExpiryDateLabel).Click();
         }
 
