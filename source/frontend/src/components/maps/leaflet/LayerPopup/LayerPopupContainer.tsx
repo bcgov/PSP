@@ -18,7 +18,7 @@ export const LayerPopupContainer: React.FC<React.PropsWithChildren<ILayerPopupCo
   onViewPropertyInfo,
 }) => {
   const history = useHistory();
-  const { setState, selectedFeature, selectedInventoryProperty } = useContext(MapStateContext);
+  const { setState, selectedFeature } = useContext(MapStateContext);
 
   // We are interested in the PID field that comes back from parcel map layer attributes
   const pid = layerPopup?.data?.PID;
@@ -53,7 +53,7 @@ export const LayerPopupContainer: React.FC<React.PropsWithChildren<ILayerPopupCo
   };
 
   const handleCreateLeaseLicence = () => {
-    selectedInventoryProperty &&
+    selectedFeature &&
       setState({
         type: MapStateActionTypes.SELECTED_FILE_FEATURE,
         selectedFileFeature: selectedFeature,
@@ -73,7 +73,6 @@ export const LayerPopupContainer: React.FC<React.PropsWithChildren<ILayerPopupCo
       {showFlyout && (
         <StyledFlyoutContainer>
           <LayerPopupFlyout
-            pimsPropertyId={id}
             onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
