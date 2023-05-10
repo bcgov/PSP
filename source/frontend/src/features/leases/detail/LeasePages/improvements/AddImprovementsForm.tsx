@@ -47,7 +47,7 @@ const StyledFormBody = styled.form`
   .form-group {
     flex-direction: column;
     input {
-      border-left: 0;
+      border-left: 1;
       width: 70%;
     }
     textarea {

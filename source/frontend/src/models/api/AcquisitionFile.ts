@@ -38,6 +38,7 @@ export interface Api_AcquisitionFileProperty
 
 export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
+  acquisitionFileId?: number;
   personId?: number;
   person?: Api_Person;
   personProfileTypeCode?: string;

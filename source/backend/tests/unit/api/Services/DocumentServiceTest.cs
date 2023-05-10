@@ -717,6 +717,73 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public async void DownloadFileLatestAsync_InvalidExtension()
+        {
+            // Arrange
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Ok",
+                    Status = ExternalResultStatus.Success,
+                    Payload = new()
+                    {
+                        Id = 12,
+                        FileLatest = new FileLatest()
+                        {
+                            Id = 2,
+                            Size = 1,
+                            FileName = "MyFile.exe",
+                        }
+                    },
+                });
+
+            // Act
+            var result = await service.DownloadFileLatestAsync(1);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
+            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
+            Assert.Equal(ExternalResultStatus.Error, result.Status);
+        }
+
+        [Fact]
+        public async void DownloadFileLatestAsync_ValidExtension()
+        {
+            // Arrange
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Ok",
+                    Status = ExternalResultStatus.Success,
+                    Payload = new()
+                    {
+                        Id = 12,
+                        FileLatest = new FileLatest()
+                        {
+                            Id = 2,
+                            Size = 1,
+                            FileName = "MyFile.pdf",
+                        }
+                    },
+                });
+
+            // Act
+            await service.DownloadFileLatestAsync(1);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
+            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
         public async void DownloadFileLatestAsync_Successfull_Payload_Document()
         {
             // Arrange
@@ -732,7 +799,7 @@ namespace Pims.Api.Test.Services
                     Payload = new DocumentDetail()
                     {
                         Id = 1,
-                        FileLatest = new FileLatest() { Id = 2, }
+                        FileLatest = new FileLatest() { Id = 2, FileName = "MyFile.pdf" }
                     },
                 });
 
@@ -746,7 +813,7 @@ namespace Pims.Api.Test.Services
                     {
                         FilePayload = "156165165156asdasdasd==",
                         Size = 1,
-                        FileName = "MyFile",
+                        FileName = "MyFile.pdf",
                         EncodingType = "base64"
                     },
                 });
@@ -758,5 +825,33 @@ namespace Pims.Api.Test.Services
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
         }
 
+        [Fact]
+        public async void DownloadFileAsync_InvalidExtension()
+        {
+            // Arrange
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = _helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResult<FileDownload>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Status = ExternalResultStatus.Success,
+                    Payload = new FileDownload()
+                    {
+                        FileName = "Test.exe",
+                        FileNameExtension = "exe",
+                        FileNameWithoutExtension = "Test",
+                    }
+                });
+
+            // Act
+            var result = await service.DownloadFileAsync(1, 2);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+
+            Assert.Equal(ExternalResultStatus.Error, result.Status);
+        }
     }
 }
