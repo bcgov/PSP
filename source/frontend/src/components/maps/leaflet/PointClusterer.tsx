@@ -383,6 +383,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
           //render all of the unclustered draft markers.
           if (draftPoint?.geometry?.coordinates) {
             const [longitude, latitude] = draftPoint.geometry.coordinates;
+            if (!latitude || !longitude) return <></>;
             return (
               <Marker
                 {...(draftPoint.properties as any)}
