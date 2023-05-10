@@ -110,7 +110,6 @@ export const MapStateContextProvider: React.FC<
             draft.selectedFeature = action.selectedFeature;
           });
         case MapStateActionTypes.SELECTED_FILE_FEATURE:
-          console.log('MapStateContextProvider.SELECTED_FILE_FEATURE', action.selectedFileFeature);
           return produce(prevState, draft => {
             draft.selectedFileFeature = action.selectedFileFeature;
           });
