@@ -18,16 +18,23 @@ export interface WithAcquisitionOwners {
 }
 
 export class AcquisitionTeamFormModel {
+  id?: number;
+  rowVersion?: number;
+  acquisitionFileId?: number;
   contact?: IContactSearchResult;
   contactTypeCode: string;
 
-  constructor(contactTypeCode: string, contact?: IContactSearchResult) {
+  constructor(contactTypeCode: string, id?: number, contact?: IContactSearchResult) {
+    this.id = id;
     this.contactTypeCode = contactTypeCode;
     this.contact = contact;
   }
 
   toApi(): Api_AcquisitionFilePerson {
     return {
+      id: this.id,
+      rowVersion: this.rowVersion,
+      acquisitionFileId: this.acquisitionFileId,
       personId: this.contact?.personId || 0,
       person: { id: this.contact?.personId || 0 },
       personProfileType: toTypeCode(this.contactTypeCode),
@@ -38,8 +45,13 @@ export class AcquisitionTeamFormModel {
   static fromApi(model: Api_AcquisitionFilePerson): AcquisitionTeamFormModel {
     const newForm = new AcquisitionTeamFormModel(
       fromTypeCode(model.personProfileType) || '',
+      model.id ?? 0,
       model.person !== undefined ? fromApiPerson(model.person) : undefined,
     );
+
+    newForm.rowVersion = model.rowVersion;
+    newForm.acquisitionFileId = model.acquisitionFileId;
+
     return newForm;
   }
 }
