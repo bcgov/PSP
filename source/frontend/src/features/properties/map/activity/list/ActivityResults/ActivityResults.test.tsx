@@ -1,4 +1,4 @@
-import { getMockActivityResponse, mockActivitiesResponse } from 'mocks/mockActivities';
+import { getMockActivityResponse, mockActivitiesResponse } from 'mocks/activities.mock';
 import React from 'react';
 import { render, RenderOptions } from 'utils/test-utils';
 

@@ -148,7 +148,7 @@
     "resetMocks": false,
     "clearMocks": true,
     "moduleNameMapper": {
-      "\\.(css|less|sass|scss)$": "<rootDir>/src/mocks/styleMock.js"
+      "\\.(css|less|sass|scss)$": "<rootDir>/src/mocks/style.mock.js"
     },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",

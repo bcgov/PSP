@@ -7,9 +7,9 @@ import { noop } from 'lodash';
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
-import { mockLookups } from 'mocks/mockLookups';
-import { mockNotesResponse } from 'mocks/mockNoteResponses';
+} from 'mocks/acquisitionFiles.mock';
+import { mockLookups } from 'mocks/lookups.mock';
+import { mockNotesResponse } from 'mocks/noteResponses.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   act,

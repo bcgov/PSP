@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { FormAccessRequest } from 'features/admin/access-request/models';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockApiAccessRequest } from 'mocks/filterDataMock';
+import { mockApiAccessRequest } from 'mocks/filterData.mock';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';

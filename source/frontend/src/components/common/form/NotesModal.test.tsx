@@ -5,7 +5,7 @@ import NotesModal, { INotesModalProps } from 'components/common/form/NotesModal'
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';

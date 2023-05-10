@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 import { Claims } from 'constants/index';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
