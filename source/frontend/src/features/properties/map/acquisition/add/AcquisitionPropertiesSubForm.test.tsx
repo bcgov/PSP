@@ -109,7 +109,7 @@ describe('AcquisitionProperties component', () => {
     await waitFor(() => {
       expect(setDraftProperties).toHaveBeenCalledWith({
         type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [mockDraftProperties()],
+        draftProperties: mockDraftProperties(),
       });
     });
 

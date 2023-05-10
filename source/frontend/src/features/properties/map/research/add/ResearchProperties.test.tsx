@@ -90,7 +90,7 @@ describe('ResearchProperties component', () => {
       await waitFor(async () => {
         expect(setDraftProperties).toHaveBeenCalledWith({
           type: MapStateActionTypes.DRAFT_PROPERTIES,
-          draftProperties: [mockDraftProperties()],
+          draftProperties: mockDraftProperties(),
         });
       });
     });
@@ -106,7 +106,7 @@ describe('ResearchProperties component', () => {
     await waitFor(async () => {
       expect(setDraftProperties).toHaveBeenCalledWith({
         type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [mockDraftProperties()],
+        draftProperties: mockDraftProperties(),
       });
     });
     expect(getByTitle('1')).toBeInTheDocument();
