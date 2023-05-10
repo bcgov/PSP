@@ -11,7 +11,7 @@ using Pims.Core.Test;
 using Pims.Dal.Security;
 using Xunit;
 
-namespace Pims.Api.Test.Controllers
+namespace Pims.Api.Test.Admin.Controllers
 {
     [Trait("category", "unit")]
     [Trait("category", "api")]
