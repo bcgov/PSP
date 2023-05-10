@@ -1,8 +1,8 @@
-﻿Feature: Contacts
+﻿@Regression-Contacts
+Feature: Contacts
 
 A short summary of the feature
 
-@Regression-Contacts
 Scenario Outline: 01. Create new Organization Complete Contact
 	Given I create a new Organization Contact from row number <RowNumber>
 	And I search for an existing contact from type "<ContactType>" row number <RowNumber>

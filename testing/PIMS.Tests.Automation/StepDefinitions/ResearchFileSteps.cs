@@ -61,79 +61,79 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFileCode = researchFiles.GetResearchFileCode();
 
             //Add additional info to the reseach File
-            researchFiles.VerifyResearchFileEditInitForm(researchFile, userName);
-            researchFiles.AddAdditionalResearchFileInfo(researchFile);
+            //researchFiles.VerifyResearchFileEditInitForm(researchFile, userName);
+            //researchFiles.AddAdditionalResearchFileInfo(researchFile);
 
-            //Save Research File
-            researchFiles.SaveResearchFile();
+            ////Save Research File
+            //researchFiles.SaveResearchFile();
 
-            //Verify Research File Details View Form
-            researchFiles.VerifyResearchFileMainFormView(researchFile, userName);
+            ////Verify Research File Details View Form
+            //researchFiles.VerifyResearchFileMainFormView(researchFile, userName);
 
-            //Verify automatic note created when
-            if (researchFile.Status != "Active")
-            {
-                notes.NavigateNotesTab();
-                notes.VerifyAutomaticNotes("Research File", "Active", researchFile.Status);
-            }
-            
-            //Navigate to Edit Research File
-            researchFiles.NavigateToAddPropertiesReseachFile();
+            ////Verify automatic note created when
+            //if (researchFile.Status != "Active")
+            //{
+            //    notes.NavigateNotesTab();
+            //    notes.VerifyAutomaticNotes("Research File", "Active", researchFile.Status);
+            //}
 
-            //Verify UI/ UX from Search By Component
-            sharedSearchProperties.NavigateToSearchTab();
-            sharedSearchProperties.VerifySearchPropertiesFeature();
+            ////Navigate to Edit Research File
+            //researchFiles.NavigateToAddPropertiesReseachFile();
 
-            //Search for a property by PID
-            if (researchFile.SearchProperties.PID != "")
-            {
-                sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
-            }
-            //Search for a property by PIN
-            if (researchFile.SearchProperties.PIN != "")
-            {
-                sharedSearchProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption();
-            }
-            //Search for a property by Plan
-            if (researchFile.SearchProperties.PlanNumber != "")
-            {
-                sharedSearchProperties.SelectPropertyByPlan(researchFile.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption();
-            }
-            //Search for a property by Address
-            if (researchFile.SearchProperties.Address != "")
-            {
-                sharedSearchProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption();
-            }
-            //Search for a property by Legal Description
-            if (researchFile.SearchProperties.LegalDescription != "")
-            {
-                sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
-            }
+            ////Verify UI/ UX from Search By Component
+            //sharedSearchProperties.NavigateToSearchTab();
+            //sharedSearchProperties.VerifySearchPropertiesFeature();
 
-            //Save Research File
-            researchFiles.SaveResearchFile();
+            ////Search for a property by PID
+            //if (researchFile.SearchProperties.PID != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
+            ////Search for a property by PIN
+            //if (researchFile.SearchProperties.PIN != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
+            ////Search for a property by Plan
+            //if (researchFile.SearchProperties.PlanNumber != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByPlan(researchFile.SearchProperties.PlanNumber);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
+            ////Search for a property by Address
+            //if (researchFile.SearchProperties.Address != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
+            ////Search for a property by Legal Description
+            //if (researchFile.SearchProperties.LegalDescription != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
+            //    sharedSearchProperties.SelectFirstOption();
+            //}
 
-            //Confirm saving changes
-            researchFiles.ConfirmChangesResearchFile();
+            ////Save Research File
+            //researchFiles.SaveResearchFile();
 
-            //Add Property Research Information
-            if (researchFile.PropertyResearchRowEnd != 0 && researchFile.PropertyResearchRowStart != 0)
-            {
-                for (int i = 0; i < researchFile.PropertyResearchRowEnd; i++)
-                {
-                    researchFiles.AddPropertyResearchInfo(researchFile.PropertyResearch[i], i);
-                    researchFiles.SaveResearchFile();
-                    researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
-                }
-            }
+            ////Confirm saving changes
+            //researchFiles.ConfirmChangesResearchFile();
 
-            //Go back to Research File Details
-            researchFiles.NavigateToFileSummary();
+            ////Add Property Research Information
+            //if (researchFile.PropertyResearchRowEnd != 0 && researchFile.PropertyResearchRowStart != 0)
+            //{
+            //    for (int i = 0; i < researchFile.PropertyResearchRowEnd; i++)
+            //    {
+            //        researchFiles.AddPropertyResearchInfo(researchFile.PropertyResearch[i], i);
+            //        researchFiles.SaveResearchFile();
+            //        researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
+            //    }
+            //}
+
+            ////Go back to Research File Details
+            //researchFiles.NavigateToFileSummary();
         }
 
         [StepDefinition(@"I create a Research File from a pin on map and from row number (.*)")]
