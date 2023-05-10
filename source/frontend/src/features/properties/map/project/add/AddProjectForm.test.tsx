@@ -57,6 +57,9 @@ describe('AddProjectForm component', () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
         projectStatusOptions={mockStatusOptions}
+        businessFunctionOptions={[]}
+        costTypeOptions={[]}
+        workActivityOptions={[]}
       />,
       {
         ...renderOptions,

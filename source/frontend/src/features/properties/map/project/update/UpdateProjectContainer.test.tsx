@@ -54,6 +54,9 @@ describe('UpdateProjectContainer', () => {
     viewProps = {
       initialValues: formValues,
       projectStatusOptions: [],
+      businessFunctionOptions: [],
+      costTypeOptions: [],
+      workActivityOptions: [],
       onSubmit: jest.fn(),
     };
     jest.resetAllMocks();

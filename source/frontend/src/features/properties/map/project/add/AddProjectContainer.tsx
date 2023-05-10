@@ -1,4 +1,3 @@
-import { SelectOption } from 'components/common/form';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import * as API from 'constants/API';
 import { FinancialCodeTypes } from 'constants/index';
@@ -6,11 +5,12 @@ import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { useFinancialCodeRepository } from 'hooks/repositories/useFinancialCodeRepository';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import orderBy from 'lodash/orderBy';
+import { Api_FinancialCode } from 'models/api/FinancialCode';
 import { Api_Project } from 'models/api/Project';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+import { toDropDownOptions } from 'utils/financialCodeUtils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddProjectForm } from '../hooks/useAddProjectFormManagement';
@@ -30,51 +30,45 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
     getFinancialCodesByType: { execute: getFinancialCodes },
   } = useFinancialCodeRepository();
 
-  const [businessFunctionOptions, setBusinessFunctionOptions] = useState<SelectOption[]>([]);
-  const [costTypeOptions, setCostTypeOptions] = useState<SelectOption[]>([]);
-  const [workActivityOptions, setWorkActivityOptions] = useState<SelectOption[]>([]);
+  const [businessFunctions, setBusinessFunctions] = useState<Api_FinancialCode[]>([]);
+  const [costTypes, setCostTypes] = useState<Api_FinancialCode[]>([]);
+  const [workActivities, setWorkActivities] = useState<Api_FinancialCode[]>([]);
 
   useEffect(() => {
-    async function fetchData() {
-      if (businessFunctionOptions === undefined) {
-        let records = (await getFinancialCodes(FinancialCodeTypes.BusinessFunction)) ?? [];
-        records = orderBy(records, ['displayOrder'], ['asc']);
-        const options = records.map<SelectOption>(c => {
-          return {
-            label: c.description!,
-            value: c.id!,
-          };
-        });
-        setBusinessFunctionOptions(options);
-      }
-
-      if (costTypeOptions === undefined) {
-        let records = (await getFinancialCodes(FinancialCodeTypes.CostType)) ?? [];
-        records = orderBy(records, ['displayOrder'], ['asc']);
-        const options = records.map<SelectOption>(c => {
-          return {
-            label: c.description!,
-            value: c.id!,
-          };
-        });
-        setCostTypeOptions(options);
-      }
-
-      if (workActivityOptions === undefined) {
-        let records = (await getFinancialCodes(FinancialCodeTypes.WorkActivity)) ?? [];
-        records = orderBy(records, ['displayOrder'], ['asc']);
-        const options = records.map<SelectOption>(c => {
-          return {
-            label: c.description!,
-            value: c.id!,
-          };
-        });
-        setWorkActivityOptions(options);
-      }
+    async function fetchBusinessFunctions() {
+      const data = (await getFinancialCodes(FinancialCodeTypes.BusinessFunction)) ?? [];
+      setBusinessFunctions(data);
     }
+    fetchBusinessFunctions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    fetchData();
-  }, [businessFunctionOptions, costTypeOptions, getFinancialCodes, workActivityOptions]);
+  useEffect(() => {
+    async function fetchCostTypes() {
+      const data = (await getFinancialCodes(FinancialCodeTypes.CostType)) ?? [];
+      setCostTypes(data);
+    }
+    fetchCostTypes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    async function fetchWorkActivities() {
+      const data = (await getFinancialCodes(FinancialCodeTypes.WorkActivity)) ?? [];
+      setWorkActivities(data);
+    }
+    fetchWorkActivities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const businessFunctionOptions = useMemo(
+    () => toDropDownOptions(businessFunctions),
+    [businessFunctions],
+  );
+
+  const costTypeOptions = useMemo(() => toDropDownOptions(costTypes), [costTypes]);
+
+  const workActivityOptions = useMemo(() => toDropDownOptions(workActivities), [workActivities]);
 
   const { getOptionsByType } = useLookupCodeHelpers();
   const projectStatusTypeCodes = getOptionsByType(API.PROJECT_STATUS_TYPES);
@@ -107,9 +101,9 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
         ref={formikRef}
         initialValues={helper.initialValues}
         projectStatusOptions={projectStatusTypeCodes}
-        businessFunctionOptions={businessFunctionOptions}
-        costTypeOptions={costTypeOptions}
-        workActivityOptions={workActivityOptions}
+        businessFunctionOptions={businessFunctionOptions ?? []}
+        costTypeOptions={costTypeOptions ?? []}
+        workActivityOptions={workActivityOptions ?? []}
         onSubmit={helper.handleSubmit}
         validationSchema={helper.validationSchema}
         isCreating
