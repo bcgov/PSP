@@ -11,7 +11,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LoginSteps loginSteps;
         private readonly HelpDesk helpDesk;
         private readonly ManageUsers manageUsers;
-        private readonly SharedDocumentsTab digitalDocuments;
+        private readonly DigitalDocuments digitalDocuments;
         private readonly CDOGSTemplates cdogsTemplates;
         private readonly FinancialCodes financialCodes;
         private readonly IEnumerable<DocumentFile> documentFiles;
@@ -26,7 +26,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             helpDesk = new HelpDesk(driver.Current);
             manageUsers = new ManageUsers(driver.Current);
-            digitalDocuments = new SharedDocumentsTab(driver.Current);
+            digitalDocuments = new DigitalDocuments(driver.Current);
             financialCodes = new FinancialCodes(driver.Current);
             cdogsTemplates = new CDOGSTemplates(driver.Current);
             documentFiles = driver.Configuration.GetSection("UploadDocuments").Get<IEnumerable<DocumentFile>>();

@@ -19,12 +19,14 @@ namespace PIMS.Tests.Automation.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Regression-Contacts")]
     public partial class ContactsFeature : object, Xunit.IClassFixture<ContactsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private static string[] featureTags = ((string[])(null));
+        private static string[] featureTags = new string[] {
+                "Regression-Contacts"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -83,18 +85,11 @@ namespace PIMS.Tests.Automation.Features
         [Xunit.SkippableTheoryAttribute(DisplayName="01. Create new Organization Complete Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
         [Xunit.TraitAttribute("Description", "01. Create new Organization Complete Contact")]
-        [Xunit.TraitAttribute("Category", "Regression-Contacts")]
         [Xunit.InlineDataAttribute("Organization", "1", new string[0])]
         [Xunit.InlineDataAttribute("Organization", "3", new string[0])]
         public void _01_CreateNewOrganizationCompleteContact(string contactType, string rowNumber, string[] exampleTags)
         {
-            string[] @__tags = new string[] {
-                    "Regression-Contacts"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);

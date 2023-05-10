@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -7,7 +8,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly Activities activities;
         private readonly Notes notes;
-        private readonly SharedDocumentsTab digitalDocuments;
+        private readonly DigitalDocuments digitalDocuments;
         private readonly IEnumerable<DocumentFile> documentFiles;
 
         private string activityDescription = "Automated Test - Description on activity";
@@ -34,7 +35,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //activities = new Activities(driver.Current);
             notes = new Notes(driver.Current);
-            digitalDocuments = new SharedDocumentsTab(driver.Current);
+            digitalDocuments = new DigitalDocuments(driver.Current);
             documentFiles = driver.Configuration.GetSection("UploadDocuments").Get<IEnumerable<DocumentFile>>();
         }
 

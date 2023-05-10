@@ -117,7 +117,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchProject1stResultNbrLink).Text.Equals(project.Number));
             Assert.True(webDriver.FindElement(searchProject1stResultNameLink).Text.Equals(project.Name));
             Assert.True(webDriver.FindElement(searchProject1stResultRegionContent).Text.Equals(project.MOTIRegion));
-            Assert.True(webDriver.FindElement(searchProject1stResultStatusContent).Text.Equals(project.Status));
+            Assert.True(webDriver.FindElement(searchProject1stResultStatusContent).Text.Equals(project.ProjectStatus));
             Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedByContent).Text.Equals(project.UpdatedBy));
             Assert.True(webDriver.FindElement(searchProject1stResultLastUpdatedDateContent).Text.Equals(today));
         }

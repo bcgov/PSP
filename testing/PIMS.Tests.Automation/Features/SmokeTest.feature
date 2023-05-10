@@ -1,8 +1,8 @@
-﻿Feature: SmokeTest
+﻿@Smoke-Test
+Feature: SmokeTest
 
 Test cases allocated for Smoke Testing
 
-@Smoke-Test
 Scenario: Create Minimum Individual Contact
 	Given I create a new Individual Contact from row number 2
 	And I search for an existing contact from type "Individual" row number 2

@@ -83,9 +83,9 @@ namespace PIMS.Tests.Automation.Data
         //Class properties that will store the Excel data by Row and Column Name 
         public class DataCollection
         {
-            public int RowNumber { get; set; }
-            public string ColumnName { get; set; }
-            public string ColumnValue { get; set; }
+            public int RowNumber { get; set; } = 0;
+            public string ColumnName { get; set; } = null!;
+            public string ColumnValue { get; set; } = null!;
         }
     }
 }

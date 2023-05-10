@@ -1,8 +1,7 @@
-﻿Feature: AdminTools
+﻿@AdminTools
+Feature: AdminTools
 
 Feature that covers User Access, User lists, CDOGS and Help Desk sections
-
-@AdminTools
 
 Scenario: 01. Help Desk Section
 	Given I review the Help Desk Section

@@ -30,7 +30,7 @@ namespace PIMS.Tests.Automation.Drivers
             var options = new ChromeOptions();
             if (runAutomationHeadless)
             {
-                options.AddArguments("window-size=1920,1080", "headless");
+                options.AddArguments("window-size=1920,1080", "headless", "no-sandbox");
             }
             else
             {

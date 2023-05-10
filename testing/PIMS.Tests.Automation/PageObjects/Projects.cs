@@ -94,7 +94,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 webDriver.FindElement(projectNumberInput).SendKeys(project.Number);
             }
-            ChooseSpecificSelectOption(projectStatusSelect, project.Status);
+            ChooseSpecificSelectOption(projectStatusSelect, project.ProjectStatus);
             ChooseSpecificSelectOption(projectMOTIRegionInput, project.MOTIRegion);
             if (project.Summary != "")
             {
@@ -158,7 +158,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 webDriver.FindElement(projectNumberInput).SendKeys(project.Number);
             }
-            if (project.Status != "") { ChooseSpecificSelectOption(projectStatusSelect, project.Status); }
+            if (project.ProjectStatus != "") { ChooseSpecificSelectOption(projectStatusSelect, project.ProjectStatus); }
             if (project.MOTIRegion != "") { ChooseSpecificSelectOption(projectMOTIRegionInput, project.MOTIRegion); }
             if (project.Summary != "")
             {
@@ -312,7 +312,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(projectHeaderLastUpdatedContent).Text.Equals(today));
             Assert.True(webDriver.FindElement(projectHeaderLastUpdatedBy).Text.Equals(project.UpdatedBy));
             Assert.True(webDriver.FindElement(projectHeaderStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectHeaderStatusContent).Text.Equals(project.Status));
+            Assert.True(webDriver.FindElement(projectHeaderStatusContent).Text.Equals(project.ProjectStatus));
 
             //Edit Button
             Assert.True(webDriver.FindElement(projectEditButton).Displayed);

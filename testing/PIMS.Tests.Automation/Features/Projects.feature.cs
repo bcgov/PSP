@@ -19,12 +19,14 @@ namespace PIMS.Tests.Automation.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Regression-Projects")]
     public partial class ProjectsFeature : object, Xunit.IClassFixture<ProjectsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private static string[] featureTags = ((string[])(null));
+        private static string[] featureTags = new string[] {
+                "Regression-Projects"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -83,20 +85,13 @@ namespace PIMS.Tests.Automation.Features
         [Xunit.SkippableTheoryAttribute(DisplayName="Create new Projects")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
         [Xunit.TraitAttribute("Description", "Create new Projects")]
-        [Xunit.TraitAttribute("Category", "Regression-Projects")]
         [Xunit.InlineDataAttribute("1", new string[0])]
         [Xunit.InlineDataAttribute("2", new string[0])]
         [Xunit.InlineDataAttribute("3", new string[0])]
         [Xunit.InlineDataAttribute("4", new string[0])]
         public void CreateNewProjects(string rowNumber, string[] exampleTags)
         {
-            string[] @__tags = new string[] {
-                    "Regression-Projects"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("RowNumber", rowNumber);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new Projects", null, tagsOfScenario, argumentsOfScenario, featureTags);
