@@ -30,6 +30,17 @@ const ProjectSummaryView: React.FunctionComponent<
           {project?.note}
         </SectionField>
       </Section>
+      <Section header="Associated Codes" isCollapsable initiallyExpanded>
+        <SectionField label="Cost type" labelWidth="3">
+          {project?.costTypeCode?.description ?? ''}
+        </SectionField>
+        <SectionField label="Work activity" labelWidth="3">
+          {project?.workActivityCode?.description ?? ''}
+        </SectionField>
+        <SectionField label="Business function" labelWidth="3">
+          {project?.businessFunctionCode?.description ?? ''}
+        </SectionField>
+      </Section>
       <ProjectProductView project={project} />
     </StyledSummarySection>
   );
