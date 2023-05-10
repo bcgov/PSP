@@ -115,18 +115,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.Delete1stDocument();
         }
 
-        //[StepDefinition(@"A digital document has been uploaded successfully")]
-        //public void DocumentUploadSuccess()
-        //{
-        //    Assert.True(digitalDocumentsTab.GetTotalUploadedDocuments() == totalDigitalDocumentsUploaded + 1);
-        //}
-
-        //[StepDefinition(@"A digital document has been deleted successfully")]
-        //public void DocumentDeleteSuccess()
-        //{
-        //    Assert.True(digitalDocumentsTab.GetTotalUploadedDocuments() == 0);
-        //}
-
         private void PopulateDigitalDocumentIndex(int rowNumber)
         {
             DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"];
