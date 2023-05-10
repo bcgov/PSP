@@ -5,12 +5,12 @@ import { useFinancialCodeRepository } from 'hooks/repositories/useFinancialCodeR
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import orderBy from 'lodash/orderBy';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
-import moment from 'moment';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
+import { isExpiredCode } from 'utils/financialCodeUtils';
 
 import {
   defaultFinancialCodeFilter,
@@ -127,14 +127,5 @@ const StyledAddButton = styled(Button)`
     background-color: ${props => props.theme.css.completedColor};
   }
 `;
-
-function isExpiredCode(value: Api_FinancialCode): boolean {
-  if (value.expiryDate !== undefined) {
-    const now = moment();
-    return moment(value.expiryDate).isBefore(now, 'day');
-  }
-  // no expiry date means the code never expires
-  return false;
-}
 
 export default FinancialCodeListView;
