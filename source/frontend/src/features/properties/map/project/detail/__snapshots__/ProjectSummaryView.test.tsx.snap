@@ -119,6 +119,100 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
       </div>
     </div>
     <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Associated Codes
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c3"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c4"
+            >
+              Cost type:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c4"
+            >
+              Work activity:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c4"
+            >
+              Business function:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
       class=""
     >
       <div
