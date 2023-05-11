@@ -1,4 +1,3 @@
-import { useMachine } from '@xstate/react';
 import { DistrictCodes, RegionCodes } from 'constants/index';
 import { useMapProperties } from 'features/properties/map/hooks/useMapProperties';
 import { Feature, FeatureCollection, GeoJsonObject, GeoJsonProperties, Geometry } from 'geojson';
@@ -17,7 +16,6 @@ import {
   useLayerQuery,
 } from '../leaflet/LayerPopup';
 import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
-import { mapMachine } from '../stateMachines/mapMachine';
 
 interface IUseActiveParcelMapLayer {
   /** the current leaflet map reference. This hook will add layers to this map reference. */
@@ -54,9 +52,6 @@ const useActiveFeatureLayer = ({
   } = useMapProperties();
 
   const { isSelecting, setState } = useContext(MapStateContext);
-
-  // TODO: PSP-5606 WIP
-  const [machine, send] = useMachine(mapMachine);
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
