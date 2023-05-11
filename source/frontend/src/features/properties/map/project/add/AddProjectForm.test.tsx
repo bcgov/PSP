@@ -86,6 +86,12 @@ describe('AddProjectForm component', () => {
         utils.container.querySelector(`textarea[name="summary"]`) as HTMLInputElement,
       getProductCodeTextBox: (index: number) =>
         utils.container.querySelector(`input[name="products.${index}.code"]`) as HTMLInputElement,
+      getCostTypeDropdown: () =>
+        utils.container.querySelector(`select[name="costTypeCode"]`) as HTMLSelectElement,
+      getWorkActivityDropdown: () =>
+        utils.container.querySelector(`select[name="workActivityCode"]`) as HTMLSelectElement,
+      getBusinessFunctionDropdown: () =>
+        utils.container.querySelector(`select[name="businessFunctionCode"]`) as HTMLSelectElement,
     };
   };
 
@@ -117,6 +123,9 @@ describe('AddProjectForm component', () => {
       getStatusDropdown,
       getRegionDropdown,
       getSummaryTextbox,
+      getCostTypeDropdown,
+      getWorkActivityDropdown,
+      getBusinessFunctionDropdown,
     } = setup({ initialValues });
 
     const input = getNameTextbox();
@@ -124,6 +133,9 @@ describe('AddProjectForm component', () => {
     const select = getRegionDropdown();
     const status = getStatusDropdown();
     const summary = getSummaryTextbox();
+    const costType = getCostTypeDropdown();
+    const workActivity = getWorkActivityDropdown();
+    const businessFunction = getBusinessFunctionDropdown();
 
     expect(input).toBeVisible();
     expect(select).toBeVisible();
@@ -136,6 +148,10 @@ describe('AddProjectForm component', () => {
     expect(summary.tagName).toBe('TEXTAREA');
     expect(select.tagName).toBe('SELECT');
     expect(status.tagName).toBe('SELECT');
+
+    expect(costType.tagName).toBe('SELECT');
+    expect(workActivity.tagName).toBe('SELECT');
+    expect(businessFunction.tagName).toBe('SELECT');
   });
 
   it('should validate character limits', async () => {
