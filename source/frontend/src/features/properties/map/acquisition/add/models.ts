@@ -5,7 +5,6 @@ import {
   Api_AcquisitionFilePerson,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
-import { defaultProduct, defaultProject } from 'models/api/Project';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
@@ -35,7 +34,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   owners: AcquisitionOwnerFormModel[] = [];
 
   project?: IAutocompletePrediction;
-  product?: number;
+  product: string = '';
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
   ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
@@ -52,14 +51,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
-      project:
-        this.project?.id !== undefined && this.project?.id !== 0
-          ? { ...defaultProject, id: this.project?.id }
-          : undefined,
-      product:
-        this.product !== undefined && this.product !== 0
-          ? { ...defaultProduct, id: Number(this.product) }
-          : undefined,
+      projectId: this.project?.id !== undefined && this.project?.id !== 0 ? this.project?.id : null,
+      productId: this.product !== '' ? Number(this.product) : null,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       // ACQ file properties
@@ -101,7 +94,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     // ACQ file properties
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
-    newForm.product = model.product?.id ?? undefined;
+    newForm.product = model.product?.id?.toString() ?? '';
     newForm.fundingTypeCode = model.fundingTypeCode?.id;
     newForm.fundingTypeOtherDescription = model.fundingOther || '';
     newForm.project =

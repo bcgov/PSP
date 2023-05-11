@@ -36,8 +36,6 @@ export interface IMapStateContext {
   mapState: MapState;
   /** The currently selected property from the PIMS inventory */
   selectedInventoryProperty: IProperty | null;
-  /** The currently selected property from the PIMS inventory intended for L&L */
-  selectedLeaseProperty: IProperty | null;
   /** The currently selected feature from the LTSA ParcelMap */
   selectedFeature: Feature<Geometry, GeoJsonProperties> | null;
   /** The currently selected feature in the context of an active file */
@@ -126,7 +124,6 @@ export const MapStateContextProvider: React.FC<
               if (draft.mapState === MapState.MAP) {
                 draft.selectedInventoryProperty = null;
                 draft.selectedFileFeature = null;
-                draft.selectedLeaseProperty = null;
               }
               draft.selectedFeature = null;
             }

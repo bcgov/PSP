@@ -4,7 +4,6 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
 } from 'models/api/AcquisitionFile';
-import { defaultProduct, defaultProject } from 'models/api/Project';
 import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 
 import {
@@ -37,7 +36,7 @@ export class UpdateAcquisitionSummaryFormModel
   owners: AcquisitionOwnerFormModel[] = [];
 
   project?: IAutocompletePrediction;
-  product?: number;
+  product: string = '';
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
   ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
@@ -57,14 +56,8 @@ export class UpdateAcquisitionSummaryFormModel
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
-      project:
-        this.project?.id !== undefined && this.project?.id !== 0
-          ? { ...defaultProject, id: this.project?.id, rowVersion: 0 } // TODO: Fix this workaround when bug PSP-5871 gets fixed
-          : undefined,
-      product:
-        this.product !== undefined && this.product !== 0
-          ? { ...defaultProduct, id: Number(this.product), rowVersion: 0 } // TODO: Fix this workaround when bug PSP-5871 gets fixed
-          : undefined,
+      projectId: this.project?.id !== undefined && this.project?.id !== 0 ? this.project?.id : null,
+      productId: this.product !== '' ? Number(this.product) : null,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       acquisitionFileOwners: this.owners
@@ -103,7 +96,7 @@ export class UpdateAcquisitionSummaryFormModel
       model.project !== undefined
         ? { id: model.project?.id || 0, text: model.project?.description || '' }
         : undefined;
-    newForm.product = model.product?.id ?? undefined;
+    newForm.product = model.product?.id?.toString() ?? '';
     newForm.ownerSolicitor = model.acquisitionFileOwnerSolicitors?.length
       ? AcquisitionSolicitorFormModel.fromApi(model.acquisitionFileOwnerSolicitors[0])
       : new AcquisitionSolicitorFormModel(null);
