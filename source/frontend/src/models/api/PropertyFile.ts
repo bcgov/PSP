@@ -16,5 +16,6 @@ export interface Api_PropertyFile extends Api_ConcurrentVersion {
   documentReference?: string;
   researchSummary?: string;
   property?: Api_Property;
+  propertyId?: number;
   activityInstanceProperties?: Api_PropertyActivity[];
 }

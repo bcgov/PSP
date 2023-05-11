@@ -24,14 +24,13 @@ export class ResearchForm {
         return {
           id: x.id,
           property: x.toApi(),
+          propertyId: x.apiId,
           researchFile: { id: this.id },
           propertyName: x.name,
           rowVersion: x.rowVersion,
         };
       }),
-      researchFileProjects: this.researchFileProjects
-        .map(x => x.toApi())
-        .filter(rp => rp?.project !== undefined),
+      researchFileProjects: ResearchFileProjectFormModel.toApiList(this.researchFileProjects),
       rowVersion: this.rowVersion,
     };
   }

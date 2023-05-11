@@ -20,6 +20,11 @@ namespace Pims.Api.Models.Concepts
         public ProjectModel Project { get; set; }
 
         /// <summary>
+        /// get/set - The research project's id.
+        /// </summary>
+        public long? ProjectId { get; set; }
+
+        /// <summary>
         /// get/set - The relationship's research file.
         /// </summary>
         public ResearchFileModel File { get; set; }

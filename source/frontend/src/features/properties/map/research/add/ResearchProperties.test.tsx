@@ -5,6 +5,7 @@ import {
 } from 'components/maps/providers/MapStateContext';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
+import { mockDraftProperties } from 'mocks/mockDraftProperties';
 import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -71,7 +72,7 @@ describe('ResearchProperties component', () => {
     await waitFor(async () => {
       expect(setDraftProperties).toHaveBeenCalledWith({
         type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [],
+        draftProperties: mockDraftProperties(),
       });
     });
     expect(getByText('PID: 123-456-789')).toBeVisible();
@@ -89,7 +90,7 @@ describe('ResearchProperties component', () => {
       await waitFor(async () => {
         expect(setDraftProperties).toHaveBeenCalledWith({
           type: MapStateActionTypes.DRAFT_PROPERTIES,
-          draftProperties: [],
+          draftProperties: mockDraftProperties(),
         });
       });
     });
@@ -105,7 +106,7 @@ describe('ResearchProperties component', () => {
     await waitFor(async () => {
       expect(setDraftProperties).toHaveBeenCalledWith({
         type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [],
+        draftProperties: mockDraftProperties(),
       });
     });
     expect(getByTitle('1')).toBeInTheDocument();
@@ -126,6 +127,17 @@ describe('ResearchProperties component', () => {
             {
               geometry: { coordinates: [2, 1], type: 'Point' },
               properties: { id: 0, name: 'New Parcel' },
+              type: 'Feature',
+            },
+            {
+              geometry: {
+                coordinates: [0, 0],
+                type: 'Point',
+              },
+              properties: {
+                id: 0,
+                name: 'New Parcel',
+              },
               type: 'Feature',
             },
           ],

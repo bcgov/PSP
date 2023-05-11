@@ -26,6 +26,7 @@ export const mockAcquisitionFileResponse = (
     products: [],
     rowVersion: null,
   },
+  projectId: null,
   product: {
     id: 1,
     acquisitionFiles: [],
@@ -33,12 +34,14 @@ export const mockAcquisitionFileResponse = (
     description: 'MISCELLANEOUS CLAIMS',
     rowVersion: 1,
     parentProject: null,
+    parentProjectId: null,
     startDate: '2022-06-27T00:00:00',
     costEstimate: 10000,
     costEstimateDate: null,
     objective: 'For Product',
     scope: null,
   },
+  productId: null,
   legacyFileNumber: 'legacy file number',
   assignedDate: '2022-06-27T00:00:00',
   deliveryDate: '2022-07-29T00:00:00',
@@ -61,6 +64,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 1,
       isDisabled: false,
+      propertyId: 442,
       property: {
         id: 442,
         anomalies: [],
@@ -98,6 +102,7 @@ export const mockAcquisitionFileResponse = (
     {
       id: 2,
       isDisabled: false,
+      propertyId: 443,
       property: {
         id: 443,
         anomalies: [],
@@ -171,7 +176,7 @@ export const mockAcquisitionFileResponse = (
         rowVersion: 1,
       },
       personProfileType: {
-        id: 'NEGOTAGENT',
+        id: 'MOTILAWYER',
         description: 'Negotiation agent',
         isDisabled: false,
       },

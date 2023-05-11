@@ -10,6 +10,8 @@ import React, { useState } from 'react';
 import { ActivityListView } from '../../activity/list/ActivityListView';
 import AgreementContainer from '../../agreement/detail/AgreementContainer';
 import AgreementView from '../../agreement/detail/AgreementView';
+import CompensationListContainer from '../../compensation/list/CompensationListContainer';
+import CompensationListView from '../../compensation/list/CompensationListView';
 import { FormListView } from '../../form/list/FormListView';
 import FormListViewContainer from '../../form/list/FormListViewContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
@@ -126,6 +128,19 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       ),
       key: FileTabType.AGREEMENTS,
       name: 'Agreements',
+    });
+  }
+
+  if (acquisitionFile?.id && hasClaim(Claims.COMPENSATION_REQUISITION_VIEW)) {
+    tabViews.push({
+      content: (
+        <CompensationListContainer
+          fileId={acquisitionFile.id}
+          View={CompensationListView}
+        ></CompensationListContainer>
+      ),
+      key: FileTabType.COMPENSATIONS,
+      name: 'Compensation',
     });
   }
 

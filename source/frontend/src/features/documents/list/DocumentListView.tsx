@@ -69,7 +69,7 @@ export const DocumentListView: React.FunctionComponent<
       ) {
         setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
       } else {
-        setDocumentTypes(axiosResponse || []);
+        setDocumentTypes(axiosResponse?.filter(x => x.isDisabled !== true) || []);
       }
     };
 

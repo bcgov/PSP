@@ -5,12 +5,12 @@ import {
   Api_AcquisitionFilePerson,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
-import { defaultProduct, defaultProject } from 'models/api/Project';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
 import {
   AcquisitionOwnerFormModel,
+  AcquisitionSolicitorFormModel,
   AcquisitionTeamFormModel,
   WithAcquisitionOwners,
   WithAcquisitionTeam,
@@ -34,9 +34,10 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   owners: AcquisitionOwnerFormModel[] = [];
 
   project?: IAutocompletePrediction;
-  product?: number;
+  product: string = '';
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
+  ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -50,14 +51,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
-      project:
-        this.project?.id !== undefined && this.project?.id !== 0
-          ? { ...defaultProject, id: this.project?.id }
-          : undefined,
-      product:
-        this.product !== undefined && this.product !== 0
-          ? { ...defaultProduct, id: Number(this.product) }
-          : undefined,
+      projectId: this.project?.id !== undefined && this.project?.id !== 0 ? this.project?.id : null,
+      productId: this.product !== '' ? Number(this.product) : null,
       fundingTypeCode: toTypeCode(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       // ACQ file properties
@@ -69,6 +64,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
           displayOrder: ap.displayOrder,
           rowVersion: ap.rowVersion,
           property: ap.toApi(),
+          propertyId: ap.apiId,
           acquisitionFile: { id: this.id },
         };
       }),
@@ -78,6 +74,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map<Api_AcquisitionFilePerson>(x => x.toApi()),
+      acquisitionFileOwnerSolicitors: this.ownerSolicitor.contact
+        ? [this.ownerSolicitor.toApi()]
+        : [],
     };
   }
 
@@ -95,13 +94,16 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     // ACQ file properties
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
-    newForm.product = model.product?.id ?? undefined;
+    newForm.product = model.product?.id?.toString() ?? '';
     newForm.fundingTypeCode = model.fundingTypeCode?.id;
     newForm.fundingTypeOtherDescription = model.fundingOther || '';
     newForm.project =
       model.project !== undefined
         ? { id: model.project?.id || 0, text: model.project?.description || '' }
         : undefined;
+    newForm.ownerSolicitor = model.acquisitionFileOwnerSolicitors?.length
+      ? AcquisitionSolicitorFormModel.fromApi(model.acquisitionFileOwnerSolicitors[0])
+      : new AcquisitionSolicitorFormModel(null);
 
     return newForm;
   }

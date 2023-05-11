@@ -66,9 +66,9 @@ const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
         </Modal.Body>
 
         <Modal.Footer>
-          {config?.settings.helpDeskEmail ? (
+          {config?.settings?.helpDeskEmail ? (
             <Button
-              href={`mailto:${config?.settings.helpDeskEmail}?subject=${mailto?.subject}&body=${mailto?.body}`}
+              href={`mailto:${config?.settings?.helpDeskEmail}?subject=${mailto?.subject}&body=${mailto?.body}`}
               onClick={() => {
                 handleSubmit();
               }}

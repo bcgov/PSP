@@ -33,6 +33,11 @@ namespace Pims.Api.Models.Concepts
         public string Position { get; set; }
 
         /// <summary>
+        /// get/set - The User type code.
+        /// </summary>
+        public string UserTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - A note corresponding to this user.
         /// </summary>
         public string Note { get; set; }

@@ -5,8 +5,8 @@ import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { useGenerateLetter } from 'hooks/useGenerateLetter';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { Api_File } from 'models/api/File';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 
 import { SideBarContext } from '../context/sidebarContext';
@@ -43,7 +43,7 @@ const initialState: AcquisitionContainerState = {
 export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
-  const { setFile, setFileLoading, staleFile, setStaleFile, file } = useContext(SideBarContext);
+  const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
   const { search } = useMapSearch();
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
@@ -54,7 +54,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     },
     getAcquisitionFileChecklist: { execute: retrieveAcquisitionFileChecklist },
   } = useAcquisitionProvider();
-  const generateLetter = useGenerateLetter();
 
   const formikRef = useRef<FormikProps<any>>(null);
 
@@ -173,6 +172,11 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     );
   };
 
+  const onUpdateProperties = (file: Api_File): Promise<Api_File | undefined> => {
+    // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
+    return updateAcquisitionProperties.execute({ ...file, productId: null, projectId: null });
+  };
+
   // UI components
 
   if (
@@ -192,11 +196,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       onSave={handleSaveClick}
       onMenuChange={onMenuChange}
       onCancelConfirm={handleCancelConfirm}
-      onUpdateProperties={updateAcquisitionProperties.execute}
+      onUpdateProperties={onUpdateProperties}
       onSuccess={onSuccess}
       canRemove={canRemove}
       formikRef={formikRef}
-      onGenerateLetter={() => (!!file ? generateLetter(file) : Promise.resolve())}
     ></View>
   );
 };

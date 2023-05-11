@@ -147,7 +147,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public PimsProperty GetAllByIds(IEnumerable<long> ids)
+        public List<PimsProperty> GetAllByIds(List<long> ids)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
@@ -177,7 +177,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
-                .FirstOrDefault(p => ids.Contains(p.PropertyId)) ?? throw new KeyNotFoundException();
+                .Where(p => ids.Any(s => s == p.PropertyId))
+                .ToList();
             return property;
         }
 

@@ -1,4 +1,4 @@
-import { Api_Product, Api_Project, defaultProject } from 'models/api/Project';
+import { Api_Product, Api_Project } from 'models/api/Project';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { stringToNull, toTypeCode } from 'utils/formUtils';
 
@@ -16,12 +16,8 @@ export class ProductForm {
   toApi(parentId?: number | null): Api_Product {
     return {
       id: this.id,
-      parentProject: !!parentId
-        ? {
-            ...defaultProject,
-            id: parentId,
-          }
-        : null,
+      parentProject: null,
+      parentProjectId: !!parentId ? parentId : null,
       code: this.code,
       description: this.description,
       startDate: stringToNull(this.startDate),

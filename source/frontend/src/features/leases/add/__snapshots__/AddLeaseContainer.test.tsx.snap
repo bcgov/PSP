@@ -818,17 +818,20 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                   <svg
                                     class="c14"
                                     height="97"
-                                    title="select properties on the map"
+                                    title="Click once to enter property selection mode."
                                     width="97"
                                   >
                                     icon-draft.svg
                                   </svg>
                                   <ol>
                                     <li>
-                                      Click pin above
+                                      Single-click blue marker above
                                     </li>
                                     <li>
-                                      Position it on the map
+                                      Mouse to a parcel on the map
+                                    </li>
+                                    <li>
+                                      Single-click on parcel to select it
                                     </li>
                                   </ol>
                                 </div>
@@ -2755,6 +2758,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                         id="input-consultations.6.consultationTypeOtherDescription"
                         name="consultations.6.consultationTypeOtherDescription"
                         placeholder="Describe other"
+                        title=""
                         value=""
                       />
                     </div>

@@ -14,6 +14,7 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
     {
       id: 55,
       isDisabled: false,
+      propertyId: 495,
       property: {
         id: 495,
         anomalies: [],
@@ -93,6 +94,7 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
         appCreateUserid: 'dbo',
         rowVersion: 1,
       },
+      projectId: 1,
       fileId: 109,
       rowVersion: 1,
     },

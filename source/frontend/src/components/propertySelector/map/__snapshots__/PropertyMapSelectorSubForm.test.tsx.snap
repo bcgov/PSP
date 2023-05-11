@@ -54,17 +54,20 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
         <svg
           class="c1"
           height="97"
-          title="select properties on the map"
+          title="Click once to enter property selection mode."
           width="97"
         >
           icon-draft.svg
         </svg>
         <ol>
           <li>
-            Click pin above
+            Single-click blue marker above
           </li>
           <li>
-            Position it on the map
+            Mouse to a parcel on the map
+          </li>
+          <li>
+            Single-click on parcel to select it
           </li>
         </ol>
       </div>

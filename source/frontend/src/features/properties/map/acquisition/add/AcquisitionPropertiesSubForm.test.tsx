@@ -5,6 +5,7 @@ import {
 } from 'components/maps/providers/MapStateContext';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
+import { mockDraftProperties } from 'mocks/mockDraftProperties';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
@@ -67,7 +68,7 @@ describe('AcquisitionProperties component', () => {
     await waitFor(() => {
       expect(setDraftProperties).toHaveBeenCalledWith({
         type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [],
+        draftProperties: mockDraftProperties(),
       });
     });
 
@@ -83,7 +84,19 @@ describe('AcquisitionProperties component', () => {
     await waitFor(() => {
       expect(setDraftProperties).toHaveBeenCalledWith({
         type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [],
+        draftProperties: [
+          {
+            geometry: {
+              coordinates: [0, 0],
+              type: 'Point',
+            },
+            properties: {
+              id: 0,
+              name: 'New Parcel',
+            },
+            type: 'Feature',
+          },
+        ],
       });
     });
 
@@ -96,7 +109,7 @@ describe('AcquisitionProperties component', () => {
     await waitFor(() => {
       expect(setDraftProperties).toHaveBeenCalledWith({
         type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: [],
+        draftProperties: mockDraftProperties(),
       });
     });
 
@@ -117,6 +130,17 @@ describe('AcquisitionProperties component', () => {
           {
             geometry: { coordinates: [2, 1], type: 'Point' },
             properties: { id: 0, name: 'New Parcel' },
+            type: 'Feature',
+          },
+          {
+            geometry: {
+              coordinates: [0, 0],
+              type: 'Point',
+            },
+            properties: {
+              id: 0,
+              name: 'New Parcel',
+            },
             type: 'Feature',
           },
         ],

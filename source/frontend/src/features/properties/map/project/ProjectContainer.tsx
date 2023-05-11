@@ -1,6 +1,5 @@
 import { FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
-import { IProjectForm } from 'interfaces/IProject';
 import { Api_Project } from 'models/api/Project';
 import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import * as Yup from 'yup';
@@ -32,7 +31,7 @@ export interface IProjectContainerProps {
 export interface ProjectPageProps {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
-  formikRef: React.RefObject<FormikProps<ProjectForm | IProjectForm>>;
+  formikRef: React.RefObject<FormikProps<ProjectForm>>;
 }
 
 export interface IProjectPage {

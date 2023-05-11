@@ -13,7 +13,7 @@ exports[`Update lease container component renders as expected 1`] = `
   z-index: 999;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.5);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -769,17 +769,20 @@ exports[`Update lease container component renders as expected 1`] = `
                               <svg
                                 class="c12"
                                 height="97"
-                                title="select properties on the map"
+                                title="Click once to enter property selection mode."
                                 width="97"
                               >
                                 icon-draft.svg
                               </svg>
                               <ol>
                                 <li>
-                                  Click pin above
+                                  Single-click blue marker above
                                 </li>
                                 <li>
-                                  Position it on the map
+                                  Mouse to a parcel on the map
+                                </li>
+                                <li>
+                                  Single-click on parcel to select it
                                 </li>
                               </ol>
                             </div>
@@ -2706,6 +2709,7 @@ exports[`Update lease container component renders as expected 1`] = `
                     id="input-consultations.6.consultationTypeOtherDescription"
                     name="consultations.6.consultationTypeOtherDescription"
                     placeholder="Describe other"
+                    title=""
                     value=""
                   />
                 </div>

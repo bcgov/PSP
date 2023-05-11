@@ -346,17 +346,20 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
                       <svg
                         class="c6"
                         height="97"
-                        title="select properties on the map"
+                        title="Click once to enter property selection mode."
                         width="97"
                       >
                         icon-draft.svg
                       </svg>
                       <ol>
                         <li>
-                          Click pin above
+                          Single-click blue marker above
                         </li>
                         <li>
-                          Position it on the map
+                          Mouse to a parcel on the map
+                        </li>
+                        <li>
+                          Single-click on parcel to select it
                         </li>
                       </ol>
                     </div>
@@ -920,24 +923,6 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   font-size: 1.2rem;
 }
 
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c6 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
 .c8.c8.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -970,6 +955,24 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
 .c8.c8.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c6 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 .c1 {

@@ -42,7 +42,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
   z-index: 999;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.5);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -521,12 +521,36 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c6"
+      class="c1 form-section"
     >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Owner Information
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
       <div
-        class="spinner-border text-warning"
-        data-testid="filter-backdrop-loading"
-      />
+        class="collapse show"
+      >
+        <div
+          class="c6"
+        >
+          <div
+            class="spinner-border text-warning"
+            data-testid="filter-backdrop-loading"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>

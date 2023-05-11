@@ -31,6 +31,8 @@ namespace Pims.Dal.Entities
         [Column("DOCUMENT_TYPE_DESCRIPTION")]
         [StringLength(200)]
         public string DocumentTypeDescription { get; set; }
+        [Column("IS_DISABLED")]
+        public bool IsDisabled { get; set; }
         [Column("DISPLAY_ORDER")]
         public int? DisplayOrder { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
