@@ -26,7 +26,9 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionFileOwnerSolicitors?: Api_AcquisitionFileSolicitor[];
   acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
   project?: Api_Project;
+  projectId: number | null;
   product?: Api_Product;
+  productId: number | null;
   fundingTypeCode?: Api_TypeCode<string>;
   fundingOther?: string;
 }

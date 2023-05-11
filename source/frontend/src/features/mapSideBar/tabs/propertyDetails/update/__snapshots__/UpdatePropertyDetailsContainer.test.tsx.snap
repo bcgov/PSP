@@ -140,21 +140,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c8 {
-  margin-left: 0.5rem;
-  cursor: pointer;
-}
-
-.c13 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
 .c7.c7.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -187,6 +172,21 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
 .c7.c7.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c8 {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.c13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c12.form-group {

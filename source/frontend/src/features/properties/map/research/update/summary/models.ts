@@ -113,9 +113,7 @@ export class UpdateResearchSummaryFormModel {
       requestorPerson: toPerson(this.requestor),
       requestorOrganization: toOrganization(this.requestor),
       researchFilePurposes: this.researchFilePurposes?.map(x => x.toApi()),
-      researchFileProjects: this.researchFileProjects
-        .map(x => x.toApi())
-        .filter(rp => rp?.project !== undefined),
+      researchFileProjects: ResearchFileProjectFormModel.toApiList(this.researchFileProjects),
     };
   }
 }

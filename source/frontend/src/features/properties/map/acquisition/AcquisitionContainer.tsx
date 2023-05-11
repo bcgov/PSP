@@ -6,6 +6,7 @@ import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { Api_File } from 'models/api/File';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 
 import { SideBarContext } from '../context/sidebarContext';
@@ -171,6 +172,11 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     );
   };
 
+  const onUpdateProperties = (file: Api_File): Promise<Api_File | undefined> => {
+    // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
+    return updateAcquisitionProperties.execute({ ...file, productId: null, projectId: null });
+  };
+
   // UI components
 
   if (
@@ -190,7 +196,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       onSave={handleSaveClick}
       onMenuChange={onMenuChange}
       onCancelConfirm={handleCancelConfirm}
-      onUpdateProperties={updateAcquisitionProperties.execute}
+      onUpdateProperties={onUpdateProperties}
       onSuccess={onSuccess}
       canRemove={canRemove}
       formikRef={formikRef}

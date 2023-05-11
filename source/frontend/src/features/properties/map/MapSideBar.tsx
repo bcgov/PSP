@@ -1,3 +1,5 @@
+import { Backdrop } from 'components/common/styles';
+import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import { Api_Property } from 'models/api/Property';
 import { useContext } from 'react';
 import styled from 'styled-components';
@@ -17,8 +19,22 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarPro
   onZoom,
 }) => {
   const { fullWidth } = useContext(SideBarContext);
+  const { isSelecting, setState } = useContext(MapStateContext);
   return (
     <StyledMapSideBar show={showSideBar} fullWidth={fullWidth}>
+      {isSelecting && (
+        <StyledBackdrop
+          parentScreen
+          onClick={() => setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: false })}
+        >
+          <StyledSelectingText
+            style={{ color: 'white', fontFamily: 'BCSans-Bold', fontSize: '2.5rem' }}
+          >
+            Selecting Properties...
+            <br /> Click here to exit property selection.
+          </StyledSelectingText>
+        </StyledBackdrop>
+      )}
       <MapRouter showSideBar={showSideBar} setShowSideBar={setShowSideBar} onZoom={onZoom} />
     </StyledMapSideBar>
   );
@@ -26,8 +42,18 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarPro
 
 export default MapSideBar;
 
+export const StyledBackdrop = styled(Backdrop)`
+  background-color: rgba(0, 0, 0, 0.7);
+`;
+
+const StyledSelectingText = styled.p`
+color: white
+font-family: BCSans-Bold
+font-size: 2.5rem`;
+
 const StyledMapSideBar = styled.div<{ show: boolean; fullWidth: boolean }>`
   display: flex;
+  position: relative;
   flex-flow: column;
   h1 {
     border-bottom: none;
