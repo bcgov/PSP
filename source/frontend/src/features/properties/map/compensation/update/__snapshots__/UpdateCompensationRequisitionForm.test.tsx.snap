@@ -475,9 +475,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
           </div>
           <div
             class="c4 text-left col"
-          >
-            001
-          </div>
+          />
         </div>
         <div
           class="pb-2 row"
