@@ -50,7 +50,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   return loadedCompensation ? (
     <View
       compensation={loadedCompensation}
-      acquistionFile={file as Api_AcquisitionFile}
+      acquistionFile={file as unknown as Api_AcquisitionFile}
       clientConstant={clientConstant?.value ?? ''}
       gstConstant={gstDecimal}
       onClose={onClose}
