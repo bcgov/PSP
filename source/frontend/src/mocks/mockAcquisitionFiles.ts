@@ -138,6 +138,7 @@ export const mockAcquisitionFileResponse = (
   acquisitionTeam: [
     {
       id: 1,
+      acquisitionFileId: 1,
       person: {
         id: 1,
         isDisabled: false,
@@ -161,6 +162,7 @@ export const mockAcquisitionFileResponse = (
     },
     {
       id: 2,
+      acquisitionFileId: 1,
       person: {
         id: 3,
         isDisabled: false,
