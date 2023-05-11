@@ -2,14 +2,15 @@ import { Api_AcquisitionFile } from './AcquisitionFile';
 import { Api_AuditFields } from './AuditFields';
 import { Api_CodeType } from './CodeType';
 import { Api_ConcurrentVersion_Null } from './ConcurrentVersion';
+import { Api_FinancialCode } from './FinancialCode';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Project extends Api_ConcurrentVersion_Null, Api_AuditFields {
   id: number | null;
   projectStatusTypeCode: Api_TypeCode<string> | null;
-  businessFunctionCode: Api_CodeType | null;
-  costTypeCode: Api_CodeType | null;
-  workActivityCode: Api_CodeType | null;
+  businessFunctionCode: Api_FinancialCode | null;
+  costTypeCode: Api_FinancialCode | null;
+  workActivityCode: Api_FinancialCode | null;
   regionCode: Api_CodeType | null;
   code: string | null;
   description: string | null;
