@@ -204,7 +204,7 @@ namespace Pims.Api.Services
                 newStatusDescription = projectStatuses.FirstOrDefault(x => x.ProjectStatusTypeCode == newStatusCode).Description;
             }
 
-            if(oldStatusCode is null)
+            if (oldStatusCode is null)
             {
                 oldStatusDescription = "'No Status'";
             }

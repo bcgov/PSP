@@ -1,5 +1,6 @@
 import { Button } from 'components/common/buttons';
 import { Check, Form, Input, Multiselect } from 'components/common/form';
+import { RadioGroup } from 'components/common/form/RadioGroup';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -15,7 +16,7 @@ import styled from 'styled-components';
 import { UserUpdateSchema } from 'utils/YupSchema';
 
 import RolesToolTip from '../access-request/RolesToolTip';
-import { FormUser } from '../users/models';
+import { FormUser, userTypeCodeValues } from '../users/models';
 
 interface IEditUserFormProps {
   updateUserDetail: (user: Api_User) => void;
@@ -55,6 +56,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
               type="text"
             />
           </SectionField>
+
           <SectionField label="First name" labelWidth="2">
             <Input
               data-testid="firstName"
@@ -63,6 +65,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
               type="text"
             />
           </SectionField>
+
           <SectionField label="Last name" labelWidth="2">
             <Input
               data-testid="surname"
@@ -89,6 +92,15 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
               data-testid="position"
             />
           </SectionField>
+
+          <SectionField label="Internal staff / Contractor" labelWidth="2" required>
+            <RadioGroup
+              field="userTypeCode.id"
+              radioValues={userTypeCodeValues}
+              flexDirection="row"
+            ></RadioGroup>
+          </SectionField>
+
           <SectionField label="Role(s)" required labelWidth="2">
             <Multiselect placeholder="" field="roles" options={roles} displayValue="name" />
             <TooltipWrapper

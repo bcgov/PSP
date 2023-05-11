@@ -88,6 +88,36 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetFinancialCodesByType_Success()
+        {
+            // Arrange
+            var service = CreateWithPermissions(Permissions.ProjectView);
+            var repo = _helper.GetService<Mock<IBusinessFunctionCodeRepository>>();
+
+            repo.Setup(x => x.GetAllBusinessFunctionCodes()).Returns(new List<PimsBusinessFunctionCode>());
+
+            // Act
+            var result = service.GetFinancialCodesByType(FinancialCodeTypes.BusinessFunction);
+
+            // Assert
+            result.Should().BeAssignableTo<IList<FinancialCodeModel>>();
+            repo.Verify(x => x.GetAllBusinessFunctionCodes(), Times.Once);
+        }
+
+        [Fact]
+        public void GetFinancialCodesByType_NoPermission()
+        {
+            // Arrange
+            var service = CreateWithPermissions();
+
+            // Act
+            Action act = () => service.GetFinancialCodesByType(FinancialCodeTypes.BusinessFunction);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
         public void GetById_Success()
         {
             // Arrange

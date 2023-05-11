@@ -1,3 +1,4 @@
+import { ContactMethodTypes } from 'constants/contactMethodType';
 import { getMockPerson } from 'mocks/mockContacts';
 
 import { GeneratePerson } from './GeneratePerson';
@@ -53,6 +54,54 @@ describe('GenerateContact tests', () => {
       ],
     });
     expect(contact.email).toBe(`mypersonalemail@hotmail.com`);
+  });
+
+  it('Can generate a contact phone, preferring work phone', () => {
+    const contact = new GeneratePerson({
+      ...getMockPerson({ id: 1, surname: 'last', firstName: 'first' }),
+      contactMethods: [
+        {
+          id: 3,
+          contactMethodType: {
+            id: ContactMethodTypes.PersonalPhone,
+            description: 'Personal phone',
+            isDisabled: false,
+          },
+          value: '22222222222',
+          rowVersion: 1,
+        },
+        {
+          id: 4,
+          contactMethodType: {
+            id: ContactMethodTypes.WorkPhone,
+            description: 'work phone',
+            isDisabled: false,
+          },
+          value: '11111111111',
+          rowVersion: 1,
+        },
+      ],
+    });
+    expect(contact.phone).toBe(`11111111111`);
+  });
+
+  it('Can generate a contact phone if only personal phone is present', () => {
+    const contact = new GeneratePerson({
+      ...getMockPerson({ id: 1, surname: 'last', firstName: 'first' }),
+      contactMethods: [
+        {
+          id: 3,
+          contactMethodType: {
+            id: ContactMethodTypes.PersonalPhone,
+            description: 'Personal phone',
+            isDisabled: false,
+          },
+          value: '1111111111',
+          rowVersion: 1,
+        },
+      ],
+    });
+    expect(contact.phone).toBe(`1111111111`);
   });
 
   it('Can generate organization names', () => {

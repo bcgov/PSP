@@ -10,6 +10,11 @@ namespace Pims.Api.Models.Concepts
         public long Id { get; set; }
 
         /// <summary>
+        /// Parent Acquisition File.
+        /// </summary>
+        public long AcquisitionFileId { get; set; }
+
+        /// <summary>
         /// get/set - The Id of the person associated with an acquisition file as part of the acquisition team.
         /// </summary>
         public long PersonId { get; set; }

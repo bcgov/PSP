@@ -1,14 +1,10 @@
 import { ContactMethodTypes } from 'constants/contactMethodType';
+import { UserTypes } from 'constants/index';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
-import { stringToNull, toTypeCode } from 'utils/formUtils';
+import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 
 import { Api_AccessRequest } from './../../../models/api/AccessRequest';
-
-export enum UserTypeCodesEnum {
-  CONTRACT = 'CONTRACT',
-  MINSTAFF = 'MINSTAFF',
-}
 
 export class FormAccessRequest {
   public id: NumberFieldValue;
@@ -55,7 +51,7 @@ export class FormAccessRequest {
     this.businessIdentifierValue = accessRequest.user?.businessIdentifierValue ?? '';
     this.keycloakUserGuid = accessRequest?.user?.guidIdentifierValue ?? '';
     this.position = accessRequest?.user?.position ?? '';
-    this.userTypeCode = accessRequest?.user?.userTypeCode ?? UserTypeCodesEnum.CONTRACT;
+    this.userTypeCode = fromTypeCode(accessRequest?.user?.userTypeCode) ?? UserTypes.Contractor;
     this.rowVersion = accessRequest.rowVersion;
   }
 
@@ -70,7 +66,7 @@ export class FormAccessRequest {
       user: {
         guidIdentifierValue: this.keycloakUserGuid,
         position: this.position,
-        userTypeCode: this.userTypeCode,
+        userTypeCode: toTypeCode(this.userTypeCode),
         userRoles: [],
         userRegions: [],
       },
@@ -81,11 +77,11 @@ export class FormAccessRequest {
 
 export const userTypeCodeValues = [
   {
-    radioValue: UserTypeCodesEnum.MINSTAFF,
+    radioValue: UserTypes.MinistryStaff,
     radioLabel: 'Ministry staff',
   },
   {
-    radioValue: UserTypeCodesEnum.CONTRACT,
+    radioValue: UserTypes.Contractor,
     radioLabel: 'Contractor',
   },
 ];

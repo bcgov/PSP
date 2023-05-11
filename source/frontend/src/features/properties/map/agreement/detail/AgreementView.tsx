@@ -69,7 +69,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
         >
           <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
           <SectionField labelWidth="5" label="Agreement status">
-            {agreement.isDraft === true ? 'Yes' : 'No'}
+            {agreement.isDraft === true ? 'Draft' : 'Final'}
           </SectionField>
           <SectionField labelWidth="5" label="Legal survey plan">
             {agreement.legalSurveyPlanNum}

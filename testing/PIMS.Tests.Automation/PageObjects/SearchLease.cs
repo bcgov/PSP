@@ -116,6 +116,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ChooseMultiSelectSpecificOption(searchLicenseStatusOptions, status);
 
+            Wait();
             webDriver.FindElement(searchLicenseSearchButton).Click();
         }
 

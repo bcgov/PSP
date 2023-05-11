@@ -30,8 +30,90 @@ namespace PIMS.Tests.Automation.StepDefinitions
         }
 
 
-    [StepDefinition(@"I navigate to the Documents Tab, validate Documents Types and attach a Document")]
-        public void DocumentTabValidationAndCreate()
+        [StepDefinition(@"I manage Documents Tab within a Research File")]
+        public void DocumentTabResearchFile()
+        {
+            /* TEST COVERAGE: PSP-4159, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, PSP-4354, PSP-4355, PSP-4356, PSP-4357 */
+
+            //Access the documents tab
+            sharedDocumentsTab.NavigateDocumentsTab();
+
+            //Get total uploaded documents
+            totalDigitalDocumentsUploaded = sharedDocumentsTab.GetTotalUploadedDocuments();
+
+            //Add a New Document
+            sharedDocumentsTab.AddNewDocument();
+
+            //Verify different types of document types
+            sharedDocumentsTab.VerifyDocumentFields("BC assessment search");
+            sharedDocumentsTab.VerifyDocumentFields("Privy council");
+            sharedDocumentsTab.VerifyDocumentFields("Photos / Images/ Video");
+            sharedDocumentsTab.VerifyDocumentFields("PA plans / Design drawings");
+            sharedDocumentsTab.VerifyDocumentFields("Other");
+            sharedDocumentsTab.VerifyDocumentFields("OIC");
+            sharedDocumentsTab.VerifyDocumentFields("MoTI plan");
+
+            //Upload one digital document
+            Random random = new Random();
+            var index = random.Next(0, documentFiles.Count());
+            var document = documentFiles.ElementAt(index);
+
+            sharedDocumentsTab.UploadDocument(document.Url);
+            sharedDocumentsTab.UploadTransferAdminFile(dateSigned, motiFile, pid, roadName, transferNbr);
+
+            //Save digital document
+            sharedDocumentsTab.SaveDigitalDocument();
+        }
+
+        [StepDefinition(@"I manage Documents Tab within an Acquisition File")]
+        public void DocumentTabAcquisitionFile()
+        {
+            /* TEST COVERAGE: PSP-4159, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, PSP-4354, PSP-4355, PSP-4356, PSP-4357 */
+
+            //Access the documents tab
+            sharedDocumentsTab.NavigateDocumentsTab();
+
+            //Get total uploaded documents
+            totalDigitalDocumentsUploaded = sharedDocumentsTab.GetTotalUploadedDocuments();
+
+            //Add a New Document
+            sharedDocumentsTab.AddNewDocument();
+
+            //Verify different types of document types
+            sharedDocumentsTab.VerifyDocumentFields("BC assessment search");
+            sharedDocumentsTab.VerifyDocumentFields("Privy council");
+            sharedDocumentsTab.VerifyDocumentFields("Photos / Images/ Video");
+            sharedDocumentsTab.VerifyDocumentFields("PA plans / Design drawings");
+            sharedDocumentsTab.VerifyDocumentFields("Other");
+            sharedDocumentsTab.VerifyDocumentFields("OIC");
+            sharedDocumentsTab.VerifyDocumentFields("MoTI plan");
+            sharedDocumentsTab.VerifyDocumentFields("Miscellaneous notes (LTSA)");
+            sharedDocumentsTab.VerifyDocumentFields("Ministerial order");
+            sharedDocumentsTab.VerifyDocumentFields("Title search / Historical title");
+            sharedDocumentsTab.VerifyDocumentFields("Legal survey plan");
+            sharedDocumentsTab.VerifyDocumentFields("Historical file");
+            sharedDocumentsTab.VerifyDocumentFields("Gazette");
+            sharedDocumentsTab.VerifyDocumentFields("Field notes");
+            sharedDocumentsTab.VerifyDocumentFields("District road register");
+            sharedDocumentsTab.VerifyDocumentFields("Crown grant");
+            sharedDocumentsTab.VerifyDocumentFields("Correspondence");
+            sharedDocumentsTab.VerifyDocumentFields("Canada lands survey");
+            sharedDocumentsTab.VerifyDocumentFields("Transfer of administration");
+
+            //Upload one digital document
+            Random random = new Random();
+            var index = random.Next(0, documentFiles.Count());
+            var document = documentFiles.ElementAt(index);
+
+            sharedDocumentsTab.UploadDocument(document.Url);
+            sharedDocumentsTab.UploadTransferAdminFile(dateSigned, motiFile, pid, roadName, transferNbr);
+
+            //Save digital document
+            sharedDocumentsTab.SaveDigitalDocument();
+        }
+
+        [StepDefinition(@"I manage Documents Tab within a Lease")]
+        public void DocumentTabLeaseLicense()
         {
             /* TEST COVERAGE: PSP-4159, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, PSP-4354, PSP-4355, PSP-4356, PSP-4357 */
 

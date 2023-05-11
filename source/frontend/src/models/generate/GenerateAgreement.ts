@@ -4,7 +4,7 @@ import { formatMoney } from 'utils';
 
 import { Api_GenerateFile } from './GenerateFile';
 export class Api_GenerateAgreement {
-  file: Api_GenerateFile;
+  file: Api_GenerateFile | null;
   current_year: string;
   date: string;
   completion_date: string;
@@ -16,17 +16,25 @@ export class Api_GenerateAgreement {
   survey_plan_number: string;
   no_later_than_days: string;
 
-  constructor(agreement: Api_Agreement, generateFile: Api_GenerateFile) {
+  constructor(agreement: Api_Agreement | null, generateFile: Api_GenerateFile | null) {
     this.file = generateFile;
     this.current_year = moment().format('YYYY');
-    this.date = moment(agreement.agreementDate).format('MMM DD, YYYY') ?? '';
-    this.status = agreement.isDraft ? 'DRAFT' : '';
-    this.completion_date = moment(agreement.completionDate).format('MMM DD, YYYY') ?? '';
-    this.termination_date = moment(agreement.terminationDate).format('MMM DD, YYYY') ?? '';
-    this.commencement_date = moment(agreement.commencementDate).format('MMM DD, YYYY') ?? '';
-    this.deposit_amount = formatMoney(agreement.depositAmount);
-    this.purchase_price = formatMoney(agreement.purchasePrice);
-    this.survey_plan_number = agreement.legalSurveyPlanNum ?? '';
-    this.no_later_than_days = agreement.noLaterThanDays?.toString() ?? '';
+    this.date = agreement?.agreementDate
+      ? moment(agreement?.agreementDate).format('MMM DD, YYYY') ?? ''
+      : '';
+    this.status = agreement?.isDraft ? 'DRAFT' : '';
+    this.completion_date = agreement?.completionDate
+      ? moment(agreement?.completionDate).format('MMM DD, YYYY') ?? ''
+      : '';
+    this.termination_date = agreement?.terminationDate
+      ? moment(agreement?.terminationDate).format('MMM DD, YYYY') ?? ''
+      : '';
+    this.commencement_date = agreement?.commencementDate
+      ? moment(agreement?.commencementDate).format('MMM DD, YYYY') ?? ''
+      : '';
+    this.deposit_amount = agreement?.depositAmount ? formatMoney(agreement?.depositAmount) : '';
+    this.purchase_price = agreement?.purchasePrice ? formatMoney(agreement?.purchasePrice) : '';
+    this.survey_plan_number = agreement?.legalSurveyPlanNum ?? '';
+    this.no_later_than_days = agreement?.noLaterThanDays?.toString() ?? '';
   }
 }

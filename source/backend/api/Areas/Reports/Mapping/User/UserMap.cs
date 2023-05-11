@@ -19,6 +19,7 @@ namespace Pims.Api.Areas.Reports.Mapping.User
                 .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Map(dest => dest.Regions, src => string.Join(",", src.PimsRegionUsers.Select(ur => ur.RegionCodeNavigation.Description)))
                 .Map(dest => dest.Roles, src => string.Join(",", src.GetRoles().Select(r => r.Name)))
+                .Map(dest => dest.UserType, src => src.UserTypeCodeNavigation.Description)
                 .Map(dest => dest.ApprovedBy, src => src.ApprovedById)
                 .Map(dest => dest.IssueOn, src => src.IssueDate)
                 .Inherits<Entity.IDisableBaseAppEntity, Api.Models.BaseAppModel>();

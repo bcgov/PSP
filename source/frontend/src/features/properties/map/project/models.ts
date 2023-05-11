@@ -1,6 +1,6 @@
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { stringToNull, toTypeCode } from 'utils/formUtils';
+import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 
 export class ProductForm {
   id: number | null = null;
@@ -51,6 +51,9 @@ export class ProjectForm {
   projectName: string | '' = '';
   projectNumber: string | '' = '';
   projectStatusType: string | '' = '';
+  businessFunctionCode: NumberFieldValue | '' = '';
+  costTypeCode: NumberFieldValue | '' = '';
+  workActivityCode: NumberFieldValue | '' = '';
   region: NumberFieldValue | '' = '';
   summary: string | '' = '';
   rowVersion: number | null = null;
@@ -66,9 +69,13 @@ export class ProjectForm {
       note: this.summary ?? null,
       products: this.products?.map(x => x.toApi(this.id)),
       rowVersion: this.rowVersion ?? null,
-      businessFunctionCode: null,
-      costTypeCode: null,
-      workActivityCode: null,
+      businessFunctionCode: this.businessFunctionCode
+        ? toTypeCode<number>(+this.businessFunctionCode) ?? null
+        : null,
+      costTypeCode: this.costTypeCode ? toTypeCode<number>(+this.costTypeCode) ?? null : null,
+      workActivityCode: this.workActivityCode
+        ? toTypeCode<number>(+this.workActivityCode) ?? null
+        : null,
     };
   }
 
@@ -82,6 +89,15 @@ export class ProjectForm {
     newForm.summary = model.note ?? '';
     newForm.rowVersion = model.rowVersion ?? null;
     newForm.products = model.products?.map(x => ProductForm.fromApi(x)) || [];
+    newForm.businessFunctionCode = model.businessFunctionCode?.id
+      ? fromTypeCode<number>(model.businessFunctionCode) ?? ''
+      : '';
+    newForm.costTypeCode = model.costTypeCode?.id
+      ? fromTypeCode<number>(model.costTypeCode) ?? ''
+      : '';
+    newForm.workActivityCode = model.workActivityCode?.id
+      ? fromTypeCode<number>(model.workActivityCode) ?? ''
+      : '';
 
     return newForm;
   }

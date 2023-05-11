@@ -61,7 +61,8 @@ namespace Pims.Dal.Repositories
         public PimsAcquisitionFileForm GetByAcquisitionFileFormId(long acquisitionFileFormId)
         {
             return Context.PimsAcquisitionFileForms.Include(af => af.FormTypeCodeNavigation).AsNoTracking().FirstOrDefault(af => af.AcquisitionFileFormId == acquisitionFileFormId)
-                ?? throw new KeyNotFoundException($"Failed to find acquisition file form with id ${acquisitionFileFormId}"); ;
+                ?? throw new KeyNotFoundException($"Failed to find acquisition file form with id ${acquisitionFileFormId}");
+            ;
         }
 
         public bool TryDelete(long acquisitionFileFormId)

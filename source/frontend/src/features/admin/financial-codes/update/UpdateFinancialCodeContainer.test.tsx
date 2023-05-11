@@ -22,7 +22,7 @@ const mockUpdateApi = {
   loading: false,
 };
 
-jest.mock('../hooks/useFinancialCodeRepository', () => ({
+jest.mock('hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       getFinancialCode: mockGetApi,

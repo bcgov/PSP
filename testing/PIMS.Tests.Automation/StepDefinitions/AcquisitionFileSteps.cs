@@ -11,7 +11,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SearchProperties searchProperties;
         private readonly PropertyInformation propertyInformation;
-        private readonly SharedNotesTab sharedNotesTab;
+        private readonly Notes notes;
 
         private readonly string userName = "TRANPSP1";
         //private readonly string userName = "sutairak";

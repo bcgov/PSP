@@ -1,6 +1,5 @@
 import { mockLookups } from 'mocks/mockLookups';
 import { getUserMock } from 'mocks/userMock';
-import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
@@ -117,5 +116,15 @@ describe('EditUserForm component', () => {
     userEvent.click(submitButton);
 
     await waitFor(() => expect(onSubmit).not.toHaveBeenCalled());
+  });
+
+  it('should identify user as internal staff or contractor', async () => {
+    const { getByText } = setup({ initialValues });
+
+    const internal = getByText('Ministry staff');
+    const contractor = getByText('Contractor');
+
+    expect(internal).toBeInTheDocument();
+    expect(contractor).toBeInTheDocument();
   });
 });

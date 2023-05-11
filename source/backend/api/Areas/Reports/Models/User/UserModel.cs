@@ -5,7 +5,7 @@ namespace Pims.Api.Areas.Reports.Models.User
     /// <summary>
     /// UserModel class, provides a model that represents a user.
     /// </summary>
-    public class UserModel : Pims.Api.Models.BaseAppModel
+    public class UserModel : Api.Models.BaseAppModel
     {
         #region Properties
 
@@ -53,6 +53,11 @@ namespace Pims.Api.Areas.Reports.Models.User
         /// get/set - When this user was approved on.
         /// </summary>
         public DateTime? IssueOn { get; set; }
+
+        /// <summary>
+        /// get/set - The User type (e.g. internal staff, contractor, etc).
+        /// </summary>
+        public string UserType { get; set; }
 
         /// <summary>
         /// get/set - A comma-separated list of regions the user belongs to.

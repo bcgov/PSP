@@ -67,7 +67,7 @@ namespace Pims.Api.Services
                     var newMetadataType = new MetadataType() { Label = metadataTypeLabel.Label, Name = metadataTypeLabel.Name };
                     createTasks.Add(mayanMetadataRepository.TryCreateMetadataTypeAsync(newMetadataType));
                 }
-                else if(matchingMetadataResult.Label != metadataTypeLabel.Label)
+                else if (matchingMetadataResult.Label != metadataTypeLabel.Label)
                 {
                     matchingMetadataResult.Label = metadataTypeLabel.Label;
                     updateTasks.Add(mayanMetadataRepository.TryUpdateMetadataTypeAsync(matchingMetadataResult));

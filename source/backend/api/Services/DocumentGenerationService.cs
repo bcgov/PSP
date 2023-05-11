@@ -68,7 +68,6 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Generating document");
 
             // this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
-
             var formTypeCode = _formDocumentService.GetFormDocumentTypes(templateType.ToString()).LastOrDefault();
             if (formTypeCode?.Document?.MayanId != null)
             {
@@ -103,7 +102,7 @@ namespace Pims.Api.Services
             }
             else
             {
-                throw new KeyNotFoundException("Unable to find matching template for PIMS document template"); //TODO: this should trigger the warning to the user to ask their admin to upload a template.
+                throw new KeyNotFoundException("Unable to find matching template for PIMS document template"); // TODO: this should trigger the warning to the user to ask their admin to upload a template.
             }
         }
     }
