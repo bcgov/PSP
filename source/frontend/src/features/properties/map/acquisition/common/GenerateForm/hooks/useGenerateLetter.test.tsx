@@ -69,6 +69,7 @@ describe('useGenerateLetter functions', () => {
       acquisitionTeam: [
         {
           id: 1,
+          acquisitionFileId: 1,
           personId: 1,
           personProfileTypeCode: 'PROPCOORD',
           isDisabled: false,
