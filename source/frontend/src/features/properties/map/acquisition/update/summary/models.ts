@@ -72,7 +72,7 @@ export class UpdateAcquisitionSummaryFormModel
         .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
-        .map<Api_AcquisitionFilePerson>(x => x.toApi()),
+        .map<Api_AcquisitionFilePerson>(x => x.toApi(this.id || 0)),
       acquisitionFileOwnerSolicitors: this.ownerSolicitor.contact
         ? [this.ownerSolicitor.toApi()]
         : [],
