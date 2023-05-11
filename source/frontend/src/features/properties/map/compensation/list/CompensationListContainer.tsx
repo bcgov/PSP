@@ -37,7 +37,7 @@ export const CompensationListContainer: React.FunctionComponent<
     await getAcquisitionCompensationRequisitions(fileId);
   }, [getAcquisitionCompensationRequisitions, fileId]);
 
-  const onAddCompensationRequistion = (fileId: number) => {
+  const onAddCompensationRequisition = (fileId: number) => {
     const defaultCompensationRequisition: Api_Compensation = {
       id: null,
       acquisitionFileId: fileId,
@@ -71,7 +71,7 @@ export const CompensationListContainer: React.FunctionComponent<
   return (
     <View
       compensations={compensations || []}
-      onAdd={async () => onAddCompensationRequistion(fileId)}
+      onAdd={async () => onAddCompensationRequisition(fileId)}
       onDelete={async (compensationId: number) => {
         setModalContent({
           ...getDeleteModalProps(),

@@ -3,7 +3,6 @@ import * as Styled from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Compensation } from 'models/api/Compensation';
-import { useState } from 'react';
 import React from 'react';
 import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
@@ -24,6 +23,8 @@ export interface CompensationRequisitionTrayViewProps {
   error: boolean;
   editMode: boolean;
   setEditMode: (editMode: boolean) => void;
+  show: boolean;
+  setShow: (show: boolean) => void;
   onUpdate: () => void;
 }
 
@@ -36,13 +37,13 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   gstConstant,
   editMode,
   setEditMode,
+  show,
+  setShow,
   loading,
   error,
   onClose,
   onUpdate,
 }) => {
-  const [show, setShow] = useState(true);
-
   let detailViewContent =
     !editMode && compensation ? (
       <HalfHeightDiv>
@@ -53,7 +54,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
             View={CompensationRequisitionDetailView}
             clientConstant={clientConstant}
             gstConstant={gstConstant ?? 0}
-            loading={false}
+            loading={loading}
             setEditMode={setEditMode}
           ></CompensationRequisitionDetailContainer>
         )}
@@ -68,10 +69,8 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
           acquisitionFile={acquistionFile}
           formikRef={React.createRef()}
           onSuccess={() => {
-            //setShow(false);
             setEditMode(false);
             onUpdate();
-            //onClose();
           }}
           onCancel={() => {
             setEditMode(false);

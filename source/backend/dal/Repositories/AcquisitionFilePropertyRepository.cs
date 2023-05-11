@@ -112,7 +112,7 @@ namespace Pims.Dal.Repositories
 
         public List<PimsCompensationRequisition> GetCompensationRequisitionsByAcquisitionFileId(long acquisitionFileId)
         {
-            User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
 
             var acquisitionFile = Context.PimsAcquisitionFiles
                 .Where(x => x.Internal_Id == acquisitionFileId)

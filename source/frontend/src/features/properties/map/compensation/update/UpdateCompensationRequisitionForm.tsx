@@ -110,7 +110,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 {acquisitionFile.product?.code ?? ''}
               </SectionField>
               <SectionField label="Business function" labelWidth={'4'}>
-                {acquisitionFile.project?.code ?? ''}
+                {acquisitionFile.project?.businessFunctionCode?.code ?? ''}
               </SectionField>
               <SectionField label="Work activity" labelWidth={'4'}>
                 {acquisitionFile.project?.workActivityCode?.code ?? ''}

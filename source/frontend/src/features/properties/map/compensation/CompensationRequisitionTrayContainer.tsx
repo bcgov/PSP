@@ -20,6 +20,8 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   const { file } = useContext(SideBarContext);
 
   const [editMode, setEditMode] = useState(false);
+  const [show, setShow] = useState(true);
+
   const [loadedCompensation, setLoadedCompensation] = useState<Api_Compensation | undefined>();
 
   const clientConstant = getSystemConstant(SystemConstants.CLIENT);
@@ -56,6 +58,8 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
       error={!!error}
       editMode={editMode}
       setEditMode={setEditMode}
+      show={show}
+      setShow={setShow}
       onUpdate={() => {
         fetchCompensationReq();
       }}

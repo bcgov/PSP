@@ -11,7 +11,7 @@ namespace Pims.Dal.Repositories
 
         PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition);
 
-        PimsCompensationRequisition Update(long compensationRequisitionId, PimsCompensationRequisition compensationRequisition);
+        PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition);
 
         bool TryDelete(long compensationId);
     }

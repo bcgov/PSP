@@ -30,6 +30,8 @@ namespace Pims.Dal.Repositories
 
         public IList<PimsCompensationRequisition> GetAllByAcquisitionFileId(long acquisitionFileId)
         {
+            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqH120s)
                 .AsNoTracking()
@@ -44,18 +46,6 @@ namespace Pims.Dal.Repositories
             return compensationRequisition;
         }
 
-        public void Delete(long compensationRequisitionId)
-        {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionDelete);
-            var entity = Context.PimsCompensationRequisitions.FirstOrDefault(d => d.CompensationRequisitionId == compensationRequisitionId);
-            if (entity is not null)
-            {
-                Context.PimsCompensationRequisitions.Remove(entity);
-            }
-
-            return;
-        }
-
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
         {
             User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
@@ -66,11 +56,11 @@ namespace Pims.Dal.Repositories
             return entity;
         }
 
-        public PimsCompensationRequisition Update(long compensationRequisitionId, PimsCompensationRequisition compensationRequisition)
+        public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
             User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             var existingCompensationRequisition = Context.PimsCompensationRequisitions
-                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.Internal_Id)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
 

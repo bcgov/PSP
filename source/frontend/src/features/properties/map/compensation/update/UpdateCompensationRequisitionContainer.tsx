@@ -22,7 +22,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
     updateCompensationRequisition: { execute: updateCompensationRequisition, loading: isUpdating },
   } = useCompensationRequisitionRepository();
 
-  const udpateCompensation = async (compensation: CompensationRequisitionFormModel) => {
+  const updateCompensation = async (compensation: CompensationRequisitionFormModel) => {
     const result = await updateCompensationRequisition(compensation.toApi());
     if (result !== undefined) {
       onSuccess();
@@ -36,7 +36,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
       formikRef={formikRef}
       initialValues={CompensationRequisitionFormModel.fromApi(compensation)}
       acquisitionFile={acquisitionFile}
-      onSave={udpateCompensation}
+      onSave={updateCompensation}
       onCancel={onCancel}
     />
   );

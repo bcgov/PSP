@@ -104,14 +104,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsCompensationRequisition>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
 
             // Act
             var result = service.Update(1, new PimsCompensationRequisition { Internal_Id = 1, ConcurrencyControlNumber = 2 });
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
 
 

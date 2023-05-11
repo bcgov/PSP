@@ -24,7 +24,7 @@ namespace Pims.Api.Services
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
         {
-            _logger.LogInformation($"Getting Compensatio Requisition with id {compensationRequisitionId}");
+            _logger.LogInformation($"Getting Compensation Requisition with id {compensationRequisitionId}");
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             return _compensationRequisitionRepository.GetById(compensationRequisitionId);
@@ -42,7 +42,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.Internal_Id}");
 
-            var updatedEntity = _compensationRequisitionRepository.Update(compensationRequisitionId, compensationRequisition);
+            var updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
