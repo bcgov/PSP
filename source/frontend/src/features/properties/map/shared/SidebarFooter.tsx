@@ -9,6 +9,7 @@ interface ISidebarFooterProps {
   editMode?: boolean;
   onEdit?: (editMode: boolean) => void;
   onCancel: () => void;
+  errorMessage?: string | undefined;
 }
 
 const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
@@ -18,11 +19,15 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
   onSave,
   onCancel,
   isOkDisabled,
+  errorMessage,
 }) => {
   return (
     <SidebarFooterBar className="justify-content-end mt-auto no-gutters">
       {(!showEdit || editMode) && (
         <>
+          <Col xs="auto" className="pr-3">
+            <StyledError>{errorMessage}</StyledError>
+          </Col>
           <Col xs="auto" className="pr-4">
             <Button variant="secondary" onClick={onCancel}>
               Cancel
@@ -56,6 +61,11 @@ const SidebarFooterBar = styled(Row)`
   bottom: 0;
   background: white;
   z-index: 10;
+`;
+
+const StyledError = styled.div`
+  padding-top: 0.7rem;
+  color: red;
 `;
 
 export default SidebarFooter;
