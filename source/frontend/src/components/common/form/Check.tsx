@@ -105,7 +105,7 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
             isInvalid={!!touch && !!error}
             type={type}
             {...rest}
-            value={(checked === true) as any}
+            value={(checked === false) as any}
             placeholder={placeholder}
             checked={checked === true}
             onChange={() => {
