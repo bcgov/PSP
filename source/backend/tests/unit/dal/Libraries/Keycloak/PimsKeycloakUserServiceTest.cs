@@ -68,6 +68,11 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 eUser.PimsUserRoles.Remove(userRole);
                 return eUser;
             });
+            userRepository.Setup(m => m.UpdateAllRolesForUser(euser.Internal_Id, It.IsAny<ICollection<PimsUserRole>>())).Returns((long userId, ICollection<PimsUserRole> roles) =>
+            {
+                euser.PimsUserRoles = roles;
+                return roles;
+            });
             roleRepository.Setup(m => m.Find(removeRole.RoleId)).Returns(removeRole);
 
             var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
@@ -128,6 +133,11 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(euser);
             userRepository.Setup(m => m.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
+            userRepository.Setup(m => m.UpdateAllRolesForUser(euser.Internal_Id, It.IsAny<ICollection<PimsUserRole>>())).Returns((long userId, ICollection<PimsUserRole> roles) =>
+            {
+                euser.PimsUserRoles = roles;
+                return roles;
+            });
             roleRepository.Setup(m => m.Find(removeRole.RoleId)).Returns(removeRole);
 
             var user = EntityHelper.CreateUser(euser.Internal_Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
@@ -361,6 +371,11 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 var userRole = eUser.PimsUserRoles.FirstOrDefault(r => r.RoleId == roleId);
                 eUser.PimsUserRoles.Remove(userRole);
                 return eUser;
+            });
+            userRepository.Setup(m => m.UpdateAllRolesForUser(euser.Internal_Id, It.IsAny<ICollection<PimsUserRole>>())).Returns((long userId, ICollection<PimsUserRole> roles) =>
+            {
+                euser.PimsUserRoles = roles;
+                return roles;
             });
             roleRepository.Setup(m => m.Find(existingRole.RoleId)).Returns(existingRole);
 

@@ -3,6 +3,11 @@ import { FinancialCodeTypes } from 'constants/index';
 import CustomAxios from 'customAxios';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 
+export const getFinancialCodesByType = (codeType: FinancialCodeTypes) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/${codeType}`,
+  );
+
 export const getFinancialCodes = () =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(`/admin/financial-codes`);
 
