@@ -112,7 +112,7 @@ const ContactManagerView = ({
           </Col>
         )}
       </Row>
-      <StyledContacts>
+      <div>
         <ContactResultComponent
           loading={loading}
           results={results}
@@ -130,16 +130,12 @@ const ContactManagerView = ({
           isSummary={isSummary}
           isSingleSelect={isSingleSelect}
         />
-      </StyledContacts>
+      </div>
     </div>
   );
 };
 
 export default ContactManagerView;
-
-const StyledContacts = styled.div`
-  overflow: scroll;
-`;
 
 const StyledPrimaryButton = styled(Button)`
   margin: 0.4rem 0.6rem;
