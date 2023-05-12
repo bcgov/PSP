@@ -8,21 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQ_OWNER_COMP_REQ_CHQ_HIST")]
-    [Index(nameof(AcqOwnerCompReqChqHistId), nameof(EndDateHist), Name = "PIMS_AOCRCQ_H_UK", IsUnique = true)]
-    public partial class PimsAcqOwnerCompReqChqHist
+    [Table("PIMS_ACQ_PAYEE_CHEQUE_HIST")]
+    [Index(nameof(AcqPayeeChequeHistId), nameof(EndDateHist), Name = "PIMS_AQPCHQ_H_UK", IsUnique = true)]
+    public partial class PimsAcqPayeeChequeHist
     {
         [Key]
-        [Column("_ACQ_OWNER_COMP_REQ_CHQ_HIST_ID")]
-        public long AcqOwnerCompReqChqHistId { get; set; }
+        [Column("_ACQ_PAYEE_CHEQUE_HIST_ID")]
+        public long AcqPayeeChequeHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("ACQ_OWNER_COMP_REQ_CHQ_ID")]
-        public long AcqOwnerCompReqChqId { get; set; }
-        [Column("ACQUISITION_OWNER_ID")]
-        public long AcquisitionOwnerId { get; set; }
+        [Column("ACQ_PAYEE_CHEQUE_ID")]
+        public long AcqPayeeChequeId { get; set; }
+        [Column("ACQUISITION_PAYEE_ID")]
+        public long AcquisitionPayeeId { get; set; }
         [Column("PRETAX_AMT", TypeName = "money")]
         public decimal? PretaxAmt { get; set; }
         [Column("TAX_AMT", TypeName = "money")]
