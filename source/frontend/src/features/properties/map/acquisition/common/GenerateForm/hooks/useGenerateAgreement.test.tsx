@@ -73,6 +73,7 @@ describe('useGenerateAgreement functions', () => {
       acquisitionTeam: [
         {
           id: 1,
+          acquisitionFileId: 1,
           personId: 1,
           personProfileTypeCode: 'PROPCOORD',
           isDisabled: false,

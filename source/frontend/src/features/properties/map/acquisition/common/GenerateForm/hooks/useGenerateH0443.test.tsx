@@ -78,6 +78,7 @@ describe('useGenerateH0443 functions', () => {
       acquisitionTeam: [
         {
           id: 1,
+          acquisitionFileId: 1,
           personId: 1,
           personProfileTypeCode: 'PROPCOORD',
           isDisabled: false,
@@ -85,6 +86,7 @@ describe('useGenerateH0443 functions', () => {
         },
         {
           id: 2,
+          acquisitionFileId: 1,
           personId: 2,
           personProfileTypeCode: 'PROPAGENT',
           isDisabled: false,

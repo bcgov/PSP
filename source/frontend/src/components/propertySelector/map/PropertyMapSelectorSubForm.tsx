@@ -8,13 +8,12 @@ import { IMapProperty } from '../models';
 
 export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
-  onClickAway: () => void;
   selectedProperty?: IMapProperty;
 }
 
 export const PropertyMapSelectorSubForm: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorSubFormProps>
-> = ({ onClickDraftMarker, onClickAway, selectedProperty }) => {
+> = ({ onClickDraftMarker, selectedProperty }) => {
   const pid = selectedProperty?.pid;
   const planNumber = selectedProperty?.planNumber;
   const address = selectedProperty?.address;
@@ -26,7 +25,7 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
   return (
     <StyledFormRow>
       <Col md={4}>
-        <SelectProperty onClickAway={onClickAway} onClick={onClickDraftMarker} />
+        <SelectProperty onClick={onClickDraftMarker} />
       </Col>
       <Col md={8}>
         <Row>
