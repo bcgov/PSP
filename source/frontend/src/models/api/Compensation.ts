@@ -1,14 +1,14 @@
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 
 export interface Api_Compensation extends Api_ConcurrentVersion {
-  id: number;
+  id: number | null;
   acquisitionFileId: number;
   isDraft: boolean | null;
   fiscalYear: string | null;
-  agreementDateTime: string | null;
-  expropriationNoticeServedDateTime: string | null;
-  expropriationVestingDateTime: string | null;
-  generationDatetTime: string | null;
+  agreementDate: string | null;
+  expropriationNoticeServedDate: string | null;
+  expropriationVestingDate: string | null;
+  generationDate: string | null;
   specialInstruction: string | null;
   detailedRemarks: string | null;
   isDisabled: boolean | null;
