@@ -25,20 +25,20 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
 -- Drop index dbo.PRPRTY_LOCATION_IDX
-PRINT N'Drop index dbo.PRPRTY_LOCATION_IDX'
-GO
-DROP INDEX IF EXISTS [PRPRTY_LOCATION_IDX] ON [dbo].[PIMS_PROPERTY] 
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--PRINT N'Drop index dbo.PRPRTY_LOCATION_IDX'
+--GO
+--DROP INDEX IF EXISTS [PRPRTY_LOCATION_IDX] ON [dbo].[PIMS_PROPERTY] 
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Drop index dbo.PRPRTY_BOUNDARY_IDX
-PRINT N'Drop index dbo.PRPRTY_BOUNDARY_IDX'
-GO
-DROP INDEX IF EXISTS [PRPRTY_BOUNDARY_IDX] ON [dbo].[PIMS_PROPERTY]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--PRINT N'Drop index dbo.PRPRTY_BOUNDARY_IDX'
+--GO
+--DROP INDEX IF EXISTS [PRPRTY_BOUNDARY_IDX] ON [dbo].[PIMS_PROPERTY]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Drop trigger dbo.PIMS_PRPRTY_I_S_U_TR
 PRINT N'Drop trigger dbo.PIMS_PRPRTY_I_S_U_TR'
@@ -1080,20 +1080,20 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
 -- Create index dbo.PRPRTY_BOUNDARY_IDX
-PRINT N'Create index dbo.PRPRTY_BOUNDARY_IDX'
-GO
+--PRINT N'Create index dbo.PRPRTY_BOUNDARY_IDX'
+--GO
 -- [PRPRTY_BOUNDARY_IDX] : Scripting for Spatial Index currently not supported
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create index dbo.PRPRTY_LOCATION_IDX
-PRINT N'Create index dbo.PRPRTY_LOCATION_IDX'
-GO
+--PRINT N'Create index dbo.PRPRTY_LOCATION_IDX'
+--GO
 -- [PRPRTY_LOCATION_IDX] : Scripting for Spatial Index currently not supported
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create foreign key constraint dbo.PIM_RESPCD_PIM_CMPREQ_FK
 PRINT N'Create foreign key constraint dbo.PIM_RESPCD_PIM_CMPREQ_FK'

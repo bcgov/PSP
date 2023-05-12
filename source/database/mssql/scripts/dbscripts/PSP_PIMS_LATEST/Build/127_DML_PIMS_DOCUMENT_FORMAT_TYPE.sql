@@ -16,7 +16,7 @@ VALUES
   ('DOCX', 'Microsoft Office Open XML document',        CONVERT(DATE, '1900-01-01')),
   ('DOC',  'Microsoft Word document',                   CONVERT(DATE, '1900-01-01')),
   ('XLSX', 'Microsoft Office Open XML worksheet sheet', CONVERT(DATE, '1900-01-01')),
-  ('XLS',  'Microsoft Excel worksheet sheet (97ï¿½2003)', CONVERT(DATE, '1900-01-01')),
+  ('XLS',  'Microsoft Excel worksheet sheet (97–2003)', CONVERT(DATE, '1900-01-01')),
   ('HTML', 'HTML HyperText Markup Language',            CONVERT(DATE, '1900-01-01')),
   ('ODT',  'OpenDocument text document',                CONVERT(DATE, '1900-01-01')),
   ('PNG',  'Portable Network Graphic',                  CONVERT(DATE, '1900-01-01')),
