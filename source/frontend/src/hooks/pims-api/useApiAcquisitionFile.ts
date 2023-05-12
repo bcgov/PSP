@@ -6,6 +6,8 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
+import { Api_Compensation } from 'models/api/Compensation';
+import { Api_Product, Api_Project } from 'models/api/Project';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -39,10 +41,24 @@ export const useApiAcquisitionFile = () => {
         api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
       getAcquisitionFileOwners: (acqFileId: number) =>
         api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
+      getAcquisitionFileProject: (acqFileId: number) =>
+        api.get<Api_Project>(`/acquisitionfiles/${acqFileId}/project`),
+      getAcquisitionFileProduct: (acqFileId: number) =>
+        api.get<Api_Product>(`/acquisitionfiles/${acqFileId}/product`),
       getAcquisitionFileChecklist: (acqFileId: number) =>
         api.get<Api_AcquisitionFileChecklistItem[]>(`/acquisitionfiles/${acqFileId}/checklist`),
       putAcquisitionFileChecklist: (acqFile: Api_AcquisitionFile) =>
         api.put<Api_AcquisitionFile>(`/acquisitionfiles/${acqFile?.id}/checklist`, acqFile),
+      getFileCompensationRequisitions: (acqFileId: number) =>
+        api.get<Api_Compensation[]>(`/acquisitionfiles/${acqFileId}/compensation-requisitions`),
+      postFileCompensationRequisition: (
+        acqFileId: number,
+        compensationRequisition: Api_Compensation,
+      ) =>
+        api.post<Api_Compensation>(
+          `/acquisitionfiles/${acqFileId}/compensation-requisitions`,
+          compensationRequisition,
+        ),
     }),
     [api],
   );
