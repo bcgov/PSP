@@ -21,77 +21,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string userName = "TRANPSP1";
         //private readonly string userName = "sutairak";
 
-        private readonly string status1 = "Draft";
-        private readonly string status2 = "Inactive";
-        private readonly string project = "Automation Project 04";
-        private readonly string leaseStartDate = "02/22/2022";
-        private readonly string leaseExpiryDate = "03/22/2024";
-        private readonly string leaseExpiryPastDate = "12/24/2022";
-        private readonly string motiContact = "Automation Test";
-        private readonly string program = "BC Ferries";
-        private readonly string responsibilityDate = "02/23/2022";
-        private readonly string locationDoc = "Automation Test Location of Documents";
-        private readonly string description = "Automation Test Intention of use";
-        private readonly string lisDocumentNbr = "1948-0000-1";
-        private readonly string psDocumentNbr = "135-256-001";
-        private readonly string notes = "Automation Test Notes";
-        private readonly string editDescription = "Automation Test Intented use - Edited by automation";
-        private readonly string editNotes = "Automation Test Notes - Edited by automation";
-
-        private readonly string PID = "001-192-396";
-        private readonly string PID2 = "010-598-103";
-        private readonly string PIN = "553490";
-        private readonly string address = "2525 Mill Bay Rd";
-        private readonly string planNbr = "VAP7495";
-        private readonly string legalDescription = "LOT 3 DISTRICT LOT 118 GROUP 1";
-
-        private readonly string individualTenant = "John Smith";
-        private readonly string organizationTenant1 = "District of Saanich";
-        private readonly string organizationTenant2 = "Sakwi Creek Hydro LP";
-        private readonly string organizationTenant3 = "Bishop of Victoria";
-
         private readonly string firstTermEndDate = "04/22/2022";
         private readonly string firstTermFrequency = "Weekly";
         private readonly string firstTermAgreedPayment = "2500";
 
-        private readonly string improvementCommercialAddress = "1688 Blanshard St. Victoria, BC, V7C 1B7";
-        private readonly string improvementCommercialSize = "256 sqft";
-        private readonly string improvementCommercialDescription = "Automation Test - Commercial Improvement Description";
-        private readonly string improvementResidentialAddress = "2301-1155 Nanaimo St. Vancouver, BC V6Z 2C7";
-        private readonly string improvementResidentialSize = "175.69 sqft";
-        private readonly string improvementResidentialDescription = "Automation Test - Residential Improvement Description";
-        private readonly string improvementOtherAddress1 = "Stanley Park, Vancouver, BC, V6Z 8J9";
-        private readonly string improvementOtherSize1 = "2256 sqft";
-        private readonly string improvementOtherDescription1 = "Automation Test - Other Improvement Description";
-        private readonly string improvementOtherAddress2 = "Vancouver Aquarium, Vancouver, BC, V6Z 8J9";
-        private readonly string improvementOtherSize2 = "225 sqft";
-        private readonly string improvementOtherDescription2 = "Automation Test Edition - Other Improvement Description edited";
-
-        private readonly string insuranceAircraftInPlace = "yes";
-        private readonly string insuranceAircraftLimit = "25000";
-        private readonly string insuranceAircraftExpiryDate = "12/12/2025";
-        private readonly string insuranceAircraftDescription = "Automation Test - Aircraft Insurance Description";
-        private readonly string insuranceCGLInPlace = "yes";
-        private readonly string insuranceCGLLimit = "205000";
-        private readonly string insuranceCGLExpiryDate = "12/12/2026";
-        private readonly string insuranceCGLDescription = "Automation Test - Commercial General Liability Insurance Description";
-        private readonly string insuranceMarineInPlace = "no";
-        private readonly string insuranceMarineLimit = "125000";
-        private readonly string insuranceMarineExpiryDate = "12/12/2027";
-        private readonly string insuranceMarineDescription = "Automation Test - Marine Insurance Description";
-        private readonly string insuranceVehicleInPlace = "yes";
-        private readonly string insuranceVehicleLimit = "11000";
-        private readonly string insuranceVehicleExpiryDate = "12/12/2023";
-        private readonly string insuranceVehicleDescription = "Automation Test - Vehicle Insurance Description";
-        private readonly string insuranceOtherType = "Pets Insurance";
-        private readonly string insuranceOtherInPlace = "no";
-        private readonly string insuranceOtherLimit = "100000";
-        private readonly string insuranceOtherExpiryDate = "12/12/2030";
-        private readonly string insuranceOtherDescription = "Automation Test - Aircraft Insurance Description";
-
-        private readonly string depositType = "Security deposit";
-        private readonly string depositType2 = "Other deposit";
-        private readonly string depositDescription = "Automation Test - Deposit Description";
+        private readonly string depositType = "";
+        private readonly string depositType2 = "";
+        private readonly string depositDescription = "";
         private readonly string depositAmount = "250";
         private readonly string depositPaidDate = "02/25/2022";
         private readonly string depositHolder = "John Smith";
