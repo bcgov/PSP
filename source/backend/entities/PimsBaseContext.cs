@@ -27,8 +27,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsAcqChklstItemType> PimsAcqChklstItemTypes { get; set; }
         public virtual DbSet<PimsAcqChklstSectionType> PimsAcqChklstSectionTypes { get; set; }
         public virtual DbSet<PimsAcqFlPersonProfileType> PimsAcqFlPersonProfileTypes { get; set; }
-        public virtual DbSet<PimsAcqOwnerCompReqChq> PimsAcqOwnerCompReqChqs { get; set; }
-        public virtual DbSet<PimsAcqOwnerCompReqChqHist> PimsAcqOwnerCompReqChqHists { get; set; }
+        public virtual DbSet<PimsAcqPayeeCheque> PimsAcqPayeeCheques { get; set; }
+        public virtual DbSet<PimsAcqPayeeChequeHist> PimsAcqPayeeChequeHists { get; set; }
         public virtual DbSet<PimsAcqPhysFileStatusType> PimsAcqPhysFileStatusTypes { get; set; }
         public virtual DbSet<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
         public virtual DbSet<PimsAcquisitionActivityInstanceHist> PimsAcquisitionActivityInstanceHists { get; set; }
@@ -50,6 +50,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsAcquisitionOwnerHist> PimsAcquisitionOwnerHists { get; set; }
         public virtual DbSet<PimsAcquisitionOwnerSolicitor> PimsAcquisitionOwnerSolicitors { get; set; }
         public virtual DbSet<PimsAcquisitionOwnerSolicitorHist> PimsAcquisitionOwnerSolicitorHists { get; set; }
+        public virtual DbSet<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
+        public virtual DbSet<PimsAcquisitionPayeeHist> PimsAcquisitionPayeeHists { get; set; }
         public virtual DbSet<PimsAcquisitionType> PimsAcquisitionTypes { get; set; }
         public virtual DbSet<PimsActInstPropAcqFile> PimsActInstPropAcqFiles { get; set; }
         public virtual DbSet<PimsActInstPropAcqFileHist> PimsActInstPropAcqFileHists { get; set; }
@@ -519,14 +521,14 @@ namespace Pims.Dal
                     .HasComment("Indicates if the code value is inactive.");
             });
 
-            modelBuilder.Entity<PimsAcqOwnerCompReqChq>(entity =>
+            modelBuilder.Entity<PimsAcqPayeeCheque>(entity =>
             {
-                entity.HasKey(e => e.AcqOwnerCompReqChqId)
-                    .HasName("AOCRCQ_PK");
+                entity.HasKey(e => e.AcqPayeeChequeId)
+                    .HasName("AQPCHQ_PK");
 
                 entity.HasComment("Table associating cheques for an acquisition file owner with a compenstion requisition.");
 
-                entity.Property(e => e.AcqOwnerCompReqChqId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_OWNER_COMP_REQ_CHQ_ID_SEQ])");
+                entity.Property(e => e.AcqPayeeChequeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_PAYEE_CHEQUE_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -556,19 +558,19 @@ namespace Pims.Dal
 
                 entity.Property(e => e.TotalAmt).HasComment("Total value of the owner's cheque related to the requisition.");
 
-                entity.HasOne(d => d.AcquisitionOwner)
-                    .WithMany(p => p.PimsAcqOwnerCompReqChqs)
-                    .HasForeignKey(d => d.AcquisitionOwnerId)
+                entity.HasOne(d => d.AcquisitionPayee)
+                    .WithMany(p => p.PimsAcqPayeeCheques)
+                    .HasForeignKey(d => d.AcquisitionPayeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ACQOWN_PIM_AOCRCQ_FK");
+                    .HasConstraintName("PIM_ACQPAY_PIM_AQPCHQ_FK");
             });
 
-            modelBuilder.Entity<PimsAcqOwnerCompReqChqHist>(entity =>
+            modelBuilder.Entity<PimsAcqPayeeChequeHist>(entity =>
             {
-                entity.HasKey(e => e.AcqOwnerCompReqChqHistId)
-                    .HasName("PIMS_AOCRCQ_H_PK");
+                entity.HasKey(e => e.AcqPayeeChequeHistId)
+                    .HasName("PIMS_AQPCHQ_H_PK");
 
-                entity.Property(e => e.AcqOwnerCompReqChqHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_OWNER_COMP_REQ_CHQ_H_ID_SEQ])");
+                entity.Property(e => e.AcqPayeeChequeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_PAYEE_CHEQUE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -1147,6 +1149,12 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date the owner record became effective. Defaults to current date/time.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the owner record expired.");
+
                 entity.Property(e => e.GivenName).HasComment("Given name of the owner (person).");
 
                 entity.Property(e => e.IncorporationNumber).HasComment("Incorporation number of the organization.");
@@ -1241,6 +1249,64 @@ namespace Pims.Dal
                     .HasName("PIMS_AQOWSO_H_PK");
 
                 entity.Property(e => e.AcquisitionOwnerSolicitorHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_OWNER_SOLICITOR_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsAcquisitionPayee>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionPayeeId)
+                    .HasName("ACQPAY_PK");
+
+                entity.HasComment("Person receiving a payment from MoTI.  Associates owners, cheques, and compensation requisitions.");
+
+                entity.Property(e => e.AcquisitionPayeeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_PAYEE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the acquisition payee is inactive.");
+
+                entity.HasOne(d => d.AcquisitionOwner)
+                    .WithMany(p => p.PimsAcquisitionPayees)
+                    .HasForeignKey(d => d.AcquisitionOwnerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACQOWN_PIM_ACQPAY_FK");
+
+                entity.HasOne(d => d.CompensationRequisition)
+                    .WithMany(p => p.PimsAcquisitionPayees)
+                    .HasForeignKey(d => d.CompensationRequisitionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_CMPREQ_PIM_ACQPAY_FK");
+            });
+
+            modelBuilder.Entity<PimsAcquisitionPayeeHist>(entity =>
+            {
+                entity.HasKey(e => e.AcquisitionPayeeHistId)
+                    .HasName("PIMS_ACQPAY_H_PK");
+
+                entity.Property(e => e.AcquisitionPayeeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_PAYEE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -7470,14 +7536,6 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
-            modelBuilder.HasSequence("BCA_MINOR_TAXING_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("BCA_OWNER_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
             modelBuilder.HasSequence("PIMS_ACCESS_REQUEST_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -7494,11 +7552,11 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACQ_OWNER_COMP_REQ_CHQ_H_ID_SEQ")
+            modelBuilder.HasSequence("PIMS_ACQ_PAYEE_CHEQUE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACQ_OWNER_COMP_REQ_CHQ_ID_SEQ")
+            modelBuilder.HasSequence("PIMS_ACQ_PAYEE_CHEQUE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -7573,6 +7631,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_ACQUISITION_OWNER_SOLICITOR_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_ACQUISITION_PAYEE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_ACQUISITION_PAYEE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
