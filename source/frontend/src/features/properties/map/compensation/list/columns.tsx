@@ -1,10 +1,12 @@
 import { LinkButton, StyledRemoveIconButton } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
-import { FaTrash } from 'react-icons/fa';
+import { Col } from 'react-bootstrap';
+import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate, stringToFragment } from 'utils';
@@ -21,7 +23,7 @@ export function createCompensationTableColumns(
       minWidth: 40,
       maxWidth: 40,
       Cell: (cellProps: CellProps<Api_Compensation>) => {
-        return stringToFragment(prettyFormatDate(cellProps.row.original.agreementDateTime));
+        return stringToFragment(prettyFormatDate(cellProps.row.original.agreementDate));
       },
     },
     {
@@ -40,7 +42,7 @@ export function createCompensationTableColumns(
             {cellProps.row.original.id}
           </LinkButton>
         ) : (
-          stringToFragment(cellProps.row.original.id)
+          stringToFragment(cellProps.row.original.id!)
         );
       },
     },
@@ -79,10 +81,27 @@ export function createCompensationTableColumns(
       Cell: (cellProps: CellProps<Api_Compensation>) => {
         const { hasClaim } = useKeycloakWrapper();
         return (
-          <StyledDiv>
+          <StyledDiv className="no-gutters">
+            {hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) && (
+              <Col>
+                <Button
+                  icon={
+                    <FaEye
+                      size={24}
+                      id={`compensation-view-${cellProps.row.id}`}
+                      data-testid={`compensation-view-${cellProps.row.id}`}
+                      title="Compensation view details"
+                    />
+                  }
+                  onClick={() => cellProps.row.original.id && onShow(cellProps.row.original.id)}
+                ></Button>
+              </Col>
+            )}
             {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
             cellProps.row.original.isDraft !== false ? (
               <StyledRemoveIconButton
+                id={`compensation-delete-${cellProps.row.id}`}
+                data-testid={`compensation-delete-${cellProps.row.id}`}
                 onClick={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
                 title="Delete Compensation"
               >
@@ -101,4 +120,20 @@ export function createCompensationTableColumns(
 const StyledDiv = styled(InlineFlexDiv)`
   justify-content: space-around;
   width: 100%;
+
+  [id^='compensation-view'] {
+    color: ${props => props.theme.css.slideOutBlue};
+  }
+  [id^='compensation-delete'] {
+    color: ${props => props.theme.css.discardedColor};
+    :hover {
+      color: ${({ theme }) => theme.css.dangerColor};
+    }
+  }
+
+  .btn.btn-primary {
+    background-color: transparent;
+    padding: 0;
+    margin-left: 0.5rem;
+  }
 `;

@@ -1,0 +1,464 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Compensation Detail View Component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c6 {
+  float: right;
+  cursor: pointer;
+}
+
+.c0 {
+  text-align: right;
+}
+
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+.c2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="c0"
+    />
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c2 no-gutters row"
+        >
+          <div
+            class="col-7"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="pr-0 text-left col-auto"
+                  >
+                    <label>
+                      Client:
+                    </label>
+                  </div>
+                  <div
+                    class="pl-1 text-left col-4"
+                    data-testid="compensation-client"
+                  >
+                    <strong>
+                      034
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="pr-0 text-left col-auto"
+                  >
+                    <label>
+                      Requisition number:
+                    </label>
+                  </div>
+                  <div
+                    class="pl-1 text-left col-4"
+                  >
+                    <strong>
+                      Draft
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-5"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="pr-0 text-left col-auto"
+                  >
+                    <label>
+                      Compensation amount:
+                    </label>
+                  </div>
+                  <div
+                    class="pl-1 text-left col-4"
+                  >
+                    <strong>
+                      $0.00
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="pr-0 text-left col-auto"
+                  >
+                    <label>
+                      Applicable GST:
+                    </label>
+                  </div>
+                  <div
+                    class="pl-1 text-left col-4"
+                  >
+                    <strong>
+                      $0.00
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="pr-0 text-left col-auto"
+                  >
+                    <label>
+                      Total cheque amount:
+                    </label>
+                  </div>
+                  <div
+                    class="pl-1 text-left col-4"
+                  >
+                    <strong>
+                      $0.00
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Requisition Details
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Status:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            Draft
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Agreement date:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Expropriation notice server date:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Expropriation vesting date:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c4"
+            >
+              Special instructions:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Financial Coding
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c6"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Product:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Business function:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Work activity:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Cost type:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Fiscal year:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c4"
+            >
+              Detailed remarks:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

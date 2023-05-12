@@ -16,5 +16,7 @@ namespace Pims.Dal.Repositories
         PimsPropertyAcquisitionFile Update(PimsPropertyAcquisitionFile propertyAcquisitionFile);
 
         void Delete(PimsPropertyAcquisitionFile propertyAcquisitionFile);
+
+        List<PimsCompensationRequisition> GetCompensationRequisitionsByAcquisitionFileId(long acquisitionFileId);
     }
 }
