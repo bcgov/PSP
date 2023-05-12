@@ -8,21 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACQ_OWNER_COMP_REQ_CHQ")]
-    [Index(nameof(AcquisitionOwnerId), Name = "AOCRCQ_ACQUISITION_OWNER_ID_IDX")]
-    public partial class PimsAcqOwnerCompReqChq
+    [Table("PIMS_ACQUISITION_PAYEE")]
+    [Index(nameof(AcquisitionOwnerId), Name = "ACQPAY_ACQUISITION_OWNER_ID_IDX")]
+    [Index(nameof(CompensationRequisitionId), Name = "ACQPAY_COMPENSATION_REQUISITION_ID_IDX")]
+    public partial class PimsAcquisitionPayee
     {
+        public PimsAcquisitionPayee()
+        {
+            PimsAcqPayeeCheques = new HashSet<PimsAcqPayeeCheque>();
+        }
+
         [Key]
-        [Column("ACQ_OWNER_COMP_REQ_CHQ_ID")]
-        public long AcqOwnerCompReqChqId { get; set; }
+        [Column("ACQUISITION_PAYEE_ID")]
+        public long AcquisitionPayeeId { get; set; }
         [Column("ACQUISITION_OWNER_ID")]
         public long AcquisitionOwnerId { get; set; }
-        [Column("PRETAX_AMT", TypeName = "money")]
-        public decimal? PretaxAmt { get; set; }
-        [Column("TAX_AMT", TypeName = "money")]
-        public decimal? TaxAmt { get; set; }
-        [Column("TOTAL_AMT", TypeName = "money")]
-        public decimal? TotalAmt { get; set; }
+        [Column("COMPENSATION_REQUISITION_ID")]
+        public long CompensationRequisitionId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -63,7 +67,12 @@ namespace Pims.Dal.Entities
         public string DbLastUpdateUserid { get; set; }
 
         [ForeignKey(nameof(AcquisitionOwnerId))]
-        [InverseProperty(nameof(PimsAcquisitionOwner.PimsAcqOwnerCompReqChqs))]
+        [InverseProperty(nameof(PimsAcquisitionOwner.PimsAcquisitionPayees))]
         public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
+        [ForeignKey(nameof(CompensationRequisitionId))]
+        [InverseProperty(nameof(PimsCompensationRequisition.PimsAcquisitionPayees))]
+        public virtual PimsCompensationRequisition CompensationRequisition { get; set; }
+        [InverseProperty(nameof(PimsAcqPayeeCheque.AcquisitionPayee))]
+        public virtual ICollection<PimsAcqPayeeCheque> PimsAcqPayeeCheques { get; set; }
     }
 }
