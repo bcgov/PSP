@@ -12,6 +12,11 @@ namespace Pims.Dal.Entities
     [Index(nameof(Code), Name = "YRFINC_CODE_IDX")]
     public partial class PimsYearlyFinancialCode
     {
+        public PimsYearlyFinancialCode()
+        {
+            PimsCompensationRequisitions = new HashSet<PimsCompensationRequisition>();
+        }
+
         [Key]
         [Column("ID")]
         public long Id { get; set; }
@@ -67,5 +72,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [InverseProperty(nameof(PimsCompensationRequisition.YearlyFinancial))]
+        public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; }
     }
 }
