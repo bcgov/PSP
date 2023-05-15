@@ -130,7 +130,7 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
               type={type}
               id={`input-${field}-2`}
               {...rest}
-              value={(checked === true) as any}
+              value={(checked === false) as any}
               placeholder={placeholder}
               checked={checked === false}
               onChange={(e: any) => {

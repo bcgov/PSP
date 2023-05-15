@@ -6,7 +6,7 @@ namespace PIMS.Tests.Automation.Classes
         public string Name { get; set; } = null!;
         public string? Number { get; set; } = null;
         public string CodeName { get; set; } = null!;
-        public string Status { get; set; } = null!;
+        public string ProjectStatus { get; set; } = null!;
         public string MOTIRegion { get; set; } = null!;
         public string? Summary { get; set; } = null;
         public string CreatedBy { get; set; } = null!;

@@ -19,12 +19,14 @@ namespace PIMS.Tests.Automation.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Acquisition-Files")]
     public partial class AcquisitionFilesFeature : object, Xunit.IClassFixture<AcquisitionFilesFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private static string[] featureTags = ((string[])(null));
+        private static string[] featureTags = new string[] {
+                "Acquisition-Files"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -83,11 +85,9 @@ namespace PIMS.Tests.Automation.Features
         [Xunit.SkippableFactAttribute(DisplayName="01. Create a new complete Acquisition File with pins")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
         [Xunit.TraitAttribute("Description", "01. Create a new complete Acquisition File with pins")]
-        [Xunit.TraitAttribute("Category", "Acquisition-Files")]
         public void _01_CreateANewCompleteAcquisitionFileWithPins()
         {
-            string[] tagsOfScenario = new string[] {
-                    "Acquisition-Files"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Create a new complete Acquisition File with pins", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6

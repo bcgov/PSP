@@ -23,6 +23,12 @@ namespace Pims.Dal.Entities
         public long CompensationRequisitionId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
+        [Column("CHART_OF_ACCOUNTS_ID")]
+        public long? ChartOfAccountsId { get; set; }
+        [Column("RESPONSIBILITY_ID")]
+        public long? ResponsibilityId { get; set; }
+        [Column("YEARLY_FINANCIAL_ID")]
+        public long? YearlyFinancialId { get; set; }
         [Column("IS_DRAFT")]
         public bool? IsDraft { get; set; }
         [Column("FISCAL_YEAR")]

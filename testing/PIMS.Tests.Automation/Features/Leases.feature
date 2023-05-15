@@ -1,4 +1,5 @@
-﻿Feature: Leases and Licenses
+﻿@Regression-Leases
+Feature: Leases and Licenses
 
 This feature tests all test cases related to Leases and Licenses.
 
