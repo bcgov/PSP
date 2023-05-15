@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 13.0.3                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S53.00.dez                                 */
+/* Project file:          PIMS S54.00.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-04-26 10:26                                */
+/* Created on:            2023-05-10 09:56                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -1569,6 +1569,18 @@ DROP TRIGGER [dbo].[PIMS_ARQSTT_I_S_I_TR]
 GO
 
 
+DROP TRIGGER [dbo].[PIMS_STAVBL_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_STAVBL_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_STAVBL_A_S_IUD_TR]
+GO
+
+
 /* ---------------------------------------------------------------------- */
 /* Drop views                                                             */
 /* ---------------------------------------------------------------------- */
@@ -2393,11 +2405,23 @@ ALTER TABLE [dbo].[PIMS_COMPENSATION_REQUISITION] DROP CONSTRAINT [PIM_ACQNFL_PI
 GO
 
 
+ALTER TABLE [dbo].[PIMS_COMPENSATION_REQUISITION] DROP CONSTRAINT [PIM_CHRTAC_PIM_CMPREQ_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_COMPENSATION_REQUISITION] DROP CONSTRAINT [PIM_RESPCD_PIM_CMPREQ_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_COMPENSATION_REQUISITION] DROP CONSTRAINT [PIM_YRFINC_PIM_CMPREQ_FK]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_COMP_REQ_H120] DROP CONSTRAINT [PIM_CMPREQ_PIM_CRH120_FK]
 GO
 
 
-ALTER TABLE [dbo].[PIMS_COMP_REQ_H120] DROP CONSTRAINT [PIM_H120CT_PIM_CRH120_FK]
+ALTER TABLE [dbo].[PIMS_COMP_REQ_H120] DROP CONSTRAINT [PIM_FINACT_PIM_CRH120_FK]
 GO
 
 
@@ -2965,6 +2989,10 @@ ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_ACQ_PAYEE_CHEQ
 GO
 
 
+ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_IS_GST_REQUIRED_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_CONCURRENCY_CONTROL_NUMBER_DEF]
 GO
 
@@ -3022,6 +3050,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_PAYEE_CHEQUE', 'COLUMN', N'TOTAL_AMT'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_PAYEE_CHEQUE', 'COLUMN', N'IS_GST_REQUIRED'
 GO
 
 
@@ -3748,6 +3780,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY', 'COLUMN', N'LOCATION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY', 'COLUMN', N'GENERAL_LOCATION'
 GO
 
 
@@ -5315,6 +5351,10 @@ ALTER TABLE [dbo].[PIMS_COMP_REQ_H120] DROP CONSTRAINT [CRH120_COMP_REQ_FIN_ACTI
 GO
 
 
+ALTER TABLE [dbo].[PIMS_COMP_REQ_H120] DROP CONSTRAINT [CRH120_IS_GST_REQUIRED_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_COMP_REQ_H120] DROP CONSTRAINT [CRH120_IS_DISABLED_DEF]
 GO
 
@@ -5376,6 +5416,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMP_REQ_H120', 'COLUMN', N'TOTAL_AMT'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMP_REQ_H120', 'COLUMN', N'IS_GST_REQUIRED'
 GO
 
 
@@ -8458,6 +8502,68 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_PROPERTY_SERVICE_FILE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_DOCUMENT_FORMAT_TYPE"                             */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_FORMAT_TYPE] DROP CONSTRAINT [DOCFMT_EFFECTIVE_DATE_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_FORMAT_TYPE] DROP CONSTRAINT [DOCFMT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_FORMAT_TYPE] DROP CONSTRAINT [DOCFMT_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_FORMAT_TYPE] DROP CONSTRAINT [DOCFMT_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_FORMAT_TYPE] DROP CONSTRAINT [DOCFMT_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_FORMAT_TYPE] DROP CONSTRAINT [DOCFMT_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_FORMAT_TYPE] DROP CONSTRAINT [DOCFMT_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_FORMAT_TYPE', 'COLUMN', N'DOCUMENT_FORMAT_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_FORMAT_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_FORMAT_TYPE', 'COLUMN', N'EFFECTIVE_DATE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_FORMAT_TYPE', 'COLUMN', N'EXPIRY_DATE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_FORMAT_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_FORMAT_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_DOCUMENT_FORMAT_TYPE]
 GO
 
 

@@ -6,6 +6,8 @@ DECLARE @manuelPersonId bigint;
 
 DECLARE @maheshPersonId bigint;
 
+DECLARE @amanPersonId bigint;
+
 INSERT INTO
     [dbo].[PIMS_PERSON] (
         [SURNAME],
@@ -57,6 +59,16 @@ VALUES
         'seed_data',
         'seed_data',
         'seed_data'
+    ),
+    (
+        'Monga',
+        'Aman',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
     );
 
 SET
@@ -97,6 +109,16 @@ SET
             PIMS_PERSON
         WHERE
             SURNAME = 'Babu' AND FIRST_NAME = 'Mahesh'
+    );
+
+SET
+    @amanPersonId = (
+        SELECT
+            TOP(1) PERSON_ID
+        FROM
+            PIMS_PERSON
+        WHERE
+            SURNAME = 'Monga' AND FIRST_NAME = 'Aman'
     );
 
 INSERT INTO
@@ -165,6 +187,19 @@ VALUES
         'seed_data',
         'seed_data',
         'seed_data'
+    ),
+    (
+        @amanPersonId,
+        'amonga',
+        'E4240183-82D2-4CB7-BA7E-84E7067CB14A',
+        0,
+        CURRENT_TIMESTAMP,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
     );
 
 GO
@@ -174,6 +209,7 @@ DECLARE @devinUserId bigint;
 DECLARE @alejandroUserId bigint;
 DECLARE @manuelUserId bigint;
 DECLARE @maheshUserId bigint;
+DECLARE @amanUserId bigint;
 
 SET
     @systemAdmin = (
@@ -221,6 +257,15 @@ SET
         WHERE
             BUSINESS_IDENTIFIER_VALUE = 'mbabu'
     );
+SET
+    @amanUserId = (
+        SELECT
+            TOP(1) USER_ID
+        FROM
+            PIMS_USER
+        WHERE
+            BUSINESS_IDENTIFIER_VALUE = 'amonga'
+    );
 
 INSERT INTO
     [dbo].[PIMS_USER_ROLE] (
@@ -266,6 +311,16 @@ VALUES
     ),
     (
         @maheshUserId,
+        @systemAdmin,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @amanUserId,
         @systemAdmin,
         'seed_data',
         'seed_data',
