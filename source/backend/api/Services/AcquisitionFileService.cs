@@ -11,6 +11,7 @@ using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -71,8 +72,9 @@ namespace Pims.Api.Services
             // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? personId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetPage(filter, userRegions);
+            return _acqFileRepository.GetPage(filter, userRegions, personId);
         }
 
         public PimsAcquisitionFile GetById(long id)
@@ -81,6 +83,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var acqFile = _acqFileRepository.GetById(id);
+            _user.HasAccessToAcquisitionFile(_userRepository, acqFile);
+
             return acqFile;
         }
 
@@ -143,6 +147,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
+            _user.HasAccessToAcquisitionFile(_userRepository, acquisitionFile);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             if (!userOverride)
@@ -170,6 +175,8 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating acquisition file properties...");
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            _user.HasAccessToAcquisitionFile(_userRepository, acquisitionFile);
+
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             MatchProperties(acquisitionFile);
@@ -230,6 +237,7 @@ namespace Pims.Api.Services
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
             _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.HasAccessToAcquisitionFile(_userRepository, acquisitionFile);
 
             // Get the current checklist items for this acquisition file.
             var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
@@ -281,6 +289,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Adding compensation requisition for acquisition file id ...", acquisitionFileId);
 
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
+            _user.HasAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
 

@@ -19,6 +19,12 @@ namespace Pims.Dal.Entities
         public override long Internal_Id { get => UserId; set => UserId = value; }
 
         /// <summary>
+        /// get - User is Contractor
+        /// </summary>
+        [NotMapped]
+        public bool IsContractor => UserTypeCode is not null && UserTypeCode == EnumUserTypeCodes.CONTRACT.ToString();
+
+        /// <summary>
         /// get - A collection of organizations this user belongs to.
         /// </summary>
         public ICollection<PimsOrganization> GetOrganizations() => PimsUserOrganizations?.Select(o => o.Organization).ToArray();
