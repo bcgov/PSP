@@ -50,16 +50,18 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           header={
             <Row>
               <Col md={6}>{`Agreement ${index + 1}`}</Col>
-              <Col md={6}>
+              <Col md={6} style={{ paddingRight: '0px' }}>
                 {agreement.agreementType !== null && (
-                  <StyledAddButton
-                    onClick={() => {
-                      onGenerate(agreement);
-                    }}
-                  >
-                    <FaMailBulk className="mr-2" />
-                    Generate document
-                  </StyledAddButton>
+                  <StyledButtonContainer>
+                    <StyledAddButton
+                      onClick={() => {
+                        onGenerate(agreement);
+                      }}
+                    >
+                      <FaMailBulk className="mr-2" />
+                      Generate document
+                    </StyledAddButton>
+                  </StyledButtonContainer>
                 )}
               </Col>
             </Row>
@@ -121,4 +123,8 @@ export const StyledNoData = styled.div`
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+`;
+
+export const StyledButtonContainer = styled.div`
+  float: right;
 `;
