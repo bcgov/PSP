@@ -1,8 +1,8 @@
-﻿Feature: AcquisitionFiles
+﻿@Acquisition-Files
+Feature: AcquisitionFiles
 
 A short summary of the feature
 
-@Acquisition-Files
 Scenario: 01. Create a new complete Acquisition File with pins
 	Given I create a new Acquisition File
 	When I add additional information to the Acquisition File
