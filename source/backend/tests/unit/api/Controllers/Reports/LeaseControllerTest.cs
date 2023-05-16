@@ -49,6 +49,7 @@ namespace Pims.Api.Test.Controllers.Reports
         };
 
         private Mock<ILeaseReportsService> _service;
+        private Mock<ILeasePaymentService> _paymentService;
         private Mock<ILeaseRepository> _repository;
         private LeaseController _controller;
         private IMapper _mapper;
@@ -63,6 +64,7 @@ namespace Pims.Api.Test.Controllers.Reports
             _controller = _helper.CreateController<LeaseController>(Permissions.LeaseView);
             _mapper = _helper.GetService<IMapper>();
             _service = _helper.GetService<Mock<ILeaseReportsService>>();
+            _paymentService = _helper.GetService<Mock<ILeasePaymentService>>();
             _lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
             _webHost = _helper.GetService<Mock<IWebHostEnvironment>>();
             _headers = _helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
@@ -521,6 +523,35 @@ namespace Pims.Api.Test.Controllers.Reports
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => _controller.ExportAggregatedLeases(1800));
+        }
+
+        #endregion
+
+        #region ExportPayments
+
+        /// <summary>
+        /// Make a successful request that includes the latitude.
+        /// </summary>
+        [Fact]
+        public void ExportLeasePayments_ExcelX_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            _headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
+
+            var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
+            _webHost.SetupGet(m => m.ContentRootPath).Returns(path);
+
+            _paymentService.Setup(m => m.GetAllByDateRange(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(new List<PimsLeasePayment>());
+
+            // Act
+            var result = _controller.ExportLeasePayments(2021);
+
+            // Assert
+            var actionResult = Assert.IsType<FileStreamResult>(result);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
+            Assert.NotNull(actionResult.FileDownloadName);
+            Assert.True(actionResult.FileStream.Length > 0);
         }
 
         #endregion

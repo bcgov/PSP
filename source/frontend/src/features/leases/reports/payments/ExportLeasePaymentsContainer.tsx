@@ -12,25 +12,25 @@ import { getCurrentFiscalYear } from 'utils';
 
 import { generateFiscalYearOptions } from '../reportUtils';
 
-interface IExportAggregatedLeasesContainerProps {}
+interface IExportLeasePaymentsContainerProps {}
 
-export interface IExportAggregatedLeasesContainer {
+export interface IExportLeasePaymentsContainer {
   fiscalYear: number;
 }
 
-export const ExportAggregatedLeasesContainer: React.FunctionComponent<
-  React.PropsWithChildren<IExportAggregatedLeasesContainerProps>
+export const ExportLeasePaymentsContainer: React.FunctionComponent<
+  React.PropsWithChildren<IExportLeasePaymentsContainerProps>
 > = props => {
-  const { exportAggregatedLeases } = useLeaseExport();
+  const { exportLeasePayments } = useLeaseExport();
   const fiscalYearOptions = generateFiscalYearOptions(1990, getCurrentFiscalYear());
   return (
     <Formik
       initialValues={{
         fiscalYear: fiscalYearOptions[fiscalYearOptions.length - 1].value as number,
       }}
-      onSubmit={async (values: IExportAggregatedLeasesContainer) => {
+      onSubmit={async (values: IExportLeasePaymentsContainer) => {
         try {
-          await exportAggregatedLeases(values.fiscalYear);
+          await exportLeasePayments(values.fiscalYear);
         } catch (error) {
           toast.error(
             'Failed to export report. If this error persists, please contact your System Administrator.',
@@ -47,7 +47,7 @@ export const ExportAggregatedLeasesContainer: React.FunctionComponent<
                 field="fiscalYear"
                 options={fiscalYearOptions}
               ></InlineSelect>
-              <TooltipWrapper toolTipId="download-aggregated-lease-report" toolTip="Download">
+              <TooltipWrapper toolTipId="download-lease-payments-report" toolTip="Download">
                 <ClickableDownload title="Export Aggregated Report" onClick={() => submitForm()} />
               </TooltipWrapper>
             </FlexRowDiv>
@@ -66,4 +66,4 @@ const ClickableDownload = styled(FaDownload)`
   color: ${({ theme }) => theme.css.slideOutBlue};
 `;
 
-export default ExportAggregatedLeasesContainer;
+export default ExportLeasePaymentsContainer;

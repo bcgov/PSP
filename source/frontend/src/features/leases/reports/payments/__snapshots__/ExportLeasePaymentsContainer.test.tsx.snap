@@ -1,0 +1,313 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentsContainer component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c2 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c0 {
+  list-style-type: none;
+}
+
+.c3 {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c3:hover {
+  cursor: pointer;
+}
+
+<ul
+    class="c0"
+  >
+    <li>
+      <div
+        class="c1"
+      >
+        <div
+          class="c2 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-fiscalYear"
+          >
+            Select fiscal year 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-fiscalYear"
+            name="fiscalYear"
+          >
+            <option
+              class="option"
+              data-testid="select-option-1990"
+              value="1990"
+            >
+              1990-91
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1991"
+              value="1991"
+            >
+              1991-92
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1992"
+              value="1992"
+            >
+              1992-93
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1993"
+              value="1993"
+            >
+              1993-94
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1994"
+              value="1994"
+            >
+              1994-95
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1995"
+              value="1995"
+            >
+              1995-96
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1996"
+              value="1996"
+            >
+              1996-97
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1997"
+              value="1997"
+            >
+              1997-98
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1998"
+              value="1998"
+            >
+              1998-99
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-1999"
+              value="1999"
+            >
+              1999-00
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2000"
+              value="2000"
+            >
+              2000-01
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2001"
+              value="2001"
+            >
+              2001-02
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2002"
+              value="2002"
+            >
+              2002-03
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2003"
+              value="2003"
+            >
+              2003-04
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2004"
+              value="2004"
+            >
+              2004-05
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2005"
+              value="2005"
+            >
+              2005-06
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2006"
+              value="2006"
+            >
+              2006-07
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2007"
+              value="2007"
+            >
+              2007-08
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2008"
+              value="2008"
+            >
+              2008-09
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2009"
+              value="2009"
+            >
+              2009-10
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2010"
+              value="2010"
+            >
+              2010-11
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2011"
+              value="2011"
+            >
+              2011-12
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2012"
+              value="2012"
+            >
+              2012-13
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2013"
+              value="2013"
+            >
+              2013-14
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2014"
+              value="2014"
+            >
+              2014-15
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2015"
+              value="2015"
+            >
+              2015-16
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2016"
+              value="2016"
+            >
+              2016-17
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2017"
+              value="2017"
+            >
+              2017-18
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2018"
+              value="2018"
+            >
+              2018-19
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2019"
+              value="2019"
+            >
+              2019-20
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-2020"
+              value="2020"
+            >
+              2020-21
+            </option>
+          </select>
+        </div>
+        <svg
+          class="c3"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>
+            Export Aggregated Report
+          </title>
+          <path
+            d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
+          />
+        </svg>
+      </div>
+    </li>
+  </ul>
+</DocumentFragment>
+`;
