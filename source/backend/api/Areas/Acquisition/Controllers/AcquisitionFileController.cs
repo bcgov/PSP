@@ -113,7 +113,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, bool userOverride = false)
+        public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, bool ministryOverride = false, bool propertiesOverride = false)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -125,7 +125,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
             var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
-            var acquisitionFile = _acquisitionService.Update(acqFileEntity, userOverride);
+            var acquisitionFile = _acquisitionService.Update(acqFileEntity, ministryOverride, propertiesOverride);
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
