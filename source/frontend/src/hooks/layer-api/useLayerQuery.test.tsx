@@ -1,3 +1,4 @@
+import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -80,7 +81,7 @@ describe('useLayerQuery hook tests', () => {
       const { findByPid } = getRenderedHook();
       mockAxios.onGet().reply(500);
       try {
-        await findByPid('pid');
+        await act(async () => await findByPid('pid'));
       } catch (err) {}
 
       expect(toastErrorSpy).toHaveBeenCalledTimes(1);
@@ -89,7 +90,7 @@ describe('useLayerQuery hook tests', () => {
       const { findByPid } = getRenderedHook();
       mockAxios.onGet().reply(500);
       try {
-        await findByPid('pid');
+        await act(async () => await findByPid('pid'));
       } catch (err) {}
 
       expect(mockAxios.history.get.length).toBe(3);
@@ -98,7 +99,7 @@ describe('useLayerQuery hook tests', () => {
       const { findByPid } = getRenderedHook();
       mockAxios.onGet().replyOnce(500).onAny().reply(200);
       try {
-        await findByPid('pid');
+        await act(async () => await findByPid('pid'));
       } catch (err) {}
 
       expect(mockAxios.history.get.length).toBe(2);
@@ -110,7 +111,7 @@ describe('useLayerQuery hook tests', () => {
       const { findByPin } = getRenderedHook();
       mockAxios.onGet().reply(500);
       try {
-        await findByPin('pin');
+        await act(async () => await findByPin('pin'));
       } catch (err) {}
 
       expect(toastErrorSpy).toHaveBeenCalledTimes(1);
@@ -119,7 +120,7 @@ describe('useLayerQuery hook tests', () => {
       const { findByPin } = getRenderedHook();
       mockAxios.onGet().reply(500);
       try {
-        await findByPin('pin');
+        await act(async () => await findByPin('pin'));
       } catch (err) {}
 
       expect(mockAxios.history.get.length).toBe(3);
@@ -128,7 +129,7 @@ describe('useLayerQuery hook tests', () => {
       const { findByPin } = getRenderedHook();
       mockAxios.onGet().replyOnce(500).onAny().reply(200);
       try {
-        await findByPin('pin');
+        await act(async () => await findByPin('pin'));
       } catch (err) {}
 
       expect(mockAxios.history.get.length).toBe(2);

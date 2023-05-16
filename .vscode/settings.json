@@ -49,5 +49,6 @@
     "Xunit",
     "keycloak",
     "pims"
-  ]
+  ],
+  "jest.rootPath": "./source/frontend/src"
 }
