@@ -216,17 +216,15 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
             var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
-            {
-                AcquisitionFileStatusTypeCode = acqFile.AcquisitionFileStatusTypeCode,
-            });
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, true);
+            var result = service.Update(acqFile, true, true);
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -283,7 +281,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.Update(acqFile, true);
+            Action act = () => service.Update(acqFile, true, true);
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -325,7 +323,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_ThrowIf_RegionDoesNotMatch()
+        public void Update_Region_Violation()
         {
             // Arrange
             var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
@@ -340,15 +338,16 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.Update(acqFile, false);
+            Action act = () => service.Update(acqFile, ministryOverride: false, propertiesOverride: true);
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>();
+            var ex = act.Should().Throw<UserOverrideException>();
+            ex.Which.ErrorCode.Should().Be("region_violation");
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
         [Fact]
-        public void Update_Success_UserOverride()
+        public void Update_Success_Region_UserOverride()
         {
             // Arrange
             var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
@@ -358,20 +357,87 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
             var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
-            {
-                AcquisitionFileStatusTypeCode = acqFile.AcquisitionFileStatusTypeCode,
-            });
+
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, userOverride: true);
+            var result = service.Update(acqFile, ministryOverride: true, propertiesOverride: true);
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_PropertyOfInterest_Violation()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.AcquisitionFileStatusTypeCode = "COMPLT";
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var property = EntityHelper.CreateProperty(12345);
+            property.IsPropertyOfInterest = true;
+            var propertyAcqFile = new PimsPropertyAcquisitionFile() { Property = property };
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { propertyAcqFile };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var filePropertyRepository = _helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            // Act
+            Action act = () => service.Update(acqFile, ministryOverride: true, propertiesOverride: false);
+
+            // Assert
+            var ex = act.Should().Throw<UserOverrideException>();
+            ex.Which.ErrorCode.Should().Be("properties_of_interest_violation");
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Success_PropertyOfInterest_UserOverride()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.AcquisitionFileStatusTypeCode = "COMPLT";
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var property = EntityHelper.CreateProperty(12345);
+            property.IsPropertyOfInterest = true;
+            var propertyAcqFile = new PimsPropertyAcquisitionFile() { Property = property };
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { propertyAcqFile };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+
+            var filePropertyRepository = _helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            var propertyRepository = _helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.TransferToCoreInventory(It.IsAny<PimsProperty>()));
+
+            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            var result = service.Update(acqFile, ministryOverride: true, propertiesOverride: true);
+
+            // Assert
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+            propertyRepository.Verify(x => x.TransferToCoreInventory(It.IsAny<PimsProperty>()), Times.Once);
         }
 
         [Fact]
@@ -1023,7 +1089,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.AddCompensationRequisition(1, new PimsCompensationRequisition() {  Internal_Id = 2});
+            Action act = () => service.AddCompensationRequisition(1, new PimsCompensationRequisition() { Internal_Id = 2 });
 
             // Assert
             act.Should().Throw<BadRequestException>();

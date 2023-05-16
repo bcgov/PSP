@@ -143,7 +143,7 @@ namespace Pims.Api.Services
             return newAcqFile;
         }
 
-        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool ministryOverride = false, bool fileCompletedOverride = false)
+        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool ministryOverride = false, bool propertiesOverride = false)
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
@@ -160,7 +160,7 @@ namespace Pims.Api.Services
 
             if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
             {
-                TransferPropertiesOfInterestToInventory(acquisitionFile, fileCompletedOverride);
+                TransferPropertiesOfInterestToInventory(acquisitionFile, propertiesOverride);
             }
 
             ValidateStaff(acquisitionFile);
