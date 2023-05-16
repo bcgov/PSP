@@ -1,4 +1,3 @@
-import { SelectOption } from 'components/common/form';
 import { InlineSelect } from 'components/common/form/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { FlexRowDiv, UnOrderedListNoStyle } from 'features/leases/detail/LeasePages/payment/styles';
