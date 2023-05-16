@@ -181,6 +181,9 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         <SectionField label="Postal code">
           <Input field="address.postal" />
         </SectionField>
+        <SectionField label="General location">
+          <Input field="generalLocation" />
+        </SectionField>
       </Section>
       <Section header="Property Attributes">
         <SectionField label="MOTI region">

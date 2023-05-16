@@ -41,6 +41,8 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
 
   address?: Api_Address;
 
+  generalLocation?: string;
+
   isSensitive?: boolean;
   isVisibleToOtherAgencies?: boolean;
   isProvincialPublicHwy?: boolean;
