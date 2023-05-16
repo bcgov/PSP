@@ -1,6 +1,7 @@
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Compensation } from 'models/api/Compensation';
 
+import { useGenerateH120 } from '../../acquisition/common/GenerateForm/hooks/useGenerateH120';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
 export interface CompensationRequisitionDetailContainerProps {
@@ -24,6 +25,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   gstConstant,
   loading,
 }) => {
+  const onGenerate = useGenerateH120();
   return compensation ? (
     <View
       compensation={compensation}
@@ -33,6 +35,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       clientConstant={clientConstant}
       gstConstant={gstConstant}
       loading={loading}
+      onGenerate={onGenerate}
     ></View>
   ) : null;
 };

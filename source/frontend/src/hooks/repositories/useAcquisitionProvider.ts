@@ -7,7 +7,7 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback, useMemo } from 'react';
@@ -32,6 +32,7 @@ export const useAcquisitionProvider = () => {
     putAcquisitionFileChecklist,
     getFileCompensationRequisitions,
     postFileCompensationRequisition,
+    getFileCompReqH120s,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -176,6 +177,23 @@ export const useAcquisitionProvider = () => {
     ),
   });
 
+  const getAcquisitionCompReqH120sApi = useApiRequestWrapper<
+    (
+      acqFileId: number,
+      finalOnly: boolean,
+    ) => Promise<AxiosResponse<Api_CompensationFinancial[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number, finalOnly: boolean) =>
+        await getFileCompReqH120s(acqFileId, finalOnly),
+      [getFileCompReqH120s],
+    ),
+    requestName: 'getAcquisitionCompReqH120s',
+    onError: useAxiosErrorHandler(
+      'Failed to load requisition compensation financials. Refresh the page to try again.',
+    ),
+  });
+
   const postFileCompensationRequisitionApi = useApiRequestWrapper<
     (
       acqFileId: number,
@@ -206,6 +224,7 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionChecklist: updateAcquisitionChecklistApi,
       getAcquisitionCompensationRequisitions: getAcquisitionCompensationRequisitionsApi,
       postAcquisitionCompensationRequisition: postFileCompensationRequisitionApi,
+      getAcquisitionCompReqH120s: getAcquisitionCompReqH120sApi,
     }),
     [
       addAcquisitionFileApi,
@@ -220,6 +239,7 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionChecklistApi,
       getAcquisitionCompensationRequisitionsApi,
       postFileCompensationRequisitionApi,
+      getAcquisitionCompReqH120sApi,
     ],
   );
 };

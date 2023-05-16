@@ -77,6 +77,7 @@ describe('compensation list view', () => {
           financials: [
             {
               id: 1,
+              financialActivityCode: null,
               compensationId: 1,
               pretaxAmount: null,
               taxAmount: null,
@@ -86,6 +87,7 @@ describe('compensation list view', () => {
             {
               id: 2,
               compensationId: 1,
+              financialActivityCode: null,
               pretaxAmount: null,
               taxAmount: null,
               totalAmount: 10,
@@ -108,6 +110,7 @@ describe('compensation list view', () => {
           financials: [
             {
               id: 3,
+              financialActivityCode: null,
               compensationId: 1,
               pretaxAmount: null,
               taxAmount: null,
@@ -116,6 +119,7 @@ describe('compensation list view', () => {
             },
             {
               id: 4,
+              financialActivityCode: null,
               compensationId: 1,
               pretaxAmount: null,
               taxAmount: null,

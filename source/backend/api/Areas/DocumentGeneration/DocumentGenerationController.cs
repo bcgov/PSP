@@ -77,7 +77,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         public async Task<IActionResult> UploadTemplateAndDownloadWrapped([FromBody] DocumentGenerationRequest request)
         {
-            var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData);
+            var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData, request.ConvertToType);
             return new JsonResult(result);
         }
 
@@ -91,7 +91,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         public async Task<IActionResult> UploadTemplateAndDownload([FromBody] DocumentGenerationRequest request)
         {
-            var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData);
+            var result = await _documentGenerationService.GenerateDocument(request.TemplateType, request.TemplateData, request.ConvertToType);
             if (result?.Payload == null)
             {
                 return new NotFoundResult();
