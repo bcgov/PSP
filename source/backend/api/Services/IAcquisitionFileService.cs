@@ -12,7 +12,7 @@ namespace Pims.Api.Services
 
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile);
 
-        PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool userOverride);
+        PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool ministryOverride = false, bool fileCompletedOverride = false);
 
         PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile);
 

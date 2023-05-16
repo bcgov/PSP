@@ -125,16 +125,8 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
             var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
-
-            try
-            {
-                var acquisitionFile = _acquisitionService.Update(acqFileEntity, userOverride);
-                return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
-            }
-            catch (BusinessRuleViolationException e)
-            {
-                return Conflict(e.Message);
-            }
+            var acquisitionFile = _acquisitionService.Update(acqFileEntity, userOverride);
+            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
         /// <summary>
@@ -221,7 +213,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 201)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
-        public IActionResult AddCompensationRequisition([FromRoute]long id, [FromBody] CompensationRequisitionModel compensationRequisition)
+        public IActionResult AddCompensationRequisition([FromRoute] long id, [FromBody] CompensationRequisitionModel compensationRequisition)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",

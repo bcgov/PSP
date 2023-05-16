@@ -33,5 +33,7 @@ namespace Pims.Dal.Repositories
         PimsProperty Update(PimsProperty property);
 
         void Delete(PimsProperty property);
+
+        PimsProperty TransferToCoreInventory(PimsProperty property);
     }
 }
