@@ -113,7 +113,7 @@ namespace Pims.Api.Models.Concepts
         public string PaymentFrequency { get; set; }
 
         /// <summary>
-        /// get/set - The text description if the lease program type is set to "other".
+        /// get/set - A text description of when the payment is due.
         /// </summary>
         ///
         [DisplayName("Payment due")]
