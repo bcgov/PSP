@@ -98,6 +98,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsDataSourceType> PimsDataSourceTypes { get; set; }
         public virtual DbSet<PimsDistrict> PimsDistricts { get; set; }
         public virtual DbSet<PimsDocument> PimsDocuments { get; set; }
+        public virtual DbSet<PimsDocumentFormatType> PimsDocumentFormatTypes { get; set; }
         public virtual DbSet<PimsDocumentHist> PimsDocumentHists { get; set; }
         public virtual DbSet<PimsDocumentStatusType> PimsDocumentStatusTypes { get; set; }
         public virtual DbSet<PimsDocumentTyp> PimsDocumentTyps { get; set; }
@@ -551,6 +552,10 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsGstRequired)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if GST is required for this transaction.");
 
                 entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the owner's cheque related to the requisition.");
 
@@ -2187,6 +2192,10 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the requisition is inactive.");
 
+                entity.Property(e => e.IsGstRequired)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if GST is required for this transaction.");
+
                 entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the requisition's work activity.");
 
                 entity.Property(e => e.TaxAmt).HasComment("Taxes on the requisition's work activity.");
@@ -2199,10 +2208,11 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_CMPREQ_PIM_CRH120_FK");
 
-                entity.HasOne(d => d.H120Category)
+                entity.HasOne(d => d.FinancialActivityCode)
                     .WithMany(p => p.PimsCompReqH120s)
-                    .HasForeignKey(d => d.H120CategoryId)
-                    .HasConstraintName("PIM_H120CT_PIM_CRH120_FK");
+                    .HasForeignKey(d => d.FinancialActivityCodeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_FINACT_PIM_CRH120_FK");
             });
 
             modelBuilder.Entity<PimsCompReqH120Hist>(entity =>
@@ -2273,6 +2283,21 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.AcquisitionFileId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.ChartOfAccounts)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.ChartOfAccountsId)
+                    .HasConstraintName("PIM_CHRTAC_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.Responsibility)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.ResponsibilityId)
+                    .HasConstraintName("PIM_RESPCD_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.YearlyFinancial)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.YearlyFinancialId)
+                    .HasConstraintName("PIM_YRFINC_PIM_CMPREQ_FK");
             });
 
             modelBuilder.Entity<PimsCompensationRequisitionHist>(entity =>
@@ -2613,6 +2638,36 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.DocumentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_DOCTYP_PIM_DOCMNT_FK");
+            });
+
+            modelBuilder.Entity<PimsDocumentFormatType>(entity =>
+            {
+                entity.HasKey(e => e.DocumentFormatTypeCode)
+                    .HasName("DOCFMT_PK");
+
+                entity.HasComment("Table to contain the acceptable document formats that can be uploaded to the system.");
+
+                entity.Property(e => e.DocumentFormatTypeCode).HasComment("Code value of the acceptable document type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Decription of the acceptable document type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code values or descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date that the document format became acceptable to the system.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date that the document format became unsupported in the system.");
             });
 
             modelBuilder.Entity<PimsDocumentHist>(entity =>
@@ -4993,6 +5048,8 @@ namespace Pims.Dal
                 entity.Property(e => e.FileNumber).HasComment("The (ARCS/ORCS) number identifying the Property File.");
 
                 entity.Property(e => e.FileNumberSuffix).HasComment("A suffix to distinguish between Property Files with the same number.");
+
+                entity.Property(e => e.GeneralLocation).HasComment("Descriptive location of the property, primarily for H120 activities.");
 
                 entity.Property(e => e.IsOwned)
                     .HasDefaultValueSql("(CONVERT([bit],(1)))")
