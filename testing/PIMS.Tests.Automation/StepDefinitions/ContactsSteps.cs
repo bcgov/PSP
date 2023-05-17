@@ -266,7 +266,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             individualContact.LastName = ExcelDataContext.ReadData(rowNumber, "LastName");
             individualContact.FullName = ExcelDataContext.ReadData(rowNumber, "FullName");
             individualContact.PreferableName = ExcelDataContext.ReadData(rowNumber, "PreferableName");
-            individualContact.Status = ExcelDataContext.ReadData(rowNumber, "Status");
+            individualContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "ContactStatus");
             individualContact.Organization = ExcelDataContext.ReadData(rowNumber, "Organization");
 
             individualContact.Email1 = ExcelDataContext.ReadData(rowNumber, "Email1");
@@ -324,7 +324,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             organizationContact.OrganizationName = ExcelDataContext.ReadData(rowNumber, "OrganizationName");
             organizationContact.Alias = ExcelDataContext.ReadData(rowNumber, "Alias");
             organizationContact.IncorporationNumber = ExcelDataContext.ReadData(rowNumber, "IncorporationNumber");
-            organizationContact.Status = ExcelDataContext.ReadData(rowNumber, "Status");
+            organizationContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "ContactStatus");
 
             organizationContact.Email1 = ExcelDataContext.ReadData(rowNumber, "Email1");
             organizationContact.EmailType1 = ExcelDataContext.ReadData(rowNumber, "EmailType1");

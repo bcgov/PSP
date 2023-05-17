@@ -46,6 +46,7 @@ using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
 using Pims.Dal;
 using Pims.Dal.Keycloak;
+using Pims.Dal.Repositories;
 using Pims.Geocoder;
 using Pims.Ltsa;
 using Prometheus;
@@ -404,7 +405,7 @@ namespace Pims.Api
             services.AddScoped<IDocumentFileService, DocumentFileService>();
             services.AddScoped<ITakeService, TakeService>();
             services.AddScoped<IFormDocumentService, FormDocumentService>();
-            services.AddScoped<ICompensationService, CompensationService>();
+            services.AddScoped<ICompensationRequisitionService, CompensationRequisitionService>();
         }
 
         /// <summary>

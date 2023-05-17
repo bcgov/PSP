@@ -13,26 +13,19 @@ import { useContext, useEffect } from 'react';
  * @param modifiedProperties the current form values to extract lat/lngs from.
  */
 const getDraftMarkers = (modifiedProperties: IMapProperty[]): PointFeature[] => {
-  return modifiedProperties
-    .filter((property: IMapProperty) => {
-      if (!property?.latitude || !property?.longitude) {
-        return false;
-      }
-      return true;
-    })
-    .map<PointFeature>((property: IMapProperty) => {
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [+(property?.longitude ?? 0), +(property?.latitude ?? 0)],
-        },
-        properties: {
-          id: 0,
-          name: property.name?.length ? property.name : 'New Parcel',
-        },
-      };
-    });
+  return modifiedProperties.map<PointFeature>((property: IMapProperty) => {
+    return {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [+(property?.longitude ?? 0), +(property?.latitude ?? 0)],
+      },
+      properties: {
+        id: 0,
+        name: property.name?.length ? property.name : 'New Parcel',
+      },
+    };
+  });
 };
 
 /**

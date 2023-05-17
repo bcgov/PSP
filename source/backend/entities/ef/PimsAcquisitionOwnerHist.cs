@@ -50,6 +50,10 @@ namespace Pims.Dal.Entities
         [Column("CONTACT_PHONE_NUM")]
         [StringLength(20)]
         public string ContactPhoneNum { get; set; }
+        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
+        public DateTime? EffectiveDate { get; set; }
+        [Column("EXPIRY_DATE", TypeName = "datetime")]
+        public DateTime? ExpiryDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

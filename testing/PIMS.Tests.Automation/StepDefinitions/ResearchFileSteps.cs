@@ -76,7 +76,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 notes.NavigateNotesTab();
                 notes.VerifyAutomaticNotes("Research File", "Active", researchFile.Status);
             }
-            
+
             //Navigate to Edit Research File
             researchFiles.NavigateToAddPropertiesReseachFile();
 

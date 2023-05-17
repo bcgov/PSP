@@ -14,11 +14,6 @@ namespace Pims.Dal.Entities
     [Index(nameof(WorkActivityId), Name = "H120CT_WORK_ACTIVITY_ID_IDX")]
     public partial class PimsH120Category
     {
-        public PimsH120Category()
-        {
-            PimsCompReqH120s = new HashSet<PimsCompReqH120>();
-        }
-
         [Key]
         [Column("H120_CATEGORY_ID")]
         public long H120CategoryId { get; set; }
@@ -86,7 +81,5 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(WorkActivityId))]
         [InverseProperty(nameof(PimsWorkActivityCode.PimsH120Categories))]
         public virtual PimsWorkActivityCode WorkActivity { get; set; }
-        [InverseProperty(nameof(PimsCompReqH120.H120Category))]
-        public virtual ICollection<PimsCompReqH120> PimsCompReqH120s { get; set; }
     }
 }

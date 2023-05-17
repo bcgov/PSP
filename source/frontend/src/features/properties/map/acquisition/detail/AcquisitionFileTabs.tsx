@@ -6,6 +6,7 @@ import NoteListView from 'features/notes/list/NoteListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { ActivityListView } from '../../activity/list/ActivityListView';
 import AgreementContainer from '../../agreement/detail/AgreementContainer';
@@ -33,6 +34,9 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+  const [activeTab, setActiveTab] = useState<FileTabType>(defaultTab);
+
+  const history = useHistory();
 
   tabViews.push({
     content: (
@@ -144,7 +148,16 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     });
   }
 
-  const [activeTab, setActiveTab] = useState<FileTabType>(defaultTab);
+  const onSetActiveTab = (tab: FileTabType) => {
+    let previousTab = activeTab;
+    setActiveTab(tab);
+    setContainerState({ defaultFileTab: tab });
+
+    if (previousTab === FileTabType.COMPENSATIONS) {
+      const backUrl = history.location.pathname.split('compensation-requisition')[0];
+      history.push(backUrl);
+    }
+  };
 
   return (
     <FileTabs
@@ -152,8 +165,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       defaultTabKey={defaultTab}
       activeTab={activeTab}
       setActiveTab={(tab: FileTabType) => {
-        setActiveTab(tab);
-        setContainerState({ defaultFileTab: tab });
+        onSetActiveTab(tab);
       }}
     />
   );

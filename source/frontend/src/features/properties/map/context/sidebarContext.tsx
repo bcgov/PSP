@@ -7,6 +7,8 @@ import { useCallback, useState } from 'react';
 
 export interface TypedFile extends Api_File {
   fileType: FileTypes;
+  projectId?: number | null;
+  productId?: number | null;
 }
 
 export interface ISideBarContext {

@@ -74,6 +74,8 @@ describe('AcquisitionHeader component', () => {
       acquisitionFile: {
         ...mockAcquisitionFileResponse,
         product: undefined,
+        productId: null,
+        projectId: null,
       },
     });
 

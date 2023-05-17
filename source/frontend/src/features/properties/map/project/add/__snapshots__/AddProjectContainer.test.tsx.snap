@@ -228,7 +228,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c8 {
+.c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -242,14 +242,14 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c6.required::before {
+.c7.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c5 {
+.c6 {
   font-weight: bold;
 }
 
@@ -258,14 +258,14 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   padding-bottom: 0.5rem;
 }
 
-.c4 {
+.c5 {
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
   text-align: left;
 }
 
-.c7 textarea.form-control {
+.c8 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -287,11 +287,27 @@ exports[`AddProjectContainer component renders as expected 1`] = `
           <div
             class="c3 form-section"
           >
+            <h2
+              class="c4"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Project Details
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
             <div
               class="collapse show"
             >
               <div
-                class="c4 no-gutters py-4 mb-5 row"
+                class="c5 no-gutters py-4 mb-5 row"
               >
                 <div
                   class="col"
@@ -314,13 +330,13 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="pr-0 text-left col-2"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Project name:
                   </label>
                 </div>
                 <div
-                  class="c6 required text-left col"
+                  class="c7 required text-left col"
                 >
                   <div
                     class="input form-group"
@@ -342,13 +358,13 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="pr-0 text-left col-2"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Project number:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   <div
                     class="input form-group"
@@ -371,13 +387,13 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="pr-0 text-left col-2"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Status:
                   </label>
                 </div>
                 <div
-                  class="c6 required text-left col"
+                  class="c7 required text-left col"
                 >
                   <div
                     class="form-group"
@@ -445,13 +461,13 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="pr-0 text-left col-2"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     MoTI region:
                   </label>
                 </div>
                 <div
-                  class="c6 required text-left col"
+                  class="c7 required text-left col"
                 >
                   <div
                     class="d-flex form-group"
@@ -491,16 +507,16 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                   class="pr-0 text-left col-12"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Project summary:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   <div
-                    class="c7 textarea input form-group"
+                    class="c8 textarea input form-group"
                   >
                     <textarea
                       class="form-control"
@@ -517,7 +533,127 @@ exports[`AddProjectContainer component renders as expected 1`] = `
             class="c3 form-section"
           >
             <h2
-              class="c8"
+              class="c4"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Associated Codes
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Cost type:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-costTypeCode"
+                      name="costTypeCode"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Work activity:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-workActivityCode"
+                      name="workActivityCode"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-2"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Business function:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-businessFunctionCode"
+                      name="businessFunctionCode"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c3 form-section"
+          >
+            <h2
+              class="c4"
             >
               <div
                 class="no-gutters row"

@@ -97,6 +97,7 @@ export const mockProjectGetResponse = (): Api_Project => ({
       scope: 'Scope of Product A',
       rowVersion: 1,
       parentProject: null,
+      parentProjectId: null,
     },
     {
       id: 49,
@@ -110,6 +111,7 @@ export const mockProjectGetResponse = (): Api_Project => ({
       scope: 'Scope of Product B',
       rowVersion: 1,
       parentProject: null,
+      parentProjectId: null,
     },
   ],
   businessFunctionCode: null,
