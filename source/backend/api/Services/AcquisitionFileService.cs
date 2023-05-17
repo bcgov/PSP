@@ -83,7 +83,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var acqFile = _acqFileRepository.GetById(id);
-            _user.HasAccessToAcquisitionFile(_userRepository, acqFile);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acqFile.Internal_Id);
 
             return acqFile;
         }
@@ -147,7 +147,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
-            _user.HasAccessToAcquisitionFile(_userRepository, acquisitionFile);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             if (!userOverride)
@@ -175,7 +175,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating acquisition file properties...");
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
-            _user.HasAccessToAcquisitionFile(_userRepository, acquisitionFile);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
 
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
@@ -237,7 +237,7 @@ namespace Pims.Api.Services
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
             _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
-            _user.HasAccessToAcquisitionFile(_userRepository, acquisitionFile);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
 
             // Get the current checklist items for this acquisition file.
             var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
@@ -289,7 +289,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Adding compensation requisition for acquisition file id ...", acquisitionFileId);
 
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
-            _user.HasAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
 

@@ -162,7 +162,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetById(1);
 
             // Assert
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -366,7 +366,6 @@ namespace Pims.Api.Test.Services
             });
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
-
 
             // Act
             var result = service.Update(acqFile, userOverride: true);
@@ -725,6 +724,9 @@ namespace Pims.Api.Test.Services
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
             // Act
             Action act = () => service.UpdateProperties(acqFile);
 
@@ -821,7 +823,7 @@ namespace Pims.Api.Test.Services
             // Assert
             fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsAcquisitionChecklistItem>()), Times.Once);
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -851,7 +853,7 @@ namespace Pims.Api.Test.Services
 
             fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsAcquisitionChecklistItem>()), Times.Never);
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -884,6 +886,9 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
             repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
 
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
@@ -893,7 +898,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Never);
         }
         #endregion
 

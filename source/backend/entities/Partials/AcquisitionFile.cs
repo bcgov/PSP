@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace Pims.Dal.Entities
 {
@@ -11,11 +10,6 @@ namespace Pims.Dal.Entities
         #region Properties
         [NotMapped]
         public override long Internal_Id { get => this.AcquisitionFileId; set => this.AcquisitionFileId = value; }
-
-        public bool PersonIsAssignedToFile(long personId)
-        {
-            return PimsAcquisitionFilePeople is not null && PimsAcquisitionFilePeople.Any(x => x.PersonId == personId);
-        }
         #endregion
     }
 }
