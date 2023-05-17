@@ -19,12 +19,14 @@ namespace PIMS.Tests.Automation.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Smoke-Test")]
     public partial class SmokeTestFeature : object, Xunit.IClassFixture<SmokeTestFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private static string[] featureTags = ((string[])(null));
+        private static string[] featureTags = new string[] {
+                "Smoke-Test"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -83,11 +85,9 @@ namespace PIMS.Tests.Automation.Features
         [Xunit.SkippableFactAttribute(DisplayName="Create Minimum Individual Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
         [Xunit.TraitAttribute("Description", "Create Minimum Individual Contact")]
-        [Xunit.TraitAttribute("Category", "Smoke-Test")]
         public void CreateMinimumIndividualContact()
         {
-            string[] tagsOfScenario = new string[] {
-                    "Smoke-Test"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Minimum Individual Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6

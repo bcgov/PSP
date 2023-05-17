@@ -20,7 +20,6 @@ export interface WithAcquisitionOwners {
 export class AcquisitionTeamFormModel {
   id?: number;
   rowVersion?: number;
-  acquisitionFileId?: number;
   contact?: IContactSearchResult;
   contactTypeCode: string;
 
@@ -30,11 +29,11 @@ export class AcquisitionTeamFormModel {
     this.contact = contact;
   }
 
-  toApi(): Api_AcquisitionFilePerson {
+  toApi(acquisitionFileId: number): Api_AcquisitionFilePerson {
     return {
       id: this.id,
       rowVersion: this.rowVersion,
-      acquisitionFileId: this.acquisitionFileId,
+      acquisitionFileId: acquisitionFileId,
       personId: this.contact?.personId || 0,
       person: { id: this.contact?.personId || 0 },
       personProfileType: toTypeCode(this.contactTypeCode),
@@ -50,7 +49,7 @@ export class AcquisitionTeamFormModel {
     );
 
     newForm.rowVersion = model.rowVersion;
-    newForm.acquisitionFileId = model.acquisitionFileId;
+    //newForm.acquisitionFileId = model.acquisitionFileId;
 
     return newForm;
   }

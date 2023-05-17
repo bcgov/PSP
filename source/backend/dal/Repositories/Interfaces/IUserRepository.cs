@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 
@@ -27,9 +28,13 @@ namespace Pims.Dal.Repositories
 
         PimsUser GetTrackingById(long id);
 
-        public PimsUser RemoveRole(PimsUser user, long roleId);
+        PimsUser RemoveRole(PimsUser user, long roleId);
 
-        public PimsUser RemoveRegion(PimsUser user, long regionId);
+        PimsUser RemoveRegion(PimsUser user, long regionId);
+
+        ICollection<PimsUserRole> UpdateAllRolesForUser(long userId, ICollection<PimsUserRole> roles);
+
+        ICollection<PimsRegionUser> UpdateAllRegionsForUser(long userId, ICollection<PimsRegionUser> regions);
 
         PimsUser Add(PimsUser add);
 

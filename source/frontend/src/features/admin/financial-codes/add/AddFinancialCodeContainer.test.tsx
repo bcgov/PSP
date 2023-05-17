@@ -12,7 +12,7 @@ const mockApi = {
   loading: false,
 };
 
-jest.mock('../hooks/useFinancialCodeRepository', () => ({
+jest.mock('hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       addFinancialCode: mockApi,
