@@ -205,6 +205,14 @@ namespace PIMS.Tests.Automation.PageObjects
             return result;
         }
 
+        protected string TransformBooleanFormat(bool elementValue)
+        {
+            if (elementValue)
+                { return "Y"; }
+            else
+                { return "N"; }
+        }
+
         protected List<string> GetViewFieldListContent(By element)
         {
             var result = new List<string>();

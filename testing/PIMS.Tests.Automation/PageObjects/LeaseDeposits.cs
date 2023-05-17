@@ -1,6 +1,8 @@
 ﻿
 
 using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V110.IndexedDB;
+using PIMS.Tests.Automation.Classes;
 using System;
 using System.Globalization;
 
@@ -127,25 +129,25 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(licenseDepositAddBttn);
         }
 
-        public void AddDeposit(string depositType, string description, string amount, string paidDate, string depositHolder)
+        public void AddDeposit(Deposit deposit)
         {
             Wait();
-            ChooseSpecificSelectOption(licenseDepositAddTypeSelect, depositType);
+            ChooseSpecificSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
 
             Wait();
             if (webDriver.FindElements(licenseDepositAddOtherTypeInput).Count() > 0)
             {
-                webDriver.FindElement(licenseDepositAddOtherTypeInput).SendKeys("Automation Test - Other Type Deposit");
+                webDriver.FindElement(licenseDepositAddOtherTypeInput).SendKeys(deposit.DepositTypeOther);
             }
 
-            webDriver.FindElement(licenseDepositAddDescriptionTextarea).SendKeys(description);
-            webDriver.FindElement(licenseDepositAddAmountInput).SendKeys(amount);
-            webDriver.FindElement(licenseDepositAddPaidDateInput).SendKeys(paidDate);
+            webDriver.FindElement(licenseDepositAddDescriptionTextarea).SendKeys(deposit.DepositDescription);
+            webDriver.FindElement(licenseDepositAddAmountInput).SendKeys(deposit.DepositAmount);
+            webDriver.FindElement(licenseDepositAddPaidDateInput).SendKeys(deposit.DepositPaidDate);
             webDriver.FindElement(licenseDepositAddDepositHolderLabel).Click();
 
             webDriver.FindElement(licenseDepositAddContactButton).Click();
 
-            sharedSelectContact.SelectContact(depositHolder);
+            sharedSelectContact.SelectContact(deposit.DepositHolder);
 
             ButtonElement("Save");
         }
@@ -156,19 +158,19 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licenseDepositTable1stRowReturnBttn).Click();
         }
 
-        public void AddReturn(string terminationDate, string claimsDeposit, string returnedAmount, string interestPaid, string returnedDate, string payeeName)
+        public void AddReturn(Deposit deposit)
         {
             Wait();
 
-            webDriver.FindElement(licenseDepositReturnTerminationDateInput).SendKeys(terminationDate);
-            webDriver.FindElement(licenseDepositReturnClaimInput).SendKeys(claimsDeposit);
-            webDriver.FindElement(licenseDepositReturnAmountInput).SendKeys(returnedAmount);
-            webDriver.FindElement(licenseDepositReturnInterestPaidInput).SendKeys(interestPaid);
-            webDriver.FindElement(licenseDepositReturnDateInput).SendKeys(returnedDate);
+            webDriver.FindElement(licenseDepositReturnTerminationDateInput).SendKeys(deposit.ReturnTerminationDate);
+            webDriver.FindElement(licenseDepositReturnClaimInput).SendKeys(deposit.TerminationClaimDeposit);
+            webDriver.FindElement(licenseDepositReturnAmountInput).SendKeys(deposit.ReturnedAmount);
+            webDriver.FindElement(licenseDepositReturnInterestPaidInput).SendKeys(deposit.ReturnInterestPaid);
+            webDriver.FindElement(licenseDepositReturnDateInput).SendKeys(deposit.ReturnedDate);
 
             webDriver.FindElement(licenseDepositAddContactButton).Click();
 
-            sharedSelectContact.SelectContact(payeeName);
+            sharedSelectContact.SelectContact(deposit.ReturnPayeeName);
 
             ButtonElement("Save");
         }
@@ -193,19 +195,33 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.ModalClickOKBttn();
         }
 
-        public void EditLastDeposit(string depositType, string description, string amount)
+        public void EditLastDeposit(Deposit deposit)
         {
             Wait();
             var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
             webDriver.FindElement(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") button[title='edit deposit']")).Click();
 
-            ChooseSpecificSelectOption(licenseDepositAddTypeSelect, depositType);
+            ChooseSpecificSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
+
+            Wait();
+            if (webDriver.FindElements(licenseDepositAddOtherTypeInput).Count() > 0)
+            {
+                ClearInput(licenseDepositAddOtherTypeInput);
+                webDriver.FindElement(licenseDepositAddOtherTypeInput).SendKeys(deposit.DepositTypeOther);
+            }
 
             ClearInput(licenseDepositAddDescriptionTextarea);
-            webDriver.FindElement(licenseDepositAddDescriptionTextarea).SendKeys(description);
+            webDriver.FindElement(licenseDepositAddDescriptionTextarea).SendKeys(deposit.DepositDescription);
 
             ClearInput(licenseDepositAddAmountInput);
-            webDriver.FindElement(licenseDepositAddAmountInput).SendKeys(amount);
+            webDriver.FindElement(licenseDepositAddAmountInput).SendKeys(deposit.DepositAmount);
+
+            ClearInput(licenseDepositAddPaidDateInput);
+            webDriver.FindElement(licenseDepositAddPaidDateInput).SendKeys(deposit.DepositPaidDate);
+            webDriver.FindElement(licenseDepositAddPaidDateInput).SendKeys(Keys.Enter);
+
+            webDriver.FindElement(licenseDepositAddContactButton).Click();
+            sharedSelectContact.SelectContact(deposit.DepositHolder);
 
             ButtonElement("Save");
         }
@@ -280,37 +296,37 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.VerifyButtonsPresence();
         }
 
-        public void VerifyCreatedDepositTable(string depositType, string description, string amountPaid, string paidDate, string depositHolder)
+        public void VerifyCreatedDepositTable(Deposit deposit)
         {
             Wait();
-            if (depositType == "Other deposit")
+            if (deposit.DepositType == "Other deposit")
             {
-                Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositTypeContent).Text == "Automation Test - Other Type Deposit (Other)");
+                Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositTypeContent).Text == deposit.DepositTypeOther);
             }
             else
             {
-                Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositTypeContent).Text == depositType);
+                Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositTypeContent).Text == deposit.DepositType);
             }
             
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowDescriptionContent).Text == description);
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowAmountPaidContent).Text == TransformCurrencyFormat(amountPaid));
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowPaidDateContent).Text == TransformDateFormat(paidDate));
-            Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositHolderContent).Text == depositHolder);
+            Assert.True(webDriver.FindElement(licenseDepositTable1stRowDescriptionContent).Text == deposit.DepositDescription);
+            Assert.True(webDriver.FindElement(licenseDepositTable1stRowAmountPaidContent).Text == TransformCurrencyFormat(deposit.DepositAmount));
+            Assert.True(webDriver.FindElement(licenseDepositTable1stRowPaidDateContent).Text == TransformDateFormat(deposit.DepositPaidDate));
+            Assert.True(webDriver.FindElement(licenseDepositTable1stRowDepositHolderContent).Text == deposit.DepositHolder);
             Assert.True(webDriver.FindElement(licenseDepositTable1stRowEditBttn).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositTable1stRowDeleteBttn).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositTable1stRowReturnBttn).Displayed);
 
         }
 
-        public void VerifyCreateReturnForm(string depositType,string depositAmount)
+        public void VerifyCreateReturnForm(Deposit deposit)
         {
             Wait();
             Assert.True(sharedModals.ModalHeader() == "Return a Deposit");
 
             Assert.True(webDriver.FindElement(licenseDepositReturnDepositTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositReturnDepositTypeContent).Text == depositType);
+            Assert.True(webDriver.FindElement(licenseDepositReturnDepositTypeContent).Text == deposit.DepositType);
             Assert.True(webDriver.FindElement(licenseDepositReturnDepositAmountLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositReturnDepositAmountContent).Text == TransformCurrencyFormat(depositAmount));
+            Assert.True(webDriver.FindElement(licenseDepositReturnDepositAmountContent).Text == TransformCurrencyFormat(deposit.DepositAmount));
             Assert.True(webDriver.FindElement(licenseDepositReturnTerminationDateLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositReturnTerminationDateInput).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositReturnClaimLabel).Displayed);
@@ -327,17 +343,17 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.VerifyButtonsPresence();
         }
 
-        public void VerifyCreatedReturnTable(string depositType, string terminationDate, string amountPaid, string claim, string returnedAmount, string interestPaid, string returnDate, string payeeName)
+        public void VerifyCreatedReturnTable(Deposit deposit)
         {
             Wait();
-            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowDepositTypeContent).Text == depositType);
-            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowTerminationContent).Text == TransformDateFormat(terminationDate));
-            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowAmountContent).Text == TransformCurrencyFormat(amountPaid));
-            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowClaimContent).Text == TransformCurrencyFormat(claim));
-            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowReturnedAmountContent).Text == TransformCurrencyFormat(returnedAmount));
-            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowInterestPaidContent).Text == TransformCurrencyFormat(interestPaid));
-            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowReturnDateContent).Text == TransformDateFormat(returnDate));
-            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowReturnedPayeeNameContent).Text == payeeName);
+            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowDepositTypeContent).Text == deposit.DepositType);
+            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowTerminationContent).Text == TransformDateFormat(deposit.ReturnTerminationDate));
+            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowAmountContent).Text == TransformCurrencyFormat(deposit.DepositAmount));
+            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowClaimContent).Text == TransformCurrencyFormat(deposit.TerminationClaimDeposit));
+            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowReturnedAmountContent).Text == TransformCurrencyFormat(deposit.ReturnedAmount));
+            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowInterestPaidContent).Text == TransformCurrencyFormat(deposit.ReturnInterestPaid));
+            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowReturnDateContent).Text == TransformDateFormat(deposit.ReturnedDate));
+            Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowReturnedPayeeNameContent).Text == deposit.ReturnPayeeName);
             Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowDeleteBttn).Displayed);
             Assert.True(webDriver.FindElement(licenseDepositReturnTable1stRowEditBttn).Displayed);
         }

@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using PIMS.Tests.Automation.Classes;
 using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -91,12 +92,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsProgramSelector = By.Id("input-programTypeCode");
         private By licenseDetailsOtherProgramLabel = By.XPath("//label[contains(text(),'Other Program')]");
         private By licenseDetailsOtherProgramInput = By.Id("input-otherProgramTypeDescription");
+        private By licenseDetailsOtherProgramContent = By.Id("input-otherProgramType");
         private By licenseDetailsTypeLabel = By.XPath("//label[contains(text(),'Type')]");
         private By licenseDetailsTypeSelector = By.Id("input-leaseTypeCode");
         private By licenseDetailsViewTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
         private By licenseDetailsTypeContent = By.Id("input-type.description");
         private By licenseDetailsOtherTypeLabel = By.XPath("//input[@id='input-otherLeaseTypeDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
         private By licenseDetailsOtherTypeInput = By.Id("input-otherLeaseTypeDescription");
+        private By licenseDetailsOtherTypeContent = By.Id("input-otherType");
         private By licenseDetailsReceivableToLabel = By.XPath("//label[contains(text(),'Receivable to')]");
         private By licenseDetailsReceivableToContent = By.Id("input-paymentReceivableType.description");
         private By licenseDetailsCategoryLabel = By.XPath("//label[contains(text(),'Category')]");
@@ -104,11 +107,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsCategoryContent = By.Id("input-categoryType.description");
         private By licenseDetailsCategoryOtherLabel = By.XPath("//input[@id='input-otherCategoryTypeDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
         private By licenseDetailsCategoryOtherInput = By.Id("input-otherCategoryTypeDescription");
+        private By licenseDetailsCategoryOtherContent = By.Id("input-otherCategoryType");
         private By licenseDetailsPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
         private By licenseDetailsPurposeSelector = By.Id("input-purposeTypeCode");
         private By licenseDetailsPurposeContent = By.Id("input-purposeType.description");
         private By licenseDetailsOtherPurposeLabel = By.XPath("//input[@id='input-otherPurposeTypeDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
         private By licenseDetailsOtherPurposeInput = By.Id("input-otherPurposeTypeDescription");
+        private By licenseDetailsOtherPurposeContent = By.Id("input-otherPurposeType");
         private By licenseDetailsInitiatorLabel = By.XPath("//label[contains(text(),'Initiator')]");
         private By licenseDetailsInitiatorTooltip = By.XPath("//label[contains(text(),'Initiator')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
         private By licenseDetailsInitiatorSelector = By.Id("input-initiatorTypeCode");
@@ -123,7 +128,31 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsIntendedUseLabel = By.XPath("//label[contains(text(),'Intended use')]");
         private By licenseDetailsIntendedUseTextarea = By.Id("input-description");
 
-        private By licenseDetailsDocsSutitle = By.XPath("//div[contains(text(),'Documentation')]");
+        private By licenseDetailsConsultationSubtitle = By.XPath("//div[contains(text(),'Consultation')]");
+        private By licenseDetailsFirstNationLabel = By.XPath("//label[contains(text(),'First nation')]");
+        private By licenseDetailsFirstNationSelect = By.Id("input-consultations.0.consultationStatusType");
+        private By licenseDetailsFirstNationContent = By.XPath("//label[contains(text(),'First nation')]/parent::div/following-sibling::div");
+        private By licenseDetailsSRELabel = By.XPath("//label[contains(text(),'Strategic Real Estate (SRE)')]");
+        private By licenseDetailsSRESelect = By.Id("input-consultations.1.consultationStatusType");
+        private By licenseDetailsSREContent = By.XPath("//label[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/following-sibling::div");
+        private By licenceDetailsRegionalPlanningLabel = By.XPath("//label[contains(text(),'Regional planning')]");
+        private By licenseDetailsRegionalPlanningSelect = By.Id("input-consultations.2.consultationStatusType");
+        private By licenceDetailsRegionalPlanningContent = By.XPath("//label[contains(text(),'Regional planning')]/parent::div/following-sibling::div");
+        private By licenseDetailsRegionalPropertyServicesLabel = By.XPath("//label[contains(text(),'Regional property services')]");
+        private By licenseDetailsRegionalPropertyServicesSelect = By.Id("input-consultations.3.consultationStatusType");
+        private By licenseDetailsRegionalPropertyServicesContent = By.XPath("//label[contains(text(),'Regional property services')]/parent::div/following-sibling::div");
+        private By licenceDetailsDistrictLabel = By.XPath("//label[contains(text(),'District')]");
+        private By licenseDetailsDistrictSelect = By.Id("input-consultations.4.consultationStatusType");
+        private By licenceDetailsDistrictContent = By.XPath("//label[contains(text(),'District')]/parent::div/following-sibling::div");
+        private By licenseDetailsHeadquarterLabel = By.XPath("//label[contains(text(),'Headquarter (HQ)')]");
+        private By licenseDetailsHeadquarterSelect = By.Id("input-consultations.5.consultationStatusType");
+        private By licenseDetailsHeadquarterContent = By.XPath("//label[contains(text(),'Headquarter (HQ)')]/parent::div/following-sibling::div");
+        private By licenceDetailsOtherLabel = By.XPath("//label[contains(text(),'Other')]");
+        private By licenseDetailsOtherSelect = By.Id("input-consultations.6.consultationStatusType");
+        private By licenceDetailsOtherContent = By.XPath("//label[contains(text(),'Other')]/parent::div/following-sibling::div");
+        private By licenseDetailsOtherDetailsInput = By.Id("input-consultations.6.consultationTypeOtherDescription");
+
+        private By licenseDetailsDocsSubtitle = By.XPath("//div[contains(text(),'Documentation')]");
         private By licenseDetailsPhysicalLeaseExistViewLabel = By.XPath("//label[contains(text(),'Physical copy exists')]");
         private By licenseDetailsPhysicalLeaseExistContent = By.Id("input-description");
         private By licenseDetailsPhysicalLeaseExistLabel = By.XPath("//label[contains(text(),'Physical lease/license exists')]");
@@ -171,195 +200,354 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(createLicenseButton).Click();
         }
 
-        //Covers only required fields on License Details
-        public void LicenseDetailsMinFields(string status, string startDate, string expiryDate, string program)
-        {
-            Wait();
-
-            //Change Status
-            ChooseSpecificSelectOption(licenseDetailsStatusSelector, status);
-
-            //Selecting Account Type
-            var receivePayableTypeElement = webDriver.FindElement(licenseDetailsAccountTypeSelector);
-            receivePayableTypeElement.Click();
-            ChooseRandomSelectOption(licenseDetailsAccountTypeSelector, 0);
-
-            //Insert Start Date
-            webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(startDate);
-            webDriver.FindElement(licenseDetailsStartDateLabel).Click();
-
-            //Insert Expiry Date
-            webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(expiryDate);
-            webDriver.FindElement(licenseDetailsExpiryDateLabel).Click();
-
-            //Selecting MOTI Region
-            ChooseRandomSelectOption(licenseDetailsMotiRegionSelector, 1);
-
-            //Selecting Program
-            ChooseSpecificSelectOption(licenseDetailsProgramSelector, program);
-
-            Wait();
-            //If other Program is selected, insert input
-            if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0)
-            {
-                Assert.True(webDriver.FindElement(licenseDetailsOtherProgramLabel).Displayed);
-                webDriver.FindElement(licenseDetailsOtherProgramInput).SendKeys("Automation Test - Other Program");
-            }
-
-            //Selecting Type
-            ChooseRandomSelectOption(licenseDetailsTypeSelector, 1);
-
-            //Selecting other Type if required
-            if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count() > 0)
-            {
-                Assert.True(webDriver.FindElement(licenseDetailsOtherTypeLabel).Displayed);
-                webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys("Automation Test - Other Type");
-            }
-
-            Wait();
-            //Selecting Category if required
-            if (webDriver.FindElements(licenseDetailsCategorySelector).Count() > 0)
-            {
-                Assert.True(webDriver.FindElement(licenseDetailsCategoryLabel).Displayed);
-                ChooseRandomSelectOption(licenseDetailsCategorySelector, 1);
-            }
-
-            //If Other Category is selected
-            if (webDriver.FindElements(licenseDetailsCategoryOtherInput).Count() > 0)
-            {
-                Assert.True(webDriver.FindElement(licenseDetailsCategoryOtherLabel).Displayed);
-                webDriver.FindElement(licenseDetailsCategoryOtherInput).SendKeys("Automation Test - Other Category");
-            }
-
-            //Selecting Purpose
-            ChooseRandomSelectOption(licenseDetailsPurposeSelector, 1);
-
-            Wait();
-            //If other Purpose is selected, insert input
-            if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0)
-            {
-                Assert.True(webDriver.FindElement(licenseDetailsOtherPurposeLabel).Displayed);
-                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys("Automation Test - Other Purpose");
-            }
-        }
-
         //Covers all fields on License Details
-        public void LicenseDetailsMaxFields(string ministryProject, string status, string startDate, string expiryDate, string motiContact, string program, string responsibilityDate, string locationOfDoc, string description, string lis, string ps, string notes)
+        public void CreateLicenseDetails(Lease lease)
         {
             Wait();
-            
-            //Insert Project
-            webDriver.FindElement(licenseDetailsProjectInput).SendKeys(ministryProject);
-            Wait();
-            webDriver.FindElement(licenseDetailsProject1stOption).Click();
 
-            //Change Status
-            ChooseSpecificSelectOption(licenseDetailsStatusSelector, status);
+            //MAIN DETAILS
+            //Project
+            if (lease.MinistryProject != "")
+            {
+                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
+                Wait();
+                webDriver.FindElement(licenseDetailsProject1stOption).Click();
+            }
 
-            //Insert Start Date
-            webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(startDate);
+            //Status
+            if (lease.LeaseStatus != "")
+                ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
 
-            //Insert Expiry Date
-            webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
-            webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(expiryDate);
+            //Account Type
+            if (lease.AccountType != "")
+            {
+                webDriver.FindElement(licenseDetailsAccountTypeSelector).Click();
+                ChooseSpecificSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
+            }
 
-            //Selecting Account Type
-            webDriver.FindElement(licenseDetailsAccountTypeSelector).Click();
-            ChooseRandomSelectOption(licenseDetailsAccountTypeSelector, 0);
+            //Start Date
+            if (lease.LeaseStartDate != "")
+                webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(lease.LeaseStartDate);
 
-            //Inserting MOTI Contact
-            webDriver.FindElement(licenseDetailsMotiContactInput).SendKeys(motiContact);
+            //Expiry Date
+            if (lease.LeaseExpiryDate != "")
+            {
+                webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
+                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(lease.LeaseExpiryDate);
+            }
 
-            //Selecting MOTI Region
-            ChooseRandomSelectOption(licenseDetailsMotiRegionSelector, 1);
+            //Administration Details
+            //MOTI Contact
+            if (lease.MOTIContact != "")
+                webDriver.FindElement(licenseDetailsMotiContactInput).SendKeys(lease.MOTIContact);
 
-            //Selecting Program
-            ChooseSpecificSelectOption(licenseDetailsProgramSelector, program);
+            //MOTI Region
+            if(lease.MOTIRegion != "")
+                ChooseSpecificSelectOption(licenseDetailsMotiRegionSelector, lease.MOTIRegion);
+
+            //Program
+            if (lease.Program != "")
+                ChooseSpecificSelectOption(licenseDetailsProgramSelector, lease.Program);
 
             Wait();
             //If other Program is selected, insert input
-            if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0)
+            if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0 && lease.ProgramOther != "")
             {
                 Assert.True(webDriver.FindElement(licenseDetailsOtherProgramLabel).Displayed);
-                webDriver.FindElement(licenseDetailsOtherProgramInput).SendKeys("Automation Test - Other Program");
+                webDriver.FindElement(licenseDetailsOtherProgramInput).SendKeys(lease.ProgramOther);
             }
 
-            //Selecting Type
-            ChooseRandomSelectOption(licenseDetailsTypeSelector, 1);
+            //Type
+            if (lease.AdminType != "")
+                ChooseSpecificSelectOption(licenseDetailsTypeSelector, lease.AdminType);
 
             //If other Type is selected, insert input
-            if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0)
+            if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0 && lease.TypeOther != "")
             {
                 Assert.True(webDriver.FindElement(licenseDetailsOtherTypeLabel).Displayed);
-                webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys("Automation Test - Other Type");
+                webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys(lease.TypeOther);
             }
 
             Wait();
             //Selecting Category if required
-            if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0)
+            if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0 && lease.Category != "")
             {
                 Assert.True(webDriver.FindElement(licenseDetailsCategoryLabel).Displayed);
-                ChooseRandomSelectOption(licenseDetailsCategorySelector, 1);
+                ChooseSpecificSelectOption(licenseDetailsCategorySelector, lease.Category);
             }
 
             //If Other Category has been selected
-            if (webDriver.FindElements(licenseDetailsCategoryOtherInput).Count > 0)
+            if (webDriver.FindElements(licenseDetailsCategoryOtherInput).Count > 0 && lease.CategoryOther != "")
             {
                 Assert.True(webDriver.FindElement(licenseDetailsCategoryOtherLabel).Displayed);
-                webDriver.FindElement(licenseDetailsCategoryOtherInput).SendKeys("Automation Test - Other Category");
+                webDriver.FindElement(licenseDetailsCategoryOtherInput).SendKeys(lease.CategoryOther);
             }
 
-            //Selecting Purpose
-            ChooseRandomSelectOption(licenseDetailsPurposeSelector, 1);
+            //Purpose
+            if(lease.Purpose != "")
+                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.Purpose);
 
             Wait();
             //If other Purpose is selected, insert input
-            if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0)
+            if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
             {
                 Assert.True(webDriver.FindElement(licenseDetailsOtherPurposeLabel).Displayed);
-                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys("Automation Test - Other Purpose");
+                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys(lease.PurposeOther);
             }
 
-            //Selecting a Initiator
-            ChooseRandomSelectOption(licenseDetailsInitiatorSelector, 1);
+            //Initiator
+            if (lease.Initiator != "")
+                ChooseSpecificSelectOption(licenseDetailsInitiatorSelector, lease.Initiator);
 
-            //Selecting a Responsibility
-            ChooseRandomSelectOption(licenseDetailsResposibilitySelector, 1);
+            //Responsibility
+            if(lease.Responsibility != "")
+                ChooseSpecificSelectOption(licenseDetailsResposibilitySelector, lease.Responsibility);
 
-            //Inserting a Effective date of responsibility
-            webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(responsibilityDate);
+            //Effective date of responsibility
+            if(lease.EffectiveDate != "")
+                webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(lease.EffectiveDate);
 
+            //Intended use
+            if(lease.IntendedUse != "")
+                webDriver.FindElement(licenseDetailsIntendedUseTextarea).SendKeys(lease.IntendedUse);
+
+            //CONSULTATION DETAILS
+            //First Nation
+            if(lease.FirstNation != "")
+                ChooseSpecificSelectOption(licenseDetailsFirstNationSelect, lease.FirstNation);
+
+            //Startegic Real Estate
+            if(lease.StrategicRealEstate != "")
+                ChooseSpecificSelectOption(licenseDetailsSRESelect, lease.StrategicRealEstate);
+
+            //Regional planning
+            if(lease.RegionalPlanning != "")
+                ChooseSpecificSelectOption(licenseDetailsRegionalPlanningSelect, lease.RegionalPlanning);
+
+            //Regional property services
+            if(lease.RegionalPropertyService != "")
+                ChooseSpecificSelectOption(licenseDetailsRegionalPropertyServicesSelect, lease.RegionalPropertyService);
+
+            //District
+            if(lease.District != "")
+                ChooseSpecificSelectOption(licenseDetailsDistrictSelect, lease.District);
+
+            //Headquarters
+            if(lease.Headquarter != "")
+                ChooseSpecificSelectOption(licenseDetailsHeadquarterSelect, lease.Headquarter);
+
+            //Other
+            if(lease.ConsultationOther != "")
+                ChooseSpecificSelectOption(licenseDetailsOtherSelect, lease.ConsultationOther);
+
+            //Describe other
+            if(lease.ConsultationOtherDetails != "")
+                webDriver.FindElement(licenseDetailsOtherDetailsInput).SendKeys(lease.ConsultationOtherDetails);
+
+            //DOCUMENTATION
             //Selecting Physical lease exists
-            ChooseRandomSelectOption(licenseDetailsPhysicalLeaseExistSelector, 0);
+            if (lease.PhysicalLeaseExist != "")
+                ChooseSpecificSelectOption(licenseDetailsPhysicalLeaseExistSelector, lease.PhysicalLeaseExist);
 
             //Selecting Digital lease exists
-            ChooseRandomSelectOption(licenseDetailsDigitalLeaseExistSelector, 0);
+            if (lease.DigitalLeaseExist != "")
+                ChooseSpecificSelectOption(licenseDetailsDigitalLeaseExistSelector, lease.DigitalLeaseExist);
 
             //Inserting Location of documents
-            webDriver.FindElement(licenseDetailsLocationDocsTextarea).SendKeys(locationOfDoc);
+            if (lease.DocumentLocation != "")
+                webDriver.FindElement(licenseDetailsLocationDocsTextarea).SendKeys(lease.DocumentLocation);
 
             //Inserting LIS#
-            webDriver.FindElement(licenseDetailsLISNbrInput).SendKeys(lis);
- 
-            //Inserting PS#
-            webDriver.FindElement(licenseDetailsPSNbrInput).SendKeys(ps);
+            if (lease.LISNumber != "")
+                webDriver.FindElement(licenseDetailsLISNbrInput).SendKeys(lease.LISNumber);
 
-            //Inserting Intended use
-            webDriver.FindElement(licenseDetailsIntendedUseTextarea).SendKeys(description);
+            //Inserting PS#
+            if (lease.PSNumber != "")
+                webDriver.FindElement(licenseDetailsPSNbrInput).SendKeys(lease.PSNumber);
 
             //Inserting Notes
-            webDriver.FindElement(licenseDetailsNotesTextarea).SendKeys(notes);
+            if (lease.LeaseNotes != "")
+                webDriver.FindElement(licenseDetailsNotesTextarea).SendKeys(lease.LeaseNotes);
         }
 
-        public void UpdateLeaseFileDetails(string description, string notes)
+        public void UpdateLeaseFileDetails(Lease lease)
         {
             Wait();
 
-            ClearInput(licenseDetailsIntendedUseTextarea);
-            webDriver.FindElement(licenseDetailsIntendedUseTextarea).SendKeys(description);
+            //MAIN DETAILS
+            //Project
+            if (lease.MinistryProject != "")
+            {
+                ClearInput(licenseDetailsProjectInput);
+                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
+                Wait();
+                webDriver.FindElement(licenseDetailsProject1stOption).Click();
+            }
 
-            ClearInput(licenseDetailsNotesTextarea);
-            webDriver.FindElement(licenseDetailsNotesTextarea).SendKeys(notes);
+            //Status
+            if (lease.LeaseStatus != "")
+                ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
+
+            //Account Type
+            if (lease.AccountType != "")
+            {
+                webDriver.FindElement(licenseDetailsAccountTypeSelector).Click();
+                ChooseSpecificSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
+            }
+
+            //Start Date
+            if (lease.LeaseStartDate != "")
+                ClearInput(licenseDetailsStartDateInput);
+                webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(lease.LeaseStartDate);
+
+            //Expiry Date
+            if (lease.LeaseExpiryDate != "")
+            {
+                ClearInput (licenseDetailsExpiryDateInput);
+                webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
+                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(lease.LeaseExpiryDate);
+            }
+
+            //Administration Details
+            //MOTI Contact
+            if (lease.MOTIContact != "")
+                webDriver.FindElement(licenseDetailsMotiContactInput).SendKeys(lease.MOTIContact);
+
+            //MOTI Region
+            if (lease.MOTIRegion != "")
+                ChooseSpecificSelectOption(licenseDetailsMotiRegionSelector, lease.MOTIRegion);
+
+            //Program
+            if (lease.Program != "")
+                ChooseSpecificSelectOption(licenseDetailsProgramSelector, lease.Program);
+
+            Wait();
+            //If other Program is selected, insert input
+            if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0 && lease.ProgramOther != "")
+            {
+                Assert.True(webDriver.FindElement(licenseDetailsOtherProgramLabel).Displayed);
+                ClearInput(licenseDetailsOtherProgramInput);
+                webDriver.FindElement(licenseDetailsOtherProgramInput).SendKeys(lease.ProgramOther);
+            }
+
+            //Type
+            if (lease.AdminType != "")
+                ChooseSpecificSelectOption(licenseDetailsTypeSelector, lease.AdminType);
+
+            //If other Type is selected, insert input
+            if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0 && lease.TypeOther != "")
+            {
+                Assert.True(webDriver.FindElement(licenseDetailsOtherTypeLabel).Displayed);
+                ClearInput(licenseDetailsOtherTypeInput);
+                webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys(lease.TypeOther);
+            }
+
+            Wait();
+            //Selecting Category if required
+            if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0 && lease.Category != "")
+            {
+                Assert.True(webDriver.FindElement(licenseDetailsCategoryLabel).Displayed);
+                ChooseSpecificSelectOption(licenseDetailsCategorySelector, lease.Category);
+            }
+
+            //If Other Category has been selected
+            if (webDriver.FindElements(licenseDetailsCategoryOtherInput).Count > 0 && lease.CategoryOther != "")
+            {
+                Assert.True(webDriver.FindElement(licenseDetailsCategoryOtherLabel).Displayed);
+                webDriver.FindElement(licenseDetailsCategoryOtherInput).SendKeys(lease.CategoryOther);
+            }
+
+            //Purpose
+            if (lease.Purpose != "")
+                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.Purpose);
+
+            Wait();
+            //If other Purpose is selected, insert input
+            if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
+            {
+                Assert.True(webDriver.FindElement(licenseDetailsOtherPurposeLabel).Displayed);
+                ClearInput(licenseDetailsOtherPurposeInput);
+                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys(lease.PurposeOther);
+            }
+
+            //Initiator
+            if (lease.Initiator != "")
+                ChooseSpecificSelectOption(licenseDetailsInitiatorSelector, lease.Initiator);
+
+            //Responsibility
+            if (lease.Responsibility != "")
+                ChooseSpecificSelectOption(licenseDetailsResposibilitySelector, lease.Responsibility);
+
+            //Effective date of responsibility
+            if (lease.EffectiveDate != "")
+                ClearInput(licenseDetailsEffectiveDateInput);
+                webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(lease.EffectiveDate);
+
+            //Intended use
+            if (lease.IntendedUse != "")
+                ClearInput(licenseDetailsIntendedUseTextarea);
+                webDriver.FindElement(licenseDetailsIntendedUseTextarea).SendKeys(lease.IntendedUse);
+
+            //CONSULTATION DETAILS
+            //First Nation
+            if (lease.FirstNation != "")
+                ChooseSpecificSelectOption(licenseDetailsFirstNationSelect, lease.FirstNation);
+
+            //Startegic Real Estate
+            if (lease.StrategicRealEstate != "")
+                ChooseSpecificSelectOption(licenseDetailsSRESelect, lease.StrategicRealEstate);
+
+            //Regional planning
+            if (lease.RegionalPlanning != "")
+                ChooseSpecificSelectOption(licenseDetailsRegionalPlanningSelect, lease.RegionalPlanning);
+
+            //Regional property services
+            if (lease.RegionalPropertyService != "")
+                ChooseSpecificSelectOption(licenseDetailsRegionalPropertyServicesSelect, lease.RegionalPropertyService);
+
+            //District
+            if (lease.District != "")
+                ChooseSpecificSelectOption(licenseDetailsDistrictSelect, lease.District);
+
+            //Headquarters
+            if (lease.Headquarter != "")
+                ChooseSpecificSelectOption(licenseDetailsHeadquarterSelect, lease.Headquarter);
+
+            //Other
+            if (lease.ConsultationOther != "")
+                ChooseSpecificSelectOption(licenseDetailsOtherSelect, lease.ConsultationOther);
+
+            //Describe other
+            if (lease.ConsultationOtherDetails != "")
+                webDriver.FindElement(licenseDetailsOtherDetailsInput).SendKeys(lease.ConsultationOtherDetails);
+
+            //DOCUMENTATION
+            //Selecting Physical lease exists
+            if (lease.PhysicalLeaseExist != "")
+                ChooseSpecificSelectOption(licenseDetailsPhysicalLeaseExistSelector, lease.PhysicalLeaseExist);
+
+            //Selecting Digital lease exists
+            if (lease.DigitalLeaseExist != "")
+                ChooseSpecificSelectOption(licenseDetailsDigitalLeaseExistSelector, lease.DigitalLeaseExist);
+
+            //Inserting Location of documents
+            if (lease.DocumentLocation != "")
+                webDriver.FindElement(licenseDetailsLocationDocsTextarea).SendKeys(lease.DocumentLocation);
+
+            //Inserting LIS#
+            if (lease.LISNumber != "")
+                ClearInput(licenseDetailsLISNbrInput);
+                webDriver.FindElement(licenseDetailsLISNbrInput).SendKeys(lease.LISNumber);
+
+            //Inserting PS#
+            if (lease.PSNumber != "")
+                ClearInput(licenseDetailsPSNbrInput);
+                webDriver.FindElement(licenseDetailsPSNbrInput).SendKeys(lease.PSNumber);
+
+            //Inserting Notes
+            if (lease.LeaseNotes != "")
+                ClearInput(licenseDetailsNotesTextarea);
+                webDriver.FindElement(licenseDetailsNotesTextarea).SendKeys(lease.LeaseNotes);
         }
 
         public void EditLeaseFileDetails()
@@ -466,8 +654,26 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(licenseDetailsIntendedUseLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsIntendedUseTextarea).Displayed);
 
+            //Consultation
+            Assert.True(webDriver.FindElement(licenseDetailsConsultationSubtitle).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsFirstNationLabel).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsFirstNationSelect).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsSRELabel).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsSRESelect).Displayed);
+            Assert.True(webDriver.FindElement(licenceDetailsRegionalPlanningLabel).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsRegionalPlanningSelect).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsRegionalPropertyServicesLabel).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsRegionalPropertyServicesSelect).Displayed);
+            Assert.True(webDriver.FindElement(licenceDetailsDistrictLabel).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsDistrictSelect).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsHeadquarterLabel).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsHeadquarterSelect).Displayed);
+            Assert.True(webDriver.FindElement(licenceDetailsOtherLabel).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsOtherSelect).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsOtherDetailsInput).Displayed);
+
             //Documentation
-            Assert.True(webDriver.FindElement(licenseDetailsDocsSutitle).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsDocsSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistSelector).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistLabel).Displayed);
@@ -518,7 +724,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void VerifyLicenseDetailsViewForm()
+        public void VerifyLicenseDetailsViewForm(Lease lease)
         {
             Wait();
             VerifyLicenseHeader();
@@ -563,39 +769,88 @@ namespace PIMS.Tests.Automation.PageObjects
             //Lease Management
             Assert.True(webDriver.FindElement(licenseDetailsAdmSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsProgramViewLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsProgramContent).GetAttribute("value") != "");
+            if(lease.Program != "")
+                Assert.True(webDriver.FindElement(licenseDetailsProgramContent).GetAttribute("value") == lease.Program);
+            if (lease.ProgramOther != "")
+                Assert.True(webDriver.FindElement(licenseDetailsOtherProgramContent).GetAttribute("value") == lease.ProgramOther);
             Assert.True(webDriver.FindElement(licenseDetailsViewTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsTypeContent).GetAttribute("value") != "");
+            if(lease.AdminType != "")
+                Assert.True(webDriver.FindElement(licenseDetailsTypeContent).GetAttribute("value") == lease.AdminType);
+            if (lease.TypeOther != "")
+                Assert.True(webDriver.FindElement(licenseDetailsOtherTypeContent).GetAttribute("value") == lease.TypeOther);
             Assert.True(webDriver.FindElement(licenseDetailsReceivableToLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsReceivableToContent).GetAttribute("value") != "");
+            if(lease.AccountType != "")
+                Assert.True(webDriver.FindElement(licenseDetailsReceivableToContent).GetAttribute("value") == lease.AccountType);
             Assert.True(webDriver.FindElement(licenseDetailsCategoryLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsCategoryContent).GetAttribute("value") != "");
+            if(lease.Category != "")
+                Assert.True(webDriver.FindElement(licenseDetailsCategoryContent).GetAttribute("value") == lease.Category);
+            if (lease.CategoryOther != "")
+                Assert.True(webDriver.FindElement(licenseDetailsCategoryOtherContent).GetAttribute("value") == lease.CategoryOther);
             Assert.True(webDriver.FindElement(licenseDetailsPurposeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPurposeContent).GetAttribute("value") != "");
+            if(lease.Purpose != "")
+            Assert.True(webDriver.FindElement(licenseDetailsPurposeContent).GetAttribute("value") == lease.Purpose);
+            if (lease.PurposeOther != "")
+                Assert.True(webDriver.FindElement(licenseDetailsOtherPurposeContent).GetAttribute("value") == lease.PurposeOther);
             Assert.True(webDriver.FindElement(licenseDetailsInitiatorLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsInitiatorContent).GetAttribute("value") != "");
+            if(lease.Initiator != "")
+                Assert.True(webDriver.FindElement(licenseDetailsInitiatorContent).GetAttribute("value") == lease.Initiator);
             Assert.True(webDriver.FindElement(licenseDetailsResponsibilityLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsResponsibilityContent).GetAttribute("value") != "");
+            if(lease.Responsibility != "")
+                Assert.True(webDriver.FindElement(licenseDetailsResponsibilityContent).GetAttribute("value") == lease.Responsibility);
             Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateContent).GetAttribute("value") != "");
+            if(lease.EffectiveDate != "")
+                Assert.True(webDriver.FindElement(licenseDetailsEffectiveDateContent).GetAttribute("value") == TransformDateFormat(lease.EffectiveDate));
             Assert.True(webDriver.FindElement(licenseDetailsMotiContactViewLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsMotiContactInput).GetAttribute("value") != "");
+            if(lease.MOTIContact != "")
+                Assert.True(webDriver.FindElement(licenseDetailsMotiContactInput).GetAttribute("value") == lease.MOTIContact);
             Assert.True(webDriver.FindElement(licenseDetailsIntendedUseLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsIntendedUseTextarea).GetAttribute("value") != "");
+            if(lease.IntendedUse != "")
+                Assert.True(webDriver.FindElement(licenseDetailsIntendedUseTextarea).GetAttribute("value") == lease.IntendedUse);
+
+            //Consultation
+            Assert.True(webDriver.FindElement(licenseDetailsConsultationSubtitle).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsFirstNationLabel).Displayed);
+            if(lease.FirstNation != "")
+                Assert.True(webDriver.FindElement(licenseDetailsFirstNationContent).Text == lease.FirstNation);
+            Assert.True(webDriver.FindElement(licenseDetailsSRELabel).Displayed);
+            if(lease.StrategicRealEstate != "")
+                Assert.True(webDriver.FindElement(licenseDetailsSREContent).Text == lease.StrategicRealEstate);
+            Assert.True(webDriver.FindElement(licenceDetailsRegionalPlanningLabel).Displayed);
+            if(lease.RegionalPlanning != "")
+                Assert.True(webDriver.FindElement(licenceDetailsRegionalPlanningContent).Text == lease.RegionalPlanning);
+            Assert.True(webDriver.FindElement(licenseDetailsRegionalPropertyServicesLabel).Displayed);
+            if(lease.RegionalPropertyService != "")
+                Assert.True(webDriver.FindElement(licenseDetailsRegionalPropertyServicesContent).Text == lease.RegionalPropertyService);
+            Assert.True(webDriver.FindElement(licenceDetailsDistrictLabel).Displayed);
+            if(lease.District != "")
+                Assert.True(webDriver.FindElement(licenceDetailsDistrictContent).Text == lease.District);
+            Assert.True(webDriver.FindElement(licenseDetailsHeadquarterLabel).Displayed);
+            if(lease.Headquarter != "")
+                Assert.True(webDriver.FindElement(licenseDetailsHeadquarterContent).Text == lease.Headquarter);
+            Assert.True(webDriver.FindElement(licenceDetailsOtherLabel).Displayed);
+            if(lease.ConsultationOther != "")
+                Assert.True(webDriver.FindElement(licenceDetailsOtherContent).Text == lease.ConsultationOther);
+            Assert.True(webDriver.FindElement(licenseDetailsOtherDetailsInput).Displayed);
 
             //Documentation
             Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistViewLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistContent).GetAttribute("value") != "");
+            if (lease.PhysicalLeaseExist != "")
+                Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistContent).GetAttribute("value") == lease.PhysicalLeaseExist);
             Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistViewLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistContent).GetAttribute("value") != "");
+            if (lease.DigitalLeaseExist != "")
+                Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistContent).GetAttribute("value") == lease.DigitalLeaseExist);
             Assert.True(webDriver.FindElement(licenseDetailsLocationDocsLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLocationDocsContent).GetAttribute("value") != "");
+            if (lease.DocumentLocation != "")
+                Assert.True(webDriver.FindElement(licenseDetailsLocationDocsContent).GetAttribute("value") == lease.DocumentLocation);
             Assert.True(webDriver.FindElement(licenseDetailsLISNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLISNbrInput).GetAttribute("value") != "");
+            if (lease.LISNumber != "")
+                Assert.True(webDriver.FindElement(licenseDetailsLISNbrInput).GetAttribute("value") == lease.LISNumber);
             Assert.True(webDriver.FindElement(licenseDetailsPSNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsPSNbrInput).GetAttribute("value") != "");
+            if (lease.PSNumber != "")
+                Assert.True(webDriver.FindElement(licenseDetailsPSNbrInput).GetAttribute("value") == lease.PSNumber);
             Assert.True(webDriver.FindElement(licenseDetailsNotesLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsNotesContent).Text != "");
+            if (lease.LeaseNotes != "")
+                Assert.True(webDriver.FindElement(licenseDetailsNotesContent).Text == lease.LeaseNotes) ;
         }
 
         public void VerifyLicenseDetailsUpdateForm()
@@ -645,7 +900,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(licenseDetailsIntendedUseTextarea).Displayed);
 
             //Documentation
-            Assert.True(webDriver.FindElement(licenseDetailsDocsSutitle).Displayed);
+            Assert.True(webDriver.FindElement(licenseDetailsDocsSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsPhysicalLeaseExistSelector).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsDigitalLeaseExistLabel).Displayed);

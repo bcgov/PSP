@@ -1,6 +1,7 @@
 ﻿
 
 using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -54,59 +55,107 @@ namespace PIMS.Tests.Automation.PageObjects
         }
 
         //Add Commercial Improvements
-        public void AddCommercialImprovement(string address, string size, string description)
+        public void AddCommercialImprovement(Lease lease)
         {
-            webDriver.FindElement(licenceImprovCommercialUnitNbrInput).SendKeys(address);
-            webDriver.FindElement(licenceImprovCommercialSizeInput).SendKeys(size);
-            webDriver.FindElement(licenceImprovCommercialDescriptionTextarea).SendKeys(description);
+            if (lease.CommercialImprovementUnit != "")
+            {
+                ClearInput(licenceImprovCommercialUnitNbrInput);
+                webDriver.FindElement(licenceImprovCommercialUnitNbrInput).SendKeys(lease.CommercialImprovementUnit);
+            }
+
+            if (lease.CommercialImprovementBuildingSize != "")
+            {
+                ClearInput(licenceImprovCommercialSizeInput);
+                webDriver.FindElement(licenceImprovCommercialSizeInput).SendKeys(lease.CommercialImprovementBuildingSize);
+            }
+
+            if (lease.CommercialImprovementDescription != "")
+            {
+                ClearInput(licenceImprovCommercialDescriptionTextarea);
+                webDriver.FindElement(licenceImprovCommercialDescriptionTextarea).SendKeys(lease.CommercialImprovementDescription);
+            }   
         }
 
         //Add Residetial Improvements
-        public void AddResidentialImprovement(string address, string size, string description)
+        public void AddResidentialImprovement(Lease lease)
         {
-            webDriver.FindElement(licenceImprovResidentialUnitNbrInput).SendKeys(address);
-            webDriver.FindElement(licenceImprovResidentialSizeInput).SendKeys(size);
-            webDriver.FindElement(licenceImprovResidentialDescriptionTextarea).SendKeys(description);
+            if (lease.ResidentialImprovementUnit != "")
+            {
+                ClearInput(licenceImprovResidentialUnitNbrInput);
+                webDriver.FindElement(licenceImprovResidentialUnitNbrInput).SendKeys(lease.ResidentialImprovementUnit);
+            }
+
+            if (lease.ResidentialImprovementBuildingSize != "")
+            {
+                ClearInput(licenceImprovResidentialSizeInput);
+                webDriver.FindElement(licenceImprovResidentialSizeInput).SendKeys(lease.ResidentialImprovementBuildingSize);
+            }
+
+            if (lease.ResidentialImprovementDescription != "")
+            {
+                ClearInput(licenceImprovResidentialDescriptionTextarea);
+                webDriver.FindElement(licenceImprovResidentialDescriptionTextarea).SendKeys(lease.ResidentialImprovementDescription);
+            }
+                
         }
 
         //Add Other Improvements
-        public void AddOtherImprovement(string address, string size, string description)
+        public void AddOtherImprovement(Lease lease)
         {
-            ClearInput(licenceImprovOtherUnitNbrInput);
-            ClearInput(licenceImprovOtherSizeInput);
-            ClearInput(licenceImprovOtherDescriptionTextarea);
+            if (lease.OtherImprovementUnit != "")
+            {
+                ClearInput(licenceImprovOtherUnitNbrInput);
+                webDriver.FindElement(licenceImprovOtherUnitNbrInput).SendKeys(lease.OtherImprovementUnit);
+            }
 
-            webDriver.FindElement(licenceImprovOtherUnitNbrInput).SendKeys(address);
-            webDriver.FindElement(licenceImprovOtherSizeInput).SendKeys(size);
-            webDriver.FindElement(licenceImprovOtherDescriptionTextarea).SendKeys(description);
+            if (lease.OtherImprovementBuildingSize != "")
+            {
+                ClearInput(licenceImprovOtherSizeInput);
+                webDriver.FindElement(licenceImprovOtherSizeInput).SendKeys(lease.OtherImprovementBuildingSize);
+            }
+
+            if (lease.OtherImprovementDescription != "")
+            {
+                ClearInput(licenceImprovOtherDescriptionTextarea);
+                webDriver.FindElement(licenceImprovOtherDescriptionTextarea).SendKeys(lease.OtherImprovementDescription);
+            }  
         }
 
-        public void VerifyImprovementView(string commUnitNbr, string commSize, string commDescription, string resUnitNbr, string resSize, string resDescription, string otherUnitNbr, string otherSize, string otherDescription)
+        public void VerifyImprovementView(Lease lease)
         {
             Wait();
             Assert.True(webDriver.FindElement(licenceImprovCommecialSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenceImprovCommercialUnitNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovCommercialUnitNbrInput).GetAttribute("value") == commUnitNbr);
+            if(lease.CommercialImprovementUnit != "")
+                Assert.True(webDriver.FindElement(licenceImprovCommercialUnitNbrInput).GetAttribute("value") == lease.CommercialImprovementUnit);
             Assert.True(webDriver.FindElement(licenceImprovCommercialSizeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovCommercialSizeInput).GetAttribute("value") == commSize);
+            if (lease.CommercialImprovementBuildingSize != "")
+                Assert.True(webDriver.FindElement(licenceImprovCommercialSizeInput).GetAttribute("value") == lease.CommercialImprovementBuildingSize);
             Assert.True(webDriver.FindElement(licenceImprovCommercialDescriptionLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovCommercialDescriptionTextarea).Text == commDescription);
+            if (lease.CommercialImprovementDescription != "")
+                Assert.True(webDriver.FindElement(licenceImprovCommercialDescriptionTextarea).Text == lease.CommercialImprovementDescription);
 
             Assert.True(webDriver.FindElement(licenceImprovResidentialSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenceImprovResidentialUnitNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovResidentialUnitNbrInput).GetAttribute("value") == resUnitNbr);
+            if(lease.ResidentialImprovementUnit != "")
+                Assert.True(webDriver.FindElement(licenceImprovResidentialUnitNbrInput).GetAttribute("value") == lease.ResidentialImprovementUnit);
             Assert.True(webDriver.FindElement(licenceImprovResidentialSizeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovResidentialSizeInput).GetAttribute("value") == resSize);
+            if (lease.ResidentialImprovementBuildingSize != "")
+                Assert.True(webDriver.FindElement(licenceImprovResidentialSizeInput).GetAttribute("value") == lease.ResidentialImprovementBuildingSize);
             Assert.True(webDriver.FindElement(licenceImprovResidentialDescriptionLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovResidentialDescriptionTextarea).Text == resDescription);
+            if(lease.ResidentialImprovementDescription != "")
+                Assert.True(webDriver.FindElement(licenceImprovResidentialDescriptionTextarea).Text == lease.ResidentialImprovementDescription);
 
             Assert.True(webDriver.FindElement(licenceImprovOtherSubtitle).Displayed);
             Assert.True(webDriver.FindElement(licenceImprovOtherlUnitNbrLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovOtherUnitNbrInput).GetAttribute("value") == otherUnitNbr);
+            if(lease.OtherImprovementUnit != "")
+                Assert.True(webDriver.FindElement(licenceImprovOtherUnitNbrInput).GetAttribute("value") == lease.OtherImprovementUnit);
             Assert.True(webDriver.FindElement(licenceImprovOtherSizeLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovOtherSizeInput).GetAttribute("value") == otherSize);
+            if (lease.OtherImprovementBuildingSize != "")
+                Assert.True(webDriver.FindElement(licenceImprovOtherSizeInput).GetAttribute("value") == lease.OtherImprovementBuildingSize);
             Assert.True(webDriver.FindElement(licenceImprovOtherDescriptionLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenceImprovOtherDescriptionTextarea).Text == otherDescription);
+            if (lease.OtherImprovementDescription != "")
+                Assert.True(webDriver.FindElement(licenceImprovOtherDescriptionTextarea).Text == lease.OtherImprovementDescription);
         }
     }
 }
