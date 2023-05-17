@@ -5,7 +5,15 @@ import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, createAxiosError, render, RenderOptions, screen, userEvent } from 'utils/test-utils';
+import {
+  act,
+  createAxiosError,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+} from 'utils/test-utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionContainer } from './UpdateAcquisitionContainer';
@@ -134,17 +142,17 @@ describe('UpdateAcquisition container', () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(409, 'test message', { errorCode: 'region_violation' }),
     );
-    const { formikRef, findByText } = setup();
+    const { formikRef } = setup();
 
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await findByText(/The Ministry region has been changed/i);
+    const popup = await screen.findByText(/The Ministry region has been changed/i);
     expect(popup).toBeVisible();
 
     mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
 
-    await act(async () => userEvent.click(await findByText('Continue Save')));
+    await act(async () => userEvent.click(await screen.findByText('Continue Save')));
 
     const fileData = viewProps?.initialValues.toApi();
     expect(mockUpdateAcquisitionFile).toHaveBeenCalledTimes(2);
@@ -157,17 +165,18 @@ describe('UpdateAcquisition container', () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(409, 'test message', { errorCode: 'region_violation' }),
     );
-    const { formikRef, findByText } = setup();
+    const { formikRef } = setup();
 
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await findByText(/The Ministry region has been changed/i);
-    expect(popup).toBeVisible();
+    expect(await screen.findByText(/The Ministry region has been changed/i)).toBeVisible();
 
-    await act(async () => userEvent.click(await findByText('Cancel Update')));
+    await act(async () => userEvent.click(await screen.findByText('Cancel Update')));
 
-    expect(popup).not.toBeVisible();
+    await waitFor(() =>
+      expect(screen.queryByText(/The Ministry region has been changed/i)).toBeNull(),
+    );
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
@@ -175,12 +184,12 @@ describe('UpdateAcquisition container', () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(409, 'test message', { errorCode: 'properties_of_interest_violation' }),
     );
-    const { formikRef, findByText } = setup();
+    const { formikRef } = setup();
 
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await findByText(
+    const popup = await screen.findByText(
       /The properties of interest will be added to the inventory as acquired properties/i,
     );
     expect(popup).toBeVisible();
@@ -190,19 +199,19 @@ describe('UpdateAcquisition container', () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(409, 'test message', { errorCode: 'properties_of_interest_violation' }),
     );
-    const { formikRef, findByText } = setup();
+    const { formikRef } = setup();
 
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await findByText(
+    const popup = await screen.findByText(
       /The properties of interest will be added to the inventory as acquired properties/i,
     );
     expect(popup).toBeVisible();
 
     mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
 
-    await act(async () => userEvent.click(await findByText('Continue Save')));
+    await act(async () => userEvent.click(await screen.findByText('Continue Save')));
 
     const fileData = viewProps?.initialValues.toApi();
     expect(mockUpdateAcquisitionFile).toHaveBeenCalledTimes(2);
@@ -215,19 +224,26 @@ describe('UpdateAcquisition container', () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(409, 'test message', { errorCode: 'properties_of_interest_violation' }),
     );
-    const { formikRef, findByText } = setup();
+    const { formikRef } = setup();
 
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await findByText(
-      /The properties of interest will be added to the inventory as acquired properties/i,
+    expect(
+      await screen.findByText(
+        /The properties of interest will be added to the inventory as acquired properties/i,
+      ),
+    ).toBeVisible();
+
+    await act(async () => userEvent.click(await screen.findByText('Cancel Update')));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByText(
+          /The properties of interest will be added to the inventory as acquired properties/i,
+        ),
+      ).toBeNull(),
     );
-    expect(popup).toBeVisible();
-
-    await act(async () => userEvent.click(await findByText('Cancel Update')));
-
-    expect(popup).not.toBeVisible();
     expect(onSuccess).not.toHaveBeenCalled();
   });
 });
