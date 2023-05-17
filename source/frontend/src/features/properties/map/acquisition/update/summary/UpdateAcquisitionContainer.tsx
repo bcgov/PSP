@@ -10,18 +10,19 @@ import styled from 'styled-components';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
-import { UpdateAcquisitionForm } from './UpdateAcquisitionForm';
+import { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
 
 export interface IUpdateAcquisitionContainerProps {
   acquisitionFile: Api_AcquisitionFile;
   onSuccess: () => void;
+  View: React.FC<IUpdateAcquisitionFormProps>;
 }
 
 export const UpdateAcquisitionContainer = React.forwardRef<
   FormikProps<any>,
   IUpdateAcquisitionContainerProps
 >((props, formikRef) => {
-  const { acquisitionFile, onSuccess } = props;
+  const { acquisitionFile, onSuccess, View } = props;
 
   const {
     updateAcquisitionFile: { execute: updateAcquisitionFile },
@@ -102,8 +103,8 @@ export const UpdateAcquisitionContainer = React.forwardRef<
 
   return (
     <StyledFormWrapper>
-      <UpdateAcquisitionForm
-        ref={formikRef}
+      <View
+        formikRef={formikRef}
         initialValues={UpdateAcquisitionSummaryFormModel.fromApi(acquisitionFile)}
         onSubmit={handleSubmit}
         validationSchema={UpdateAcquisitionFileYupSchema}

@@ -37,7 +37,7 @@ describe('UpdateAcquisitionForm component', () => {
     const ref = createRef<FormikProps<UpdateAcquisitionSummaryFormModel>>();
     const utils = render(
       <UpdateAcquisitionForm
-        ref={ref}
+        formikRef={ref}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
