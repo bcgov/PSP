@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
+import { IAutocompletePrediction } from 'interfaces';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNotesResponse } from 'mocks/mockNoteResponses';
@@ -11,7 +12,6 @@ import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
 import UpdateAcquisitionForm, { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
-import { IAutocompletePrediction } from 'interfaces';
 
 const mockAxios = new MockAdapter(axios);
 
