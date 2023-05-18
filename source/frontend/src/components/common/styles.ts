@@ -1,3 +1,4 @@
+import { LoadingBackdropProps } from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
@@ -164,4 +165,19 @@ export const StyledSectionParagraph = styled.p`
   color: ${props => props.theme.css.textColor};
   font-size: 1.6rem;
   text-decoration: none;
+`;
+
+export const Backdrop = styled.div<LoadingBackdropProps>`
+  width: 100%;
+  height: 100%;
+  position: ${(props: any) => (props.parentScreen ? 'absolute' : 'fixed')};
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+  justify-content: center;
 `;
