@@ -11,6 +11,7 @@ import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
 import UpdateAcquisitionForm, { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
+import { IAutocompletePrediction } from 'interfaces';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -97,6 +98,10 @@ describe('UpdateAcquisitionForm component', () => {
       getTeamMemberProfileDropDownList: (index: number = 0) =>
         utils.container.querySelector(
           `select[name="team[${index}].contactTypeCode"]`,
+        ) as HTMLSelectElement,
+      getRemoveProjectButton: () =>
+        utils.container.querySelector(
+          `div[data-testid="typeahead-project"] button`,
         ) as HTMLSelectElement,
     };
   };
@@ -200,6 +205,21 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(validationSchema).toBeCalled();
     expect(queryByTestId(/team-profile-dup-error/i)).toBeNull();
+  });
+
+  it('it clears the product field when a project is removed', async () => {
+    const { getRemoveProjectButton, getFormikRef } = setup({
+      initialValues,
+    });
+
+    await waitFor(() => userEvent.click(getRemoveProjectButton()));
+    await waitFor(() => getFormikRef().current?.submitForm());
+
+    initialValues.product = '';
+    initialValues.project = '' as unknown as IAutocompletePrediction;
+
+    expect(validationSchema).toBeCalled();
+    expect(onSubmit).toHaveBeenLastCalledWith(initialValues, expect.anything());
   });
 
   it('should disable file completion date until the user marks the file as COMPLETED', async () => {
