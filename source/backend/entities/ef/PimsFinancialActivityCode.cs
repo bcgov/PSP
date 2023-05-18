@@ -14,6 +14,7 @@ namespace Pims.Dal.Entities
     {
         public PimsFinancialActivityCode()
         {
+            PimsCompReqH120s = new HashSet<PimsCompReqH120>();
             PimsH120Categories = new HashSet<PimsH120Category>();
         }
 
@@ -73,6 +74,8 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [InverseProperty(nameof(PimsCompReqH120.FinancialActivityCode))]
+        public virtual ICollection<PimsCompReqH120> PimsCompReqH120s { get; set; }
         [InverseProperty(nameof(PimsH120Category.FinancialActivity))]
         public virtual ICollection<PimsH120Category> PimsH120Categories { get; set; }
     }

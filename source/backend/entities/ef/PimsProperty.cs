@@ -114,6 +114,9 @@ namespace Pims.Dal.Entities
         public Geometry Boundary { get; set; }
         [Column("LOCATION", TypeName = "geometry")]
         public Geometry Location { get; set; }
+        [Column("GENERAL_LOCATION")]
+        [StringLength(2000)]
+        public string GeneralLocation { get; set; }
         [Column("SURVEY_PLAN_NUMBER")]
         [StringLength(250)]
         public string SurveyPlanNumber { get; set; }
