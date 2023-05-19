@@ -134,6 +134,19 @@ describe('Add Improvements container component', () => {
       expect(JSON.parse(mockAxios.history.put[0].data).improvements).toHaveLength(2);
     });
   });
+
+  it('displays the improvement types in order', async () => {
+    const { component } = await setup({
+      improvements: [
+        { propertyImprovementTypeId: 'COMMBLDG', address: 'test address 1' },
+        { propertyImprovementTypeId: 'OTHER', address: 'test address 2' },
+        { propertyImprovementTypeId: 'RTA', address: 'test address 3' },
+      ],
+    });
+
+    //Snapshot shows the correct order
+    expect(component.asFragment()).toMatchSnapshot();
+  });
 });
 
 const expectedFormData =
