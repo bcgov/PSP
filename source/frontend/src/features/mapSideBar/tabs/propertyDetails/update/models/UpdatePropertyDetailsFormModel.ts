@@ -3,7 +3,13 @@ import isEmpty from 'lodash/isEmpty';
 import { Api_Address } from 'models/api/Address';
 import { Api_CodeType } from 'models/api/CodeType';
 import { Api_Property } from 'models/api/Property';
-import { booleanToString, fromTypeCode, stringToBoolean, toTypeCode } from 'utils/formUtils';
+import {
+  booleanToString,
+  fromTypeCode,
+  stringToBoolean,
+  stringToNull,
+  toTypeCode,
+} from 'utils/formUtils';
 
 import {
   PropertyAdjacentLandFormModel,
@@ -89,6 +95,7 @@ export class UpdatePropertyDetailsFormModel {
   longitude?: number;
 
   address?: AddressFormModel;
+  generalLocation?: string;
 
   landArea?: number;
   landLegalDescription?: string;
@@ -148,6 +155,8 @@ export class UpdatePropertyDetailsFormModel {
     model.address =
       base.address !== undefined ? AddressFormModel.fromApi(base.address) : new AddressFormModel();
 
+    model.generalLocation = base.generalLocation;
+
     model.landLegalDescription = base.landLegalDescription;
     model.landArea = base.landArea;
     model.areaUnitTypeCode = fromTypeCode(base.areaUnit);
@@ -206,6 +215,7 @@ export class UpdatePropertyDetailsFormModel {
       district: toTypeCode(this.districtTypeCode),
       region: toTypeCode(this.regionTypeCode),
       address: this.address !== undefined ? this.address.toApi() : undefined,
+      generalLocation: stringToNull(this.generalLocation),
       // multi-selects
       anomalies: this.anomalies?.map(e => e.toApi()),
       tenures: this.tenures?.map(e => e.toApi()),
