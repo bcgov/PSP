@@ -366,6 +366,7 @@ exports[`UpdateProjectsSubForm renders as expected with pre-existing form data 1
         >
           <div
             class="c2 form-group"
+            data-testid="typeahead-researchFileProjects[0].project"
           >
             <div
               class="rbt has-aux"

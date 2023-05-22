@@ -461,6 +461,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 >
                   <div
                     class="c6 form-group"
+                    data-testid="typeahead-project"
                   >
                     <div
                       class="rbt"
