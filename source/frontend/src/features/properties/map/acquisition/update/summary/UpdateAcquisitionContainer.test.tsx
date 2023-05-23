@@ -1,7 +1,6 @@
 import { Formik, FormikProps } from 'formik';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { mockLookups } from 'mocks';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import { mockAcquisitionFileResponse, mockLookups } from 'mocks/index.mock';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';

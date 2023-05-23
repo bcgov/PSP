@@ -1,3 +1,4 @@
+export * from './acquisitionFiles.mock';
 export * from './data.mock';
 export * from './districtLayerResponse.mock';
 export * from './faParcelLayerResponse.mock';
