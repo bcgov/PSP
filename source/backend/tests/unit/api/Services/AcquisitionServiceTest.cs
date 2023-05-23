@@ -394,6 +394,9 @@ namespace Pims.Api.Test.Services
             var filePropertyRepository = _helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
 
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
             // Act
             Action act = () => service.Update(acqFile, ministryOverride: true, propertiesOverride: false);
 
@@ -431,6 +434,9 @@ namespace Pims.Api.Test.Services
 
             var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.Update(acqFile, ministryOverride: true, propertiesOverride: true);
@@ -1113,7 +1119,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
             // Act
-           Action act = () => service.AddCompensationRequisition(1, newCompensationReq);
+            Action act = () => service.AddCompensationRequisition(1, newCompensationReq);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
