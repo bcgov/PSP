@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
+} from 'mocks/acquisitionFiles.mock';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import AcquisitionOwnersSummaryContainer, {

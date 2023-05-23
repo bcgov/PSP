@@ -3,8 +3,8 @@ import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
 import { createMemoryHistory } from 'history';
 import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockApiPerson, mockOrganization } from 'mocks/filterDataMock';
-import { getMockLeaseWithNoTenants } from 'mocks/mockLease';
+import { mockApiPerson, mockOrganization } from 'mocks/filterData.mock';
+import { getMockLeaseWithNoTenants } from 'mocks/lease.mock';
 import React from 'react';
 import { render, RenderOptions, userEvent } from 'utils/test-utils';
 

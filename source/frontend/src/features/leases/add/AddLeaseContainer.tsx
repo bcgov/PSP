@@ -29,8 +29,8 @@ export const AddLeaseContainer: React.FunctionComponent<
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const { selectedFileFeature } = React.useContext(MapStateContext);
-
   const { addLease } = useAddLease();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [addLeaseParams, setAddLeaseParams] = useState<
     { lease: Api_Lease; userOverride?: string } | undefined
   >();
@@ -71,6 +71,16 @@ export const AddLeaseContainer: React.FunctionComponent<
   };
 
   const handleSave = () => {
+    const isFormValid = formikRef?.current?.isValid;
+
+    if (!isFormValid) {
+      setErrorMessage('Please check the required fields.');
+    }
+
+    if (isFormValid) {
+      setErrorMessage(undefined);
+    }
+
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
@@ -90,6 +100,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}
           onSave={handleSave}
           onCancel={handleCancel}
+          errorMessage={errorMessage}
         />
       }
       showCloseButton

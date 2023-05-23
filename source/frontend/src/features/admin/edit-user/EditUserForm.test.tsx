@@ -1,5 +1,5 @@
-import { mockLookups } from 'mocks/mockLookups';
-import { getUserMock } from 'mocks/userMock';
+import { mockLookups } from 'mocks/lookups.mock';
+import { getUserMock } from 'mocks/user.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 

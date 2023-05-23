@@ -41,4 +41,5 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
     municipality: Yup.string().max(200, 'City must be at most 200 characters'),
     postal: Yup.string().max(20, 'Postal must be at most 20 characters'),
   }),
+  generalLocation: Yup.string().max(2000, 'General location must be less than 2000 characters'),
 });

@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultActivityFilter } from 'interfaces/IActivityResults';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks';
+import { mockLookups } from 'mocks/index.mock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';

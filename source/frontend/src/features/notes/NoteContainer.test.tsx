@@ -2,8 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims, NoteTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
-import { mockNoteResponse } from 'mocks/mockNoteResponses';
+import { mockLookups } from 'mocks/lookups.mock';
+import { mockNoteResponse } from 'mocks/noteResponses.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   act,

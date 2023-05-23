@@ -394,6 +394,11 @@ exports[`UpdateProperties component renders as expected 1`] = `
   z-index: 10;
 }
 
+.c27 {
+  padding-top: 0.7rem;
+  color: red;
+}
+
 <body>
   <div>
     <div
@@ -1136,6 +1141,13 @@ exports[`UpdateProperties component renders as expected 1`] = `
       <div
         class="c26 justify-content-end mt-auto no-gutters row"
       >
+        <div
+          class="pr-3 col-auto"
+        >
+          <div
+            class="c27"
+          />
+        </div>
         <div
           class="pr-4 col-auto"
         >
