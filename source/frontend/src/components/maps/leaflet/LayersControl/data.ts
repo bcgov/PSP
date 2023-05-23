@@ -231,6 +231,7 @@ export const layersTree: ILayerItem[] = [
         zIndex: 5,
         id: 'crownTenures',
         color: '#E83FFF',
+        styles: 2216,
         maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
         maxZoom: MAP_MAX_ZOOM,
       },
