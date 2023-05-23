@@ -65,7 +65,7 @@ describe('Improvements Container component', () => {
 
     expect(
       getByText(
-        'If this lease/license includes any commercial, residential or other improvements on the property, switch to edit mode to add details to this record.',
+        'There are no commercial, residential, or other improvements indicated with this lease/license.',
       ),
     ).toBeVisible();
   });
