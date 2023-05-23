@@ -11,6 +11,7 @@ using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -142,7 +143,7 @@ namespace Pims.Api.Services
             return newAcqFile;
         }
 
-        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool userOverride)
+        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool ministryOverride = false, bool propertiesOverride = false)
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
@@ -152,9 +153,14 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
-            if (!userOverride)
+            if (!ministryOverride)
             {
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
+            }
+
+            if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
+            {
+                TransferPropertiesOfInterestToInventory(acquisitionFile, propertiesOverride);
             }
 
             ValidateStaff(acquisitionFile);
@@ -300,7 +306,7 @@ namespace Pims.Api.Services
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
 
             var acquisitionFileParent = _acqFileRepository.GetById(acquisitionFileId);
-            if(acquisitionFileId != compensationRequisition.AcquisitionFileId || acquisitionFileParent is null)
+            if (acquisitionFileId != compensationRequisition.AcquisitionFileId || acquisitionFileParent is null)
             {
                 throw new BadRequestException("Invalid acquisitionFileId.");
             }
@@ -421,7 +427,32 @@ namespace Pims.Api.Services
             short currentRegion = _acqFileRepository.GetRegion(acqFileId);
             if (currentRegion != updatedRegion)
             {
-                throw new BusinessRuleViolationException("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
+                throw new UserOverrideException("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", "region_violation");
+            }
+        }
+
+        /// <summary>
+        /// Attempt to transfer properties of interest to core inventory when an acquisition file is deemed to be completed.
+        ///
+        /// By default, do not allow a property of interest to be modified unless the userOverride flag is true.
+        /// </summary>
+        /// <param name="acquisitionFile"></param>
+        /// <param name="userOverride"></param>
+        private void TransferPropertiesOfInterestToInventory(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
+        {
+            // Get the current properties in the research file
+            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
+            var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest.HasValue && p.Property.IsPropertyOfInterest.Value);
+
+            // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
+            foreach (var acquisitionProperty in propertiesOfInterest)
+            {
+                var property = acquisitionProperty.Property;
+                if (!userOverride)
+                {
+                    throw new UserOverrideException("The properties of interest will be added to the inventory as acquired properties.", "properties_of_interest_violation");
+                }
+                _propertyRepository.TransferToCoreInventory(property);
             }
         }
 
