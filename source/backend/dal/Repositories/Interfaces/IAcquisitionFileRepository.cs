@@ -6,7 +6,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IAcquisitionFileRepository : IRepository
     {
-        Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter, HashSet<short> regions);
+        Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter, HashSet<short> regions, long? filterPersonId = null);
 
         PimsAcquisitionFile GetById(long id);
 

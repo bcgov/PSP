@@ -59,12 +59,13 @@ export const useAcquisitionProvider = () => {
   const updateAcquisitionFileApi = useApiRequestWrapper<
     (
       acqFile: Api_AcquisitionFile,
-      userOverride: boolean,
+      ministryOverride: boolean,
+      propertiesOverride: boolean,
     ) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile, userOverride = false) =>
-        await putAcquisitionFile(acqFile, userOverride),
+      async (acqFile: Api_AcquisitionFile, ministryOverride = false, propertiesOverride = false) =>
+        await putAcquisitionFile(acqFile, ministryOverride, propertiesOverride),
       [putAcquisitionFile],
     ),
     requestName: 'UpdateAcquisitionFile',
