@@ -89,6 +89,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             <SectionField label="City">{address?.municipality}</SectionField>
             <SectionField label="Province">{address?.province?.description}</SectionField>
             <SectionField label="Postal code">{address?.postal}</SectionField>
+            <SectionField label="General location">{property?.generalLocation}</SectionField>
           </>
         ) : (
           <b>Property address not available.</b>

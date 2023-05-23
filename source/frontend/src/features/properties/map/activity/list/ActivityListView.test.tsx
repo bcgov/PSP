@@ -4,8 +4,8 @@ import MockAdapter from 'axios-mock-adapter';
 import Claims from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks';
-import { mockActivitiesResponse } from 'mocks/mockActivities';
+import { mockActivitiesResponse } from 'mocks/activities.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   act,

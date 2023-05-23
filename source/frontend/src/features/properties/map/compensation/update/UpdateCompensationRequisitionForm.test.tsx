@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
-import { getMockApiDefaultCompensation } from 'mocks/mockCompensations';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
+import { mockLookups } from 'mocks/lookups.mock';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {

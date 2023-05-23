@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
-import { mockLtsaResponse } from 'mocks/filterDataMock';
+import { mockLtsaResponse } from 'mocks/filterData.mock';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import LtsaLandSubForm, { ILtsaLandSubFormProps } from './LtsaLandSubForm';

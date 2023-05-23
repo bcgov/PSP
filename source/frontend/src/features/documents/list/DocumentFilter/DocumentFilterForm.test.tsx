@@ -4,8 +4,8 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultDocumentFilter } from 'interfaces/IDocumentResults';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks';
-import { mockDocumentTypesResponse } from 'mocks/mockDocuments';
+import { mockDocumentTypesResponse } from 'mocks/documents.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
