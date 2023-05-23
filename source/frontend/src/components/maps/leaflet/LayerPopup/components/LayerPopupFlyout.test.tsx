@@ -1,6 +1,6 @@
 import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from 'utils/test-utils';
 

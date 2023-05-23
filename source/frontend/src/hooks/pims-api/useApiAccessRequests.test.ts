@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IPagedItems } from 'interfaces';
-import { mockApiAccessRequest } from 'mocks/filterDataMock';
+import { mockApiAccessRequest } from 'mocks/filterData.mock';
 
 import { useApiAccessRequests } from '.';
 

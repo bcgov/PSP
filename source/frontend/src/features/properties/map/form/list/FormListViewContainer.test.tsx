@@ -2,8 +2,8 @@ import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
 import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import { filter, sortBy } from 'lodash';
-import { mockLookups } from 'mocks';
-import { getMockApiFileForms } from 'mocks/mockForm';
+import { getMockApiFileForms } from 'mocks/form.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 

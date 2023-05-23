@@ -213,6 +213,11 @@ namespace Pims.Api.Models.Concepts
         public GeometryModel Location { get; set; }
 
         /// <summary>
+        /// get/set - General location of the property.
+        /// </summary>
+        public string GeneralLocation { get; set; }
+
+        /// <summary>
         /// get/set - The property notes.
         /// </summary>
         public string Notes { get; set; }

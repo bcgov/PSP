@@ -1,5 +1,5 @@
 import Claims from 'constants/claims';
-import { mockProjectGetResponse } from 'mocks/mockProjects';
+import { mockProjectGetResponse } from 'mocks/projects.mock';
 import { render, RenderOptions, screen } from 'utils/test-utils';
 
 import ProjectTabsContainer, { IProjectTabsContainerProps } from './ProjectTabsContainer';

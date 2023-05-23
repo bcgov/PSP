@@ -4,9 +4,9 @@ import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
-import { mockLookups } from 'mocks';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
-import { getMockActivityResponse } from 'mocks/mockActivities';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import { getMockActivityResponse } from 'mocks/activities.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 
