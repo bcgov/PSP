@@ -4,9 +4,9 @@ import MockAdapter from 'axios-mock-adapter';
 import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks';
-import { mockDocumentDetailResponse } from 'mocks/mockDocumentDetail';
-import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
+import { mockDocumentDetailResponse } from 'mocks/documentDetail.mock';
+import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/documents.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, cleanup, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 

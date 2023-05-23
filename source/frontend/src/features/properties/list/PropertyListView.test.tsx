@@ -4,7 +4,7 @@ import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
 import { useApiProperties } from 'hooks/pims-api';
 import { IPagedItems, IProperty } from 'interfaces';
-import { mockParcel } from 'mocks/filterDataMock';
+import { mockParcel } from 'mocks/filterData.mock';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';

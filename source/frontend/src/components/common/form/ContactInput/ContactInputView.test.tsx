@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { IContactSearchResult } from 'interfaces';
 import noop from 'lodash/noop';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 

@@ -4,7 +4,7 @@ import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
 import { defaultLease, ILeaseImprovement } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { renderAsync, RenderOptions } from 'utils/test-utils';

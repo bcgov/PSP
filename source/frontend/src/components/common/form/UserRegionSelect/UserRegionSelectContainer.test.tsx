@@ -2,7 +2,7 @@ import { cleanup } from '@testing-library/react-hooks';
 import { Formik } from 'formik';
 import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 

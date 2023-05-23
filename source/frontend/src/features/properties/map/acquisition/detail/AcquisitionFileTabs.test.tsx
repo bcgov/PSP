@@ -1,6 +1,6 @@
 import Claims from 'constants/claims';
 import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
 import { act } from 'react-test-renderer';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 

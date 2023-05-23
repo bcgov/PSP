@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { getMockLeaseResponse } from 'mocks/mockLease';
+import { getMockLeaseResponse } from 'mocks/lease.mock';
 import { prettyFormatDate } from 'utils';
 import { render, RenderOptions } from 'utils/test-utils';
 

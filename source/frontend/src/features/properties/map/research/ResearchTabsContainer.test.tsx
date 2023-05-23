@@ -1,5 +1,5 @@
 import Claims from 'constants/claims';
-import { getMockResearchFile } from 'mocks/mockResearchFile';
+import { getMockResearchFile } from 'mocks/researchFile.mock';
 import { act } from 'react-test-renderer';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
