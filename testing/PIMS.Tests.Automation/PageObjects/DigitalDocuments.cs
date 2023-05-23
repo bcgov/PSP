@@ -15,7 +15,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Documents Tab List Header
         private By documentsTitle = By.XPath("//div[contains(text(),'File Documents')]");
+        private By documentsLeasesTitle = By.XPath("//div[contains(text(),'Documents')]");
         private By addDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
+        private By addDocumentLeasesBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Upload Documents Dialog General Elements
         private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4'] span");
@@ -103,7 +105,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Upload Title search/ Historical title Fields
         private By documentTitleSearchTypePIDLabel = By.XPath("//input[@id='input-documentMetadata.62']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
         private By documentTitleSearchTypePIDInput = By.Id("input-documentMetadata.62");
-        private By documentTitleSearchTypeTitleLabel = By.XPath("//label[contains(text(),'Title')]");
+        private By documentTitleSearchTypeTitleLabel = By.XPath("//input[@id='input-documentMetadata.58']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Title')]");
         private By documentTitleSearchTypeTitleInput = By.Id("input-documentMetadata.58");
 
         //Upload Historical File Fields
@@ -237,7 +239,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewRollContent = By.XPath("//label[contains(text(),'Roll')]/parent::div/following-sibling::div");
         private By documentViewSectionContent = By.XPath("//label[contains(text(),'Section')]/parent::div/following-sibling::div");
         private By documentViewShortDescriptorContent = By.XPath("//label[contains(text(),'Short descriptor')]/parent::div/following-sibling::div");
-        private By documentViewStartDateContent = By.XPath("//label[contains(text(),'Start date')]/parent::div/following-sibling::div");
+        private By documentViewStartDateContent = By.XPath("//div[@class='modal-body']/div/div[3]/div/div[4]/div/label[contains(text(),'Start date')]/parent::div/following-sibling::div");
         private By documentViewTitleContent = By.XPath("//label[contains(text(),'Title')]/parent::div/following-sibling::div");
         private By documentViewTransferContent = By.XPath("//label[contains(text(),'Transfer')]/parent::div/following-sibling::div");
         private By documentViewYearContent = By.XPath("//label[contains(text(),'Year')]/parent::div/following-sibling::div");
@@ -278,8 +280,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentFilterTypeSelect = By.XPath("//select[@data-testid='document-type']");
         private By documentFilterStatusSelect = By.XPath("//select[@data-testid='document-status']");
         private By documentFilterNameInput = By.XPath("//input[@data-testid='document-filename']");
-        private By documentFilterSearchBttn = By.XPath("//button[@data-testid='search']");
-        private By documentFilterResetBttn = By.XPath("//button[@data-testid='reset-button']");
+        private By documentFilterSearchBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='search']");
+        private By documentFilterResetBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='reset-button']");
 
         //Activities Documents List Results
         //private By documentTableResults = By.XPath("//div[@data-testid='activity-tray']/div[2]/div/div[2]/div[3]/div/div[@data-testid='documentsTable']");
@@ -328,10 +330,13 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentsTab).Click();
         }
 
-        public void AddNewDocument()
+        public void AddNewDocument(string fileType)
         {
             Wait();
-            FocusAndClick(addDocumentBttn);
+            if (fileType == "Lease")
+                FocusAndClick(addDocumentLeasesBttn);
+            else
+                FocusAndClick(addDocumentBttn);
         }
 
         public void VerifyDocumentFields(string documentType)
@@ -405,12 +410,20 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void VerifyDocumentsListView()
+        public void VerifyDocumentsListView(string fileType)
         {
             Wait();
-            Assert.True(webDriver.FindElement(documentsTitle).Displayed);
-            Assert.True(webDriver.FindElement(addDocumentBttn).Displayed);
-
+            if (fileType == "Lease")
+            {
+                Assert.True(webDriver.FindElement(documentsLeasesTitle).Displayed);
+                Assert.True(webDriver.FindElement(addDocumentLeasesBttn).Displayed);
+            }
+            else
+            {
+                Assert.True(webDriver.FindElement(documentsTitle).Displayed);
+                Assert.True(webDriver.FindElement(addDocumentBttn).Displayed);
+            
+            }
             Assert.True(webDriver.FindElement(documentFilterTypeSelect).Displayed);
             Assert.True(webDriver.FindElement(documentFilterStatusSelect).Displayed);
             Assert.True(webDriver.FindElement(documentFilterNameInput).Displayed);
@@ -992,11 +1005,11 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.Date != "" && webDriver.FindElements(documentPhotosCorrespondenceTypeDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewDateContent).Text == document.Date);
+                Assert.True(webDriver.FindElement(documentViewDateContent).Text == TranformFormatDateDocument(document.Date));
             }
             if (document.DateSigned != "" && webDriver.FindElements(documentDateSignedLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewDateSignedContent).Text == document.DateSigned);
+                Assert.True(webDriver.FindElement(documentViewDateSignedContent).Text == TranformFormatDateDocument(document.DateSigned));
             }
             if (document.DistrictLot != "" && webDriver.FindElements(documentFieldNotesTypeDistrictLotLabel).Count > 0)
             {
@@ -1008,7 +1021,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.EndDate != "" && webDriver.FindElements(documentHistoricFileTypeEndDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewEndDateContent).Text == document.EndDate);
+                Assert.True(webDriver.FindElement(documentViewEndDateContent).Text == TranformFormatDateDocument(document.EndDate));
             }
             if (document.FieldBook != "" && webDriver.FindElements(documentFieldNotesTypeYearLabel).Count > 0)
             {
@@ -1020,7 +1033,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.GazetteDate != "" && webDriver.FindElements(documentGazetteDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewGazetteDateContent).Text == document.GazetteDate);
+                Assert.True(webDriver.FindElement(documentViewGazetteDateContent).Text == TranformFormatDateDocument(document.GazetteDate));
             }
             if (document.GazettePage != "" && webDriver.FindElements(documentGazettePageLabel).Count > 0)
             {
@@ -1028,7 +1041,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.GazettePublishedDate != "" && webDriver.FindElements(documentGazettePublishedDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewGazettePublishedDateContent).Text == document.GazettePublishedDate);
+                Assert.True(webDriver.FindElement(documentViewGazettePublishedDateContent).Text == TranformFormatDateDocument(document.GazettePublishedDate));
             }
             if (document.GazetteType != "" && webDriver.FindElements(documentGazettePublishedTypeLabel).Count > 0)
             {
@@ -1124,7 +1137,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.PublishedDate != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyPublishDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewPublishedDateContent).Text == document.PublishedDate);
+                Assert.True(webDriver.FindElement(documentViewPublishedDateContent).Text == TranformFormatDateDocument(document.PublishedDate));
             }
             if (document.RelatedGazette != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyRelatedGazetteLabel).Count > 0)
             {
@@ -1148,7 +1161,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (document.StartDate != "" && webDriver.FindElements(documentHistoricFileTypeStartDateLabel).Count > 0)
             {
-                Assert.True(webDriver.FindElement(documentViewStartDateContent).Text == document.StartDate);
+                Assert.True(webDriver.FindElement(documentViewStartDateContent).Text == TranformFormatDateDocument(document.StartDate));
             }
             if (document.Title != "" && webDriver.FindElements(documentTitleSearchTypeTitleLabel).Count > 0)
             {
@@ -1290,7 +1303,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentMOTIFileLabel).Displayed);
             Assert.True(webDriver.FindElement(documentTypeMotiFileInput).Displayed);
             Assert.True(webDriver.FindElement(documentPropertyIdentifierLabel).Displayed);
-            Assert.True(webDriver.FindElement(documentTypePropIdInput).Displayed);
+            Assert.True(webDriver.FindElement(documentTypePropertyIdentifierInput).Displayed);
             Assert.True(webDriver.FindElement(documentRoadNameLabel).Displayed);
             Assert.True(webDriver.FindElement(documentRoadNameInput).Displayed);
         }
@@ -1511,6 +1524,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Assert.True(webDriver.FindElement(documentShortDescriptorLabel).Displayed);
             Assert.True(webDriver.FindElement(documentShortDescriptorInput).Displayed);
+        }
+
+        private string TranformFormatDateDocument(string date)
+        {
+            if (date == "")
+            {
+                return "";
+            }
+            else
+            {
+                var dateObject = DateTime.Parse(date);
+                return dateObject.ToString("G");
+            }
         }
     }
 }
