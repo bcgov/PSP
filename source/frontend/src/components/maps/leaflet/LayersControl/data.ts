@@ -322,7 +322,7 @@ export const layersTree: ILayerItem[] = [
         transparent: true,
         format: 'image/png',
         zIndex: 4,
-        id: 'federalParks',
+        id: 'bcParks',
         opacity: 0.5,
         color: '#1FB60A',
         maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
