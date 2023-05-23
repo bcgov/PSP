@@ -3,12 +3,14 @@ import { Claims } from 'constants/index';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { FaPlus } from 'react-icons/fa';
 import { ImFileText2 } from 'react-icons/im';
 import styled from 'styled-components';
 
 export interface ISectionListHeaderProps {
   title: string;
   addButtonText?: string;
+  addButtonIcon?: 'add' | null;
   onAdd?: () => void;
   claims: Claims[];
 }
@@ -19,6 +21,18 @@ export const SectionListHeader: React.FunctionComponent<
   const { hasClaim } = useKeycloakWrapper();
   const onClick = () => props.onAdd && props.onAdd();
 
+  let icon;
+  switch (props.addButtonIcon) {
+    case 'add': {
+      icon = <FaPlus size="2rem" />;
+      break;
+    }
+    default: {
+      icon = <ImFileText2 size="2rem" />;
+      break;
+    }
+  }
+
   return (
     <StyledRow className="no-gutters">
       <Col xs="auto" className="px-2 my-1">
@@ -27,7 +41,7 @@ export const SectionListHeader: React.FunctionComponent<
       <Col xs="auto" className="my-1">
         {hasClaim(props.claims) && (
           <StyledSectionAddButton onClick={onClick}>
-            <ImFileText2 size="2rem" />
+            {icon}
             &nbsp;{props.addButtonText ?? 'Add'}
           </StyledSectionAddButton>
         )}

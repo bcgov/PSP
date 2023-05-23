@@ -27,6 +27,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By insuranceOtherCheckbox = By.Id("insurance-4");
 
         private By insuranceDetailsSubtitle = By.XPath("//h2[contains(text(),'Coverage details')]");
+        private By insuranceEditTotal = By.XPath("//h2[contains(text(),'Coverage details')]/following-sibling::div/div");
+        private By insuranceViewTotal = By.XPath("//div[@data-testid='insurance-section']/div[@data-testid='insurance-section']");
 
         private By insuranceAircraftSubtitle = By.XPath("//h2[contains(text(),'Aircraft Liability Coverage')]");
         private By insuranceAircraftInPlaceLabel = By.XPath("//h2[contains(text(),'Aircraft Liability Coverage')]/following-sibling::div[1]/div/strong[contains(text(), 'Insurance In Place')]");
@@ -177,14 +179,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Fill out form
             Wait();
+
             if(lease.AircraftInsuranceInPlace != "")
                 ChooseSpecificRadioButton(insuranceAircraftInPlaceRadioBttnGroup, lease.AircraftInsuranceInPlace);
+
             if (lease.AircraftLimit != "")
                 webDriver.FindElement(insuranceAircraftLimitInput).SendKeys(lease.AircraftLimit);
+
             webDriver.FindElement(insuranceAircraftExpiryDateInput).Click();
+
             if(lease.AircraftPolicyExpiryDate != "")
                 webDriver.FindElement(insuranceAircraftExpiryDateInput).SendKeys(lease.AircraftPolicyExpiryDate);
+
             webDriver.FindElement(insuranceAircraftDescriptionTextarea).Click();
+
             if(lease.AircraftDescriptionCoverage != "")
                 webDriver.FindElement(insuranceAircraftDescriptionTextarea).SendKeys(lease.AircraftDescriptionCoverage);
         }
@@ -316,24 +324,27 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(insuranceOtherDescriptionTextarea).SendKeys(lease.OtherDescriptionCoverage);
         }
 
-        public void DeleteInsurance(string insuranceType)
+        public void DeleteLastInsurance()
         {
             Wait();
-            switch (insuranceType)
+            var totalInsertedInsurance = webDriver.FindElements(insuranceEditTotal).Count;
+            var lastInsuranceInserted = webDriver.FindElement(By.XPath("//h2[contains(text(),'Coverage details')]/following-sibling::div/div[" + totalInsertedInsurance + "]/h2")).Text;
+            
+            switch (lastInsuranceInserted)
             {
-                case "Aircraft":
+                case "Aircraft Liability Coverage":
                     FocusAndClick(insuranceAircraftCheckbox);
                     break;
-                case "CGL":
+                case "Commercial General Liability (CGL)":
                     FocusAndClick(insuranceCGLCheckbox);
                     break;
-                case "Marine":
+                case "Marine Liability Coverage":
                     FocusAndClick(insuranceMarineCheckbox);
                     break;
-                case "Vehicle":
+                case "Vehicle Liability Coverage":
                     FocusAndClick(insuranceVehicleCheckbox);
                     break;
-                case "Other":
+                case "Other Insurance Coverage":
                     FocusAndClick(insuranceOtherCheckbox);
                     break;
             }
@@ -483,5 +494,11 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.True(webDriver.FindElement(insuranceOtherViewDescriptionContent).Text.Equals(lease.OtherDescriptionCoverage));
             }
         }
+
+        public int TotalInsuranceCount()
+        {
+            return webDriver.FindElements(insuranceViewTotal).Count;
+        }
+            
     }
 }

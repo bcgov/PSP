@@ -19,12 +19,14 @@ namespace PIMS.Tests.Automation.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Regression-Properties")]
     public partial class PropertiesFeature : object, Xunit.IClassFixture<PropertiesFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private static string[] featureTags = ((string[])(null));
+        private static string[] featureTags = new string[] {
+                "Regression-Properties"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -83,11 +85,9 @@ namespace PIMS.Tests.Automation.Features
         [Xunit.SkippableFactAttribute(DisplayName="Property Map Filters and Details validation")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
         [Xunit.TraitAttribute("Description", "Property Map Filters and Details validation")]
-        [Xunit.TraitAttribute("Category", "Properties")]
         public void PropertyMapFiltersAndDetailsValidation()
         {
-            string[] tagsOfScenario = new string[] {
-                    "Properties"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Property Map Filters and Details validation", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6

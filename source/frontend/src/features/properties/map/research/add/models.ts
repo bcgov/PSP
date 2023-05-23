@@ -30,9 +30,7 @@ export class ResearchForm {
           rowVersion: x.rowVersion,
         };
       }),
-      researchFileProjects: this.researchFileProjects
-        .map(x => x.toApi())
-        .filter(rp => rp?.project !== undefined),
+      researchFileProjects: ResearchFileProjectFormModel.toApiList(this.researchFileProjects),
       rowVersion: this.rowVersion,
     };
   }

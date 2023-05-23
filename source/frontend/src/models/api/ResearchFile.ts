@@ -49,5 +49,6 @@ export interface Api_ResearchFileProject extends Api_ConcurrentVersion, Api_Audi
   id: number | undefined;
   fileId: number | undefined;
   project: Api_Project | undefined;
+  projectId: number | null;
   isDisabled: boolean | undefined;
 }

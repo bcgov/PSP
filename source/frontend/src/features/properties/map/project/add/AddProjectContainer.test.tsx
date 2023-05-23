@@ -116,7 +116,7 @@ describe('AddProjectContainer component', () => {
     const nameInput = getNameTextbox();
     const numberInput = getNumberTextbox();
     const selectRegion = getRegionDropdown();
-    const selectSatus = getStatusDropdown();
+    const selectStatus = getStatusDropdown();
 
     expect(formTitle).toBeVisible();
     expect(nameInput).toBeVisible();
@@ -125,8 +125,8 @@ describe('AddProjectContainer component', () => {
     expect(numberInput.tagName).toBe('INPUT');
     expect(selectRegion).toBeVisible();
     expect(selectRegion.tagName).toBe('SELECT');
-    expect(selectSatus).toBeVisible();
-    expect(selectSatus.tagName).toBe('SELECT');
+    expect(selectStatus).toBeVisible();
+    expect(selectStatus.tagName).toBe('SELECT');
   });
 
   it('should save the form and navigate to details view when Save button is clicked', async () => {

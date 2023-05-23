@@ -1,13 +1,17 @@
-﻿Feature: Leases and Licenses
+﻿@Regression-Leases
+Feature: Leases and Licenses
 
 This feature tests all test cases related to Leases and Licenses.
 
-Scenario: 01. Create Maximum Lease and License
-	Given I create a new complete Lease from row number 1
+Scenario: 01. Create a Complete Lease and License
+	Given I create a new Lease from row number 1
+	And  I create Digital Documents for a "Lease" row number 3
+	And I create a new Note on the Notes Tab from row number 5
 	Then A new lease is created successfully
 
 Scenario: 02. Edit Existing Lease and License
 	Given I update an existing lease from row number 2
+	And I edit a Note on the Notes Tab from row number 2
 	Then An existing lease is updated successfully
 
 Scenario: 03. Create a Lease from an Inventory Property

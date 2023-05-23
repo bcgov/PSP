@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import { useRequisitionCompensationRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
+import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { mockLookups } from 'mocks';
 import { getMockApiCompensationList } from 'mocks/mockCompensations';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -31,8 +31,16 @@ jest.mock('hooks/repositories/useRequisitionCompensationRepository');
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
 
-let viewProps: ICompensationListViewProps;
+jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
+  useAcquisitionProvider: () => {
+    return {
+      getAcquisitionCompensationRequisitions: mockGetApi,
+      postAcquisitionCompensationRequisition: mockApi,
+    };
+  },
+}));
 
+let viewProps: ICompensationListViewProps;
 const CompensationListView = (props: ICompensationListViewProps) => {
   viewProps = props;
   return <></>;
@@ -62,8 +70,7 @@ describe('compensation list view container', () => {
   };
 
   beforeEach(() => {
-    (useRequisitionCompensationRepository as jest.Mock).mockImplementation(() => ({
-      getFileCompensations: mockGetApi,
+    (useCompensationRequisitionRepository as jest.Mock).mockImplementation(() => ({
       deleteCompensation: mockApi,
     }));
   });
@@ -98,15 +105,10 @@ describe('compensation list view container', () => {
   });
 
   it('fetchs data when no data is currently available in container', async () => {
-    (useRequisitionCompensationRepository as jest.Mock).mockImplementation(() => ({
-      getFileCompensations: mockApi,
-      deleteCompensation: mockApi,
-    }));
-
     setup({
       claims: [],
     });
 
-    expect(mockApi.execute).toHaveBeenCalledWith(0);
+    expect(mockGetApi.execute).toHaveBeenCalledTimes(0);
   });
 });

@@ -2,6 +2,7 @@
 {
     public class Lease
     {
+        public string? MinistryProjectCode { get; set; } = String.Empty;
         public string? MinistryProject { get; set; } = String.Empty;
         public string LeaseStatus { get; set; } = null!;
         public string AccountType { get; set; } = null!;
@@ -53,7 +54,10 @@
         public string? OtherImprovementUnit { get; set; } = String.Empty;
         public string? OtherImprovementBuildingSize { get; set; } = String.Empty;
         public string? OtherImprovementDescription { get; set; } = String.Empty;
+        public int TotalImprovementCount { get; set; } = 0;
+
         public string? AircraftInsuranceInPlace { get; set; } = String.Empty;
+
         public string? AircraftLimit { get; set; } = String.Empty;
         public string? AircraftPolicyExpiryDate { get; set; } = String.Empty;
         public string? AircraftDescriptionCoverage { get; set; } = String.Empty;
@@ -74,6 +78,7 @@
         public string? OtherLimit { get; set; } = String.Empty;
         public string? OtherPolicyExpiryDate { get; set; } = String.Empty;
         public string? OtherDescriptionCoverage { get; set; } = String.Empty;
+        public int TotalInsuranceCount { get; set; } = 0;
         public string? DepositNotes { get; set; } = String.Empty;
         public int DepositsStartRow { get; set; } = 0;
         public int DepositsCount { get; set; } = 0;
@@ -118,7 +123,7 @@
         public string? TermPaymentFrequency { get; set;} = String.Empty;
         public string? TermAgreedPayment { get; set; } = String.Empty;
         public string? TermPaymentsDue { get; set; } = String.Empty;
-        public bool PaymentGST { get; set; } = false;
+        public bool IsGSTEligible { get; set; } = false;
         public string? TermStatus { get; set; } = String.Empty;
     }
 

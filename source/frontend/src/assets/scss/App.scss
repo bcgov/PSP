@@ -101,6 +101,11 @@
     color: $danger-color;
   }
 
+  .btn.btn-success,
+  .btn.btn-success:active {
+    background-color: $completed-color;
+  }
+
   ul.pagination li {
     cursor: pointer;
   }

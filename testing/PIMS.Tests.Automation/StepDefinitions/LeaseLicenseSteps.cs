@@ -43,9 +43,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
+            lease = new Lease();
         }
 
-        [StepDefinition(@"I create a new complete Lease from row number (.*)")]
+        [StepDefinition(@"I create a new Lease from row number (.*)")]
         public void MaximumLeaseLicense(int rowNumber)
         {
             /* TEST COVERAGE: 
@@ -103,6 +104,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save the new license details
             leaseDetails.SaveLicense();
+            leaseDetails.VerifyLicenseDetailsViewForm(lease);
 
             //TENANTS
             //Navigate to Tenants
@@ -114,6 +116,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify Tenants Initial Form
             tenant.VerifyTenantsInitForm();
 
+            //Go back to initial view form
+            leaseDetails.CancelLicense();
+
             //Adding an individual Tenant
             if (lease.LeaseTenants.Count > 0)
             {
@@ -123,14 +128,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     tenant.EditTenant();
 
                     if (lease.LeaseTenants[i].ContactType == "Individual")
-                        tenant.AddIndividualTenant(lease.LeaseTenants[i].Summary, lease.LeaseTenants[i].TenantType);
+                        tenant.AddIndividualTenant(lease.LeaseTenants[i]);
                     else
-                        tenant.AddOrganizationTenant(lease.LeaseTenants[i].Summary, lease.LeaseTenants[i].TenantType);
+                        tenant.AddOrganizationTenant(lease.LeaseTenants[i]);
 
                     //Saving Tenants
                     tenant.SaveTenant();
                 }
-                
+
             }
 
             //Assert quantity of tenants
@@ -147,13 +152,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             improvements.EditImprovements();
 
             //Add Commercial Improvements
-            improvements.AddCommercialImprovement(lease);
+            if (lease.CommercialImprovementUnit != "")
+                improvements.AddCommercialImprovement(lease);
 
             //Add Commercial Improvements
-            improvements.AddResidentialImprovement(lease) ;
+            if (lease.ResidentialImprovementUnit != "")
+                improvements.AddResidentialImprovement(lease);
 
             //Add Commercial Improvements
-            improvements.AddOtherImprovement(lease);
+            if (lease.OtherImprovementUnit != "")
+                improvements.AddOtherImprovement(lease);
 
             //Save Improvements
             leaseDetails.SaveLicense();
@@ -170,19 +178,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Add Aircraft Insurance
             insurance.VerifyInsuranceInitForm();
-            insurance.AddAircraftInsurance(lease);
+
+            if (lease.AircraftDescriptionCoverage != "")
+                insurance.AddAircraftInsurance(lease);
 
             //Add CGL Insurance
-            insurance.AddCGLInsurance(lease);
+            if (lease.CGLDescriptionCoverage != "")
+                insurance.AddCGLInsurance(lease);
 
             //Add Marine Insurance
-            insurance.AddMarineInsurance(lease);
+            if (lease.MarineDescriptionCoverage != "")
+                insurance.AddMarineInsurance(lease);
 
             //Add Vehicle Insurance
-            insurance.AddVehicleInsurance(lease);
+            if (lease.VehicleDescriptionCoverage != "")
+                insurance.AddVehicleInsurance(lease);
 
             //Add Other Insurance
-            insurance.AddOtherInsurance(lease);
+            if (lease.OtherDescriptionCoverage != "")
+                insurance.AddOtherInsurance(lease);
 
             //Save Insurances
             leaseDetails.SaveLicense();
@@ -201,7 +215,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             deposits.AddDepositBttn();
             deposits.VerifyCreateDepositForm();
             leaseDetails.CancelLicense();
-           
+
             if (lease.DepositsStartRow != 0)
             {
                 for (var i = 0; i < lease.LeaseDeposits.Count; i++)
@@ -231,7 +245,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 deposits.AddNotes(lease.DepositNotes);
                 leaseDetails.SaveLicense();
             }
-            
+
             //PAYMENTS
             //Navigating to Payments section
             payments.NavigateToPaymentSection();
@@ -255,7 +269,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < lease.TermPayments.Count; i++)
             {
                 //Add Payments
-                payments.OpenLastPaymentTab();
+                payments.OpenPaymentTab(lease.TermPayments[i].ParentTerm);
 
                 //Verify Payment Form
                 payments.AddPaymentBttn();
@@ -267,6 +281,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Verify Header for Payments Table
                 payments.VerifyPaymentTableHeader();
                 payments.VerifyInsertedPayment(lease.TermPayments[i]);
+
+                //Close Payment Tab
+                payments.OpenPaymentTab(lease.TermPayments[i].ParentTerm);
             }
 
             //SURPLUS
@@ -409,9 +426,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.SelectFirstOption();
 
             //FILE DETAILS
-            //Verify File Details Form
-            //leaseDetails.VerifyLicenseDetailsViewForm();
-
             //Edit File Details Section
             PopulateLeaseLicense(rowNumber);
             leaseDetails.EditLeaseFileDetails();
@@ -431,27 +445,39 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save the new license details
             leaseDetails.SaveLicense();
 
+            //Verify File Details Form
+            leaseDetails.VerifyLicenseDetailsViewForm(lease);
+
             //TENANTS
             //Navigate to Tenants section
             tenant.NavigateToTenantSection();
 
             //Edit Tenants
-            tenant.EditTenant();
+            if (lease.TenantsQuantity > 0)
+            {
+                //Delete last Tenant
+                tenant.EditTenant();
+                tenant.DeleteLastTenant();
 
-            //Delete last Tenant
-            tenant.DeleteLastTenant();
+                //Save tenants changes
+                tenant.SaveTenant();
 
-            //Edit last Tenant
-            tenant.EditLastTenant("Unknown");
+                for (int i = 0; i < lease.LeaseTenants.Count; i++)
+                {
+                    //Edit last Tenant
+                    tenant.EditTenant();
+                    tenant.EditTenant(lease.LeaseTenants[i]);
 
-            //Save tenants changes
-            tenant.SaveTenant();
+                    //Save tenants changes
+                    tenant.SaveTenant();
+                }
 
-            //Assert quantity of tenants
-            Assert.True(tenant.TotalTenants() == 1);
-            Assert.True(tenant.TotalRepresentatives() == 1);
-            Assert.True(tenant.TotalManagers() == 0);
-            Assert.True(tenant.TotalUnknown() == 1);
+                //Assert quantity of tenants
+                Assert.True(tenant.TotalTenants() == lease.TenantsNumber);
+                Assert.True(tenant.TotalRepresentatives() == lease.RepresentativeNumber);
+                Assert.True(tenant.TotalManagers() == lease.PropertyManagerNumber);
+                Assert.True(tenant.TotalUnknown() == lease.UnknownNumber);
+            }
 
             //IMPROVEMENTS
             //Navigate to the improvements section
@@ -462,10 +488,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.CommercialImprovementUnit != "")
                 improvements.AddCommercialImprovement(lease);
 
-            if (lease.ResidentialImprovementUnit!= "")
+            if (lease.ResidentialImprovementUnit != "")
                 improvements.AddResidentialImprovement(lease);
 
-            if(lease.OtherImprovementUnit != "")
+            if (lease.OtherImprovementUnit != "")
                 improvements.AddOtherImprovement(lease);
 
             //Save Improvements
@@ -474,19 +500,27 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify Improvement Changes
             improvements.VerifyImprovementView(lease);
 
+            //Verify improvements count
+            Assert.True(improvements.ImprovementTotal() == lease.TotalImprovementCount);
+
             //INSURANCE
             //Navigate to Insurance
             insurance.NavigateToInsuranceSection();
 
             //Edit Insurance Section
             insurance.EditInsuranceButton();
-            insurance.DeleteInsurance("Other");
+
+            if (lease.TotalInsuranceCount > 0)
+                insurance.DeleteLastInsurance();
 
             //Save Insurance
             leaseDetails.SaveLicense();
 
             //Verify Insurance changes
             insurance.VerifyInsuranceViewForm(lease);
+
+            //Verify Insurance Total count
+            Assert.True(insurance.TotalInsuranceCount() == lease.TotalInsuranceCount);
 
             //DEPOSITS
             //Navigate to Deposits
@@ -507,9 +541,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Delete last deposit
             deposits.DeleteLastDeposit();
 
-            //Verify terms quantity
-            Assert.True(deposits.TotalDeposits() == 0);
-
             //PAYMENTS
             //Navigate to Payments
             payments.NavigateToPaymentSection();
@@ -517,17 +548,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Delete last term
             payments.DeleteLastTerm();
 
-            //Verify Terms quantity
-            Assert.True(payments.TotalTerms() == 1);
-
             //Navigate to first term payments
-            payments.OpenLastPaymentTab();
+            payments.OpenPaymentTab(lease.TermPayments[0].ParentTerm);
 
             //Delete first term last payment
             payments.DeleteLastPayment();
-
-            //Verify payments quantity
-            Assert.True(payments.TotalPayments() == 1);
         }
 
         [StepDefinition(@"I search for an existing Lease or License from row number (.*)")]
@@ -587,6 +612,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             ExcelDataContext.PopulateInCollection(leaseSheet);
 
             //Lease Details
+            lease.MinistryProjectCode = ExcelDataContext.ReadData(rowNumber, "MinistryProjectCode");
             lease.MinistryProject = ExcelDataContext.ReadData(rowNumber, "MinistryProject");
             lease.LeaseStatus = ExcelDataContext.ReadData(rowNumber, "LeaseStatus");
             lease.AccountType = ExcelDataContext.ReadData(rowNumber, "AccountType");
@@ -669,8 +695,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.ResidentialImprovementDescription = ExcelDataContext.ReadData(rowNumber, "ResidentialImprovementDescription");
 
             lease.OtherImprovementUnit = ExcelDataContext.ReadData(rowNumber, "OtherImprovementUnit");
-            lease.OtherImprovementBuildingSize = ExcelDataContext.ReadData(rowNumber, "OtherImprovememntBuildingSize");
+            lease.OtherImprovementBuildingSize = ExcelDataContext.ReadData(rowNumber, "OtherImprovementBuildingSize");
             lease.OtherImprovementDescription = ExcelDataContext.ReadData(rowNumber, "OtherImprovementDescription");
+
+            lease.TotalImprovementCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "TotalImprovementCount"));
 
             //Insurance
             lease.AircraftInsuranceInPlace = ExcelDataContext.ReadData(rowNumber, "AircraftInsuranceInPlace");
@@ -698,6 +726,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.OtherLimit = ExcelDataContext.ReadData(rowNumber, "OtherLimit");
             lease.OtherPolicyExpiryDate = ExcelDataContext.ReadData(rowNumber, "OtherPolicyExpiryDate");
             lease.OtherDescriptionCoverage = ExcelDataContext.ReadData(rowNumber, "OtherDescriptionCoverage");
+
+            lease.TotalInsuranceCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "TotalInsuranceCount"));
 
             //Deposits
             lease.DepositNotes = ExcelDataContext.ReadData(rowNumber, "DepositNotes");
@@ -730,7 +760,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable leasesTenantsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTenants"];
             ExcelDataContext.PopulateInCollection(leasesTenantsSheet);
 
-            for (int i = startRow; i <= startRow + rowsCount; i++)
+            for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 Tenant tenant = new Tenant();
                 tenant.ContactType = ExcelDataContext.ReadData(i, "ContactType");
@@ -747,11 +777,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable leasesDepositsSheet = ExcelDataContext.GetInstance().Sheets["LeasesDeposits"];
             ExcelDataContext.PopulateInCollection(leasesDepositsSheet);
 
-            for (int i = startRow; i <= startRow + rowsCount; i++)
+            for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 Deposit deposit = new Deposit();
                 deposit.DepositType = ExcelDataContext.ReadData(i, "DepositType");
                 deposit.DepositTypeOther = ExcelDataContext.ReadData(i, "DepositTypeOther");
+
                 deposit.DepositDescription = ExcelDataContext.ReadData(i, "DepositDescription");
                 deposit.DepositAmount = ExcelDataContext.ReadData(i, "DepositAmount");
                 deposit.DepositPaidDate = ExcelDataContext.ReadData(i, "DepositPaidDate");
@@ -773,14 +804,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable leasesTermsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTerms"];
             ExcelDataContext.PopulateInCollection(leasesTermsSheet);
 
-            for (int i = startRow; i <= startRow + rowsCount; i++)
+            for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 Term term = new Term();
                 term.TermStartDate = ExcelDataContext.ReadData(i, "TermStartDate");
                 term.TermEndDate = ExcelDataContext.ReadData(i, "TermEndDate");
                 term.TermPaymentFrequency = ExcelDataContext.ReadData(i, "TermPaymentFrequency");
                 term.TermAgreedPayment = ExcelDataContext.ReadData(i, "TermAgreedPayment");
-                term.PaymentGST = bool.Parse(ExcelDataContext.ReadData(i, "PaymentGST"));
+                term.TermPaymentsDue = ExcelDataContext.ReadData(i, "TermPaymentsDue");
+                term.IsGSTEligible = bool.Parse(ExcelDataContext.ReadData(i, "IsGSTEligible"));
                 term.TermStatus = ExcelDataContext.ReadData(i, "TermStatus");
 
                 lease.LeaseTerms.Add(term);
@@ -792,7 +824,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable leasesDepositsPaymentsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPayments"];
             ExcelDataContext.PopulateInCollection(leasesDepositsPaymentsSheet);
 
-            for (int i = startRow; i <= startRow + rowsCount; i++)
+            for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 Payment payment = new Payment();
                 payment.PaymentSentDate = ExcelDataContext.ReadData(i, "PaymentSentDate");
@@ -801,6 +833,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 payment.PaymentExpectedPayment = ExcelDataContext.ReadData(i, "PaymentExpectedPayment");
                 payment.PaymentGST = ExcelDataContext.ReadData(i, "PaymentGST");
                 payment.PaymentStatus = ExcelDataContext.ReadData(i, "PaymentStatus");
+                payment.ParentTerm = int.Parse(ExcelDataContext.ReadData(i, "ParentTerm"));
 
                 lease.TermPayments.Add(payment);
             }

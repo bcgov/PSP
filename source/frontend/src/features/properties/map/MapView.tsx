@@ -14,6 +14,7 @@ import { pidParser } from 'utils';
 
 import Map from '../../../components/maps/leaflet/Map';
 import ActivityRouter from './ActivityRouter';
+import CompensationRequisitionRouter from './CompensationRequisitionRouter';
 import { SideBarContextProvider } from './context/sidebarContext';
 import MapSideBar from './MapSideBar';
 import PopupRouter from './PopupRouter';
@@ -75,6 +76,7 @@ const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = (props: MapView
               />
               <ActivityRouter setShowActionBar={setShowActionBar} />
               <PopupRouter setShowActionBar={setShowActionBar} />
+              <CompensationRequisitionRouter setShowActionBar={setShowActionBar} />
             </SideBarContextProvider>
             {!showActionBar && (
               <FilterProvider>
