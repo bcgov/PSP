@@ -1,5 +1,5 @@
 import { ContactMethodTypes } from 'constants/contactMethodType';
-import { getMockPerson } from 'mocks/mockContacts';
+import { getMockPerson } from 'mocks/contacts.mock';
 
 import { GeneratePerson } from './GeneratePerson';
 

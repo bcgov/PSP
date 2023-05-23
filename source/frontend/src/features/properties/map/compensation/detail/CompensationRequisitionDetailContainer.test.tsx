@@ -1,5 +1,5 @@
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
-import { getMockApiCompensation } from 'mocks/mockCompensations';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import { getMockApiCompensation } from 'mocks/compensations.mock';
 import { render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import {

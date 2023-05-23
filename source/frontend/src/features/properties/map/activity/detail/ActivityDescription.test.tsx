@@ -1,8 +1,8 @@
 import { Claims } from 'constants/claims';
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
-import { mockLookups } from 'mocks';
-import { getMockActivityResponse } from 'mocks/mockActivities';
+import { getMockActivityResponse } from 'mocks/activities.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 

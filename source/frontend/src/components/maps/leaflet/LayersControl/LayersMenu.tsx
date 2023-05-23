@@ -203,9 +203,25 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
           return (
             <ParentNode key={node.key} id={node.key}>
               {node.isOpen ? (
-                <OpenedIcon onClick={node.toggleNode} />
+                <OpenedIcon
+                  onClick={(event: React.MouseEvent<SVGElement>) => {
+                    if (node?.toggleNode) {
+                      node.toggleNode();
+                    }
+
+                    event.stopPropagation();
+                  }}
+                />
               ) : (
-                <ClosedIcon onClick={node.toggleNode} />
+                <ClosedIcon
+                  onClick={(event: any) => {
+                    if (node?.toggleNode) {
+                      node.toggleNode();
+                    }
+
+                    event.stopPropagation();
+                  }}
+                />
               )}
               <ParentCheckbox
                 index={node.index}

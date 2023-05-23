@@ -4,7 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { ORGANIZATION_TYPES } from 'constants/API';
 import { find, values } from 'lodash';
-import * as MOCK from 'mocks/dataMocks';
+import * as MOCK from 'mocks/data.mock';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';

@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
-import { getMockApiPropertyFiles } from 'mocks/mockProperties';
-import { getMockApiTakes } from 'mocks/mockTakes';
+import { mockLookups } from 'mocks/lookups.mock';
+import { getMockApiPropertyFiles } from 'mocks/properties.mock';
+import { getMockApiTakes } from 'mocks/takes.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent } from 'utils/test-utils';
 

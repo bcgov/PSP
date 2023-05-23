@@ -9,7 +9,7 @@ import {
   mockGeocoderPidsResponse,
   mockMotiRegionLayerResponse,
   mockPropertyLayerSearchResponse,
-} from 'mocks';
+} from 'mocks/index.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';

@@ -1,10 +1,10 @@
 import { Claims } from 'constants/index';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
-import { mockLookups } from 'mocks';
 import {
   mockAcquisitionFileChecklistResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
+} from 'mocks/acquisitionFiles.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
