@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { mockLookups } from 'mocks';
-import { mockProjectGetResponse } from 'mocks/mockProjects';
+import { mockLookups } from 'mocks/index.mock';
+import { mockProjectGetResponse } from 'mocks/projects.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from 'utils/test-utils';
 

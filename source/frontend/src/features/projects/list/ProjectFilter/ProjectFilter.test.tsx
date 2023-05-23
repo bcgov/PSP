@@ -1,6 +1,6 @@
 import { IProjectFilter } from 'features/projects/interfaces';
 import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 

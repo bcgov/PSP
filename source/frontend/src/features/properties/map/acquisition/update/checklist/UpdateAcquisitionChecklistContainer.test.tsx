@@ -1,9 +1,9 @@
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { mockLookups } from 'mocks';
 import {
   mockAcquisitionFileChecklistResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
+} from 'mocks/acquisitionFiles.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';

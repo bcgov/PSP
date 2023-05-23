@@ -1,6 +1,6 @@
 import { Formik, FormikProps } from 'formik';
 import noop from 'lodash/noop';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions } from 'utils/test-utils';
 
