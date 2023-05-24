@@ -115,7 +115,11 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
-            return _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(id);
+            var checklistItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(id);
+            var acquisitionFile = _acqFileRepository.GetById(id);
+            AppendToAcquisitionChecklist(acquisitionFile, ref checklistItems);
+
+            return checklistItems;
         }
 
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
@@ -252,13 +256,17 @@ namespace Pims.Api.Services
 
             foreach (var incomingItem in acquisitionFile.PimsAcquisitionChecklistItems)
             {
-                if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem))
+                if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem) && incomingItem.Internal_Id != 0)
                 {
                     throw new BadRequestException($"Cannot update checklist item. Item with Id: {incomingItem.Internal_Id} not found.");
                 }
 
                 // Only update checklist items that changed.
-                if (existingItem.AcqChklstItemStatusTypeCode != incomingItem.AcqChklstItemStatusTypeCode)
+                if(existingItem == null)
+                {
+                    _checklistRepository.Add(incomingItem);
+                }
+                else if (existingItem.AcqChklstItemStatusTypeCode != incomingItem.AcqChklstItemStatusTypeCode)
                 {
                     _checklistRepository.Update(incomingItem);
                 }
@@ -499,6 +507,32 @@ namespace Pims.Api.Services
                 };
 
                 acquisitionFile.PimsAcquisitionChecklistItems.Add(checklistItem);
+            }
+        }
+
+        private void AppendToAcquisitionChecklist(PimsAcquisitionFile acquisitionFile, ref List<PimsAcquisitionChecklistItem> pimsAcquisitionChecklistItems)
+        {
+            var doNotAddToStatuses = new List<string>() { "COMPLT", "CANCEL", "ARCHIV" };
+            if(doNotAddToStatuses.Contains(acquisitionFile.AcqPhysFileStatusTypeCode))
+            {
+                return;
+            }
+            var checklistStatusTypes = _lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
+            foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
+            {
+                if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && acquisitionFile.AppCreateTimestamp >= itemType.EffectiveDate)
+                {
+                    var checklistItem = new PimsAcquisitionChecklistItem
+                    {
+                        AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
+                        AcqChklstItemTypeCodeNavigation = itemType,
+                        AcqChklstItemStatusTypeCode = "INCOMP",
+                        AcquisitionFileId = acquisitionFile.AcquisitionFileId,
+                        AcqChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == "INCOMP"),
+                    };
+
+                    pimsAcquisitionChecklistItems.Add(checklistItem);
+                }
             }
         }
     }
