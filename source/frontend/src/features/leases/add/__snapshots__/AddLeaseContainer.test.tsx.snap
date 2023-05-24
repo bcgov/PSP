@@ -3011,7 +3011,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           </div>
         </div>
       </div>
-      <div />
     </div>
   </div>
   .c2.btn {

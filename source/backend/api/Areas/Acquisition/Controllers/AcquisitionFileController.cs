@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,9 @@ using Pims.Api.Areas.CompensationRequisition.Controllers;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -87,7 +88,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult AddAcquisitionFile([FromBody] AcquisitionFileModel model)
+        public IActionResult AddAcquisitionFile([FromBody] AcquisitionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -99,7 +100,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
             var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
-            var acquisitionFile = _acquisitionService.Add(acqFileEntity);
+            var acquisitionFile = _acquisitionService.Add(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
@@ -113,7 +114,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, bool ministryOverride = false, bool propertiesOverride = false)
+        public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -125,7 +126,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
             var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
-            var acquisitionFile = _acquisitionService.Update(acqFileEntity, ministryOverride, propertiesOverride);
+            var acquisitionFile = _acquisitionService.Update(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
@@ -138,18 +139,11 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult UpdateAcquisitionFileProperties([FromBody] AcquisitionFileModel acquisitionFileModel)
+        public IActionResult UpdateAcquisitionFileProperties([FromBody] AcquisitionFileModel acquisitionFileModel, [FromQuery] string[] userOverrideCodes)
         {
             var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
-            try
-            {
-                var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
-                return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
-            }
-            catch (BusinessRuleViolationException e)
-            {
-                return Conflict(e.Message);
-            }
+            var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
         /// <summary>

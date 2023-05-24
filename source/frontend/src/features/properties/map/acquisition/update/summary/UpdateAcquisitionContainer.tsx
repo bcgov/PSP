@@ -1,10 +1,9 @@
-import axios, { AxiosError } from 'axios';
-import GenericModal from 'components/common/GenericModal';
 import { FormikHelpers, FormikProps } from 'formik';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { IApiError } from 'interfaces/IApiError';
+import useApiUserOverride from 'hooks/useApiUserOverride';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import React, { useCallback, useState } from 'react';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
+import React from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -28,50 +27,19 @@ export const UpdateAcquisitionContainer = React.forwardRef<
     updateAcquisitionFile: { execute: updateAcquisitionFile },
   } = useAcquisitionProvider();
 
-  const [showMinistryModal, setShowMinistryModal] = useState(false);
-  const [ministryOverride, setMinistryOverride] = useState(false);
-
-  const [showPropertiesModal, setShowPropertiesModal] = useState(false);
-  const [propertiesOverride, setPropertiesOverride] = useState(false);
-
-  const handleAxiosError = useCallback((error: unknown) => {
-    if (axios.isAxiosError(error)) {
-      const axiosError = error as AxiosError<IApiError>;
-      if (axiosError?.response?.status === 409) {
-        // The API sent a 409 error - indicating user confirmation is needed
-        switch (axiosError?.response?.data?.errorCode) {
-          case 'region_violation':
-            setShowMinistryModal(true);
-            break;
-          case 'properties_of_interest_violation':
-            setShowPropertiesModal(true);
-            break;
-          default:
-            break;
-        }
-      } else if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response.data.error);
-      } else {
-        toast.error('Failed to update Acquisition File');
-      }
-    }
-  }, []);
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_AcquisitionFile | void>
+  >('Failed to update Acquisition File');
 
   // save handler
   const handleSubmit = async (
     values: UpdateAcquisitionSummaryFormModel,
     formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
+    userOverrideCodes: UserOverrideCode[],
   ) => {
     try {
-      setShowMinistryModal(false);
-      setShowPropertiesModal(false);
-
       const acquisitionFile = values.toApi();
-      const response = await updateAcquisitionFile(
-        acquisitionFile,
-        ministryOverride,
-        propertiesOverride,
-      );
+      const response = await updateAcquisitionFile(acquisitionFile, userOverrideCodes);
 
       if (!!response?.id) {
         if (acquisitionFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
@@ -85,59 +53,24 @@ export const UpdateAcquisitionContainer = React.forwardRef<
           onSuccess();
         }
       }
-    } catch (e) {
-      handleAxiosError(e);
     } finally {
       formikHelpers?.setSubmitting(false);
     }
   };
-
-  const saveAfterConfirmation = async () => {
-    // need to use type coercion here to make typescript happy
-    const ref = formikRef as React.RefObject<FormikProps<UpdateAcquisitionSummaryFormModel>>;
-    if (ref !== undefined) {
-      ref.current?.setSubmitting(true);
-      ref.current?.submitForm();
-    }
-  };
-
   return (
     <StyledFormWrapper>
       <View
         formikRef={formikRef}
         initialValues={UpdateAcquisitionSummaryFormModel.fromApi(acquisitionFile)}
-        onSubmit={handleSubmit}
+        onSubmit={(
+          values: UpdateAcquisitionSummaryFormModel,
+          formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
+        ) =>
+          withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
+            handleSubmit(values, formikHelpers, userOverrideCodes),
+          )
+        }
         validationSchema={UpdateAcquisitionFileYupSchema}
-      />
-      <GenericModal
-        title="Different Ministry region"
-        message="The Ministry region has been changed, this will result in a change to the file's prefix. Do you wish to continue?"
-        okButtonText="Continue Save"
-        cancelButtonText="Cancel Update"
-        display={showMinistryModal}
-        handleOk={() => {
-          setMinistryOverride(true);
-          saveAfterConfirmation();
-        }}
-        handleCancel={() => {
-          setMinistryOverride(false);
-          setShowMinistryModal(false);
-        }}
-      />
-      <GenericModal
-        title="Warning"
-        message="The properties of interest will be added to the inventory as acquired properties. Do you wish to continue?"
-        okButtonText="Continue Save"
-        cancelButtonText="Cancel Update"
-        display={showPropertiesModal}
-        handleOk={() => {
-          setPropertiesOverride(true);
-          saveAfterConfirmation();
-        }}
-        handleCancel={() => {
-          setPropertiesOverride(false);
-          setShowPropertiesModal(false);
-        }}
       />
     </StyledFormWrapper>
   );
