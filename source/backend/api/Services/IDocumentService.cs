@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Pims.Api.Constants;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Download;
@@ -27,6 +28,8 @@ namespace Pims.Api.Services
         Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(long mayanDocumentId);
 
         IList<PimsDocumentTyp> GetPimsDocumentTypes();
+
+        IList<PimsDocumentTyp> GetPimsDocumentTypes(DocumentRelationType relationshipType);
 
         Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest);
 

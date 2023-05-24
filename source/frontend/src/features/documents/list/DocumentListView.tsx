@@ -58,23 +58,25 @@ export const DocumentListView: React.FunctionComponent<
     defaultFilters ?? defaultDocumentFilter,
   );
 
-  const { retrieveDocumentTypes } = useDocumentProvider();
+  const { getDocumentRelationshipTypes, getDocumentTypes } = useDocumentProvider();
 
   useEffect(() => {
     const fetch = async () => {
-      const axiosResponse = await retrieveDocumentTypes();
-      if (
-        axiosResponse !== undefined &&
-        props.relationshipType === DocumentRelationshipType.TEMPLATES
-      ) {
-        setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
+      if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+        const axiosResponse = await getDocumentTypes();
+        if (axiosResponse !== undefined) {
+          setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
+        }
       } else {
-        setDocumentTypes(axiosResponse?.filter(x => x.isDisabled !== true) || []);
+        const axiosResponse = await getDocumentRelationshipTypes(props.relationshipType);
+        if (axiosResponse !== undefined) {
+          setDocumentTypes(axiosResponse?.filter(x => x.isDisabled !== true) || []);
+        }
       }
     };
 
     fetch();
-  }, [props.relationshipType, retrieveDocumentTypes]);
+  }, [props.relationshipType, getDocumentRelationshipTypes]);
 
   const mapSortField = (sortField: string) => {
     if (sortField === 'documentType') {
