@@ -14,8 +14,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By locateOnMapTab = By.XPath("//a[contains(text(),'Locate on Map')]");
         private By locateOnMapSubtitle = By.XPath("//h3[contains(text(), 'Select a property')]");
         private By locateOnMapBlueIcon = By.Id("Layer_2");
-        private By locateOnMapInstuction1 = By.XPath("//li[contains(text(),'Click pin above')]");
-        private By locateOnMapInstuction2 = By.XPath("//li[contains(text(),'Position it on the map')]");
+        private By locateOnMapInstuction1 = By.XPath("//li[contains(text(),'Single-click pin above')]");
+        private By locateOnMapInstuction2 = By.XPath("//li[contains(text(),'Mouse to a parcel on the map')]");
+        private By locateOnMapInstuction3 = By.XPath("//li[contains(text(),'Single-click on parcel to select it')]");
         private By locateOnMapSelectedLabel = By.XPath("//div[contains(text(),'Selected property attributes')]");
         private By locateOnMapPIDLabel = By.XPath("//label[contains(text(),'PID')]");
         private By locateOnMapPlanLabel = By.XPath("//label[contains(text(),'Plan #')]");
@@ -193,13 +194,13 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Add to selection");
 
-            Wait();
-            sharedModals.SiteMinderModal();
+            //Wait();
+            //sharedModals.SiteMinderModal();
 
-            //if (webDriver.FindElements(generalToastBody).Count() > 0)
-            //{
-            //    Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
-            //}
+            if (webDriver.FindElements(generalToastBody).Count() > 0)
+            {
+                Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
+            }
 
             Wait(5000);
             if (webDriver.FindElements(searchPropertiesModal).Count > 0)
@@ -231,6 +232,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(locateOnMapBlueIcon).Displayed);
             Assert.True(webDriver.FindElement(locateOnMapInstuction1).Displayed);
             Assert.True(webDriver.FindElement(locateOnMapInstuction2).Displayed);
+            Assert.True(webDriver.FindElement(locateOnMapInstuction3).Displayed);
             Assert.True(webDriver.FindElement(locateOnMapSelectedLabel).Displayed);
             Assert.True(webDriver.FindElement(locateOnMapPIDLabel).Displayed);
             Assert.True(webDriver.FindElement(locateOnMapPlanLabel).Displayed);

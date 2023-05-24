@@ -41,7 +41,6 @@ namespace Pims.Api.Controllers
 
         #region Endpoints
 
-
         /// <summary>
         /// Get all the compensations corresponding to the passed file id.
         /// </summary>

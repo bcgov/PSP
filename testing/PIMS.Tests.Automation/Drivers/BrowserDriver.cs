@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
 
 namespace PIMS.Tests.Automation.Drivers
 {
@@ -8,13 +9,13 @@ namespace PIMS.Tests.Automation.Drivers
     {
         private readonly Lazy<IWebDriver> currentWebDriverLazy;
         private readonly Lazy<IConfiguration> configurationLazy;
-        private bool _isDisposed;
+        //private bool _isDisposed;
         private readonly bool closeBrowserOnDispose;
         private readonly bool runAutomationHeadless;
 
         public BrowserDriver()
         {
-            currentWebDriverLazy = new Lazy<IWebDriver>(CreateWebDriver);
+            currentWebDriverLazy = new Lazy<IWebDriver>(CreateEdgeWebDriver);
             configurationLazy = new Lazy<IConfiguration>(ReadConfiguration);
             closeBrowserOnDispose = Configuration.GetValue("CloseBrowserAfterEachTest", true);
             runAutomationHeadless = Configuration.GetValue("RunHeadless", true);
@@ -24,7 +25,7 @@ namespace PIMS.Tests.Automation.Drivers
 
         public IConfiguration Configuration => configurationLazy.Value;
 
-        private IWebDriver CreateWebDriver()
+        private IWebDriver CreateChromeWebDriver()
         {
             var options = new ChromeOptions();
             if (runAutomationHeadless)
@@ -42,6 +43,24 @@ namespace PIMS.Tests.Automation.Drivers
             return chromeDriver;
         }
 
+        private IWebDriver CreateEdgeWebDriver()
+        {
+            var options = new EdgeOptions();
+            if (runAutomationHeadless)
+            {
+                options.AddArguments("window-size=1920,1080", "headless");
+            }
+            else
+            {
+                options.AddArguments("start-maximized");
+            }
+
+            var edgeDriver = new EdgeDriver(EdgeDriverService.CreateDefaultService(), options);
+            edgeDriver.Url = Configuration.GetValue<string>("baseUrl");
+
+            return edgeDriver;
+        }
+
         private IConfiguration ReadConfiguration() =>
             new ConfigurationBuilder()
                 .AddUserSecrets<BrowserDriver>()
@@ -49,17 +68,17 @@ namespace PIMS.Tests.Automation.Drivers
 
         public void Dispose()
         {
-            if (_isDisposed)
-            {
-                return;
-            }
+            //if (_isDisposed)
+            //{
+            //    return;
+            //}
 
             if (currentWebDriverLazy.IsValueCreated && closeBrowserOnDispose)
             {
                 Current.Quit();
             }
 
-            _isDisposed = true;
+            //_isDisposed = true;
         }
     }
 }

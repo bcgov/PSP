@@ -65,7 +65,7 @@ export class UpdateAcquisitionSummaryFormModel
         .map<Api_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
-        .map<Api_AcquisitionFilePerson>(x => x.toApi()),
+        .map<Api_AcquisitionFilePerson>(x => x.toApi(this.id || 0)),
       acquisitionFileOwnerSolicitors: this.ownerSolicitor.contact
         ? [this.ownerSolicitor.toApi()]
         : [],
@@ -82,7 +82,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
-    newForm.completionDate = model.completionDate;
+    newForm.completionDate = model.completionDate ?? '';
     newForm.fileStatusTypeCode = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);

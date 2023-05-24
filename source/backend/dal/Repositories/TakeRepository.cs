@@ -40,7 +40,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all Takes for a Property in the Acquisition File
+        /// Get all Takes for a Property in the Acquisition File.
         /// </summary>
         /// <param name="fileId"></param>
         /// <param name="acquisitionFilePropertyId"></param>

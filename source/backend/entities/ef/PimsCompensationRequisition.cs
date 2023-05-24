@@ -14,6 +14,7 @@ namespace Pims.Dal.Entities
     {
         public PimsCompensationRequisition()
         {
+            PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
             PimsCompReqH120s = new HashSet<PimsCompReqH120>();
         }
 
@@ -85,6 +86,8 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsCompensationRequisitions))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionPayee.CompensationRequisition))]
+        public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
         [InverseProperty(nameof(PimsCompReqH120.CompensationRequisition))]
         public virtual ICollection<PimsCompReqH120> PimsCompReqH120s { get; set; }
     }

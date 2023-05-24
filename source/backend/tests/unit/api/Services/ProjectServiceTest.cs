@@ -213,7 +213,7 @@ namespace Pims.Api.Test.Services
 
             var productRepository = helper.GetService<Mock<IProductRepository>>();
             productRepository.Setup(x => x.GetByProductBatch(It.IsAny<IEnumerable<PimsProduct>>(), It.IsAny<long>())).Returns(new List<PimsProduct>() { duplicateCode });
-            
+
             // Act
             Action result = () => service.Add(new PimsProject() { PimsProducts = new List<PimsProduct>() { duplicateCode } });
 

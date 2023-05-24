@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -88,6 +86,9 @@ namespace Pims.Dal.Repositories
                     .Include(x => x.PimsProducts)
                     .Include(x => x.ProjectStatusTypeCodeNavigation)
                     .Include(x => x.RegionCodeNavigation)
+                    .Include(x => x.CostTypeCode)
+                    .Include(x => x.BusinessFunctionCode)
+                    .Include(x => x.WorkActivityCode)
                     .Where(x => x.Id == id)
                     .FirstOrDefault();
         }

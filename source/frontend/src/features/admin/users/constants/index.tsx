@@ -1,6 +1,6 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
-import { ColumnWithProps } from 'components/Table';
+import { ColumnWithProps, renderTypeCode } from 'components/Table';
 import { DateTimeCell } from 'components/Table/DateCell';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
@@ -63,7 +63,13 @@ export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[]
     clickable: true,
     sortable: true,
   },
-
+  {
+    Header: 'User Type',
+    accessor: 'userTypeCode',
+    align: 'left',
+    clickable: true,
+    Cell: renderTypeCode,
+  },
   {
     Header: 'Roles',
     accessor: 'roles',
