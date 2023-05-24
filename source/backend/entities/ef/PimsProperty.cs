@@ -11,9 +11,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_PROPERTY")]
     [Index(nameof(AddressId), Name = "PRPRTY_ADDRESS_ID_IDX")]
-    [Index(nameof(Boundary), Name = "PRPRTY_BOUNDARY_IDX")]
     [Index(nameof(DistrictCode), Name = "PRPRTY_DISTRICT_CODE_IDX")]
-    [Index(nameof(Location), Name = "PRPRTY_LOCATION_IDX")]
     [Index(nameof(Pid), Name = "PRPRTY_PID_IDX")]
     [Index(nameof(PphStatusTypeCode), Name = "PRPRTY_PPH_STATUS_TYPE_CODE_IDX")]
     [Index(nameof(PropertyAreaUnitTypeCode), Name = "PRPRTY_PROPERTY_AREA_UNIT_TYPE_CODE_IDX")]
@@ -114,9 +112,6 @@ namespace Pims.Dal.Entities
         public Geometry Boundary { get; set; }
         [Column("LOCATION", TypeName = "geometry")]
         public Geometry Location { get; set; }
-        [Column("GENERAL_LOCATION")]
-        [StringLength(2000)]
-        public string GeneralLocation { get; set; }
         [Column("SURVEY_PLAN_NUMBER")]
         [StringLength(250)]
         public string SurveyPlanNumber { get; set; }
@@ -204,6 +199,9 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("GENERAL_LOCATION")]
+        [StringLength(2000)]
+        public string GeneralLocation { get; set; }
 
         [ForeignKey(nameof(AddressId))]
         [InverseProperty(nameof(PimsAddress.PimsProperties))]

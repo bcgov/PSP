@@ -58,9 +58,6 @@ namespace Pims.Dal.Entities
         public bool IsLandAct { get; set; }
         [Column("LAND_ACT_AREA")]
         public float? LandActArea { get; set; }
-        [Column("LAND_ACT_DESCRIPTION")]
-        [StringLength(2000)]
-        public string LandActDescription { get; set; }
         [Column("LAND_ACT_END_DT", TypeName = "date")]
         public DateTime? LandActEndDt { get; set; }
         [Column("IS_SURPLUS")]
@@ -105,5 +102,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("LAND_ACT_TYPE_CODE")]
+        [StringLength(20)]
+        public string LandActTypeCode { get; set; }
     }
 }
