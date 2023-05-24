@@ -115,7 +115,7 @@ namespace Pims.Dal.Repositories
             {
                 if (acquisitionProperty.Property.Internal_Id != 0)
                 {
-                    Context.Entry(acquisitionProperty.Property).State = EntityState.Unchanged;
+                    acquisitionProperty.Property = null;
                 }
             }
 

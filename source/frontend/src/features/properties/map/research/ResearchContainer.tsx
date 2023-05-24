@@ -5,7 +5,10 @@ import { FileTypes } from 'constants/fileTypes';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
+import useApiUserOverride from 'hooks/useApiUserOverride';
+import { Api_File } from 'models/api/File';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { MdTopic } from 'react-icons/md';
@@ -57,6 +60,10 @@ export const ResearchContainer: React.FunctionComponent<
   menuItems.unshift('File Summary');
 
   const { updateResearchFileProperties } = useUpdateResearchProperties();
+  const wrapWithOverride =
+    useApiUserOverride<
+      (userOverrideCodes: UserOverrideCode[]) => Promise<Api_ResearchFile | undefined>
+    >();
 
   useEffect(
     () => setFileLoading(loadingResearchFile || loadingResearchFileProperties),
@@ -151,8 +158,17 @@ export const ResearchContainer: React.FunctionComponent<
         file={researchFile}
         setIsShowingPropertySelector={setIsShowingPropertySelector}
         onSuccess={onSuccess}
-        updateFileProperties={updateResearchFileProperties}
+        updateFileProperties={(file: Api_File) =>
+          wrapWithOverride((userOverrideCodes: UserOverrideCode[]) =>
+            updateResearchFileProperties(file, userOverrideCodes).then(response => {
+              onSuccess();
+              setIsShowingPropertySelector(false);
+              return response;
+            }),
+          )
+        }
         canRemove={() => Promise.resolve(true)} //TODO: add this if we need this check for the research file.
+        formikRef={formikRef}
       />
     );
   } else {

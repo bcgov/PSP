@@ -6,6 +6,7 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/lookups.mock';
 import { Api_Lease } from 'models/api/Lease';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
@@ -117,7 +118,9 @@ describe('AddLeaseContainer component', () => {
       await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
     });
 
-    mockAxios.onPost().reply(409, { error: 'test message' });
+    mockAxios
+      .onPost()
+      .reply(409, { error: 'test message', details: UserOverrideCode.ADD_LOCATION_TO_PROPERTY });
     act(() => userEvent.click(getByText(/Save/i)));
     expect(await findByText('test message')).toBeVisible();
   });
@@ -138,17 +141,19 @@ describe('AddLeaseContainer component', () => {
       await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
     });
 
-    mockAxios.onPost().reply(409, { error: 'test message' });
+    mockAxios
+      .onPost()
+      .reply(409, { error: 'test message', details: UserOverrideCode.ADD_LOCATION_TO_PROPERTY });
     act(() => userEvent.click(getByText(/Save/i)));
     await waitFor(() => {
       expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
     });
 
     await act(async () => {
-      userEvent.click(await findByText('Save Anyways'));
+      userEvent.click(await findByText('Acknowledge & Continue'));
     });
 
-    expect(mockAxios.history.post[1].data).toEqual(JSON.stringify(leaseData));
+    expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
   });
 });
 

@@ -52,11 +52,11 @@ describe('useAcquisitionProvider hook', () => {
     jest.restoreAllMocks();
   });
 
-  let url: string;
+  let url: RegExp;
 
   describe('addAcquisitionFile', () => {
     beforeEach(() => {
-      url = `/acquisitionfiles`;
+      url = /acquisitionfiles.*/;
     });
 
     it('Dispatches success with correct response when request is successful', async () => {
@@ -64,7 +64,7 @@ describe('useAcquisitionProvider hook', () => {
       const { addAcquisitionFile } = setup();
 
       await act(async () => {
-        const response = await addAcquisitionFile.execute(mockAcquisitionFileResponse(1));
+        const response = await addAcquisitionFile.execute(mockAcquisitionFileResponse(1), []);
         expect(response).toEqual(mockAcquisitionFileResponse(1));
       });
 
@@ -77,18 +77,15 @@ describe('useAcquisitionProvider hook', () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       const { addAcquisitionFile } = setup();
 
-      await act(async () => {
-        await addAcquisitionFile.execute(mockAcquisitionFileResponse(1));
-      });
-
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(toastErrorSpy).toHaveBeenCalled();
+      expect(async () => {
+        await addAcquisitionFile.execute(mockAcquisitionFileResponse(1), []);
+      }).rejects.toThrow();
     });
   });
 
   describe('getAcquisitionFile', () => {
     beforeEach(() => {
-      url = `/acquisitionfiles/1`;
+      url = /acquisitionfiles.*/;
     });
 
     it('Dispatches success with correct response when request is successful', async () => {

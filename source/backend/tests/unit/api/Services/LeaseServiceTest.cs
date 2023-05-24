@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
@@ -63,7 +64,7 @@ namespace Pims.Api.Test.Services
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
-            var result = service.Update(leaseEntity);
+            var result = service.Update(leaseEntity, new List<UserOverrideCode>());
 
             // Assert
             noteRepository.Verify(x => x.Add(It.IsAny<PimsLeaseNote>()), Times.Never);
@@ -93,7 +94,7 @@ namespace Pims.Api.Test.Services
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
 
             // Act
-            var result = service.Update(leaseEntity);
+            var result = service.Update(leaseEntity, new List<UserOverrideCode>());
 
             // Assert
             noteRepository.Verify(x => x.Add(It.IsAny<PimsLeaseNote>()), Times.Once);
@@ -114,7 +115,7 @@ namespace Pims.Api.Test.Services
 
             // Act
 
-            var updatedLease = service.Update(lease);
+            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
@@ -136,7 +137,7 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             // Act
-            updatedLease = service.Update(updatedLease);
+            updatedLease = service.Update(updatedLease, new List<UserOverrideCode>());
 
             // Assert
             propertyRepository.Verify(x => x.Delete(It.IsAny<PimsProperty>()), Times.Never());
@@ -162,7 +163,7 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             // Act
-            updatedLease = service.Update(updatedLease);
+            updatedLease = service.Update(updatedLease, new List<UserOverrideCode>());
 
             // Assert
             propertyRepository.Verify(x => x.Delete(deletedProperty), Times.Once);

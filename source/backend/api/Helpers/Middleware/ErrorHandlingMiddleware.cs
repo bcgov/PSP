@@ -149,7 +149,7 @@ namespace Pims.Api.Helpers.Middleware
                 var exception = ex as UserOverrideException;
                 code = HttpStatusCode.Conflict;
                 message = exception.Message;
-                errorCode = exception.ErrorCode;
+                errorCode = (ex as UserOverrideException).UserOverride?.Code;
 
                 _logger.LogError(ex, "User override required to complete this action.");
             }
