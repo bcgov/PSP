@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
 import { prettyFormatDate } from 'utils';
 import { render, RenderOptions } from 'utils/test-utils';
 

@@ -484,6 +484,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const renderTableHeader = (headerGroup: HeaderGroup<T>, actions: any) => {
     return (
       <>
+        {props.canRowExpand ? <div className="th" style={{ width: '4.7rem' }}></div> : null}
         {filterable && (
           <div className={'th reset-filter svg-btn'}>
             <TooltipWrapper toolTipId="properties-list-filter-reset-tooltip" toolTip="Reset Filter">

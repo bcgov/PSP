@@ -1,4 +1,4 @@
-import { mockPropertyLayerSearchResponse } from 'mocks/filterDataMock';
+import { mockPropertyLayerSearchResponse } from 'mocks/filterData.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';

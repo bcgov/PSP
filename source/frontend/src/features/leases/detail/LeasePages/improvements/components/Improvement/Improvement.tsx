@@ -47,6 +47,7 @@ export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImpro
             rows={5}
             disabled={disabled}
             field={withNameSpace(nameSpace, 'description')}
+            placeholder="Reason for improvement and improvement details"
           />
         </SectionField>
       </Section>

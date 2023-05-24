@@ -1,11 +1,11 @@
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
-import { mockLookups } from 'mocks';
 import {
   mockAcquisitionFileChecklistResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
+} from 'mocks/acquisitionFiles.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { createRef } from 'react';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions } from 'utils/test-utils';

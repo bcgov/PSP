@@ -1,7 +1,7 @@
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
-import { mockLookups } from 'mocks';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
-import { getMockApiDefaultCompensation } from 'mocks/mockCompensations';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
+import { mockLookups } from 'mocks/lookups.mock';
 import { Api_Compensation } from 'models/api/Compensation';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';

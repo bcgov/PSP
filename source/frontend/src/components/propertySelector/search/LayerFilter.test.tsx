@@ -1,4 +1,4 @@
-import { mockGeocoderOptions } from 'mocks';
+import { mockGeocoderOptions } from 'mocks/index.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fillInput, render, RenderOptions } from 'utils/test-utils';

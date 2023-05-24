@@ -3,11 +3,11 @@ import { PropertyDataSourceTypes } from 'constants/propertyDataSourceTypes';
 import { PropertyStatusTypes } from 'constants/propertyStatusTypes';
 import { PropertyTenureTypes } from 'constants/propertyTenureTypes';
 import { IProperty } from 'interfaces';
-import { mockAddress } from 'mocks';
+import { mockAddress } from 'mocks/index.mock';
 import { Api_Property } from 'models/api/Property';
 
-import { Api_PropertyFile } from './../models/api/PropertyFile';
-import { getMockApiAddress } from './mockAddress';
+import { Api_PropertyFile } from '../models/api/PropertyFile';
+import { getMockApiAddress } from './address.mock';
 
 export const getMockProperties: () => IProperty[] = () => [
   {

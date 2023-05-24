@@ -12,7 +12,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
 }
 
 .c18 .nav-item {
-  min-width: 7rem;
+  min-width: 5rem;
   padding: 0.1rem 0.6rem;
 }
 

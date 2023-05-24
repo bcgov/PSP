@@ -7,12 +7,12 @@ import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { defaultFormLease, defaultLease, IFormLease, ILease } from 'interfaces';
-import { mockLookups } from 'mocks';
 import {
   getMockContactOrganizationWithMultiplePeople,
   getMockContactOrganizationWithOnePerson,
-} from 'mocks/mockContacts';
-import { getMockLease } from 'mocks/mockLease';
+} from 'mocks/contacts.mock';
+import { mockLookups } from 'mocks/index.mock';
+import { getMockLease } from 'mocks/lease.mock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { mockKeycloak, renderAsync, RenderOptions } from 'utils/test-utils';
