@@ -48,8 +48,9 @@ export const AddResearchContainer: React.FunctionComponent<
   if (initialForm?.properties.length && initialProperty) {
     initialForm.properties[0].address = initialProperty.address;
   }
-  const withUserOverride =
-    useApiUserOverride<(userOverrideCodes: UserOverrideCode[]) => Promise<any | void>>();
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to add Research File');
 
   useEffect(() => {
     if (!!initialForm && !!formikRef.current) {
@@ -96,7 +97,7 @@ export const AddResearchContainer: React.FunctionComponent<
       initialValues={initialForm}
       onSubmit={async (values: ResearchForm, formikHelpers: FormikHelpers<ResearchForm>) => {
         const researchFile: Api_ResearchFile = values.toApi();
-        withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
+        return withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
           saveResearchFile(researchFile, userOverrideCodes),
         );
       }}
@@ -119,6 +120,7 @@ export const AddResearchContainer: React.FunctionComponent<
           <StyledFormWrapper>
             <AddResearchForm />
 
+            {}
             <Prompt
               when={
                 (formikProps.dirty ||

@@ -13,7 +13,9 @@ export interface IUserOverrideModalState {
 
 export const useApiUserOverride = <
   FunctionType extends (userOverrideCodes: UserOverrideCode[]) => Promise<any>,
->() => {
+>(
+  genericErrorMessage: string,
+) => {
   const [state, setState] = useState<IUserOverrideModalState>({
     previousUserOverrideCodes: [],
     userOverrideCode: null,
@@ -25,18 +27,23 @@ export const useApiUserOverride = <
   const needsUserAction = useCallback(
     (userOverrideCode: UserOverrideCode | null, message: string | null) => {
       if (userOverrideCode) {
-        setState({
-          previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-          userOverrideCode: userOverrideCode,
-          message: message,
+        setState(oldState => {
+          return {
+            previousUserOverrideCodes: [...oldState.previousUserOverrideCodes],
+            userOverrideCode: userOverrideCode,
+            message: message,
+          };
         });
         setDisplayModal(true);
       }
     },
-    [setDisplayModal, state.previousUserOverrideCodes],
+    [setDisplayModal],
   );
 
-  const handleOverrideError = useAxiosErrorHandlerWithConfirmation(needsUserAction);
+  const handleOverrideError = useAxiosErrorHandlerWithConfirmation(
+    needsUserAction,
+    genericErrorMessage,
+  );
 
   const apiCallWithOverride = useCallback(
     async (apiFunction: FunctionType, userOverrideCodes: UserOverrideCode[] = []) => {
@@ -55,37 +62,46 @@ export const useApiUserOverride = <
   );
 
   useEffect(() => {
-    setModalContent({
-      title: 'User Override Required',
-      message: state?.message,
-      handleOk: async () => {
-        if (state?.userOverrideCode && overridenApiFunction.current) {
-          setState({
-            ...state,
-            previousUserOverrideCodes: [
+    if (state?.userOverrideCode) {
+      setModalContent({
+        title: 'User Override Required',
+        message: state?.message,
+        handleOk: async () => {
+          if (state?.userOverrideCode && overridenApiFunction.current) {
+            setState({
+              ...state,
+              previousUserOverrideCodes: [
+                ...state.previousUserOverrideCodes,
+                state?.userOverrideCode,
+              ],
+            });
+            await apiCallWithOverride(overridenApiFunction.current, [
               ...state.previousUserOverrideCodes,
               state?.userOverrideCode,
-            ],
+            ]);
+          }
+        },
+        handleCancel: () => {
+          setState({
+            previousUserOverrideCodes: [...state.previousUserOverrideCodes],
+            userOverrideCode: null,
+            message: null,
           });
-          await apiCallWithOverride(overridenApiFunction.current, [
-            ...state.previousUserOverrideCodes,
-            state?.userOverrideCode,
-          ]);
-        }
-      },
-      handleCancel: () => {
-        setState({
-          previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-          userOverrideCode: null,
-          message: null,
-        });
-        setDisplayModal(false);
-      },
-      okButtonText: 'Acknowledge & Continue',
-      okButtonVariant: 'warning',
-      cancelButtonText: 'Cancel',
-    });
-  }, [apiCallWithOverride, overridenApiFunction, setDisplayModal, setModalContent, state]);
+          setDisplayModal(false);
+        },
+        okButtonText: 'Acknowledge & Continue',
+        okButtonVariant: 'warning',
+        cancelButtonText: 'Cancel Update',
+      });
+    }
+  }, [
+    apiCallWithOverride,
+    overridenApiFunction,
+    setDisplayModal,
+    setModalContent,
+    state,
+    state.previousUserOverrideCodes,
+  ]);
 
   return apiCallWithOverride;
 };

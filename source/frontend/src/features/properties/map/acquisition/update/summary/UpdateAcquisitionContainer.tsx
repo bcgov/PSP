@@ -27,21 +27,19 @@ export const UpdateAcquisitionContainer = React.forwardRef<
     updateAcquisitionFile: { execute: updateAcquisitionFile },
   } = useAcquisitionProvider();
 
-  const withUserOverride =
-    useApiUserOverride<
-      (userOverrideCodes: UserOverrideCode[]) => Promise<Api_AcquisitionFile | void>
-    >();
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_AcquisitionFile | void>
+  >('Failed to update Acquisition File');
 
   // save handler
   const handleSubmit = async (
     values: UpdateAcquisitionSummaryFormModel,
     formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
+    userOverrideCodes: UserOverrideCode[],
   ) => {
     try {
       const acquisitionFile = values.toApi();
-      const response = (await withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
-        updateAcquisitionFile(acquisitionFile, userOverrideCodes),
-      )) as Api_AcquisitionFile;
+      const response = await updateAcquisitionFile(acquisitionFile, userOverrideCodes);
 
       if (!!response?.id) {
         if (acquisitionFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
@@ -67,7 +65,11 @@ export const UpdateAcquisitionContainer = React.forwardRef<
         onSubmit={(
           values: UpdateAcquisitionSummaryFormModel,
           formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
-        ) => handleSubmit(values, formikHelpers)}
+        ) =>
+          withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
+            handleSubmit(values, formikHelpers, userOverrideCodes),
+          )
+        }
         validationSchema={UpdateAcquisitionFileYupSchema}
       />
     </StyledFormWrapper>

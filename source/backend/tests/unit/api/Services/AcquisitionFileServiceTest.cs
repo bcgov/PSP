@@ -224,7 +224,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, true, true);
+            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -253,7 +253,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
             // Act
-            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -341,8 +341,8 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<UserOverrideException>();
-            ex.Which.ErrorCode.Should().Be("region_violation");
+            var ex = act.Should().Throw<UserOverrideException>();
+            ex.Which.UserOverride.Should().Be(UserOverrideCode.UpdateRegion);
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -366,7 +366,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, ministryOverride: true, propertiesOverride: true);
+            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -398,11 +398,11 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             var ex = act.Should().Throw<UserOverrideException>();
-            ex.Which.ErrorCode.Should().Be("properties_of_interest_violation");
+            ex.Which.UserOverride.Should().Be(UserOverrideCode.PoiToInventory);
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -439,7 +439,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, ministryOverride: true, propertiesOverride: true);
+            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion, UserOverrideCode.PoiToInventory });
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -605,7 +605,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
+            service.UpdateProperties(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
@@ -800,7 +800,7 @@ namespace Pims.Api.Test.Services
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             // Act
-            Action act = () => service.UpdateProperties(acqFile);
+            Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();

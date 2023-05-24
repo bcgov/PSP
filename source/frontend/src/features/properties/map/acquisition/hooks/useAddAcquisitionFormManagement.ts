@@ -26,15 +26,15 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
 
   const { onSuccess } = props;
   const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(props.selectedFeature);
-  const withUserOverride =
-    useApiUserOverride<(userOverrideCodes: UserOverrideCode[]) => Promise<any | void>>();
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to add Acquisition File');
 
   // save handler
   const handleSubmit = useCallback(
     async (values: AcquisitionForm, setSubmitting: (isSubmitting: boolean) => void) => {
       return withUserOverride(async (userOverrideCodes: UserOverrideCode[]) => {
         const acquisitionFile = values.toApi();
-        console.log(acquisitionFile);
         const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
         if (!!response?.id) {
           if (typeof onSuccess === 'function') {

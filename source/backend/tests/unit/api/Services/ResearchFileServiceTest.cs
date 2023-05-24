@@ -120,7 +120,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
-            service.UpdateProperties(researchFile, new List<UserOverrideCode>());
+            service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             filePropertyRepository.Verify(x => x.Add(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
@@ -150,7 +150,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
-            service.UpdateProperties(researchFile, new List<UserOverrideCode>());
+            service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             filePropertyRepository.Verify(x => x.Add(It.IsAny<PimsPropertyResearchFile>()), Times.Once);

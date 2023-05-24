@@ -29,7 +29,7 @@ namespace Pims.Dal.Exceptions
 
         private static List<UserOverrideCode> UserOverrideCodes
         {
-            get { return new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory, UserOverrideCode.AddLocationToProperty, UserOverrideCode.UpdateRegion }; }
+            get { return new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory, UserOverrideCode.AddLocationToProperty, UserOverrideCode.UpdateRegion, UserOverrideCode.PoiToInventory }; }
         }
 
         private UserOverrideCode(string code)

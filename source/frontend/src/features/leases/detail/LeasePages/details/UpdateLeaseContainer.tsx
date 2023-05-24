@@ -27,8 +27,9 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     refresh,
   } = useLeaseDetail(lease?.id);
   const { updateApiLease } = useUpdateLease();
-  const withUserOverride =
-    useApiUserOverride<(userOverrideCodes: UserOverrideCode[]) => Promise<any | void>>();
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to update Lease File');
 
   const leaseId = lease?.id;
   //TODO: For now we make a duplicate request here for the lease in the newer format. In the future all lease pages will use the new format so this will no longer be necessary.

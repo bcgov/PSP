@@ -60,10 +60,9 @@ export const ResearchContainer: React.FunctionComponent<
   menuItems.unshift('File Summary');
 
   const { updateResearchFileProperties } = useUpdateResearchProperties();
-  const wrapWithOverride =
-    useApiUserOverride<
-      (userOverrideCodes: UserOverrideCode[]) => Promise<Api_ResearchFile | undefined>
-    >();
+  const wrapWithOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_ResearchFile | undefined>
+  >('Failed to update Research File');
 
   useEffect(
     () => setFileLoading(loadingResearchFile || loadingResearchFileProperties),

@@ -29,7 +29,7 @@ export const AddLeaseContainer: React.FunctionComponent<
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const { selectedFileFeature } = React.useContext(MapStateContext);
-  const withUserOverride = useApiUserOverride();
+  const withUserOverride = useApiUserOverride('Failed to save Lease File');
   const { addLease } = useAddLease();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 

@@ -47,8 +47,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
   const { search } = useMapSearch();
-  const withUserOverride =
-    useApiUserOverride<(userOverrideCodes: UserOverrideCode[]) => Promise<any | void>>();
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to update Acquisition File');
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
     updateAcquisitionProperties,

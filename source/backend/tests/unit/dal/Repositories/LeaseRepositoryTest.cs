@@ -390,7 +390,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
             lease.PimsPropertyLeases.Add(addProperty);
-            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory});
+            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty, UserOverrideCode.AddPropertyToInventory });
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
@@ -430,7 +430,7 @@ namespace Pims.Dal.Test.Repositories
             propertyToUpdate.PropertyId = updateProperty.PropertyId;
             propertyToUpdate.Property = updateProperty;
             context.ChangeTracker.Clear();
-            var updatedLease = service.Update(lease, new List<UserOverrideCode>());
+            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
