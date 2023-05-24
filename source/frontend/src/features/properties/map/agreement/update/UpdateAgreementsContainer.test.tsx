@@ -1,6 +1,6 @@
 import { useAgreementProvider } from 'hooks/repositories/useAgreementProvider';
-import { mockLookups } from 'mocks';
-import { mockAgreementsResponse } from 'mocks/mockAgreements';
+import { mockAgreementsResponse } from 'mocks/agreements.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { Api_Agreement } from 'models/api/Agreement';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';

@@ -18,13 +18,14 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="filter"></param>
         /// <param name="regions"></param>
         /// <returns></returns>
-        public static IQueryable<Entities.PimsAcquisitionFile> GenerateAcquisitionQuery(this PimsContext context, Entity.Models.AcquisitionFilter filter, HashSet<short> regions)
+        public static IQueryable<Entities.PimsAcquisitionFile> GenerateAcquisitionQuery(
+            this PimsContext context, Entity.Models.AcquisitionFilter filter, HashSet<short> regions, long? filterPersonId = null)
         {
             filter.ThrowIfNull(nameof(filter));
 
             var query = context.PimsAcquisitionFiles.AsNoTracking();
 
-            query = query.GenerateCommonAcquisitionQuery(filter, regions);
+            query = query.GenerateCommonAcquisitionQuery(filter, regions, filterPersonId);
 
             return query;
         }
@@ -36,7 +37,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="filter"></param>
         /// <param name="regions"></param>
         /// <returns></returns>
-        private static IQueryable<Entities.PimsAcquisitionFile> GenerateCommonAcquisitionQuery(this IQueryable<Entities.PimsAcquisitionFile> query, Entity.Models.AcquisitionFilter filter, HashSet<short> regions)
+        private static IQueryable<Entities.PimsAcquisitionFile> GenerateCommonAcquisitionQuery(this IQueryable<Entities.PimsAcquisitionFile> query, Entity.Models.AcquisitionFilter filter, HashSet<short> regions, long? filterPersonId = null)
         {
             filter.ThrowIfNull(nameof(filter));
 
@@ -78,6 +79,11 @@ namespace Pims.Dal.Helpers.Extensions
 
             // Business Requirement: limit search results to user's assigned region(s)
             query = query.Where(acq => regions.Contains(acq.RegionCode));
+
+            if(filterPersonId is not null)
+            {
+                query = query.Where(acq => acq.PimsAcquisitionFilePeople.Any(x => x.PersonId == filterPersonId));
+            }
 
             if (filter.Sort?.Any() == true)
             {

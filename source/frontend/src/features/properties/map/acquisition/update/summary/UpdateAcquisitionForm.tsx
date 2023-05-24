@@ -28,6 +28,7 @@ import { UpdateAcquisitionSummaryFormModel } from './models';
 import StatusToolTip from './StatusToolTip';
 
 export interface IUpdateAcquisitionFormProps {
+  formikRef: React.Ref<FormikProps<UpdateAcquisitionSummaryFormModel>>;
   /** Initial values of the form */
   initialValues: UpdateAcquisitionSummaryFormModel;
   /** A Yup Schema or a function that returns a Yup schema */
@@ -39,11 +40,8 @@ export interface IUpdateAcquisitionFormProps {
   ) => void | Promise<any>;
 }
 
-export const UpdateAcquisitionForm = React.forwardRef<
-  FormikProps<UpdateAcquisitionSummaryFormModel>,
-  IUpdateAcquisitionFormProps
->((props, formikRef) => {
-  const { initialValues, validationSchema, onSubmit } = props;
+export const UpdateAcquisitionForm: React.FC<IUpdateAcquisitionFormProps> = props => {
+  const { formikRef, initialValues, validationSchema, onSubmit } = props;
 
   return (
     <Formik<UpdateAcquisitionSummaryFormModel>
@@ -66,7 +64,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
       }}
     </Formik>
   );
-});
+};
 
 export default UpdateAcquisitionForm;
 

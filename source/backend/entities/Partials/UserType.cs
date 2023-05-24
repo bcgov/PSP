@@ -16,4 +16,10 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Id { get => UserTypeCode; set => UserTypeCode = value; }
     }
+
+    public enum EnumUserTypeCodes
+    {
+        CONTRACT,
+        MINSTAFF,
+    }
 }

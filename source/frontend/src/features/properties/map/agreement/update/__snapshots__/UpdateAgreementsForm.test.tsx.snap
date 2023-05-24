@@ -218,6 +218,28 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c10 label {
+  margin-left: 0.5rem;
+}
+
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -672,15 +694,22 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="input form-group"
+                class="c10"
               >
-                <input
-                  class="form-control"
-                  id="input-agreements.0.noLaterThanDays"
-                  name="agreements.0.noLaterThanDays"
-                  title=""
-                  value=""
-                />
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-agreements.0.noLaterThanDays"
+                    name="agreements.0.noLaterThanDays"
+                    title=""
+                    value=""
+                  />
+                </div>
+                <label>
+                  days.
+                </label>
               </div>
             </div>
           </div>
@@ -1101,15 +1130,22 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
               class="c8 text-left col"
             >
               <div
-                class="input form-group"
+                class="c10"
               >
-                <input
-                  class="form-control"
-                  id="input-agreements.1.noLaterThanDays"
-                  name="agreements.1.noLaterThanDays"
-                  title="20"
-                  value="20"
-                />
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-agreements.1.noLaterThanDays"
+                    name="agreements.1.noLaterThanDays"
+                    title="20"
+                    value="20"
+                  />
+                </div>
+                <label>
+                  days.
+                </label>
               </div>
             </div>
           </div>

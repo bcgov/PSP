@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { LeaseTermStatusTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { defaultFormLeaseTerm } from 'interfaces';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 

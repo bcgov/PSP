@@ -199,6 +199,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(generalToastBody).Count() > 0)
             {
+                Wait(200);
                 Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
             }
 

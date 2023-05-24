@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import find from 'lodash/find';
-import * as MOCK from 'mocks/dataMocks';
+import * as MOCK from 'mocks/data.mock';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
