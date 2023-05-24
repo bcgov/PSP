@@ -53,6 +53,13 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
+        public PimsAcquisitionChecklistItem Add(PimsAcquisitionChecklistItem checklistItem)
+        {
+            using var scope = Logger.QueryScope();
+            Context.PimsAcquisitionChecklistItems.Add(checklistItem);
+            return checklistItem;
+        }
+
         public PimsAcquisitionChecklistItem Update(PimsAcquisitionChecklistItem checklistItem)
         {
             checklistItem.ThrowIfNull(nameof(checklistItem));

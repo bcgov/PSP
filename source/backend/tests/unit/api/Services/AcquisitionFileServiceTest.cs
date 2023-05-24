@@ -26,12 +26,12 @@ namespace Pims.Api.Test.Services
     [Trait("category", "api")]
     [Trait("group", "acquisition")]
     [ExcludeFromCodeCoverage]
-    public class AcquisitionServiceTest
+    public class AcquisitionFileServiceTest
     {
         #region Tests
         private readonly TestHelper _helper;
 
-        public AcquisitionServiceTest()
+        public AcquisitionFileServiceTest()
         {
             _helper = new TestHelper();
         }
@@ -846,7 +846,9 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            var acquisitionRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -856,6 +858,76 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetChecklist_Append_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            var acquisitionRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST" } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(1);
+            result.FirstOrDefault().AcqChklstItemTypeCode.Should().Be("TEST");
+            result.FirstOrDefault().AcqChklstItemStatusTypeCode.Should().Be("INCOMP");
+        }
+
+        [Fact]
+        public void GetChecklist_Append_IgnoreAcqFileByStatus()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFile.AcqPhysFileStatusTypeCode = "COMPLT";
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            var acquisitionRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST" } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(0);
+        }
+
+        [Fact]
+        public void GetChecklist_Append_IgnoreItemByDate()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFile.AppCreateTimestamp = new DateTime(2023, 1, 1);
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            var acquisitionRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST", EffectiveDate = new DateTime(2024, 1, 1) } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(0);
         }
 
         [Fact]
