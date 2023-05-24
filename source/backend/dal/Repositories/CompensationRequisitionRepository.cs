@@ -78,5 +78,24 @@ namespace Pims.Dal.Repositories
             }
             return false;
         }
+
+        public PimsAcquisitionPayee AddPayee(PimsAcquisitionPayee payee)
+        {
+            User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionEdit);
+            Context.PimsAcquisitionPayees.Add(payee);
+
+            return payee;
+        }
+
+        public int GetCompensationRequisitionPayeeCount(long compensationRequisitionId)
+        {
+            User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+
+            return Context.PimsCompensationRequisitions
+                .AsNoTracking()
+                .Where(x => x.Internal_Id == compensationRequisitionId)
+                .Include(x => x.PimsAcquisitionPayees)
+                .FirstOrDefault().PimsAcquisitionPayees.Count;
+        }
     }
 }

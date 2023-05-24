@@ -14,5 +14,9 @@ namespace Pims.Dal.Repositories
         PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition);
 
         bool TryDelete(long compensationId);
+
+        PimsAcquisitionPayee AddPayee(PimsAcquisitionPayee payee);
+
+        int GetCompensationRequisitionPayeeCount(long compensationRequisitionId);
     }
 }
