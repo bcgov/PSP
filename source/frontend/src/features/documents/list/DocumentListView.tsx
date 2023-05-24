@@ -76,7 +76,7 @@ export const DocumentListView: React.FunctionComponent<
     };
 
     fetch();
-  }, [props.relationshipType, getDocumentRelationshipTypes]);
+  }, [props.relationshipType, getDocumentTypes, getDocumentRelationshipTypes]);
 
   const mapSortField = (sortField: string) => {
     if (sortField === 'documentType') {
