@@ -17,6 +17,7 @@ import { EditFormType } from './EditFormNames';
 import { UpdateAcquisitionChecklistContainer } from './update/checklist/UpdateAcquisitionChecklistContainer';
 import { UpdateAcquisitionChecklistForm } from './update/checklist/UpdateAcquisitionChecklistForm';
 import { UpdateAcquisitionContainer } from './update/summary/UpdateAcquisitionContainer';
+import { UpdateAcquisitionForm } from './update/summary/UpdateAcquisitionForm';
 
 export interface IViewSelectorProps {
   acquisitionFile?: Api_AcquisitionFile;
@@ -53,6 +54,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
                 ref={formikRef}
                 acquisitionFile={props.acquisitionFile}
                 onSuccess={props.onSuccess}
+                View={UpdateAcquisitionForm}
               />
             );
 

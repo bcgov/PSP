@@ -23,9 +23,9 @@ export const UpdateAgreementsYupSchema = Yup.object().shape({
         value === ''
           ? Yup.string()
           : Yup.number()
-              .typeError('Invalid')
+              .typeError('Invalid number')
               .integer('Invalid number')
-              .min(0, 'Must be greater than 0'),
+              .min(0, 'Number of days must be greater than 0'),
       ),
       depositAmount: Yup.lazy(value =>
         value === ''

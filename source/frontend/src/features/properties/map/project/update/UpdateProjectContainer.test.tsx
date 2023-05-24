@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/mockProjects';
+import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/projects.mock';
 import React from 'react';
 import { act, render, RenderOptions, screen, waitFor } from 'utils/test-utils';
 

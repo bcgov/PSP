@@ -3,7 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { mockFAParcelLayerResponse, mockGeocoderOptions } from 'mocks';
+import { mockFAParcelLayerResponse, mockGeocoderOptions } from 'mocks/index.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { featuresToIdentifiedMapProperty } from 'utils/mapPropertyUtils';

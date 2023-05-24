@@ -229,7 +229,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
 }
 
 .c6 .nav-item {
-  min-width: 7rem;
+  min-width: 5rem;
   padding: 0.1rem 0.6rem;
 }
 
@@ -392,6 +392,11 @@ exports[`UpdateProperties component renders as expected 1`] = `
   bottom: 0;
   background: white;
   z-index: 10;
+}
+
+.c27 {
+  padding-top: 0.7rem;
+  color: red;
 }
 
 <body>
@@ -1136,6 +1141,13 @@ exports[`UpdateProperties component renders as expected 1`] = `
       <div
         class="c26 justify-content-end mt-auto no-gutters row"
       >
+        <div
+          class="pr-3 col-auto"
+        >
+          <div
+            class="c27"
+          />
+        </div>
         <div
           class="pr-4 col-auto"
         >

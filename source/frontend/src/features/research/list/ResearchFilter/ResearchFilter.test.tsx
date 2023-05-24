@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { Claims } from 'constants/index';
 import { IResearchFilter } from 'features/research/interfaces';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 

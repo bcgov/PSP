@@ -5,7 +5,7 @@ import { useOrganizationDetail } from 'features/contacts/hooks/useOrganizationDe
 import { useUpdateContact } from 'features/contacts/hooks/useUpdateContact';
 import { createMemoryHistory } from 'history';
 import { IEditableOrganization, IEditableOrganizationAddress } from 'interfaces/editable-contact';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 

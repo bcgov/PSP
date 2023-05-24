@@ -381,6 +381,23 @@ namespace Pims.Dal.Repositories
             this.Context.Entry(new PimsProperty() { PropertyId = property.PropertyId }).State = EntityState.Deleted;
         }
 
+        /// <summary>
+        /// Update the passed property in the database so that it is classified as "core inventory" in PIMS.
+        /// </summary>
+        /// <param name="property">The property to update.</param>
+        /// <returns>The updated property.</returns>
+        public PimsProperty TransferToCoreInventory(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
+
+            existingProperty.IsPropertyOfInterest = false;
+            existingProperty.IsOwned = true;
+            return existingProperty;
+        }
+
         #endregion
     }
 }

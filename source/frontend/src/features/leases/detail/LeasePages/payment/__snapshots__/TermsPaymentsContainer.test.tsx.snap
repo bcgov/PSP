@@ -239,6 +239,10 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
           >
             <div
               class="th"
+              style="width: 4.7rem;"
+            />
+            <div
+              class="th"
               colspan="1"
               role="columnheader"
               style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
@@ -735,6 +739,10 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
             role="row"
             style="display: flex; flex: 1 0 auto; min-width: 390px;"
           >
+            <div
+              class="th"
+              style="width: 4.7rem;"
+            />
             <div
               class="th"
               colspan="1"

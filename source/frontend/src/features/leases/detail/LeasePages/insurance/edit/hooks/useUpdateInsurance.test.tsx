@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { IInsurance } from 'interfaces';
 import { IBatchUpdateReply, IBatchUpdateRequest } from 'interfaces/batchUpdate';
 import find from 'lodash/find';
-import * as MOCK from 'mocks/dataMocks';
+import * as MOCK from 'mocks/data.mock';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';

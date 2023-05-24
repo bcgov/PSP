@@ -79,13 +79,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>())).Returns(acqFile);
+            _service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(acqFile);
 
             // Act
             var result = _controller.UpdateAcquisitionFile(1, _mapper.Map<AcquisitionFileModel>(acqFile), true);
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>()), Times.Once());
+            _service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>(), It.IsAny<bool>()), Times.Once());
         }
 
         /// <summary>
