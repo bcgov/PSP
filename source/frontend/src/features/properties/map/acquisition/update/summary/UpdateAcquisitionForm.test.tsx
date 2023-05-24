@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
+import { IAutocompletePrediction } from 'interfaces';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNotesResponse } from 'mocks/mockNoteResponses';
@@ -98,6 +99,10 @@ describe('UpdateAcquisitionForm component', () => {
         utils.container.querySelector(
           `select[name="team[${index}].contactTypeCode"]`,
         ) as HTMLSelectElement,
+      getRemoveProjectButton: () =>
+        utils.container.querySelector(
+          `div[data-testid="typeahead-project"] button`,
+        ) as HTMLSelectElement,
     };
   };
 
@@ -177,7 +182,7 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getRegistrationTextbox(1).value).toEqual('12345');
 
     expect(getEmailTextbox(1).value).toEqual('fake@email.ca');
-    expect(getPhoneTextbox(1).value).toEqual('');
+    expect(getPhoneTextbox(1).value).toEqual('775-111-1111');
   });
 
   it('it validates that only profile is not repeated on another team member', async () => {
@@ -200,6 +205,21 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(validationSchema).toBeCalled();
     expect(queryByTestId(/team-profile-dup-error/i)).toBeNull();
+  });
+
+  it('it clears the product field when a project is removed', async () => {
+    const { getRemoveProjectButton, getFormikRef } = setup({
+      initialValues,
+    });
+
+    await waitFor(() => userEvent.click(getRemoveProjectButton()));
+    await waitFor(() => getFormikRef().current?.submitForm());
+
+    initialValues.product = '';
+    initialValues.project = '' as unknown as IAutocompletePrediction;
+
+    expect(validationSchema).toBeCalled();
+    expect(onSubmit).toHaveBeenLastCalledWith(initialValues, expect.anything());
   });
 
   it('should disable file completion date until the user marks the file as COMPLETED', async () => {

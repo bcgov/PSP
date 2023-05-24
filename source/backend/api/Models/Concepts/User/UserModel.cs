@@ -35,7 +35,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The User type code.
         /// </summary>
-        public string UserTypeCode { get; set; }
+        public TypeModel<string> UserTypeCode { get; set; }
 
         /// <summary>
         /// get/set - A note corresponding to this user.
@@ -63,7 +63,7 @@ namespace Pims.Api.Models.Concepts
         public IEnumerable<UserRoleModel> UserRoles { get; set; } = new List<UserRoleModel>();
 
         /// <summary>
-        /// get/set - A person entitiy that corresponds to this user.
+        /// get/set - A person entity that corresponds to this user.
         /// </summary>
         public PersonModel Person { get; set; }
 

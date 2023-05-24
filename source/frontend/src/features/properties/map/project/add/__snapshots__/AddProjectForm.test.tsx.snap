@@ -140,7 +140,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c5 {
+.c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -154,14 +154,14 @@ exports[`AddProjectForm component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
 }
 
@@ -170,7 +170,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
   padding-bottom: 0.5rem;
 }
 
-.c4 textarea.form-control {
+.c5 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -186,6 +186,22 @@ exports[`AddProjectForm component renders as expected 1`] = `
       <div
         class="c1 form-section"
       >
+        <h2
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Project Details
+            </div>
+            <div
+              class="col-1"
+            />
+          </div>
+        </h2>
         <div
           class="collapse show"
         >
@@ -196,13 +212,13 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 Project name:
               </label>
             </div>
             <div
-              class="c3 required text-left col"
+              class="c4 required text-left col"
             >
               <div
                 class="input form-group"
@@ -224,13 +240,13 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 Project number:
               </label>
             </div>
             <div
-              class="c3 text-left col"
+              class="c4 text-left col"
             >
               <div
                 class="input form-group"
@@ -253,13 +269,13 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 Status:
               </label>
             </div>
             <div
-              class="c3 required text-left col"
+              class="c4 required text-left col"
             >
               <div
                 class="form-group"
@@ -327,13 +343,13 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 MoTI region:
               </label>
             </div>
             <div
-              class="c3 required text-left col"
+              class="c4 required text-left col"
             >
               <div
                 class="d-flex form-group"
@@ -373,16 +389,16 @@ exports[`AddProjectForm component renders as expected 1`] = `
               class="pr-0 text-left col-12"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 Project summary:
               </label>
             </div>
             <div
-              class="c3 text-left col"
+              class="c4 text-left col"
             >
               <div
-                class="c4 textarea input form-group"
+                class="c5 textarea input form-group"
               >
                 <textarea
                   class="form-control"
@@ -399,7 +415,127 @@ exports[`AddProjectForm component renders as expected 1`] = `
         class="c1 form-section"
       >
         <h2
-          class="c5"
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Associated Codes
+            </div>
+            <div
+              class="col-1"
+            />
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c3"
+              >
+                Cost type:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-costTypeCode"
+                  name="costTypeCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c3"
+              >
+                Work activity:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-workActivityCode"
+                  name="workActivityCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c3"
+              >
+                Business function:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-businessFunctionCode"
+                  name="businessFunctionCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c2"
         >
           <div
             class="no-gutters row"
@@ -618,7 +754,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   line-height: 2rem;
 }
 
-.c5 {
+.c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -632,14 +768,14 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
 }
 
@@ -658,7 +794,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   padding-bottom: 0.5rem;
 }
 
-.c4 textarea.form-control {
+.c5 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -674,6 +810,22 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
       <div
         class="c1 form-section"
       >
+        <h2
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Project Details
+            </div>
+            <div
+              class="col-1"
+            />
+          </div>
+        </h2>
         <div
           class="collapse show"
         >
@@ -684,13 +836,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 Project name:
               </label>
             </div>
             <div
-              class="c3 required text-left col"
+              class="c4 required text-left col"
             >
               <div
                 class="input form-group"
@@ -712,13 +864,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 Project number:
               </label>
             </div>
             <div
-              class="c3 text-left col"
+              class="c4 text-left col"
             >
               <div
                 class="input form-group"
@@ -741,13 +893,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 Status:
               </label>
             </div>
             <div
-              class="c3 required text-left col"
+              class="c4 required text-left col"
             >
               <div
                 class="form-group"
@@ -815,13 +967,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 MoTI region:
               </label>
             </div>
             <div
-              class="c3 required text-left col"
+              class="c4 required text-left col"
             >
               <div
                 class="d-flex form-group"
@@ -861,16 +1013,16 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
               class="pr-0 text-left col-12"
             >
               <label
-                class="c2"
+                class="c3"
               >
                 Project summary:
               </label>
             </div>
             <div
-              class="c3 text-left col"
+              class="c4 text-left col"
             >
               <div
-                class="c4 textarea input form-group"
+                class="c5 textarea input form-group"
               >
                 <textarea
                   class="form-control"
@@ -889,7 +1041,127 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
         class="c1 form-section"
       >
         <h2
-          class="c5"
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Associated Codes
+            </div>
+            <div
+              class="col-1"
+            />
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c3"
+              >
+                Cost type:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-costTypeCode"
+                  name="costTypeCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c3"
+              >
+                Work activity:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-workActivityCode"
+                  name="workActivityCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c3"
+              >
+                Business function:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-businessFunctionCode"
+                  name="businessFunctionCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select...
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c2"
         >
           <div
             class="no-gutters row"
@@ -955,13 +1227,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Product code:
                     </label>
                   </div>
                   <div
-                    class="c3 required text-left col"
+                    class="c4 required text-left col"
                   >
                     <div
                       class="input form-group"
@@ -987,13 +1259,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="pr-0 text-left col-2"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Name:
                     </label>
                   </div>
                   <div
-                    class="c3 required text-left col"
+                    class="c4 required text-left col"
                   >
                     <div
                       class="input form-group"
@@ -1017,13 +1289,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="pr-0 text-left col-2"
               >
                 <label
-                  class="c2"
+                  class="c3"
                 >
                   Start date:
                 </label>
               </div>
               <div
-                class="c3 text-left col-4"
+                class="c4 text-left col-4"
               >
                 <div
                   class="form-group"
@@ -1061,13 +1333,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Cost estimate:
                     </label>
                   </div>
                   <div
-                    class="c3 text-left col"
+                    class="c4 text-left col"
                   >
                     <div
                       class="form-group"
@@ -1099,13 +1371,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Estimate date:
                     </label>
                   </div>
                   <div
-                    class="c3 text-left col"
+                    class="c4 text-left col"
                   >
                     <div
                       class="form-group"
@@ -1139,13 +1411,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="pr-0 text-left col-12"
               >
                 <label
-                  class="c2"
+                  class="c3"
                 >
                   Objectives:
                 </label>
               </div>
               <div
-                class="c3 text-left col"
+                class="c4 text-left col"
               >
                 <div
                   class="c9 textarea input form-group"
@@ -1168,13 +1440,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="pr-0 text-left col-12"
               >
                 <label
-                  class="c2"
+                  class="c3"
                 >
                   Scope:
                 </label>
               </div>
               <div
-                class="c3 text-left col"
+                class="c4 text-left col"
               >
                 <div
                   class="c9 textarea input form-group"
@@ -1242,13 +1514,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Product code:
                     </label>
                   </div>
                   <div
-                    class="c3 required text-left col"
+                    class="c4 required text-left col"
                   >
                     <div
                       class="input form-group"
@@ -1274,13 +1546,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="pr-0 text-left col-2"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Name:
                     </label>
                   </div>
                   <div
-                    class="c3 required text-left col"
+                    class="c4 required text-left col"
                   >
                     <div
                       class="input form-group"
@@ -1304,13 +1576,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="pr-0 text-left col-2"
               >
                 <label
-                  class="c2"
+                  class="c3"
                 >
                   Start date:
                 </label>
               </div>
               <div
-                class="c3 text-left col-4"
+                class="c4 text-left col-4"
               >
                 <div
                   class="form-group"
@@ -1348,13 +1620,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Cost estimate:
                     </label>
                   </div>
                   <div
-                    class="c3 text-left col"
+                    class="c4 text-left col"
                   >
                     <div
                       class="form-group"
@@ -1386,13 +1658,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c2"
+                      class="c3"
                     >
                       Estimate date:
                     </label>
                   </div>
                   <div
-                    class="c3 text-left col"
+                    class="c4 text-left col"
                   >
                     <div
                       class="form-group"
@@ -1426,13 +1698,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="pr-0 text-left col-12"
               >
                 <label
-                  class="c2"
+                  class="c3"
                 >
                   Objectives:
                 </label>
               </div>
               <div
-                class="c3 text-left col"
+                class="c4 text-left col"
               >
                 <div
                   class="c9 textarea input form-group"
@@ -1455,13 +1727,13 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
                 class="pr-0 text-left col-12"
               >
                 <label
-                  class="c2"
+                  class="c3"
                 >
                   Scope:
                 </label>
               </div>
               <div
-                class="c3 text-left col"
+                class="c4 text-left col"
               >
                 <div
                   class="c9 textarea input form-group"

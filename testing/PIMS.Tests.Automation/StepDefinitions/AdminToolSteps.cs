@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using PIMS.Tests.Automation.Classes;
+using PIMS.Tests.Automation.Data;
+using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -16,13 +19,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string userName = "TRANPSP1";
         //private readonly string userName = "sutairak";
 
-        private readonly string financialCodeType = "Work activity";
-        private readonly string financialCodeValue = "AUTO-TSTFINCODE";
-        private readonly string financialCodeDescription = "This is a Test Financial Code created by Automated programming";
-        private readonly string financialCodeUpdateDescription = "This is a Test Financial Code created by Automated programming - Edited automated form";
-        private readonly string financialCodeExpiryDate = "02/13/2025";
-        private readonly string financialCodeOrder = "10";
-
+        private FinancialCode financialCode;
 
         public AdminToolSteps(BrowserDriver driver)
         {
@@ -33,6 +30,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             financialCodes = new FinancialCodes(driver.Current);
             cdogsTemplates = new CDOGSTemplates(driver.Current);
             documentFiles = driver.Configuration.GetSection("UploadDocuments").Get<IEnumerable<DocumentFile>>();
+            financialCode = new FinancialCode();
         }
 
         [StepDefinition(@"I review the Help Desk Section")]
@@ -104,10 +102,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             cdogsTemplates.NavigateAdminTemplates();
 
             //Select Templates type
-            cdogsTemplates.SelectTemplateType("General");
-
-            //Verify Filters
-            cdogsTemplates.CDOGSFilters("Amended", "Happy test");
+            cdogsTemplates.SelectTemplateType("General Letter");
 
             //Add new template
             cdogsTemplates.AddNewTemplate();
@@ -136,8 +131,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             cdogsTemplates.Delete1stTemplate();
         }
 
-        [StepDefinition(@"I create a Financial Code")]
-        public void CreateFinancialCode()
+        [StepDefinition(@"I create a Financial Code from row number (.*)")]
+        public void CreateFinancialCode(int rowNumber)
         {
             /* TEST COVERAGE: PSP-5311, PSP-5426, PSP-5427 */
 
@@ -145,6 +140,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Navigate to Admin Tools
+            PopulateFinancialCode(rowNumber);
             manageUsers.NavigateAdminTools();
 
             //Navigate to Financial Codes
@@ -157,57 +153,58 @@ namespace PIMS.Tests.Automation.StepDefinitions
             financialCodes.VerifyCreateNewFinancialCodeForm();
 
             //Create New Financial Code
-            financialCodes.CreateNewFinancialCode(financialCodeType, financialCodeValue, financialCodeDescription, financialCodeOrder);
+            financialCodes.CreateNewFinancialCode(financialCode);
 
             //Cancel creation of Financial Code
             financialCodes.CancelFinancialCode();
 
             //Create New Financial Code
             financialCodes.CreateNewFinancialCodeBttn();
-            financialCodes.CreateNewFinancialCode(financialCodeType, financialCodeValue, financialCodeDescription, financialCodeOrder);
+            financialCodes.CreateNewFinancialCode(financialCode);
 
             //Save new Financial Code
             financialCodes.SaveFinancialCode();
 
             //Filter Financial Code
-            financialCodes.FilterFinancialCode(financialCodeValue);
+            financialCodes.FilterFinancialCode(financialCode.CodeValue);
 
             //Verify new code exists
             Assert.True(financialCodes.CountTotalFinancialCodeResults() == 1);
         }
 
-        [StepDefinition(@"I update a Financial Code")]
-        public void UpdateFinancialCode()
+        [StepDefinition(@"I update a Financial Code from row number (.*)")]
+        public void UpdateFinancialCode(int rowNumber)
         {
             /* TEST COVERAGE: PSP-5424, PSP-5425 */
 
             //Choose first result from search
+            PopulateFinancialCode(rowNumber);
             financialCodes.ChooseFirstSearchCodeValue();
 
             //Verify Update Financial Code Form
             financialCodes.VerifyUpdateFinancialCodeForm();
 
             //Edit Financial Code
-            financialCodes.UpdateFinancialCode(financialCodeUpdateDescription, financialCodeExpiryDate);
+            financialCodes.UpdateFinancialCode(financialCode);
 
             //Cancel changes
             financialCodes.CancelFinancialCode();
 
             //Filter Financial Code
-            financialCodes.FilterFinancialCode(financialCodeValue);
+            financialCodes.FilterFinancialCode(financialCode.CodeValue);
 
             //Choose first result from search
             financialCodes.ChooseFirstSearchCodeValue();
 
             //Edit Financial Code
-            financialCodes.UpdateFinancialCode(financialCodeUpdateDescription, financialCodeExpiryDate);
+            financialCodes.UpdateFinancialCode(financialCode);
 
             //Save changes
             financialCodes.SaveFinancialCode();
         }
 
-        [StepDefinition(@"I attempt to duplicate a Financial Code")]
-        public void DuplicateFinancialCode()
+        [StepDefinition(@"I attempt to duplicate a Financial Code from row number (.*)")]
+        public void DuplicateFinancialCode(int rowNumber)
         {
             /* TEST COVERAGE:  */
 
@@ -215,6 +212,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Navigate to Admin Tools
+            PopulateFinancialCode(rowNumber);
             manageUsers.NavigateAdminTools();
 
             //Navigate to Financial Codes
@@ -222,7 +220,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Create New Financial Code
             financialCodes.CreateNewFinancialCodeBttn();
-            financialCodes.CreateNewFinancialCode(financialCodeType, financialCodeValue, financialCodeDescription, financialCodeOrder);
+            financialCodes.CreateNewFinancialCode(financialCode);
 
             //Save new Financial Code
             financialCodes.SaveFinancialCode();
@@ -269,6 +267,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void FinancialCodesCannotDuplicateSuccessfully()
         {
             Assert.True(financialCodes.DuplicateErrorMessageDisplayed());
+        }
+
+        private void PopulateFinancialCode(int rowNumber)
+        {
+            DataTable financialCodesSheet = ExcelDataContext.GetInstance().Sheets["FinancialCodes"];
+            ExcelDataContext.PopulateInCollection(financialCodesSheet);
+
+            financialCode.CodeType = ExcelDataContext.ReadData(rowNumber, "CodeType");
+            financialCode.CodeValue = ExcelDataContext.ReadData(rowNumber, "CodeValue");
+            financialCode.CodeDescription = ExcelDataContext.ReadData(rowNumber, "CodeDescription");
+            financialCode.EffectiveDate = ExcelDataContext.ReadData(rowNumber, "EffectiveDate");
+            financialCode.ExpiryDate = ExcelDataContext.ReadData(rowNumber, "ExpiryDate");
+            financialCode.DisplayOrder = ExcelDataContext.ReadData(rowNumber, "DisplayOrder");
         }
 
     }

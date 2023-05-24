@@ -1,4 +1,3 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
 import { FormDocumentType } from 'constants/formDocumentTypes';
 import { showFile } from 'features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
@@ -6,9 +5,10 @@ import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useProperties } from 'hooks/repositories/useProperties';
 import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
-import { Api_Address } from 'models/api/Address';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { Api_Property } from 'models/api/Property';
+import { GenerateOwner } from 'models/generate/GenerateOwner';
+import { GeneratePerson } from 'models/generate/GeneratePerson';
+import { GenerateProperty } from 'models/generate/GenerateProperty';
 
 export const useGenerateH0443 = () => {
   const { getPersonConcept } = useApiContacts();
@@ -56,21 +56,14 @@ export const useGenerateH0443 = () => {
         file_number: file.fileNumber || '',
         project_number: file.project?.code || '',
         project_name: file.project?.description || '',
-        properties: properties !== undefined ? properties.map<Property>(x => getProperty(x)) : [],
+        properties:
+          properties !== undefined
+            ? properties.map<GenerateProperty>(x => new GenerateProperty(x))
+            : [],
         owner_names: owners.map<string>(x => getOwnerName(x)) || [],
-        owner_contact: contactOwner !== undefined ? getOwnerContact(contactOwner) : null,
-        property_coordinator: {
-          first_name: coordinatorPerson?.firstName || '',
-          last_name: coordinatorPerson?.surname || '',
-        },
-        property_agent: {
-          first_name: agentPerson?.firstName || '',
-          last_name: agentPerson?.surname || '',
-          phone:
-            agentPerson?.contactMethods?.find(
-              x => x.contactMethodType?.id === ContactMethodTypes.WorkPhone,
-            )?.value || '',
-        },
+        owner_contact: contactOwner !== undefined ? new GenerateOwner(contactOwner) : null,
+        property_coordinator: new GeneratePerson(coordinatorPerson),
+        property_agent: new GeneratePerson(agentPerson),
       };
 
       const generatedFile = await generate({
@@ -100,73 +93,14 @@ function getOwnerName(owner: Api_AcquisitionFileOwner): string {
   }
 }
 
-function getOwnerContact(owner: Api_AcquisitionFileOwner): PersonWithPhone {
-  if (owner.isOrganization) {
-    return {
-      last_name: owner.lastNameAndCorpName || '',
-      first_name: owner.otherName || '',
-      phone: owner.contactPhoneNum || '',
-    };
-  } else {
-    return {
-      last_name: owner.lastNameAndCorpName || '',
-      first_name: owner.givenName || '',
-      phone: owner.contactPhoneNum || '',
-    };
-  }
-}
-
-function getPropertyAddress(address: Api_Address): Address {
-  return {
-    municipality: address.municipality || '',
-    postal_code: address.postal || '',
-    province: address.province?.description || '',
-    street_address_1: address.streetAddress1 || '',
-    street_address_2: address.streetAddress2 || '',
-    street_address_3: address.streetAddress3 || '',
-  };
-}
-
-function getProperty(property: Api_Property): Property {
-  return {
-    address: property.address !== undefined ? getPropertyAddress(property.address) : null,
-    legal_description: property.landLegalDescription || '',
-    pid: property.pid?.toString() || '',
-  };
-}
-
-interface Person {
-  first_name: string;
-  last_name: string;
-}
-
-interface PersonWithPhone extends Person {
-  phone: string;
-}
-
-interface Address {
-  municipality: string;
-  postal_code: string;
-  province: string;
-  street_address_1: string;
-  street_address_2: string;
-  street_address_3: string;
-}
-
-interface Property {
-  address: Address | null;
-  legal_description: string;
-  pid: string;
-}
-
 interface H0443Data {
   file_name: string;
   file_number: string;
-  owner_contact: PersonWithPhone | null;
+  owner_contact: GenerateOwner | null;
   owner_names: string[];
   project_number: string;
   project_name: string;
-  properties: Property[];
-  property_agent: PersonWithPhone;
-  property_coordinator: Person;
+  properties: GenerateProperty[];
+  property_agent: GeneratePerson;
+  property_coordinator: GeneratePerson;
 }

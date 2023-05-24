@@ -52,8 +52,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Save Project
-            projects.SaveProject();
+            projects.SaveProject();  
+        }
 
+        [StepDefinition(@"I verify The Project View Form")]
+        public void VerifyCreatedProject()
+        {
             //Verify Project View
             projects.VerifyProjectViewForm(project);
 
@@ -111,6 +115,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void VerifyProjectsTableContent()
         {
             /* TEST COVERAGE: PSP-5319 */
+            searchProjects.VerifySearchView();
             searchProjects.VerifyViewSearchResult(project);
         }
 
@@ -130,8 +135,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Duplicate Project Alert is displayed")]
         public void DuplicateProject()
         {
+            /* TEST COVERAGE:  PSP-5670 */
+
             Assert.True(projects.duplicateProject());
         }
+
         private void PopulateProjectData(int rowNumber)
         {
             DataTable projectsSheet = ExcelDataContext.GetInstance().Sheets["Projects"];
@@ -145,27 +153,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             project.Summary = ExcelDataContext.ReadData(rowNumber, "Summary");
             project.CreatedBy = ExcelDataContext.ReadData(rowNumber, "CreatedBy");
             project.UpdatedBy = ExcelDataContext.ReadData(rowNumber, "UpdatedBy");
-            project.ProductsCount = Int32.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsCount"));
-            project.ProductsRowStart = Int32.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsRowStart"));
-            project.UpdateNumber = ExcelDataContext.ReadData(rowNumber, "UpdateNumber");
-            project.UpdateName = ExcelDataContext.ReadData(rowNumber, "UpdateName");
-            project.UpdateCodeName = ExcelDataContext.ReadData(rowNumber, "UpdateCodeName");
-            project.UpdateStatus = ExcelDataContext.ReadData(rowNumber, "UpdateStatus");
-            project.UpdateMOTIRegion = ExcelDataContext.ReadData(rowNumber, "UpdateMOTIRegion");
-            project.UpdateSummary = ExcelDataContext.ReadData(rowNumber, "UpdateSummary");
+            project.ProductsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsCount"));
+            project.ProductsRowStart = int.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsRowStart"));
             
             if (project.ProductsCount != 0 && project.ProductsRowStart != 0)
             {
                 PopulateProductCollection(project.ProductsRowStart, project.ProductsCount);
             }
         }
-        
+ 
         private void PopulateProductCollection(int startRow, int rowsCount)
         {
             DataTable projectProductsSheet = ExcelDataContext.GetInstance().Sheets["ProjectsProducts"];
             ExcelDataContext.PopulateInCollection(projectProductsSheet);
 
-            for (int i = startRow; i <= rowsCount; i++)
+            for (int i = startRow; i <= startRow + rowsCount; i++)
             {
                 Product product = new Product();
                 product.ProductCode = ExcelDataContext.ReadData(i, "ProductCode");
@@ -176,14 +178,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 product.StartDate = ExcelDataContext.ReadData(i, "StartDate");
                 product.Objectives = ExcelDataContext.ReadData(i, "Objectives");
                 product.Scope = ExcelDataContext.ReadData(i, "Scope");
-                product.UpdateProductCode = ExcelDataContext.ReadData(i, "UpdateProductCode");
-                product.UpdateProductName = ExcelDataContext.ReadData(i, "UpdateProductName");
-                product.UpdateProductCodeName = ExcelDataContext.ReadData(i, "UpdateProductCodeName");
-                product.UpdateCostEstimate = ExcelDataContext.ReadData(i, "UpdateCostEstimate");
-                product.UpdateEstimateDate = ExcelDataContext.ReadData(i, "UpdateEstimateDate");
-                product.UpdateStartDate = ExcelDataContext.ReadData(i, "UpdateStartDate");
-                product.UpdateObjectives = ExcelDataContext.ReadData(i, "UpdateObjectives");
-                product.UpdateScope = ExcelDataContext.ReadData(i, "UpdateScope");
 
                 project.Products.Add(product);
             }

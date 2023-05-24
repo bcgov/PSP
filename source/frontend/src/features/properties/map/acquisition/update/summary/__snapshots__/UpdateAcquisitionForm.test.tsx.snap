@@ -518,6 +518,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           >
             <div
               class="c5 form-group"
+              data-testid="typeahead-project"
             >
               <div
                 class="rbt has-aux"
@@ -2997,8 +2998,8 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-owners[1].contactPhoneNumber"
                     name="owners[1].contactPhoneNumber"
-                    title=""
-                    value=""
+                    title="775-111-1111"
+                    value="775-111-1111"
                   />
                 </div>
               </div>

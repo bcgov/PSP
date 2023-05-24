@@ -24,5 +24,6 @@ export * from './propertyTenureTypes';
 export * from './propertyTypes';
 export * from './regionCodes';
 export * from './roles';
+export * from './userTypes';
 export * from './volumetricParcelTypes';
 export * from './volumeUnitTypes';

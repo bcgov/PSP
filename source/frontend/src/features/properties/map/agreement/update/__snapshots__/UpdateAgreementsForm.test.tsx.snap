@@ -355,19 +355,23 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                 class="form-group"
               >
                 <select
-                  class="form-control"
-                  id="input-agreements.0.agreementStatus"
-                  name="agreements.0.agreementStatus"
+                  class="form-select form-control"
+                  id="input-agreements.0.isDraft"
+                  name="agreements.0.isDraft"
                 >
                   <option
+                    class="option"
+                    data-testid="select-option-true"
                     value="true"
                   >
-                    Yes
+                    Draft
                   </option>
                   <option
+                    class="option"
+                    data-testid="select-option-false"
                     value="false"
                   >
-                    No
+                    Final
                   </option>
                 </select>
               </div>
@@ -818,19 +822,23 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                 class="form-group"
               >
                 <select
-                  class="form-control"
-                  id="input-agreements.1.agreementStatus"
-                  name="agreements.1.agreementStatus"
+                  class="form-select form-control"
+                  id="input-agreements.1.isDraft"
+                  name="agreements.1.isDraft"
                 >
                   <option
+                    class="option"
+                    data-testid="select-option-true"
                     value="true"
                   >
-                    Yes
+                    Draft
                   </option>
                   <option
+                    class="option"
+                    data-testid="select-option-false"
                     value="false"
                   >
-                    No
+                    Final
                   </option>
                 </select>
               </div>
@@ -1071,7 +1079,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                     name="agreements.1.purchasePrice"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$2,000.00"
                   />
                 </div>
               </div>
@@ -1133,7 +1141,7 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                     name="agreements.1.depositAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$1,000.00"
                   />
                 </div>
               </div>

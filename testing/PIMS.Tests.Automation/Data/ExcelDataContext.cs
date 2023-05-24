@@ -14,10 +14,9 @@ namespace PIMS.Tests.Automation.Data
         //Creating the collection we will use to store data 
         private static List<DataCollection> dataCollection = new List<DataCollection>();
 
-        // no instantiated available
         private ExcelDataContext()
         {
-            FileStream stream = File.Open("C:\\Users\\sueta\\Quartech Projects\\PSP\\testing\\PIMS.Tests.Automation\\Data\\PIMS_Testing_Data.xlsx", FileMode.Open, FileAccess.Read);
+            FileStream stream = File.Open(".\\Data\\PIMS_Testing_Data.xlsx", FileMode.Open, FileAccess.Read);
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
 
@@ -30,6 +29,9 @@ namespace PIMS.Tests.Automation.Data
             });
 
             this.Sheets = result.Tables;
+
+            stream.Close();
+            stream.Dispose();
         }
 
         // accessing to ExcelDataContext singleton
@@ -65,13 +67,13 @@ namespace PIMS.Tests.Automation.Data
                 //Retriving Data using LINQ 
                 string data = (from colData in dataCollection
                                where colData.ColumnName == ColumnName && colData.RowNumber == rowNumber
-                               select colData.ColumnValue).SingleOrDefault();
+                               select colData.ColumnValue).FirstOrDefault();
 
                 return data.ToString();
             }
             catch (Exception e)
             {
-                return null;
+                return e.ToString();
             }
         }
 

@@ -85,7 +85,7 @@ namespace Pims.Api.Areas.Takes.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(TakeModel), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
-        public IActionResult GetTakesByPropertyId([FromRoute]long fileId, [FromRoute]long acquisitionFilePropertyId)
+        public IActionResult GetTakesByPropertyId([FromRoute] long fileId, [FromRoute] long acquisitionFilePropertyId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -133,7 +133,7 @@ namespace Pims.Api.Areas.Takes.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(TakeModel), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
-        public IActionResult GetTakesCountByPropertyId([FromRoute]long propertyId)
+        public IActionResult GetTakesCountByPropertyId([FromRoute] long propertyId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",

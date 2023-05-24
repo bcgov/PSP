@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -25,7 +24,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         #region Variables
         private readonly IAcquisitionFileService _acquisitionService;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
         #endregion
 
         #region Constructors
@@ -35,13 +33,11 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// </summary>
         /// <param name="acquisitionService"></param>
         /// <param name="mapper"></param>
-        /// <param name="logger"></param>
         ///
-        public AgreementController(IAcquisitionFileService acquisitionService, IMapper mapper, ILogger<AgreementController> logger)
+        public AgreementController(IAcquisitionFileService acquisitionService, IMapper mapper)
         {
             _acquisitionService = acquisitionService;
             _mapper = mapper;
-            _logger = logger;
         }
         #endregion
 
