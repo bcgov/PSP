@@ -6,7 +6,7 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import queryString from 'query-string';
@@ -71,6 +71,10 @@ export const useApiAcquisitionFile = () => {
         api.put<Api_AcquisitionFile>(`/acquisitionfiles/${acqFile?.id}/checklist`, acqFile),
       getFileCompensationRequisitions: (acqFileId: number) =>
         api.get<Api_Compensation[]>(`/acquisitionfiles/${acqFileId}/compensation-requisitions`),
+      getFileCompReqH120s: (acqFileId: number, finalOnly?: boolean) =>
+        api.get<Api_CompensationFinancial[]>(
+          `/acquisitionfiles/${acqFileId}/comp-req-h120s?finalOnly=${!!finalOnly}`,
+        ),
       postFileCompensationRequisition: (
         acqFileId: number,
         compensationRequisition: Api_Compensation,

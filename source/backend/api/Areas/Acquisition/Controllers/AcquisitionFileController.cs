@@ -12,6 +12,7 @@ using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -30,6 +31,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     {
         #region Variables
         private readonly IAcquisitionFileService _acquisitionService;
+        private readonly ICompReqH120Service _compReqH120Service;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         #endregion
@@ -40,12 +42,14 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Creates a new instance of a AcquisitionFileController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="acquisitionService"></param>
+        /// <param name="compReqH120Service"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public AcquisitionFileController(IAcquisitionFileService acquisitionService, IMapper mapper, ILogger<AcquisitionFileController> logger)
+        public AcquisitionFileController(IAcquisitionFileService acquisitionService, ICompReqH120Service compReqH120Service, IMapper mapper, ILogger<AcquisitionFileController> logger)
         {
             _acquisitionService = acquisitionService;
+            _compReqH120Service = compReqH120Service;
             _mapper = mapper;
             _logger = logger;
         }
@@ -194,6 +198,29 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var pimsCompensations = _acquisitionService.GetAcquisitionCompensations(id);
             var compensations = _mapper.Map<List<CompensationRequisitionModel>>(pimsCompensations);
             return new JsonResult(compensations);
+        }
+
+        /// <summary>
+        /// Gets all the compensation requisition financials for an acq file.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/comp-req-h120s")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<H120CategoryModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "comp-req-h120s" })]
+        public IActionResult GetFileCompReqH120(long id, bool? finalOnly)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(GetFileCompReqH120),
+                User.GetUsername(),
+                DateTime.Now);
+            _logger.LogInformation("Dispatching to service: {Service}", _compReqH120Service.GetType());
+
+            var h120Categories = _compReqH120Service.GetAllByAcquisitionFileId(id, finalOnly);
+
+            return new JsonResult(_mapper.Map<IEnumerable<CompensationFinancialModel>>(h120Categories));
         }
 
         /// <summary>

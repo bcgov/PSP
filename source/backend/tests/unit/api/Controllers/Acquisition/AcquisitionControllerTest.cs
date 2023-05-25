@@ -25,6 +25,7 @@ namespace Pims.Api.Test.Controllers
     {
         #region Variables
         private Mock<IAcquisitionFileService> _service;
+        private Mock<ICompReqH120Service> _compReqH120service;
         private AcquisitionFileController _controller;
         private IMapper _mapper;
         #endregion
@@ -35,6 +36,7 @@ namespace Pims.Api.Test.Controllers
             _controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
             _mapper = helper.GetService<IMapper>();
             _service = helper.GetService<Mock<IAcquisitionFileService>>();
+            _compReqH120service = helper.GetService<Mock<ICompReqH120Service>>();
         }
 
         #region Tests
@@ -106,6 +108,38 @@ namespace Pims.Api.Test.Controllers
 
             // Assert
             _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Get all compensation financials for a file.
+        /// </summary>
+        [Fact]
+        public void GetFileCompReqH120_Success()
+        {
+            // Arrange
+            _compReqH120service.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqH120>());
+
+            // Act
+            var result = _controller.GetFileCompReqH120(1, false);
+
+            // Assert
+            _compReqH120service.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), false));
+        }
+
+        /// <summary>
+        /// get all compensation financials for a file that belong to compensation requisitions in the final status.
+        /// </summary>
+        [Fact]
+        public void GetFileCompReqH120_FinalOnly()
+        {
+            // Arrange
+            _compReqH120service.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqH120>());
+
+            // Act
+            var result = _controller.GetFileCompReqH120(1, true);
+
+            // Assert
+            _compReqH120service.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true));
         }
 
         #endregion
