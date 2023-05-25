@@ -47,6 +47,13 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
     setSelectedCountryId(countryId);
   }, [countryId, namespace, setFieldValue, setSelectedCountryId]);
 
+  useEffect(() => {
+    if (!countryId) {
+      setFieldValue(withNameSpace(namespace, 'countryId'), '1');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // clear associated fields (province, other country name) whenever country value is changed
   const onCountryChanged = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {

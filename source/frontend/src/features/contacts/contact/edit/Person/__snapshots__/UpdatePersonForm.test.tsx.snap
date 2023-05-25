@@ -1000,11 +1000,114 @@ exports[`UpdatePersonForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
+                <label
+                  class="form-label"
+                  for="input-mailingAddress.provinceId"
+                >
+                  Province 
+                </label>
                 <select
                   class="form-select form-control"
                   id="input-mailingAddress.provinceId"
                   name="mailingAddress.provinceId"
-                />
+                >
+                  <option
+                    value=""
+                  >
+                    Select province
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-1"
+                    value="1"
+                  >
+                    British Columbia
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-2"
+                    value="2"
+                  >
+                    Alberta
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-3"
+                    value="3"
+                  >
+                    Manitoba
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-4"
+                    value="4"
+                  >
+                    Newfoundland
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-5"
+                    value="5"
+                  >
+                    New Brunswick
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-6"
+                    value="6"
+                  >
+                    Nova Scotia
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-7"
+                    value="7"
+                  >
+                    North West Territories
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-8"
+                    value="8"
+                  >
+                    Nunavut
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-9"
+                    value="9"
+                  >
+                    Ontario
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-10"
+                    value="10"
+                  >
+                    Prince Edward Island
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-11"
+                    value="11"
+                  >
+                    Quebec
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-12"
+                    value="12"
+                  >
+                    Saskatchewan
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-13"
+                    value="13"
+                  >
+                    Yukon Territory
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -1017,6 +1120,12 @@ exports[`UpdatePersonForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
+                <label
+                  class="form-label"
+                  for="input-mailingAddress.postal"
+                >
+                  Postal Code 
+                </label>
                 <input
                   class="form-control"
                   id="input-mailingAddress.postal"
@@ -1175,11 +1284,114 @@ exports[`UpdatePersonForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
+                <label
+                  class="form-label"
+                  for="input-propertyAddress.provinceId"
+                >
+                  Province 
+                </label>
                 <select
                   class="form-select form-control"
                   id="input-propertyAddress.provinceId"
                   name="propertyAddress.provinceId"
-                />
+                >
+                  <option
+                    value=""
+                  >
+                    Select province
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-1"
+                    value="1"
+                  >
+                    British Columbia
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-2"
+                    value="2"
+                  >
+                    Alberta
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-3"
+                    value="3"
+                  >
+                    Manitoba
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-4"
+                    value="4"
+                  >
+                    Newfoundland
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-5"
+                    value="5"
+                  >
+                    New Brunswick
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-6"
+                    value="6"
+                  >
+                    Nova Scotia
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-7"
+                    value="7"
+                  >
+                    North West Territories
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-8"
+                    value="8"
+                  >
+                    Nunavut
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-9"
+                    value="9"
+                  >
+                    Ontario
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-10"
+                    value="10"
+                  >
+                    Prince Edward Island
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-11"
+                    value="11"
+                  >
+                    Quebec
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-12"
+                    value="12"
+                  >
+                    Saskatchewan
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-13"
+                    value="13"
+                  >
+                    Yukon Territory
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -1192,6 +1404,12 @@ exports[`UpdatePersonForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
+                <label
+                  class="form-label"
+                  for="input-propertyAddress.postal"
+                >
+                  Postal Code 
+                </label>
                 <input
                   class="form-control"
                   id="input-propertyAddress.postal"
@@ -1350,11 +1568,114 @@ exports[`UpdatePersonForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
+                <label
+                  class="form-label"
+                  for="input-billingAddress.provinceId"
+                >
+                  Province 
+                </label>
                 <select
                   class="form-select form-control"
                   id="input-billingAddress.provinceId"
                   name="billingAddress.provinceId"
-                />
+                >
+                  <option
+                    value=""
+                  >
+                    Select province
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-1"
+                    value="1"
+                  >
+                    British Columbia
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-2"
+                    value="2"
+                  >
+                    Alberta
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-3"
+                    value="3"
+                  >
+                    Manitoba
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-4"
+                    value="4"
+                  >
+                    Newfoundland
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-5"
+                    value="5"
+                  >
+                    New Brunswick
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-6"
+                    value="6"
+                  >
+                    Nova Scotia
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-7"
+                    value="7"
+                  >
+                    North West Territories
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-8"
+                    value="8"
+                  >
+                    Nunavut
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-9"
+                    value="9"
+                  >
+                    Ontario
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-10"
+                    value="10"
+                  >
+                    Prince Edward Island
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-11"
+                    value="11"
+                  >
+                    Quebec
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-12"
+                    value="12"
+                  >
+                    Saskatchewan
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-13"
+                    value="13"
+                  >
+                    Yukon Territory
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -1367,6 +1688,12 @@ exports[`UpdatePersonForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
+                <label
+                  class="form-label"
+                  for="input-billingAddress.postal"
+                >
+                  Postal Code 
+                </label>
                 <input
                   class="form-control"
                   id="input-billingAddress.postal"
