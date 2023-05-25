@@ -15,6 +15,7 @@ using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
@@ -38,6 +39,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         private readonly ILookupRepository _lookupRepository;
         private readonly ILeaseRepository _leaseRepository;
         private readonly ILeaseReportsService _leaseReportService;
+        private readonly ILeasePaymentService _leasePaymentService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         #endregion
@@ -52,11 +54,12 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="leaseReportService"></param>
         /// <param name="webHostEnvironment"></param>
         /// <param name="mapper"></param>
-        public LeaseController(ILookupRepository lookupRepository, ILeaseRepository leaseRepository, ILeaseReportsService leaseReportService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
+        public LeaseController(ILookupRepository lookupRepository, ILeaseRepository leaseRepository, ILeaseReportsService leaseReportService, ILeasePaymentService leasePaymentService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
         {
             _lookupRepository = lookupRepository;
             _leaseRepository = leaseRepository;
             _leaseReportService = leaseReportService;
+            _leasePaymentService = leasePaymentService;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -155,6 +158,37 @@ namespace Pims.Api.Areas.Reports.Controllers
 
                 return new FileStreamResult(stream, ContentTypes.CONTENTTYPEEXCELX);
             }
+        }
+
+        /// <summary>
+        /// Exports lease payments as CSV or Excel file.
+        /// Include 'Accept' header to request the appropriate export -
+        ///     ["application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"].
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("payments")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces(ContentTypes.CONTENTTYPEEXCELX)]
+        [ProducesResponseType(200)]
+        [SwaggerOperation(Tags = new[] { "lease", "payements", "report" })]
+        public IActionResult ExportLeasePayments(int fiscalYearStart)
+        {
+            var acceptHeader = (string)this.Request.Headers["Accept"];
+
+            if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
+            {
+                throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
+            }
+
+            DateTime startDate = fiscalYearStart.ToFiscalYearDate();
+            var allPayments = _leasePaymentService.GetAllByDateRange(startDate, startDate.AddYears(1).AddDays(-1)); // Add years will give you the equivalent month, except for 29th/ 28th of leap years which is not the case here.
+            var paymentItems = _mapper.Map<IEnumerable<Api.Models.Concepts.LeasePaymentReportModel>>(allPayments);
+
+            return acceptHeader.ToString() switch
+            {
+                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv<Api.Models.Concepts.LeasePaymentReportModel>(paymentItems.OrderBy(p => p.Region).ThenBy(p => p.LFileNumber).ThenByDescending(p => p.PaymentReceivedDate)),
+                _ => ReportHelper.GenerateExcel(paymentItems, $"LeaseLicense_Payments")
+            };
         }
 
         #endregion

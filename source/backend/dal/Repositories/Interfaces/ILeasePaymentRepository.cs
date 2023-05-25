@@ -1,4 +1,6 @@
 using Pims.Dal.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace Pims.Dal.Repositories
 {
@@ -11,5 +13,7 @@ namespace Pims.Dal.Repositories
         PimsLeasePayment Add(PimsLeasePayment pimsLeasePayment);
 
         PimsLeasePayment GetById(long leasePaymentId);
+
+        IEnumerable<PimsLeasePayment> GetAll(DateTime startDate, DateTime endDate);
     }
 }
