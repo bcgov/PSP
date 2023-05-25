@@ -90,7 +90,7 @@ namespace Pims.Api.Test.Services
             // Act
             researchFile.PimsPropertyResearchFiles.Clear();
             researchFile.ConcurrencyControlNumber++;
-            var updatedLease = service.UpdateProperties(researchFile);
+            var updatedLease = service.UpdateProperties(researchFile, new List<UserOverrideCode>());
 
             // Assert
             researchFilePropertyRepository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Once);
@@ -120,7 +120,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
-            service.UpdateProperties(researchFile);
+            service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             filePropertyRepository.Verify(x => x.Add(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
@@ -150,7 +150,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             // Act
-            service.UpdateProperties(researchFile);
+            service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             filePropertyRepository.Verify(x => x.Add(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
@@ -184,7 +184,7 @@ namespace Pims.Api.Test.Services
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
             // Act
-            service.UpdateProperties(researchFile);
+            service.UpdateProperties(researchFile, new List<UserOverrideCode>());
 
             // Assert
             // since this is a new property, the following default fields should be set.
@@ -229,7 +229,7 @@ namespace Pims.Api.Test.Services
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
             // Act
-            service.UpdateProperties(researchFile);
+            service.UpdateProperties(researchFile, new List<UserOverrideCode>());
 
             // Assert
             // since this is a new property, the following default fields should be set.

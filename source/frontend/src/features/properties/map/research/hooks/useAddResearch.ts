@@ -1,8 +1,8 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
-import { IApiError } from 'interfaces/IApiError';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
@@ -16,18 +16,14 @@ export const useAddResearch = () => {
     (...args: any[]) => Promise<AxiosResponse<Api_ResearchFile, any>>
   >({
     requestFunction: useCallback(
-      async (researchFile: Api_ResearchFile) => await postResearchFile(researchFile),
+      async (researchFile: Api_ResearchFile, userOverrideCodes: UserOverrideCode[]) =>
+        await postResearchFile(researchFile, userOverrideCodes),
       [postResearchFile],
     ),
     requestName: 'AddResearchFile',
     onSuccess: useCallback(() => toast.success('Research File saved'), []),
-    onError: useCallback((axiosError: AxiosError<IApiError>) => {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response.data.error);
-      } else {
-        toast.error('Save error. Check responses and try again.');
-      }
-    }, []),
+    throwError: true,
+    skipErrorLogCodes: [409],
   });
 
   return { addResearchFile: execute };

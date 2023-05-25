@@ -2962,6 +2962,5 @@ exports[`Update lease container component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  <div />
 </DocumentFragment>
 `;

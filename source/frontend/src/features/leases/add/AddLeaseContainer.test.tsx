@@ -6,8 +6,9 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/lookups.mock';
 import { Api_Lease } from 'models/api/Lease';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, screen, waitFor } from 'utils/test-utils';
 
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 
@@ -117,14 +118,16 @@ describe('AddLeaseContainer component', () => {
       await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
     });
 
-    mockAxios.onPost().reply(409, { error: 'test message' });
+    mockAxios
+      .onPost()
+      .reply(409, { error: 'test message', errorCode: UserOverrideCode.ADD_LOCATION_TO_PROPERTY });
     act(() => userEvent.click(getByText(/Save/i)));
     expect(await findByText('test message')).toBeVisible();
   });
 
   it('clicking on the save anyways popup saves the form', async () => {
     const {
-      component: { findByText, getByText, container },
+      component: { getByText, container },
     } = await setup({});
 
     await act(async () => {
@@ -138,17 +141,22 @@ describe('AddLeaseContainer component', () => {
       await fillInput(container, 'purposeTypeCode', 'BCFERRIES', 'select');
     });
 
-    mockAxios.onPost().reply(409, { error: 'test message' });
+    mockAxios
+      .onPost()
+      .reply(409, { error: 'test message', errorCode: UserOverrideCode.ADD_LOCATION_TO_PROPERTY });
     act(() => userEvent.click(getByText(/Save/i)));
     await waitFor(() => {
       expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
     });
 
+    const popup = await screen.findByText(/test message/i);
+    expect(popup).toBeVisible();
+
     await act(async () => {
-      userEvent.click(await findByText('Save Anyways'));
+      userEvent.click(await screen.findByText('Acknowledge & Continue'));
     });
 
-    expect(mockAxios.history.post[1].data).toEqual(JSON.stringify(leaseData));
+    expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(leaseData));
   });
 });
 

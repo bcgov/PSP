@@ -17,6 +17,7 @@ import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from 'interfaces/IAutocomplete';
 import { Api_Product } from 'models/api/Project';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
@@ -35,7 +36,8 @@ export interface IAddAcquisitionFormProps {
   /** Submission handler */
   onSubmit: (
     values: AcquisitionForm,
-    formikHelpers: FormikHelpers<AcquisitionForm>,
+    setSubmitting: (isSubmitting: boolean) => void,
+    userOverrides: UserOverrideCode[],
   ) => void | Promise<any>;
 }
 
@@ -69,7 +71,7 @@ export const AddAcquisitionForm = React.forwardRef<
     if (isMinistryRegionDiff(values)) {
       setShowDiffMinistryRegionModal(true);
     } else {
-      onSubmit(values, formikHelpers);
+      onSubmit(values, formikHelpers.setSubmitting, []);
     }
   };
 
@@ -223,7 +225,9 @@ export const AddAcquisitionForm = React.forwardRef<
             display={showDiffMinistryRegionModal}
             handleOk={() => {
               setShowDiffMinistryRegionModal(false);
-              onSubmit(formikProps.values, formikProps);
+              onSubmit(formikProps.values, formikProps.setSubmitting, [
+                UserOverrideCode.UPDATE_REGION,
+              ]);
             }}
             handleCancel={() => {
               setShowDiffMinistryRegionModal(false);
