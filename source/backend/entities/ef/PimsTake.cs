@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_TAKE")]
+    [Index(nameof(AreaUnitTypeCode), Name = "TAKE_AREA_UNIT_TYPE_CODE_IDX")]
+    [Index(nameof(LandActTypeCode), Name = "TAKE_LAND_ACT_TYPE_CODE_IDX")]
     [Index(nameof(PropertyAcquisitionFileId), Name = "TAKE_PROPERTY_ACQUISITION_FILE_ID_IDX")]
     [Index(nameof(TakeSiteContamTypeCode), Name = "TAKE_TAKE_SITE_CONTAM_TYPE_CODE_IDX")]
     [Index(nameof(TakeStatusTypeCode), Name = "TAKE_TAKE_STATUS_TYPE_CODE_IDX")]
@@ -59,9 +61,6 @@ namespace Pims.Dal.Entities
         public bool? IsLandAct { get; set; }
         [Column("LAND_ACT_AREA")]
         public float? LandActArea { get; set; }
-        [Column("LAND_ACT_DESCRIPTION")]
-        [StringLength(2000)]
-        public string LandActDescription { get; set; }
         [Column("LAND_ACT_END_DT", TypeName = "date")]
         public DateTime? LandActEndDt { get; set; }
         [Required]
@@ -107,10 +106,16 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("LAND_ACT_TYPE_CODE")]
+        [StringLength(20)]
+        public string LandActTypeCode { get; set; }
 
         [ForeignKey(nameof(AreaUnitTypeCode))]
         [InverseProperty(nameof(PimsAreaUnitType.PimsTakes))]
         public virtual PimsAreaUnitType AreaUnitTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(LandActTypeCode))]
+        [InverseProperty(nameof(PimsLandActType.PimsTakes))]
+        public virtual PimsLandActType LandActTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(PropertyAcquisitionFileId))]
         [InverseProperty(nameof(PimsPropertyAcquisitionFile.PimsTakes))]
         public virtual PimsPropertyAcquisitionFile PropertyAcquisitionFile { get; set; }
