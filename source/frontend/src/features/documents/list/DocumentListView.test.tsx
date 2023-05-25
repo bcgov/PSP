@@ -4,7 +4,6 @@ import MockAdapter from 'axios-mock-adapter';
 import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { noop } from 'lodash';
-import { mockDocumentDetailResponse } from 'mocks/documentDetail.mock';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/documents.mock';
 import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -134,7 +133,7 @@ describe('Document List View', () => {
   });
 
   it('should not display the download icon on the listview', async () => {
-    mockAxios.onGet().reply(200, mockDocumentDetailResponse());
+    mockAxios.onGet().reply(200, []);
     const documentRows = mockDocumentRowResponse();
     documentRows[0].isFileAvailable = true;
     const { queryByTestId } = setup({

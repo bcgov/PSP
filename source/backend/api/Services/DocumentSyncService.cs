@@ -153,16 +153,39 @@ namespace Pims.Api.Services
             IList<PimsDocumentTyp> updatedDocumentTypes = new List<PimsDocumentTyp>();
             foreach (var documentTypeModel in model.DocumentTypes)
             {
+                var subcategories = documentTypeModel.Categories.Select(
+                        x => new PimsDocumentCategorySubtype()
+                        {
+                            DocumentCategoryTypeCode = x,
+                        }).ToList();
+
                 var matchingDocumentType = pimsDocumentTypes.FirstOrDefault(x => x.DocumentType == documentTypeModel.Name);
                 if (matchingDocumentType == null)
                 {
-                    var newPimsDocType = new PimsDocumentTyp() { DocumentType = documentTypeModel.Name, DocumentTypeDescription = documentTypeModel.Label, DisplayOrder = documentTypeModel.DisplayOrder };
+                    var newPimsDocType = new PimsDocumentTyp()
+                    {
+                        DocumentType = documentTypeModel.Name,
+                        DocumentTypeDescription = documentTypeModel.Label,
+                        DisplayOrder = documentTypeModel.DisplayOrder,
+                        PimsDocumentCategorySubtypes = subcategories,
+                    };
                     createdDocumentTypes.Add(documentTypeRepository.Add(newPimsDocType));
                 }
-                else if (matchingDocumentType.DocumentTypeDescription != documentTypeModel.Label)
+                else
                 {
-                    matchingDocumentType.DocumentTypeDescription = documentTypeModel.Label;
-                    updatedDocumentTypes.Add(documentTypeRepository.Update(matchingDocumentType));
+                    var subtypeCodes = matchingDocumentType.PimsDocumentCategorySubtypes.Select(x => x.DocumentCategoryTypeCode).ToList();
+
+                    var needsLabelUpdate = matchingDocumentType.DocumentTypeDescription != documentTypeModel.Label;
+                    var needsCategoryUpdate = !(subtypeCodes.All(documentTypeModel.Categories.Contains) && subtypeCodes.Count == documentTypeModel.Categories.Count);
+                    var needsOrderUpdate = matchingDocumentType.DisplayOrder != documentTypeModel.DisplayOrder;
+                    if (needsLabelUpdate || needsCategoryUpdate || needsOrderUpdate)
+                    {
+                        matchingDocumentType.DocumentTypeDescription = documentTypeModel.Label;
+                        matchingDocumentType.PimsDocumentCategorySubtypes = subcategories;
+                        matchingDocumentType.DisplayOrder = documentTypeModel.DisplayOrder;
+
+                        updatedDocumentTypes.Add(documentTypeRepository.Update(matchingDocumentType));
+                    }
                 }
             }
 

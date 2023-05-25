@@ -17,5 +17,8 @@ namespace Pims.Api.Models.Mayan.Sync
 
         [JsonPropertyName("display_order")]
         public int DisplayOrder { get; set; }
+
+        [JsonPropertyName("categories")]
+        public List<string> Categories { get; set; }
     }
 }
