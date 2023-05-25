@@ -1,22 +1,17 @@
-import GenericModal from 'components/common/GenericModal';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { useLeaseDetail } from 'features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from 'features/leases/hooks/useUpdateLease';
 import { LeaseFormModel } from 'features/leases/models';
 import { FormikProps } from 'formik/dist/types';
+import useApiUserOverride from 'hooks/useApiUserOverride';
 import { Api_Lease } from 'models/api/Lease';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import * as React from 'react';
-import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 
 import { UpdateLeaseForm } from './UpdateLeaseForm';
-
-interface IAddLeaseParams {
-  lease?: Api_Lease;
-  userOverride?: string;
-}
 
 interface UpdateLeaseContainerProps {
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
@@ -31,8 +26,10 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     getApiLeaseById: { execute, response: apiLease, loading },
     refresh,
   } = useLeaseDetail(lease?.id);
-  const [addLeaseParams, setAddLeaseParams] = useState<IAddLeaseParams | undefined>();
   const { updateApiLease } = useUpdateLease();
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to update Lease File');
 
   const leaseId = lease?.id;
   //TODO: For now we make a duplicate request here for the lease in the newer format. In the future all lease pages will use the new format so this will no longer be necessary.
@@ -46,13 +43,11 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     exec();
   }, [execute, leaseId, formikRef]);
 
-  const onSubmit = async (lease: LeaseFormModel) => {
+  const onSubmit = async (lease: LeaseFormModel, userOverrideCodes: UserOverrideCode[] = []) => {
     try {
       const leaseToUpdate = lease.toApi();
 
-      const updatedLease = await updateApiLease(leaseToUpdate, (userOverrideMessage?: string) =>
-        setAddLeaseParams({ lease: leaseToUpdate, userOverride: userOverrideMessage }),
-      );
+      const updatedLease = await updateApiLease.execute(leaseToUpdate, userOverrideCodes);
       afterSubmit(updatedLease);
     } finally {
       formikRef?.current?.setSubmitting(false);
@@ -71,22 +66,14 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen></LoadingBackdrop>
-      <UpdateLeaseForm onSubmit={onSubmit} initialValues={initialValues} formikRef={formikRef} />
-      <GenericModal
-        title="Warning"
-        display={!!addLeaseParams}
-        message={addLeaseParams?.userOverride}
-        handleOk={async () => {
-          if (!!addLeaseParams?.lease) {
-            const leaseResponse = await updateApiLease(addLeaseParams.lease, undefined, true);
-            afterSubmit(leaseResponse);
-            setAddLeaseParams(undefined);
-          }
-        }}
-        handleCancel={() => setAddLeaseParams(undefined)}
-        okButtonText="Save Anyways"
-        okButtonVariant="warning"
-        cancelButtonText="Cancel"
+      <UpdateLeaseForm
+        onSubmit={(lease: LeaseFormModel) =>
+          withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
+            onSubmit(lease, userOverrideCodes),
+          )
+        }
+        initialValues={initialValues}
+        formikRef={formikRef}
       />
     </>
   );

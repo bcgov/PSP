@@ -139,7 +139,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>{message}</Modal.Body>
+      <Modal.Body style={{ whiteSpace: 'pre-line' }}>{message}</Modal.Body>
 
       {!hideFooter && (
         <Modal.Footer>

@@ -1,8 +1,10 @@
-import { FormikHelpers } from 'formik';
+import { FormikProps } from 'formik';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import useApiUserOverride from 'hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback } from 'react';
 
 import { AddAcquisitionFileYupSchema } from '../add/AddAcquisitionFileYupSchema';
@@ -13,6 +15,7 @@ export interface IUseAddAcquisitionFormManagementProps {
   onSuccess?: (acquisitionFile: Api_AcquisitionFile) => Promise<void>;
   initialForm?: AcquisitionForm;
   selectedFeature: Feature<Geometry, GeoJsonProperties> | null;
+  formikRef: React.RefObject<FormikProps<AcquisitionForm>>;
 }
 
 /**
@@ -23,20 +26,25 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
 
   const { onSuccess } = props;
   const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(props.selectedFeature);
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to add Acquisition File');
 
   // save handler
   const handleSubmit = useCallback(
-    async (values: AcquisitionForm, formikHelpers: FormikHelpers<AcquisitionForm>) => {
-      const acquisitionFile = values.toApi();
-      const response = await addAcquisitionFile.execute(acquisitionFile);
-      if (!!response?.id) {
-        if (typeof onSuccess === 'function') {
-          await onSuccess(response);
+    async (values: AcquisitionForm, setSubmitting: (isSubmitting: boolean) => void) => {
+      return withUserOverride(async (userOverrideCodes: UserOverrideCode[]) => {
+        const acquisitionFile = values.toApi();
+        const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
+        if (!!response?.id) {
+          if (typeof onSuccess === 'function') {
+            await onSuccess(response);
+          }
         }
-      }
-      formikHelpers?.setSubmitting(false);
+        setSubmitting(false);
+      });
     },
-    [addAcquisitionFile, onSuccess],
+    [addAcquisitionFile, onSuccess, withUserOverride],
   );
   if (props.initialForm?.properties.length && initialProperty) {
     props.initialForm.properties[0].address = initialProperty.address;

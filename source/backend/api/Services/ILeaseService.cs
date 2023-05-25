@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 
 namespace Pims.Api.Services
 {
@@ -8,8 +10,8 @@ namespace Pims.Api.Services
 
         PimsLease GetById(long leaseId);
 
-        PimsLease Add(PimsLease lease, bool userOverride = false);
+        PimsLease Add(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides);
 
-        PimsLease Update(PimsLease lease, bool userOverride = false);
+        PimsLease Update(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides);
     }
 }

@@ -23,7 +23,7 @@ namespace Pims.Dal.Repositories
 
         IList<PimsLeaseDocument> GetAllLeaseDocuments(long leaseId);
 
-        PimsLease Add(PimsLease lease, bool userOverride = false);
+        PimsLease Add(PimsLease lease);
 
         PimsLeaseDocument AddLeaseDocument(PimsLeaseDocument leaseDocument);
 
@@ -35,7 +35,7 @@ namespace Pims.Dal.Repositories
 
         PimsLease UpdateLeaseImprovements(long leaseId, long? rowVersion, ICollection<PimsPropertyImprovement> pimsPropertyImprovements);
 
-        PimsLease UpdatePropertyLeases(long leaseId, long? rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases, bool userOverride = false);
+        PimsLease UpdatePropertyLeases(long leaseId, long? rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases);
 
         PimsLease UpdateLeaseConsultations(long leaseId, long? rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations);
     }
