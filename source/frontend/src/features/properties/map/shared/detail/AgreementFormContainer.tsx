@@ -19,6 +19,7 @@ export const AgreementFormContainer: React.FunctionComponent<IAgreementFormConta
     const file = await generateDocumentDownloadWrappedRequest({
       templateData: values,
       templateType: 'placeholder',
+      convertToType: null,
     });
     if (file?.payload) {
       showFile(file?.payload);

@@ -1,14 +1,16 @@
 import EditButton from 'components/common/EditButton';
+import { StyledAddButton } from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import Claims from 'constants/claims';
 import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
+import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Compensation } from 'models/api/Compensation';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { Col, Row } from 'react-bootstrap';
+import { FaMoneyCheck } from 'react-icons/fa';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
@@ -20,17 +22,26 @@ export interface CompensationRequisitionDetailViewProps {
   gstConstant: number | undefined;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
+  onGenerate: (compensation: Api_Compensation) => void;
 }
 
 export const CompensationRequisitionDetailView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailViewProps>
-> = ({ compensation, acqFileProject, acqFileProduct, clientConstant, loading, setEditMode }) => {
+> = ({
+  compensation,
+  acqFileProject,
+  acqFileProduct,
+  clientConstant,
+  loading,
+  setEditMode,
+  onGenerate,
+}) => {
   const { hasClaim } = useKeycloakWrapper();
 
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
-      <StyledEditWrapper>
+      <RightFlexDiv>
         {setEditMode !== undefined && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) && (
           <EditButton
             title="Edit compensation requisition"
@@ -39,7 +50,15 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             }}
           />
         )}
-      </StyledEditWrapper>
+        <StyledAddButton
+          onClick={() => {
+            onGenerate(compensation);
+          }}
+        >
+          <FaMoneyCheck className="mr-2" />
+          Generate H120
+        </StyledAddButton>
+      </RightFlexDiv>
       <Section>
         <StyledRow className="no-gutters">
           <Col xs="7">
@@ -132,4 +151,9 @@ const StyledRow = styled(Row)`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   font-weight: bold;
+`;
+
+const RightFlexDiv = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
 `;
