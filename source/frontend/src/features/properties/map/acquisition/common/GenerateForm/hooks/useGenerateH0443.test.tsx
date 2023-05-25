@@ -4,7 +4,7 @@ import { useDocumentGenerationRepository } from 'features/documents/hooks/useDoc
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useProperties } from 'hooks/repositories/useProperties';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Property } from 'models/api/Property';
 import { Provider } from 'react-redux';

@@ -13,6 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsDocumentTyp()
         {
+            PimsDocumentCategorySubtypes = new HashSet<PimsDocumentCategorySubtype>();
             PimsDocuments = new HashSet<PimsDocument>();
         }
 
@@ -73,6 +74,8 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [InverseProperty(nameof(PimsDocumentCategorySubtype.DocumentType))]
+        public virtual ICollection<PimsDocumentCategorySubtype> PimsDocumentCategorySubtypes { get; set; }
         [InverseProperty(nameof(PimsDocument.DocumentType))]
         public virtual ICollection<PimsDocument> PimsDocuments { get; set; }
     }

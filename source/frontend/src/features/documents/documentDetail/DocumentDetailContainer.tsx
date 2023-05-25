@@ -41,7 +41,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
     retrieveDocumentDetail,
     retrieveDocumentDetailLoading,
   } = useDocumentProvider();
-  const { getDocumentTypeMetadata } = useApiDocuments();
+  const { getDocumentTypeMetadataApiCall } = useApiDocuments();
 
   const formikRef = useRef<FormikProps<DocumentUpdateFormData>>(null);
 
@@ -122,7 +122,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
       if (props.pimsDocument.mayanDocumentId !== undefined) {
         const mayanDocumentTypeId = props.pimsDocument.documentType?.mayanId;
         if (mayanDocumentTypeId) {
-          const axiosResponse = await getDocumentTypeMetadata(mayanDocumentTypeId);
+          const axiosResponse = await getDocumentTypeMetadataApiCall(mayanDocumentTypeId);
           if (axiosResponse?.data.status === ExternalResultStatus.Success && isMounted()) {
             let results = axiosResponse?.data.payload.results;
             setDocumentTypeMetadataTypes(results);
@@ -134,7 +134,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
   }, [
     props.pimsDocument.mayanDocumentId,
     props.pimsDocument.documentType?.mayanId,
-    getDocumentTypeMetadata,
+    getDocumentTypeMetadataApiCall,
     isMounted,
   ]);
 

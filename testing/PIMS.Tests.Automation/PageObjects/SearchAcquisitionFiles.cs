@@ -159,7 +159,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultHistoricalFile).Text == "");
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultName).Text.Equals(name));
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultMOTIRegion).Text != "");
-            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultProject).Text == "");
+            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultProject).Text != "");
             Assert.True(webDriver.FindElements(searchAcquisitionFile1stResultAddress).Count() > 0);
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultStatus).Text.Equals("Active"));
         }

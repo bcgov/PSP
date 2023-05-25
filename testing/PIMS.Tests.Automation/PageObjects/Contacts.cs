@@ -202,7 +202,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(contactOrgNameSelect).Click();
             }
             //Inserting contact info
-            if (contact.Email1 != "")
+            if (contact.Email1 != "" && contact.EmailType1 != "")
             {
                 webDriver.FindElement(contactEmailInput1).SendKeys(contact.Email1);
                 ChooseSpecificSelectOption(contactEmailSelect1, contact.EmailType1);
@@ -509,7 +509,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(contactIndFullName).Text.Equals(contact.FullName));
             Assert.True(webDriver.FindElement(contactIndPrefNameLabel).Displayed);
             Assert.True(webDriver.FindElement(contactIndPrefNameContent).Text.Equals(contact.PreferableName));
-            Assert.True(webDriver.FindElement(contactIndStatusSpan).Text.Equals(contact.Status));
+            Assert.True(webDriver.FindElement(contactIndStatusSpan).Text.Equals(contact.ContactStatus));
 
             Assert.True(webDriver.FindElement(contactIndOrganizationLabel).Displayed);
             if (contact.Organization != "")
@@ -709,7 +709,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(contactOrgName).Text.Equals(contact.OrganizationName));
             Assert.True(webDriver.FindElement(contactOrgAliasLabel).Displayed);
             Assert.True(webDriver.FindElement(contactOrgAliasContent).Text.Equals(contact.Alias));
-            Assert.True(webDriver.FindElement(contactOrgStatusSpan).Text.Equals(contact.Status));
+            Assert.True(webDriver.FindElement(contactOrgStatusSpan).Text.Equals(contact.ContactStatus));
 
             Assert.True(webDriver.FindElement(contactOrgIncorpNbrLabel).Displayed);
             Assert.True(webDriver.FindElement(contactOrgIncorpNbrContent).Text.Equals(contact.IncorporationNumber));

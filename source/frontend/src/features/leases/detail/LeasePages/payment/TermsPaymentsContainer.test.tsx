@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultFormLease, defaultFormLeaseTerm, defaultLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';

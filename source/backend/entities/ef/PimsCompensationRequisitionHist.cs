@@ -82,5 +82,11 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("CHART_OF_ACCOUNTS_ID")]
+        public long? ChartOfAccountsId { get; set; }
+        [Column("RESPONSIBILITY_ID")]
+        public long? ResponsibilityId { get; set; }
+        [Column("YEARLY_FINANCIAL_ID")]
+        public long? YearlyFinancialId { get; set; }
     }
 }

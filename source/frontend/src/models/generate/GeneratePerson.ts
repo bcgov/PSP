@@ -3,15 +3,15 @@ import { getApiPersonOrOrgMailingAddress } from 'features/contacts/contactUtils'
 import { Api_Person } from 'models/api/Person';
 import { formatNames } from 'utils/personUtils';
 
-import { GenerateAddress } from './GenerateAddress';
-export class GeneratePerson {
+import { Api_GenerateAddress } from './GenerateAddress';
+export class Api_GeneratePerson {
   given_name: string;
   middle_names: string;
   last_name: string;
   email: string;
   organizations: string;
   full_name_string: string;
-  address: GenerateAddress | null;
+  address: Api_GenerateAddress | null;
   phone: string;
 
   constructor(person: Api_Person | null | undefined) {
@@ -49,7 +49,7 @@ export class GeneratePerson {
     this.organizations =
       person?.personOrganizations?.map(o => o.organization?.name).join(', ') ?? '';
     this.address = person
-      ? new GenerateAddress(getApiPersonOrOrgMailingAddress(person) ?? null)
+      ? new Api_GenerateAddress(getApiPersonOrOrgMailingAddress(person) ?? null)
       : null;
     this.full_name_string = formatNames([this.given_name, this.middle_names, this.last_name]);
   }

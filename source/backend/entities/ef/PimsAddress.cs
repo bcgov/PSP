@@ -11,8 +11,10 @@ namespace Pims.Dal.Entities
     [Table("PIMS_ADDRESS")]
     [Index(nameof(CountryId), Name = "ADDRSS_COUNTRY_ID_IDX")]
     [Index(nameof(DistrictCode), Name = "ADDRSS_DISTRICT_CODE_IDX")]
+    [Index(nameof(MunicipalityName), Name = "ADDRSS_MUNICIPALITY_NAME_IDX")]
     [Index(nameof(ProvinceStateId), Name = "ADDRSS_PROVINCE_STATE_ID_IDX")]
     [Index(nameof(RegionCode), Name = "ADDRSS_REGION_CODE_IDX")]
+    [Index(nameof(StreetAddress1), Name = "ADDRSS_STREET_ADDRESS_1_IDX")]
     public partial class PimsAddress
     {
         public PimsAddress()

@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { MAX_SQL_MONEY_SIZE } from 'constants/API';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions } from 'utils/test-utils';
 

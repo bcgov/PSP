@@ -1,4 +1,4 @@
-import { mockLookups } from 'mocks';
+import { mockLookups } from 'mocks/index.mock';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';

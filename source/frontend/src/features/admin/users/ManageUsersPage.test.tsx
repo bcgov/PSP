@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import { getMockPagedUsers } from 'mocks/userMock';
+import { getMockPagedUsers } from 'mocks/user.mock';
 import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';

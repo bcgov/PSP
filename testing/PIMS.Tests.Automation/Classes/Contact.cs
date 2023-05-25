@@ -3,7 +3,7 @@ namespace PIMS.Tests.Automation.Classes
 {
     public class Contact
     {
-        public string Status { get; set; } = null!;
+        public string ContactStatus { get; set; } = null!;
         public string? Email1 { get; set; } = null;
         public string? EmailType1 { get; set; } = null;
         public string? EmailTypeDisplay1 { get; set; } = null;

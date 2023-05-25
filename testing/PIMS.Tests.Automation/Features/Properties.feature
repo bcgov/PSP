@@ -1,8 +1,8 @@
-﻿Feature: Properties
+﻿@Regression-Properties
+Feature: Properties
 
 Property Inventory and Information Details test cases
 
-@Properties
 Scenario: Property Map Filters and Details validation
 	Given I search for a Property in the Inventory by different filters from row number 9
 

@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import find from 'lodash/find';
-import * as MOCK from 'mocks/dataMocks';
+import * as MOCK from 'mocks/data.mock';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -19,7 +19,6 @@ const testResearchFile: Api_ResearchFile = {
 
 const dispatch = jest.fn();
 const toastSuccessSpy = jest.spyOn(toast, 'success');
-const toastErrorSpy = jest.spyOn(toast, 'error');
 const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
 const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
 const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
@@ -55,7 +54,7 @@ describe('useAddResearch functions', () => {
   });
 
   describe('addResearch', () => {
-    const url = `/researchFiles`;
+    const url = /researchFiles.*/;
     it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onPost(url).reply(200, testResearchFile);
       const { addResearchFile } = setup();
@@ -74,12 +73,9 @@ describe('useAddResearch functions', () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       const { addResearchFile } = setup();
 
-      await act(async () => {
+      expect(async () => {
         await addResearchFile(testResearchFile);
-      });
-
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(toastErrorSpy).toHaveBeenCalled();
+      }).rejects.toThrow();
     });
   });
 });

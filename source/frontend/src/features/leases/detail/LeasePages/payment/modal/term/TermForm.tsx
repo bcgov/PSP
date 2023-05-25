@@ -80,8 +80,8 @@ export const TermForm: React.FunctionComponent<React.PropsWithChildren<ITermForm
           <Check
             label="Subject to GST?"
             field="isGstEligible"
-            radioLabelOne="Y"
-            radioLabelTwo="N"
+            radioLabelOne="N"
+            radioLabelTwo="Y"
             type="radio"
           />
           <Select label="Term Status" field="statusTypeCode.id" options={leaseTermStatusOptions} />

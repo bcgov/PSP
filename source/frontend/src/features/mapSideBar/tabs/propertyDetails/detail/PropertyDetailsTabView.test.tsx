@@ -1,6 +1,6 @@
 import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { Api_Property } from 'models/api/Property';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';

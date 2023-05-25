@@ -14,7 +14,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By locateOnMapTab = By.XPath("//a[contains(text(),'Locate on Map')]");
         private By locateOnMapSubtitle = By.XPath("//h3[contains(text(), 'Select a property')]");
         private By locateOnMapBlueIcon = By.Id("Layer_2");
-        private By locateOnMapInstuction1 = By.XPath("//li[contains(text(),'Single-click pin above')]");
+        private By locateOnMapInstuction1 = By.XPath("//li[contains(text(),'Single-click blue marker above')]");
         private By locateOnMapInstuction2 = By.XPath("//li[contains(text(),'Mouse to a parcel on the map')]");
         private By locateOnMapInstuction3 = By.XPath("//li[contains(text(),'Single-click on parcel to select it')]");
         private By locateOnMapSelectedLabel = By.XPath("//div[contains(text(),'Selected property attributes')]");
@@ -199,6 +199,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(generalToastBody).Count() > 0)
             {
+                Wait(200);
                 Assert.True(sharedModals.ToastifyText().Equals("A property that the user is trying to select has already been added to the selected properties list"));
             }
 

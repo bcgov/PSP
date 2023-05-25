@@ -241,6 +241,7 @@ exports[`NoteDetailsFormModal component renders as expected 1`] = `
         </div>
         <div
           class="modal-body"
+          style="white-space: pre-line;"
         >
           <div
             class="container"

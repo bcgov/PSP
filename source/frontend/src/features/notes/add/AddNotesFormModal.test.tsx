@@ -1,6 +1,6 @@
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fakeText, render, RenderOptions, userEvent } from 'utils/test-utils';
 

@@ -163,5 +163,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("GENERAL_LOCATION")]
+        [StringLength(2000)]
+        public string GeneralLocation { get; set; }
     }
 }

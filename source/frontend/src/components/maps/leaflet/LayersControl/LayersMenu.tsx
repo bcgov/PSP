@@ -5,8 +5,7 @@ import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
 import L from 'leaflet';
 import flatten from 'lodash/flatten';
 import noop from 'lodash/noop';
-import React, { useEffect, useMemo } from 'react';
-import { useContext } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FaAngleDown, FaAngleRight } from 'react-icons/fa';
@@ -203,9 +202,25 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
           return (
             <ParentNode key={node.key} id={node.key}>
               {node.isOpen ? (
-                <OpenedIcon onClick={node.toggleNode} />
+                <OpenedIcon
+                  onClick={(event: React.MouseEvent<SVGElement>) => {
+                    if (node?.toggleNode) {
+                      node.toggleNode();
+                    }
+
+                    event.stopPropagation();
+                  }}
+                />
               ) : (
-                <ClosedIcon onClick={node.toggleNode} />
+                <ClosedIcon
+                  onClick={(event: any) => {
+                    if (node?.toggleNode) {
+                      node.toggleNode();
+                    }
+
+                    event.stopPropagation();
+                  }}
+                />
               )}
               <ParentCheckbox
                 index={node.index}
@@ -256,7 +271,7 @@ const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
           nodes: allNodes?.map((node: any, index) => ({
             ...node,
             zIndex: (parentIndex + 1) * index,
-            opacity: node?.opacity !== undefined ? Number(node?.opacity) : 0.3,
+            opacity: node?.opacity !== undefined ? Number(node?.opacity) : 0.8,
           })),
         };
       }),

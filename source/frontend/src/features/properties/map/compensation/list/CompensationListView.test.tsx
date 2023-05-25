@@ -1,7 +1,7 @@
 import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks';
-import { getMockApiCompensationList } from 'mocks/mockCompensations';
+import { getMockApiCompensationList } from 'mocks/compensations.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
@@ -15,6 +15,7 @@ const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
 
 const onDelete = jest.fn();
+const onAddCompensationRequisition = jest.fn();
 
 describe('compensation list view', () => {
   const setup = (renderOptions?: RenderOptions & Partial<ICompensationListViewProps>) => {
@@ -23,6 +24,7 @@ describe('compensation list view', () => {
       <CompensationListView
         compensations={renderOptions?.compensations ?? []}
         onDelete={onDelete}
+        onAdd={onAddCompensationRequisition}
       />,
       {
         ...renderOptions,
@@ -65,16 +67,17 @@ describe('compensation list view', () => {
           acquisitionFileId: 1,
           isDraft: true,
           fiscalYear: null,
-          agreementDateTime: null,
-          expropriationNoticeServedDateTime: null,
-          expropriationVestingDateTime: null,
-          generationDatetTime: null,
+          agreementDate: null,
+          expropriationNoticeServedDate: null,
+          expropriationVestingDate: null,
+          generationDate: null,
           specialInstruction: null,
           detailedRemarks: null,
           isDisabled: null,
           financials: [
             {
               id: 1,
+              financialActivityCode: null,
               compensationId: 1,
               pretaxAmount: null,
               taxAmount: null,
@@ -84,6 +87,7 @@ describe('compensation list view', () => {
             {
               id: 2,
               compensationId: 1,
+              financialActivityCode: null,
               pretaxAmount: null,
               taxAmount: null,
               totalAmount: 10,
@@ -96,16 +100,17 @@ describe('compensation list view', () => {
           acquisitionFileId: 1,
           isDraft: false,
           fiscalYear: null,
-          agreementDateTime: null,
-          expropriationNoticeServedDateTime: null,
-          expropriationVestingDateTime: null,
-          generationDatetTime: null,
+          agreementDate: null,
+          expropriationNoticeServedDate: null,
+          expropriationVestingDate: null,
+          generationDate: null,
           specialInstruction: null,
           detailedRemarks: null,
           isDisabled: null,
           financials: [
             {
               id: 3,
+              financialActivityCode: null,
               compensationId: 1,
               pretaxAmount: null,
               taxAmount: null,
@@ -114,6 +119,7 @@ describe('compensation list view', () => {
             },
             {
               id: 4,
+              financialActivityCode: null,
               compensationId: 1,
               pretaxAmount: null,
               taxAmount: null,
@@ -162,6 +168,20 @@ describe('compensation list view', () => {
     const deleteButton = queryByTitle('Delete Compensation');
     await waitFor(() => {
       expect(deleteButton).toBeNull();
+    });
+  });
+
+  it('can click the Add Compensation button', async () => {
+    const { getByText } = setup({
+      compensations: getMockApiCompensationList(),
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_ADD],
+    });
+
+    const addButton = getByText('Add a Requisition');
+    expect(addButton).toBeVisible();
+    act(() => userEvent.click(addButton));
+    await waitFor(() => {
+      expect(onAddCompensationRequisition).toHaveBeenCalled();
     });
   });
 });

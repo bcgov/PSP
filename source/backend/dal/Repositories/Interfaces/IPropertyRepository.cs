@@ -30,8 +30,10 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetAllAssociationsById(long id);
 
-        PimsProperty Update(PimsProperty property);
+        PimsProperty Update(PimsProperty property, bool overrideLocation = false);
 
         void Delete(PimsProperty property);
+
+        PimsProperty TransferToCoreInventory(PimsProperty property);
     }
 }
