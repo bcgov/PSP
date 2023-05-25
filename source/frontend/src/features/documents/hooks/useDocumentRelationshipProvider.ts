@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
  */
 export const useDocumentRelationshipProvider = () => {
   const {
-    getDocumentRelationship,
+    getDocumentRelationshipApiCall,
     deleteDocumentRelationshipApiCall,
     uploadDocumentRelationshipApiCall,
   } = useApiDocuments();
@@ -31,8 +31,8 @@ export const useDocumentRelationshipProvider = () => {
     >({
       requestFunction: useCallback(
         async (relationshipType: DocumentRelationshipType, parentId: string) =>
-          await getDocumentRelationship(relationshipType, parentId),
-        [getDocumentRelationship],
+          await getDocumentRelationshipApiCall(relationshipType, parentId),
+        [getDocumentRelationshipApiCall],
       ),
       requestName: 'retrieveDocumentRelationship',
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
