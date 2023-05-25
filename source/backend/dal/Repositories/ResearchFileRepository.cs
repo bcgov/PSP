@@ -72,7 +72,7 @@ namespace Pims.Dal.Repositories
             {
                 if (researchProperty.Property.PropertyId != 0)
                 {
-                    Context.Entry(researchProperty.Property).State = EntityState.Unchanged;
+                    researchProperty.Property = null;
                 }
             }
 

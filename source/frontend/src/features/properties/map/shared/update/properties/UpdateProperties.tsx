@@ -11,6 +11,7 @@ import { useBcaAddress } from 'features/properties/map/hooks/useBcaAddress';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { Api_File } from 'models/api/File';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -22,14 +23,19 @@ export interface IUpdatePropertiesProps {
   file: Api_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
   onSuccess: () => void;
-  updateFileProperties: (file: Api_File) => Promise<Api_File | undefined>;
+  updateFileProperties: (
+    file: Api_File,
+    userOverrideCodes: UserOverrideCode[],
+  ) => Promise<Api_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
+  formikRef?: React.RefObject<FormikProps<any>>;
 }
 
 export const UpdateProperties: React.FunctionComponent<
   React.PropsWithChildren<IUpdatePropertiesProps>
 > = props => {
-  const formikRef = useRef<FormikProps<FileForm>>(null);
+  const localRef = useRef<FormikProps<FileForm>>(null);
+  const formikRef = props.formikRef ? props.formikRef : localRef;
   const formFile = FileForm.fromApi(props.file);
 
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
@@ -71,7 +77,7 @@ export const UpdateProperties: React.FunctionComponent<
 
   const saveFile = async (file: Api_File) => {
     try {
-      const response = await props.updateFileProperties(file);
+      const response = await props.updateFileProperties(file, []);
 
       formikRef.current?.setSubmitting(false);
       if (!!response?.fileName) {

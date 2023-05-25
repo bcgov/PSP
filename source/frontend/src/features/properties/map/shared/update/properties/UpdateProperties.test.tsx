@@ -37,6 +37,7 @@ describe('UpdateProperties component', () => {
           onSuccess={onSuccess}
           updateFileProperties={updateFileProperties}
           canRemove={props.canRemove ?? jest.fn()}
+          formikRef={{} as any}
         />
       </SideBarContextProvider>,
       {

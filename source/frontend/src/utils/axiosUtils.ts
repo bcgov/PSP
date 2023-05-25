@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { IApiError } from 'interfaces/IApiError';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
@@ -33,7 +34,7 @@ export function useAxiosErrorHandler(message = 'Network error. Check responses a
 }
 
 export function useAxiosErrorHandlerWithConfirmation(
-  needsUserAction: (needsAction: boolean) => void,
+  needsUserAction: (userOverrideCode: UserOverrideCode | null, message: string | null) => void,
   message = 'Network error. Check responses and try again.',
 ) {
   return useCallback(
@@ -42,7 +43,12 @@ export function useAxiosErrorHandlerWithConfirmation(
         const axiosError = error as AxiosError<IApiError>;
         if (axiosError?.response?.status === 409) {
           // The API sent a 409 error - indicating user confirmation is needed
-          needsUserAction(true);
+          const userOverrideCode = Object.keys(UserOverrideCode).includes(
+            axiosError?.response?.data?.errorCode,
+          )
+            ? (axiosError?.response?.data?.errorCode as UserOverrideCode)
+            : null;
+          needsUserAction(userOverrideCode, axiosError?.response?.data?.error ?? null);
         } else if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
         } else {

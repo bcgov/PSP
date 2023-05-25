@@ -80,7 +80,7 @@ namespace Pims.Dal.Repositories
             // Mark the property not to be changed if it did not exist already.
             if (propertyAcquisitionFile.PropertyId != 0)
             {
-                Context.Entry(propertyAcquisitionFile.Property).State = EntityState.Unchanged;
+                propertyAcquisitionFile.Property = null;
             }
 
             Context.PimsPropertyAcquisitionFiles.Add(propertyAcquisitionFile);

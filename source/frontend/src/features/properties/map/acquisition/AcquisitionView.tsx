@@ -65,6 +65,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
         onSuccess={onSuccess}
         updateFileProperties={onUpdateProperties}
         canRemove={canRemove}
+        formikRef={formikRef}
       />
     );
   }

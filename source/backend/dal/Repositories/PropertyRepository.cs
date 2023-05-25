@@ -310,7 +310,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public PimsProperty Update(PimsProperty property)
+        public PimsProperty Update(PimsProperty property, bool overrideLocation = false)
         {
             property.ThrowIfNull(nameof(property));
 
@@ -321,7 +321,10 @@ namespace Pims.Dal.Repositories
 
             // ignore a number of properties that we don't the frontend to override - for now
             property.Boundary = existingProperty.Boundary;
-            property.Location = existingProperty.Location;
+            if (!overrideLocation)
+            {
+                property.Location = existingProperty.Location;
+            }
             property.AddressId = existingProperty.AddressId;
             property.PropertyDataSourceEffectiveDate = existingProperty.PropertyDataSourceEffectiveDate;
             property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
