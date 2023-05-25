@@ -511,6 +511,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                 >
                   <div
                     class="c8 form-group"
+                    data-testid="typeahead-project"
                   >
                     <div
                       class="rbt"

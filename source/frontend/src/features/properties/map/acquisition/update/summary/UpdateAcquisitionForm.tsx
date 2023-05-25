@@ -147,7 +147,7 @@ const AcquisitionDetailSubForm: React.FC<{
             onChange={(vals: IAutocompletePrediction[]) => {
               onMinistryProjectSelected(vals);
               if (vals.length === 0) {
-                formikProps.setFieldValue('product', 0);
+                formikProps.setFieldValue('product', '');
               }
             }}
           />

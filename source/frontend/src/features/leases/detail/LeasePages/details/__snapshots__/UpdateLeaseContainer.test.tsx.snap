@@ -412,6 +412,7 @@ exports[`Update lease container component renders as expected 1`] = `
             >
               <div
                 class="c4 form-group"
+                data-testid="typeahead-project"
               >
                 <div
                   class="rbt"

@@ -60,6 +60,7 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
         >
           <div
             class="c3 form-group"
+            data-testid="typeahead-project"
           >
             <div
               class="rbt"
