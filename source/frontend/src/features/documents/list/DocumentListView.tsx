@@ -65,7 +65,7 @@ export const DocumentListView: React.FunctionComponent<
       if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
         const axiosResponse = await getDocumentTypes();
         if (axiosResponse !== undefined) {
-          setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
+          setDocumentTypes(axiosResponse?.filter(x => x.documentType === DocumentTypeName.CDOGS));
         }
       } else {
         const axiosResponse = await getDocumentRelationshipTypes(props.relationshipType);

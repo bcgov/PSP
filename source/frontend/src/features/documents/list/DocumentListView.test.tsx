@@ -134,7 +134,7 @@ describe('Document List View', () => {
   });
 
   it('should not display the download icon on the listview', async () => {
-    mockAxios.onGet().reply(200, mockDocumentDetailResponse());
+    mockAxios.onGet().reply(200, []);
     const documentRows = mockDocumentRowResponse();
     documentRows[0].isFileAvailable = true;
     const { queryByTestId } = setup({
