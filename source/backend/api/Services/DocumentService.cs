@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
@@ -78,6 +79,32 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             return documentTypeRepository.GetAll();
+        }
+
+        public IList<PimsDocumentTyp> GetPimsDocumentTypes(DocumentRelationType relationshipType)
+        {
+            this.Logger.LogInformation("Retrieving PIMS document types for relationship type {relationshipType}", relationshipType);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
+            string categoryType;
+            switch (relationshipType)
+            {
+                case DocumentRelationType.ResearchFiles:
+                    categoryType = "RESEARCH";
+                    break;
+                case DocumentRelationType.AcquisitionFiles:
+                    categoryType = "ACQUIRE";
+                    break;
+                case DocumentRelationType.Leases:
+                    categoryType = "LEASLIC";
+                    break;
+                case DocumentRelationType.Projects:
+                    categoryType = "PROJECT";
+                    break;
+                default:
+                    throw new InvalidDataException("The requested category relationship does not exist");
+            }
+            return documentTypeRepository.GetByCategory(categoryType);
         }
 
         public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest)

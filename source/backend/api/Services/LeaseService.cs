@@ -63,13 +63,13 @@ namespace Pims.Api.Services
             return lease;
         }
 
-        public PimsLease Add(PimsLease lease, bool userOverride = false)
+        public PimsLease Add(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
-            var leasesWithProperties = AssociatePropertyLeases(lease, userOverride);
-            return _leaseRepository.Add(leasesWithProperties, userOverride);
+            var leasesWithProperties = AssociatePropertyLeases(lease, userOverrides);
+            return _leaseRepository.Add(leasesWithProperties);
         }
 
-        public PimsLease Update(PimsLease lease, bool userOverride = false)
+        public PimsLease Update(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
             var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
@@ -93,8 +93,8 @@ namespace Pims.Api.Services
             }
 
             _leaseRepository.Update(lease, false);
-            var leaseWithProperties = AssociatePropertyLeases(lease, userOverride);
-            _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases, userOverride);
+            var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
+            _leaseRepository.UpdatePropertyLeases(lease.Internal_Id, lease.ConcurrencyControlNumber, leaseWithProperties.PimsPropertyLeases);
 
             _leaseRepository.UpdateLeaseConsultations(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseConsultations);
 
@@ -126,11 +126,11 @@ namespace Pims.Api.Services
         /// By default, do not allow a property with existing leases to be associated unless the userOverride flag is true.
         /// </summary>
         /// <param name="lease"></param>
-        /// <param name="userOverride"></param>
+        /// <param name="userOverrides"></param>
         /// <returns></returns>
-        private PimsLease AssociatePropertyLeases(PimsLease lease, bool userOverride = false)
+        private PimsLease AssociatePropertyLeases(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
-            MatchProperties(lease);
+            MatchProperties(lease, userOverrides);
 
             foreach (var propertyLease in lease.PimsPropertyLeases)
             {
@@ -138,18 +138,18 @@ namespace Pims.Api.Services
                 var existingPropertyLeases = _propertyLeaseRepository.GetAllByPropertyId(property.PropertyId);
                 var isPropertyOnOtherLease = existingPropertyLeases.Any(p => p.LeaseId != lease.Internal_Id);
                 var isPropertyOnThisLease = existingPropertyLeases.Any(p => p.LeaseId == lease.Internal_Id);
-                if (isPropertyOnOtherLease && !isPropertyOnThisLease && !userOverride)
+                if (isPropertyOnOtherLease && !isPropertyOnThisLease && !userOverrides.Contains(UserOverrideCode.AddPropertyToInventory))
                 {
                     var genericOverrideErrorMsg = $"is attached to L-File # {existingPropertyLeases.FirstOrDefault().Lease.LFileNo}";
                     if (propertyLease?.Property?.Pin != null)
                     {
-                        throw new UserOverrideException($"PIN {propertyLease?.Property?.Pin.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
+                        throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, $"PIN {propertyLease?.Property?.Pin.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                     }
                     if (propertyLease?.Property?.Pid != null)
                     {
-                        throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
+                        throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, $"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                     }
-                    throw new UserOverrideException($"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
+                    throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, $"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
                         $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}");
                 }
 
@@ -164,7 +164,29 @@ namespace Pims.Api.Services
             return lease;
         }
 
-        private void MatchProperties(PimsLease lease)
+        private void UpdateLocation(PimsProperty leaseProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> userOverrides)
+        {
+            if (propertyToUpdate.Location == null)
+            {
+                if (userOverrides.Contains(UserOverrideCode.AddLocationToProperty))
+                {
+                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+                    var geom = leaseProperty.Location;
+                    if (geom.SRID != SpatialReference.BCALBERS)
+                    {
+                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                    }
+                }
+                else
+                {
+                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
+                }
+            }
+        }
+
+        private void MatchProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
             foreach (var leaseProperty in lease.PimsPropertyLeases)
             {
@@ -175,6 +197,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
+                        UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
                         leaseProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -190,6 +213,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
+                        UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
                         leaseProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)

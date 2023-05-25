@@ -9,10 +9,7 @@ namespace Pims.Dal.Exceptions
     [Serializable]
     public class UserOverrideException : Exception
     {
-        /// <summary>
-        /// get/set - For some errors that could be handled programmatically, a short string indicating the error code reported.
-        /// </summary>
-        public string ErrorCode { get; set; }
+        public UserOverrideCode UserOverride { get; }
 
         #region Constructors
 
@@ -39,12 +36,11 @@ namespace Pims.Dal.Exceptions
         /// Creates a new instance of a UserOverrideException class, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="errorCode"></param>
         /// <returns></returns>
-        public UserOverrideException(string message, string errorCode)
+        public UserOverrideException(UserOverrideCode overrideCode, string message)
             : base(message)
         {
-            ErrorCode = errorCode;
+            this.UserOverride = overrideCode;
         }
 
         /// <summary>

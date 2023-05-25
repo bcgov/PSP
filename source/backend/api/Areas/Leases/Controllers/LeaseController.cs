@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -83,10 +85,11 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddLease(Api.Models.Concepts.LeaseModel leaseModel, bool userOverride = false)
+        public IActionResult AddLease(Api.Models.Concepts.LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
         {
             var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
-            var lease = _leaseService.Add(leaseEntity, userOverride);
+            var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
+            var lease = _leaseService.Add(leaseEntity, userOverrides);
 
             return new JsonResult(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
         }
@@ -100,10 +103,11 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateLease(Api.Models.Concepts.LeaseModel leaseModel, bool userOverride = false)
+        public IActionResult UpdateLease(Api.Models.Concepts.LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
         {
             var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
-            var updatedLease = _leaseService.Update(leaseEntity, userOverride);
+            var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
+            var updatedLease = _leaseService.Update(leaseEntity, userOverrides);
 
             return new JsonResult(_mapper.Map<Api.Models.Concepts.LeaseModel>(updatedLease));
         }

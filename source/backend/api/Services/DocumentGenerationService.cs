@@ -63,11 +63,10 @@ namespace Pims.Api.Services
             return result;
         }
 
-        public async Task<ExternalResult<FileDownload>> GenerateDocument(FormDocumentType templateType, JsonElement templateData)
+        public async Task<ExternalResult<FileDownload>> GenerateDocument(FormDocumentType templateType, JsonElement templateData, ConvertToTypes? convertTo)
         {
             this.Logger.LogInformation("Generating document");
 
-            // this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
             var formTypeCode = _formDocumentService.GetFormDocumentTypes(templateType.ToString()).LastOrDefault();
             if (formTypeCode?.Document?.MayanId != null)
             {
@@ -87,6 +86,7 @@ namespace Pims.Api.Services
                         {
                             ReportName = templateFile.FileNameWithoutExtension + '-' + DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture),
                             Overwrite = true,
+                            ConvertTo = convertTo.ToString(),
                         },
                         Data = templateData,
                     };

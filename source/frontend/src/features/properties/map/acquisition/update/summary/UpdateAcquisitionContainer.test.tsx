@@ -2,6 +2,7 @@ import { Formik, FormikProps } from 'formik';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { mockAcquisitionFileResponse, mockLookups } from 'mocks/index.mock';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
@@ -100,7 +101,7 @@ describe('UpdateAcquisition container', () => {
     await act(async () => formikRef.current?.submitForm());
 
     const fileData = viewProps?.initialValues.toApi();
-    expect(mockUpdateAcquisitionFile).toHaveBeenCalledWith(fileData, false, false);
+    expect(mockUpdateAcquisitionFile).toHaveBeenCalledWith(fileData, []);
     expect(onSuccess).toHaveBeenCalled();
   });
 
@@ -126,7 +127,9 @@ describe('UpdateAcquisition container', () => {
 
   it(`triggers the confirm popup when region doesn't match`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(409, 'test message', { errorCode: 'region_violation' }),
+      createAxiosError(409, 'The Ministry region has been changed', {
+        errorCode: UserOverrideCode.UPDATE_REGION,
+      }),
     );
     const { formikRef, findByText } = setup();
 
@@ -139,7 +142,9 @@ describe('UpdateAcquisition container', () => {
 
   it(`saves the form when clicking 'Continue Save' in the region popup`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(409, 'test message', { errorCode: 'region_violation' }),
+      createAxiosError(409, 'The Ministry region has been changed', {
+        errorCode: UserOverrideCode.UPDATE_REGION,
+      }),
     );
     const { formikRef } = setup();
 
@@ -151,18 +156,22 @@ describe('UpdateAcquisition container', () => {
 
     mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
 
-    await act(async () => userEvent.click(await screen.findByText('Continue Save')));
+    await act(async () => userEvent.click(await screen.findByText('Acknowledge & Continue')));
 
     const fileData = viewProps?.initialValues.toApi();
     expect(mockUpdateAcquisitionFile).toHaveBeenCalledTimes(2);
-    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(1, fileData, false, false);
-    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(2, fileData, true, false);
+    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(1, fileData, []);
+    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(2, fileData, [
+      UserOverrideCode.UPDATE_REGION,
+    ]);
     expect(onSuccess).toHaveBeenCalled();
   });
 
   it(`dismisses the region popup when clicking 'Cancel Update'`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(409, 'test message', { errorCode: 'region_violation' }),
+      createAxiosError(409, 'The Ministry region has been changed', {
+        errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+      }),
     );
     const { formikRef } = setup();
 
@@ -181,7 +190,13 @@ describe('UpdateAcquisition container', () => {
 
   it(`triggers the confirm popup when user changes file status to completed`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(409, 'test message', { errorCode: 'properties_of_interest_violation' }),
+      createAxiosError(
+        409,
+        'The properties of interest will be added to the inventory as acquired properties',
+        {
+          errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+        },
+      ),
     );
     const { formikRef } = setup();
 
@@ -196,7 +211,11 @@ describe('UpdateAcquisition container', () => {
 
   it(`saves the form when clicking 'Continue Save' in the properties popup`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(409, 'test message', { errorCode: 'properties_of_interest_violation' }),
+      createAxiosError(
+        409,
+        'The properties of interest will be added to the inventory as acquired properties',
+        { errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY },
+      ),
     );
     const { formikRef } = setup();
 
@@ -210,18 +229,26 @@ describe('UpdateAcquisition container', () => {
 
     mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
 
-    await act(async () => userEvent.click(await screen.findByText('Continue Save')));
+    await act(async () => userEvent.click(await screen.findByText('Acknowledge & Continue')));
 
     const fileData = viewProps?.initialValues.toApi();
     expect(mockUpdateAcquisitionFile).toHaveBeenCalledTimes(2);
-    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(1, fileData, false, false);
-    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(2, fileData, false, true);
+    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(1, fileData, []);
+    expect(mockUpdateAcquisitionFile).toHaveBeenNthCalledWith(2, fileData, [
+      'PROPERTY_OF_INTEREST_TO_INVENTORY',
+    ]);
     expect(onSuccess).toHaveBeenCalled();
   });
 
   it(`dismisses the properties popup when clicking 'Cancel Update'`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(409, 'test message', { errorCode: 'properties_of_interest_violation' }),
+      createAxiosError(
+        409,
+        'The properties of interest will be added to the inventory as acquired properties',
+        {
+          errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+        },
+      ),
     );
     const { formikRef } = setup();
 

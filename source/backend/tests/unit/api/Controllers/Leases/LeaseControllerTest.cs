@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -11,6 +12,7 @@ using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
@@ -70,13 +72,13 @@ namespace Pims.Api.Test.Controllers.Lease
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            _service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
+            _service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>())).Returns(lease);
 
             // Act
-            var result = _controller.UpdateLease(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
+            var result = _controller.UpdateLease(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
+            _service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>()), Times.Once());
         }
 
         [Fact]
@@ -85,13 +87,13 @@ namespace Pims.Api.Test.Controllers.Lease
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            _service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
+            _service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>())).Returns(lease);
 
             // Act
-            var result = _controller.UpdateLease(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
+            var result = _controller.UpdateLease(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
+            _service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), new List<UserOverrideCode>()), Times.Once());
         }
         #endregion
         #endregion

@@ -27,6 +27,7 @@ export const useGenerateLetter = () => {
       const generatedFile = await generate({
         templateType: FormDocumentType.LETTER,
         templateData: letterData,
+        convertToType: null,
       });
       generatedFile?.status === ExternalResultStatus.Success!! &&
         generatedFile?.payload &&

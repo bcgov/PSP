@@ -1,13 +1,13 @@
 import { ReactComponent as Fence } from 'assets/images/fence.svg';
-import GenericModal from 'components/common/GenericModal';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import { IMapProperty } from 'components/propertySelector/models';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FormikHelpers, FormikProps } from 'formik';
+import useApiUserOverride from 'hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
-import { Api_Lease } from 'models/api/Lease';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import * as React from 'react';
 import { useMemo, useState } from 'react';
 import { useRef } from 'react';
@@ -29,11 +29,9 @@ export const AddLeaseContainer: React.FunctionComponent<
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const { selectedFileFeature } = React.useContext(MapStateContext);
+  const withUserOverride = useApiUserOverride('Failed to save Lease File');
   const { addLease } = useAddLease();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
-  const [addLeaseParams, setAddLeaseParams] = useState<
-    { lease: Api_Lease; userOverride?: string } | undefined
-  >();
 
   const { search } = useMapSearch();
 
@@ -52,11 +50,10 @@ export const AddLeaseContainer: React.FunctionComponent<
   const saveLeaseFile = async (
     leaseFormModel: LeaseFormModel,
     formikHelpers: FormikHelpers<LeaseFormModel>,
+    userOverrideCodes: UserOverrideCode[],
   ) => {
     const leaseApi = leaseFormModel.toApi();
-    const response = await addLease(leaseApi, (userOverrideMessage?: string) =>
-      setAddLeaseParams({ lease: leaseApi, userOverride: userOverrideMessage }),
-    );
+    const response = await addLease.execute(leaseApi, userOverrideCodes);
     formikHelpers.setSubmitting(false);
     if (!!response?.id) {
       if (leaseApi.properties?.find(p => !p.property?.address && !p.property?.id)) {
@@ -106,24 +103,14 @@ export const AddLeaseContainer: React.FunctionComponent<
       showCloseButton
       onClose={handleCancel}
     >
-      <AddLeaseForm onSubmit={saveLeaseFile} formikRef={formikRef} propertyInfo={initialProperty} />
-      <GenericModal
-        title="Warning"
-        display={!!addLeaseParams}
-        message={addLeaseParams?.userOverride}
-        handleOk={async () => {
-          if (!!addLeaseParams?.lease) {
-            const leaseResponse = await addLease(addLeaseParams.lease, undefined, true);
-            setAddLeaseParams(undefined);
-            if (!!leaseResponse?.id) {
-              history.push(`/mapview/sidebar/lease/${leaseResponse?.id}`);
-            }
-          }
-        }}
-        handleCancel={() => setAddLeaseParams(undefined)}
-        okButtonText="Save Anyways"
-        okButtonVariant="warning"
-        cancelButtonText="Cancel"
+      <AddLeaseForm
+        onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) =>
+          withUserOverride((useOverrideCodes: UserOverrideCode[]) =>
+            saveLeaseFile(values, formikHelpers, useOverrideCodes),
+          )
+        }
+        formikRef={formikRef}
+        propertyInfo={initialProperty}
       />
     </MapSideBarLayout>
   );

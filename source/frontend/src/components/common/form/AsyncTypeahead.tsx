@@ -109,7 +109,10 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
   );
 
   return (
-    <StyledFormGroup className={cx({ required: required }, className)}>
+    <StyledFormGroup
+      className={cx({ required: required }, className)}
+      data-testid={`typeahead-${field}`}
+    >
       {label && <Form.Label htmlFor={`typeahead-${field}`}>{label}</Form.Label>}
       {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
       <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>

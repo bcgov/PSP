@@ -1,4 +1,5 @@
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import Api_TypeCode from './TypeCode';
 
 export interface Api_Compensation extends Api_ConcurrentVersion {
   id: number | null;
@@ -22,4 +23,5 @@ export interface Api_CompensationFinancial extends Api_ConcurrentVersion {
   taxAmount: number | null;
   totalAmount: number | null;
   isDisabled: boolean | null;
+  financialActivityCode: Api_TypeCode<number> | null;
 }

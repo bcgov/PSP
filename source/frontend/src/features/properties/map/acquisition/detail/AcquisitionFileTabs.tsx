@@ -13,8 +13,6 @@ import AgreementContainer from '../../agreement/detail/AgreementContainer';
 import AgreementView from '../../agreement/detail/AgreementView';
 import CompensationListContainer from '../../compensation/list/CompensationListContainer';
 import CompensationListView from '../../compensation/list/CompensationListView';
-import { FormListView } from '../../form/list/FormListView';
-import FormListViewContainer from '../../form/list/FormListViewContainer';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
 import { EditFormType } from '../EditFormNames';
 import { AcquisitionChecklistView } from './checklist/AcquisitionChecklistView';
@@ -82,20 +80,6 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       ),
       key: FileTabType.ACTIVITIES,
       name: 'Activities',
-    });
-  }
-
-  if (acquisitionFile?.id && hasClaim(Claims.FORM_VIEW)) {
-    tabViews.push({
-      content: (
-        <FormListViewContainer
-          View={FormListView}
-          fileId={acquisitionFile.id}
-          fileType={FileTypes.Acquisition}
-        ></FormListViewContainer>
-      ),
-      key: FileTabType.FORMS,
-      name: 'Forms',
     });
   }
 

@@ -88,7 +88,7 @@ export const Tabs = styled(BsTabs)`
     height: 2.4rem;
   }
   .nav-item {
-    min-width: 7rem;
+    min-width: 5rem;
     padding: 0.1rem 0.6rem;
 
     &:hover {

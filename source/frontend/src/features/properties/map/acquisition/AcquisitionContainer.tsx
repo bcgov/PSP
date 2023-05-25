@@ -5,8 +5,10 @@ import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import useApiUserOverride from 'hooks/useApiUserOverride';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_File } from 'models/api/File';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
 
 import { SideBarContext } from '../context/sidebarContext';
@@ -45,6 +47,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
   const { search } = useMapSearch();
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to update Acquisition File');
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
     updateAcquisitionProperties,
@@ -174,11 +179,14 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const onUpdateProperties = (file: Api_File): Promise<Api_File | undefined> => {
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
-    return updateAcquisitionProperties.execute({ ...file, productId: null, projectId: null });
+    return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
+      return updateAcquisitionProperties
+        .execute({ ...file, productId: null, projectId: null }, userOverrideCodes)
+        .then(() => onSuccess());
+    });
   };
 
   // UI components
-
   if (
     loadingAcquisitionFile ||
     (loadingAcquisitionFileProperties &&

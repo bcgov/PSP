@@ -360,9 +360,8 @@ namespace Pims.Dal.Repositories
         /// Add the passed lease to the database assuming the user has the require claims.
         /// </summary>
         /// <param name="lease"></param>
-        /// <param name="userOverride"></param>
         /// <returns></returns>
-        public PimsLease Add(PimsLease lease, bool userOverride = false)
+        public PimsLease Add(PimsLease lease)
         {
             if (lease == null)
             {
@@ -490,7 +489,7 @@ namespace Pims.Dal.Repositories
         /// <param name="rowVersion"></param>
         /// <param name="pimsPropertyLeases"></param>
         /// <returns></returns>
-        public PimsLease UpdatePropertyLeases(long leaseId, long? rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases, bool userOverride = false)
+        public PimsLease UpdatePropertyLeases(long leaseId, long? rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var existingLease = this.Context.PimsLeases.Include(l => l.PimsPropertyLeases).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)

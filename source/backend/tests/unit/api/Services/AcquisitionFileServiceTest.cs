@@ -26,12 +26,12 @@ namespace Pims.Api.Test.Services
     [Trait("category", "api")]
     [Trait("group", "acquisition")]
     [ExcludeFromCodeCoverage]
-    public class AcquisitionServiceTest
+    public class AcquisitionFileServiceTest
     {
         #region Tests
         private readonly TestHelper _helper;
 
-        public AcquisitionServiceTest()
+        public AcquisitionFileServiceTest()
         {
             _helper = new TestHelper();
         }
@@ -57,7 +57,7 @@ namespace Pims.Api.Test.Services
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
-            var result = service.Add(acqFile);
+            var result = service.Add(acqFile, new List<UserOverrideCode>());
 
             // Assert
             repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -79,7 +79,7 @@ namespace Pims.Api.Test.Services
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
-            Action act = () => service.Add(acqFile);
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -94,7 +94,7 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             // Act
-            Action act = () => service.Add(acqFile);
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
 
@@ -114,7 +114,7 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             // Act
-            Action act = () => service.Add(null);
+            Action act = () => service.Add(null, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -136,7 +136,7 @@ namespace Pims.Api.Test.Services
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
-            Action act = () => service.Add(acqFile);
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -224,7 +224,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, true, true);
+            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -253,7 +253,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
             // Act
-            Action act = () => service.Update(acqFile, true);
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -281,7 +281,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.Update(acqFile, true, true);
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -297,7 +297,7 @@ namespace Pims.Api.Test.Services
 
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             // Act
-            Action act = () => service.Update(acqFile, true);
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -315,7 +315,7 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             // Act
-            Action act = () => service.Update(null, false);
+            Action act = () => service.Update(null, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -338,11 +338,11 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.Update(acqFile, ministryOverride: false, propertiesOverride: true);
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>());
 
             // Assert
             var ex = act.Should().Throw<UserOverrideException>();
-            ex.Which.ErrorCode.Should().Be("region_violation");
+            ex.Which.UserOverride.Should().Be(UserOverrideCode.UpdateRegion);
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -366,7 +366,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, ministryOverride: true, propertiesOverride: true);
+            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -398,11 +398,11 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.Update(acqFile, ministryOverride: true, propertiesOverride: false);
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             var ex = act.Should().Throw<UserOverrideException>();
-            ex.Which.ErrorCode.Should().Be("properties_of_interest_violation");
+            ex.Which.UserOverride.Should().Be(UserOverrideCode.PoiToInventory);
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -439,7 +439,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, ministryOverride: true, propertiesOverride: true);
+            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion, UserOverrideCode.PoiToInventory });
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -477,7 +477,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            var result = service.Update(acqFile, true);
+            var result = service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
@@ -505,7 +505,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            service.UpdateProperties(acqFile);
+            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
@@ -539,7 +539,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.UpdateProperties(EntityHelper.CreateAcquisitionFile());
+            Action act = () => service.UpdateProperties(EntityHelper.CreateAcquisitionFile(), new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>();
@@ -573,7 +573,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.UpdateProperties(EntityHelper.CreateAcquisitionFile());
+            Action act = () => service.UpdateProperties(EntityHelper.CreateAcquisitionFile(), new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>();
@@ -605,7 +605,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            service.UpdateProperties(acqFile);
+            service.UpdateProperties(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
@@ -642,7 +642,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            service.UpdateProperties(acqFile);
+            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             // since this is a new property, the following default fields should be set.
@@ -685,7 +685,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            service.UpdateProperties(acqFile);
+            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
@@ -716,7 +716,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            service.UpdateProperties(acqFile);
+            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
@@ -753,7 +753,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            service.UpdateProperties(acqFile);
+            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
@@ -773,7 +773,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
 
             // Act
-            Action act = () => service.UpdateProperties(acqFile);
+            Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -800,7 +800,7 @@ namespace Pims.Api.Test.Services
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             // Act
-            Action act = () => service.UpdateProperties(acqFile);
+            Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -828,7 +828,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
-            Action act = () => service.Update(acqFile, true);
+            Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -846,7 +846,9 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            var acquisitionRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -856,6 +858,76 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetChecklist_Append_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            var acquisitionRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST" } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(1);
+            result.FirstOrDefault().AcqChklstItemTypeCode.Should().Be("TEST");
+            result.FirstOrDefault().AcqChklstItemStatusTypeCode.Should().Be("INCOMP");
+        }
+
+        [Fact]
+        public void GetChecklist_Append_IgnoreAcqFileByStatus()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFile.AcqPhysFileStatusTypeCode = "COMPLT";
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            var acquisitionRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST" } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(0);
+        }
+
+        [Fact]
+        public void GetChecklist_Append_IgnoreItemByDate()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFile.AppCreateTimestamp = new DateTime(2023, 1, 1);
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            var acquisitionRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST", EffectiveDate = new DateTime(2024, 1, 1) } });
+            acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            result.Count().Should().Be(0);
         }
 
         [Fact]

@@ -50,6 +50,7 @@ namespace Pims.Dal.Repositories
         {
             User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
             var entity = Context.PimsCompensationRequisitions
+                .Include(c => c.PimsCompReqH120s)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 

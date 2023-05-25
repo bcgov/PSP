@@ -18,7 +18,7 @@ namespace Pims.Core.Extensions
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
             var acquisitionFile = acquisitionFileRepository.GetById(acquisitionFileId);
 
-            if (pimsUser.IsContractor && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.PersonId == pimsUser.PersonId))
+            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.PersonId == pimsUser.PersonId))
             {
                 throw new NotAuthorizedException("Contractor is not assigned to the Acquisition File's team");
             }
