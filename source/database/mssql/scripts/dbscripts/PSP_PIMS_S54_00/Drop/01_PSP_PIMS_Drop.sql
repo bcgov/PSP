@@ -5,7 +5,7 @@
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-05-10 09:56                                */
+/* Created on:            2023-05-18 12:46                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -1581,6 +1581,22 @@ DROP TRIGGER [dbo].[PIMS_STAVBL_A_S_IUD_TR]
 GO
 
 
+DROP TRIGGER [dbo].[PIMS_VOLUTY_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_VOLUTY_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_TKCONT_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_TKCONT_I_S_I_TR]
+GO
+
+
 /* ---------------------------------------------------------------------- */
 /* Drop views                                                             */
 /* ---------------------------------------------------------------------- */
@@ -2345,6 +2361,10 @@ ALTER TABLE [dbo].[PIMS_TAKE] DROP CONSTRAINT [PIM_ARUNIT_PIM_TAKE_FK]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_TAKE] DROP CONSTRAINT [PIM_LNDATY_PIM_TAKE_FK]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_ACQ_CHKLST_ITEM_TYPE] DROP CONSTRAINT [PIM_AQCSCT_PIM_ACQCIT_FK]
 GO
 
@@ -2446,6 +2466,14 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACQUISITION_PAYEE] DROP CONSTRAINT [PIM_CMPREQ_PIM_ACQPAY_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [PIM_DOCTYP_PIM_DCCTSB_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [PIM_DOCCAT_PIM_DCCTSB_FK]
 GO
 
 
@@ -3188,10 +3216,6 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_TAKE', 'COLUMN', N'LAND_ACT_AREA'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_TAKE', 'COLUMN', N'LAND_ACT_DESCRIPTION'
 GO
 
 
@@ -8502,6 +8526,168 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_PROPERTY_SERVICE_FILE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_DOCUMENT_CATEGORY_SUBTYPE"                        */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_DOCUMENT_CATEGORY_SUBTYPE_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE] DROP CONSTRAINT [DCCTSB_DOCUMENT_CATEGORY_SUBTYPE_TUC]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_CATEGORY_SUBTYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_CATEGORY_SUBTYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+DROP TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_LAND_ACT_TYPE"                                    */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_LAND_ACT_TYPE] DROP CONSTRAINT [LNDATY_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LAND_ACT_TYPE] DROP CONSTRAINT [LNDATY_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LAND_ACT_TYPE] DROP CONSTRAINT [LNDATY_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LAND_ACT_TYPE] DROP CONSTRAINT [LNDATY_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LAND_ACT_TYPE] DROP CONSTRAINT [LNDATY_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LAND_ACT_TYPE] DROP CONSTRAINT [LNDATY_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LAND_ACT_TYPE', 'COLUMN', N'LAND_ACT_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LAND_ACT_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LAND_ACT_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LAND_ACT_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_LAND_ACT_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_DOCUMENT_CATEGORY_TYPE"                           */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_TYPE] DROP CONSTRAINT [DOCCAT_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_TYPE] DROP CONSTRAINT [DOCCAT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_TYPE] DROP CONSTRAINT [DOCCAT_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_TYPE] DROP CONSTRAINT [DOCCAT_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_TYPE] DROP CONSTRAINT [DOCCAT_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_TYPE] DROP CONSTRAINT [DOCCAT_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_TYPE] DROP CONSTRAINT [DOCCAT_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_CATEGORY_TYPE', 'COLUMN', N'DOCUMENT_CATEGORY_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_CATEGORY_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_CATEGORY_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_CATEGORY_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_CATEGORY_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_DOCUMENT_CATEGORY_TYPE]
 GO
 
 
@@ -14054,5 +14240,9 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_ACQUISITION_PAYEE_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_DOCUMENT_CATEGORY_SUBTYPE_ID_SEQ]
 GO
 
