@@ -5,7 +5,7 @@ import {
   getMockLegalDescriptions,
   getMockSales,
   getMockValues,
-} from 'mocks/bcAssessmentMock';
+} from 'mocks/bcAssessment.mock';
 import { rest } from 'msw';
 
 export const handlers = [

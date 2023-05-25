@@ -94,7 +94,10 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
         />
       </SectionField>
       <SectionField labelWidth="5" label="Deposit due no later than">
-        <Input field={withNameSpace(nameSpace, 'noLaterThanDays')} />
+        <StyledDiv>
+          <Input field={withNameSpace(nameSpace, 'noLaterThanDays')} />
+          <label>days.</label>
+        </StyledDiv>
       </SectionField>
       <SectionField labelWidth="5" label="Deposit amount">
         <FastCurrencyInput
@@ -113,5 +116,15 @@ export const MediumTextArea = styled(TextArea)`
     min-width: 80rem;
     height: 7rem;
     resize: none;
+  }
+`;
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  label {
+    margin-left: 0.5rem;
   }
 `;

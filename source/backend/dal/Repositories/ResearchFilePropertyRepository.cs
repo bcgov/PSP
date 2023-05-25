@@ -58,7 +58,7 @@ namespace Pims.Dal.Repositories
             // Mark the property not to be changed if it did not exist already.
             if (propertyResearchFile.PropertyId != 0)
             {
-                Context.Entry(propertyResearchFile.Property).State = EntityState.Unchanged;
+                propertyResearchFile.Property = null;
             }
 
             Context.PimsPropertyResearchFiles.Add(propertyResearchFile);

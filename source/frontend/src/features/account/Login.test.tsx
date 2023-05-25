@@ -2,7 +2,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { mockLookups } from 'mocks';
+import { mockLookups } from 'mocks/index.mock';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';

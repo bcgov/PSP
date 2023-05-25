@@ -1,7 +1,7 @@
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/mockAcquisitionFiles';
+} from 'mocks/acquisitionFiles.mock';
 import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 import { render, RenderOptions } from 'utils/test-utils';
 

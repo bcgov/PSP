@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { NoteTypes } from 'constants/index';
 import { FormikHelpers } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockEntityNote } from 'mocks/mockNoteResponses';
+import { mockEntityNote } from 'mocks/noteResponses.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fakeText } from 'utils/test-utils';

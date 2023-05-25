@@ -1,6 +1,7 @@
 import ProtectedComponent from 'components/common/ProtectedComponent';
 import { Claims } from 'constants/claims';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { Formik, FormikProps } from 'formik';
 import { defaultFormLease, IFormLease } from 'interfaces';
@@ -19,10 +20,12 @@ export const ImprovementsContainer: React.FunctionComponent<
 
   if (!lease?.improvements?.length && !isEditing) {
     return (
-      <b className="mx-4">
-        If this lease/license includes any commercial, residential or other improvements on the
-        property, switch to edit mode to add details to this record.
-      </b>
+      <Section>
+        <p>
+          There are no commercial, residential, or other improvements indicated with this
+          lease/license.
+        </p>
+      </Section>
     );
   }
 

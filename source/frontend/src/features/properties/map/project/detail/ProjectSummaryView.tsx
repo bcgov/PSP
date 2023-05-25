@@ -21,7 +21,7 @@ const ProjectSummaryView: React.FunctionComponent<
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && project !== undefined ? (
+        {keycloak.hasClaim(Claims.PROJECT_EDIT) && project !== undefined ? (
           <EditButton title="Edit project" onClick={onEdit} />
         ) : null}
       </StyledEditWrapper>

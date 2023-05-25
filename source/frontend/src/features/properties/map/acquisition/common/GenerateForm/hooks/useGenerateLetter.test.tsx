@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';

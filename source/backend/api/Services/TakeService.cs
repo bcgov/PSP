@@ -49,8 +49,10 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("updating takes with propertyFileId {propertyFileId}", acquisitionFilePropertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
             _takeRepository.UpdateAcquisitionPropertyTakes(acquisitionFilePropertyId, takes);
             _takeRepository.CommitTransaction();
+
             return _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionFilePropertyId);
         }
     }

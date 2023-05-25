@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -10,6 +11,7 @@ using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Xunit;
 
@@ -44,13 +46,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            _service.Setup(m => m.Add(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.AddAcquisitionFile(_mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = _controller.AddAcquisitionFile(_mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once());
+            _service.Verify(m => m.Add(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         /// <summary>
@@ -79,13 +81,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>())).Returns(acqFile);
+            _service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.UpdateAcquisitionFile(1, _mapper.Map<AcquisitionFileModel>(acqFile), true);
+            var result = _controller.UpdateAcquisitionFile(1, _mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>()), Times.Once());
+            _service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         /// <summary>
@@ -97,31 +99,13 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
-            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>()), Times.Once());
-        }
-
-        /// <summary>
-        /// Make a conflict request to update an acquisition file's properties.
-        /// </summary>
-        [Fact]
-        public void UpdateAcquisitionFileProperties_Conflict()
-        {
-            // Arrange
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-
-            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Throws(new BusinessRuleViolationException());
-
-            // Act
-            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile));
-
-            // Assert
-            result.Should().BeAssignableTo<ConflictObjectResult>();
+            _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         #endregion

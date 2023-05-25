@@ -8,6 +8,7 @@ using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -68,13 +69,13 @@ namespace Pims.Api.Services
             return propertyResearchFiles;
         }
 
-        public PimsResearchFile Add(PimsResearchFile researchFile)
+        public PimsResearchFile Add(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             _logger.LogInformation("Adding research file...");
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileAdd);
             researchFile.ResearchFileStatusTypeCode = "ACTIVE";
 
-            MatchProperties(researchFile);
+            MatchProperties(researchFile, userOverrideCodes);
 
             var newResearchFile = _researchFileRepository.Add(researchFile);
             _researchFileRepository.CommitTransaction();
@@ -96,34 +97,34 @@ namespace Pims.Api.Services
             return newResearchFile;
         }
 
-        public PimsResearchFile UpdateProperties(PimsResearchFile researchFile)
+        public PimsResearchFile UpdateProperties(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             _logger.LogInformation("Updating research file properties...");
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
-            MatchProperties(researchFile);
+            MatchProperties(researchFile, userOverrideCodes);
 
             // Get the current properties in the research file
             var currentProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
-            foreach (var incommingResearchProperty in researchFile.PimsPropertyResearchFiles)
+            foreach (var incomingResearchProperty in researchFile.PimsPropertyResearchFiles)
             {
                 // If the property is not new, check if the name has been updated.
-                if (incommingResearchProperty.Internal_Id != 0)
+                if (incomingResearchProperty.Internal_Id != 0)
                 {
-                    PimsPropertyResearchFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incommingResearchProperty.Internal_Id);
-                    if (existingProperty.PropertyName != incommingResearchProperty.PropertyName)
+                    PimsPropertyResearchFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingResearchProperty.Internal_Id);
+                    if (existingProperty.PropertyName != incomingResearchProperty.PropertyName)
                     {
-                        existingProperty.PropertyName = incommingResearchProperty.PropertyName;
+                        existingProperty.PropertyName = incomingResearchProperty.PropertyName;
                         _researchFilePropertyRepository.Update(existingProperty);
                     }
                 }
                 else
                 {
                     // New property needs to be added
-                    _researchFilePropertyRepository.Add(incommingResearchProperty);
+                    _researchFilePropertyRepository.Add(incomingResearchProperty);
                 }
             }
 
@@ -171,7 +172,29 @@ namespace Pims.Api.Services
             return _researchFileRepository.GetById(researchFileId);
         }
 
-        private void MatchProperties(PimsResearchFile researchFile)
+        private void UpdateLocation(PimsProperty researchProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> userOverrideCodes)
+        {
+            if (propertyToUpdate.Location == null)
+            {
+                if (userOverrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
+                {
+                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+                    var geom = researchProperty.Location;
+                    if (geom.SRID != SpatialReference.BCALBERS)
+                    {
+                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                    }
+                }
+                else
+                {
+                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
+                }
+            }
+        }
+
+        private void MatchProperties(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
             {
@@ -182,6 +205,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
+                        UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -197,6 +221,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
+                        UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)

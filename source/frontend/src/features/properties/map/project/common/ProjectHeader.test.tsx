@@ -1,6 +1,6 @@
-import { mockProjectGetResponse } from 'mocks/mockProjects';
 import { rest, server } from 'mocks/msw/server';
-import { getUserMock } from 'mocks/userMock';
+import { mockProjectGetResponse } from 'mocks/projects.mock';
+import { getUserMock } from 'mocks/user.mock';
 import { Api_Project } from 'models/api/Project';
 import { prettyFormatDate } from 'utils';
 import { render, RenderOptions } from 'utils/test-utils';

@@ -1,6 +1,6 @@
 import { FinancialCodeTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { mockFinancialCode } from 'mocks';
+import { mockFinancialCode } from 'mocks/index.mock';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 import { act, createAxiosError, render, RenderOptions, screen } from 'utils/test-utils';
 

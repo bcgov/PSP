@@ -310,7 +310,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public PimsProperty Update(PimsProperty property)
+        public PimsProperty Update(PimsProperty property, bool overrideLocation = false)
         {
             property.ThrowIfNull(nameof(property));
 
@@ -321,7 +321,10 @@ namespace Pims.Dal.Repositories
 
             // ignore a number of properties that we don't the frontend to override - for now
             property.Boundary = existingProperty.Boundary;
-            property.Location = existingProperty.Location;
+            if (!overrideLocation)
+            {
+                property.Location = existingProperty.Location;
+            }
             property.AddressId = existingProperty.AddressId;
             property.PropertyDataSourceEffectiveDate = existingProperty.PropertyDataSourceEffectiveDate;
             property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
@@ -379,6 +382,23 @@ namespace Pims.Dal.Repositories
         public void Delete(PimsProperty property)
         {
             this.Context.Entry(new PimsProperty() { PropertyId = property.PropertyId }).State = EntityState.Deleted;
+        }
+
+        /// <summary>
+        /// Update the passed property in the database so that it is classified as "core inventory" in PIMS.
+        /// </summary>
+        /// <param name="property">The property to update.</param>
+        /// <returns>The updated property.</returns>
+        public PimsProperty TransferToCoreInventory(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
+
+            existingProperty.IsPropertyOfInterest = false;
+            existingProperty.IsOwned = true;
+            return existingProperty;
         }
 
         #endregion
