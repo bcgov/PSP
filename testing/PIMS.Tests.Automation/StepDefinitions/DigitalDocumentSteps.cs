@@ -59,7 +59,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 //Verify Details View Form
                 digitalDocumentsTab.ViewIthDocument(i);
-                digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[i]);
+                digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
         }
@@ -106,7 +106,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Details View Form
             digitalDocumentsTab.View1stDocument();
-            digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[0]);
+            digitalDocumentsTab.VerifyDocumentDetailsUpdateViewForm(digitalDocumentList[0]);
 
             //Close Digital Documents Details View
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();

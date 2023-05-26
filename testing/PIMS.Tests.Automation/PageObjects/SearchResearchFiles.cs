@@ -96,7 +96,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             webDriver.FindElement(searchResearchFile1stResultLink).Click();
 
-            Wait();
+            Wait(4000);
             Assert.True(webDriver.FindElement(researchFileHeaderCode).Displayed);
         }
 

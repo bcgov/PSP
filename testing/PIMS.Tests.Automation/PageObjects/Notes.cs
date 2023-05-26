@@ -67,10 +67,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
         private By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/following-sibling::div[@class='modal-footer']/button[@title='ok-modal']");
 
-        //Notes Toast
-        private By notesToast = By.CssSelector("div[class='Toastify__toast-body']");
-
-
 
         public Notes(IWebDriver webDriver) : base(webDriver)
         {}
@@ -139,17 +135,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesDeleteOkBttn).Click();
         }
 
-        //public void VerifyNotesListView()
-        //{
-        //    Wait();
-        //    Assert.True(webDriver.FindElement(notesTitle).Displayed);
-        //    Assert.True(webDriver.FindElement(notesAddNoteBttn).Displayed);
-        //    Assert.True(webDriver.FindElement(notesTable).Displayed);
-        //    Assert.True(webDriver.FindElement(notesNoteColumn).Displayed);
-        //    Assert.True(webDriver.FindElement(notesCreatedDateColumn).Displayed);
-        //    Assert.True(webDriver.FindElement(notesCreatedByColumn).Displayed);
-        //}
-
         public void VerifyNotesAddNew()
         {
             Wait();
@@ -207,14 +192,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             Assert.True(webDriver.FindElement(note1stNoteContent).Text == fileType + " status changed from "+ fromStatus +" to " + toStatus);
-        }
-
-        public Boolean NoteDeletedSuccessfully()
-        {
-            Wait(1000);
-            Assert.True(webDriver.FindElement(notesToast).Text == "Deleted successfully.");
-            return webDriver.FindElements(notesToast).Count > 0;
-            
         }
     }
 }

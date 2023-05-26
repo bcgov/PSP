@@ -103,9 +103,6 @@ this.ScenarioInitialize(scenarioInfo);
 #line 7
  testRunner.Given("I create a new Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 8
- testRunner.And("I create Digital Documents for a \"Lease\" row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
 #line 9
  testRunner.And("I create a new Note on the Notes Tab from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden

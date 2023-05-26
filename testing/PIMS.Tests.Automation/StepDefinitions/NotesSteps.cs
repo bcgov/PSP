@@ -11,13 +11,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly Notes notes;
         private readonly GenericSteps genericSteps;
 
-        private List<string> notesData; 
+        private List<string> notesData;
+        private int notesCount;
 
         public NotesSteps(BrowserDriver driver)
         {
             notes = new Notes(driver.Current);
             genericSteps = new GenericSteps(driver);
             notesData = new List<string>();
+            notesCount = 0;
         }
 
         [StepDefinition(@"I create a new Note on the Notes Tab from row number (.*)")]
@@ -72,13 +74,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes.SaveNote();
 
             //Delete Note
+            notesCount = notes.NotesTabCount();
             notes.DeleteFirstNote();
         }
 
         [StepDefinition(@"Notes update have been done successfully")]
         public void NoteUpdateSuccess()
         {
-            Assert.True(notes.NoteDeletedSuccessfully());
+            Assert.True(notes.NotesTabCount() == notesCount -1);
         }
 
         private void PopulateNotes(int rowNumber)

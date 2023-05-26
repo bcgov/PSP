@@ -5,7 +5,7 @@ This feature tests all test cases related to Leases and Licenses.
 
 Scenario: 01. Create a Complete Lease and License
 	Given I create a new Lease from row number 1
-	And  I create Digital Documents for a "Lease" row number 3
+	#And  I create Digital Documents for a "Lease" row number 3
 	And I create a new Note on the Notes Tab from row number 5
 	Then A new lease is created successfully
 

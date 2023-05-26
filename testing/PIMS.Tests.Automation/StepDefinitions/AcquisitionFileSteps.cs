@@ -1,12 +1,17 @@
 ﻿
 
+using PIMS.Tests.Automation.Classes;
+using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
+using System.Data;
+
 namespace PIMS.Tests.Automation.StepDefinitions
 {
     [Binding]
     public class AcquisitionFileSteps
     {
         private readonly LoginSteps loginSteps;
-        private readonly AcquisitionFile acquisitionFile;
+        private readonly AcquisitionFiles acquisitionFiles;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SearchProperties searchProperties;
@@ -16,80 +21,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string userName = "TRANPSP1";
         //private readonly string userName = "sutairak";
 
-        private readonly string acquisitionFileName = "Automated Acquisition File";
-
-        private readonly string acquisitionFileProject = "Highway 1 Widening - 216th Street Interchange";
-        private readonly string acquisitionFileProduct = "12570LANG TOWNSHIP OF LANGLEY";
-
-        private readonly string acquisitionFileDeliveryDate = "12/27/2023";
-        private readonly string teamMember1 = "Alejandro Sanchez";
-        private readonly string teamMember2 = "Devin Smith";
-
-        private readonly string PID1Search = "014-083-736";
-        private readonly string PID2Search = "014-929-791";
-        private readonly string PID3Search = "000-750-166";
-        private readonly string PID4Search = "025-710-176";
-        private readonly string PIN1Search = "90077451";
-        private readonly string Plan1Search = "EPP92028";
-        private readonly string address1Search = "1818 Cornwall";
-        private readonly string legalDescription1Search = "65 VICTORIA DISTRICT PLAN 33395";
-
-        private readonly string propertyDetailsAddressLine1 = "1239 Automated St.";
-        private readonly string propertyDetailsAddressLine2 = "Office 4566";
-        private readonly string propertyDetailsCity = "Victoria";
-        private readonly string propertyDetailsPostalCode = "V8P 1A1";
-
-        private readonly string propertyDetailsmunicipalZoning = "Automated Acquisition zone";
-        private readonly string propertyDetailssqMts = "89.87";
-        private readonly string propertyDetailscubeMts = "125.78";
-        private readonly string propertyDetailsNotes = "Automated Acquisition files - Notes for Property Information";
-        private readonly string propertyDetailsNotes2 = "  - Edited note";
-
+        private AcquisitionFile acquisitionFile;
         protected string acquisitionFileCode = "";
 
         public AcquisitionFileSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            acquisitionFile = new AcquisitionFile(driver.Current);
+            acquisitionFiles = new AcquisitionFiles(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
+            acquisitionFile = new AcquisitionFile();
         }
 
-        //[StepDefinition(@"I navigate to create new Acquisition File")]
-        //public void NavigateCreateNewAcquisitionFile()
-        //{
-        //    //Login to PIMS
-        //    loginSteps.Idir(userName);
-
-        //    //Navigate to Create Acquisition File
-        //    acquisitionFile.NavigateToCreateNewAcquisitionFile();
-        //}
-
-        //[StepDefinition(@"I create and cancel new Acquisition Files")]
-        //public void CreateCancelAcquisitionFile()
-        //{
-        //    /* TEST COVERAGE: PSP-4167 */
-
-        //    //Cancel empty acquisition file
-        //    acquisitionFile.CancelAcquisitionFile();
-
-        //    //Verify Form is no longer visible
-        //    Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
-
-        //    //Navigate to Create Acquisition File
-        //    acquisitionFile.NavigateToCreateNewAcquisitionFile();
-
-        //    //Add basic Information
-        //    acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileName);
-
-        //    //Cancel Creation
-        //    acquisitionFile.CancelAcquisitionFile();
-        //}
-
-        [StepDefinition(@"I create a new Acquisition File")]
-        public void CreateAcquisitionFile()
+        [StepDefinition(@"I create a new Acquisition File from row number (.*)")]
+        public void CreateAcquisitionFile(int rowNumber)
         {
             /* TEST COVERAGE: PSP-4163, PSP-4164, PSP-4323, PSP-4553  */
 
@@ -97,84 +44,76 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Navigate to Acquisition File
-            acquisitionFile.NavigateToCreateNewAcquisitionFile();
+            PopulateAcquisitionFile(rowNumber);
+            acquisitionFiles.NavigateToCreateNewAcquisitionFile();
 
             //Validate Acquisition File Details Create Form
-            acquisitionFile.VerifyAcquisitionFileCreate();
+            acquisitionFiles.VerifyAcquisitionFileCreate();
 
             //Create basic Acquisition File
-            acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileName);
+            acquisitionFiles.CreateMinimumAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
-            acquisitionFile.SaveAcquisitionFile();
+            acquisitionFiles.SaveAcquisitionFile();
 
             //Get Research File code
-            acquisitionFileCode = acquisitionFile.GetAcquisitionFileCode();
+            acquisitionFileCode = acquisitionFiles.GetAcquisitionFileCode();
         }
 
         [StepDefinition(@"I add additional information to the Acquisition File")]
         public void AddAdditionalInfoAcquisitionFile()
         {
-            /* TEST COVERAGE: PSP-4163, PSP-4323, PSP-4471, PSP-4553, PSP-4331, PSP-4469, PSP-5308 */
+            /* TEST COVERAGE: PSP-4163, PSP-4323, PSP-4471, PSP-4553, PSP-4331, PSP-4469, PSP-5308, PSP-4327, PSP-4163, PSP-4593, PSP-4334, PSP-4329, PSP-4328, PSP-4327, PSP-4326, PSP-4325 */
 
             //Enter to Edit mode of Acquisition File
-            acquisitionFile.EditAcquisitionFileDetails();
-
-            //Validate Acquisition File Details Update Form
-            acquisitionFile.VerifyAcquisitionFileUpdate();
+            acquisitionFiles.EditAcquisitionFileDetails();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFile.AddAdditionalInformation(acquisitionFileProject, acquisitionFileProduct, acquisitionFileDeliveryDate, teamMember1, teamMember2);
+            acquisitionFiles.AddAdditionalInformation(acquisitionFile);
 
             //Save Research File
-            acquisitionFile.SaveAcquisitionFile();
+            acquisitionFiles.SaveAcquisitionFile();
 
             //Validate View File Details View Mode
-            acquisitionFile.VerifyAcquisitionFileView();
-        }
-
-        [StepDefinition(@"I add several Properties to the Acquisition File")]
-        public void AddAllPropertiesAcquisitionFile()
-        {
-            /* TEST COVERAGE: PSP-4327, PSP-4163, PSP-4593, PSP-4334, PSP-4329, PSP-4328, PSP-4327, PSP-4326, PSp-4325 */
+            acquisitionFiles.VerifyAcquisitionFileView(acquisitionFile);
 
             //Navigate to Edit Research File
-            acquisitionFile.NavigateToAddPropertiesAcquisitionFile();
+            acquisitionFiles.NavigateToAddPropertiesAcquisitionFile();
 
             //Navigate to Add Properties by search and verify Add Properties UI/UX
             sharedSearchProperties.NavigateToSearchTab();
             sharedSearchProperties.VerifySearchPropertiesFeature();
 
             //Search for a property by PID
-            sharedSearchProperties.SelectPropertyByPID(PID2Search);
+            sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by PIN
-            sharedSearchProperties.SelectPropertyByPIN(PIN1Search);
+            sharedSearchProperties.SelectPropertyByPIN(acquisitionFile.SearchProperties.PIN);
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Plan
-            sharedSearchProperties.SelectPropertyByPlan(Plan1Search);
+            sharedSearchProperties.SelectPropertyByPlan(acquisitionFile.SearchProperties.PlanNumber);
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Address
-            sharedSearchProperties.SelectPropertyByAddress(address1Search);
+            sharedSearchProperties.SelectPropertyByAddress(acquisitionFile.SearchProperties.Address);
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Legal Description
-            sharedSearchProperties.SelectPropertyByLegalDescription(legalDescription1Search);
+            sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a duplicate property
-            sharedSearchProperties.SelectPropertyByPID(PID2Search);
+            sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
             sharedSearchProperties.SelectFirstOption();
 
             //Save Research File
-            acquisitionFile.SaveAcquisitionFileProperties();
+            acquisitionFiles.SaveAcquisitionFileProperties();
         }
 
-        [StepDefinition(@"I create an Acquisition File from a pin on map")]
-        public void CreateAcquisitionFileFromPin()
+        [StepDefinition(@"I create an Acquisition File from a pin on map from row number (.*)")]
+        public void CreateAcquisitionFileFromPin(int rowNumber)
         {
             /* TEST COVERAGE: PSP-1546, PSP-1556, PSP-4164, PSP-4167, PSP-4601, PSP-4704, PSP-5308  */
 
@@ -182,7 +121,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(PID4Search);
+            PopulateAcquisitionFile(rowNumber);
+            searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -195,16 +135,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
 
             //Validate Acquisition File Details Create Form
-            acquisitionFile.VerifyAcquisitionFileCreate();
+            acquisitionFiles.VerifyAcquisitionFileCreate();
 
             //Cancel empty acquisition file
-            acquisitionFile.CancelAcquisitionFile();
+            acquisitionFiles.CancelAcquisitionFile();
 
             //Verify Form is no longer visible
-            Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
+            Assert.True(acquisitionFiles.IsCreateAcquisitionFileFormVisible() == 0);
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(PID4Search);
+            searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -217,13 +157,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
 
             //Fill basic Acquisition File information
-            acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileName);
+            acquisitionFiles.CreateMinimumAcquisitionFile(acquisitionFile);
 
             //Cancel Creation
-            acquisitionFile.CancelAcquisitionFile();
+            acquisitionFiles.CancelAcquisitionFile();
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(PID4Search);
+            searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -236,22 +176,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
 
             //Fill basic Acquisition File information
-            acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileName);
+            acquisitionFiles.CreateMinimumAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
-            acquisitionFile.SaveAcquisitionFile();
+            acquisitionFiles.SaveAcquisitionFile();
 
             //Get Research File code
-            acquisitionFileCode = acquisitionFile.GetAcquisitionFileCode();
+            acquisitionFileCode = acquisitionFiles.GetAcquisitionFileCode();
 
             //Edit Acquisition File
-            acquisitionFile.EditAcquisitionFile();
+            acquisitionFiles.EditAcquisitionFile();
 
             //Add additional information
-            acquisitionFile.AddAdditionalInformation(acquisitionFileProject, acquisitionFileProduct, acquisitionFileDeliveryDate, teamMember1, teamMember2);
+            acquisitionFiles.AddAdditionalInformation(acquisitionFile);
 
             //Save Acquisition File
-            acquisitionFile.SaveAcquisitionFile();
+            acquisitionFiles.SaveAcquisitionFile();
         }
 
         [StepDefinition(@"I search for an existing acquisition file")]
@@ -270,78 +210,85 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.SelectFirstOption();
         }
 
-        [StepDefinition(@"I edit an existing Acquisition File")]
-        public void EditAcquisitionFile()
+        [StepDefinition(@"I edit an existing Acquisition File from row number (.*)")]
+        public void EditAcquisitionFile(int rowNumber)
         {
             /* TEST COVERAGE: PSP-4544, PSP-4545, PSP-4590, PSP-4591, PSP-4600, PSP-4689, PSP-5003, PSP-5006, PSP-5007  */
 
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Acquisition File Search
+            PopulateAcquisitionFile(rowNumber);
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+
+            //Filter research Files
+            searchAcquisitionFiles.FilterAcquisitionFiles(acquisitionFile.SearchProperties.PID, acquisitionFile.AcquisitionFileName, acquisitionFile.AcquisitionStatus);
+
+            //Look for the last created research file
+            searchAcquisitionFiles.SearchLastAcquisitionFile();
+
+            //Choose first found option
+            searchAcquisitionFiles.SelectFirstOption();
+
             //Edit Acquisition File
-            acquisitionFile.EditAcquisitionFile();
+            acquisitionFiles.EditAcquisitionFile();
+
+            //Update Acquisition File main form
+            acquisitionFiles.UpdateAcquisitionFile(acquisitionFile);
+
+            //Cancel changes
+            acquisitionFiles.CancelAcquisitionFile();
+
+            //Edit Acquisition File
+            acquisitionFiles.EditAcquisitionFile();
+
+            //Update Acquisition File main form
+            acquisitionFiles.UpdateAcquisitionFile(acquisitionFile);
 
             //Delete a staff member
-            acquisitionFile.DeleteLastStaffMember();
+            acquisitionFiles.DeleteLastStaffMember();
 
             //Save Staff changes
-            acquisitionFile.SaveAcquisitionFile();
+            acquisitionFiles.SaveAcquisitionFile();
 
             //Navigate to Edit Research File
-            acquisitionFile.NavigateToAddPropertiesAcquisitionFile();
+            acquisitionFiles.NavigateToAddPropertiesAcquisitionFile();
 
-            //Search for a property by PID
+            //Search for a property by Legal Description
             sharedSearchProperties.NavigateToSearchTab();
-            sharedSearchProperties.SelectPropertyByPID(PID3Search);
+            sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
             sharedSearchProperties.SelectFirstOption();
 
             //Save changes
-            acquisitionFile.SaveAcquisitionFileProperties();
+            acquisitionFiles.SaveAcquisitionFileProperties();
 
             //Select 1st Property
-            acquisitionFile.ChooseFirstPropertyOption();
+            acquisitionFiles.ChooseFirstPropertyOption();
 
             //Verify its Property Details
             propertyInformation.NavigatePropertyDetailsTab();
             propertyInformation.VerifyPropertyDetailsView("Acquisition File");
 
-            //Edit Property Details
-            propertyInformation.EditPropertyInfoBttn();
-            propertyInformation.UpdateMaxPropertyDetails(propertyDetailsAddressLine1, propertyDetailsAddressLine2, propertyDetailsCity, propertyDetailsPostalCode, propertyDetailsmunicipalZoning,
-                propertyDetailssqMts, propertyDetailscubeMts, propertyDetailsNotes);
-
-            //Save Property Details
-            propertyInformation.SavePropertyDetails();
-
-            //Edit Property Details
-            propertyInformation.EditPropertyInfoBttn();
-            propertyInformation.UpdateMinPropertyDetails(propertyDetailsNotes2);
-
-            //Cancel Property Details
-            acquisitionFile.CancelAcquisitionFile();
-
-            //Verify PIMS File Tab
-            propertyInformation.VerifyPimsFiles();
-
             //Edit Acquisition File
-            acquisitionFile.NavigateToAddPropertiesAcquisitionFile();
+            acquisitionFiles.NavigateToAddPropertiesAcquisitionFile();
 
             //Delete Property
-            acquisitionFile.DeleteLastProperty();
+            acquisitionFiles.DeleteLastProperty();
 
             //Save Acquisition File changes
-            acquisitionFile.SaveAcquisitionFileProperties();
-
-            //Navigate to Edit Research File
-            acquisitionFile.EditAcquisitionFile(); ;
-
-            //Change Status
-            acquisitionFile.ChangeStatus("Cancelled");
-
-            //Cancel changes
-            acquisitionFile.CancelAcquisitionFile();
-
+            acquisitionFiles.SaveAcquisitionFileProperties();
         }
 
-        [StepDefinition(@"I search for an existing Acquisition File")]
-        public void SearchExistingAcquisitionFile()
+        [StepDefinition(@"I navigate back to the Acquisition File Summary")]
+        public void NavigateMainResearchFileSection()
+        {
+            //Navigate back to File Summary
+            acquisitionFiles.NavigateToFileSummary();
+        }
+
+        [StepDefinition(@"I search for an existing Acquisition File from row number (.*)")]
+        public void SearchExistingAcquisitionFile(int rowNumber)
         {
             /* TEST COVERAGE: PSP-4252  */
 
@@ -349,13 +296,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Navigate to Acquisition File Search
+            PopulateAcquisitionFile(rowNumber);
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
 
             //Filter research Files
-            searchAcquisitionFiles.FilterAcquisitionFiles(PID2Search, "Automated", "Active");
+            searchAcquisitionFiles.FilterAcquisitionFiles(acquisitionFile.SearchProperties.PID, acquisitionFile.AcquisitionFileName, acquisitionFile.AcquisitionStatus);
             Assert.True(searchAcquisitionFiles.SearchFoundResults());
 
-            searchAcquisitionFiles.FilterAcquisitionFiles(PID1Search, "Automated", "Cancelled");
+            searchAcquisitionFiles.FilterAcquisitionFiles("003-549-551", "Acquisition from Jonathan Doe", "Cancelled");
             Assert.False(searchAcquisitionFiles.SearchFoundResults());
 
             //Look for the last created research file
@@ -375,7 +323,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"An existing Acquisition file has been edited successfully")]
         public void EditAcquisitionFileSuccess()
         {
-            acquisitionFile.VerifyAcquisitionFileView();
+            acquisitionFiles.VerifyAcquisitionFileView(acquisitionFile);
         }
 
         [StepDefinition(@"Expected Acquisition File Content is displayed on Acquisition File Table")]
@@ -385,15 +333,112 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify List View
             searchAcquisitionFiles.VerifyAcquisitionFileListView();
-            searchAcquisitionFiles.VerifyAcquisitionFileTableContent(acquisitionFileName);
+            searchAcquisitionFiles.VerifyAcquisitionFileTableContent(acquisitionFile.AcquisitionFileName);
 
         }
 
-        //[StepDefinition(@"The creation of an Acquisition File is cancelled successfully")]
-        //public void CancelSuccessful()
-        //{
-        //    Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
-        //}
+        private void PopulateAcquisitionFile(int rowNumber)
+        {
+            DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"];
+            ExcelDataContext.PopulateInCollection(acquisitionSheet);
+
+            //Lease Details
+            acquisitionFile.AcquisitionStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionStatus");
+
+            acquisitionFile.AcquisitionProject = ExcelDataContext.ReadData(rowNumber, "AcquisitionProject");
+            acquisitionFile.AcquisitionProjCode = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjCode");
+            acquisitionFile.AcquisitionProjProduct = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjProduct");
+            acquisitionFile.AcquisitionProjFunding = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjFunding");
+            acquisitionFile.AcquisitionFundingOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionFundingOther");
+
+            acquisitionFile.DeliveryDate = ExcelDataContext.ReadData(rowNumber, "DeliveryDate");
+            acquisitionFile.AcquisitionCompletedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompletedDate");
+
+            acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
+            acquisitionFile.HistoricalFileNumber = ExcelDataContext.ReadData(rowNumber, "HistoricalFileNumber");
+            acquisitionFile.PhysicalFileStatus = ExcelDataContext.ReadData(rowNumber, "PhysicalFileStatus");
+            acquisitionFile.AcquisitionType = ExcelDataContext.ReadData(rowNumber, "AcquisitionType");
+            acquisitionFile.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "MOTIRegion");
+
+            acquisitionFile.AcquisitionTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionTeamStartRow"));
+            acquisitionFile.AcquisitionTeamCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionTeamCount"));
+
+            //Acquisition Team
+            if (acquisitionFile.AcquisitionTeamStartRow != 0 && acquisitionFile.AcquisitionTeamCount != 0)
+            {
+                PopulateTeamsCollection(acquisitionFile.AcquisitionTeamStartRow, acquisitionFile.AcquisitionTeamCount);
+            }
+
+            //Owner
+            acquisitionFile.OwnerStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerStartRow"));
+            acquisitionFile.OwnerCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerCount"));
+            if (acquisitionFile.OwnerStartRow != 0 && acquisitionFile.OwnerCount != 0)
+            {
+                PopulateOwnersCollection(acquisitionFile.OwnerStartRow, acquisitionFile.OwnerCount);
+            }
+
+            acquisitionFile.OwnerSolicitor = ExcelDataContext.ReadData(rowNumber, "OwnerSolicitor");
+
+            //Properties Search
+            acquisitionFile.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "SearchPropertiesIndex"));
+            if (acquisitionFile.SearchPropertiesIndex > 0)
+            {
+                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+                ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
+
+                acquisitionFile.SearchProperties.PID = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "PID");
+                acquisitionFile.SearchProperties.PIN = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "PIN");
+                acquisitionFile.SearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "Address");
+                acquisitionFile.SearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "PlanNumber");
+                acquisitionFile.SearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "LegalDescription");
+            }
+        }
+
+        private void PopulateTeamsCollection(int startRow, int rowsCount)
+        {
+            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionTeams"];
+            ExcelDataContext.PopulateInCollection(teamsSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                AcquisitionTeamMember teamMember = new AcquisitionTeamMember();
+                teamMember.TeamRole = ExcelDataContext.ReadData(i, "TeamRole");
+                teamMember.ContactName = ExcelDataContext.ReadData(i, "ContactName");
+
+                acquisitionFile.AcquisitionTeam.Add(teamMember);
+            }
+        }
+
+        private void PopulateOwnersCollection(int startRow, int rowsCount)
+        {
+            DataTable ownersSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionOwners"];
+            ExcelDataContext.PopulateInCollection(ownersSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                Owner owner = new Owner();
+                owner.ContactType = ExcelDataContext.ReadData(i, "ContactType");
+                owner.isPrimary = bool.Parse(ExcelDataContext.ReadData(i, "isPrimary"));
+                owner.GivenNames = ExcelDataContext.ReadData(i, "GivenNames");
+                owner.LastName = ExcelDataContext.ReadData(i, "LastName");
+                owner.OtherName = ExcelDataContext.ReadData(i, "OtherName");
+                owner.CorporationName = ExcelDataContext.ReadData(i, "CorporationName");
+                owner.IncorporationNumber = ExcelDataContext.ReadData(i, "IncorporationNumber");
+                owner.RegistrationNumber = ExcelDataContext.ReadData(i, "RegistrationNumber");
+                owner.MailAddressLine1 = ExcelDataContext.ReadData(i, "MailAddressLine1");
+                owner.MailAddressLine2 = ExcelDataContext.ReadData(i, "MailAddressLine2");
+                owner.MailAddressLine3 = ExcelDataContext.ReadData(i, "MailAddressLine3");
+                owner.MailCity = ExcelDataContext.ReadData(i, "MailCity");
+                owner.MailProvince = ExcelDataContext.ReadData(i, "MailProvince");
+                owner.MailCountry = ExcelDataContext.ReadData(i, "MailCountry");
+                owner.MailOtherCountry = ExcelDataContext.ReadData(i, "MailOtherCountry");
+                owner.MailPostalCode = ExcelDataContext.ReadData(i, "MailPostalCode");
+                owner.Email = ExcelDataContext.ReadData(i, "Email");
+                owner.Phone = ExcelDataContext.ReadData(i, "Phone");
+
+                acquisitionFile.AcquisitionOwners.Add(owner);
+            }
+        }
 
     }
 }

@@ -23,4 +23,10 @@ Scenario: Create Minimum Research File
 	And I create a new Note on the Notes Tab from row number 5
 	Then A new Research File is created successfully
 
+Scenario: Create Minimum Acquisition File
+	Given I create a new Acquisition File from row number 4
+	When I add additional information to the Acquisition File
+	Then A new Acquisition file is created successfully
+
+
 
