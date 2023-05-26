@@ -40,11 +40,11 @@ namespace Pims.Dal.Repositories
                 .Include(rp => rp.Property)
                 .Include(rp => rp.PimsTakes)
                 .Include(rp => rp.Property)
-                .ThenInclude(rp => rp.RegionCodeNavigation)
+                    .ThenInclude(rp => rp.RegionCodeNavigation)
                 .Include(rp => rp.Property)
-                .ThenInclude(rp => rp.DistrictCodeNavigation)
+                    .ThenInclude(rp => rp.DistrictCodeNavigation)
                 .Include(rp => rp.Property)
-                .ThenInclude(rp => rp.Address)
+                    .ThenInclude(rp => rp.Address)
                 .AsNoTracking()
                 .ToList();
         }
@@ -80,7 +80,7 @@ namespace Pims.Dal.Repositories
             // Mark the property not to be changed if it did not exist already.
             if (propertyAcquisitionFile.PropertyId != 0)
             {
-                Context.Entry(propertyAcquisitionFile.Property).State = EntityState.Unchanged;
+                propertyAcquisitionFile.Property = null;
             }
 
             Context.PimsPropertyAcquisitionFiles.Add(propertyAcquisitionFile);

@@ -18,6 +18,11 @@ namespace Pims.Api.Models
         public string Error { get; set; }
 
         /// <summary>
+        /// get/set - Optional. For some errors that could be handled programmatically, a short string indicating the error code reported.
+        /// </summary>
+        public string ErrorCode { get; set; }
+
+        /// <summary>
         /// get/set - The exception type that threw thew exception.
         /// </summary>
         public string Type { get; set; }
@@ -49,13 +54,15 @@ namespace Pims.Api.Models
         /// <param name="ex"></param>
         /// <param name="message"></param>
         /// <param name="details"></param>
-        public ErrorResponseModel(IWebHostEnvironment environment, Exception ex, string message = null, string details = null)
+        /// <param name="errorCode"></param>
+        public ErrorResponseModel(IWebHostEnvironment environment, Exception ex, string message = null, string details = null, string errorCode = null)
         {
             var showError = !environment.IsProduction();
             this.Error = showError ? ex.Message : message;
             this.Type = ex.GetType().Name;
             this.Details = showError ? details ?? ex.GetAllMessages() : null;
             this.StackTrace = showError ? ex.StackTrace : null;
+            this.ErrorCode = errorCode;
         }
 
         /// <summary>

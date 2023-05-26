@@ -563,6 +563,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
               >
                 <div
                   class="c9 form-group"
+                  data-testid="typeahead-organization"
                 >
                   <label
                     class="form-label"

@@ -243,7 +243,7 @@ describe('AddAcquisitionContainer component', () => {
     });
 
     const expectedValues = formValues.toApi();
-    expect(addAcquisitionFile).toBeCalledWith(expectedValues);
+    expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);
     expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
   });
 
@@ -310,7 +310,7 @@ describe('AddAcquisitionContainer component', () => {
     await act(() => userEvent.click(getSaveButton()));
 
     const expectedValues = formValues.toApi();
-    expect(addAcquisitionFile).toBeCalledWith(expectedValues);
+    expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);
     expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
   });
 });

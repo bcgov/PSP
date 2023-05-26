@@ -153,6 +153,11 @@ namespace Pims.Api.Models.Concepts
         public bool IsOwned { get; set; }
 
         /// <summary>
+        /// get/set - Whether this parcel is a property of interest to the ministry.
+        /// </summary>
+        public bool IsPropertyOfInterest { get; set; }
+
+        /// <summary>
         /// get/set - Whether or not other agencies can view this property.
         /// </summary>
         public bool IsVisibleToOtherAgencies { get; set; }

@@ -138,6 +138,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         <DocumentListContainer
           parentId={lease?.id.toString()}
           relationshipType={DocumentRelationshipType.LEASES}
+          title="File Documents"
         />
       ),
       key: LeaseFileTabNames.documents,

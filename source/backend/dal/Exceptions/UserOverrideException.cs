@@ -9,6 +9,8 @@ namespace Pims.Dal.Exceptions
     [Serializable]
     public class UserOverrideException : Exception
     {
+        public UserOverrideCode UserOverride { get; }
+
         #region Constructors
 
         /// <summary>
@@ -28,6 +30,17 @@ namespace Pims.Dal.Exceptions
         public UserOverrideException(string message)
             : base(message)
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of a UserOverrideException class, and initializes it with the specified arguments.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public UserOverrideException(UserOverrideCode overrideCode, string message)
+            : base(message)
+        {
+            this.UserOverride = overrideCode;
         }
 
         /// <summary>

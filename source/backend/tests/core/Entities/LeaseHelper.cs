@@ -1,7 +1,10 @@
 using System;
 using System.Linq;
+using NetTopologySuite.Geometries;
 using Pims.Dal;
+using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -30,11 +33,14 @@ namespace Pims.Core.Test
             organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address });
             if (addProperty)
             {
-                lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new Entity.PimsProperty() { Pid = pid }, Lease = lease });
+                lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new Entity.PimsProperty() { Pid = pid, Location = GeometryHelper.CreatePoint(0, 0, SpatialReference.BCALBERS),
+                }, Lease = lease, });
             }
             lease.MotiContact = $"{motiFirstName} {motiLastName}";
             lease.LeaseProgramTypeCodeNavigation = pimsLeaseProgramType ?? new Entity.PimsLeaseProgramType() { Id = "testProgramType" };
+            lease.LeaseProgramTypeCode = "testProgramType";
             lease.LeasePurposeTypeCodeNavigation = pimsLeasePurposeType ?? new Entity.PimsLeasePurposeType() { Id = "testPurposeType" };
+            lease.LeasePurposeTypeCode = "testPurposeType";
             lease.LeaseStatusTypeCodeNavigation = pimsLeaseStatusType ?? new Entity.PimsLeaseStatusType() { Id = "testStatusType" };
             lease.LeasePayRvblTypeCodeNavigation = pimsLeasePayRvblType ?? new Entity.PimsLeasePayRvblType() { Id = "testRvblType" };
             lease.LeaseCategoryTypeCodeNavigation = pimsLeaseCategoryType ?? new Entity.PimsLeaseCategoryType() { Id = "testCategoryType" };

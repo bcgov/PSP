@@ -71,6 +71,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     onSuccess,
     initialForm,
     selectedFeature: selectedFileFeature,
+    formikRef,
   });
 
   return (

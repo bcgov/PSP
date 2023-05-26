@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Pims.Dal.Entities;
@@ -22,6 +24,11 @@ namespace Pims.Api.Services
             _leasePaymentRepository = leasePaymentRepository;
             _leaseService = leaseService;
             _user = user;
+        }
+
+        public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
+        {
+            return _leasePaymentRepository.GetAll(startDate, endDate);
         }
 
         public PimsLease DeletePayment(long leaseId, long leaseRowVersion, PimsLeasePayment payment)

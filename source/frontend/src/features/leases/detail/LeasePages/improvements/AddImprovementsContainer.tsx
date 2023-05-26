@@ -34,7 +34,7 @@ export const AddImprovementsContainer: React.FunctionComponent<
   const onSubmit = async (lease: IFormLease) => {
     try {
       const leaseToUpdate = formLeaseToApiLease(removeEmptyImprovements(lease));
-      const updatedLease = await updateLease(leaseToUpdate, 'improvements');
+      const updatedLease = await updateLease.execute(leaseToUpdate, 'improvements', []);
       if (!!updatedLease?.id) {
         formikRef?.current?.resetForm({ values: apiLeaseToFormLease(updatedLease) });
         setLease(updatedLease);

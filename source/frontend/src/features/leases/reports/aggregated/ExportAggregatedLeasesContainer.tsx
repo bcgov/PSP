@@ -1,4 +1,3 @@
-import { SelectOption } from 'components/common/form';
 import { InlineSelect } from 'components/common/form/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { FlexRowDiv, UnOrderedListNoStyle } from 'features/leases/detail/LeasePages/payment/styles';
@@ -9,6 +8,8 @@ import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { getCurrentFiscalYear } from 'utils';
+
+import { generateFiscalYearOptions } from '../reportUtils';
 
 interface IExportAggregatedLeasesContainerProps {}
 
@@ -54,22 +55,6 @@ export const ExportAggregatedLeasesContainer: React.FunctionComponent<
       )}
     </Formik>
   );
-};
-
-export const generateFiscalYearOptions = (minYear: number, maxYear: number) => {
-  const options: SelectOption[] = [];
-  for (let year: number = minYear; year < maxYear; year++) {
-    const yearString = year.toString();
-    const yearEndString = (year + 1).toString();
-    options.push({
-      label: `${yearString}-${yearEndString.substring(
-        yearEndString.length - 2,
-        yearEndString.length,
-      )}`,
-      value: year,
-    });
-  }
-  return options;
 };
 
 const ClickableDownload = styled(FaDownload)`

@@ -68,7 +68,7 @@ describe('AddLeaseTenantContainer component', () => {
     jest.resetAllMocks();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
     (useApiContacts as jest.Mock).mockReturnValue({ getPersonConcept: getPersonConcept });
-    (useUpdateLease as jest.Mock).mockReturnValue({ updateLease: updateLease });
+    (useUpdateLease as jest.Mock).mockReturnValue({ updateLease: { execute: updateLease } });
   });
   it('renders as expected', async () => {
     const { component } = await setup({});
