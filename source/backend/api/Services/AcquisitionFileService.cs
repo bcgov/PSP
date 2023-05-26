@@ -115,10 +115,14 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
-            return _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(id);
+            var checklistItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(id);
+            var acquisitionFile = _acqFileRepository.GetById(id);
+            AppendToAcquisitionChecklist(acquisitionFile, ref checklistItems);
+
+            return checklistItems;
         }
 
-        public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
+        public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
@@ -135,7 +139,7 @@ namespace Pims.Api.Services
             ValidateStaff(acquisitionFile);
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
-            MatchProperties(acquisitionFile);
+            MatchProperties(acquisitionFile, userOverrides);
             PopulateAcquisitionChecklist(acquisitionFile);
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
@@ -143,7 +147,7 @@ namespace Pims.Api.Services
             return newAcqFile;
         }
 
-        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool ministryOverride = false, bool propertiesOverride = false)
+        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
@@ -153,14 +157,14 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
-            if (!ministryOverride)
+            if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
             {
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
 
             if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
             {
-                TransferPropertiesOfInterestToInventory(acquisitionFile, propertiesOverride);
+                TransferPropertiesOfInterestToInventory(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
             }
 
             ValidateStaff(acquisitionFile);
@@ -179,7 +183,7 @@ namespace Pims.Api.Services
             return newAcqFile;
         }
 
-        public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile)
+        public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("Updating acquisition file properties...");
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
@@ -187,7 +191,7 @@ namespace Pims.Api.Services
 
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
-            MatchProperties(acquisitionFile);
+            MatchProperties(acquisitionFile, userOverrides);
 
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
@@ -252,13 +256,17 @@ namespace Pims.Api.Services
 
             foreach (var incomingItem in acquisitionFile.PimsAcquisitionChecklistItems)
             {
-                if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem))
+                if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem) && incomingItem.Internal_Id != 0)
                 {
                     throw new BadRequestException($"Cannot update checklist item. Item with Id: {incomingItem.Internal_Id} not found.");
                 }
 
                 // Only update checklist items that changed.
-                if (existingItem.AcqChklstItemStatusTypeCode != incomingItem.AcqChklstItemStatusTypeCode)
+                if(existingItem == null)
+                {
+                    _checklistRepository.Add(incomingItem);
+                }
+                else if (existingItem.AcqChklstItemStatusTypeCode != incomingItem.AcqChklstItemStatusTypeCode)
                 {
                     _checklistRepository.Update(incomingItem);
                 }
@@ -326,7 +334,29 @@ namespace Pims.Api.Services
             }
         }
 
-        private void MatchProperties(PimsAcquisitionFile acquisitionFile)
+        private void UpdateLocation(PimsProperty researchProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
+        {
+            if (propertyToUpdate.Location == null)
+            {
+                if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
+                {
+                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+                    var geom = researchProperty.Location;
+                    if (geom.SRID != SpatialReference.BCALBERS)
+                    {
+                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                    }
+                }
+                else
+                {
+                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
+                }
+            }
+        }
+
+        private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
@@ -337,6 +367,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid);
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
+                        UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -352,6 +383,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
+                        UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -427,7 +459,7 @@ namespace Pims.Api.Services
             short currentRegion = _acqFileRepository.GetRegion(acqFileId);
             if (currentRegion != updatedRegion)
             {
-                throw new UserOverrideException("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", "region_violation");
+                throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
             }
         }
 
@@ -450,7 +482,7 @@ namespace Pims.Api.Services
                 var property = acquisitionProperty.Property;
                 if (!userOverride)
                 {
-                    throw new UserOverrideException("The properties of interest will be added to the inventory as acquired properties.", "properties_of_interest_violation");
+                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
                 }
                 _propertyRepository.TransferToCoreInventory(property);
             }
@@ -499,6 +531,32 @@ namespace Pims.Api.Services
                 };
 
                 acquisitionFile.PimsAcquisitionChecklistItems.Add(checklistItem);
+            }
+        }
+
+        private void AppendToAcquisitionChecklist(PimsAcquisitionFile acquisitionFile, ref List<PimsAcquisitionChecklistItem> pimsAcquisitionChecklistItems)
+        {
+            var doNotAddToStatuses = new List<string>() { "COMPLT", "CANCEL", "ARCHIV" };
+            if(doNotAddToStatuses.Contains(acquisitionFile.AcqPhysFileStatusTypeCode))
+            {
+                return;
+            }
+            var checklistStatusTypes = _lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
+            foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
+            {
+                if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && acquisitionFile.AppCreateTimestamp >= itemType.EffectiveDate)
+                {
+                    var checklistItem = new PimsAcquisitionChecklistItem
+                    {
+                        AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
+                        AcqChklstItemTypeCodeNavigation = itemType,
+                        AcqChklstItemStatusTypeCode = "INCOMP",
+                        AcquisitionFileId = acquisitionFile.AcquisitionFileId,
+                        AcqChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == "INCOMP"),
+                    };
+
+                    pimsAcquisitionChecklistItems.Add(checklistItem);
+                }
             }
         }
     }

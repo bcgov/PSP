@@ -66,6 +66,7 @@ export const useGenerateAgreement = () => {
     const generatedFile = await generate({
       templateType: getTemplateTypeFromAgreementType(agreement.agreementType.id),
       templateData: agreementData,
+      convertToType: null,
     });
     generatedFile?.status === ExternalResultStatus.Success!! &&
       generatedFile?.payload &&

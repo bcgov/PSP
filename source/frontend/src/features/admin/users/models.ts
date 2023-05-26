@@ -1,5 +1,5 @@
 import { ContactMethodTypes } from 'constants/contactMethodType';
-import { UserTypes } from 'constants/index';
+import { UserTypes } from 'constants/userTypes';
 import { Api_Person } from 'models/api/Person';
 import { Api_Role } from 'models/api/Role';
 import Api_TypeCode from 'models/api/TypeCode';

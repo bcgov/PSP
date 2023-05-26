@@ -28,6 +28,7 @@ namespace Pims.Api.Controllers
         private readonly IFormDocumentService _formDocumentService;
         private readonly IDocumentActivityService _documentActivityService;
         private readonly IDocumentFileService _documentFileService;
+        private readonly IDocumentService _documentService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -39,21 +40,40 @@ namespace Pims.Api.Controllers
         /// <param name="documentActivityService"></param>
         /// <param name="documentFileService"></param>
         /// <param name="formDocumentService"></param>
+        /// <param name="documentService"></param>
         /// <param name="mapper"></param>
         public DocumentRelationshipController(
             IDocumentActivityService documentActivityService,
             IDocumentFileService documentFileService,
             IFormDocumentService formDocumentService,
+            IDocumentService documentService,
             IMapper mapper)
         {
             _documentActivityService = documentActivityService;
             _documentFileService = documentFileService;
             _formDocumentService = formDocumentService;
+            _documentService = documentService;
             _mapper = mapper;
         }
         #endregion
 
         #region Endpoints
+
+        /// <summary>
+        /// Get the document types.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("categories/{relationshipType}")]
+        [HasPermission(Permissions.DocumentView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<DocumentTypeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "document-types" })]
+        public IActionResult GetDocumentRelationshipTypes(DocumentRelationType relationshipType)
+        {
+            var documentTypes = _documentService.GetPimsDocumentTypes(relationshipType);
+            var mappedDocumentTypes = _mapper.Map<List<DocumentTypeModel>>(documentTypes);
+            return new JsonResult(mappedDocumentTypes);
+        }
 
         /// <summary>
         /// Gets a collection of documents for the specified type and owner id.
@@ -70,14 +90,14 @@ namespace Pims.Api.Controllers
         {
             switch (relationshipType)
             {
-                case DocumentRelationType.ResearchFileActivities:
+                /*case DocumentRelationType.ResearchFileActivities:
                     var researchActivityDocuments = _documentActivityService.GetFileActivityDocuments(FileType.Research, long.Parse(parentId));
                     var mappedResearchFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(researchActivityDocuments);
                     return new JsonResult(mappedResearchFileActivityDocuments);
                 case DocumentRelationType.AcquisitionFileActivities:
                     var aquistionFileActivityDocuments = _documentActivityService.GetFileActivityDocuments(FileType.Acquisition, long.Parse(parentId));
                     var mappedAquisitionFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(aquistionFileActivityDocuments);
-                    return new JsonResult(mappedAquisitionFileActivityDocuments);
+                    return new JsonResult(mappedAquisitionFileActivityDocuments);*/
                 case DocumentRelationType.ResearchFiles:
                     var researchFileDocuments = _documentFileService.GetFileDocuments<PimsResearchFileDocument>(FileType.Research, long.Parse(parentId));
                     var mappedResearchFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(researchFileDocuments);

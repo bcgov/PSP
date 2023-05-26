@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Constants;
@@ -44,7 +45,7 @@ namespace Pims.Api.Test.Routes
         public void AddAcquisitionFile_Route()
         {
             // Arrange
-            var endpoint = typeof(AcquisitionFileController).FindMethod(nameof(AcquisitionFileController.AddAcquisitionFile), typeof(AcquisitionFileModel));
+            var endpoint = typeof(AcquisitionFileController).FindMethod(nameof(AcquisitionFileController.AddAcquisitionFile), typeof(AcquisitionFileModel), typeof(string[]));
 
             // Act
             // Assert
@@ -70,7 +71,7 @@ namespace Pims.Api.Test.Routes
         public void UpdateAcquisitionFile_Route()
         {
             // Arrange
-            var endpoint = typeof(AcquisitionFileController).FindMethod(nameof(AcquisitionFileController.UpdateAcquisitionFile), typeof(long), typeof(AcquisitionFileModel), typeof(bool), typeof(bool));
+            var endpoint = typeof(AcquisitionFileController).FindMethod(nameof(AcquisitionFileController.UpdateAcquisitionFile), typeof(long), typeof(AcquisitionFileModel), typeof(string[]));
 
             // Act
             // Assert

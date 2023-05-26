@@ -12,8 +12,11 @@ import { logRequest, logSuccess } from 'store/slices/network/networkSlice';
  * hook that allows the user to export the currently filtered lease data.
  */
 export const useLeaseExport = () => {
-  const { exportLeases: apiExportLeases, exportAggregatedLeases: apiExportAggregatedLeases } =
-    useApiLeases();
+  const {
+    exportLeases: apiExportLeases,
+    exportAggregatedLeases: apiExportAggregatedLeases,
+    exportLeasePayments: apiExportLeasePayments,
+  } = useApiLeases();
   const dispatch = useDispatch();
 
   const exportLeases = useCallback(
@@ -59,5 +62,24 @@ export const useLeaseExport = () => {
     [dispatch, apiExportAggregatedLeases],
   );
 
-  return { exportLeases, exportAggregatedLeases };
+  const exportLeasePayments = useCallback(
+    async (fiscalYearStart: number, requestId = 'lease-payments-report') => {
+      dispatch(logRequest(requestId));
+      dispatch(showLoading());
+      try {
+        const { data, status } = await apiExportLeasePayments(fiscalYearStart);
+        dispatch(logSuccess({ name: requestId, status }));
+        dispatch(hideLoading());
+        // trigger file download in client browser
+        fileDownload(data, `pims-lease-payments-${fiscalYearStart}-${fiscalYearStart + 1}.xlsx`);
+      } catch (axiosError) {
+        if (axios.isAxiosError(axiosError)) {
+          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+        }
+      }
+    },
+    [dispatch, apiExportLeasePayments],
+  );
+
+  return { exportLeases, exportAggregatedLeases, exportLeasePayments };
 };

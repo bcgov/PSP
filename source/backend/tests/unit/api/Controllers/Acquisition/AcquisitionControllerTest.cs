@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -10,6 +11,7 @@ using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Xunit;
 
@@ -23,6 +25,7 @@ namespace Pims.Api.Test.Controllers
     {
         #region Variables
         private Mock<IAcquisitionFileService> _service;
+        private Mock<ICompReqH120Service> _compReqH120service;
         private AcquisitionFileController _controller;
         private IMapper _mapper;
         #endregion
@@ -33,6 +36,7 @@ namespace Pims.Api.Test.Controllers
             _controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
             _mapper = helper.GetService<IMapper>();
             _service = helper.GetService<Mock<IAcquisitionFileService>>();
+            _compReqH120service = helper.GetService<Mock<ICompReqH120Service>>();
         }
 
         #region Tests
@@ -44,13 +48,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            _service.Setup(m => m.Add(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.AddAcquisitionFile(_mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = _controller.AddAcquisitionFile(_mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once());
+            _service.Verify(m => m.Add(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         /// <summary>
@@ -79,13 +83,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            _service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(acqFile);
+            _service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.UpdateAcquisitionFile(1, _mapper.Map<AcquisitionFileModel>(acqFile), true);
+            var result = _controller.UpdateAcquisitionFile(1, _mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>(), It.IsAny<bool>()), Times.Once());
+            _service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         /// <summary>
@@ -97,31 +101,45 @@ namespace Pims.Api.Test.Controllers
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
-            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(acqFile);
 
             // Act
-            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile), Array.Empty<string>());
 
             // Assert
-            _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>()), Times.Once());
+            _service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
         /// <summary>
-        /// Make a conflict request to update an acquisition file's properties.
+        /// Get all compensation financials for a file.
         /// </summary>
         [Fact]
-        public void UpdateAcquisitionFileProperties_Conflict()
+        public void GetFileCompReqH120_Success()
         {
             // Arrange
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-
-            _service.Setup(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>())).Throws(new BusinessRuleViolationException());
+            _compReqH120service.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqH120>());
 
             // Act
-            var result = _controller.UpdateAcquisitionFileProperties(_mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = _controller.GetFileCompReqH120(1, false);
 
             // Assert
-            result.Should().BeAssignableTo<ConflictObjectResult>();
+            _compReqH120service.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), false));
+        }
+
+        /// <summary>
+        /// get all compensation financials for a file that belong to compensation requisitions in the final status.
+        /// </summary>
+        [Fact]
+        public void GetFileCompReqH120_FinalOnly()
+        {
+            // Arrange
+            _compReqH120service.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqH120>());
+
+            // Act
+            var result = _controller.GetFileCompReqH120(1, true);
+
+            // Assert
+            _compReqH120service.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true));
         }
 
         #endregion

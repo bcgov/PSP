@@ -82,7 +82,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
-    newForm.completionDate = model.completionDate;
+    newForm.completionDate = model.completionDate ?? '';
     newForm.fileStatusTypeCode = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);

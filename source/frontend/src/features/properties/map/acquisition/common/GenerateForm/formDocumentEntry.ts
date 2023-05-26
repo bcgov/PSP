@@ -7,4 +7,5 @@ interface FormDocumentEntry {
 export const generateDocumentEntries: FormDocumentEntry[] = [
   { formType: FormDocumentType.LETTER, text: 'Generate Letter' },
   { formType: FormDocumentType.H0443, text: 'Conditions of Entry (H0443)' },
+  { formType: FormDocumentType.H120, text: 'H120 WIP' },
 ];

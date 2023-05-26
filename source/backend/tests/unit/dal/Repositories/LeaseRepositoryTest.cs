@@ -357,7 +357,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             Assert.Throws<UserOverrideException>(() =>
-                service.Update(lease, false));
+                service.Update(lease, Array.Empty<UserOverrideCode>()));
         }
 
         [Fact]
@@ -385,16 +385,16 @@ namespace Pims.Dal.Test.Repositories
             var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
-            leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>(), false));
+            leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>()));
 
             // Act
             var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
             lease.PimsPropertyLeases.Add(addProperty);
-            var updatedLease = service.Update(lease, true);
+            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty, UserOverrideCode.AddPropertyToInventory });
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases, true), Times.Once);
+            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases), Times.Once);
         }
 
         [Fact]
@@ -421,7 +421,7 @@ namespace Pims.Dal.Test.Repositories
             var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
-            leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>(), false));
+            leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>()));
 
             // Act
             var updateProperty = EntityHelper.CreateProperty(context, 2);
@@ -430,11 +430,11 @@ namespace Pims.Dal.Test.Repositories
             propertyToUpdate.PropertyId = updateProperty.PropertyId;
             propertyToUpdate.Property = updateProperty;
             context.ChangeTracker.Clear();
-            var updatedLease = service.Update(lease, false);
+            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases, false), Times.Once);
+            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases), Times.Once);
         }
 
         [Fact]

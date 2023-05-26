@@ -6,9 +6,9 @@ import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvide
 import { useProperties } from 'hooks/repositories/useProperties';
 import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { GenerateOwner } from 'models/generate/GenerateOwner';
-import { GeneratePerson } from 'models/generate/GeneratePerson';
-import { GenerateProperty } from 'models/generate/GenerateProperty';
+import { Api_GenerateOwner } from 'models/generate/GenerateOwner';
+import { Api_GeneratePerson } from 'models/generate/GeneratePerson';
+import { Api_GenerateProperty } from 'models/generate/GenerateProperty';
 
 export const useGenerateH0443 = () => {
   const { getPersonConcept } = useApiContacts();
@@ -58,17 +58,18 @@ export const useGenerateH0443 = () => {
         project_name: file.project?.description || '',
         properties:
           properties !== undefined
-            ? properties.map<GenerateProperty>(x => new GenerateProperty(x))
+            ? properties.map<Api_GenerateProperty>(x => new Api_GenerateProperty(x))
             : [],
         owner_names: owners.map<string>(x => getOwnerName(x)) || [],
-        owner_contact: contactOwner !== undefined ? new GenerateOwner(contactOwner) : null,
-        property_coordinator: new GeneratePerson(coordinatorPerson),
-        property_agent: new GeneratePerson(agentPerson),
+        owner_contact: contactOwner !== undefined ? new Api_GenerateOwner(contactOwner) : null,
+        property_coordinator: new Api_GeneratePerson(coordinatorPerson),
+        property_agent: new Api_GeneratePerson(agentPerson),
       };
 
       const generatedFile = await generate({
         templateType: FormDocumentType.H0443,
         templateData: h0443Data,
+        convertToType: null,
       });
       generatedFile?.status === ExternalResultStatus.Success!! &&
         generatedFile?.payload &&
@@ -96,11 +97,11 @@ function getOwnerName(owner: Api_AcquisitionFileOwner): string {
 interface H0443Data {
   file_name: string;
   file_number: string;
-  owner_contact: GenerateOwner | null;
+  owner_contact: Api_GenerateOwner | null;
   owner_names: string[];
   project_number: string;
   project_name: string;
-  properties: GenerateProperty[];
-  property_agent: GeneratePerson;
-  property_coordinator: GeneratePerson;
+  properties: Api_GenerateProperty[];
+  property_agent: Api_GeneratePerson;
+  property_coordinator: Api_GeneratePerson;
 }
