@@ -63,7 +63,7 @@ describe('NoteContainer component', () => {
 
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
-    mockAxios.onGet(new RegExp('notes/activity/*')).reply(200, mockNoteResponse(1));
+    mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNoteResponse(1));
   });
 
   afterEach(() => {

@@ -1919,6 +1919,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                       class="form-control"
                       id="input-ownerRepresentative.comment"
                       name="ownerRepresentative.comment"
+                      placeholder="Remarks or additional representative(s)"
                       title=""
                     />
                   </div>

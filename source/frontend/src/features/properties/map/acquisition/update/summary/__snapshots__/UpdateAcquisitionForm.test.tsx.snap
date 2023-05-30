@@ -3242,6 +3242,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 class="form-control"
                 id="input-ownerRepresentative.comment"
                 name="ownerRepresentative.comment"
+                placeholder="Remarks or additional representative(s)"
                 title="test representative comment"
               >
                 test representative comment

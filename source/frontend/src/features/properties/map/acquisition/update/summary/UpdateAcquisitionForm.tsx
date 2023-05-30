@@ -271,7 +271,10 @@ const AcquisitionDetailSubForm: React.FC<{
           ></ContactInputContainer>
         </SectionField>
         <SectionField label="Comment">
-          <TextArea field="ownerRepresentative.comment"></TextArea>
+          <TextArea
+            field="ownerRepresentative.comment"
+            placeholder="Remarks or additional representative(s)"
+          ></TextArea>
         </SectionField>
       </Section>
     </Container>
