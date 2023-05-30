@@ -8,31 +8,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_COMP_REQ_H120_HIST")]
-    [Index(nameof(CompReqH120HistId), nameof(EndDateHist), Name = "PIMS_CRH120_H_UK", IsUnique = true)]
-    public partial class PimsCompReqH120Hist
+    [Table("PIMS_INTHLDR_PROP_INTEREST_HIST")]
+    [Index(nameof(InthldrPropInterestHistId), nameof(EndDateHist), Name = "PIMS_IHPRIN_H_UK", IsUnique = true)]
+    public partial class PimsInthldrPropInterestHist
     {
         [Key]
-        [Column("_COMP_REQ_H120_HIST_ID")]
-        public long CompReqH120HistId { get; set; }
+        [Column("_INTHLDR_PROP_INTEREST_HIST_ID")]
+        public long InthldrPropInterestHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("COMP_REQ_FIN_ACTIVITY")]
-        public long CompReqFinActivity { get; set; }
-        [Column("COMPENSATION_REQUISITION_ID")]
-        public long CompensationRequisitionId { get; set; }
-        [Column("FINANCIAL_ACTIVITY_CODE_ID")]
-        public long FinancialActivityCodeId { get; set; }
-        [Column("PRETAX_AMT", TypeName = "money")]
-        public decimal? PretaxAmt { get; set; }
-        [Column("TAX_AMT", TypeName = "money")]
-        public decimal? TaxAmt { get; set; }
-        [Column("TOTAL_AMT", TypeName = "money")]
-        public decimal? TotalAmt { get; set; }
-        [Column("IS_GST_REQUIRED")]
-        public bool? IsGstRequired { get; set; }
+        [Required]
+        [Column("PIMS_INTHLDR_PROP_INTEREST_ID")]
+        [StringLength(40)]
+        public string PimsInthldrPropInterestId { get; set; }
+        [Column("INTEREST_HOLDER_ID")]
+        public long InterestHolderId { get; set; }
+        [Column("PROPERTY_ACQUISITION_FILE_ID")]
+        public long? PropertyAcquisitionFileId { get; set; }
+        [Required]
+        [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
+        [StringLength(20)]
+        public string InterestHolderInterestTypeCode { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
