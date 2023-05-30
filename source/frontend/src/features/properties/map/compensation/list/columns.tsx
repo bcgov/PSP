@@ -4,7 +4,10 @@ import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
+import {
+  Api_CompensationFinancial,
+  Api_CompensationRequisition,
+} from 'models/api/CompensationRequisition';
 import { Col } from 'react-bootstrap';
 import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
@@ -15,14 +18,14 @@ export function createCompensationTableColumns(
   onShow: (compensationId: number) => void,
   onDelete: (compensationId: number) => void,
 ) {
-  const columns: ColumnWithProps<Api_Compensation>[] = [
+  const columns: ColumnWithProps<Api_CompensationRequisition>[] = [
     {
       Header: 'Date',
       align: 'left',
       sortable: false,
       minWidth: 40,
       maxWidth: 40,
-      Cell: (cellProps: CellProps<Api_Compensation>) => {
+      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
         return stringToFragment(prettyFormatDate(cellProps.row.original.agreementDate));
       },
     },
@@ -33,7 +36,7 @@ export function createCompensationTableColumns(
       sortable: false,
       minWidth: 40,
       maxWidth: 40,
-      Cell: (cellProps: CellProps<Api_Compensation>) => {
+      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
         const { hasClaim } = useKeycloakWrapper();
         return hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) ? (
           <LinkButton
@@ -52,8 +55,8 @@ export function createCompensationTableColumns(
       sortable: false,
       width: 30,
       maxWidth: 30,
-      Cell: (cellProps: CellProps<Api_Compensation>) => {
-        const totalAmount = cellProps.row.original.financials.reduce(
+      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
+        const totalAmount = cellProps.row.original.financials?.reduce(
           (total: number, method: Api_CompensationFinancial) => {
             return total + (method.totalAmount ?? 0);
           },
@@ -68,7 +71,7 @@ export function createCompensationTableColumns(
       sortable: false,
       minWidth: 20,
       maxWidth: 20,
-      Cell: (cellProps: CellProps<Api_Compensation>) => {
+      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
         return stringToFragment(cellProps.row.original.isDraft ? 'Draft' : 'Final');
       },
     },
@@ -78,7 +81,7 @@ export function createCompensationTableColumns(
       sortable: false,
       width: 20,
       maxWidth: 20,
-      Cell: (cellProps: CellProps<Api_Compensation>) => {
+      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
         const { hasClaim } = useKeycloakWrapper();
         return (
           <StyledDiv className="no-gutters">

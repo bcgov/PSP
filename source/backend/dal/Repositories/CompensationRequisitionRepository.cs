@@ -50,7 +50,11 @@ namespace Pims.Dal.Repositories
         {
             User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
             var entity = Context.PimsCompensationRequisitions
+                .Include(x => x.YearlyFinancial)
+                .Include(x => x.ChartOfAccounts)
+                .Include(x => x.Responsibility)
                 .Include(c => c.PimsCompReqH120s)
+                    .ThenInclude(y => y.FinancialActivityCode)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -64,6 +68,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.Internal_Id)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(p => p.PimsCompReqH120s, compensationRequisition.Internal_Id, compensationRequisition.PimsCompReqH120s.ToArray());
 
             return compensationRequisition;
         }

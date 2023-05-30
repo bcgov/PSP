@@ -4,7 +4,7 @@ import { useDocumentGenerationRepository } from 'features/documents/hooks/useDoc
 import { FormTemplateTypes } from 'features/properties/map/shared/content/models';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from 'hooks/repositories/useH120CategoryRepository';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { Api_GenerateCompensation } from 'models/generate/GenerateCompensation';
 import { Api_GenerateFile } from 'models/generate/GenerateFile';
@@ -14,7 +14,7 @@ export const useGenerateH120 = () => {
     useAcquisitionProvider();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const getH120Categories = useH120CategoryRepository();
-  const generateCompensation = async (compensation: Api_Compensation) => {
+  const generateCompensation = async (compensation: Api_CompensationRequisition) => {
     if (compensation?.id === undefined) {
       throw Error(
         'user must choose a valid compensation requisition in order to generate a document',

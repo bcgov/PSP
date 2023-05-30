@@ -6,7 +6,7 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikProps } from 'formik';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import moment from 'moment';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
@@ -14,13 +14,21 @@ import styled from 'styled-components';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { CompensationRequisitionYupSchema } from '../CompensationRequisitionYupSchema';
 import { CompensationRequisitionFormModel } from '../models';
+import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm';
 
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
   formikRef: React.Ref<FormikProps<CompensationRequisitionFormModel>>;
   acquisitionFile: Api_AcquisitionFile;
   initialValues: CompensationRequisitionFormModel;
-  onSave: (compensation: CompensationRequisitionFormModel) => Promise<Api_Compensation | undefined>;
+  gstConstant: number;
+  financialActivityOptions: SelectOption[];
+  chartOfAccountsOptions: SelectOption[];
+  responsiblityCentreOptions: SelectOption[];
+  yearlyFinancialOptions: SelectOption[];
+  onSave: (
+    compensation: CompensationRequisitionFormModel,
+  ) => Promise<Api_CompensationRequisition | undefined>;
   onCancel: () => void;
 }
 
@@ -29,6 +37,11 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   formikRef,
   acquisitionFile,
   initialValues,
+  gstConstant,
+  financialActivityOptions,
+  chartOfAccountsOptions,
+  responsiblityCentreOptions,
+  yearlyFinancialOptions,
   onSave,
   onCancel,
 }) => {
@@ -105,6 +118,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 <MediumTextArea field="specialInstruction" />
               </SectionField>
             </Section>
+
             <Section header="Financial coding">
               <SectionField label="Product" labelWidth={'4'}>
                 {acquisitionFile.product?.code ?? ''}
@@ -121,7 +135,35 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
                 <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
               </SectionField>
+              <SectionField label="STOB" labelWidth="4" contentWidth="4" required>
+                <Select field="stob" options={yearlyFinancialOptions} placeholder="Select..." />
+              </SectionField>
+              <SectionField label="Service line" labelWidth="4" required>
+                <Select
+                  field="serviceLine"
+                  options={chartOfAccountsOptions}
+                  placeholder="Select..."
+                />
+              </SectionField>
+              <SectionField label="Responsibility centre" labelWidth="4" required>
+                <Select
+                  field="responsibilityCentre"
+                  options={responsiblityCentreOptions}
+                  placeholder="Select..."
+                />
+              </SectionField>
             </Section>
+
+            <Section header="Payee" isCollapsable initiallyExpanded></Section>
+
+            <Section header="Activities" isCollapsable initiallyExpanded>
+              <FinancialActivitiesSubForm
+                financialActivityOptions={financialActivityOptions}
+                formikProps={formikProps}
+                gstConstant={gstConstant}
+              ></FinancialActivitiesSubForm>
+            </Section>
+
             <Section>
               <SectionField label="Detailed remarks" labelWidth="12">
                 <MediumTextArea field="detailedRemarks" />

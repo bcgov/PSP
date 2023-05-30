@@ -22,6 +22,8 @@ import UpdateCompensationRequisitionForm, {
 const onSave = jest.fn();
 const onCancel = jest.fn();
 
+const currentGst = 0.05;
+
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
@@ -43,6 +45,11 @@ describe('TakesUpdateForm component', () => {
         onSave={onSave}
         onCancel={onCancel}
         initialValues={renderOptions.props?.initialValues ?? defaultCompensation}
+        financialActivityOptions={[]}
+        chartOfAccountsOptions={[]}
+        responsiblityCentreOptions={[]}
+        yearlyFinancialOptions={[]}
+        gstConstant={currentGst}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
         formikRef={formikRef}

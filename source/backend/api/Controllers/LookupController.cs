@@ -143,6 +143,10 @@ namespace Pims.Api.Controllers
                 var acqChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistSectionTypes());
                 var acqChecklistItemStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistItemStatusTypes());
                 var agreementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementTypes());
+                var financialActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllFinancialActivityCodes());
+                var chartOfAccountTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllChartOfAccountCodes());
+                var responsiblityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllResponsibilityCodes());
+                var yearlyFinancialTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllYearlyFinancialCodes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -200,6 +204,10 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acqChecklistSectionTypes);
                 codes.AddRange(acqChecklistItemStatusTypes);
                 codes.AddRange(agreementTypes);
+                codes.AddRange(financialActivityTypes);
+                codes.AddRange(chartOfAccountTypes);
+                codes.AddRange(responsiblityTypes);
+                codes.AddRange(yearlyFinancialTypes);
 
                 var response = new JsonResult(codes);
 
