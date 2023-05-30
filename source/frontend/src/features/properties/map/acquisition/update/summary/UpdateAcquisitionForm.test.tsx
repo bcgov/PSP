@@ -134,6 +134,13 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getByDisplayValue('legacy file number')).toBeVisible();
   });
 
+  it('displays owner solicitor and owner representative', async () => {
+    const { getByText } = setup({ initialValues });
+    expect(getByText('Luke Skywalker')).toBeVisible();
+    expect(getByText('Han Solo')).toBeVisible();
+    expect(getByText('test representative comment')).toBeVisible();
+  });
+
   it('displays Individual type Owner with data', async () => {
     const {
       getIsOrganizationRadioButtonValue,
