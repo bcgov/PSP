@@ -106,6 +106,10 @@ export const ACQUISITION_CHECKLIST_SECTION_TYPES = 'PimsAcqChklstSectionType';
 export const ACQUISITION_CHECKLIST_ITEM_TYPES = 'PimsAcqChklstItemType';
 export const ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsAcqChklstItemStatusType';
 export const AGREEMENT_TYPES = 'PimsAgreementType';
+export const FINANCIAL_ACTIVITY_CODE_TYPES = 'PimsFinancialActivityCode';
+export const CHART_OF_ACCOUNTS_CODE_TYPES = 'PimsChartOfAccountsCode';
+export const RESPONSIBILITY_CODE_TYPES = 'PimsResponsibilityCode';
+export const YEARLY_FINANCIAL_CODE_TYPES = 'PimsYearlyFinancialCode';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

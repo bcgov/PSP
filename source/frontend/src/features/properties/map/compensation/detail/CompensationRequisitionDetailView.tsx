@@ -7,7 +7,7 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { Col, Row } from 'react-bootstrap';
 import { FaMoneyCheck } from 'react-icons/fa';
@@ -15,14 +15,14 @@ import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
 export interface CompensationRequisitionDetailViewProps {
-  compensation: Api_Compensation;
+  compensation: Api_CompensationRequisition;
   acqFileProject?: Api_Project;
-  acqFileProduct?: Api_Product;
+  acqFileProduct?: Api_Product | undefined;
   clientConstant: string;
   gstConstant: number | undefined;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
-  onGenerate: (compensation: Api_Compensation) => void;
+  onGenerate: (compensation: Api_CompensationRequisition) => void;
 }
 
 export const CompensationRequisitionDetailView: React.FunctionComponent<

@@ -7,7 +7,10 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
-import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
+import {
+  Api_CompensationFinancial,
+  Api_CompensationRequisition,
+} from 'models/api/CompensationRequisition';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback, useMemo } from 'react';
@@ -165,7 +168,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionCompensationRequisitionsApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_Compensation[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<Api_CompensationRequisition[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getFileCompensationRequisitions(acqFileId),
@@ -197,11 +200,11 @@ export const useAcquisitionProvider = () => {
   const postFileCompensationRequisitionApi = useApiRequestWrapper<
     (
       acqFileId: number,
-      compRequisition: Api_Compensation,
-    ) => Promise<AxiosResponse<Api_Compensation, any>>
+      compRequisition: Api_CompensationRequisition,
+    ) => Promise<AxiosResponse<Api_CompensationRequisition, any>>
   >({
     requestFunction: useCallback(
-      async (acqFileId: number, compRequisition: Api_Compensation) =>
+      async (acqFileId: number, compRequisition: Api_CompensationRequisition) =>
         await postFileCompensationRequisition(acqFileId, compRequisition),
       [postFileCompensationRequisition],
     ),

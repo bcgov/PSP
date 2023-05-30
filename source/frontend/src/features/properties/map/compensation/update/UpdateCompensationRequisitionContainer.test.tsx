@@ -2,7 +2,7 @@ import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequ
 import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
 import { mockLookups } from 'mocks/lookups.mock';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions } from 'utils/test-utils';
@@ -112,7 +112,7 @@ describe('UpdateAgreementsContainer component', () => {
     setup();
     mockCompensation.detailedRemarks = 'my update';
     mockUpdateCompensation.mockResolvedValue(mockCompensation);
-    let updatedCompensation: Api_Compensation | undefined;
+    let updatedCompensation: Api_CompensationRequisition | undefined;
 
     let updatedCompensationModel = new CompensationRequisitionFormModel(
       mockCompensation.id,

@@ -349,6 +349,27 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsFormTypes.AsNoTracking().ToArray();
         }
+
+        public IEnumerable<PimsFinancialActivityCode> GetAllFinancialActivityCodes()
+        {
+            return this.Context.PimsFinancialActivityCodes.AsNoTracking().OrderBy(x => x.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsChartOfAccountsCode> GetAllChartOfAccountCodes()
+        {
+            return this.Context.PimsChartOfAccountsCodes.AsNoTracking().OrderBy(x => x.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsResponsibilityCode> GetAllResponsibilityCodes()
+        {
+            return this.Context.PimsResponsibilityCodes.AsNoTracking().OrderBy(x => x.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsYearlyFinancialCode> GetAllYearlyFinancialCodes()
+        {
+            return this.Context.PimsYearlyFinancialCodes.AsNoTracking().OrderBy(x => x.DisplayOrder).ToArray();
+        }
+
         #endregion
     }
 }

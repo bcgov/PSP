@@ -121,5 +121,13 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsAcqChklstItemStatusType> GetAllAcquisitionChecklistItemStatusTypes();
 
         IEnumerable<PimsAgreementType> GetAllAgreementTypes();
+
+        IEnumerable<PimsFinancialActivityCode> GetAllFinancialActivityCodes();
+
+        IEnumerable<PimsChartOfAccountsCode> GetAllChartOfAccountCodes();
+
+        IEnumerable<PimsResponsibilityCode> GetAllResponsibilityCodes();
+
+        IEnumerable<PimsYearlyFinancialCode> GetAllYearlyFinancialCodes();
     }
 }
