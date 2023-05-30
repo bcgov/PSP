@@ -8,31 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_COMP_REQ_H120_HIST")]
-    [Index(nameof(CompReqH120HistId), nameof(EndDateHist), Name = "PIMS_CRH120_H_UK", IsUnique = true)]
-    public partial class PimsCompReqH120Hist
+    [Table("PIMS_INTEREST_HOLDER")]
+    [Index(nameof(OrganizationId), Name = "INTHLD_ORGANIZATION_ID_IDX")]
+    [Index(nameof(PersonId), Name = "INTHLD_PERSON_ID_IDX")]
+    [Index(nameof(PersonId), nameof(OrganizationId), Name = "INTHLD_PERSON_ORGANIZATION_TUC", IsUnique = true)]
+    public partial class PimsInterestHolder
     {
+        public PimsInterestHolder()
+        {
+            PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
+            PimsInthldrPropInterests = new HashSet<PimsInthldrPropInterest>();
+        }
+
         [Key]
-        [Column("_COMP_REQ_H120_HIST_ID")]
-        public long CompReqH120HistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("COMP_REQ_FIN_ACTIVITY")]
-        public long CompReqFinActivity { get; set; }
-        [Column("COMPENSATION_REQUISITION_ID")]
-        public long CompensationRequisitionId { get; set; }
-        [Column("FINANCIAL_ACTIVITY_CODE_ID")]
-        public long FinancialActivityCodeId { get; set; }
-        [Column("PRETAX_AMT", TypeName = "money")]
-        public decimal? PretaxAmt { get; set; }
-        [Column("TAX_AMT", TypeName = "money")]
-        public decimal? TaxAmt { get; set; }
-        [Column("TOTAL_AMT", TypeName = "money")]
-        public decimal? TotalAmt { get; set; }
-        [Column("IS_GST_REQUIRED")]
-        public bool? IsGstRequired { get; set; }
+        [Column("INTEREST_HOLDER_ID")]
+        public long InterestHolderId { get; set; }
+        [Column("PERSON_ID")]
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -73,5 +67,21 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
+
+        [ForeignKey(nameof(AcquisitionFileId))]
+        [InverseProperty(nameof(PimsAcquisitionFile.PimsInterestHolders))]
+        public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [ForeignKey(nameof(OrganizationId))]
+        [InverseProperty(nameof(PimsOrganization.PimsInterestHolders))]
+        public virtual PimsOrganization Organization { get; set; }
+        [ForeignKey(nameof(PersonId))]
+        [InverseProperty(nameof(PimsPerson.PimsInterestHolders))]
+        public virtual PimsPerson Person { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionPayee.InterestHolder))]
+        public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
+        [InverseProperty(nameof(PimsInthldrPropInterest.InterestHolder))]
+        public virtual ICollection<PimsInthldrPropInterest> PimsInthldrPropInterests { get; set; }
     }
 }
