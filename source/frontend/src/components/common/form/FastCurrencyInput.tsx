@@ -49,6 +49,8 @@ type OptionalAttributes = {
   allowNegative?: boolean;
   /** Suppress validation on submit */
   suppressValidation?: boolean;
+
+  onChange?: React.FormEventHandler;
 };
 
 export type CurrencyInputProps = RequiredAttributes &
@@ -79,6 +81,7 @@ const CurrencyInput = ({
     unregisterField,
     isSubmitting,
   },
+  onChange,
   ...rest
 }: CurrencyInputProps) => {
   value = value ? value : getIn(values, field);
@@ -92,12 +95,21 @@ const CurrencyInput = ({
     value = '';
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
+    setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
+    if (typeof onChange === 'function') {
+      onChange(e);
+    }
+  };
+
   useEffect(() => {
     registerField(field, {});
     return () => {
       unregisterField(field);
     };
   }, [field, registerField, unregisterField]);
+
   const isInvalid = error && touch ? 'is-invalid ' : '';
   const isValid = !error && touch && value && !disabled ? 'is-valid ' : '';
 
@@ -116,10 +128,7 @@ const CurrencyInput = ({
           id={`input-${field}`}
           value={value}
           name={field}
-          onChange={(e: any) => {
-            const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
-            setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
-          }}
+          onChange={handleChange}
           onBlur={(e: any) => {
             handleBlur(e);
           }}
