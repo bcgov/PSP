@@ -1,5 +1,5 @@
 import { LinkButton, StyledRemoveLinkButton } from 'components/common/buttons';
-import { FastCurrencyInput, Input, Select, SelectOption } from 'components/common/form';
+import { FastCurrencyInput, Select, SelectOption } from 'components/common/form';
 import { H3 } from 'components/common/styles';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
@@ -19,19 +19,7 @@ export interface IFinancialActivitiesSubFormProps {
 export const FinancialActivitiesSubForm: React.FunctionComponent<
   IFinancialActivitiesSubFormProps
 > = ({ formikProps, financialActivityOptions, gstConstant }) => {
-  const { values, setFieldValue, handleChange } =
-    useFormikContext<CompensationRequisitionFormModel>();
-
-  const calculateActivityAmounts = (index: number): void => {
-    setFieldValue(`financials[${index}].taxAmount`, '');
-  };
-
-  const onPreTaxAmountUpdated = (updateFunction: () => void) => {
-    return (e: React.ChangeEvent<any>) => {
-      updateFunction();
-      handleChange(e);
-    };
-  };
+  const { values, setFieldValue } = useFormikContext<CompensationRequisitionFormModel>();
 
   const updateGstRequiredAmounts = (index: number, option: string): void => {
     const isGstRequired = stringToBoolean(option);
@@ -72,11 +60,12 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                     </Col>
                   </Row>
 
-                  <SectionField label="Code & Description" labelWidth="4" required>
+                  <SectionField label="Code & Description" labelWidth="4">
                     <Select
                       field={`financials[${index}].financialActivityCodeId`}
                       options={financialActivityOptions}
                       placeholder="Select..."
+                      required
                     />
                   </SectionField>
 
