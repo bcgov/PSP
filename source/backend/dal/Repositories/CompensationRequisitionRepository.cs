@@ -34,6 +34,14 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqH120s)
+                    .ThenInclude(h120 => h120.FinancialActivityCode)
+                .Include(c => c.PimsAcquisitionPayees)
+                    .ThenInclude(ap => ap.AcquisitionOwner)
+                .Include(c => c.PimsAcquisitionPayees)
+                    .ThenInclude(ap => ap.PimsAcqPayeeCheques)
+                .Include(c => c.Responsibility)
+                .Include(c => c.ChartOfAccounts)
+                .Include(c => c.YearlyFinancial)
                 .AsNoTracking()
                 .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
@@ -51,6 +59,14 @@ namespace Pims.Dal.Repositories
             User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
             var entity = Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqH120s)
+                    .ThenInclude(h120 => h120.FinancialActivityCode)
+                .Include(c => c.PimsAcquisitionPayees)
+                    .ThenInclude(ap => ap.AcquisitionOwner)
+                .Include(c => c.PimsAcquisitionPayees)
+                    .ThenInclude(ap => ap.PimsAcqPayeeCheques)
+                .Include(c => c.Responsibility)
+                .Include(c => c.ChartOfAccounts)
+                .Include(c => c.YearlyFinancial)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 

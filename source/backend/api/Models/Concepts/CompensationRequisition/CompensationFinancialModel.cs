@@ -4,7 +4,7 @@ namespace Pims.Api.Models.Concepts
     {
         public long Id { get; set; }
 
-        public TypeModel<long> FinancialActivityCode { get; set; }
+        public FinancialCodeModel FinancialActivityCode { get; set; }
 
         public long CompensationId { get; set; }
 

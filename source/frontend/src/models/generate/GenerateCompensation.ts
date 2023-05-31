@@ -2,12 +2,15 @@ import { chain } from 'lodash';
 import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
 import { Api_H120Category } from 'models/api/H120Category';
 import moment from 'moment';
+import { ISystemConstant } from 'store/slices/systemConstants';
 import { formatMoney } from 'utils';
 
 import { Api_GenerateCompensationFinancial } from './GenerateCompensationFinancial';
 import { Api_GenerateCompensationFinancialSummary } from './GenerateCompensationFinancialSummary';
+import { Api_GenerateCompensationPayee } from './GenerateCompensationPayee';
 import { Api_GenerateFile } from './GenerateFile';
 export class Api_GenerateCompensation {
+  client: string;
   file: Api_GenerateFile | null;
   status: string;
   generated_date: string;
@@ -18,13 +21,19 @@ export class Api_GenerateCompensation {
   summary_financial_activities: Api_GenerateCompensationFinancialSummary[];
   file_financial_total: string;
   financial_total: string;
+  responsibility_centre: string;
+  service_line: string;
+  yearly_financial: string;
+  payees: Api_GenerateCompensationPayee[];
 
   constructor(
     compensation: Api_Compensation | null,
     generateFile: Api_GenerateFile | null,
     h120Categories: Api_H120Category[],
     finalFileFinancials: Api_CompensationFinancial[],
+    client: ISystemConstant | undefined,
   ) {
+    this.client = client?.value ?? '';
     this.file = generateFile;
     this.generated_date = moment().format('MMM DD, YYYY') ?? '';
     this.requisition_number = compensation?.id?.toString() ?? '';
@@ -47,6 +56,9 @@ export class Api_GenerateCompensation {
       .filter(summary => summary.file_total !== '$0.00' || summary.total !== '$0.00')
       .value();
 
+    this.payees =
+      compensation?.payees?.map(payee => new Api_GenerateCompensationPayee(payee)) ?? [];
+
     const otherFileFinancials = finalFileFinancials?.filter(
       f => !compensation?.financials?.find(cf => cf?.id === f?.id),
     );
@@ -56,5 +68,14 @@ export class Api_GenerateCompensation {
     this.financial_total = formatMoney(
       compensation?.financials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
     );
+    this.responsibility_centre = compensation?.responsibilityCode
+      ? compensation.responsibilityCode.code + ' ' + compensation.responsibilityCode.description
+      : '';
+    this.service_line = compensation?.chartOfAccountsCode
+      ? compensation.chartOfAccountsCode.code + ' ' + compensation.chartOfAccountsCode.description
+      : '';
+    this.yearly_financial = compensation?.yearlyFinancialCode
+      ? compensation.yearlyFinancialCode.code + ' ' + compensation.yearlyFinancialCode.description
+      : '';
   }
 }

@@ -20,6 +20,10 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Financials, src => src.PimsCompReqH120s)
+                .Map(dest => dest.Payees, src => src.PimsAcquisitionPayees)
+                .Map(dest => dest.ResponsibilityCode, src => src.Responsibility)
+                .Map(dest => dest.ChartOfAccountsCode, src => src.ChartOfAccounts)
+                .Map(dest => dest.YearlyFinancialCode, src => src.YearlyFinancial)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
@@ -36,6 +40,10 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.PimsCompReqH120s, src => src.Financials)
+                .Map(dest => dest.PimsAcquisitionPayees, src => src.Payees)
+                .Map(dest => dest.Responsibility, src => src.ResponsibilityCode)
+                .Map(dest => dest.ChartOfAccounts, src => src.ChartOfAccountsCode)
+                .Map(dest => dest.YearlyFinancial, src => src.YearlyFinancialCode)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

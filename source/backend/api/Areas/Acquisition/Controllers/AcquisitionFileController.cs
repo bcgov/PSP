@@ -196,7 +196,20 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         public IActionResult GetFileCompensations(long id)
         {
             var pimsCompensations = _acquisitionService.GetAcquisitionCompensations(id);
+
+            var currentDate = DateTime.UtcNow.Date;
+
             var compensations = _mapper.Map<List<CompensationRequisitionModel>>(pimsCompensations);
+
+            foreach (CompensationRequisitionModel compensationReq in compensations)
+            {
+                var effectiveDate = compensationReq.YearlyFinancialCode?.EffectiveDate;
+                var expiryDate = compensationReq.YearlyFinancialCode?.ExpiryDate;
+                if (!(effectiveDate.HasValue && expiryDate.HasValue && currentDate >= effectiveDate.Value && currentDate <= expiryDate.Value))
+                {
+                    compensationReq.YearlyFinancialCode = null;
+                }
+            }
             return new JsonResult(compensations);
         }
 

@@ -45,7 +45,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
-        public IActionResult GetCompensationRequisitionById([FromRoute]long id)
+        public IActionResult GetCompensationRequisitionById([FromRoute] long id)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -57,7 +57,18 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
 
             var compensationRequisition = _compensationRequisitionService.GetById(id);
 
-            return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compensationRequisition));
+            var compensation = _mapper.Map<CompensationRequisitionModel>(compensationRequisition);
+
+            var currentDate = DateTime.UtcNow.Date;
+            var effectiveDate = compensation?.YearlyFinancialCode?.EffectiveDate;
+            var expiryDate = compensation?.YearlyFinancialCode?.ExpiryDate;
+
+            if (!(effectiveDate.HasValue && expiryDate.HasValue && currentDate >= effectiveDate.Value && currentDate <= expiryDate.Value))
+            {
+                compensation.YearlyFinancialCode = null;
+            }
+
+            return new JsonResult(compensation);
         }
 
         [HttpPut("{id:long}")]
@@ -65,7 +76,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
-        public IActionResult UpdateCompensationRequisition([FromRoute]long id, [FromBody]CompensationRequisitionModel compensationRequisition)
+        public IActionResult UpdateCompensationRequisition([FromRoute] long id, [FromBody] CompensationRequisitionModel compensationRequisition)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -92,7 +103,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult DeleteCompensation([FromRoute]long id)
+        public IActionResult DeleteCompensation([FromRoute] long id)
         {
             var result = _compensationRequisitionService.DeleteCompensation(id);
             return new JsonResult(result);

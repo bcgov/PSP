@@ -8,12 +8,18 @@ import { Api_Compensation } from 'models/api/Compensation';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { Api_GenerateCompensation } from 'models/generate/GenerateCompensation';
 import { Api_GenerateFile } from 'models/generate/GenerateFile';
+import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
 
 export const useGenerateH120 = () => {
   const { getAcquisitionFile, getAcquisitionProperties, getAcquisitionCompReqH120s } =
     useAcquisitionProvider();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const getH120Categories = useH120CategoryRepository();
+
+  const { getSystemConstant } = useSystemConstants();
+
+  const clientConstant = getSystemConstant(SystemConstants.CLIENT);
+
   const generateCompensation = async (compensation: Api_Compensation) => {
     if (compensation?.id === undefined) {
       throw Error(
@@ -26,6 +32,7 @@ export const useGenerateH120 = () => {
       compensation.acquisitionFileId,
       true,
     );
+
     const h120CategoriesPromise = getH120Categories.execute();
 
     const [file, properties, h120Categories, compReqH120s] = await Promise.all([
@@ -40,17 +47,20 @@ export const useGenerateH120 = () => {
     file.fileProperties = properties;
 
     const fileData = new Api_GenerateFile(file);
+
     const compensationData = new Api_GenerateCompensation(
       compensation,
       fileData,
       h120Categories ?? [],
       compReqH120s ?? [],
+      clientConstant,
     );
     const generatedFile = await generate({
       templateType: FormTemplateTypes.H120,
       templateData: compensationData,
       convertToType: ConvertToTypes.PDF,
     });
+    console.log(compensationData);
     if (generatedFile?.status === ExternalResultStatus.Success!! && generatedFile?.payload) {
       showFile(generatedFile?.payload);
     } else {
