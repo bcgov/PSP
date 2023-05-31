@@ -5,7 +5,7 @@
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-05-26 11:18                                */
+/* Created on:            2023-05-30 13:44                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -2521,6 +2521,10 @@ ALTER TABLE [dbo].[PIMS_INTEREST_HOLDER] DROP CONSTRAINT [PIM_ORG_PIM_INTHLD_FK]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_INTEREST_HOLDER] DROP CONSTRAINT [PIM_ACQNFL_PIM_INTHLD_FK]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_ACQUISITION_OWNER_REP] DROP CONSTRAINT [PIM_ACQNFL_PIM_AQOWRP_FK]
 GO
 
@@ -3148,6 +3152,10 @@ GO
 /* Drop constraints */
 
 ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_ACQ_PAYEE_CHEQUE_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_IS_PAYMENT_IN_TRUST_DEF]
 GO
 
 
@@ -14620,10 +14628,6 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_INTEREST_HOLDER_PROPERTY_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_ACQUISITION_FILE_STAKEHOLDER_ID_SEQ]
 GO
 
 
