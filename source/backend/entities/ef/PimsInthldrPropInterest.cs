@@ -16,8 +16,7 @@ namespace Pims.Dal.Entities
     {
         [Key]
         [Column("PIMS_INTHLDR_PROP_INTEREST_ID")]
-        [StringLength(40)]
-        public string PimsInthldrPropInterestId { get; set; }
+        public long PimsInthldrPropInterestId { get; set; }
         [Column("INTEREST_HOLDER_ID")]
         public long InterestHolderId { get; set; }
         [Column("PROPERTY_ACQUISITION_FILE_ID")]
