@@ -389,7 +389,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 case "Privy council":
                     VerifyPrivyCouncilFields();
                     break;
-                case "OIC":
+                case "Order in Council (OIC)":
                     VerifyOICFields();
                     break;
                 case "Legal survey plan":
@@ -405,7 +405,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     VerifyPAPlansFields();
                     break;
                 default:
-                    VerifyShotDescriptorField();
+                    VerifyShortDescriptorField();
                     break;
             }
         }
@@ -1730,7 +1730,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(documentPAPlanProjectNameMandatory).Displayed);
         }
 
-        private void VerifyShotDescriptorField()
+        private void VerifyShortDescriptorField()
         {
             Wait();
             VerifyGeneralUploadDocumentForm();

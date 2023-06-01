@@ -59,7 +59,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit note
             PopulateNotes(rowNumber);
-            notes.ViewFirstNoteDetails();
+            notes.ViewSecondLastNoteDetails();
             notes.VerifyNotesEditForm();
             notes.EditNote(notesData[0]);
 
@@ -67,7 +67,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes.CancelNote();
 
             //Edit note
-            notes.ViewFirstNoteDetails();
+            notes.ViewSecondLastNoteDetails();
             notes.EditNote(notesData[0]);
 
             //Save changes
@@ -75,7 +75,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Delete Note
             notesCount = notes.NotesTabCount();
-            notes.DeleteFirstNote();
+            notes.DeleteLastSecondNote();
         }
 
         [StepDefinition(@"Notes update have been done successfully")]

@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesTabTableBody = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']");
         private By notesTabTableContentTotal = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-        private By notesTab1stResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='View Note']");
+        private By notesTab1stResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
         private By notesTab1stResultDeleteBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='Delete Note']");
 
         //Notes Add New button Element
@@ -35,8 +35,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Notes 1st result Elements
         private By note1stViewNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='View Note']");
-        private By note1stDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='Delete Note']");
         private By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(1)");
+        private By note2ndDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(2) div[role='cell']:nth-child(4) div button[title='Delete Note']");
+        private By note2ndNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(2)");
 
         //Notes Add new notes Details Elements
         private By notesAddDetailsHeader = By.XPath("//div[@class='modal-title h4']");
@@ -89,7 +90,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesAddDetailsTextarea).SendKeys(note);
         }
 
-        public void ViewFirstNoteDetails()
+        public void ViewSecondLastNoteDetails()
         {
             Wait();
             webDriver.FindElement(notesTab1stResultViewBttn).Click();
@@ -115,7 +116,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(notesAddDetailsCancelBttn).Click();
-           
+
+            Wait();
             if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
             {
                 Assert.True(webDriver.FindElement(notesCancelPopupHeader).Displayed);
@@ -124,10 +126,10 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void DeleteFirstNote()
+        public void DeleteLastSecondNote()
         {
             Wait();
-            webDriver.FindElement(note1stDeleteNoteBttn).Click();
+            webDriver.FindElement(note2ndDeleteNoteBttn).Click();
 
             Wait();
             Assert.True(webDriver.FindElement(notesDeletePopupHeader).Text.Equals("Delete Note"));

@@ -85,28 +85,46 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.VerifySearchPropertiesFeature();
 
             //Search for a property by PID
-            sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
-            sharedSearchProperties.SelectFirstOption();
+            if (acquisitionFile.SearchProperties.PID != "")
+            {
+                sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a property by PIN
-            sharedSearchProperties.SelectPropertyByPIN(acquisitionFile.SearchProperties.PIN);
-            sharedSearchProperties.SelectFirstOption();
+            if (acquisitionFile.SearchProperties.PIN != "")
+            {
+                sharedSearchProperties.SelectPropertyByPIN(acquisitionFile.SearchProperties.PIN);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a property by Plan
-            sharedSearchProperties.SelectPropertyByPlan(acquisitionFile.SearchProperties.PlanNumber);
-            sharedSearchProperties.SelectFirstOption();
+            if (acquisitionFile.SearchProperties.PlanNumber != "")
+            {
+                sharedSearchProperties.SelectPropertyByPlan(acquisitionFile.SearchProperties.PlanNumber);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a property by Address
-            sharedSearchProperties.SelectPropertyByAddress(acquisitionFile.SearchProperties.Address);
-            sharedSearchProperties.SelectFirstOption();
+            if (acquisitionFile.SearchProperties.Address != "")
+            {
+                sharedSearchProperties.SelectPropertyByAddress(acquisitionFile.SearchProperties.Address);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a property by Legal Description
-            sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            sharedSearchProperties.SelectFirstOption();
+            if (acquisitionFile.SearchProperties.LegalDescription != "")
+            {
+                sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a duplicate property
-            sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
-            sharedSearchProperties.SelectFirstOption();
+            if (acquisitionFile.SearchProperties.PID != "")
+            {
+                sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Save Research File
             acquisitionFiles.SaveAcquisitionFileProperties();
@@ -185,7 +203,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFileCode = acquisitionFiles.GetAcquisitionFileCode();
 
             //Edit Acquisition File
-            acquisitionFiles.EditAcquisitionFile();
+            acquisitionFiles.EditAcquisitionFileBttn();
 
             //Add additional information
             acquisitionFiles.AddAdditionalInformation(acquisitionFile);
@@ -232,7 +250,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.SelectFirstOption();
 
             //Edit Acquisition File
-            acquisitionFiles.EditAcquisitionFile();
+            acquisitionFiles.EditAcquisitionFileBttn();
 
             //Update Acquisition File main form
             acquisitionFiles.UpdateAcquisitionFile(acquisitionFile);
@@ -241,13 +259,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFiles.CancelAcquisitionFile();
 
             //Edit Acquisition File
-            acquisitionFiles.EditAcquisitionFile();
+            acquisitionFiles.EditAcquisitionFileBttn();
 
             //Update Acquisition File main form
             acquisitionFiles.UpdateAcquisitionFile(acquisitionFile);
-
-            //Delete a staff member
-            acquisitionFiles.DeleteLastStaffMember();
 
             //Save Staff changes
             acquisitionFiles.SaveAcquisitionFile();
@@ -268,7 +283,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify its Property Details
             propertyInformation.NavigatePropertyDetailsTab();
-            propertyInformation.VerifyPropertyDetailsView("Acquisition File");
+            propertyInformation.VerifyPropertyDetailsView();
 
             //Edit Acquisition File
             acquisitionFiles.NavigateToAddPropertiesAcquisitionFile();
@@ -278,6 +293,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save Acquisition File changes
             acquisitionFiles.SaveAcquisitionFileProperties();
+
+            //Select 1st Property
+            acquisitionFiles.ChooseFirstPropertyOption();
         }
 
         [StepDefinition(@"I navigate back to the Acquisition File Summary")]
@@ -307,7 +325,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.False(searchAcquisitionFiles.SearchFoundResults());
 
             //Look for the last created research file
-            searchAcquisitionFiles.SearchLastAcquisitionFile();
+            searchAcquisitionFiles.FilterAcquisitionFiles(acquisitionFile.SearchProperties.PID, acquisitionFile.AcquisitionFileName, acquisitionFile.AcquisitionStatus);
         }
 
         [StepDefinition(@"A new Acquisition file is created successfully")]
@@ -333,7 +351,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify List View
             searchAcquisitionFiles.VerifyAcquisitionFileListView();
-            searchAcquisitionFiles.VerifyAcquisitionFileTableContent(acquisitionFile.AcquisitionFileName);
+            searchAcquisitionFiles.VerifyAcquisitionFileTableContent(acquisitionFile);
 
         }
 

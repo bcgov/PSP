@@ -297,7 +297,7 @@ namespace PIMS.Tests.Automation.PageObjects
             DateTime thisDay = DateTime.Today;
             string today = thisDay.ToString("MMM dd, yyyy");
 
-            Wait();
+            Wait(4000);
 
             //Header
             Assert.True(webDriver.FindElement(projectViewTitle).Displayed);
