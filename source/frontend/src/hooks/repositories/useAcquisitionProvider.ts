@@ -7,8 +7,9 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
 import { Api_Product, Api_Project } from 'models/api/Project';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
@@ -31,18 +32,24 @@ export const useAcquisitionProvider = () => {
     putAcquisitionFileChecklist,
     getFileCompensationRequisitions,
     postFileCompensationRequisition,
+    getFileCompReqH120s,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
-    (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    (
+      acqFile: Api_AcquisitionFile,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile) => await postAcquisitionFile(acqFile),
+      async (acqFile: Api_AcquisitionFile, useOverride: UserOverrideCode[] = []) =>
+        await postAcquisitionFile(acqFile, useOverride),
       [postAcquisitionFile],
     ),
     requestName: 'AddAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File saved'),
-    onError: useAxiosErrorHandler('Failed to save Acquisition File'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
   });
 
   const getAcquisitionFileApi = useApiRequestWrapper<
@@ -59,12 +66,12 @@ export const useAcquisitionProvider = () => {
   const updateAcquisitionFileApi = useApiRequestWrapper<
     (
       acqFile: Api_AcquisitionFile,
-      userOverride: boolean,
+      userOverrideCodes: UserOverrideCode[],
     ) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile, userOverride = false) =>
-        await putAcquisitionFile(acqFile, userOverride),
+      async (acqFile: Api_AcquisitionFile, userOverrideCodes: UserOverrideCode[] = []) =>
+        await putAcquisitionFile(acqFile, userOverrideCodes),
       [putAcquisitionFile],
     ),
     requestName: 'UpdateAcquisitionFile',
@@ -74,15 +81,19 @@ export const useAcquisitionProvider = () => {
   });
 
   const updateAcquisitionPropertiesApi = useApiRequestWrapper<
-    (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    (
+      acqFile: Api_AcquisitionFile,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile) => await putAcquisitionFileProperties(acqFile),
+      async (acqFile: Api_AcquisitionFile, userOverrideCodes: UserOverrideCode[]) =>
+        await putAcquisitionFileProperties(acqFile, userOverrideCodes),
       [putAcquisitionFileProperties],
     ),
     requestName: 'UpdateAcquisitionFileProperties',
     onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
-    onError: useAxiosErrorHandler('Failed to update Acquisition File Properties'),
+    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -166,6 +177,23 @@ export const useAcquisitionProvider = () => {
     ),
   });
 
+  const getAcquisitionCompReqH120sApi = useApiRequestWrapper<
+    (
+      acqFileId: number,
+      finalOnly: boolean,
+    ) => Promise<AxiosResponse<Api_CompensationFinancial[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number, finalOnly: boolean) =>
+        await getFileCompReqH120s(acqFileId, finalOnly),
+      [getFileCompReqH120s],
+    ),
+    requestName: 'getAcquisitionCompReqH120s',
+    onError: useAxiosErrorHandler(
+      'Failed to load requisition compensation financials. Refresh the page to try again.',
+    ),
+  });
+
   const postFileCompensationRequisitionApi = useApiRequestWrapper<
     (
       acqFileId: number,
@@ -196,6 +224,7 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionChecklist: updateAcquisitionChecklistApi,
       getAcquisitionCompensationRequisitions: getAcquisitionCompensationRequisitionsApi,
       postAcquisitionCompensationRequisition: postFileCompensationRequisitionApi,
+      getAcquisitionCompReqH120s: getAcquisitionCompReqH120sApi,
     }),
     [
       addAcquisitionFileApi,
@@ -210,6 +239,7 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionChecklistApi,
       getAcquisitionCompensationRequisitionsApi,
       postFileCompensationRequisitionApi,
+      getAcquisitionCompReqH120sApi,
     ],
   );
 };

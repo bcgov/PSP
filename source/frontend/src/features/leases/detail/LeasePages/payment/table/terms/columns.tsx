@@ -57,7 +57,7 @@ const renderExpectedTerm = () =>
       return stringToFragment('-');
     }
     const expectedTerm = calculateExpectedTermAmount(
-      original.leasePmtFreqTypeCode?.description ?? '',
+      original.leasePmtFreqTypeCode?.id ?? '',
       original.startDate,
       original.expiryDate,
       original.paymentAmount as number,

@@ -12,52 +12,42 @@
 
 # PIMS
 
-Property Inventory Management System
+Property Information Management System
 
 ## Introduction
 
-Strategic Real Estate Services (SRES), comprised of professionals from a variety of backgrounds (sales, marketing, First Nations consultation, environmental management and communications) was formed to dispose of assets surplus to government, in order to help government meet its commitment to balance the provincial budget, and to generate economic activity in communities throughout BC. The SRES team is tasked with coordinating the province-wide management of this initiative ensuring that all issues are addressed appropriately and the return to government is maximized.
+The Ministry of Transportation and Infrastructure's (MoTI's) Regional property services offices and Headquarter’s Properties and Land Management Branch (PLMB) are the two units responsible for Ministry property-related business and will be the major users of the system. Property Services manages all major fee simple and highway acquisition and property-related operational functions such as valuation, acquisition, expropriation, compensation entitlements, highway closure, and disposition.
 
-SRES is responsible for:
-
-- Maintaining a complete inventory of the Province’s real estate assets
-- Tracking Ministry organizations compliance with policies related to disposition of real estate assets
-- Marketing property internally for repurposing (transfer to another ministry)
-- Oversight of sales process from pre-marketing to completion
-- First Nations Consultation real estate development and dispositions
-- Providing strategic real estate analysis and advice to Ministries and Broader Public Sectors
-- Reporting to Treasury Board
-
-To support SRES’s overall strategic real estate initiatives a modern Information Management System is required that will aid in strategic decision making, support its client Ministries and the Broader Public Sector, and remain compliant with current Inventory Policies (CPPM Policy Chapter 8: Asset Management). Ideally the system will be flexible to allow for ad hoc customized reporting and adaptable to support unforeseen future real estate strategies.
+PLMB are responsible for the corporate functions of the property acquisition program, such as creating acquisition policy, standards, procedures and tools; managing the Expropriation and Litigation program; managing tenure issues and the stewardship of Ministry/BCTFA property records. It is also responsible for property management and disposition of its surplus property, including: managing the ministry's province-wide leasing/licensing/rental program and BCTFA fee-simple property assets as well as disposition of stand-alone surplus property.
 
 ## Problem Statement
 
-The Province is not able to make the most informed, timely, and strategic decisions on the optimal use of its real property assets on behalf of the people and priorities of British Columbia.
+The information management for MoTI's property services business processes is distributed between multiple systems, and many of those systems are technologically and functionally inadequate to support the Ministry's needs to consolidate relevant property data to enable operational and strategic decision making.
 
 ## Hypothesis
 
-If we have a modern easy to use system built in collaboration with, and for the benefit of, clients they will want to use it to provide Strategic Real Estate Services (SRES) with the data required to support real time executive decision making and to remain compliant with core policy.
+If we have a modern easy to use system built in collaboration with, and for the benefit of, clients they will have a means to collect, consolidate and reference property related data for the entire lifecycle of the property. This will then support real time operational and executive decision making.
 
 ## Goal
 
-The goal of the PIMS project team is to create a Geo-spatial Client Relationship Management System to support the Strategic Real Estate Services branch of Real Property Division to manage and oversee the disposal of assets surplus to government, optimize the benefits to the government and citizens of BC related to the management of public real estate assets, and be a trusted source for accurate information for Government owned titled property.
+The purpose of the Properties Services Project is to implement a new solution that will record, track and manage
+information about all property interests of MOTI/BCTFA and enable efficient operation of the Ministry's associated
+property business processes.
 
-The system will support the management of titled properties through the government property ownership life cycle from acquisition to disposal (transfer to another ministry or sale outside of the government). This would include the ability to manage internal workflows. PIMS will be capable of collection, analysis, and reporting of spatial data and related asset information from multiple data sources.
+The objectives include:
 
-Ideally reporting and query requirements would allow SRES staff to run technical detailed reports through the GIS and linked database. Simple query, collaboration and reporting should be available to non-technical users such as external stakeholders.
-
-Objectives include:
-
-- Increase the total amount of properties in the inventory Map
-- Ensure data validation occurs at time of project submission – BC Assessment and/or Land Title Survey Authority
-- Increase client satisfaction with system
-- Allow for portals for clients to add, edit, and report on properties in the system
-- Accurate, customizable, instant financial reporting
-- Seamless data migration from clients to PIMS
+- Record and process information about all Property interests of the Ministry of Transportation and Infrastructure (MoTI) and assets held by the Ministry and BC Transportation Financing Authority (BCTFA).
+- Produce reports and standard Ministry forms related to property business.
+- Spatially display the current legal Provincial cadastre and associate to all MoTI property interests’ data and documentation.
+- Display associations from properties of interest to current and historical property data, property activities, property interests, and supporting documentation.
+- Enable the Ministry to record and retrieve accurate, complete, and permanently accessible information about the acquisition, management and disposition of transportation related property.
 
 ## Project Status
 
-> **IN DEVELOPMENT**
+> Lease and Licences - **LIVE**
+> Acquisition - **IN DEVELOPMENT**
+> Management - **TO BE ASSESSED**
+> DISPOSITION - **TO BE ASSESSED**
 
 ## Development
 

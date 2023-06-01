@@ -93,7 +93,11 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
           formikProps={formikProps}
         />
       </SectionField>
-      <SectionField labelWidth="5" label="Deposit due no later than">
+      <SectionField
+        labelWidth="5"
+        label="Deposit due no later than"
+        tooltip="Generally, if applicable, this is number of days from the execution of the agreement."
+      >
         <StyledDiv>
           <Input field={withNameSpace(nameSpace, 'noLaterThanDays')} />
           <label>days.</label>

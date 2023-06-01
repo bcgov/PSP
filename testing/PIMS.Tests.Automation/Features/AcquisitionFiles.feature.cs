@@ -82,14 +82,14 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Create a new complete Acquisition File with pins")]
+        [Xunit.SkippableFactAttribute(DisplayName="Create a new complete Acquisition File with pins")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "01. Create a new complete Acquisition File with pins")]
-        public void _01_CreateANewCompleteAcquisitionFileWithPins()
+        [Xunit.TraitAttribute("Description", "Create a new complete Acquisition File with pins")]
+        public void CreateANewCompleteAcquisitionFileWithPins()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Create a new complete Acquisition File with pins", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new complete Acquisition File with pins", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,49 +110,27 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I add several Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 10
- testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I create Digital Documents for a \"Acquisition File\" row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="02. Create an Acquisition File from Pin")]
-        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "02. Create an Acquisition File from Pin")]
-        public void _02_CreateAnAcquisitionFileFromPin()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Create an Acquisition File from Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 11
+ testRunner.And("I create a new Note on the Notes Tab from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
 #line 12
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 13
- testRunner.Given("I create an Acquisition File from a pin on map", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 14
  testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Edit existing Acquisition File and Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="Edit existing Acquisition File and Properties")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "03. Edit existing Acquisition File and Properties")]
-        public void _03_EditExistingAcquisitionFileAndProperties()
+        [Xunit.TraitAttribute("Description", "Edit existing Acquisition File and Properties")]
+        public void EditExistingAcquisitionFileAndProperties()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Edit existing Acquisition File and Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 16
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edit existing Acquisition File and Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -162,28 +140,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 17
+#line 15
  testRunner.Given("I search for an existing acquisition file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 18
+#line 16
  testRunner.When("I edit an existing Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 19
+#line 17
  testRunner.Then("An existing Acquisition file has been edited successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Cancel Creation of an Acquisition File")]
+        [Xunit.SkippableFactAttribute(DisplayName="Create an Acquisition File from Pin")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "04. Cancel Creation of an Acquisition File")]
-        public void _04_CancelCreationOfAnAcquisitionFile()
+        [Xunit.TraitAttribute("Description", "Create an Acquisition File from Pin")]
+        public void CreateAnAcquisitionFileFromPin()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Cancel Creation of an Acquisition File", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 26
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create an Acquisition File from Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -193,28 +171,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 27
- testRunner.Given("I navigate to create new Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 20
+ testRunner.Given("I create an Acquisition File from a pin on map", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 28
- testRunner.When("I create and cancel new Acquisition Files", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 29
- testRunner.Then("The creation of an Acquisition File is cancelled successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+ testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Digital Documents on Acquisition File")]
+        [Xunit.SkippableFactAttribute(DisplayName="Verify Acquisition Files List View, Content and Results Content")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "05. Digital Documents on Acquisition File")]
-        public void _05_DigitalDocumentsOnAcquisitionFile()
+        [Xunit.TraitAttribute("Description", "Verify Acquisition Files List View, Content and Results Content")]
+        public void VerifyAcquisitionFilesListViewContentAndResultsContent()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Digital Documents on Acquisition File", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 41
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Acquisition Files List View, Content and Results Content", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 23
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -224,100 +199,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 42
- testRunner.Given("I create a new Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 43
- testRunner.When("I navigate to the Documents Tab, validate Documents Types and attach a Document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 44
- testRunner.Then("A digital document has been uploaded successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="06. Edit Digital Documents on Acquisition File")]
-        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "06. Edit Digital Documents on Acquisition File")]
-        public void _06_EditDigitalDocumentsOnAcquisitionFile()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Edit Digital Documents on Acquisition File", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 51
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 52
- testRunner.Given("I create a new Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 53
- testRunner.When("I edit an attached document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 54
- testRunner.Then("A digital document has been deleted successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="07. Notes Tab on Acquisition File")]
-        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "07. Notes Tab on Acquisition File")]
-        public void _07_NotesTabOnAcquisitionFile()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Notes Tab on Acquisition File", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 56
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 57
- testRunner.Given("I create a Acquisition File with a new Note on the Notes Tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 58
- testRunner.Then("The Notes Tab rendered successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="08. Verify Acquisition Files List View, Content and Results Content")]
-        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "08. Verify Acquisition Files List View, Content and Results Content")]
-        public void _08_VerifyAcquisitionFilesListViewContentAndResultsContent()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Verify Acquisition Files List View, Content and Results Content", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 60
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 61
+#line 24
  testRunner.Given("I search for an existing Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 62
+#line 25
  testRunner.Then("Expected Acquisition File Content is displayed on Acquisition File Table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

@@ -29,27 +29,32 @@ export const useApiDocuments = () => {
 
   return React.useMemo(
     () => ({
-      getDocumentTypes: () => api.get<Api_DocumentType[]>(`/documents/types`),
+      getDocumentTypesApiCall: () => api.get<Api_DocumentType[]>(`/documents/types`),
 
-      getDocumentTypeMetadata: (mayanDocumentTypeId: number) =>
+      getDocumentRelationshipTypesApiCall: (relationshipType: DocumentRelationshipType) =>
+        api.get<Api_DocumentType[]>(`/documents/categories/${relationshipType}`),
+
+      getDocumentTypeMetadataApiCall: (mayanDocumentTypeId: number) =>
         api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentTypeMetadataType>>>(
           `/documents/storage/types/${mayanDocumentTypeId}/metadata`,
         ),
 
-      getDocumentRelationship: (relationshipType: DocumentRelationshipType, parentId: string) =>
-        api.get<Api_DocumentRelationship[]>(`/documents/${relationshipType}/${parentId}`),
+      getDocumentRelationshipApiCall: (
+        relationshipType: DocumentRelationshipType,
+        parentId: string,
+      ) => api.get<Api_DocumentRelationship[]>(`/documents/${relationshipType}/${parentId}`),
 
       deleteDocumentRelationshipApiCall: (
         relationshipType: DocumentRelationshipType,
         documentRelationship: Api_DocumentRelationship,
       ) => api.delete<boolean>(`/documents/${relationshipType}`, { data: documentRelationship }),
 
-      getDocumentMetadata: (mayanDocumentId: number) =>
+      getDocumentMetadataApiCall: (mayanDocumentId: number) =>
         api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentMetadata>>>(
           `/documents/storage/${mayanDocumentId}/metadata`,
         ),
 
-      getDocumentDetail: (mayanDocumentId: number) =>
+      getDocumentDetailApiCall: (mayanDocumentId: number) =>
         api.get<ExternalResult<Api_Storage_DocumentDetail>>(
           `/documents/storage/${mayanDocumentId}/detail`,
         ),

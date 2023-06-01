@@ -1,14 +1,14 @@
 import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 import { phoneFormatter } from 'utils/formUtils';
 
-import { GenerateAddress } from './GenerateAddress';
-export class GenerateOwner {
+import { Api_GenerateAddress } from './GenerateAddress';
+export class Api_GenerateOwner {
   given_name: string;
   last_name_or_corp_name: string;
   other_name: string;
   incorporation_number: string;
   registration_number: string;
-  address: GenerateAddress;
+  address: Api_GenerateAddress;
   is_corporation: boolean;
   owner_string: string;
   email: string;
@@ -21,7 +21,7 @@ export class GenerateOwner {
     this.other_name = owner?.otherName ?? '';
     this.incorporation_number = owner?.incorporationNumber ?? '';
     this.registration_number = owner?.registrationNumber ?? '';
-    this.address = new GenerateAddress(owner?.address ?? null);
+    this.address = new Api_GenerateAddress(owner?.address ?? null);
     this.is_corporation = owner?.isOrganization ?? false;
     this.email = owner?.contactEmailAddr ?? '';
     this.phone =

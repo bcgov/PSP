@@ -21,10 +21,18 @@ namespace Pims.Dal.Entities
         public DateTime? EndDateHist { get; set; }
         [Column("ACQUISITION_PAYEE_ID")]
         public long AcquisitionPayeeId { get; set; }
-        [Column("ACQUISITION_OWNER_ID")]
-        public long AcquisitionOwnerId { get; set; }
         [Column("COMPENSATION_REQUISITION_ID")]
         public long CompensationRequisitionId { get; set; }
+        [Column("ACQUISITION_OWNER_ID")]
+        public long? AcquisitionOwnerId { get; set; }
+        [Column("INTEREST_HOLDER_ID")]
+        public long? InterestHolderId { get; set; }
+        [Column("OWNER_REPRESENTATIVE_ID")]
+        public long? OwnerRepresentativeId { get; set; }
+        [Column("OWNER_SOLICITOR_ID")]
+        public long? OwnerSolicitorId { get; set; }
+        [Column("ACQUISITION_FILE_PERSON_ID")]
+        public long? AcquisitionFilePersonId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]

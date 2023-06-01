@@ -56,8 +56,12 @@ export const DocumentUploadContainer: React.FunctionComponent<
   };
 
   const isMounted = useIsMounted();
-  const { retrieveDocumentMetadataLoading, retrieveDocumentTypeMetadata, retrieveDocumentTypes } =
-    useDocumentProvider();
+  const {
+    retrieveDocumentMetadataLoading,
+    retrieveDocumentTypeMetadata,
+    getDocumentRelationshipTypes,
+    getDocumentTypes,
+  } = useDocumentProvider();
 
   const { uploadDocument, uploadDocumentLoading } = useDocumentRelationshipProvider();
 
@@ -97,15 +101,18 @@ export const DocumentUploadContainer: React.FunctionComponent<
   useEffect(() => {
     const retrievedDocumentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
     const fetch = async () => {
-      const axiosResponse = await retrieveDocumentTypes();
-      if (axiosResponse && isMounted()) {
-        if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+      if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+        const axiosResponse = await getDocumentTypes();
+        if (axiosResponse && isMounted()) {
           setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
           updateDocumentType(axiosResponse.find(x => x.documentType === DocumentTypeName.CDOGS));
           setDocumentStatusOptions(
             retrievedDocumentStatusTypes.filter(x => x.value === DocumentStatusType.Final),
           );
-        } else {
+        }
+      } else {
+        const axiosResponse = await getDocumentRelationshipTypes(props.relationshipType);
+        if (axiosResponse && isMounted()) {
           setDocumentTypes(axiosResponse.filter(x => x.isDisabled !== true));
           setDocumentStatusOptions(retrievedDocumentStatusTypes);
         }
@@ -115,7 +122,8 @@ export const DocumentUploadContainer: React.FunctionComponent<
     fetch();
   }, [
     props.relationshipType,
-    retrieveDocumentTypes,
+    getDocumentTypes,
+    getDocumentRelationshipTypes,
     isMounted,
     updateDocumentType,
     getOptionsByType,

@@ -1,5 +1,5 @@
 import { Api_Address } from 'models/api/Address';
-export class GenerateAddress {
+export class Api_GenerateAddress {
   line_1: string;
   line_2: string;
   line_3: string;

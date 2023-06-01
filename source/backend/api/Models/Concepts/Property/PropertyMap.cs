@@ -34,6 +34,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PphStatusUpdateUserGuid, src => src.PphStatusUpdateUserGuid)
                 .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
+                .Map(dest => dest.IsPropertyOfInterest, src => src.IsPropertyOfInterest)
                 .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
 
                 // multi-selects
