@@ -4,16 +4,16 @@ namespace Pims.Api.Models.Concepts
     {
         public long? Id { get; set; }
 
-        public long AcquisitionPayeeId { get; set; }
+        public long? AcquisitionPayeeId { get; set; }
+
+        public bool? IsPaymentInTrust { get; set; }
 
         public decimal PretaxAmout { get; set; }
 
-        public bool IsGSTRequired { get; set; }
-
         public decimal? TaxAmount { get; set; }
 
-        public string GSTNumber { get; set; }
-
         public decimal TotalAmount { get; set; }
+
+        public string GSTNumber { get; set; }
     }
 }

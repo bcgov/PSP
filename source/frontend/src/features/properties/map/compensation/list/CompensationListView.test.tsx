@@ -106,6 +106,7 @@ describe('compensation list view', () => {
               rowVersion: 1,
             },
           ],
+          payees: [],
         },
         {
           id: 2,
@@ -151,6 +152,7 @@ describe('compensation list view', () => {
               rowVersion: 1,
             },
           ],
+          payees: [],
         },
       ],
     });

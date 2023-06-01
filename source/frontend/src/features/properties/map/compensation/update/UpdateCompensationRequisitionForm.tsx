@@ -15,6 +15,7 @@ import SidebarFooter from '../../shared/SidebarFooter';
 import { CompensationRequisitionYupSchema } from '../CompensationRequisitionYupSchema';
 import { CompensationRequisitionFormModel } from '../models';
 import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm';
+import PayeeSubForm from './payee/PayeeSubForm';
 
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
@@ -48,6 +49,8 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   const { setModalContent, setDisplayModal } = useModalContext();
   let fiscalYearOptions = generateFiscalYearOptions();
 
+  const dummyOptions: SelectOption[] = [{ label: 'john', value: '1' }];
+
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     if (!dirty) {
       resetForm();
@@ -63,6 +66,10 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
       });
       setDisplayModal(true);
     }
+  };
+
+  const handleAmountChanged = (): void => {
+    console.log('test');
   };
 
   return (
@@ -154,13 +161,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </SectionField>
             </Section>
 
-            <Section header="Payee" isCollapsable initiallyExpanded></Section>
+            <Section header="Payment" isCollapsable initiallyExpanded>
+              <PayeeSubForm
+                nameSpace="payees.0"
+                formikProps={formikProps}
+                payeeListOptions={dummyOptions}
+              ></PayeeSubForm>
+            </Section>
 
             <Section header="Activities" isCollapsable initiallyExpanded>
               <FinancialActivitiesSubForm
                 financialActivityOptions={financialActivityOptions}
+                compensationRequisitionId={initialValues.id!}
                 formikProps={formikProps}
                 gstConstant={gstConstant}
+                onAmountChanged={handleAmountChanged}
               ></FinancialActivitiesSubForm>
             </Section>
 

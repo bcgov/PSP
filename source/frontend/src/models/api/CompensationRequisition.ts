@@ -1,6 +1,7 @@
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion, Api_ConcurrentVersion_Null } from './ConcurrentVersion';
 import { Api_FinancialCode } from './FinancialCode';
+import { Api_Payee } from './Payee';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_AuditFields {
@@ -22,6 +23,7 @@ export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_
   detailedRemarks: string | null;
   isDisabled: boolean | null;
   financials: Api_CompensationFinancial[] | null;
+  payees: Api_Payee[] | null;
 }
 
 export interface Api_CompensationFinancial extends Api_ConcurrentVersion_Null, Api_AuditFields {

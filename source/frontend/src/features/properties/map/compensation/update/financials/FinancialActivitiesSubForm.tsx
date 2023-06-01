@@ -12,13 +12,21 @@ import { CompensationRequisitionFormModel, FinacialActivityFormModel } from '../
 
 export interface IFinancialActivitiesSubFormProps {
   formikProps: FormikProps<CompensationRequisitionFormModel>;
+  compensationRequisitionId: number;
   financialActivityOptions: SelectOption[];
   gstConstant: number;
+  onAmountChanged: () => void;
 }
 
 export const FinancialActivitiesSubForm: React.FunctionComponent<
   IFinancialActivitiesSubFormProps
-> = ({ formikProps, financialActivityOptions, gstConstant }) => {
+> = ({
+  formikProps,
+  compensationRequisitionId,
+  financialActivityOptions,
+  gstConstant,
+  onAmountChanged,
+}) => {
   const { values, setFieldValue } = useFormikContext<CompensationRequisitionFormModel>();
 
   const updateGstRequiredAmounts = (index: number, option: string): void => {
@@ -73,6 +81,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                     <FastCurrencyInput
                       formikProps={formikProps}
                       field={`financials[${index}].pretaxAmount`}
+                      onChange={onAmountChanged}
                     />
                   </SectionField>
 
@@ -116,7 +125,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
             <LinkButton
               data-testid="add=financial-activity"
               onClick={() => {
-                const activity = new FinacialActivityFormModel();
+                const activity = new FinacialActivityFormModel(null, compensationRequisitionId);
                 arrayHelpers.push(activity);
               }}
             >

@@ -41,6 +41,11 @@ namespace Pims.Dal.Repositories
         public PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition)
         {
             User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
+
+            var payee = new PimsAcquisitionPayee();
+            payee.PimsAcqPayeeCheques.Add(new PimsAcqPayeeCheque());
+
+            compensationRequisition.PimsAcquisitionPayees.Add(payee);
             Context.PimsCompensationRequisitions.Add(compensationRequisition);
 
             return compensationRequisition;
@@ -55,6 +60,10 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Responsibility)
                 .Include(c => c.PimsCompReqH120s)
                     .ThenInclude(y => y.FinancialActivityCode)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.AcquisitionOwner)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.PimsAcqPayeeCheques)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -69,6 +78,7 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(p => p.PimsCompReqH120s, compensationRequisition.Internal_Id, compensationRequisition.PimsCompReqH120s.ToArray());
+            Context.UpdateGrandchild<PimsCompensationRequisition, long, PimsAcquisitionPayee>(p => p.PimsAcquisitionPayees, ch => ch.PimsAcqPayeeCheques, compensationRequisition.Internal_Id, compensationRequisition.PimsAcquisitionPayees.ToArray());
 
             return compensationRequisition;
         }
@@ -82,25 +92,6 @@ namespace Pims.Dal.Repositories
                 return true;
             }
             return false;
-        }
-
-        public PimsAcquisitionPayee AddPayee(PimsAcquisitionPayee payee)
-        {
-            User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionEdit);
-            Context.PimsAcquisitionPayees.Add(payee);
-
-            return payee;
-        }
-
-        public int GetCompensationRequisitionPayeeCount(long compensationRequisitionId)
-        {
-            User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
-
-            return Context.PimsCompensationRequisitions
-                .AsNoTracking()
-                .Where(x => x.Internal_Id == compensationRequisitionId)
-                .Include(x => x.PimsAcquisitionPayees)
-                .FirstOrDefault().PimsAcquisitionPayees.Count;
         }
     }
 }

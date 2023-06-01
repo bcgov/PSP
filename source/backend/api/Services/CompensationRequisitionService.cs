@@ -57,22 +57,5 @@ namespace Pims.Api.Services
             _compensationRequisitionRepository.CommitTransaction();
             return fileFormToDelete;
         }
-
-        public PimsAcquisitionPayee AddPayee(PimsAcquisitionPayee payee)
-        {
-            _logger.LogInformation($"Adding a Payee for Compensation Requisition with id ${payee.CompensationRequisitionId}");
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionEdit);
-
-            var payeesCount = _compensationRequisitionRepository.GetCompensationRequisitionPayeeCount(payee.CompensationRequisitionId);
-            if(payeesCount > 0)
-            {
-                throw new BadRequestException("There can only be one payee per compensation requisition");
-            }
-
-            _compensationRequisitionRepository.AddPayee(payee);
-            _compensationRequisitionRepository.CommitTransaction();
-
-            return payee;
-        }
     }
 }
