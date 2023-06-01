@@ -14,6 +14,11 @@ namespace Pims.Dal.Entities
     [Index(nameof(PersonId), Name = "AQOWSO_PERSON_ID_IDX")]
     public partial class PimsAcquisitionOwnerSolicitor
     {
+        public PimsAcquisitionOwnerSolicitor()
+        {
+            PimsAcquisitionPayees = new HashSet<PimsAcquisitionPayee>();
+        }
+
         [Key]
         [Column("OWNER_SOLICITOR_ID")]
         public long OwnerSolicitorId { get; set; }
@@ -68,5 +73,7 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(PersonId))]
         [InverseProperty(nameof(PimsPerson.PimsAcquisitionOwnerSolicitors))]
         public virtual PimsPerson Person { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionPayee.OwnerSolicitor))]
+        public virtual ICollection<PimsAcquisitionPayee> PimsAcquisitionPayees { get; set; }
     }
 }

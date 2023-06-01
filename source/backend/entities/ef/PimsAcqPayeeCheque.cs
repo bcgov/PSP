@@ -23,6 +23,11 @@ namespace Pims.Dal.Entities
         public decimal? TaxAmt { get; set; }
         [Column("TOTAL_AMT", TypeName = "money")]
         public decimal? TotalAmt { get; set; }
+        [Column("GST_NUMBER")]
+        [StringLength(50)]
+        public string GstNumber { get; set; }
+        [Column("IS_PAYMENT_IN_TRUST")]
+        public bool? IsPaymentInTrust { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -61,8 +66,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("IS_GST_REQUIRED")]
-        public bool? IsGstRequired { get; set; }
 
         [ForeignKey(nameof(AcquisitionPayeeId))]
         [InverseProperty(nameof(PimsAcquisitionPayee.PimsAcqPayeeCheques))]
