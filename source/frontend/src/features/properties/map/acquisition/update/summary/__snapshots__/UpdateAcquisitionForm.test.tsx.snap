@@ -518,6 +518,7 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
           >
             <div
               class="c5 form-group"
+              data-testid="typeahead-project"
             >
               <div
                 class="rbt has-aux"

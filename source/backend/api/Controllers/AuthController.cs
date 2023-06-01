@@ -66,7 +66,8 @@ namespace Pims.Api.Controllers
 
             if (!exists)
             {
-                return new CreatedResult($"{user.GuidIdentifierValue}", new Model.UserModel(user));
+                // brand-new users cannot have claims mismatch
+                return new CreatedResult($"{user.GuidIdentifierValue}", new Model.UserModel(user.Internal_Id, user.GuidIdentifierValue.Value, true));
             }
 
             bool hasValidClaims = _userRepository.ValidateClaims(user);

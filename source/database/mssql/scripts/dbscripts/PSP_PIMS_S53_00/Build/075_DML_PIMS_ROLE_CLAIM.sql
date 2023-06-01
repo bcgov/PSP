@@ -282,8 +282,10 @@ VALUES
     (@prjfunc, @projectAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@prjfunc, @projectEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@prjfunc, @projectDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@prjfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Project Functional
     (@prjrdon, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@prjrdon, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Research Functional
     (@resfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @propertyAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),

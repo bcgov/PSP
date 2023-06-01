@@ -12,6 +12,7 @@ exports[`ProjectSelector component renders as expected 1`] = `
 
 <div
     class="c0 form-group"
+    data-testid="typeahead-foo"
   >
     <div
       class="rbt"

@@ -105,6 +105,9 @@ export function lastModifiedBy(array: Api_AuditFields[] = []): Api_AuditFields |
   let lastModified: Api_AuditFields | undefined = undefined;
 
   for (const item of array) {
+    if (moment(item.appLastUpdateTimestamp).isBefore(moment('1900-01-01T00:00:00.000Z'))) {
+      continue;
+    }
     if (lastModified === undefined) {
       lastModified = item;
       continue;

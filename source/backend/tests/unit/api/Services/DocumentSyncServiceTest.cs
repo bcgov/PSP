@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Pims.Api.Models;
@@ -11,11 +15,6 @@ using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -366,7 +365,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test" } });
+            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() } });
 
             var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>());
@@ -388,7 +387,10 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test" }, new DocumentTypeModel() { Name = "TESTTWO", Label = "testTwo" } });
+            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+                new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() },
+                new DocumentTypeModel() { Name = "TESTTWO", Label = "testTwo" , Categories = new List<string>() }
+                });
 
             var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>());
@@ -475,7 +477,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated" } });
+            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated", Categories = new List<string>() } });
 
             var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST" } });
@@ -499,7 +501,10 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test updated" }, new DocumentTypeModel() { Name = "TESTTWO", Label = "test two updated" } });
+            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+                new DocumentTypeModel() { Name = "TEST", Label = "test updated", Categories = new List<string>() },
+                new DocumentTypeModel() { Name = "TESTTWO", Label = "test two updated", Categories = new List<string>() }
+            });
 
             var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
             PimsDocumentTyp updatedDocumentTypeOne = null;
@@ -526,10 +531,21 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test" } });
+            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() { "TEST_CATEGORY" }, DisplayOrder = 1 } });
 
             var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
-            pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test" } });
+            pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() {
+                new PimsDocumentTyp() {
+                    DocumentType = "TEST",
+                    DocumentTypeDescription = "test",
+                    PimsDocumentCategorySubtypes = new List<PimsDocumentCategorySubtype>() {
+                        new PimsDocumentCategorySubtype() {
+                            DocumentCategoryTypeCode = "TEST_CATEGORY"
+                        }
+                    },
+                    DisplayOrder = 1,
+                }
+            });
             pimsDocumentRepository.Setup(x => x.Add(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
             pimsDocumentRepository.Setup(x => x.Update(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
 
@@ -545,12 +561,49 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_SyncPimsDocumentTypes_CategoryChange()
+        {
+            // Arrange
+            var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+
+            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() { "TEST_CATEGORY_A" }, DisplayOrder = 1 } });
+
+            var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
+            pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() {
+                new PimsDocumentTyp() {
+                    DocumentType = "TEST",
+                    DocumentTypeDescription = "test",
+                    PimsDocumentCategorySubtypes = new List<PimsDocumentCategorySubtype>() {
+                        new PimsDocumentCategorySubtype() {
+                            DocumentCategoryTypeCode = "TEST_CATEGORY_B"
+                        }
+                    },
+                    DisplayOrder = 1,
+                }
+            });
+            pimsDocumentRepository.Setup(x => x.Add(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
+            pimsDocumentRepository.Setup(x => x.Update(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
+
+            // Act
+            var result = service.SyncPimsDocumentTypes(model);
+
+            // Assert
+            pimsDocumentRepository.Verify(x => x.Add(It.IsAny<PimsDocumentTyp>()), Times.Never());
+            pimsDocumentRepository.Verify(x => x.Update(It.IsAny<PimsDocumentTyp>()), Times.Once());
+            result.Added.Should().BeEmpty();
+            result.Deleted.Should().BeEmpty();
+            result.Updated.Should().HaveCount(1);
+        }
+
+        [Fact]
         public void Update_SyncPimsDocumentTypes_SingleNameChange()
         {
             // Arrange
             var service = CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
 
-            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() { new DocumentTypeModel() { Name = "TESTUPDATE", Label = "test" } });
+            SyncModel model = CreateSyncModel(documentTypeModels: new List<DocumentTypeModel>() {
+                new DocumentTypeModel() { Name = "TESTUPDATE", Label = "test", Categories = new List<string>() }
+                });
 
             var pimsDocumentRepository = _helper.GetService<Mock<IDocumentTypeRepository>>();
             pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() { new PimsDocumentTyp() { DocumentType = "TEST", DocumentTypeDescription = "test" } });

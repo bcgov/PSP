@@ -69,6 +69,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
         totalAmount: 10.0,
         isDisabled: false,
         rowVersion: 1,
+        financialActivityCode: { id: 1 },
       },
       {
         id: 2,
@@ -78,6 +79,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
         totalAmount: 15.0,
         isDisabled: false,
         rowVersion: 1,
+        financialActivityCode: { id: 3 },
       },
       {
         id: 3,
@@ -87,6 +89,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
         totalAmount: 3.0,
         isDisabled: false,
         rowVersion: 1,
+        financialActivityCode: { id: 1 },
       },
       {
         id: 4,
@@ -96,6 +99,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
         totalAmount: 7.0,
         isDisabled: false,
         rowVersion: 1,
+        financialActivityCode: { id: 2 },
       },
     ],
     rowVersion: 1,
@@ -151,6 +155,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
         totalAmount: 7.0,
         isDisabled: false,
         rowVersion: 1,
+        financialActivityCode: { id: 1 },
       },
     ],
     rowVersion: 1,

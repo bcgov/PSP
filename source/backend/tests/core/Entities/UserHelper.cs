@@ -1,3 +1,4 @@
+using Pims.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using Entity = Pims.Dal.Entities;
@@ -30,8 +31,9 @@ namespace Pims.Core.Test
         /// <param name="person"></param>
         /// <param name="role"></param>
         /// <param name="organization"></param>
+        /// <param name="isContractor"></param>
         /// <returns></returns>
-        public static Entity.PimsUser CreateUser(long id, Guid keycloakUserId, string username, string firstName = "given name", string lastName = "surname", Entity.PimsRole role = null, Entity.PimsOrganization organization = null, Entity.PimsAddress address = null)
+        public static Entity.PimsUser CreateUser(long id, Guid keycloakUserId, string username, string firstName = "given name", string lastName = "surname", Entity.PimsRole role = null, Entity.PimsOrganization organization = null, Entity.PimsAddress address = null, bool isContractor = false)
         {
             organization ??= EntityHelper.CreateOrganization(id, "Organization 1");
             role ??= EntityHelper.CreateRole("Real Estate Manager");
@@ -45,6 +47,7 @@ namespace Pims.Core.Test
             };
             user.PimsUserRoles.Add(new Entity.PimsUserRole() { Role = role, RoleId = role.Id, User = user, UserId = user.Internal_Id });
             user.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { Organization = organization, OrganizationId = organization.Internal_Id, User = user, UserId = user.Internal_Id });
+            user.UserTypeCode = isContractor ? EnumUserTypeCodes.CONTRACT.ToString() : EnumUserTypeCodes.MINSTAFF.ToString();
 
             return user;
         }

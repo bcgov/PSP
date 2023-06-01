@@ -37,6 +37,9 @@ namespace Pims.Dal.Entities
         [Column("AREA_UNIT_TYPE_CODE")]
         [StringLength(20)]
         public string AreaUnitTypeCode { get; set; }
+        [Column("LAND_ACT_TYPE_CODE")]
+        [StringLength(20)]
+        public string LandActTypeCode { get; set; }
         [Column("DESCRIPTION")]
         [StringLength(4000)]
         public string Description { get; set; }
@@ -58,9 +61,6 @@ namespace Pims.Dal.Entities
         public bool IsLandAct { get; set; }
         [Column("LAND_ACT_AREA")]
         public float? LandActArea { get; set; }
-        [Column("LAND_ACT_DESCRIPTION")]
-        [StringLength(2000)]
-        public string LandActDescription { get; set; }
         [Column("LAND_ACT_END_DT", TypeName = "date")]
         public DateTime? LandActEndDt { get; set; }
         [Column("IS_SURPLUS")]

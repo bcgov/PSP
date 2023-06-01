@@ -24,6 +24,7 @@ describe('Compensation Detail View Component', () => {
         setEditMode={setEditMode}
         gstConstant={renderOptions.props?.gstConstant ?? 0}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
+        onGenerate={jest.fn()}
       />,
       {
         ...renderOptions,

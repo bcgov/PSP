@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
@@ -22,10 +23,10 @@ namespace Pims.Tools.Keycloak.Sync
     public class SyncFactory : ISyncFactory
     {
         #region Variables
+        private static readonly int MAXPAGES = 20;
         private readonly IKeycloakRequestClient _keycloakManagementClient;
         private readonly IPimsRequestClient _pimsClient;
         private readonly ILogger _logger;
-        private static readonly int MAX_PAGES = 20;
         #endregion
 
         #region Constructors
@@ -104,13 +105,13 @@ namespace Pims.Tools.Keycloak.Sync
                 claimsPage = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.ClaimModel>>(HttpMethod.Get, $"admin/claims?page={page++}&quantity=50");
                 claims = claims.Concat(claimsPage.Items);
             }
-            while (claimsPage != null && claimsPage.Items.Any() && page < MAX_PAGES);
+            while (claimsPage != null && claimsPage.Items.Any() && page < MAXPAGES);
 
             var allKeycloakRoles = await _keycloakManagementClient.HandleRequestAsync<ResponseWrapperModel<RoleModel[]>>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles");
             var keycloakRoles = allKeycloakRoles.Data.Where(x => x.Composite.HasValue && x.Composite.Value == false);
             var keycloakRolesToDelete = keycloakRoles.Where(r => claims.All(crr => crr.Name != r.Name));
 
-            var addTask = AddClaimsFromPims(claims, log, errorLog);
+            var addTask = AddClaimsFromPims(claims.Where(c => keycloakRoles.All(kr => c.Name != kr.Name)), log, errorLog);
             var removeTask = RemoveRolesFromPims(keycloakRolesToDelete, log, errorLog);
             await Task.WhenAll(addTask, removeTask);
         }
@@ -139,36 +140,20 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task AddKeycloakRoleAsync(PModel.ClaimModel claim)
         {
-            try
+            var krole = new KModel.RoleModel()
             {
-                // Make a request to keycloak to find a matching role.
-                // If one is found, end
-                // If one is not found, add it to keycloak.
-                await _keycloakManagementClient.HandleRequestAsync<KModel.RoleModel>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{claim.Name}");
-                _logger.LogInformation($"Keycloak role: {claim.Name} already exists");
-            }
-            catch (HttpClientRequestException ex)
+                Name = claim.Name,
+            };
+
+            // Add the role to keycloak and sync with PIMS.
+            _logger.LogInformation($"Adding keycloak role: {claim.Name}");
+            var kresponse = await _keycloakManagementClient.SendJsonAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles", HttpMethod.Post, krole);
+            if (kresponse.StatusCode != HttpStatusCode.Created)
             {
-                if (ex.StatusCode == HttpStatusCode.NotFound)
-                {
-                    var krole = new KModel.RoleModel()
-                    {
-                        Name = claim.Name,
-                    };
-
-                    // Add the role to keycloak and sync with PIMS.
-                    _logger.LogInformation($"Adding keycloak role: {claim.Name}");
-                    var kresponse = await _keycloakManagementClient.SendJsonAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles", HttpMethod.Post, krole);
-                    if (kresponse.StatusCode != HttpStatusCode.Created)
-                    {
-                        throw new HttpClientRequestException(kresponse, $"Failed to add the role '{claim.Name}' to keycloak. Original error: {ex.Message}");
-                    }
-                    _logger.LogInformation($"Keycloak role: {claim.Name} added");
-                    return;
-                }
-
-                throw ex;
+                throw new HttpClientRequestException(kresponse, $"Failed to add the role '{claim.Name}' to keycloak.");
             }
+            _logger.LogInformation($"Keycloak role: {claim.Name} added");
+            return;
         }
         #endregion
 
@@ -190,7 +175,7 @@ namespace Pims.Tools.Keycloak.Sync
                 rolesPage = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.RoleModel>>(HttpMethod.Get, $"admin/roles?page={page++}&quantity=50");
                 roles = roles.Concat(rolesPage.Items);
             }
-            while (rolesPage != null && rolesPage.Items.Any() && page < MAX_PAGES);
+            while (rolesPage != null && rolesPage.Items.Any() && page < MAXPAGES);
 
             var keycloakRoles = await _keycloakManagementClient.HandleRequestAsync<ResponseWrapperModel<RoleModel[]>>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles");
             var keycloakCompositeRoles = keycloakRoles.Data.Where(x => x.Composite.HasValue && x.Composite.Value);
@@ -203,6 +188,7 @@ namespace Pims.Tools.Keycloak.Sync
 
         private async Task AddRolesFromPims(IEnumerable<PModel.RoleModel> roles, StringBuilder log, StringBuilder errorLog)
         {
+            var keycloakRoles = await _keycloakManagementClient.HandleRequestAsync<ResponseWrapperModel<RoleModel[]>>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles");
             foreach (var role in roles)
             {
                 try
@@ -212,8 +198,17 @@ namespace Pims.Tools.Keycloak.Sync
                     {
                         continue;
                     }
+                    
                     _logger.LogInformation($"Adding/updating keycloak composite role '{prole.Name}'");
-                    await UpdateCompositeRoleInKeycloak(prole);
+                    var matchingKeycloakGroup = keycloakRoles.Data.FirstOrDefault(r => r.Name == prole.Name);
+                    if (matchingKeycloakGroup != null)
+                    {
+                        await SyncGroupInKeycloak(matchingKeycloakGroup, prole);
+                    }
+                    else
+                    {
+                        await AddGroupToKeycloak(prole);
+                    }
                     LogInfo(log, $"Added/updated keycloak composite role '{prole.Name}'");
                 }
                 catch (HttpClientRequestException ex)
@@ -230,7 +225,7 @@ namespace Pims.Tools.Keycloak.Sync
                 try
                 {
                     _logger.LogInformation($"Deleting keycloak role '{role.Name}'");
-                    await _keycloakManagementClient.DeleteAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{role.Name}");
+                    await _keycloakManagementClient.DeleteAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{Uri.EscapeDataString(role.Name)}");
                     LogInfo(log, $"Deleted keycloak role '{role.Name}'");
                 }
                 catch (HttpClientRequestException ex)
@@ -241,28 +236,6 @@ namespace Pims.Tools.Keycloak.Sync
         }
 
         #endregion
-        private async Task UpdateCompositeRoleInKeycloak(PModel.RoleModel role)
-        {
-            try
-            {
-                // Make a request to keycloak to find a matching composite role.
-                // If one is found, end.
-                // If one is not found, add it to keycloak.
-                var group = await _keycloakManagementClient.HandleRequestAsync<KModel.RoleModel>(HttpMethod.Get, $"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{role.Name}");
-
-                await SyncGroupInKeycloak(group, role);
-            }
-            catch (HttpClientRequestException ex)
-            {
-                if (ex.StatusCode == HttpStatusCode.NotFound)
-                {
-                    await AddGroupToKeycloak(role);
-                    return;
-                }
-
-                throw ex;
-            }
-        }
 
         /// <summary>
         /// Add a group to keycloak.
@@ -313,12 +286,12 @@ namespace Pims.Tools.Keycloak.Sync
                 Name = c.Claim.Name,
             }).ToArray();
 
-            var allKeycloakGroupRolesResponse = await _keycloakManagementClient.HandleGetAsync<ResponseWrapperModel<IEnumerable<KModel.RoleModel>>>($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{group.Name}/composite-roles");
+            var allKeycloakGroupRolesResponse = await _keycloakManagementClient.HandleGetAsync<ResponseWrapperModel<IEnumerable<KModel.RoleModel>>>($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{Uri.EscapeDataString(group.Name)}/composite-roles");
             var newRolesToAdd = allPimsGroupRoles.Where(r => allKeycloakGroupRolesResponse.Data.All(crr => crr.Name != r.Name));
             if (newRolesToAdd.Any())
             {
                 _logger.LogInformation($"Adding the following roles to the composite role {role.Name}: {string.Join(',', newRolesToAdd.Select(r => r.Name))}");
-                var response = await _keycloakManagementClient.SendJsonAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{group.Name}/composite-roles", HttpMethod.Post, newRolesToAdd);
+                var response = await _keycloakManagementClient.SendJsonAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{Uri.EscapeDataString(group.Name)}/composite-roles", HttpMethod.Post, newRolesToAdd);
                 _logger.LogInformation($"Added the following roles to the composite role {role.Name}: {string.Join(',', newRolesToAdd.Select(r => r.Name))}");
                 if (!response.IsSuccessStatusCode)
                 {
@@ -340,14 +313,14 @@ namespace Pims.Tools.Keycloak.Sync
                 Name = c.Claim.Name,
             }).ToArray();
 
-            var allKeycloakGroupRolesResponse = await _keycloakManagementClient.HandleGetAsync<ResponseWrapperModel<IEnumerable<KModel.RoleModel>>>($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{group.Name}/composite-roles");
+            var allKeycloakGroupRolesResponse = await _keycloakManagementClient.HandleGetAsync<ResponseWrapperModel<IEnumerable<KModel.RoleModel>>>($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{Uri.EscapeDataString(group.Name)}/composite-roles");
             var rolesToRemove = allKeycloakGroupRolesResponse.Data.Where(r => allPimsGroupRoles.All(crr => crr.Name != r.Name));
             foreach (var roleToRemove in rolesToRemove)
             {
                 _logger.LogInformation($"Deleting the following roles to the composite role {role.Name}: {roleToRemove}");
 
                 // Update the group in keycloak.
-                var response = await _keycloakManagementClient.DeleteAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{group.Name}/composite-roles/{roleToRemove.Name}");
+                var response = await _keycloakManagementClient.DeleteAsync($"{_keycloakManagementClient.GetIntegrationEnvUri()}/roles/{Uri.EscapeDataString(group.Name)}/composite-roles/{Uri.EscapeDataString(roleToRemove.Name)}");
                 _logger.LogInformation($"Deleting the following roles to the composite role {role.Name}: {roleToRemove}");
                 if (!response.IsSuccessStatusCode)
                 {
@@ -373,7 +346,7 @@ namespace Pims.Tools.Keycloak.Sync
             users.AddRange(pageOfUsers.Items);
 
             // Keep asking for pages of users until we have them all.
-            while (pageOfUsers.Items.Count() == quantity && page < MAX_PAGES)
+            while (pageOfUsers.Items.Count() == quantity && page < MAXPAGES)
             {
                 pageOfUsers = await _pimsClient.HandleRequestAsync<Api.Models.PageModel<PModel.UserModel>>(HttpMethod.Get, $"admin/users?page={++page}&quantity={quantity}");
                 users.AddRange(pageOfUsers.Items);
@@ -412,7 +385,7 @@ namespace Pims.Tools.Keycloak.Sync
         {
             var username = user.GuidIdentifierValue.ToString().Replace("-", string.Empty) + "@idir";
             var kUserRoles = await _keycloakManagementClient.HandleGetAsync<KModel.UserRoleModel>(
-                $"{_keycloakManagementClient.GetIntegrationEnvUri()}/user-role-mappings?username={username}",
+                $"{_keycloakManagementClient.GetIntegrationEnvUri()}/user-role-mappings?username={Uri.EscapeDataString(username)}",
                 (response) => response.StatusCode == HttpStatusCode.NotFound);
 
             IEnumerable<UserRoleOperation> userRolesToAdd = user.UserRoles.Where(ur => kUserRoles.Roles.All(kr => kr.Name != ur.Role.Name)).Select(ur => new UserRoleOperation() { RoleName = ur.Role.Name, Username = username, Operation = "add" });

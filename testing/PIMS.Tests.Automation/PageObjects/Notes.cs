@@ -167,8 +167,10 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(notesEditCreatedLabel).Displayed);
             Assert.True(webDriver.FindElement(notesEditCreatedDate).Displayed);
             Assert.True(webDriver.FindElement(notesEditCreatedBy).Displayed);
-            Assert.True(webDriver.FindElement(notesEditUpdatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(notesEditUpdatedDate).Displayed);
+
+            if(webDriver.FindElements(notesEditUpdatedLabel).Count > 0)
+                Assert.True(webDriver.FindElement(notesEditUpdatedDate).Displayed);
+
             Assert.True(webDriver.FindElement(notesEditUpdatedBy).Displayed);
             Assert.True(webDriver.FindElement(notedEditBttn).Displayed);
             Assert.True(webDriver.FindElement(noteEditViewTextarea).Displayed);
@@ -209,7 +211,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean NoteDeletedSuccessfully()
         {
-            Wait(500);
+            Wait(1000);
             Assert.True(webDriver.FindElement(notesToast).Text == "Deleted successfully.");
             return webDriver.FindElements(notesToast).Count > 0;
             

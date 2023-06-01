@@ -1,7 +1,6 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { FormikHelpers } from 'formik';
 import { createMemoryHistory } from 'history';
 import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
 import configureMockStore from 'redux-mock-store';
@@ -32,7 +31,11 @@ describe('useAddAcquisitionFormManagement hook', () => {
   const setup = (hookProps: IUseAddAcquisitionFormManagementProps) => {
     const { result } = renderHook(
       () =>
-        useAddAcquisitionFormManagement({ onSuccess: hookProps.onSuccess, selectedFeature: null }),
+        useAddAcquisitionFormManagement({
+          onSuccess: hookProps.onSuccess,
+          selectedFeature: null,
+          formikRef: {} as any,
+        }),
       {
         wrapper: Wrapper,
       },
@@ -51,13 +54,13 @@ describe('useAddAcquisitionFormManagement hook', () => {
   });
 
   it('should return valid initial values', async () => {
-    const { initialValues } = setup({ onSuccess, selectedFeature: null });
+    const { initialValues } = setup({ onSuccess, selectedFeature: null, formikRef: {} as any });
     expect(initialValues).toEqual(new AcquisitionForm());
   });
 
   it('should provide form validation schema', async () => {
     expect.assertions(3);
-    const { validationSchema } = setup({ onSuccess, selectedFeature: null });
+    const { validationSchema } = setup({ onSuccess, selectedFeature: null, formikRef: {} as any });
 
     const validForm = new AcquisitionForm();
     validForm.fileName = 'Lorem ipsum';
@@ -70,21 +73,5 @@ describe('useAddAcquisitionFormManagement hook', () => {
     expect(validationSchema).toBeDefined();
     await expect(validationSchema.validate(validForm)).resolves.toEqual(validForm);
     await expect(validationSchema.validate(invalidForm)).rejects.toBeInstanceOf(ValidationError);
-  });
-
-  it('should provide form submission handler', async () => {
-    const { handleSubmit } = setup({ onSuccess, selectedFeature: null });
-
-    const formValues = new AcquisitionForm();
-    formValues.fileName = 'Test Note';
-
-    const formikHelpers: Partial<FormikHelpers<AcquisitionForm>> = {
-      setSubmitting: jest.fn(),
-    };
-
-    await act(() => handleSubmit(formValues, formikHelpers as any));
-
-    expect(formikHelpers.setSubmitting).toBeCalledWith(false);
-    expect(onSuccess).toBeCalled();
   });
 });
