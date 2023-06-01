@@ -32,6 +32,8 @@ namespace Pims.Dal.Entities
         [Column("GST_NUMBER")]
         [StringLength(50)]
         public string GstNumber { get; set; }
+        [Column("IS_PAYMENT_IN_TRUST")]
+        public bool? IsPaymentInTrust { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
