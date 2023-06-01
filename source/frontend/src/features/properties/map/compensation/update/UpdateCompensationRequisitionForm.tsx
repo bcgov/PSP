@@ -8,6 +8,7 @@ import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import moment from 'moment';
+import { useRef } from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -19,7 +20,6 @@ import PayeeSubForm from './payee/PayeeSubForm';
 
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
-  formikRef: React.Ref<FormikProps<CompensationRequisitionFormModel>>;
   acquisitionFile: Api_AcquisitionFile;
   initialValues: CompensationRequisitionFormModel;
   gstConstant: number;
@@ -35,7 +35,6 @@ export interface CompensationRequisitionFormProps {
 
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
   isLoading,
-  formikRef,
   acquisitionFile,
   initialValues,
   gstConstant,
@@ -46,8 +45,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   onSave,
   onCancel,
 }) => {
+  const fiscalYearOptions = generateFiscalYearOptions();
   const { setModalContent, setDisplayModal } = useModalContext();
-  let fiscalYearOptions = generateFiscalYearOptions();
+  const formikRef = useRef<FormikProps<CompensationRequisitionFormModel>>(null);
 
   const dummyOptions: SelectOption[] = [{ label: 'john', value: '1' }];
 
@@ -66,10 +66,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
       });
       setDisplayModal(true);
     }
-  };
-
-  const handleAmountChanged = (): void => {
-    console.log('test');
   };
 
   return (
@@ -175,7 +171,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 compensationRequisitionId={initialValues.id!}
                 formikProps={formikProps}
                 gstConstant={gstConstant}
-                onAmountChanged={handleAmountChanged}
               ></FinancialActivitiesSubForm>
             </Section>
 

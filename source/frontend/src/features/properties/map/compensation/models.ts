@@ -40,11 +40,11 @@ export class CompensationRequisitionFormModel {
       acquisitionFileId: this.acquisitionFileId,
       isDraft: this.status === 'draft' ? true : false,
       fiscalYear: stringToNull(this.fiscalYear),
-      yearlyFinancialId: +this.stob ?? null,
+      yearlyFinancialId: this.stob === '' ? null : Number(this.stob),
       yearlyFinancial: null,
-      chartOfAccountsId: +this.serviceLine ?? null,
+      chartOfAccountsId: this.serviceLine === '' ? null : Number(this.serviceLine),
       chartOfAccounts: null,
-      responsibilityId: +this.responsibilityCentre ?? null,
+      responsibilityId: this.responsibilityCentre === '' ? null : Number(this.responsibilityCentre),
       responsibility: null,
       agreementDate: stringToNull(this.agreementDateTime),
       expropriationNoticeServedDate: stringToNull(this.expropriationNoticeServedDateTime),
@@ -87,6 +87,11 @@ export class CompensationRequisitionFormModel {
     compensation.payees = apiModel.payees?.map(x => AcquisitionPayeeFormModel.fromApi(x)) || [];
     compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.rowVersion = apiModel.rowVersion ?? null;
+
+    if (compensation.payees.length === 0) {
+      const defaultPayee = AcquisitionPayeeFormModel.defatulPayee(compensation.id!);
+      compensation.payees.push(defaultPayee);
+    }
 
     return compensation;
   }
@@ -182,11 +187,18 @@ export class AcquisitionPayeeFormModel {
     return payeeModel;
   }
 
+  static defatulPayee(compensationRequisitionId: number): AcquisitionPayeeFormModel {
+    let payeeModel = new AcquisitionPayeeFormModel(null, compensationRequisitionId);
+    payeeModel.cheques = [new AcquisitionPayeeChequeFormModel(null, null)];
+
+    return payeeModel;
+  }
+
   toApi(): Api_Payee {
     return {
       id: this._id,
       compensationRequisitionId: this._compensationRequisitionId ?? null,
-      acquisitionOwnerId: +this.acquisitionOwnerId,
+      acquisitionOwnerId: this.acquisitionOwnerId === '' ? 3 : +this.acquisitionOwnerId, // TODO: Remove this
       interestHolderId: null,
       ownerRepresentativeId: null,
       ownerSolicitorId: null,
@@ -206,7 +218,7 @@ export class AcquisitionPayeeChequeFormModel {
     this._acquisitionPayeeId = acquisitionPayeeId;
   }
 
-  pretaxAmout: number = 0;
+  pretaxAmount: number = 0;
   taxAmount: number = 0;
   totalAmount: number = 0;
   gstNumber: string = '';
@@ -219,7 +231,7 @@ export class AcquisitionPayeeChequeFormModel {
       apiModel.acquisitionPayeeId,
     );
 
-    payeeChequeModel.pretaxAmout = apiModel.pretaxAmout ?? 0;
+    payeeChequeModel.pretaxAmount = apiModel.pretaxAmout ?? 0;
     payeeChequeModel.taxAmount = apiModel.taxAmount ?? 0;
     payeeChequeModel.totalAmount = apiModel.totalAmount ?? 0;
     payeeChequeModel.gstNumber = apiModel.gstNumber ?? '';
@@ -234,7 +246,7 @@ export class AcquisitionPayeeChequeFormModel {
       id: this._id,
       acquisitionPayeeId: this._acquisitionPayeeId,
       isPaymentInTrust: this.isPaymentInTrust,
-      pretaxAmout: this.pretaxAmout,
+      pretaxAmout: this.pretaxAmount,
       taxAmount: this.taxAmount,
       totalAmount: this.totalAmount,
       gstNumber: this.gstNumber,

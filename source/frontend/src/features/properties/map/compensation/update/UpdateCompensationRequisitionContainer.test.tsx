@@ -38,7 +38,6 @@ describe('UpdateAgreementsContainer component', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <UpdateCompensationRequisitionContainer
-        formikRef={createRef()}
         compensation={mockCompensation}
         acquisitionFile={mockAcquisitionFileResponse()}
         onSuccess={onSuccess}

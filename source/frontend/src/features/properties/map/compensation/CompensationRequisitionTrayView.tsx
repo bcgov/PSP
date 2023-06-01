@@ -67,7 +67,6 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
         <UpdateCompensationRequisitionContainer
           compensation={compensation}
           acquisitionFile={acquistionFile}
-          formikRef={React.createRef()}
           onSuccess={() => {
             setEditMode(false);
             onUpdate();

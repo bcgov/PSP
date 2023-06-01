@@ -52,7 +52,6 @@ describe('TakesUpdateForm component', () => {
         gstConstant={currentGst}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
-        formikRef={formikRef}
       />,
       {
         ...renderOptions,

@@ -29,7 +29,7 @@ export const PayeeSubForm: React.FunctionComponent<IPayeeSubFormProps> = ({
       </SectionField>
       <SectionField label="Amount (before tax)">
         <FastCurrencyInput
-          field={withNameSpace(nameSpace, 'cheques[0].pretaxAmout')}
+          field={withNameSpace(nameSpace, 'cheques[0].pretaxAmount')}
           formikProps={formikProps}
           disabled
         />

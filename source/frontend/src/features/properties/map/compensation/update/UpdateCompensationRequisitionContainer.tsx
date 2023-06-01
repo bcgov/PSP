@@ -1,5 +1,4 @@
 import * as API from 'constants/API';
-import { FormikProps } from 'formik';
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
@@ -12,7 +11,6 @@ import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitio
 export interface UpdateCompensationRequisitionContainerProps {
   compensation: Api_CompensationRequisition;
   acquisitionFile: Api_AcquisitionFile;
-  formikRef: React.Ref<FormikProps<CompensationRequisitionFormModel>>;
   onSuccess: () => void;
   onCancel: () => void;
   View: React.FC<CompensationRequisitionFormProps>;
@@ -20,7 +18,7 @@ export interface UpdateCompensationRequisitionContainerProps {
 
 const UpdateCompensationRequisitionContainer: React.FC<
   UpdateCompensationRequisitionContainerProps
-> = ({ compensation, acquisitionFile, formikRef, onSuccess, onCancel, View }) => {
+> = ({ compensation, acquisitionFile, onSuccess, onCancel, View }) => {
   const lookups = useLookupCodeHelpers();
   const {
     updateCompensationRequisition: { execute: updateCompensationRequisition, loading: isUpdating },
@@ -74,7 +72,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
   return (
     <View
       isLoading={isUpdating}
-      formikRef={formikRef}
       initialValues={CompensationRequisitionFormModel.fromApi(compensation)}
       gstConstant={gstDecimalPercentage ?? 0}
       financialActivityOptions={financialActivityOptions}

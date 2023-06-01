@@ -41,11 +41,6 @@ namespace Pims.Dal.Repositories
         public PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition)
         {
             User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
-
-            var payee = new PimsAcquisitionPayee();
-            payee.PimsAcqPayeeCheques.Add(new PimsAcqPayeeCheque());
-
-            compensationRequisition.PimsAcquisitionPayees.Add(payee);
             Context.PimsCompensationRequisitions.Add(compensationRequisition);
 
             return compensationRequisition;
@@ -78,7 +73,7 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(p => p.PimsCompReqH120s, compensationRequisition.Internal_Id, compensationRequisition.PimsCompReqH120s.ToArray());
-            Context.UpdateGrandchild<PimsCompensationRequisition, long, PimsAcquisitionPayee>(p => p.PimsAcquisitionPayees, ch => ch.PimsAcqPayeeCheques, compensationRequisition.Internal_Id, compensationRequisition.PimsAcquisitionPayees.ToArray());
+            //Context.UpdateGrandchild<PimsCompensationRequisition, long, PimsAcquisitionPayee>(p => p.PimsAcquisitionPayees, ch => ch.PimsAcqPayeeCheques, compensationRequisition.Internal_Id, compensationRequisition.PimsAcquisitionPayees.ToArray());
 
             return compensationRequisition;
         }
