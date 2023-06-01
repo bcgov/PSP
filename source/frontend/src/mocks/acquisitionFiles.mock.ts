@@ -246,6 +246,33 @@ export const mockAcquisitionFileResponse = (
       appCreateUserid: 'dbo',
     },
   ],
+  acquisitionFileOwnerSolicitors: [
+    {
+      id: 1,
+      acquisitionFileId: 1,
+      personId: 1,
+      person: {
+        id: 1,
+        firstName: 'Luke',
+        surname: 'Skywalker',
+      },
+      isDisabled: false,
+    },
+  ],
+  acquisitionFileOwnerRepresentatives: [
+    {
+      id: 1,
+      acquisitionFileId: 1,
+      personId: 2,
+      person: {
+        id: 2,
+        firstName: 'Han',
+        surname: 'Solo',
+      },
+      comment: 'test representative comment',
+      isDisabled: false,
+    },
+  ],
   acquisitionFileChecklist: [],
   appCreateTimestamp: '2022-05-28T00:57:37.42',
   appLastUpdateTimestamp: '2022-07-28T00:57:37.42',

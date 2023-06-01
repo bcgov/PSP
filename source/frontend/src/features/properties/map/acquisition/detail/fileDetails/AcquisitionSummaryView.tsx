@@ -108,7 +108,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           ></AcquisitionOwnersSummaryContainer>
         )}
         {!!acquisitionFile?.acquisitionFileOwnerSolicitors?.length && (
-          <SectionField label="Owner Solicitor">
+          <SectionField label="Owner solicitor">
             <StyledLink
               target="_blank"
               rel="noopener noreferrer"
@@ -122,6 +122,27 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
               <FaExternalLinkAlt className="ml-2" size="1rem" />
             </StyledLink>
           </SectionField>
+        )}
+        {!!acquisitionFile?.acquisitionFileOwnerRepresentatives?.length && (
+          <>
+            <SectionField label="Owner representative">
+              <StyledLink
+                target="_blank"
+                rel="noopener noreferrer"
+                to={`/contact/P${acquisitionFile?.acquisitionFileOwnerRepresentatives[0]?.personId}`}
+              >
+                <span>
+                  {formatApiPersonNames(
+                    acquisitionFile?.acquisitionFileOwnerRepresentatives[0]?.person ?? undefined,
+                  )}
+                </span>
+                <FaExternalLinkAlt className="ml-2" size="1rem" />
+              </StyledLink>
+            </SectionField>
+            <SectionField label="Comment">
+              {acquisitionFile?.acquisitionFileOwnerRepresentatives[0]?.comment}
+            </SectionField>
+          </>
         )}
       </Section>
     </StyledSummarySection>

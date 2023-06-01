@@ -4,6 +4,7 @@ import {
   ProjectSelector,
   Select,
   SelectOption,
+  TextArea,
 } from 'components/common/form';
 import { ContactInputContainer } from 'components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from 'components/common/form/ContactInput/ContactInputView';
@@ -257,11 +258,23 @@ const AcquisitionDetailSubForm: React.FC<{
           Each property in this file should be owned by the owner(s) in this section
         </StyledSectionParagraph>
         <UpdateAcquisitionOwnersSubForm />
-        <SectionField label="Owner's Solicitor" className="mt-4">
+        <SectionField label="Owner solicitor" className="mt-4">
           <ContactInputContainer
             field="ownerSolicitor.contact"
             View={ContactInputView}
           ></ContactInputContainer>
+        </SectionField>
+        <SectionField label="Owner representative">
+          <ContactInputContainer
+            field="ownerRepresentative.contact"
+            View={ContactInputView}
+          ></ContactInputContainer>
+        </SectionField>
+        <SectionField label="Comment">
+          <TextArea
+            field="ownerRepresentative.comment"
+            placeholder="Remarks or additional representative(s)"
+          ></TextArea>
         </SectionField>
       </Section>
     </Container>

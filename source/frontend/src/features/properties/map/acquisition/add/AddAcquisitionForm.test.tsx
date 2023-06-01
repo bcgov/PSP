@@ -109,4 +109,14 @@ describe('AddAcquisitionForm component', () => {
     const { getByText } = setup({ initialValues });
     expect(getByText(/Historical file number/i)).toBeVisible();
   });
+
+  it('should display owner solicitor input', async () => {
+    const { getByText } = setup({ initialValues });
+    expect(getByText(/Owner solicitor/i)).toBeVisible();
+  });
+
+  it('should display owner representative input', async () => {
+    const { getByText } = setup({ initialValues });
+    expect(getByText(/Owner representative/i)).toBeVisible();
+  });
 });
