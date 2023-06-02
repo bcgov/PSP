@@ -9,6 +9,10 @@ namespace Pims.Dal.Repositories
 
         List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId);
 
+        List<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long acquisitionFileId);
+
+        List<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long acquisitionFileId);
+
         int GetAcquisitionFilePropertyRelatedCount(long propertyId);
 
         PimsPropertyAcquisitionFile Add(PimsPropertyAcquisitionFile propertyAcquisitionFile);

@@ -28,5 +28,7 @@ namespace Pims.Api.Models.Concepts
         public bool? IsDisabled { get; set; }
 
         public List<CompensationFinancialModel> Financials { get; set; }
+
+        public List<CompensationPayeeModel> Payees { get; set; }
     }
 }

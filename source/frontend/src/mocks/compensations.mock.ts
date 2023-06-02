@@ -13,6 +13,7 @@ export const getMockApiDefaultCompensation = (): Api_Compensation => ({
   detailedRemarks: null,
   isDisabled: false,
   financials: [],
+  payees: [],
   rowVersion: 1,
 });
 
@@ -29,6 +30,7 @@ export const getMockApiCompensation = (): Api_Compensation => ({
   detailedRemarks: null,
   isDisabled: false,
   financials: [],
+  payees: [],
   rowVersion: 1,
 });
 
@@ -46,6 +48,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
     detailedRemarks: null,
     isDisabled: false,
     financials: [],
+    payees: [],
     rowVersion: 1,
   },
   {
@@ -102,6 +105,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
         financialActivityCode: { id: 2 },
       },
     ],
+    payees: [],
     rowVersion: 1,
   },
   {
@@ -117,6 +121,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
     detailedRemarks: null,
     isDisabled: false,
     financials: [],
+    payees: [],
     rowVersion: 1,
   },
   {
@@ -132,6 +137,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
     detailedRemarks: null,
     isDisabled: false,
     financials: [],
+    payees: [],
     rowVersion: 1,
   },
   {
@@ -158,6 +164,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
         financialActivityCode: { id: 1 },
       },
     ],
+    payees: [],
     rowVersion: 1,
   },
   {
@@ -173,6 +180,7 @@ export const getMockApiCompensationList = (): Api_Compensation[] => [
     detailedRemarks: null,
     isDisabled: false,
     financials: [],
+    payees: [],
     rowVersion: 1,
   },
 ];

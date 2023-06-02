@@ -50,12 +50,13 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
 
 export interface Api_AcquisitionFileSolicitor extends Api_ConcurrentVersion, Api_AuditFields {
   id: number | null;
+  acquisitionFileId: number | null;
   personId: number | null;
   person: Api_Person | null;
   isDisabled: boolean | null;
 }
 
-export interface Api_AcquisitionFileSolicitor extends Api_ConcurrentVersion, Api_AuditFields {
+export interface Api_AcquisitionFileRepresentative extends Api_ConcurrentVersion, Api_AuditFields {
   id: number | null;
   acquisitionFileId: number | null;
   personId: number | null;

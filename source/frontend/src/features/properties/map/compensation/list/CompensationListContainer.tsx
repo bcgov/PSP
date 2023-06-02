@@ -51,6 +51,7 @@ export const CompensationListContainer: React.FunctionComponent<
       detailedRemarks: null,
       isDisabled: null,
       financials: [],
+      payees: [],
     };
 
     postAcquisitionCompensationRequisition(fileId, defaultCompensationRequisition).then(

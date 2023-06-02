@@ -12,7 +12,6 @@ using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -180,6 +179,38 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var owners = _acquisitionService.GetOwners(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerModel>>(owners));
+        }
+
+        /// <summary>
+        /// Get the acquisition file Owner representatives.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/owner-representatives")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerRepresentativeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileOwnerRepresentatives([FromRoute] long id)
+        {
+            var owners = _acquisitionService.GetOwnerRepresentatives(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerRepresentativeModel>>(owners));
+        }
+
+        /// <summary>
+        /// Get the acquisition file Owner solicitors.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/owner-solicitors")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerSolicitorModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetAcquisitionFileOwnerSolicitors([FromRoute] long id)
+        {
+            var owners = _acquisitionService.GetOwnerSolicitors(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFileOwnerSolicitorModel>>(owners));
         }
 
         /// <summary>

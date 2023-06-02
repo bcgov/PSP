@@ -6,7 +6,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c5.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c5.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,32 +128,32 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6.c6.btn {
+.c7.c7.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c6.c6.btn .text {
+.c7.c7.btn .text {
   display: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:active,
-.c6.c6.btn:focus {
+.c7.c7.btn:hover,
+.c7.c7.btn:active,
+.c7.c7.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -167,22 +167,22 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c6.c6.btn:hover .text,
-.c6.c6.btn:active .text,
-.c6.c6.btn:focus .text {
+.c7.c7.btn:hover .text,
+.c7.c7.btn:active .text,
+.c7.c7.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c16.c16.form-control.is-valid {
+.c17.c17.form-control.is-valid {
   background-image: none;
 }
 
-.c16.c16.form-control.is-invalid {
+.c17.c17.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c12 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -192,12 +192,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c4 {
+.c5 {
   float: right;
   cursor: pointer;
 }
 
-.c11.form-group {
+.c0 {
+  padding-top: 1rem;
+}
+
+.c12.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -205,7 +209,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c11.form-group .radio-group {
+.c12.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -218,7 +222,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c11.form-group .radio-group .form-check {
+.c12.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -233,19 +237,26 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c11.form-group .radio-group .form-check .form-check-input {
+.c12.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c11.form-group .radio-group .form-check-label {
+.c12.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c11 .form-label {
+.c12 .form-label {
   margin-bottom: unset;
 }
 
-.c13 {
+.c14 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c16 {
   max-width: 25rem;
   padding: 1rem;
   border: 1px solid;
@@ -253,23 +264,16 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
 }
 
 .c15 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c14 {
   max-width: 9rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c2 {
+.c3 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -277,30 +281,30 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c8.required::before {
+.c9.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c7 {
+.c8 {
   font-weight: bold;
 }
 
-.c9.form-section {
+.c10.form-section {
   margin-left: 0;
   margin-right: 0;
   padding-left: 0;
   padding-right: 0;
 }
 
-.c10 {
+.c11 {
   border: 0.1rem solid lightgrey;
   border-radius: 0.5rem;
 }
 
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -314,7 +318,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   padding: 0.5rem;
 }
 
-.c0 {
+.c1 {
   z-index: 1;
   position: -webkit-sticky;
   position: sticky;
@@ -323,13 +327,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0"
+      class="c1"
     >
       <div
-        class="c1"
+        class="c2"
       >
         Takes for 
         <b>
@@ -338,10 +342,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c2 form-section position-relative"
+      class="c3 form-section position-relative"
     >
       <h2
-        class="c3"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -355,7 +359,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c4"
+              class="c5"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -382,7 +386,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
         class="collapse show"
       >
         <button
-          class="c5 Button Button--icon-only c6 btn btn-link"
+          class="c6 Button Button--icon-only c7 btn btn-link"
           data-testid="take-delete-button"
           style="position: absolute; right: 1rem;"
           title="delete take"
@@ -417,13 +421,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c7"
+              class="c8"
             >
               Take type:
             </label>
           </div>
           <div
-            class="c8 required text-left col-5"
+            class="c9 required text-left col-5"
           >
             <div
               class="form-group"
@@ -463,13 +467,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c7"
+              class="c8"
             >
               Take status:
             </label>
           </div>
           <div
-            class="c8 required text-left col-5"
+            class="c9 required text-left col-5"
           >
             <div
               class="form-group"
@@ -511,13 +515,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c7"
+              class="c8"
             >
               Site Contamination:
             </label>
           </div>
           <div
-            class="c8 text-left col-5"
+            class="c9 text-left col-5"
           >
             <div
               class="form-group"
@@ -559,13 +563,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pr-0 text-left col-12"
           >
             <label
-              class="c7"
+              class="c8"
             >
               Description of this Take:
             </label>
           </div>
           <div
-            class="c8 text-left col"
+            class="c9 text-left col"
           >
             <div
               class="textarea input form-group"
@@ -580,10 +584,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c2 form-section c9"
+          class="c3 form-section c10"
         >
           <h2
-            class="c3"
+            class="c4"
           >
             <div
               class="no-gutters row"
@@ -602,7 +606,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="collapse show"
           >
             <div
-              class="c2 form-section c10"
+              class="c3 form-section c11"
             >
               <div
                 class="collapse show"
@@ -614,22 +618,22 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-8"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Is there a new right of way? *:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
-                      class="c11 form-group"
+                      class="c12 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -652,7 +656,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -684,13 +688,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-12"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Area:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
                       class="row"
@@ -699,7 +703,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c13"
+                          class="c14"
                         >
                           <div
                             class="pb-2 row"
@@ -709,7 +713,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -730,7 +734,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c14"
+                                class="c15"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -749,7 +753,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c15"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -759,7 +763,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -780,7 +784,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c14"
+                                class="c15"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -801,7 +805,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c2 form-section c10"
+              class="c3 form-section c11"
             >
               <div
                 class="collapse show"
@@ -813,22 +817,22 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-8"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Is there a Statutory Right of Way: (SRW)? *:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
-                      class="c11 form-group"
+                      class="c12 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -851,7 +855,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -883,13 +887,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-12"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Area:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
                       class="row"
@@ -898,7 +902,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c13"
+                          class="c14"
                         >
                           <div
                             class="pb-2 row"
@@ -908,7 +912,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -929,7 +933,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c14"
+                                class="c15"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -948,7 +952,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c15"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -958,7 +962,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -979,7 +983,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c14"
+                                class="c15"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -1000,7 +1004,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c2 form-section c10"
+              class="c3 form-section c11"
             >
               <div
                 class="collapse show"
@@ -1012,22 +1016,22 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-8"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Is there Land Act-Reserve(s)/Withdrawal(s)/Notation(s)? *:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
-                      class="c11 form-group"
+                      class="c12 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -1050,7 +1054,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -1082,13 +1086,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-12"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Area:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
                       class="row"
@@ -1097,7 +1101,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c13"
+                          class="c14"
                         >
                           <div
                             class="pb-2 row"
@@ -1107,7 +1111,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -1128,7 +1132,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c14"
+                                class="c15"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -1147,7 +1151,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c15"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -1157,7 +1161,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -1178,7 +1182,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c14"
+                                class="c15"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -1203,13 +1207,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       End date:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col-4"
+                    class="c9 text-left col-4"
                   >
                     <div
                       class="form-group"
@@ -1222,7 +1226,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         >
                           <input
                             autocomplete="off"
-                            class="c16 form-control date-picker"
+                            class="c17 form-control date-picker"
                             id="datepicker-takes.0.landActEndDt"
                             name="takes.0.landActEndDt"
                             placeholder="--/--/----"
@@ -1241,13 +1245,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Describe Land Act:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col-12"
+                    class="c9 text-left col-12"
                   >
                     <div
                       class="textarea input form-group"
@@ -1267,7 +1271,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c2 form-section c10"
+              class="c3 form-section c11"
             >
               <div
                 class="collapse show"
@@ -1279,22 +1283,22 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-8"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Is there a License to Construct (LTC)? *:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
-                      class="c11 form-group"
+                      class="c12 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -1317,7 +1321,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -1349,13 +1353,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-12"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Area:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
                       class="row"
@@ -1364,7 +1368,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c13"
+                          class="c14"
                         >
                           <div
                             class="pb-2 row"
@@ -1374,7 +1378,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -1395,7 +1399,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c14"
+                                class="c15"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -1414,7 +1418,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c15"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -1424,7 +1428,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -1445,7 +1449,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c14"
+                                class="c15"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -1470,13 +1474,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       LTC end date:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col-4"
+                    class="c9 text-left col-4"
                   >
                     <div
                       class="form-group"
@@ -1489,7 +1493,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         >
                           <input
                             autocomplete="off"
-                            class="c16 form-control date-picker"
+                            class="c17 form-control date-picker"
                             id="datepicker-takes.0.ltcEndDt"
                             name="takes.0.ltcEndDt"
                             placeholder="--/--/----"
@@ -1506,10 +1510,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c2 form-section c9"
+          class="c3 form-section c10"
         >
           <h2
-            class="c3"
+            class="c4"
           >
             <div
               class="no-gutters row"
@@ -1528,7 +1532,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="collapse show"
           >
             <div
-              class="c2 form-section c10"
+              class="c3 form-section c11"
             >
               <div
                 class="collapse show"
@@ -1540,22 +1544,22 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-8"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Is there a Surplus? *:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
-                      class="c11 form-group"
+                      class="c12 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -1578,7 +1582,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c12"
+                          class="c13"
                         >
                           <div
                             class="form-check"
@@ -1610,13 +1614,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-12"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Area:
                     </label>
                   </div>
                   <div
-                    class="c8 text-left col"
+                    class="c9 text-left col"
                   >
                     <div
                       class="row"
@@ -1625,7 +1629,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c13"
+                          class="c14"
                         >
                           <div
                             class="pb-2 row"
@@ -1635,7 +1639,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -1656,7 +1660,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c14"
+                                class="c15"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -1675,7 +1679,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c15"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -1685,7 +1689,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c14"
+                                class="c15"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -1706,7 +1710,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c14"
+                                class="c15"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -1731,7 +1735,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
       </div>
     </div>
     <button
-      class="c5 Button ml-4 mb-4 btn btn-success"
+      class="c6 Button ml-4 mb-4 btn btn-success"
       type="button"
     >
       <div

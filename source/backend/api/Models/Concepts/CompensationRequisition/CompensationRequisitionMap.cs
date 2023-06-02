@@ -20,6 +20,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Financials, src => src.PimsCompReqH120s)
+                .Map(dest => dest.Payees, src => src.PimsAcquisitionPayees)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
@@ -36,6 +37,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.PimsCompReqH120s, src => src.Financials)
+                .Map(dest => dest.PimsAcquisitionPayees, src => src.Payees)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
