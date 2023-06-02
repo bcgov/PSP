@@ -1,5 +1,6 @@
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import Api_TypeCode from './TypeCode';
 
 export interface Api_Take extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
@@ -15,7 +16,7 @@ export interface Api_Take extends Api_ConcurrentVersion, Api_AuditFields {
   newRightOfWayArea: number | null;
   landActArea: number | null;
   landActEndDt: string | null;
-  landActDescription: string | null;
+  landActTypeCode: Api_TypeCode<string> | null;
   statutoryRightOfWayArea: number | null;
   surplusArea: number | null;
   propertyAcquisitionFileId: number | null;

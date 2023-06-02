@@ -140,6 +140,7 @@ namespace Pims.Api.Controllers
                 var takeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTakeTypes());
                 var takeStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTakeStatusTypes());
                 var takeSiteContamTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTakeSiteContamTypes());
+                var landActTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLandActTypes());
                 var acqChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistSectionTypes());
                 var acqChecklistItemStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionChecklistItemStatusTypes());
                 var agreementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementTypes());
@@ -197,6 +198,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(takeTypes);
                 codes.AddRange(takeStatusTypes);
                 codes.AddRange(takeSiteContamTypes);
+                codes.AddRange(landActTypes);
                 codes.AddRange(acqChecklistSectionTypes);
                 codes.AddRange(acqChecklistItemStatusTypes);
                 codes.AddRange(agreementTypes);
