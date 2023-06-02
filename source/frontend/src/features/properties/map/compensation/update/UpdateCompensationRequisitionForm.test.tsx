@@ -4,15 +4,7 @@ import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
 import { mockLookups } from 'mocks/lookups.mock';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import {
-  act,
-  fakeText,
-  fillInput,
-  render,
-  RenderOptions,
-  userEvent,
-  waitFor,
-} from 'utils/test-utils';
+import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { CompensationRequisitionFormModel } from '../models';
 import UpdateCompensationRequisitionForm, {
