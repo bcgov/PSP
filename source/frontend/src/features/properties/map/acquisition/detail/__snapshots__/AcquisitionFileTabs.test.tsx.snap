@@ -838,16 +838,16 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Owner solicitor:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   <a
-                    class="c7"
+                    class="c8"
                     href="/contact/P1"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -879,16 +879,16 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Owner representative:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   <a
-                    class="c7"
+                    class="c8"
                     href="/contact/P2"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -920,13 +920,13 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Comment:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   test representative comment
                 </div>

@@ -561,16 +561,16 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Owner solicitor:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <a
-              class="c5"
+              class="c6"
               href="/contact/P1"
               rel="noopener noreferrer"
               target="_blank"
@@ -602,16 +602,16 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Owner representative:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <a
-              class="c5"
+              class="c6"
               href="/contact/P2"
               rel="noopener noreferrer"
               target="_blank"
@@ -643,13 +643,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Comment:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             test representative comment
           </div>

@@ -1113,16 +1113,16 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Owner solicitor:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             <a
-                              class="c18"
+                              class="c19"
                               href="/contact/P1"
                               rel="noopener noreferrer"
                               target="_blank"
@@ -1154,16 +1154,16 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Owner representative:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             <a
-                              class="c18"
+                              class="c19"
                               href="/contact/P2"
                               rel="noopener noreferrer"
                               target="_blank"
@@ -1195,13 +1195,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Comment:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             test representative comment
                           </div>
