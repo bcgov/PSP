@@ -3,7 +3,6 @@ import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
 import { mockLookups } from 'mocks/lookups.mock';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions } from 'utils/test-utils';
 

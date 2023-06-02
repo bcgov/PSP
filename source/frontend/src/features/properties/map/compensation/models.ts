@@ -10,7 +10,7 @@ import { booleanToString, stringToBoolean, stringToNull, toTypeCode } from 'util
 export class CompensationRequisitionFormModel {
   id: number | null = null;
   acquisitionFileId: number;
-  status: string = '' || 'draft' || 'final';
+  status: string = '';
   fiscalYear: string = '';
   stob: string = '';
   yearlyFinancial: Api_FinancialCode | null = null;
@@ -198,7 +198,7 @@ export class AcquisitionPayeeFormModel {
     return {
       id: this._id,
       compensationRequisitionId: this._compensationRequisitionId ?? null,
-      acquisitionOwnerId: this.acquisitionOwnerId === '' ? 3 : +this.acquisitionOwnerId, // TODO: Remove this
+      acquisitionOwnerId: this.acquisitionOwnerId === '' ? null : +this.acquisitionOwnerId,
       interestHolderId: null,
       ownerRepresentativeId: null,
       ownerSolicitorId: null,

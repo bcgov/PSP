@@ -21,10 +21,10 @@ export const PayeeSubForm: React.FunctionComponent<IPayeeSubFormProps> = ({
       <SectionField label="Payee">
         <Select options={payeeListOptions} field={withNameSpace(nameSpace, 'acquisitionOwnerId')} />
       </SectionField>
-      <SectionField label="Payment in trust">
+      <SectionField label="Payment in Trust?">
         <Check field={withNameSpace(nameSpace, 'cheques[0].isPaymentInTrust')} />
       </SectionField>
-      <SectionField label={'GstNumber'}>
+      <SectionField label="GST number" tooltip="Include GST # if applicable">
         <Input field={withNameSpace(nameSpace, 'cheques[0].gstNumber')}></Input>
       </SectionField>
       <SectionField label="Amount (before tax)">
@@ -41,7 +41,10 @@ export const PayeeSubForm: React.FunctionComponent<IPayeeSubFormProps> = ({
           disabled
         />
       </SectionField>
-      <SectionField label="Total amount">
+      <SectionField
+        label="Total amount"
+        tooltip="Calculated total of all activities in this compensation requisition"
+      >
         <FastCurrencyInput
           field={withNameSpace(nameSpace, 'cheques[0].totalAmount')}
           formikProps={formikProps}

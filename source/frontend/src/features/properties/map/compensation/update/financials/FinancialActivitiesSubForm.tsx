@@ -4,7 +4,6 @@ import GenericModal from 'components/common/GenericModal';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { useState } from 'react';
-import { Container } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 import { stringToBoolean } from 'utils/formUtils';
@@ -86,7 +85,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
           <>
             {values.financials.map((financial, index) => (
               <div key={`financial-act-${index}`}>
-                <Container>
+                <>
                   <StyledSubHeader>
                     <label>Activity {index + 1}</label>
                     <StyledRemoveLinkButton
@@ -156,7 +155,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                       disabled
                     />
                   </SectionField>
-                </Container>
+                </>
                 {index !== values.financials.length - 1 && <StyledSpacer className="my-3" />}
               </div>
             ))}
@@ -209,7 +208,7 @@ const StyledSubHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid 0.2rem ${props => props.theme.css.discardedColor};
+  border-bottom: solid 0.2rem ${props => props.theme.css.primaryColor};
   margin-bottom: 2rem;
 
   label {

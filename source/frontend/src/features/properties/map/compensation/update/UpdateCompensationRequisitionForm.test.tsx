@@ -22,7 +22,7 @@ import UpdateCompensationRequisitionForm, {
 const onSave = jest.fn();
 const onCancel = jest.fn();
 
-const currentGst = 0.05;
+const currentGstPercent = 5;
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -49,7 +49,7 @@ describe('TakesUpdateForm component', () => {
         chartOfAccountsOptions={[]}
         responsiblityCentreOptions={[]}
         yearlyFinancialOptions={[]}
-        gstConstant={currentGst}
+        gstConstant={currentGstPercent}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
       />,
@@ -85,7 +85,7 @@ describe('TakesUpdateForm component', () => {
   });
 
   it('should validate character limits', async () => {
-    const { findByText, formikRef, getSpecialInstructionsTextbox, getDetailedRemarksTextbox } =
+    const { findByText, getByText, getSpecialInstructionsTextbox, getDetailedRemarksTextbox } =
       setup({
         props: { initialValues: defaultCompensation },
       });
@@ -93,24 +93,22 @@ describe('TakesUpdateForm component', () => {
     await waitFor(() => userEvent.paste(getSpecialInstructionsTextbox(), fakeText(2001)));
     await waitFor(() => userEvent.paste(getDetailedRemarksTextbox(), fakeText(2001)));
 
-    await act(async () => {
-      formikRef.current?.submitForm();
-    });
+    const saveButton = getByText('Save');
+    userEvent.click(saveButton);
 
     expect(await findByText(/Special instructions must be at most 2000 characters/i)).toBeVisible();
     expect(await findByText(/Detailed remarks must be at most 2000 characters/i)).toBeVisible();
   });
 
   it('should validate extra fields when changing to final status', async () => {
-    const { findByText, formikRef, container } = setup({
+    const { findByText, getByText, container } = setup({
       props: { initialValues: defaultCompensation },
     });
 
     await fillInput(container, 'status', 'final', 'select');
 
-    await act(async () => {
-      formikRef.current?.submitForm();
-    });
+    const saveButton = getByText('Save');
+    userEvent.click(saveButton);
 
     expect(await findByText(/Fiscal year is required/i)).toBeVisible();
   });
