@@ -25,6 +25,11 @@ namespace Pims.Api.Models.Concepts
         public PersonModel Person { get; set; }
 
         /// <summary>
+        /// get/set - Additional comment concerning this owner representative.
+        /// </summary>
+        public string Comment { get; set; }
+
+        /// <summary>
         /// get/set - The relationship's disabled status flag.
         /// </summary>
         public bool? IsDisabled { get; set; }

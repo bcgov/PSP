@@ -24,6 +24,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionTeam?: Api_AcquisitionFilePerson[];
   acquisitionFileOwners?: Api_AcquisitionFileOwner[];
   acquisitionFileOwnerSolicitors?: Api_AcquisitionFileSolicitor[];
+  acquisitionFileOwnerRepresentatives?: Api_AcquisitionFileRepresentative[];
   acquisitionFileChecklist?: Api_AcquisitionFileChecklistItem[];
   project?: Api_Project;
   projectId: number | null;
@@ -61,6 +62,7 @@ export interface Api_AcquisitionFileRepresentative extends Api_ConcurrentVersion
   acquisitionFileId: number | null;
   personId: number | null;
   person: Api_Person | null;
+  comment: string | null;
   isDisabled: boolean | null;
 }
 

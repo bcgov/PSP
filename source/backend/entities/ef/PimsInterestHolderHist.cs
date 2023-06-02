@@ -21,6 +21,8 @@ namespace Pims.Dal.Entities
         public DateTime? EndDateHist { get; set; }
         [Column("INTEREST_HOLDER_ID")]
         public long InterestHolderId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
         [Column("PERSON_ID")]
         public long? PersonId { get; set; }
         [Column("ORGANIZATION_ID")]
