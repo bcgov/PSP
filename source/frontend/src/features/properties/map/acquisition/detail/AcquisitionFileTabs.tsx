@@ -18,6 +18,8 @@ import { EditFormType } from '../EditFormNames';
 import { AcquisitionChecklistView } from './checklist/AcquisitionChecklistView';
 import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
 import AcquisitionSummaryView from './fileDetails/AcquisitionSummaryView';
+import StakeHolderContainer from './stakeholders/StakeHolderContainer';
+import StakeHolderView from './stakeholders/StakeHolderView';
 
 export interface IAcquisitionFileTabsProps {
   acquisitionFile?: Api_AcquisitionFile;
@@ -116,6 +118,26 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       ),
       key: FileTabType.AGREEMENTS,
       name: 'Agreements',
+    });
+  }
+
+  if (acquisitionFile?.id && hasClaim(Claims.AGREEMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <StakeHolderContainer
+          View={StakeHolderView}
+          onEdit={() =>
+            setContainerState({
+              isEditing: true,
+              activeEditForm: EditFormType.STAKEHOLDERS,
+              defaultFileTab: FileTabType.STAKEHOLDERS,
+            })
+          }
+          acquisitionFile={acquisitionFile}
+        ></StakeHolderContainer>
+      ),
+      key: FileTabType.STAKEHOLDERS,
+      name: 'Stakeholders',
     });
   }
 

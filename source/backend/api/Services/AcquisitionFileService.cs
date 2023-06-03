@@ -33,6 +33,7 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFileChecklistRepository _checklistRepository;
         private readonly IAgreementRepository _agreementRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
+        private readonly IInterestHolderRepository _interestHolderRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -46,7 +47,8 @@ namespace Pims.Api.Services
             IEntityNoteRepository entityNoteRepository,
             IAcquisitionFileChecklistRepository checklistRepository,
             IAgreementRepository agreementRepository,
-            ICompensationRequisitionRepository compensationRequisitionRepository)
+            ICompensationRequisitionRepository compensationRequisitionRepository,
+            IInterestHolderRepository interestHolderRepository)
         {
             _user = user;
             _logger = logger;
@@ -60,6 +62,7 @@ namespace Pims.Api.Services
             _checklistRepository = checklistRepository;
             _agreementRepository = agreementRepository;
             _compensationRequisitionRepository = compensationRequisitionRepository;
+            _interestHolderRepository = interestHolderRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -311,6 +314,27 @@ namespace Pims.Api.Services
             _agreementRepository.CommitTransaction();
 
             return updatedAgreements;
+        }
+
+        public IEnumerable<PimsInterestHolder> GetInterestHolders(long id)
+        {
+            _logger.LogInformation("Getting acquisition file InterestHolders with AcquisitionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+
+            return _interestHolderRepository.GetInterestHoldersByAcquisitionFile(id);
+        }
+
+        public IEnumerable<PimsInterestHolder> UpdateInterestHolders(long acquisitionFileId, List<PimsInterestHolder> interestHolders)
+        {
+            _logger.LogInformation("Updating acquisition file InterestHolders with AcquisitionFile id: {acquisitionFileId}", acquisitionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            var updatedInterestHolders = _interestHolderRepository.UpdateAllForAcquisition(acquisitionFileId, interestHolders);
+            _interestHolderRepository.CommitTransaction();
+
+            return updatedInterestHolders;
         }
 
         public IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId)

@@ -1,0 +1,522 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StakeHolderView component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c3 {
+  text-align: right;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Interests
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c3 mr-3 my-1"
+        />
+        <div
+          class="table"
+          data-testid="interest-holders-by-property-table"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Interest Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No rows to display
+          </div>
+        </div>
+        <div
+          class="table"
+          data-testid="interest-holders-by-property-table"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Interest Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No rows to display
+          </div>
+        </div>
+        <div
+          class="table"
+          data-testid="interest-holders-by-property-table"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Interest Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No rows to display
+          </div>
+        </div>
+        <div
+          class="table"
+          data-testid="interest-holders-by-property-table"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Interest Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No rows to display
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  .c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c3 {
+  text-align: right;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Non-interest Payees
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c3 mr-3 my-1"
+        />
+        <div
+          class="table"
+          data-testid="interest-holders-by-property-table"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Interest Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No rows to display
+          </div>
+        </div>
+        <div
+          class="table"
+          data-testid="interest-holders-by-property-table"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Interest Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No rows to display
+          </div>
+        </div>
+        <div
+          class="table"
+          data-testid="interest-holders-by-property-table"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Interest Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No rows to display
+          </div>
+        </div>
+        <div
+          class="table"
+          data-testid="interest-holders-by-property-table"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  n/a: 
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Interest Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No rows to display
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

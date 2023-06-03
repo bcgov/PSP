@@ -7,6 +7,7 @@ import { IContactInputViewProps } from './ContactInputView';
 export type IContactInputContainerProps = {
   field: string;
   label?: string;
+  showOnlyIndividuals?: boolean;
 };
 
 export const ContactInputContainer: React.FC<
@@ -15,7 +16,7 @@ export const ContactInputContainer: React.FC<
       View: React.FunctionComponent<React.PropsWithChildren<IContactInputViewProps>>;
     }
   >
-> = ({ field, View, label }) => {
+> = ({ field, View, label, showOnlyIndividuals }) => {
   const [showContactManager, setShowContactManager] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>([]);
   const { setFieldValue } = useFormikContext<any>();
@@ -47,7 +48,7 @@ export const ContactInputContainer: React.FC<
           setSelectedContacts([]);
         },
         showActiveSelector: true,
-        showOnlyIndividuals: true,
+        showOnlyIndividuals: showOnlyIndividuals !== undefined ? showOnlyIndividuals : true,
       }}
     />
   );

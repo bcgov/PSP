@@ -102,11 +102,11 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
         setSelectedRows={contactManagerProps?.setSelectedRows}
         display={contactManagerProps?.display}
         setDisplay={setShowContactManager}
-        isSingleSelect
+        isSingleSelect={contactManagerProps?.isSingleSelect}
         handleModalOk={contactManagerProps?.handleModalOk}
         handleModalCancel={contactManagerProps?.handleModalCancel}
-        showActiveSelector={true}
-        showOnlyIndividuals={true}
+        showActiveSelector={contactManagerProps.showActiveSelector}
+        showOnlyIndividuals={contactManagerProps.showOnlyIndividuals}
       ></ContactManagerModal>
     </>
   );
