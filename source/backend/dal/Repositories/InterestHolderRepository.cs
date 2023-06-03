@@ -51,6 +51,7 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFileId, interestHolders.ToArray());
             interestHolders.ForEach(ih =>
             {
+                // ignore interest holders with no id, as those are new and do not require updates, the will be inserted by the parent's updateChild.
                 if (ih.InterestHolderId > 0)
                 {
                     Context.UpdateChild<PimsInterestHolder, long, PimsInthldrPropInterest, long>(p => p.PimsInthldrPropInterests, ih.InterestHolderId, ih.PimsInthldrPropInterests.ToArray());

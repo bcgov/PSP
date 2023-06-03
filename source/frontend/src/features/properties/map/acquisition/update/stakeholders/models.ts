@@ -28,6 +28,7 @@ export class StakeHolderForm {
     apiModel
       .flatMap(ih => ih.interestHolderProperties)
       .forEach(ihp => {
+        // Group interest holders with the same interest type code together.
         const matchingInterestHolder = groupedInterestHolders.find(
           gih => gih.interestHolderProperties[0].interestTypeCode?.id === ihp.interestTypeCode?.id,
         );
@@ -58,11 +59,14 @@ export class StakeHolderForm {
   static toApi(model: StakeHolderForm): Api_InterestHolder[] {
     // Group by personId or organizationId, create a unique list of all impacted properties for each group, and then map back to API model.
     return chain(model.interestHolders.concat(model.nonInterestPayees))
-      .forEach((ih: InterestHolderForm) =>
-        ih.impactedProperties.forEach(
-          (ihp: Api_InterestHolderProperty) =>
-            (ihp.interestTypeCode = ih.interestTypeCode ? { id: ih.interestTypeCode } : null),
-        ),
+      .forEach(
+        (
+          ih: InterestHolderForm, // copy the interest type from the interest holder to the impacted properties
+        ) =>
+          ih.impactedProperties.forEach(
+            (ihp: Api_InterestHolderProperty) =>
+              (ihp.interestTypeCode = ih.interestTypeCode ? { id: ih.interestTypeCode } : null),
+          ),
       )
       .groupBy((ih: InterestHolderForm) => ih.contact?.personId ?? ih.contact?.organizationId)
       .map(gip => {
@@ -70,7 +74,7 @@ export class StakeHolderForm {
           gip.flatMap((ih: InterestHolderForm) => ih.impactedProperties),
           (ihp: Api_InterestHolderProperty) =>
             `${ihp.acquisitionFilePropertyId}-${ihp.interestTypeCode?.id}`,
-        );
+        ); // combine interest holder properties with the same interest type code and acquisition file property id.
 
         return InterestHolderForm.toApi({
           ...gip[0],
