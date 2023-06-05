@@ -30,8 +30,6 @@ namespace Pims.Dal.Repositories
 
         public IList<PimsCompensationRequisition> GetAllByAcquisitionFileId(long acquisitionFileId)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
-
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqH120s)
                 .AsNoTracking()
@@ -40,7 +38,6 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
             Context.PimsCompensationRequisitions.Add(compensationRequisition);
 
             return compensationRequisition;
@@ -48,7 +45,6 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
             var entity = Context.PimsCompensationRequisitions
                 .Include(x => x.YearlyFinancial)
                 .Include(x => x.ChartOfAccounts)
@@ -67,13 +63,11 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             var existingCompensationRequisition = Context.PimsCompensationRequisitions
-                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.Internal_Id)) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
-            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(p => p.PimsCompReqH120s, compensationRequisition.Internal_Id, compensationRequisition.PimsCompReqH120s.ToArray());
-            //Context.UpdateGrandchild<PimsCompensationRequisition, long, PimsAcquisitionPayee>(p => p.PimsAcquisitionPayees, ch => ch.PimsAcqPayeeCheques, compensationRequisition.Internal_Id, compensationRequisition.PimsAcquisitionPayees.ToArray());
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsAcquisitionPayee, long>(a => a.PimsAcquisitionPayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsAcquisitionPayees.ToArray(), false);
 
             return compensationRequisition;
         }

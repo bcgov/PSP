@@ -1,4 +1,4 @@
-import { Api_CompensationFinancial } from 'models/api/CompensationRequisition';
+import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
 import { Api_H120Category } from 'models/api/H120Category';
 import { formatMoney } from 'utils';
 

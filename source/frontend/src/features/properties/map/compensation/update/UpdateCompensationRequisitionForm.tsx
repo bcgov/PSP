@@ -23,12 +23,13 @@ import { withNameSpace } from 'utils/formUtils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
 import { CompensationRequisitionYupSchema } from '../CompensationRequisitionYupSchema';
-import { CompensationRequisitionFormModel } from '../models';
+import { CompensationRequisitionFormModel, PayeeOption } from '../models';
 import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm';
 
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
   acquisitionFile: Api_AcquisitionFile;
+  payeeOptions: PayeeOption[];
   initialValues: CompensationRequisitionFormModel;
   gstConstant: number;
   financialActivityOptions: SelectOption[];
@@ -44,6 +45,7 @@ export interface CompensationRequisitionFormProps {
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
   isLoading,
   acquisitionFile,
+  payeeOptions,
   initialValues,
   gstConstant,
   financialActivityOptions,
@@ -119,145 +121,157 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               <LoadingBackdrop show={isLoading}></LoadingBackdrop>
               <UnsavedChangesPrompt />
 
-              <Section header="Requisition details">
-                <SectionField label="Status" labelWidth="4" contentWidth="4">
-                  <Select
-                    field="status"
-                    options={[
-                      {
-                        label: 'Draft',
-                        value: 'draft',
-                      },
-                      {
-                        label: 'Final',
-                        value: 'final',
-                      },
-                    ]}
-                    placeholder="Select..."
-                  />
-                </SectionField>
-                <SectionField label="Agreement date" labelWidth="4" contentWidth="4">
-                  <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
-                </SectionField>
-                <SectionField
-                  label="Expropriation notice served date"
-                  labelWidth="4"
-                  contentWidth="4"
-                >
-                  <FastDatePicker
-                    field="expropriationNoticeServedDateTime"
-                    formikProps={formikProps}
-                  />
-                </SectionField>
-                <SectionField label="Expropriation vesting date" labelWidth="4" contentWidth="4">
-                  <FastDatePicker field="expropriationVestingDateTime" formikProps={formikProps} />
-                </SectionField>
-                <SectionField label="Special instructions" labelWidth="12">
-                  <MediumTextArea field="specialInstruction" />
-                </SectionField>
-              </Section>
+              <StyledContent>
+                <Section header="Requisition details">
+                  <SectionField label="Status" labelWidth="4" contentWidth="4">
+                    <Select
+                      field="status"
+                      options={[
+                        {
+                          label: 'Draft',
+                          value: 'draft',
+                        },
+                        {
+                          label: 'Final',
+                          value: 'final',
+                        },
+                      ]}
+                      placeholder="Select..."
+                    />
+                  </SectionField>
+                  <SectionField label="Agreement date" labelWidth="4" contentWidth="4">
+                    <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
+                  </SectionField>
+                  <SectionField
+                    label="Expropriation notice served date"
+                    labelWidth="4"
+                    contentWidth="4"
+                  >
+                    <FastDatePicker
+                      field="expropriationNoticeServedDateTime"
+                      formikProps={formikProps}
+                    />
+                  </SectionField>
+                  <SectionField label="Expropriation vesting date" labelWidth="4" contentWidth="4">
+                    <FastDatePicker
+                      field="expropriationVestingDateTime"
+                      formikProps={formikProps}
+                    />
+                  </SectionField>
+                  <SectionField label="Special instructions" labelWidth="12">
+                    <MediumTextArea field="specialInstruction" />
+                  </SectionField>
+                </Section>
 
-              <Section header="Financial coding">
-                <SectionField label="Product" labelWidth={'4'}>
-                  {acquisitionFile.product?.code ?? ''}
-                </SectionField>
-                <SectionField label="Business function" labelWidth={'4'}>
-                  {acquisitionFile.project?.businessFunctionCode?.code ?? ''}
-                </SectionField>
-                <SectionField label="Work activity" labelWidth={'4'}>
-                  {acquisitionFile.project?.workActivityCode?.code ?? ''}
-                </SectionField>
-                <SectionField label="Cost type" labelWidth={'4'}>
-                  {acquisitionFile.project?.costTypeCode?.code ?? ''}
-                </SectionField>
-                <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
-                  <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
-                </SectionField>
-                <SectionField label="STOB" labelWidth="4" contentWidth="4" required>
-                  <Select field="stob" options={yearlyFinancialOptions} placeholder="Select..." />
-                </SectionField>
-                <SectionField label="Service line" labelWidth="4" required>
-                  <Select
-                    field="serviceLine"
-                    options={chartOfAccountsOptions}
-                    placeholder="Select..."
-                  />
-                </SectionField>
-                <SectionField label="Responsibility centre" labelWidth="4" required>
-                  <Select
-                    field="responsibilityCentre"
-                    options={responsiblityCentreOptions}
-                    placeholder="Select..."
-                  />
-                </SectionField>
-              </Section>
+                <Section header="Financial coding">
+                  <SectionField label="Product" labelWidth={'4'}>
+                    {acquisitionFile.product?.code ?? ''}
+                  </SectionField>
+                  <SectionField label="Business function" labelWidth={'4'}>
+                    {acquisitionFile.project?.businessFunctionCode?.code ?? ''}
+                  </SectionField>
+                  <SectionField label="Work activity" labelWidth={'4'}>
+                    {acquisitionFile.project?.workActivityCode?.code ?? ''}
+                  </SectionField>
+                  <SectionField label="Cost type" labelWidth={'4'}>
+                    {acquisitionFile.project?.costTypeCode?.code ?? ''}
+                  </SectionField>
+                  <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
+                    <Select
+                      field="fiscalYear"
+                      options={fiscalYearOptions}
+                      placeholder="Select..."
+                    />
+                  </SectionField>
+                  <SectionField label="STOB" labelWidth="4" contentWidth="4" required>
+                    <Select field="stob" options={yearlyFinancialOptions} placeholder="Select..." />
+                  </SectionField>
+                  <SectionField label="Service line" labelWidth="4" required>
+                    <Select
+                      field="serviceLine"
+                      options={chartOfAccountsOptions}
+                      placeholder="Select..."
+                    />
+                  </SectionField>
+                  <SectionField label="Responsibility centre" labelWidth="4" required>
+                    <Select
+                      field="responsibilityCentre"
+                      options={responsiblityCentreOptions}
+                      placeholder="Select..."
+                    />
+                  </SectionField>
+                </Section>
 
-              <Section header="Payment" isCollapsable initiallyExpanded>
-                <SectionField label="Payee">
-                  <Select
-                    options={dummyOptions}
-                    field={withNameSpace('payees.0', 'acquisitionOwnerId')}
-                  />
-                </SectionField>
-                <SectionField label="Payment in Trust?">
-                  <Check field={withNameSpace('payees.0', 'cheques[0].isPaymentInTrust')} />
-                </SectionField>
-                <SectionField label="GST number" tooltip="Include GST # if applicable">
-                  <Input field={withNameSpace('payees.0', 'cheques[0].gstNumber')}></Input>
-                </SectionField>
-                <SectionField label="Amount (before tax)">
-                  <FastCurrencyInput
-                    field={withNameSpace('payees.0', 'cheques[0].pretaxAmount')}
-                    formikProps={formikProps}
-                    disabled
-                  />
-                </SectionField>
-                <SectionField label="GST amount">
-                  <FastCurrencyInput
-                    field={withNameSpace('payees.0', 'cheques[0].taxAmount')}
-                    formikProps={formikProps}
-                    disabled
-                  />
-                </SectionField>
-                <SectionField
-                  label="Total amount"
-                  tooltip="Calculated total of all activities in this compensation requisition"
-                >
-                  <FastCurrencyInput
-                    field={withNameSpace('payees.0', 'cheques[0].totalAmount')}
-                    formikProps={formikProps}
-                    disabled
-                  />
-                </SectionField>
-              </Section>
+                <Section header="Payment" isCollapsable initiallyExpanded>
+                  <SectionField label="Payee">
+                    <Select
+                      options={dummyOptions}
+                      field={withNameSpace('payees.0', 'acquisitionOwnerId')}
+                    />
+                  </SectionField>
+                  <SectionField label="Payment in Trust?">
+                    <Check field={withNameSpace('payees.0', 'cheques[0].isPaymentInTrust')} />
+                  </SectionField>
+                  <SectionField label="GST number" tooltip="Include GST # if applicable">
+                    <Input field={withNameSpace('payees.0', 'cheques[0].gstNumber')}></Input>
+                  </SectionField>
+                  <SectionField label="Amount (before tax)">
+                    <FastCurrencyInput
+                      field={withNameSpace('payees.0', 'cheques[0].pretaxAmount')}
+                      formikProps={formikProps}
+                      disabled
+                    />
+                  </SectionField>
+                  <SectionField label="GST amount">
+                    <FastCurrencyInput
+                      field={withNameSpace('payees.0', 'cheques[0].taxAmount')}
+                      formikProps={formikProps}
+                      disabled
+                    />
+                  </SectionField>
+                  <SectionField
+                    label="Total amount"
+                    tooltip="Calculated total of all activities in this compensation requisition"
+                  >
+                    <FastCurrencyInput
+                      field={withNameSpace('payees.0', 'cheques[0].totalAmount')}
+                      formikProps={formikProps}
+                      disabled
+                    />
+                  </SectionField>
+                </Section>
 
-              <Section header="Activities" isCollapsable initiallyExpanded>
-                <FinancialActivitiesSubForm
-                  financialActivityOptions={financialActivityOptions}
-                  compensationRequisitionId={initialValues.id!}
-                  formikProps={formikProps}
-                  gstConstant={gstConstant}
-                  activitiesUpdated={() => {
-                    setActivitiesUpdated(true);
-                  }}
-                ></FinancialActivitiesSubForm>
-              </Section>
+                <Section header="Activities" isCollapsable initiallyExpanded>
+                  <FinancialActivitiesSubForm
+                    financialActivityOptions={financialActivityOptions}
+                    compensationRequisitionId={initialValues.id!}
+                    formikProps={formikProps}
+                    gstConstant={gstConstant}
+                    activitiesUpdated={() => {
+                      setActivitiesUpdated(true);
+                    }}
+                  ></FinancialActivitiesSubForm>
+                </Section>
 
-              <Section>
-                <SectionField label="Detailed remarks" labelWidth="12">
-                  <MediumTextArea field="detailedRemarks" />
-                </SectionField>
-              </Section>
+                <Section>
+                  <SectionField label="Detailed remarks" labelWidth="12">
+                    <MediumTextArea field="detailedRemarks" />
+                  </SectionField>
+                </Section>
+              </StyledContent>
 
               <Prompt
                 when={formikProps.dirty}
                 message="You have made changes on this form. Do you wish to leave without saving?"
               />
-              <SidebarFooter
-                onSave={() => formikProps.submitForm()}
-                isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
-                onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
-              />
+
+              <StyledFooter>
+                <SidebarFooter
+                  onSave={() => formikProps.submitForm()}
+                  isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
+                  onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
+                />
+              </StyledFooter>
             </>
           );
         }}
@@ -291,13 +305,21 @@ const StyledFormWrapper = styled.div`
   text-align: left;
   height: 100%;
   overflow-y: auto;
-  padding-right: 1rem;
   padding-bottom: 1rem;
 `;
 
-export const MediumTextArea = styled(TextArea)`
+const StyledContent = styled.div`
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+`;
+
+const StyledFooter = styled.div`
+  margin-right: 1rem;
+  padding-bottom: 1rem;
+`;
+
+const MediumTextArea = styled(TextArea)`
   textarea.form-control {
-    min-width: 80rem;
+    min-width: 100%;
     height: 7rem;
     resize: none;
   }

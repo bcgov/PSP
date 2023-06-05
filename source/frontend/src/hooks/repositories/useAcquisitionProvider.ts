@@ -6,11 +6,11 @@ import {
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
+  Api_AcquisitionFileRepresentative,
+  Api_AcquisitionFileSolicitor,
 } from 'models/api/AcquisitionFile';
-import {
-  Api_CompensationFinancial,
-  Api_CompensationRequisition,
-} from 'models/api/CompensationRequisition';
+import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback, useMemo } from 'react';
@@ -29,6 +29,8 @@ export const useAcquisitionProvider = () => {
     putAcquisitionFileProperties,
     getAcquisitionFileProperties,
     getAcquisitionFileOwners,
+    getAcquisitionFileSolicitors,
+    getAcquisitionFileRepresentatives,
     getAcquisitionFileProject,
     getAcquisitionFileProduct,
     getAcquisitionFileChecklist,
@@ -120,6 +122,28 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'GetAcquisitionFileOwners',
     onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owners'),
+  });
+
+  const getAcquisitionFileSolicitorsApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileSolicitor[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionFileSolicitors(acqFileId),
+      [getAcquisitionFileSolicitors],
+    ),
+    requestName: 'getAcquisitionFileSolicitorsApi',
+    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owner solicitors'),
+  });
+
+  const getAcquisitionFileRepresentativesApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileRepresentative[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionFileRepresentatives(acqFileId),
+      [getAcquisitionFileRepresentatives],
+    ),
+    requestName: 'getAcquisitionFileRepresentativesApi',
+    onError: useAxiosErrorHandler('Failed to retrieve Acquisition File Owner representatives'),
   });
 
   const getAcquisitionProjectApi = useApiRequestWrapper<
@@ -221,6 +245,8 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
       getAcquisitionProperties: getAcquisitionPropertiesApi,
       getAcquisitionOwners: getAcquisitionOwnersApi,
+      getAcquisitionFileSolicitors: getAcquisitionFileSolicitorsApi,
+      getAcquisitionFileRepresentatives: getAcquisitionFileRepresentativesApi,
       getAcquisitionProject: getAcquisitionProjectApi,
       getAcquisitionProduct: getAcquisitionProductApi,
       getAcquisitionFileChecklist: getAcquisitionChecklistApi,
@@ -236,6 +262,8 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionPropertiesApi,
       getAcquisitionPropertiesApi,
       getAcquisitionOwnersApi,
+      getAcquisitionFileSolicitorsApi,
+      getAcquisitionFileRepresentativesApi,
       getAcquisitionProjectApi,
       getAcquisitionProductApi,
       getAcquisitionChecklistApi,

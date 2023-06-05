@@ -35,12 +35,12 @@ namespace Pims.Api.Models.Concepts
 
         public string SpecialInstruction { get; set; }
 
-        public List<AcquisitionPayeeModel> Payees { get; set; }
-
         public string DetailedRemarks { get; set; }
 
         public bool? IsDisabled { get; set; }
 
         public List<CompensationFinancialModel> Financials { get; set; }
+
+        public List<CompensationPayeeModel> Payees { get; set; }
     }
 }

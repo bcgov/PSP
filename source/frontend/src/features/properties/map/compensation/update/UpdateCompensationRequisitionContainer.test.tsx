@@ -1,12 +1,15 @@
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import {
+  mockAcquisitionFileOwnersResponse,
+  mockAcquisitionFileResponse,
+} from 'mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
 import { mockLookups } from 'mocks/lookups.mock';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions } from 'utils/test-utils';
 
-import { CompensationRequisitionFormModel } from '../models';
+import { CompensationRequisitionFormModel, PayeeOption } from '../models';
 import UpdateCompensationRequisitionContainer from './UpdateCompensationRequisitionContainer';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
@@ -22,6 +25,27 @@ const mockUpdateCompensation = jest.fn();
     loading: false,
   },
 } as unknown as ReturnType<Provider>);
+
+jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
+  useAcquisitionProvider: () => {
+    return {
+      getAcquisitionOwners: {
+        error: undefined,
+        response: mockAcquisitionFileOwnersResponse(1),
+        execute: jest.fn().mockReturnValue(mockAcquisitionFileOwnersResponse(1)),
+        loading: false,
+      },
+      getAcquisitionFileSolicitors: {
+        execute: jest.fn(),
+        loading: false,
+      },
+      getAcquisitionFileRepresentatives: {
+        execute: jest.fn(),
+        loading: false,
+      },
+    };
+  },
+}));
 
 let viewProps: CompensationRequisitionFormProps | undefined;
 const TestView: React.FC<CompensationRequisitionFormProps> = props => {
@@ -122,7 +146,36 @@ describe('UpdateAgreementsContainer component', () => {
       updatedCompensation = await viewProps?.onSave(updatedCompensationModel);
     });
 
-    expect(mockUpdateCompensation).toHaveBeenCalledWith(updatedCompensationModel.toApi());
+    expect(mockUpdateCompensation).toHaveBeenCalledWith(updatedCompensationModel.toApi([]));
     expect(updatedCompensation).toStrictEqual(mockCompensation);
+  });
+
+  it('makes request to update the compensation with payees', async () => {
+    await setup();
+
+    mockCompensation.detailedRemarks = 'my update';
+    mockUpdateCompensation.mockResolvedValue(mockCompensation);
+
+    let updatedCompensationModel = new CompensationRequisitionFormModel(
+      mockCompensation.id,
+      mockCompensation.acquisitionFileId,
+    );
+    updatedCompensationModel.detailedRemarks = 'my update';
+
+    const testPayeeOption: PayeeOption = PayeeOption.createOwner(
+      mockAcquisitionFileOwnersResponse(1)[0],
+    );
+
+    updatedCompensationModel.payeeKey = testPayeeOption.value;
+
+    setTimeout(async () => {
+      await act(async () => {
+        await viewProps?.onSave(updatedCompensationModel);
+      });
+
+      expect(mockUpdateCompensation).toHaveBeenCalledWith(
+        updatedCompensationModel.toApi([testPayeeOption]),
+      );
+    }, 500);
   });
 });

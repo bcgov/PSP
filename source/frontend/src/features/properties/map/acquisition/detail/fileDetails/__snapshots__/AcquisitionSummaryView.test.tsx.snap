@@ -7,16 +7,20 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
   />
   <div />
   .c0 {
+  padding-top: 1rem;
+}
+
+.c1 {
   text-align: right;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -24,18 +28,18 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
-.c6 {
+.c7 {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -61,7 +65,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
   justify-content: center;
 }
 
-.c5 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -73,16 +77,16 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 mr-3 my-1"
+      class="c1 mr-3 my-1"
     />
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -107,13 +111,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Ministry project:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
           </div>
@@ -125,13 +129,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Product:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             00048 MISCELLANEOUS CLAIMS
           </div>
@@ -143,22 +147,22 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Funding:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -183,13 +187,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Assigned date:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Jun 27, 2022
           </div>
@@ -201,7 +205,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Delivery date:
               <span
@@ -231,7 +235,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Jul 29, 2022
           </div>
@@ -243,7 +247,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Acquisition completed date:
               <span
@@ -273,16 +277,16 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -307,13 +311,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Acquisition file name:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Test ACQ File
           </div>
@@ -325,7 +329,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Historical file number:
               <span
@@ -355,7 +359,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             legacy file number
           </div>
@@ -367,13 +371,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Physical file status:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
         <div
@@ -383,13 +387,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Acquisition type:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Consensual Agreement
           </div>
@@ -401,13 +405,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Ministry region:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             South Coast Region
           </div>
@@ -415,10 +419,10 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -443,16 +447,16 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Negotiation agent:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <a
-              class="c5"
+              class="c6"
               href="/contact/P1"
               rel="noopener noreferrer"
               target="_blank"
@@ -484,16 +488,16 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Negotiation agent:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <a
-              class="c5"
+              class="c6"
               href="/contact/P3"
               rel="noopener noreferrer"
               target="_blank"
@@ -521,10 +525,10 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -543,7 +547,7 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
         class="collapse show"
       >
         <div
-          class="c6"
+          class="c7"
         >
           <div
             class="spinner-border text-warning"
@@ -557,16 +561,16 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Owner solicitor:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <a
-              class="c5"
+              class="c6"
               href="/contact/P1"
               rel="noopener noreferrer"
               target="_blank"
@@ -598,16 +602,16 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Owner representative:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <a
-              class="c5"
+              class="c6"
               href="/contact/P2"
               rel="noopener noreferrer"
               target="_blank"
@@ -639,13 +643,13 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Comment:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             test representative comment
           </div>

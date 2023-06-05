@@ -1,4 +1,4 @@
-import { Api_CompensationFinancial } from 'models/api/CompensationRequisition';
+import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
 import { formatMoney } from 'utils';
 
 export class Api_GenerateCompensationFinancial {

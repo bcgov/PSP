@@ -4,10 +4,8 @@ import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import {
-  Api_CompensationFinancial,
-  Api_CompensationRequisition,
-} from 'models/api/CompensationRequisition';
+import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Col } from 'react-bootstrap';
 import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';

@@ -2,10 +2,8 @@ import { SectionListHeader } from 'components/common/SectionListHeader';
 import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import {
-  Api_CompensationFinancial,
-  Api_CompensationRequisition,
-} from 'models/api/CompensationRequisition';
+import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import * as React from 'react';
 import { useHistory, useRouteMatch } from 'react-router';
 import { formatMoney } from 'utils';

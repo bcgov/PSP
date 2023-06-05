@@ -1,8 +1,6 @@
 import { chain } from 'lodash';
-import {
-  Api_CompensationFinancial,
-  Api_CompensationRequisition,
-} from 'models/api/CompensationRequisition';
+import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Api_H120Category } from 'models/api/H120Category';
 import moment from 'moment';
 import { formatMoney } from 'utils';
