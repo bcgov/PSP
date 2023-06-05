@@ -15,4 +15,5 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
     .string()
     .max(2000, 'Special instructions must be at most ${max} characters'),
   detailedRemarks: yup.string().max(2000, 'Detailed remarks must be at most ${max} characters'),
+  payeeKey: yup.string().required('Payee is required'),
 });

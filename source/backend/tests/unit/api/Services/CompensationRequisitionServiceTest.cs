@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Pims.Api.Helpers.Exceptions;
@@ -7,12 +13,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -66,24 +66,12 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions();
 
             // Act
-            Action act = () => service.Update(1, new PimsCompensationRequisition());
+            Action act = () => service.Update(new PimsCompensationRequisition());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
 
-        [Fact]
-        public void Update_BadRequest_IdMissmatch()
-        {
-            // Arrange
-            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-
-            // Act
-            Action act = () => service.Update(1, new PimsCompensationRequisition() { Internal_Id = 2 });
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
-        }
 
         [Fact]
         public void Update_BadRequest_EntityIsNull()
@@ -92,7 +80,7 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
 
             // Act
-            Action act = () => service.Update(1, null);
+            Action act = () => service.Update(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -105,9 +93,10 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
 
             // Act
-            var result = service.Update(1, new PimsCompensationRequisition { Internal_Id = 1, ConcurrencyControlNumber = 2 });
+            var result = service.Update(new PimsCompensationRequisition { Internal_Id = 1, ConcurrencyControlNumber = 2 });
 
             // Assert
             result.Should().NotBeNull();

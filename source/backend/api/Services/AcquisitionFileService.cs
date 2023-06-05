@@ -109,6 +109,24 @@ namespace Pims.Api.Services
             return _acquisitionFilePropertyRepository.GetOwnersByAcquisitionFileId(id);
         }
 
+        public IEnumerable<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long id)
+        {
+            _logger.LogInformation("Getting acquisition file owner representatives with AcquisitionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+
+            return _acquisitionFilePropertyRepository.GetOwnerRepresentatives(id);
+        }
+
+        public IEnumerable<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long id)
+        {
+            _logger.LogInformation("Getting acquisition file owner solicitors with AcquisitionFile id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+
+            return _acquisitionFilePropertyRepository.GetOwnerSolicitors(id);
+        }
+
         public IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id)
         {
             _logger.LogInformation("Getting acquisition file checklist with AcquisitionFile id: {id}", id);
@@ -262,7 +280,7 @@ namespace Pims.Api.Services
                 }
 
                 // Only update checklist items that changed.
-                if(existingItem == null)
+                if (existingItem == null)
                 {
                     _checklistRepository.Add(incomingItem);
                 }
@@ -537,7 +555,7 @@ namespace Pims.Api.Services
         private void AppendToAcquisitionChecklist(PimsAcquisitionFile acquisitionFile, ref List<PimsAcquisitionChecklistItem> pimsAcquisitionChecklistItems)
         {
             var doNotAddToStatuses = new List<string>() { "COMPLT", "CANCEL", "ARCHIV" };
-            if(doNotAddToStatuses.Contains(acquisitionFile.AcqPhysFileStatusTypeCode))
+            if (doNotAddToStatuses.Contains(acquisitionFile.AcqPhysFileStatusTypeCode))
             {
                 return;
             }

@@ -42,6 +42,7 @@ describe('TakesUpdateForm component', () => {
         {...renderOptions.props}
         onSave={onSave}
         onCancel={onCancel}
+        payeeOptions={[]}
         initialValues={renderOptions.props?.initialValues ?? defaultCompensation}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}

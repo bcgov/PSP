@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
 import { Api_PropertyFile } from './PropertyFile';
@@ -54,6 +55,8 @@ export interface Api_AcquisitionFileSolicitor extends Api_ConcurrentVersion, Api
   acquisitionFileId: number | null;
   personId: number | null;
   person: Api_Person | null;
+  organizationId: number | null;
+  organization: Api_Organization | null;
   isDisabled: boolean | null;
 }
 

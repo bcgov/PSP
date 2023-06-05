@@ -69,9 +69,11 @@ export class AcquisitionSolicitorFormModel {
 
   toApi(): Api_AcquisitionFileSolicitor {
     return {
-      personId: this.contact?.personId ?? null,
       id: this.id ?? null,
+      personId: this.contact?.personId ?? null,
       person: null,
+      organizationId: this.contact?.organizationId ?? null,
+      organization: null,
       isDisabled: this.isDisabled,
       rowVersion: this.rowVersion ?? undefined,
       acquisitionFileId: this.acquisitionFileId ?? null,

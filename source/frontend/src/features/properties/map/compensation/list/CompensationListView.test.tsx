@@ -94,6 +94,7 @@ describe('compensation list view', () => {
               isDisabled: null,
             },
           ],
+          payees: [],
         },
         {
           id: 2,
@@ -127,6 +128,7 @@ describe('compensation list view', () => {
               isDisabled: null,
             },
           ],
+          payees: [],
         },
       ],
     });
