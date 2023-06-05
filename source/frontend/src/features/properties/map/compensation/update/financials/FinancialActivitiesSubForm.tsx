@@ -15,19 +15,25 @@ export interface IFinancialActivitiesSubFormProps {
   compensationRequisitionId: number;
   financialActivityOptions: SelectOption[];
   gstConstant: number;
+  activitiesUpdated: () => void;
 }
 
 export const FinancialActivitiesSubForm: React.FunctionComponent<
   IFinancialActivitiesSubFormProps
-> = ({ formikProps, compensationRequisitionId, financialActivityOptions, gstConstant }) => {
+> = ({
+  formikProps,
+  compensationRequisitionId,
+  financialActivityOptions,
+  gstConstant,
+  activitiesUpdated,
+}) => {
   const { values, setFieldValue } = useFormikContext<CompensationRequisitionFormModel>();
   const [showModal, setShowModal] = useState(false);
   const [rowToDelete, setRowToDelete] = useState<number | undefined>(undefined);
 
-  const updateGstApplicable = (index: number, gstOption: string): void => {
+  const onUpdateGstApplicable = (index: number, gstOption: string): void => {
     const isGstRequired = stringToBoolean(gstOption);
     setAmountFields(index, isGstRequired, values.financials[index].pretaxAmount);
-    updatePayeeCheque();
   };
 
   const onPretaxAmountUpdated = (index: number, newValue: string): void => {
@@ -35,14 +41,6 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
     const cleanValue = getCurrenclyCleanValue(newValue);
 
     setAmountFields(index, isGstRequired, cleanValue);
-    updatePayeeCheque();
-  };
-
-  const updateGstAmount = (index: number, newValue: string): void => {
-    const totalAmount = values.financials[index].pretaxAmount + getCurrenclyCleanValue(newValue);
-
-    setFieldValue(`financials[${index}].totalAmount`, totalAmount);
-    updatePayeeCheque();
   };
 
   const setAmountFields = (index: number, gstRequired: boolean, pretaxAmount: number): void => {
@@ -57,24 +55,10 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
     }
 
     setFieldValue(`financials[${index}].taxAmount`, taxAmount);
+    setFieldValue(`financials[${index}].taxAmount`, taxAmount);
     setFieldValue(`financials[${index}].totalAmount`, totalAmount);
-  };
 
-  const updatePayeeCheque = (): void => {
-    const chequePretaxAmount = values.financials.reduce(
-      (total, item) => total + item.pretaxAmount,
-      0,
-    );
-
-    const chequeTaxAmount = values.financials.reduce((total, item) => total + item.taxAmount, 0);
-    const chequeTotalAmount = values.financials.reduce(
-      (total, item) => total + item.totalAmount,
-      0,
-    );
-
-    setFieldValue(`payees.0.cheques.0.pretaxAmount`, chequePretaxAmount);
-    setFieldValue(`payees.0.cheques.0.taxAmount`, chequeTaxAmount);
-    setFieldValue(`payees.0.cheques.0.totalAmount`, chequeTotalAmount);
+    activitiesUpdated();
   };
 
   return (
@@ -116,6 +100,9 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         onPretaxAmountUpdated(index, e.target.value);
                       }}
+                      onBlurChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        activitiesUpdated();
+                      }}
                     />
                   </SectionField>
 
@@ -130,7 +117,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                         const selectedValue = [].slice
                           .call(e.target.selectedOptions)
                           .map((option: HTMLOptionElement & number) => option.value)[0];
-                        updateGstApplicable(index, selectedValue);
+                        onUpdateGstApplicable(index, selectedValue);
                       }}
                     />
                   </SectionField>
@@ -140,9 +127,6 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                       <FastCurrencyInput
                         formikProps={formikProps}
                         field={`financials[${index}].taxAmount`}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          updateGstAmount(index, e.target.value);
-                        }}
                         disabled
                       />
                     </SectionField>
@@ -179,7 +163,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                 setShowModal(false);
                 arrayHelpers.remove(rowToDelete!);
                 setRowToDelete(undefined);
-                updatePayeeCheque();
+                activitiesUpdated();
               }}
               handleCancel={() => {
                 setShowModal(false);

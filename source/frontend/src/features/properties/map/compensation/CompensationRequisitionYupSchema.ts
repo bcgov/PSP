@@ -17,6 +17,15 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
   payees: yup.array().of(
     yup.object().shape({
       acquisitionOwnerId: yup.string(),
+      cheques: yup.array().of(
+        yup.object().shape({
+          pretaxAmount: yup.number(),
+          taxAmount: yup.number(),
+          totalAmount: yup.number(),
+          gstNumber: yup.string(),
+          isPaymentInTrust: yup.boolean(),
+        }),
+      ),
     }),
   ),
   financials: yup.array().of(

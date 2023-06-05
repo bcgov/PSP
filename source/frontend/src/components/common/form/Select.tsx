@@ -91,7 +91,9 @@ export const Select: React.FC<React.PropsWithChildren<SelectProps>> = ({
   const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const updateFormValues = multiple ? handleMultipleChange : handleChange;
     updateFormValues(e);
-    onChange?.(e);
+    if (typeof onChange === 'function') {
+      onChange(e);
+    }
   };
 
   const renderPlaceholder = () => {

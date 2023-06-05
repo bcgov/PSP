@@ -50,6 +50,8 @@ type OptionalAttributes = {
   /** Suppress validation on submit */
   suppressValidation?: boolean;
 
+  onBlurChange?: React.FormEventHandler;
+
   onChange?: React.FormEventHandler;
 };
 
@@ -81,6 +83,7 @@ const CurrencyInput = ({
     unregisterField,
     isSubmitting,
   },
+  onBlurChange,
   onChange,
   ...rest
 }: CurrencyInputProps) => {
@@ -95,7 +98,7 @@ const CurrencyInput = ({
     value = '';
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
     setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
     if (typeof onChange === 'function') {
@@ -128,9 +131,12 @@ const CurrencyInput = ({
           id={`input-${field}`}
           value={value}
           name={field}
-          onChange={handleChange}
+          onChange={onHandleChange}
           onBlur={(e: any) => {
             handleBlur(e);
+            if (typeof onBlurChange === 'function') {
+              onBlurChange(e);
+            }
           }}
           className={classNames('form-control input-number', innerClassName, isInvalid, isValid)}
           disabled={disabled}
