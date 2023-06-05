@@ -1,6 +1,7 @@
 ﻿
 
 using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -76,7 +77,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchLastAcquisitionFile()
         {
-            Wait();
+            Wait(4000);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
 
             Wait();
@@ -129,7 +130,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Acquisition File Search Filters
             Assert.True(webDriver.FindElement(searchAcquisitionFileSearchBySelect).Displayed);
-            Assert.True(webDriver.FindElement(searchAcquisitionFileSearchByAddressInput).Displayed);
+            Assert.True(webDriver.FindElement(searchAcquisitionFileSearchByPIDInput).Displayed);
             Assert.True(webDriver.FindElement(searchAcquisitionFileStatusSelect).Displayed);
             Assert.True(webDriver.FindElement(searchAcquisitionFileNameInput).Displayed);
             Assert.True(webDriver.FindElement(searchAcquisitionFileProjectInput).Displayed);
@@ -151,17 +152,17 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchAcquisitionPaginationList).Displayed);
         }
 
-        public void VerifyAcquisitionFileTableContent(string name)
+        public void VerifyAcquisitionFileTableContent(AcquisitionFile acquisition)
         {
             Wait(1500);
 
             Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultLink).Displayed);
-            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultHistoricalFile).Text == "");
-            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultName).Text.Equals(name));
-            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultMOTIRegion).Text != "");
-            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultProject).Text != "");
+            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultHistoricalFile).Text.Equals(acquisition.HistoricalFileNumber));
+            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultName).Text.Equals(acquisition.AcquisitionFileName));
+            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultMOTIRegion).Text.Equals(acquisition.MOTIRegion));
+            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultProject).Text.Equals(acquisition.AcquisitionProjCode + " " + acquisition.AcquisitionProject));
             Assert.True(webDriver.FindElements(searchAcquisitionFile1stResultAddress).Count() > 0);
-            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultStatus).Text.Equals("Active"));
+            Assert.True(webDriver.FindElement(searchAcquisitionFile1stResultStatus).Text.Equals(acquisition.AcquisitionStatus));
         }
     }
 }

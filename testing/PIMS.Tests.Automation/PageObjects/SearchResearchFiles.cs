@@ -96,7 +96,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             webDriver.FindElement(searchResearchFile1stResultLink).Click();
 
-            Wait();
+            Wait(4000);
             Assert.True(webDriver.FindElement(researchFileHeaderCode).Displayed);
         }
 
@@ -157,13 +157,12 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchResearchFile1stResultStatus).Text.Equals(researchFile.Status));
         }
 
-        public void FilterResearchFiles(string region, string name, string status, string roadName, string idir)
+        public void FilterResearchFiles(string name, string status, string roadName, string idir)
         {
             Wait();
             webDriver.FindElement(searchResearchFileResetButton).Click();
 
             Wait();
-            ChooseSpecificSelectOption(searchResearchRegionInput, region);
             webDriver.FindElement(searchResearchNameInput).SendKeys(name);
             ChooseSpecificSelectOption(searchResearchStatusSelect, status);
             webDriver.FindElement(searchResearchRoadInput).SendKeys(roadName);

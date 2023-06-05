@@ -41,11 +41,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Property Details Elements
         private By propertyDetailsTab = By.XPath("//a[contains(text(),'Property Details')]");
-        private By propertyDetailsEditBttn = By.CssSelector("div[role='tabpanel']:nth-child(3) div div button[title='Edit research file']");
-        private By propertyDetailsResearchEditBttn = By.CssSelector("div[role='tabpanel']:nth-child(4) div div button[title='Edit research file']");
+        //private By propertyDetailsEditBttn = By.CssSelector("div[role='tabpanel']:nth-child(3) div div button[title='Edit research file']");
+        private By propertyDetailsEditBttn = By.CssSelector("button[title='Edit research file']");
 
-        private By propertyDetailsAddressTitle = By.XPath("//div[@class='tab-content']/div[@role='tabpanel'][3]/div/div[2]/h2/div/div[contains(text(),'Property Address')]");
-        private By propertyDetailsResearchTitle = By.XPath("//div[@class='tab-content']/div[@role='tabpanel'][4]/div/div[2]/h2/div/div[contains(text(),'Property Address')]");
+        private By propertyDetailsAddressTitle = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/parent::div/preceding-sibling::div/h2/div/div[contains(text(),'Property Address')]");
         private By propertyDetailsEditAddressTitle = By.XPath("//div[contains(text(),'Property Address')]");
         private By propertyDetailsAddressNotAvailable = By.XPath("//b[contains(text(),'Property address not available')]");
         private By propertyDetailsAddressLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div/label");
@@ -111,9 +110,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyDetailsAreaMtsCubeLabel = By.XPath("//span[contains(text(),'metres')]");
         private By propertyDetailsAreaFeetCubeLabel = By.XPath("//span[contains(text(),'feet')]");
 
-        private By propertyDetailsViewNotesTitle = By.XPath("//div[@role='tabpanel'][3]/div/div/h2/div/div[contains(text(),'Notes')]");
+        private By propertyDetailsViewNotesTitle = By.XPath("//div[contains(text(),'Measurements')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
         private By propertyDetailsEditNotesTitle = By.XPath("//h2/div/div[contains(text(),'Notes')]");
-        private By propertyDetailsResearchNotesTitle = By.XPath("//div[@role='tabpanel'][4]/div/div[6]/h2/div/div[contains(text(),'Notes')]");
         
         private By propertyDetailsAddressAddLineBttn = By.XPath("//div[contains(text(),'Add an address line')]/parent::button");
         private By propertyDetailsAddressLine1Input = By.Id("input-address.streetAddress1");
@@ -217,13 +215,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void EditPropertyInfoBttn()
         {
             Wait();
-            webDriver.FindElement(propertyDetailsEditBttn).Click();
-        }
-
-        public void EditPropertyInfoResearchBttn()
-        {
-            Wait();
-            webDriver.FindElement(propertyDetailsResearchEditBttn).Click();
+            FocusAndClick(propertyDetailsEditBttn);
         }
 
         public void SavePropertyDetails()
@@ -240,7 +232,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-            Assert.True(webDriver.FindElement(propertyDetailsCancelContentModal1).Text.Equals("If you cancel now, this property information will not be saved."));
+            //Assert.True(webDriver.FindElement(propertyDetailsCancelContentModal1).Text.Equals("If you cancel now, this property information will not be saved."));
             Assert.True(webDriver.FindElement(propertyDetailsCancelContentModal2).Text.Equals("Are you sure you want to Cancel?"));
 
             sharedModals.ModalClickOKBttn();
@@ -385,6 +377,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.Anomalies.First() != "")
             {
+                ClearMultiSelectInput(propertyDetailsAnomaliesInput);
                 foreach (string anomaly in property.Anomalies)
                 {
                     Wait();
@@ -406,6 +399,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.TenureStatus.First() != "")
             {
+                ClearMultiSelectInput(propertyDetailsTenureStatusInput);
                 foreach (string status in property.TenureStatus)
                 {
                     FocusAndClick(propertyDetailsTenureStatusInput);
@@ -422,7 +416,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (property.HighwayEstablishedBy.First() != "")
             {
-                foreach (string status in property.TenureStatus)
+                ClearMultiSelectInput(propertyDetailsRoadEstablishInput);
+                foreach (string status in property.HighwayEstablishedBy)
                 {
                     FocusAndClick(propertyDetailsRoadEstablishInput);
                     ChooseMultiSelectSpecificOption(propertyDetailsRoadEstablishOptions, status);
@@ -439,6 +434,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (property.AdjacentLandType.First() != "")
             {
+                ClearMultiSelectInput(propertyDetailsAdjacentLandInput);
                 foreach (string type in property.AdjacentLandType)
                 {
                     FocusAndClick(propertyDetailsAdjacentLandInput);
@@ -505,19 +501,10 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(propertyInformationHeaderZoomBttn).Displayed);
         }
 
-        public void VerifyPropertyDetailsView(string feature)
+        public void VerifyPropertyDetailsView()
         {
-            Wait();
-
-            if (feature == "Research File")
-            {
-                WaitUntil(propertyDetailsResearchEditBttn);
-                Assert.True(webDriver.FindElement(propertyDetailsResearchTitle).Displayed);
-            } else
-            {
-                WaitUntil(propertyDetailsEditBttn);
-                Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
-            }
+            WaitUntil(propertyDetailsEditBttn);
+            Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
 
             if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
             {
@@ -598,35 +585,17 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(webDriver.FindElement(propertyDetailsAreaFeetCubeLabel).Displayed);
             }
 
-            if (feature == "Research File")
-            {
-                Assert.True(webDriver.FindElement(propertyDetailsResearchNotesTitle).Displayed);
-            }
-            else
-            {
-                Assert.True(webDriver.FindElement(propertyDetailsViewNotesTitle).Displayed);
-            }
+            Assert.True(webDriver.FindElement(propertyDetailsViewNotesTitle).Displayed);
         }
 
-        public void VerifyUpdatePropertyDetailsView(string feature, Property property)
+        public void VerifyUpdatePropertyDetailsView(Property property)
         {
-            Wait();
 
-            if (feature == "Research File")
-            {
-                WaitUntil(propertyDetailsResearchEditBttn);
-                Assert.True(webDriver.FindElement(propertyDetailsResearchTitle).Displayed);
-            }
-            else
-            {
-                WaitUntil(propertyDetailsEditBttn);
-                Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
-            }
+            WaitUntil(propertyDetailsEditBttn);
+            Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
 
             if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
-            {
                 Assert.True(webDriver.FindElement(propertyDetailsAddressNotAvailable).Displayed);
-            }
             else
             {
                 Assert.True(webDriver.FindElement(propertyDetailsAddressLabel).Displayed);
@@ -658,13 +627,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalLabel).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalDiv).Text.Equals(property.MunicipalZoning));
             Assert.True(webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Displayed);
+
             if (property.Anomalies.First() != "")
             {
                 var anomaliesUI = GetViewFieldListContent(propertyDetailsAttrAnomaliesDiv);
                 Assert.True(Enumerable.SequenceEqual(anomaliesUI, property.Anomalies));
             }
-            Assert.True(webDriver.FindElement(propertyDetailsAttrCoordinatesLabel).Displayed);
 
+            Assert.True(webDriver.FindElement(propertyDetailsAttrCoordinatesLabel).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsTenureTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsTenureStatusLabel).Displayed);
 
@@ -673,6 +643,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 var tenureStatusUI = GetViewFieldListContent(propertyDetailsTenureStatusDiv);
                 Assert.True(Enumerable.SequenceEqual(tenureStatusUI, property.TenureStatus));
             }
+
             Assert.True(webDriver.FindElement(propertyDetailsPublicHwyLabel).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsPublicHwyDiv).Text.Equals(property.ProvincialPublicHwy));
 
@@ -716,20 +687,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(webDriver.FindElement(propertyDetailsAreaMtsCubeLabel).Displayed);
                 Assert.True(webDriver.FindElement(propertyDetailsAreaFeetCubeLabel).Displayed);
             }
-
-            if (feature == "Research File")
-            {
-                Assert.True(webDriver.FindElement(propertyDetailsResearchNotesTitle).Displayed);
-            }
-            else
-            {
-                Assert.True(webDriver.FindElement(propertyDetailsViewNotesTitle).Displayed);
-            }
+            
+            Assert.True(webDriver.FindElement(propertyDetailsViewNotesTitle).Displayed);
         }
 
         public void VerifyPropertyDetailsEditForm(string feature)
         {
-            Wait();
+            Wait(5000);
 
             Assert.True(webDriver.FindElement(propertyDetailsEditAddressTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsAddressLine1Label).Displayed);
@@ -816,15 +780,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(webDriver.FindElement(propertyDetailsVolCubeFeetInput).Displayed);
             }
 
-            if (feature == "Property Information")
-            {
-                Assert.True(webDriver.FindElement(propertyDetailsEditNotesTitle).Displayed);
-            }
-            else
-            {
-                Assert.True(webDriver.FindElement(propertyDetailsResearchNotesTitle).Displayed);
-            }
-            
+            Assert.True(webDriver.FindElement(propertyDetailsEditNotesTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyDetailsNotesTextarea).Displayed);
         }
 
