@@ -22,7 +22,7 @@ export class CompensationRequisitionFormModel {
   detailedRemarks: string = '';
   isDisabled: string = '';
   rowVersion: number | null = null;
-  payee: string = '';
+  payeeKey: string = '';
 
   constructor(id: number | null, acquisitionFileId: number = 0) {
     this.id = id;
@@ -32,7 +32,7 @@ export class CompensationRequisitionFormModel {
   toApi(payeeOptions: PayeeOption[]): Api_Compensation {
     const apiPayee: Api_CompensationPayee | null = PayeeOption.toApi(
       this.id,
-      this.payee,
+      this.payeeKey,
       payeeOptions,
     );
 
@@ -69,7 +69,7 @@ export class CompensationRequisitionFormModel {
     compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';
-    compensation.payee = PayeeOption.fromApi(apiModel.payees);
+    compensation.payeeKey = PayeeOption.fromApi(apiModel.payees);
     compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.rowVersion = apiModel.rowVersion ?? null;
 
@@ -184,7 +184,12 @@ export class PayeeOption {
   }
 
   public static createOwnerSolicitor(model: Api_AcquisitionFileSolicitor): PayeeOption {
-    let name = formatApiPersonNames(model.person);
+    let name = '';
+    if (model.person) {
+      name = formatApiPersonNames(model.person);
+    } else {
+      name = model.organization?.name || '';
+    }
     return new PayeeOption(
       model.id || 0,
       `${name} (Owner's Solicitor)`,

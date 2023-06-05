@@ -459,7 +459,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pb-2 row"
           >
             <div
-              class="pr-0 text-left col-7"
+              class="pr-0 text-left col-4"
             >
               <label
                 class="c3"
@@ -477,7 +477,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pb-2 row"
           >
             <div
-              class="pr-0 text-left col-7"
+              class="pr-0 text-left col-4"
             >
               <label
                 class="c3"
@@ -493,7 +493,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pb-2 row"
           >
             <div
-              class="pr-0 text-left col-7"
+              class="pr-0 text-left col-4"
             >
               <label
                 class="c3"
@@ -509,7 +509,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pb-2 row"
           >
             <div
-              class="pr-0 text-left col-7"
+              class="pr-0 text-left col-4"
             >
               <label
                 class="c3"
@@ -525,7 +525,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="pb-2 row"
           >
             <div
-              class="pr-0 text-left col-7"
+              class="pr-0 text-left col-4"
             >
               <label
                 class="c3"
@@ -618,8 +618,8 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               >
                 <select
                   class="form-select form-control"
-                  id="input-payee"
-                  name="payee"
+                  id="input-payeeKey"
+                  name="payeeKey"
                 >
                   <option
                     value=""

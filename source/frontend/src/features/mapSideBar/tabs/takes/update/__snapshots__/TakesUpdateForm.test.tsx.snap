@@ -1086,13 +1086,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c7"
+                      class="c8"
                     >
                       Land Act:
                     </label>
                   </div>
                   <div
-                    class="c8 required text-left col-7"
+                    class="c9 required text-left col-7"
                   >
                     <div
                       class="form-group"
@@ -1267,36 +1267,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           />
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="pb-2 row"
-                >
-                  <div
-                    class="pr-0 text-left col-4"
-                  >
-                    <label
-                      class="c8"
-                    >
-                      Describe Land Act:
-                    </label>
-                  </div>
-                  <div
-                    class="c9 text-left col-12"
-                  >
-                    <div
-                      class="textarea input form-group"
-                    >
-                      <textarea
-                        class="form-control"
-                        id="input-takes.0.landActDescription"
-                        name="takes.0.landActDescription"
-                        placeholder="e.g. Section 15 / Section 16 / Section 17 etc."
-                        title="NEW LAND"
-                      >
-                        NEW LAND
-                      </textarea>
                     </div>
                   </div>
                 </div>

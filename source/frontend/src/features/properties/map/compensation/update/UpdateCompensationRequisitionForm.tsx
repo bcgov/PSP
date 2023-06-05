@@ -109,19 +109,19 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
 
               <Section header="Financial coding">
-                <SectionField label="Product" labelWidth="7">
+                <SectionField label="Product" labelWidth="4">
                   {acquisitionFile.product?.code ?? ''}
                 </SectionField>
-                <SectionField label="Business function" labelWidth="7">
+                <SectionField label="Business function" labelWidth="4">
                   {acquisitionFile.project?.businessFunctionCode?.code ?? ''}
                 </SectionField>
-                <SectionField label="Work activity" labelWidth="7">
+                <SectionField label="Work activity" labelWidth="4">
                   {acquisitionFile.project?.workActivityCode?.code ?? ''}
                 </SectionField>
-                <SectionField label="Cost type" labelWidth="7">
+                <SectionField label="Cost type" labelWidth="4">
                   {acquisitionFile.project?.costTypeCode?.code ?? ''}
                 </SectionField>
-                <SectionField label="Fiscal year" labelWidth="7" contentWidth="4" required>
+                <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
                   <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
                 </SectionField>
               </Section>
@@ -129,7 +129,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               <Section header="Payment">
                 <SectionField label="Payee" labelWidth="3" required>
                   <Select
-                    field="payee"
+                    field="payeeKey"
                     options={payeeOptions.map<SelectOption>(x => {
                       return { label: x.text, value: x.value };
                     })}

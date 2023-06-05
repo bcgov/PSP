@@ -168,7 +168,7 @@ describe('UpdateAgreementsContainer component', () => {
       mockAcquisitionFileOwnersResponse(1)[0],
     );
 
-    updatedCompensationModel.payee = testPayeeOption.value;
+    updatedCompensationModel.payeeKey = testPayeeOption.value;
 
     setTimeout(async () => {
       await act(async () => {
