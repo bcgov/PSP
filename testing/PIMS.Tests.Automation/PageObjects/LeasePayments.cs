@@ -423,7 +423,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     frequencyNumber = (int)Math.Ceiling(numberOfMonths);
                     break;
                 default:
-                    frequencyNumber = 0;
+                    frequencyNumber = 1;
                     break;
             }
 
