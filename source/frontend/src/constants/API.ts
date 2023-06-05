@@ -102,6 +102,7 @@ export const FORM_TYPES = 'PimsFormType';
 export const TAKE_TYPES = 'PimsTakeType';
 export const TAKE_STATUS_TYPES = 'PimsTakeStatusType';
 export const TAKE_SITE_CONTAM_TYPES = 'PimsTakeSiteContamType';
+export const TAKE_LAND_ACT_TYPES = 'PimsLandActType';
 export const ACQUISITION_CHECKLIST_SECTION_TYPES = 'PimsAcqChklstSectionType';
 export const ACQUISITION_CHECKLIST_ITEM_TYPES = 'PimsAcqChklstItemType';
 export const ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsAcqChklstItemStatusType';

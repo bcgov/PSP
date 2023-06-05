@@ -123,6 +123,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsInthldrPropInterestHist> PimsInthldrPropInterestHists { get; set; }
         public virtual DbSet<PimsLandActType> PimsLandActTypes { get; set; }
         public virtual DbSet<PimsLandSurveyorType> PimsLandSurveyorTypes { get; set; }
+
         public virtual DbSet<PimsLease> PimsLeases { get; set; }
         public virtual DbSet<PimsLeaseActivityInstance> PimsLeaseActivityInstances { get; set; }
         public virtual DbSet<PimsLeaseActivityInstanceHist> PimsLeaseActivityInstanceHists { get; set; }

@@ -157,7 +157,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I review a Property\'s Information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
- testRunner.When("I make changes on the selected property information from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I update a Property details from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
  testRunner.Then("A Property Information is saved successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

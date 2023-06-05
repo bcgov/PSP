@@ -226,6 +226,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Start Date
             if (lease.LeaseStartDate != "")
                 webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(lease.LeaseStartDate);
+            webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(Keys.Enter);
 
             //Expiry Date
             if (lease.LeaseExpiryDate != "")
@@ -568,7 +569,16 @@ namespace PIMS.Tests.Automation.PageObjects
             //If PID is already associated with another license
             if (webDriver.FindElements(licenseDetailsModalPIDAttached).Count > 0)
             {
-                ButtonElement("Save Anyways");
+                ButtonElement("Acknowledge & Continue");
+
+                Wait();
+                if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
+                {
+                    Assert.True(sharedModals.ModalHeader().Equals("User Override Required"));
+                    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
+                    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
+                    sharedModals.SecondaryModalClickOKBttn();
+                }
             }
         }
 
@@ -749,7 +759,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(licenseDetailsLeaseDateStartLabel).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsLeaseDateStartContent).Displayed);
             Assert.True(webDriver.FindElement(licenseDetailsLeaseDateEndLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDetailsLeaseDateEndContent).Displayed);
+
+            if(lease.LeaseExpiryDate != "")
+                Assert.True(webDriver.FindElement(licenseDetailsLeaseDateEndContent).Displayed);
 
             //Lease Current Term
             //To-Do - Calculate Term Dates

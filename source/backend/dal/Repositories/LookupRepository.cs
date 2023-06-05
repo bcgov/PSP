@@ -329,6 +329,11 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsTakeSiteContamTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsLandActType> GetAllLandActTypes()
+        {
+            return this.Context.PimsLandActTypes.AsNoTracking().ToArray();
+        }
+
         // TODO: Needs DB changes to use correct type here
         public IEnumerable<PimsAcqChklstSectionType> GetAllAcquisitionChecklistSectionTypes()
         {
