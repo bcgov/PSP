@@ -79,15 +79,15 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   const onFinancialActivitiesUpdated = (values: CompensationRequisitionFormModel) => {
     const chequePretaxAmount = values?.financials
       .map(f => f.pretaxAmount)
-      .reduce((prev, next) => prev + next);
+      .reduce((prev, next) => prev + next, 0);
 
     const chequeTaxAmount = values?.financials
       .map(f => f.taxAmount)
-      .reduce((prev, next) => prev + next);
+      .reduce((prev, next) => prev + next, 0);
 
     const chequeTotalAmount = values?.financials
       .map(f => f.totalAmount)
-      .reduce((prev, next) => prev + next);
+      .reduce((prev, next) => prev + next, 0);
 
     formikRef.current?.setFieldValue(`payees.0.cheques.0.pretaxAmount`, chequePretaxAmount);
     formikRef.current?.setFieldValue(`payees.0.cheques.0.taxAmount`, chequeTaxAmount);
