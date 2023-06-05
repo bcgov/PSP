@@ -34,6 +34,10 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
   const takeTypeOptions = getOptionsByType(API.TAKE_TYPES);
   const takeStatusTypeOptions = getOptionsByType(API.TAKE_STATUS_TYPES);
   const takeSiteContamTypeOptions = getOptionsByType(API.TAKE_SITE_CONTAM_TYPES);
+  const takeLandActTypeOptions = getOptionsByType(API.TAKE_LAND_ACT_TYPES).map(landAct => ({
+    ...landAct,
+    label: landAct.value + ' ' + landAct.label,
+  }));
 
   const isSurplus = getIn(values, withNameSpace(nameSpace, 'isSurplus'));
   const isNewRightOfWay = getIn(values, withNameSpace(nameSpace, 'isNewRightOfWay'));
@@ -196,12 +200,19 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 setFieldValue(withNameSpace(nameSpace, 'isLandAct'), 'false');
                 setFieldValue(withNameSpace(nameSpace, 'landActArea'), 0);
                 setFieldValue(withNameSpace(nameSpace, 'landActEndDt'), '');
-                setFieldValue(withNameSpace(nameSpace, 'landActDescription'), '');
+                setFieldValue(withNameSpace(nameSpace, 'landActTypeCode'), '');
               })}
             />
           </SectionField>
           {isLandAct === 'true' && (
             <>
+              <SectionField label="Land Act" required contentWidth="7">
+                <Select
+                  field={withNameSpace(nameSpace, 'landActTypeCode')}
+                  placeholder="Select Land Act"
+                  options={takeLandActTypeOptions}
+                />
+              </SectionField>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
@@ -221,12 +232,6 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 <FastDatePicker
                   field={withNameSpace(nameSpace, 'landActEndDt')}
                   formikProps={formikProps}
-                />
-              </SectionField>
-              <SectionField label="Describe Land Act" contentWidth="12">
-                <TextArea
-                  field={withNameSpace(nameSpace, 'landActDescription')}
-                  placeholder="e.g. Section 15 / Section 16 / Section 17 etc."
                 />
               </SectionField>
             </>

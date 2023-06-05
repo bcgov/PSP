@@ -1083,6 +1083,38 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   class="pb-2 row"
                 >
                   <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c7"
+                    >
+                      Land Act:
+                    </label>
+                  </div>
+                  <div
+                    class="c8 required text-left col-7"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-takes.0.landActTypeCode"
+                        name="takes.0.landActTypeCode"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select Land Act
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
                     class="pr-0 text-left col-12"
                   >
                     <label

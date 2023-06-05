@@ -47,7 +47,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         }
 
         [StepDefinition(@"I create a new Lease from row number (.*)")]
-        public void MaximumLeaseLicense(int rowNumber)
+        public void CreateLeaseLicense(int rowNumber)
         {
             /* TEST COVERAGE: 
              * Lease Details: PSP-2550, PSP-1966, PSP-5100, PSP-5334, PSP-5335, PSP-5336, PSP-5337, PSP-5338, PSP-5340, PSP-5340, PSP-4558, PSP-2644
@@ -79,28 +79,48 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.VerifySearchPropertiesFeature();
 
             //Search for a property by PID
-            sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-            sharedSearchProperties.SelectFirstOption();
+            System.Diagnostics.Debug.WriteLine(lease.SearchProperties.PID);
+            if (lease.SearchProperties.PID != "")
+            {
+                sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a property by PIN
-            sharedSearchProperties.SelectPropertyByPIN(lease.SearchProperties.PIN);
-            sharedSearchProperties.SelectFirstOption();
+            if (lease.SearchProperties.PIN != "")
+            {
+                sharedSearchProperties.SelectPropertyByPIN(lease.SearchProperties.PIN);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a property by Plan
-            sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
-            sharedSearchProperties.SelectFirstOption();
+            if (lease.SearchProperties.PlanNumber != "")
+            {
+                sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
+                sharedSearchProperties.SelectFirstOption();
+            }
+
 
             //Search for a property by Address
-            sharedSearchProperties.SelectPropertyByAddress(lease.SearchProperties.Address);
-            sharedSearchProperties.SelectFirstOption();
+            if (lease.SearchProperties.Address != "")
+            {
+                sharedSearchProperties.SelectPropertyByAddress(lease.SearchProperties.Address);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a property by Legal Description
-            sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-            sharedSearchProperties.SelectFirstOption();
+            if (lease.SearchProperties.LegalDescription != "")
+            {
+                sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Search for a duplicate property
-            sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-            sharedSearchProperties.SelectFirstOption();
+            if (lease.SearchProperties.PID != "")
+            {
+                sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
+                sharedSearchProperties.SelectFirstOption();
+            }
 
             //Save the new license details
             leaseDetails.SaveLicense();
@@ -411,7 +431,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         }
 
         [StepDefinition(@"I update an existing lease from row number (.*)")]
-        public void EditExistingLease(int rowNumber)
+        public void UpdateExistingLease(int rowNumber)
         {
             /* TEST COVERAGE: PSP-2096, PSP-2637, PSP-2638, PSP-2642, PSP-2923, PSP-4195, PSP-4196, PSP-4558, PSP-5161, PSP-5342 */
 
@@ -528,9 +548,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Delete first return
             deposits.DeleteFirstReturn();
-
-            //Verify returns quantity
-            //Assert.True(deposits.TotalReturns() == 0);
 
             //Edit last deposit
             deposits.EditLastDeposit(lease.LeaseDeposits[0]);

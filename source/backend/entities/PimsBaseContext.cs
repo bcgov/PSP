@@ -1315,10 +1315,14 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_AQOWSO_FK");
 
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.PimsAcquisitionOwnerSolicitors)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("PIM_ORG_PIM_AQOWSO_FK");
+
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.PimsAcquisitionOwnerSolicitors)
                     .HasForeignKey(d => d.PersonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PERSON_PIM_AQOWSO_FK");
             });
 
