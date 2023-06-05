@@ -9,6 +9,9 @@ SELECT @llfunc  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Lease/License functional'
 DECLARE @sysadmn BIGINT;
 SELECT @sysadmn = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'System administrator';
 
+DECLARE @resfunc  BIGINT;
+SELECT @resfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Research functional';
+
 -- Declare and initialize the claims
 DECLARE @projectView BIGINT;
 SELECT @projectView = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'project-view';
@@ -30,3 +33,4 @@ VALUES
     (@sysadmn,    @activityDelete,      N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', '');
 
 DELETE FROM PIMS_ROLE_CLAIM WHERE ROLE_ID = @llfunc AND CLAIM_ID = @projectView;
+DELETE FROM PIMS_ROLE_CLAIM WHERE ROLE_ID = @resfunc AND CLAIM_ID = @projectView;

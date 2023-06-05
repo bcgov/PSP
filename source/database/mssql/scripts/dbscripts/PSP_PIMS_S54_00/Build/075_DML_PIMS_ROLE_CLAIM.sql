@@ -290,6 +290,7 @@ VALUES
     (@resfunc, @documentAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @documentEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @documentDelete,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@resfunc, @projectView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @formView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @formAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@resfunc, @formEdit,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
