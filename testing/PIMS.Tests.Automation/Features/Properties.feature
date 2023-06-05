@@ -12,7 +12,7 @@ Scenario: Invalid Property Not Found
 
 Scenario: Property Information Tab Details
 	Given I review a Property's Information
-	When I make changes on the selected property information from row number 3
+	When I update a Property details from row number 3
 	Then A Property Information is saved successfully
 	
 Scenario: Non-Inventory Property Information

@@ -82,18 +82,17 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="01. Create new Organization Complete Contact")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Create new Organization Complete Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "01. Create new Organization Complete Contact")]
+        [Xunit.TraitAttribute("Description", "Create new Organization Complete Contact")]
         [Xunit.InlineDataAttribute("Organization", "1", new string[0])]
-        [Xunit.InlineDataAttribute("Organization", "3", new string[0])]
-        public void _01_CreateNewOrganizationCompleteContact(string contactType, string rowNumber, string[] exampleTags)
+        public void CreateNewOrganizationCompleteContact(string contactType, string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Create new Organization Complete Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new Organization Complete Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -117,20 +116,19 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="02. Create new Individual Complete Contact")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Create new Individual Complete Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "02. Create new Individual Complete Contact")]
+        [Xunit.TraitAttribute("Description", "Create new Individual Complete Contact")]
         [Xunit.InlineDataAttribute("Individual", "1", new string[0])]
-        [Xunit.InlineDataAttribute("Individual", "3", new string[0])]
-        [Xunit.InlineDataAttribute("Individual", "4", new string[0])]
-        public void _02_CreateNewIndividualCompleteContact(string contactType, string rowNumber, string[] exampleTags)
+        [Xunit.InlineDataAttribute("Individual", "2", new string[0])]
+        public void CreateNewIndividualCompleteContact(string contactType, string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Create new Individual Complete Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 15
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new Individual Complete Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -140,28 +138,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 16
+#line 15
  testRunner.Given(string.Format("I create a new Individual Contact from row number {0}", rowNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 17
+#line 16
  testRunner.And(string.Format("I search for an existing contact from type \"{0}\" row number {1}", contactType, rowNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 18
+#line 17
  testRunner.Then(string.Format("Expected Content is displayed on Contacts Table from contact type \"{0}\"", contactType), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Cancel creating a new contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="Cancel creating a new contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "03. Cancel creating a new contact")]
-        public void _03_CancelCreatingANewContact()
+        [Xunit.TraitAttribute("Description", "Cancel creating a new contact")]
+        public void CancelCreatingANewContact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Cancel creating a new contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 25
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cancel creating a new contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 23
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -171,25 +169,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 26
+#line 24
  testRunner.Given("I cancel creating a new contact from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 27
+#line 25
  testRunner.Then("Search Contacts screen is correctly rendered", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Update an Existing Organization Contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update an Existing Organization Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "04. Update an Existing Organization Contact")]
-        public void _04_UpdateAnExistingOrganizationContact()
+        [Xunit.TraitAttribute("Description", "Update an Existing Organization Contact")]
+        public void UpdateAnExistingOrganizationContact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Update an Existing Organization Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 29
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an Existing Organization Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 27
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -199,25 +197,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 30
+#line 28
  testRunner.Given("I update an existing Organization Contact from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 31
+#line 29
  testRunner.Then("An Organization contact is successfully updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Update an Existing Individual Contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update an Existing Individual Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "05. Update an Existing Individual Contact")]
-        public void _05_UpdateAnExistingIndividualContact()
+        [Xunit.TraitAttribute("Description", "Update an Existing Individual Contact")]
+        public void UpdateAnExistingIndividualContact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Update an Existing Individual Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 33
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an Existing Individual Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -227,29 +225,29 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 34
+#line 32
  testRunner.Given("I update an existing Individual Contact from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 35
+#line 33
  testRunner.Then("An Individual contact is successfully updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="07. Search for a non-existing Contact")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Search for a non-existing Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "07. Search for a non-existing Contact")]
+        [Xunit.TraitAttribute("Description", "Search for a non-existing Contact")]
         [Xunit.InlineDataAttribute("Individual", "5", new string[0])]
         [Xunit.InlineDataAttribute("Organization", "4", new string[0])]
-        public void _07_SearchForANon_ExistingContact(string contactType, string rowNumber, string[] exampleTags)
+        public void SearchForANon_ExistingContact(string contactType, string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Search for a non-existing Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 37
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search for a non-existing Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -259,10 +257,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 38
+#line 36
  testRunner.Given(string.Format("I search for an non-existing contact from type \"{0}\" row number {1}", contactType, rowNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 39
+#line 37
  testRunner.Then("No contacts results are found", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

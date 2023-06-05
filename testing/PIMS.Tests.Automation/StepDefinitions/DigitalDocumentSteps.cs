@@ -24,7 +24,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         }
 
         [StepDefinition(@"I create Digital Documents for a ""(.*)"" row number (.*)")]
-        public void DocumentTabResearchFile(string fileType, int rowNumber)
+        public void DocumentTabCreate(string fileType, int rowNumber)
         {
             /* TEST COVERAGE: PSP-4159, PSP-4339, PSP-4340, PSP-4341 PSP-4342, PSP-4343, PSP-4344, PSP-4345, PSP-4346, PSP-4347, PSP-4348, PSP-4349, PSP-4350, PSP-4351, PSP-4352, PSP-4353, 
              *                PSP-4354, PSP-4355, PSP-4356, PSP-4357 */
@@ -59,7 +59,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 //Verify Details View Form
                 digitalDocumentsTab.ViewIthDocument(i);
-                digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[i]);
+                digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
         }
@@ -106,7 +106,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Details View Form
             digitalDocumentsTab.View1stDocument();
-            digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[0]);
+            digitalDocumentsTab.VerifyDocumentDetailsUpdateViewForm(digitalDocumentList[0]);
 
             //Close Digital Documents Details View
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();

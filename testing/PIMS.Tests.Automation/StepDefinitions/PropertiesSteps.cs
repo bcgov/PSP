@@ -96,7 +96,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.VerifyPropertyInformationHeader();
 
             //Validate the Property Details View
-            propertyInformation.VerifyPropertyDetailsView("Property Information");
+            propertyInformation.VerifyPropertyDetailsView();
 
         }
 
@@ -119,10 +119,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
         }
 
-        [StepDefinition(@"I make changes on the selected property information from row number (.*)")]
+        [StepDefinition(@"I update a Property details from row number (.*)")]
         public void EditPropertyInformationDetails(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-3591, PSP-3590, PSP-5165, PSP-5163, PSP-5162, PSP-5164, PSP-4794 */
+            /* TEST COVERAGE: PSP-3460, PSP-3462, PSP-3590, PSP-3591, PSP-3599, PSP-3600, PSP-3612, PSP-3722, PSP-4791, PSP-4794, PSP-5162, PSP-5163, PSP-5164, PSP-5165 */
 
             //Click on the Edit Property Information Button
             PopulateProperty(rowNumber);
@@ -148,28 +148,29 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify changes
             propertyInformation.NavigatePropertyDetailsTab();
-            propertyInformation.VerifyPropertyDetailsView("Property Information");
+            propertyInformation.VerifyPropertyDetailsView();
 
         }
 
-        [StepDefinition(@"I update a Property details from row number (.*)")]
-        public void UpdatePropertyDetailsFromFile(int rowNumber)
-        {
-            /* TEST COVERAGE: PSP-3460, PSP-3599, PSP-3600, PSP-3612, PSP-3722, PSP-3462, PSP-4791 */
+        //[StepDefinition(@"I update a Property details from row number (.*)")]
+        //public void UpdatePropertyDetailsFromFile(int rowNumber)
+        //{
+        //    /* TEST COVERAGE:  */
 
-            //Navigate to Property Information Tab
-            propertyInformation.NavigatePropertyDetailsTab();
+        //    //Navigate to Property Information Tab
+        //    propertyInformation.NavigatePropertyDetailsTab();
 
-            //Click on the Edit Property Information Button
-            propertyInformation.EditPropertyInfoResearchBttn();
+        //    //Click on the Edit Property Information Button
+        //    //propertyInformation.EditPropertyInfoResearchBttn();
+        //    propertyInformation.EditPropertyInfoBttn();
 
-            //Insert some changes
-            PopulateProperty(rowNumber);
-            propertyInformation.UpdatePropertyDetails(property);
+        //    //Insert some changes
+        //    PopulateProperty(rowNumber);
+        //    propertyInformation.UpdatePropertyDetails(property);
 
-            //Save changes
-            propertyInformation.SavePropertyDetails();
-        }
+        //    //Save changes
+        //    propertyInformation.SavePropertyDetails();
+        //}
 
         [StepDefinition(@"LTSA Pop-up Information validation is successful")]
         public void ValidateLTSAPopUp()
@@ -205,7 +206,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void PropertyInfoSucess()
         {
             //Validate Property Information View Form after changes
-            propertyInformation.VerifyPropertyDetailsView("Property Information");
+            propertyInformation.VerifyPropertyDetailsView();
         }
 
         [StepDefinition(@"Non-Inventory property renders correctly")]
