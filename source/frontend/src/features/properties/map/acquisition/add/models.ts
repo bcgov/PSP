@@ -10,6 +10,7 @@ import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 import { PropertyForm } from '../../shared/models';
 import {
   AcquisitionOwnerFormModel,
+  AcquisitionRepresentativeFormModel,
   AcquisitionSolicitorFormModel,
   AcquisitionTeamFormModel,
   WithAcquisitionOwners,
@@ -38,6 +39,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
   ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
+  ownerRepresentative: AcquisitionRepresentativeFormModel = new AcquisitionRepresentativeFormModel(
+    null,
+  );
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -77,6 +81,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       acquisitionFileOwnerSolicitors: this.ownerSolicitor.contact
         ? [this.ownerSolicitor.toApi()]
         : [],
+      acquisitionFileOwnerRepresentatives: this.ownerRepresentative.contact
+        ? [this.ownerRepresentative.toApi()]
+        : [],
     };
   }
 
@@ -104,6 +111,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.ownerSolicitor = model.acquisitionFileOwnerSolicitors?.length
       ? AcquisitionSolicitorFormModel.fromApi(model.acquisitionFileOwnerSolicitors[0])
       : new AcquisitionSolicitorFormModel(null);
+    newForm.ownerRepresentative = model.acquisitionFileOwnerRepresentatives?.length
+      ? AcquisitionRepresentativeFormModel.fromApi(model.acquisitionFileOwnerRepresentatives[0])
+      : new AcquisitionRepresentativeFormModel(null);
 
     return newForm;
   }

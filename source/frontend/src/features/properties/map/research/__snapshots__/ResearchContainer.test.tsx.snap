@@ -79,16 +79,20 @@ exports[`ResearchContainer component renders as expected 1`] = `
 }
 
 .c19 {
+  padding-top: 1rem;
+}
+
+.c20 {
   text-align: right;
 }
 
-.c21 {
+.c22 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c20 {
+.c21 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -96,14 +100,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c23.required::before {
+.c24.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c22 {
+.c23 {
   font-weight: bold;
 }
 
@@ -588,16 +592,16 @@ exports[`ResearchContainer component renders as expected 1`] = `
                     role="tabpanel"
                   >
                     <div
-                      class=""
+                      class="c19"
                     >
                       <div
-                        class="c19 mr-3 my-1"
+                        class="c20 mr-3 my-1"
                       />
                       <div
-                        class="c20 form-section"
+                        class="c21 form-section"
                       >
                         <h2
-                          class="c21"
+                          class="c22"
                         >
                           <div
                             class="no-gutters row"
@@ -622,14 +626,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Ministry project
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             >
                               <div>
                                 00048 CLAIMS
@@ -639,10 +643,10 @@ exports[`ResearchContainer component renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c20 form-section"
+                        class="c21 form-section"
                       >
                         <h2
-                          class="c21"
+                          class="c22"
                         >
                           <div
                             class="no-gutters row"
@@ -667,14 +671,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Road name
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             >
                               Test road name
                             </div>
@@ -686,14 +690,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Road alias
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             >
                               Test road alias
                             </div>
@@ -701,10 +705,10 @@ exports[`ResearchContainer component renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c20 form-section"
+                        class="c21 form-section"
                       >
                         <h2
-                          class="c21"
+                          class="c22"
                         >
                           <div
                             class="no-gutters row"
@@ -729,14 +733,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Research purpose
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             />
                           </div>
                           <div
@@ -746,14 +750,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Request date
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             >
                                
                               Apr 14, 2022
@@ -766,14 +770,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Source of request
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             >
                               Headquarters (HQ)
                             </div>
@@ -785,14 +789,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Requester
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             >
                               Dairy Queen Forever! Property Management
                             </div>
@@ -804,24 +808,24 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Description of request
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             />
                           </div>
                           a request description
                         </div>
                       </div>
                       <div
-                        class="c20 form-section"
+                        class="c21 form-section"
                       >
                         <h2
-                          class="c21"
+                          class="c22"
                         >
                           <div
                             class="no-gutters row"
@@ -846,14 +850,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Research completed on
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             >
                               Mar 30, 2022
                             </div>
@@ -865,24 +869,24 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Result of request
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             />
                           </div>
                           A research result
                         </div>
                       </div>
                       <div
-                        class="c20 form-section"
+                        class="c21 form-section"
                       >
                         <h2
-                          class="c21"
+                          class="c22"
                         >
                           <div
                             class="no-gutters row"
@@ -907,14 +911,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Expropriation?
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             >
                               No
                             </div>
@@ -926,14 +930,14 @@ exports[`ResearchContainer component renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c22"
+                                class="c23"
                               >
                                 Expropriation notes
                                 :
                               </label>
                             </div>
                             <div
-                              class="c23 text-left col"
+                              class="c24 text-left col"
                             />
                           </div>
                           An expropriation note

@@ -116,10 +116,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Save Research File
-            researchFiles.SaveResearchFile();
-
-            //Confirm saving changes
-            researchFiles.ConfirmChangesResearchFile();
+            researchFiles.SaveResearchFileProperties();
 
             //Add Property Research Information
             if (researchFile.PropertyResearchRowEnd != 0 && researchFile.PropertyResearchRowStart != 0)
@@ -249,10 +246,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchResearchFile.NavigateToSearchResearchFile();
 
             //Filter research Files
-            searchResearchFile.FilterResearchFiles("South Coast Region", "Automated", "Inactive", "Happy", "TRANPSP1");
+            searchResearchFile.FilterResearchFiles(researchFile.ResearchFileName, researchFile.Status, researchFile.RoadName, "TRANPSP1");
             Assert.True(searchResearchFile.SearchFoundResults());
 
-            searchResearchFile.FilterResearchFiles("Southern Interior Region", "Automated", "Closed", "Happy", "TRANPSP1");
+            searchResearchFile.FilterResearchFiles("Automated", "Closed", "Happy", "TRANPSP1");
         }
 
         [StepDefinition(@"I update an Existing Research File from row number (.*)")]
@@ -291,10 +288,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.DeleteProperty();
 
             //Save changes
-            researchFiles.SaveResearchFile();
-
-            //Confirm changes
-            researchFiles.ConfirmChangesResearchFile();
+            researchFiles.SaveResearchFileProperties();
 
             //Select 1st Property attached
             researchFiles.ChooseFirstPropertyOption();

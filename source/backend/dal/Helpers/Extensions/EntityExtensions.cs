@@ -102,6 +102,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="parentId"></param>
         /// <param name="children"></param>
         public static void UpdateChild<T_ParentEntity, T_ParentId, T_ChildEntity, T_ChildId>(this PimsContext context, Expression<Func<T_ParentEntity, object>> childNavigation, T_ParentId parentId, T_ChildEntity[] children, bool updateChildValues = true)
+            where T_ParentId : IComparable, IComparable<T_ParentId>, IEquatable<T_ParentId>
+            where T_ChildId : IComparable, IComparable<T_ChildId>, IEquatable<T_ChildId>
             where T_ParentEntity : StandardIdentityBaseAppEntity<T_ParentId>
             where T_ChildEntity : StandardIdentityBaseAppEntity<T_ChildId>
         {
@@ -135,8 +137,11 @@ namespace Pims.Dal.Helpers.Extensions
 
             foreach (var oldItem in dbItemsMap.Values)
             {
-                accessor.Remove(dbEntity, oldItem);
-                context.Remove(oldItem);
+                if (children.FirstOrDefault(x => x.Internal_Id.Equals(oldItem.Internal_Id)) == null)
+                {
+                    accessor.Remove(dbEntity, oldItem);
+                    context.Remove(oldItem);
+                }
             }
         }
 
@@ -161,6 +166,7 @@ namespace Pims.Dal.Helpers.Extensions
             T_Id parentId,
             T_ChildEntity[] childrenWithGrandchildren,
             bool updateGrandChildValues = true)
+            where T_Id : IComparable, IComparable<T_Id>, IEquatable<T_Id>
             where T_Entity : StandardIdentityBaseAppEntity<T_Id>
             where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
         {
@@ -190,6 +196,7 @@ namespace Pims.Dal.Helpers.Extensions
             T_ChildEntity[] childrenWithGrandchildren,
             Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild,
             bool updateGrandChildValues = true)
+            where T_Id : IComparable, IComparable<T_Id>, IEquatable<T_Id>
             where T_Entity : StandardIdentityBaseAppEntity<T_Id>
             where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
         {
@@ -226,7 +233,7 @@ namespace Pims.Dal.Helpers.Extensions
                     var grandchildValue = grandchildFunc(child);
                     if (updateGrandChildValues)
                     {
-                        if(grandchildReference?.TargetEntry is null && grandchildValue is not null)
+                        if (grandchildReference?.TargetEntry is null && grandchildValue is not null)
                         {
                             grandchildReference.CurrentValue = grandchildValue;
                         }

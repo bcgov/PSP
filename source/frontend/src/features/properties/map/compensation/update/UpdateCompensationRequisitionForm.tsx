@@ -13,12 +13,13 @@ import styled from 'styled-components';
 
 import SidebarFooter from '../../shared/SidebarFooter';
 import { CompensationRequisitionYupSchema } from '../CompensationRequisitionYupSchema';
-import { CompensationRequisitionFormModel } from '../models';
+import { CompensationRequisitionFormModel, PayeeOption } from '../models';
 
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
   formikRef: React.Ref<FormikProps<CompensationRequisitionFormModel>>;
   acquisitionFile: Api_AcquisitionFile;
+  payeeOptions: PayeeOption[];
   initialValues: CompensationRequisitionFormModel;
   onSave: (compensation: CompensationRequisitionFormModel) => Promise<Api_Compensation | undefined>;
   onCancel: () => void;
@@ -28,6 +29,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   isLoading,
   formikRef,
   acquisitionFile,
+  payeeOptions,
   initialValues,
   onSave,
   onCancel,
@@ -67,76 +69,93 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
           <>
             <LoadingBackdrop show={isLoading}></LoadingBackdrop>
             <UnsavedChangesPrompt />
+            <StyledContent>
+              <Section header="Requisition details">
+                <SectionField label="Status" labelWidth="7" contentWidth="4">
+                  <Select
+                    field="status"
+                    options={[
+                      {
+                        label: 'Draft',
+                        value: 'draft',
+                      },
+                      {
+                        label: 'Final',
+                        value: 'final',
+                      },
+                    ]}
+                    placeholder="Select..."
+                  />
+                </SectionField>
+                <SectionField label="Agreement date" labelWidth="7" contentWidth="4">
+                  <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
+                </SectionField>
+                <SectionField
+                  label="Expropriation notice served date"
+                  labelWidth="7"
+                  contentWidth="4"
+                >
+                  <FastDatePicker
+                    field="expropriationNoticeServedDateTime"
+                    formikProps={formikProps}
+                  />
+                </SectionField>
+                <SectionField label="Expropriation vesting date" labelWidth="7" contentWidth="4">
+                  <FastDatePicker field="expropriationVestingDateTime" formikProps={formikProps} />
+                </SectionField>
+                <SectionField label="Special instructions" labelWidth="12">
+                  <MediumTextArea field="specialInstruction" />
+                </SectionField>
+              </Section>
 
-            <Section header="Requisition details">
-              <SectionField label="Status" labelWidth="4" contentWidth="4">
-                <Select
-                  field="status"
-                  options={[
-                    {
-                      label: 'Draft',
-                      value: 'draft',
-                    },
-                    {
-                      label: 'Final',
-                      value: 'final',
-                    },
-                  ]}
-                  placeholder="Select..."
-                />
-              </SectionField>
-              <SectionField label="Agreement date" labelWidth="4" contentWidth="4">
-                <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
-              </SectionField>
-              <SectionField
-                label="Expropriation notice served date"
-                labelWidth="4"
-                contentWidth="4"
-              >
-                <FastDatePicker
-                  field="expropriationNoticeServedDateTime"
-                  formikProps={formikProps}
-                />
-              </SectionField>
-              <SectionField label="Expropriation vesting date" labelWidth="4" contentWidth="4">
-                <FastDatePicker field="expropriationVestingDateTime" formikProps={formikProps} />
-              </SectionField>
-              <SectionField label="Special instructions" labelWidth="12">
-                <MediumTextArea field="specialInstruction" />
-              </SectionField>
-            </Section>
-            <Section header="Financial coding">
-              <SectionField label="Product" labelWidth={'4'}>
-                {acquisitionFile.product?.code ?? ''}
-              </SectionField>
-              <SectionField label="Business function" labelWidth={'4'}>
-                {acquisitionFile.project?.businessFunctionCode?.code ?? ''}
-              </SectionField>
-              <SectionField label="Work activity" labelWidth={'4'}>
-                {acquisitionFile.project?.workActivityCode?.code ?? ''}
-              </SectionField>
-              <SectionField label="Cost type" labelWidth={'4'}>
-                {acquisitionFile.project?.costTypeCode?.code ?? ''}
-              </SectionField>
-              <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
-                <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
-              </SectionField>
-            </Section>
-            <Section>
-              <SectionField label="Detailed remarks" labelWidth="12">
-                <MediumTextArea field="detailedRemarks" />
-              </SectionField>
-            </Section>
+              <Section header="Financial coding">
+                <SectionField label="Product" labelWidth="4">
+                  {acquisitionFile.product?.code ?? ''}
+                </SectionField>
+                <SectionField label="Business function" labelWidth="4">
+                  {acquisitionFile.project?.businessFunctionCode?.code ?? ''}
+                </SectionField>
+                <SectionField label="Work activity" labelWidth="4">
+                  {acquisitionFile.project?.workActivityCode?.code ?? ''}
+                </SectionField>
+                <SectionField label="Cost type" labelWidth="4">
+                  {acquisitionFile.project?.costTypeCode?.code ?? ''}
+                </SectionField>
+                <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
+                  <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
+                </SectionField>
+              </Section>
+
+              <Section header="Payment">
+                <SectionField label="Payee" labelWidth="3" required>
+                  <Select
+                    field="payeeKey"
+                    options={payeeOptions.map<SelectOption>(x => {
+                      return { label: x.text, value: x.value };
+                    })}
+                    placeholder="Select..."
+                  />
+                </SectionField>
+              </Section>
+
+              <Section>
+                <SectionField label="Detailed remarks" labelWidth="12">
+                  <MediumTextArea field="detailedRemarks" />
+                </SectionField>
+              </Section>
+            </StyledContent>
 
             <Prompt
               when={formikProps.dirty}
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
-            <SidebarFooter
-              onSave={() => formikProps.submitForm()}
-              isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
-              onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
-            />
+            <StyledFooter>
+              <SidebarFooter
+                onSave={() => formikProps.submitForm()}
+                isOkDisabled={formikProps.isSubmitting || !formikProps.dirty}
+                onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
+              />
+            </StyledFooter>
           </>
         )}
       </Formik>
@@ -169,13 +188,21 @@ const StyledFormWrapper = styled.div`
   text-align: left;
   height: 100%;
   overflow-y: auto;
-  padding-right: 1rem;
   padding-bottom: 1rem;
 `;
 
-export const MediumTextArea = styled(TextArea)`
+const StyledContent = styled.div`
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+`;
+
+const StyledFooter = styled.div`
+  margin-right: 1rem;
+  padding-bottom: 1rem;
+`;
+
+const MediumTextArea = styled(TextArea)`
   textarea.form-control {
-    min-width: 80rem;
+    min-width: 100%;
     height: 7rem;
     resize: none;
   }

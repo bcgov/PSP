@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -45,7 +46,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
-        public IActionResult GetCompensationRequisitionById([FromRoute]long id)
+        public IActionResult GetCompensationRequisitionById([FromRoute] long id)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -65,7 +66,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
-        public IActionResult UpdateCompensationRequisition([FromRoute]long id, [FromBody]CompensationRequisitionModel compensationRequisition)
+        public IActionResult UpdateCompensationRequisition([FromRoute] long id, [FromBody] CompensationRequisitionModel compensationRequisition)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -75,8 +76,13 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
                 DateTime.Now);
             _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
 
+            if (id != compensationRequisition.Id)
+            {
+                throw new BadRequestException("Invalid compensationRequisitionId.");
+            }
+
             var compensationReqEntity = _mapper.Map<Dal.Entities.PimsCompensationRequisition>(compensationRequisition);
-            var compensation = _compensationRequisitionService.Update(id, compensationReqEntity);
+            var compensation = _compensationRequisitionService.Update(compensationReqEntity);
 
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compensation));
         }
@@ -92,7 +98,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult DeleteCompensation([FromRoute]long id)
+        public IActionResult DeleteCompensation([FromRoute] long id)
         {
             var result = _compensationRequisitionService.DeleteCompensation(id);
             return new JsonResult(result);

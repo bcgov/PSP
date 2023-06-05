@@ -6,22 +6,26 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c4 {
+  .c5 {
   float: right;
   cursor: pointer;
 }
 
 .c0 {
+  padding-top: 1rem;
+}
+
+.c1 {
   text-align: right;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -29,56 +33,56 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c6.required::before {
+.c7.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c5 {
+.c6 {
   font-weight: bold;
 }
 
-.c2 {
+.c3 {
   font-size: 1.4rem;
   text-align: center;
 }
 
-.c8 {
+.c9 {
   color: #2E8540;
   min-width: 11rem;
 }
 
-.c10 {
+.c11 {
   min-width: 11rem;
 }
 
-.c11 {
+.c12 {
   color: #aaaaaa;
   min-width: 11rem;
 }
 
-.c7 {
+.c8 {
   min-width: 13rem;
   font-size: 1.1rem;
   font-style: italic;
   text-align: right;
 }
 
-.c9 {
+.c10 {
   min-width: 2.4rem;
   text-align: right;
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 mr-3 my-1"
+      class="c1 mr-3 my-1"
     />
     <div
-      class="c1 form-section c2"
+      class="c2 form-section c3"
     >
       <div
         class="collapse show"
@@ -98,10 +102,10 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c3"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -115,7 +119,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c4"
+              class="c5"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -148,13 +152,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Pre-acquisition title:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -163,7 +167,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 >
                   <span
                     class="tooltip-icon"
@@ -183,7 +187,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-5"
               >
                 <span
-                  class="c8"
+                  class="c9"
                   color="#2E8540"
                 >
                   Complete
@@ -193,7 +197,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     color="#2E8540"
@@ -224,13 +228,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               BC Assessment:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -239,14 +243,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -255,7 +259,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -293,13 +297,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Company search:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -308,7 +312,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 >
                   <span
                     class="tooltip-icon"
@@ -328,7 +332,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-5"
               >
                 <span
-                  class="c11"
+                  class="c12"
                   color="#aaaaaa"
                 >
                   Not applicable
@@ -338,7 +342,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     color="#aaaaaa"
@@ -372,13 +376,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Land Title documents or plans:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -387,7 +391,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 >
                   <span
                     class="tooltip-icon"
@@ -407,7 +411,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-5"
               >
                 <span
-                  class="c8"
+                  class="c9"
                   color="#2E8540"
                 >
                   Complete
@@ -417,7 +421,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     color="#2E8540"
@@ -448,7 +452,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Property Acquisition (PA) Plan:
               <span
@@ -478,7 +482,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -487,14 +491,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -503,7 +507,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -537,10 +541,10 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c3"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -554,7 +558,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c4"
+              class="c5"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -587,13 +591,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Photos:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -602,14 +606,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -618,7 +622,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -656,13 +660,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Appraisals and reviews:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -671,14 +675,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -687,7 +691,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -725,7 +729,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Other reports:
               <span
@@ -755,7 +759,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -764,14 +768,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -780,7 +784,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -818,13 +822,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Record of negotiation:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -833,14 +837,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -849,7 +853,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -887,13 +891,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Copies of correspondence:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -902,14 +906,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -918,7 +922,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -956,7 +960,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Spending Authority Approval(s) - SAA:
               <span
@@ -986,7 +990,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -995,7 +999,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 >
                   <span
                     class="tooltip-icon"
@@ -1015,7 +1019,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1024,7 +1028,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1062,7 +1066,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Final agreements with owner(s):
               <span
@@ -1092,7 +1096,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1101,14 +1105,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1117,7 +1121,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1155,13 +1159,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               H120(s) processed for compensation:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1170,14 +1174,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1186,7 +1190,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1224,13 +1228,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Instructions or documents sent to lawyer:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1239,14 +1243,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1255,7 +1259,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1293,13 +1297,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Copy of owners' compensation cheque(s):
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1308,14 +1312,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1324,7 +1328,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1362,13 +1366,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Conditions of Entry (H0443):
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1377,14 +1381,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1393,7 +1397,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1431,13 +1435,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Conveyance closing documents:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1446,14 +1450,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1462,7 +1466,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1500,7 +1504,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Registered Plan:
               <span
@@ -1530,7 +1534,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1539,14 +1543,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1555,7 +1559,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1593,7 +1597,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Copy of new title:
               <span
@@ -1623,7 +1627,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1632,14 +1636,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1648,7 +1652,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1686,13 +1690,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               If this a total take with a surplus, then BCTFA notified:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1701,14 +1705,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1717,7 +1721,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1751,10 +1755,10 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c3"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -1768,7 +1772,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c4"
+              class="c5"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -1801,7 +1805,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Notice of Advanced Payment (Form 8):
               <span
@@ -1831,7 +1835,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1840,14 +1844,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1856,7 +1860,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1894,13 +1898,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Release of Claims:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1909,14 +1913,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1925,7 +1929,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -1963,13 +1967,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Conveyance Letter:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -1978,14 +1982,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -1994,7 +1998,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2032,13 +2036,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Signed Agreement:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2047,14 +2051,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2063,7 +2067,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2101,13 +2105,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Title and charges:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2116,14 +2120,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2132,7 +2136,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2170,13 +2174,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Current year property assessment:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2185,14 +2189,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2201,7 +2205,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2239,7 +2243,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               ALC order:
               <span
@@ -2269,7 +2273,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2278,14 +2282,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2294,7 +2298,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2328,10 +2332,10 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c3"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -2345,7 +2349,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c4"
+              class="c5"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -2378,7 +2382,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Copy of expropriation approval packages:
               <span
@@ -2408,7 +2412,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2417,14 +2421,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2433,7 +2437,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2471,7 +2475,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Notice of Expropriation (Form 1):
               <span
@@ -2501,7 +2505,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2510,14 +2514,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2526,7 +2530,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2564,7 +2568,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Approval of Expropriation (Form 5):
               <span
@@ -2594,7 +2598,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2603,14 +2607,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2619,7 +2623,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2657,7 +2661,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Vesting Notice (Form 9):
               <span
@@ -2687,7 +2691,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2696,14 +2700,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2712,7 +2716,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2750,13 +2754,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Copies of Affidavits of Service:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2765,14 +2769,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2781,7 +2785,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2819,13 +2823,13 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Release of Claims:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2834,14 +2838,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2850,7 +2854,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"
@@ -2884,10 +2888,10 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c3"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -2901,7 +2905,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c4"
+              class="c5"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -2934,7 +2938,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             class="pr-0 text-left col-6"
           >
             <label
-              class="c5"
+              class="c6"
             >
               File data entered into PIMS:
               <span
@@ -2964,7 +2968,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="no-gutters row"
@@ -2973,14 +2977,14 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-6"
               >
                 <span
-                  class="c7"
+                  class="c8"
                 />
               </div>
               <div
                 class="col-5"
               >
                 <span
-                  class="c10"
+                  class="c11"
                 >
                   Incomplete
                 </span>
@@ -2989,7 +2993,7 @@ exports[`AcquisitionChecklistView component renders as expected 1`] = `
                 class="col-1"
               >
                 <span
-                  class="c9"
+                  class="c10"
                 >
                   <svg
                     fill="none"

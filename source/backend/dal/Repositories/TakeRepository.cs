@@ -36,6 +36,7 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.TakeSiteContamTypeCodeNavigation)
                 .Include(t => t.TakeStatusTypeCodeNavigation)
                 .Include(t => t.TakeTypeCodeNavigation)
+                .Include(t => t.LandActTypeCodeNavigation)
                 .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId);
         }
 
@@ -52,6 +53,7 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.TakeSiteContamTypeCodeNavigation)
                 .Include(t => t.TakeStatusTypeCodeNavigation)
                 .Include(t => t.TakeTypeCodeNavigation)
+                .Include(t => t.LandActTypeCodeNavigation)
                 .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId
                         && t.PropertyAcquisitionFile.PropertyId == acquisitionFilePropertyId)
                 .AsNoTracking();
