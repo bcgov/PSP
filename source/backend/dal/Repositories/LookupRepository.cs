@@ -354,6 +354,11 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsFormTypes.AsNoTracking().ToArray();
         }
+
+        public IEnumerable<PimsInterestHolderInterestType> GetAllInterestHolderTypes()
+        {
+            return this.Context.PimsInterestHolderInterestTypes.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }
