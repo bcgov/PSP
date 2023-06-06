@@ -19,12 +19,10 @@ namespace Pims.Api.Models.Concepts
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<AcquisitionPayeeChequeModel, Entity.PimsAcqPayeeCheque>()
+                .IgnoreNullValues(true)
                 .Map(dest => dest.AcqPayeeChequeId, src => src.Id)
                 .Map(dest => dest.AcquisitionPayeeId, src => src.AcquisitionPayeeId)
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
-                .Map(dest => dest.PretaxAmt, src => src.PretaxAmout)
-                .Map(dest => dest.TaxAmt, src => src.TaxAmount)
-                .Map(dest => dest.TotalAmt, src => src.TotalAmount)
                 .Map(dest => dest.GstNumber, src => src.GSTNumber)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();

@@ -58,7 +58,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   const fiscalYearOptions = generateFiscalYearOptions();
   const { setModalContent, setDisplayModal } = useModalContext();
   const formikRef = useRef<FormikProps<CompensationRequisitionFormModel>>(null);
-  const dummyOptions: SelectOption[] = [];
   const [activitiesUpdated, setActivitiesUpdated] = useState<boolean>(false);
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
@@ -123,7 +122,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
               <StyledContent>
                 <Section header="Requisition details">
-                  <SectionField label="Status" labelWidth="4" contentWidth="4">
+                  <SectionField label="Status" labelWidth="5">
                     <Select
                       field="status"
                       options={[
@@ -139,12 +138,12 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                       placeholder="Select..."
                     />
                   </SectionField>
-                  <SectionField label="Agreement date" labelWidth="4" contentWidth="4">
+                  <SectionField label="Agreement date" labelWidth="5" contentWidth="4">
                     <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
                   </SectionField>
                   <SectionField
                     label="Expropriation notice served date"
-                    labelWidth="4"
+                    labelWidth="5"
                     contentWidth="4"
                   >
                     <FastDatePicker
@@ -152,7 +151,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                       formikProps={formikProps}
                     />
                   </SectionField>
-                  <SectionField label="Expropriation vesting date" labelWidth="4" contentWidth="4">
+                  <SectionField label="Expropriation vesting date" labelWidth="5" contentWidth="4">
                     <FastDatePicker
                       field="expropriationVestingDateTime"
                       formikProps={formikProps}
@@ -203,10 +202,13 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 </Section>
 
                 <Section header="Payment" isCollapsable initiallyExpanded>
-                  <SectionField label="Payee">
+                  <SectionField label="Payee" labelWidth="4" required>
                     <Select
-                      options={dummyOptions}
-                      field={withNameSpace('payees.0', 'acquisitionOwnerId')}
+                      field="payeeKey"
+                      options={payeeOptions.map<SelectOption>(x => {
+                        return { label: x.text, value: x.value };
+                      })}
+                      placeholder="Select..."
                     />
                   </SectionField>
                   <SectionField label="Payment in Trust?">

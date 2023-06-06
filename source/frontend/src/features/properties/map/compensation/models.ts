@@ -48,6 +48,10 @@ export class CompensationRequisitionFormModel {
       payeeOptions,
     );
 
+    if (apiPayee) {
+      apiPayee.cheques = this.payees[0].cheques.map(x => x.toApi());
+    }
+
     return {
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
@@ -269,10 +273,10 @@ export class AcquisitionPayeeChequeFormModel {
       id: this._id,
       acquisitionPayeeId: this._acquisitionPayeeId,
       isPaymentInTrust: this.isPaymentInTrust,
-      pretaxAmout: this.pretaxAmount,
-      taxAmount: this.taxAmount,
-      totalAmount: this.totalAmount,
       gstNumber: this.gstNumber,
+      pretaxAmout: null,
+      taxAmount: null,
+      totalAmount: null,
       rowVersion: this.rowVersion ?? null,
     };
   }

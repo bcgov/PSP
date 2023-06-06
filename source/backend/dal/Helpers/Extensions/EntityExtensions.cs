@@ -195,7 +195,8 @@ namespace Pims.Dal.Helpers.Extensions
             T_Id parentId,
             T_ChildEntity[] childrenWithGrandchildren,
             Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild,
-            bool updateGrandChildValues = true)
+            bool updateGrandChildValues = true,
+            bool isCollection = false)
             where T_Id : IComparable, IComparable<T_Id>, IEquatable<T_Id>
             where T_Entity : StandardIdentityBaseAppEntity<T_Id>
             where T_ChildEntity : StandardIdentityBaseAppEntity<T_Id>
@@ -225,8 +226,17 @@ namespace Pims.Dal.Helpers.Extensions
                     var dbChildEntry = context.Entry(existingChild);
                     dbChildEntry.CurrentValues.SetValues(child);
 
+                    var grandchildReference = (dynamic)null;
+                    if (isCollection)
+                    {
+                        grandchildReference = dbChildEntry.Collection(grandchildPropertyName);
+                    }
+                    else
+                    {
+                        grandchildReference = dbChildEntry.Reference(grandchildPropertyName);
+                    }
+
                     // load grandchild navigation property
-                    var grandchildReference = dbChildEntry.Reference(grandchildPropertyName);
                     grandchildReference.Load();
 
                     // Update grandchild navigation with values passed in the array
