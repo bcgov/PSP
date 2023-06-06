@@ -376,9 +376,6 @@ exports[`ResearchProperties component renders as expected when provided no prope
         >
           Properties to include in this file:
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div
@@ -900,9 +897,6 @@ exports[`ResearchProperties component renders as expected when provided no prope
             >
               Selected properties
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div

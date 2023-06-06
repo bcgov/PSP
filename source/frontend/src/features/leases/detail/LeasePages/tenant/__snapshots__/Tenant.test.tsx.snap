@@ -85,9 +85,6 @@ exports[`Tenant component renders as expected 1`] = `
           >
             Tenant
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -108,9 +105,6 @@ exports[`Tenant component renders as expected 1`] = `
           >
             Representative
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -131,9 +125,6 @@ exports[`Tenant component renders as expected 1`] = `
           >
             Property Manager
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -154,9 +145,6 @@ exports[`Tenant component renders as expected 1`] = `
           >
             Unknown
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

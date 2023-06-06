@@ -375,9 +375,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
           >
             Project
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -579,9 +576,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
           >
             Schedule
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -679,9 +673,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
           >
             Properties to include in this file:
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1203,9 +1194,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
               >
                 Selected properties
               </div>
-              <div
-                class="col-1"
-              />
             </div>
           </h2>
           <div
@@ -1266,9 +1254,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
           >
             Acquisition Details
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1530,9 +1515,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
           >
             Acquisition Team
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1567,9 +1549,6 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
           >
             Owners
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

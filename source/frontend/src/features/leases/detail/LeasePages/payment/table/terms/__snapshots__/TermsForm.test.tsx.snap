@@ -34,9 +34,6 @@ exports[`TermsForm component renders as expected 1`] = `
         >
           Payments by Term
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div
@@ -532,9 +529,6 @@ exports[`TermsForm component renders with data as expected 1`] = `
         >
           Payments by Term
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div
