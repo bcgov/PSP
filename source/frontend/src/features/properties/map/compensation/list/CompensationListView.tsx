@@ -50,7 +50,11 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           />
         }
       >
-        <SectionField label={'Total compensation for this file'} labelWidth="9">
+        <SectionField
+          label="Total compensation for this file"
+          tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
+          labelWidth="9"
+        >
           {formatMoney(fileCompensationTotal)}
         </SectionField>
       </Section>
