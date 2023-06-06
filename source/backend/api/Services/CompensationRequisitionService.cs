@@ -28,12 +28,12 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            if (compensationRequisition is not null && compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault().PimsAcqPayeeCheques.Count > 0)
+            var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
+            if (compensationRequisition is not null && compensationPayee is not null)
             {
-                var payee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
-                if (payee is not null)
+                var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
+                if(payeeCheque is not null)
                 {
-                    var payeeCheque = payee.PimsAcqPayeeCheques.FirstOrDefault();
                     payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
                     payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
                     payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
