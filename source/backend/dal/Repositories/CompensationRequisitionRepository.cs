@@ -66,9 +66,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
-
-            //Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), false);
-            //Context.UpdateGrandchild<PimsCompensationRequisition, long, PimsAcquisitionPayee>(o => o.PimsAcquisitionPayees, oa => oa.PimsAcqPayeeCheques, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsAcquisitionPayees.ToArray(), true);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), false);
 
             return compensationRequisition;
         }
@@ -81,6 +79,16 @@ namespace Pims.Dal.Repositories
             Context.Entry(existingCompensationPayee).CurrentValues.SetValues(compensationPayee);
 
             return compensationPayee;
+        }
+
+        public PimsAcqPayeeCheque UpdatePayeeCheque(PimsAcqPayeeCheque payeeCheque)
+        {
+            var existingPayeeCheque = Context.PimsAcqPayeeCheques
+                .FirstOrDefault(x => x.AcqPayeeChequeId.Equals(payeeCheque.AcqPayeeChequeId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingPayeeCheque).CurrentValues.SetValues(payeeCheque);
+
+            return existingPayeeCheque;
         }
 
         public bool TryDelete(long compensationId)

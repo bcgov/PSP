@@ -15,6 +15,8 @@ namespace Pims.Dal.Repositories
 
         PimsAcquisitionPayee UpdatePayee(PimsAcquisitionPayee compensationPayee);
 
+        PimsAcqPayeeCheque UpdatePayeeCheque(PimsAcqPayeeCheque payeeCheque);
+
         bool TryDelete(long compensationId);
     }
 }

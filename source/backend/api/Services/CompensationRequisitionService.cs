@@ -53,6 +53,7 @@ namespace Pims.Api.Services
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
             var currentPayee = currentCompensation.PimsAcquisitionPayees.FirstOrDefault();
             var updatedPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
+            var payeeCheque = updatedPayee.PimsAcqPayeeCheques.FirstOrDefault();
 
             if (currentPayee != null && updatedPayee != null)
             {
@@ -68,6 +69,11 @@ namespace Pims.Api.Services
                     updatedPayee.ConcurrencyControlNumber = currentPayee.ConcurrencyControlNumber;
                     _compensationRequisitionRepository.UpdatePayee(updatedPayee);
                 }
+            }
+
+            if (payeeCheque is not null)
+            {
+                _compensationRequisitionRepository.UpdatePayeeCheque(payeeCheque);
             }
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
