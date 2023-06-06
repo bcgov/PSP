@@ -64,7 +64,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Update the acquisition file InterestHolders.
         /// </summary>
         /// <returns>The updated interest holder items.</returns>
-        [HttpPost("{id:long}/interestholders")]
+        [HttpPut("{id:long}/interestholders")]
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(InterestHolderModel), 200)]

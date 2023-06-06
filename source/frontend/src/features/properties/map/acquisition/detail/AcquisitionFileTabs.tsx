@@ -121,7 +121,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     });
   }
 
-  if (acquisitionFile?.id && hasClaim(Claims.AGREEMENT_VIEW)) {
+  if (acquisitionFile?.id) {
     tabViews.push({
       content: (
         <StakeHolderContainer

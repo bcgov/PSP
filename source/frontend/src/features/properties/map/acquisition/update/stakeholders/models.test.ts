@@ -33,7 +33,6 @@ describe('Interest Holder model tests', () => {
       ],
     };
     const stakeholderModel = StakeHolderForm.fromApi([apiInterestHolders]);
-    console.log(stakeholderModel);
     expect(stakeholderModel.interestHolders).toHaveLength(2);
   });
 

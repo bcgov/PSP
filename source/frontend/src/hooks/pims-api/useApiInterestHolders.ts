@@ -15,10 +15,7 @@ export const useApiInterestHolders = () => {
       getAcquisitionInterestHolderApi: (acqFileId: number) =>
         api.get<Api_InterestHolder[]>(`/acquisitionfiles/${acqFileId}/interestholders`),
       postAcquisitionholderApi: (acqFileId: number, agreements: Api_InterestHolder[]) =>
-        api.post<Api_InterestHolder[]>(
-          `/acquisitionfiles/${acqFileId}/interestholders`,
-          agreements,
-        ),
+        api.put<Api_InterestHolder[]>(`/acquisitionfiles/${acqFileId}/interestholders`, agreements),
     }),
     [api],
   );

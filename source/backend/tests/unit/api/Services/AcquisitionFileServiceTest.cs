@@ -1240,7 +1240,7 @@ namespace Pims.Api.Test.Services
         public void GetInterestHolders_NotAuthorized_Contractor()
         {
             // Arrange
-            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
@@ -1260,7 +1260,7 @@ namespace Pims.Api.Test.Services
         public void GetInterestHolders_Success()
         {
             // Arrange
-            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
 
             var repository = _helper.GetService<Mock<IInterestHolderRepository>>();
             repository.Setup(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()))
@@ -1299,7 +1299,7 @@ namespace Pims.Api.Test.Services
         public void UpdateInterestHolders_NotAuthorized_Contractor()
         {
             // Arrange
-            var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var repository = _helper.GetService<Mock<IInterestHolderRepository>>();
             var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
