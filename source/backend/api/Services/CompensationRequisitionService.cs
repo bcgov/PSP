@@ -53,7 +53,7 @@ namespace Pims.Api.Services
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
             var currentPayee = currentCompensation.PimsAcquisitionPayees.FirstOrDefault();
             var updatedPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
-            var payeeCheque = updatedPayee.PimsAcqPayeeCheques.FirstOrDefault();
+            var payeeCheque = updatedPayee?.PimsAcqPayeeCheques.FirstOrDefault();
 
             if (currentPayee != null && updatedPayee != null)
             {
