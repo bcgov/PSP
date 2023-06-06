@@ -33,7 +33,7 @@ export class Api_GenerateCompensation {
     generateFile: Api_GenerateFile | null,
     h120Categories: Api_H120Category[],
     finalFileFinancials: Api_CompensationFinancial[],
-    client: ISystemConstant | undefined,
+    client?: ISystemConstant | undefined,
   ) {
     this.client = client?.value ?? '';
     this.file = generateFile;
@@ -70,14 +70,8 @@ export class Api_GenerateCompensation {
     this.financial_total = formatMoney(
       compensation?.financials?.reduce((acc, curr) => acc + (curr?.totalAmount ?? 0), 0) ?? 0,
     );
-    this.responsibility_centre = compensation?.responsibilityCode
-      ? compensation.responsibilityCode.code + ' ' + compensation.responsibilityCode.description
-      : '';
-    this.service_line = compensation?.chartOfAccountsCode
-      ? compensation.chartOfAccountsCode.code + ' ' + compensation.chartOfAccountsCode.description
-      : '';
-    this.yearly_financial = compensation?.yearlyFinancialCode
-      ? compensation.yearlyFinancialCode.code + ' ' + compensation.yearlyFinancialCode.description
-      : '';
+    this.responsibility_centre = compensation?.responsibility?.code ?? '';
+    this.service_line = compensation?.chartOfAccounts?.code ?? '';
+    this.yearly_financial = compensation?.yearlyFinancial?.code ?? '';
   }
 }

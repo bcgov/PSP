@@ -5,7 +5,7 @@ export interface Api_PayeeCheque extends Api_ConcurrentVersion_Null, Api_AuditFi
   id: number | null;
   acquisitionPayeeId: number | null;
   isPaymentInTrust: boolean | null;
-  pretaxAmout: number | null;
+  pretaxAmount: number | null;
   taxAmount: number | null;
   totalAmount: number | null;
   gstNumber: string | null;
