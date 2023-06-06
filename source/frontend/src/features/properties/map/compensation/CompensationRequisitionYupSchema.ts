@@ -22,7 +22,7 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
           pretaxAmount: yup.number(),
           taxAmount: yup.number(),
           totalAmount: yup.number(),
-          gstNumber: yup.string(),
+          gstNumber: yup.string().max(50, 'GST # must be at most ${max} characters'),
           isPaymentInTrust: yup.boolean(),
         }),
       ),

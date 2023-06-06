@@ -8,7 +8,7 @@ import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 import { stringToBoolean } from 'utils/formUtils';
 
-import { CompensationRequisitionFormModel, FinacialActivityFormModel } from '../../models';
+import { CompensationRequisitionFormModel, FinancialActivityFormModel } from '../../models';
 
 export interface IFinancialActivitiesSubFormProps {
   formikProps: FormikProps<CompensationRequisitionFormModel>;
@@ -38,9 +38,19 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
 
   const onPretaxAmountUpdated = (index: number, newValue: string): void => {
     const isGstRequired = stringToBoolean(values.financials[index].isGstRequired);
-    const cleanValue = getCurrenclyCleanValue(newValue);
+    const cleanValue = getCurrencyCleanValue(newValue);
 
     setAmountFields(index, isGstRequired, cleanValue);
+  };
+
+  const onTaxAmountUpdated = (index: number, newValue: string): void => {
+    let totalAmount = 0;
+    const preTaxAmount = values.financials[index].pretaxAmount;
+    const cleanValue = getCurrencyCleanValue(newValue);
+
+    totalAmount = preTaxAmount + cleanValue;
+    setFieldValue(`financials[${index}].totalAmount`, totalAmount);
+    activitiesUpdated();
   };
 
   const setAmountFields = (index: number, gstRequired: boolean, pretaxAmount: number): void => {
@@ -68,7 +78,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
         return (
           <>
             {values.financials.map((financial, index) => (
-              <div key={`financial-act-${index}`}>
+              <div key={`financial-act-${financial._id}`}>
                 <>
                   <StyledSubHeader>
                     <label>Activity {index + 1}</label>
@@ -127,7 +137,9 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                       <FastCurrencyInput
                         formikProps={formikProps}
                         field={`financials[${index}].taxAmount`}
-                        disabled
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          onTaxAmountUpdated(index, e.target.value);
+                        }}
                       />
                     </SectionField>
                   )}
@@ -144,9 +156,9 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
               </div>
             ))}
             <LinkButton
-              data-testid="add=financial-activity"
+              data-testid="add-financial-activity"
               onClick={() => {
-                const activity = new FinacialActivityFormModel(null, compensationRequisitionId);
+                const activity = new FinancialActivityFormModel(null, compensationRequisitionId);
                 arrayHelpers.push(activity);
               }}
             >
@@ -179,7 +191,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
 
 export default FinancialActivitiesSubForm;
 
-const getCurrenclyCleanValue = (stringValue: string): number => {
+const getCurrencyCleanValue = (stringValue: string): number => {
   return Number(stringValue.replace(/[^0-9.]/g, ''));
 };
 

@@ -30,7 +30,7 @@ export class CompensationRequisitionFormModel {
   generationDatetTime: string = '';
   specialInstruction: string = '';
   detailedRemarks: string = '';
-  financials: FinacialActivityFormModel[] = [];
+  financials: FinancialActivityFormModel[] = [];
   payees: AcquisitionPayeeFormModel[] = [];
   isDisabled: string = '';
   rowVersion: number | null = null;
@@ -95,7 +95,7 @@ export class CompensationRequisitionFormModel {
     compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.financials =
-      apiModel.financials?.map(x => FinacialActivityFormModel.fromApi(x)) || [];
+      apiModel.financials?.map(x => FinancialActivityFormModel.fromApi(x)) || [];
     compensation.detailedRemarks = apiModel.detailedRemarks || '';
     compensation.payees = apiModel.payees?.map(x => AcquisitionPayeeFormModel.fromApi(x)) || [];
     compensation.payeeKey = PayeeOption.fromApi(apiModel.payees);
@@ -111,7 +111,7 @@ export class CompensationRequisitionFormModel {
   }
 }
 
-export class FinacialActivityFormModel {
+export class FinancialActivityFormModel {
   readonly _id: number | null = null;
   readonly _compensationRequisitionId: number;
 
@@ -150,8 +150,8 @@ export class FinacialActivityFormModel {
     };
   }
 
-  static fromApi(model: Api_CompensationFinancial): FinacialActivityFormModel {
-    const newForm = new FinacialActivityFormModel(model.id, model.compensationId);
+  static fromApi(model: Api_CompensationFinancial): FinancialActivityFormModel {
+    const newForm = new FinancialActivityFormModel(model.id, model.compensationId);
     newForm.pretaxAmount = model.pretaxAmount ?? 0;
     newForm.isGstRequired = booleanToString(model.isGstRequired);
     newForm.taxAmount = model.taxAmount ?? 0;
