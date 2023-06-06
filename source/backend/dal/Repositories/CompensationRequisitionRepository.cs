@@ -4,7 +4,6 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
@@ -68,7 +67,8 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), false);
-            Context.UpdateGrandchild<PimsCompensationRequisition, long, PimsAcquisitionPayee>(o => o.PimsAcquisitionPayees, oa => oa.PimsAcqPayeeCheques, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsAcquisitionPayees.ToArray(), true);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsAcquisitionPayee, long>(a => a.PimsAcquisitionPayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsAcquisitionPayees.ToArray(), false);
+            //Context.UpdateGrandchild<PimsCompensationRequisition, long, PimsAcquisitionPayee>(o => o.PimsAcquisitionPayees, oa => oa.PimsAcqPayeeCheques, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsAcquisitionPayees.ToArray(), true);
 
             return compensationRequisition;
         }
