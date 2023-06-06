@@ -291,6 +291,11 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c18 {
+  text-align: center;
+  font-style: italic;
+}
+
 .c12 {
   border-radius: 0.5rem 0.5rem 0rem 0rem;
 }
@@ -343,6 +348,15 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
         role="tab"
       >
         Documents
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="stakeholders"
+        href="#"
+        role="tab"
+      >
+        Stakeholders
       </a>
     </nav>
     <div
@@ -1394,6 +1408,146 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
         <div />
         <div />
         <div />
+      </div>
+      <div
+        aria-hidden="true"
+        class="fade tab-pane"
+        role="tabpanel"
+      >
+        <div
+          class="c2"
+        >
+          <div
+            class="c9"
+          >
+            <div
+              class="spinner-border text-warning"
+              data-testid="filter-backdrop-loading"
+            />
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c5"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Interests
+                </div>
+                <div
+                  class="col-1"
+                >
+                  <svg
+                    class="c11"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      collapse-section
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M7 14l5-5 5 5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="c3 mr-3 my-1"
+              />
+              <div
+                class="c18"
+              >
+                <p>
+                  There are no interest holders associated with this file.
+                </p>
+                <p>
+                   To add an interest holder, click the edit button.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c2"
+        >
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c5"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Non-interest Payees
+                </div>
+                <div
+                  class="col-1"
+                >
+                  <svg
+                    class="c11"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      collapse-section
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M7 14l5-5 5 5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="c3 mr-3 my-1"
+              />
+              <div
+                class="c18"
+              >
+                <p>
+                  There are no non-interest payees associated with this file.
+                </p>
+                <p>
+                   To add a non-interest payee, click the edit button.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

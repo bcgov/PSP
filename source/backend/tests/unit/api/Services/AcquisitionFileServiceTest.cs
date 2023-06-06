@@ -1219,8 +1219,126 @@ namespace Pims.Api.Test.Services
             // Assert
             repository.Verify(x => x.Add(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
+        #endregion
 
+        #region InterestHolders
 
+        [Fact]
+        public void GetInterestHolders_NoPermissions()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetInterestHolders(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetInterestHolders_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var acqFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateAcquisitionFile());
+
+            // Act
+            Action act = () => service.GetInterestHolders(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetInterestHolders_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var repository = _helper.GetService<Mock<IInterestHolderRepository>>();
+            repository.Setup(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()))
+                .Returns(new List<PimsInterestHolder>()
+                {
+                    new PimsInterestHolder(),
+                });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.GetInterestHolders(1);
+
+            // Assert
+            repository.Verify(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateInterestHolders_NoPermissions()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.UpdateInterestHolders(1, new List<PimsInterestHolder>()
+                {
+                    new PimsInterestHolder(),
+                });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void UpdateInterestHolders_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var repository = _helper.GetService<Mock<IInterestHolderRepository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>())).Returns(new List<PimsInterestHolder>() { new PimsInterestHolder() });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void UpdateInterestHolders_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var repository = _helper.GetService<Mock<IInterestHolderRepository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>())).Returns(new List<PimsInterestHolder>() { new PimsInterestHolder() });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
+
+            // Assert
+            repository.Verify(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>()), Times.Once);
+        }
         #endregion
 
         #region Agreements

@@ -33,6 +33,10 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
 
+        IEnumerable<PimsInterestHolder> GetInterestHolders(long id);
+
+        IEnumerable<PimsInterestHolder> UpdateInterestHolders(long acquisitionFileId, List<PimsInterestHolder> interestHolders);
+
         IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId);
 
         PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition);
