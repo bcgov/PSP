@@ -1,11 +1,11 @@
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 
 import { useGenerateH120 } from '../../acquisition/common/GenerateForm/hooks/useGenerateH120';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
 export interface CompensationRequisitionDetailContainerProps {
-  compensation: Api_Compensation;
+  compensation: Api_CompensationRequisition;
   acquisitionFile: Api_AcquisitionFile;
   clientConstant: string;
   gstConstant: number;
@@ -29,8 +29,8 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   return compensation ? (
     <View
       compensation={compensation}
-      acqFileProduct={acquisitionFile.product}
       acqFileProject={acquisitionFile.project}
+      acqFileProduct={acquisitionFile.product}
       setEditMode={setEditMode}
       clientConstant={clientConstant}
       gstConstant={gstConstant}

@@ -7,7 +7,7 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { Col, Row } from 'react-bootstrap';
 import { FaMoneyCheck } from 'react-icons/fa';
@@ -15,14 +15,14 @@ import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
 export interface CompensationRequisitionDetailViewProps {
-  compensation: Api_Compensation;
+  compensation: Api_CompensationRequisition;
   acqFileProject?: Api_Project;
-  acqFileProduct?: Api_Product;
+  acqFileProduct?: Api_Product | undefined;
   clientConstant: string;
   gstConstant: number | undefined;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
-  onGenerate: (compensation: Api_Compensation) => void;
+  onGenerate: (compensation: Api_CompensationRequisition) => void;
 }
 
 export const CompensationRequisitionDetailView: React.FunctionComponent<
@@ -61,58 +61,38 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </RightFlexDiv>
       <Section>
         <StyledRow className="no-gutters">
-          <Col xs="7">
-            <Row className="no-gutters">
-              <Col>
-                <HeaderField label="Client:" contentWidth="4" valueTestId={'compensation-client'}>
-                  {clientConstant}
-                </HeaderField>
-              </Col>
-            </Row>
-            <Row className="no-gutters">
-              <Col>
-                <HeaderField label="Requisition number:" contentWidth="4">
-                  {compensation.isDraft ? 'Draft' : compensation.id}
-                </HeaderField>
-              </Col>
-            </Row>
+          <Col xs="6">
+            <HeaderField label="Client:" labelWidth="8" valueTestId={'compensation-client'}>
+              {clientConstant}
+            </HeaderField>
+            <HeaderField label="Requisition number:" labelWidth="8">
+              {compensation.isDraft ? 'Draft' : compensation.id}
+            </HeaderField>
           </Col>
-          <Col xs="5">
-            <Row className="no-gutters">
-              <Col>
-                <HeaderField label="Compensation amount:" contentWidth="4">
-                  {formatMoney(0)}
-                </HeaderField>
-              </Col>
-            </Row>
-            <Row className="no-gutters">
-              <Col>
-                <HeaderField label="Applicable GST:" contentWidth="4">
-                  {formatMoney(0)}
-                </HeaderField>
-              </Col>
-            </Row>
-            <Row className="no-gutters">
-              <Col>
-                <HeaderField label="Total cheque amount:" contentWidth="4">
-                  {formatMoney(0)}
-                </HeaderField>
-              </Col>
-            </Row>
+          <Col xs="6">
+            <HeaderField label="Compensation amount:" labelWidth="8">
+              {formatMoney(0)}
+            </HeaderField>
+            <HeaderField label="Applicable GST:" labelWidth="8">
+              {formatMoney(0)}
+            </HeaderField>
+            <HeaderField label="Total cheque amount:" labelWidth="8">
+              {formatMoney(0)}
+            </HeaderField>
           </Col>
         </StyledRow>
       </Section>
       <Section header="Requisition Details">
-        <SectionField label="Status" labelWidth={'4'}>
+        <SectionField label="Status" labelWidth="4">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
-        <SectionField label="Agreement date" labelWidth={'4'}>
+        <SectionField label="Agreement date" labelWidth="4">
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>
-        <SectionField label="Expropriation notice server date" labelWidth={'4'}>
+        <SectionField label="Expropriation notice server date" labelWidth="4">
           {prettyFormatDate(compensation.expropriationNoticeServedDate)}
         </SectionField>
-        <SectionField label="Expropriation vesting date" labelWidth={'4'}>
+        <SectionField label="Expropriation vesting date" labelWidth="4">
           {prettyFormatDate(compensation.expropriationVestingDate)}
         </SectionField>
         <SectionField label="Special instructions" labelWidth={'12'}>
@@ -120,19 +100,19 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         </SectionField>
       </Section>
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
-        <SectionField label="Product" labelWidth={'4'}>
+        <SectionField label="Product" labelWidth="4">
           {acqFileProduct?.code ?? ''}
         </SectionField>
-        <SectionField label="Business function" labelWidth={'4'}>
+        <SectionField label="Business function" labelWidth="4">
           {acqFileProject?.code ?? ''}
         </SectionField>
-        <SectionField label="Work activity" labelWidth={'4'}>
+        <SectionField label="Work activity" labelWidth="4">
           {acqFileProject?.workActivityCode?.code ?? ''}
         </SectionField>
-        <SectionField label="Cost type" labelWidth={'4'}>
+        <SectionField label="Cost type" labelWidth="4">
           {acqFileProject?.costTypeCode?.code ?? ''}
         </SectionField>
-        <SectionField label="Fiscal year" labelWidth={'4'}>
+        <SectionField label="Fiscal year" labelWidth="4">
           {compensation.fiscalYear ?? ''}
         </SectionField>
       </Section>

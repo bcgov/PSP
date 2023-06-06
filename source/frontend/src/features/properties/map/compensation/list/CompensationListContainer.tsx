@@ -1,7 +1,7 @@
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import React, { useCallback, useContext } from 'react';
 
 import { SideBarContext } from '../../context/sidebarContext';
@@ -38,11 +38,17 @@ export const CompensationListContainer: React.FunctionComponent<
   }, [getAcquisitionCompensationRequisitions, fileId]);
 
   const onAddCompensationRequisition = (fileId: number) => {
-    const defaultCompensationRequisition: Api_Compensation = {
+    const defaultCompensationRequisition: Api_CompensationRequisition = {
       id: null,
       acquisitionFileId: fileId,
       isDraft: true,
       fiscalYear: null,
+      yearlyFinancialId: null,
+      yearlyFinancial: null,
+      chartOfAccountsId: null,
+      chartOfAccounts: null,
+      responsibilityId: null,
+      responsibility: null,
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,
@@ -52,9 +58,6 @@ export const CompensationListContainer: React.FunctionComponent<
       isDisabled: null,
       financials: [],
       payees: [],
-      responsibilityCode: null,
-      chartOfAccountsCode: null,
-      yearlyFinancialCode: null,
     };
 
     postAcquisitionCompensationRequisition(fileId, defaultCompensationRequisition).then(

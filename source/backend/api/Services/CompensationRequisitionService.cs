@@ -1,6 +1,6 @@
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -27,20 +27,43 @@ namespace Pims.Api.Services
             _logger.LogInformation($"Getting Compensation Requisition with id {compensationRequisitionId}");
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            return _compensationRequisitionRepository.GetById(compensationRequisitionId);
+            var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
+            var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
+            if (compensationRequisition is not null && compensationPayee is not null)
+            {
+                var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
+                if(payeeCheque is not null)
+                {
+                    payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
+                    payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
+                    payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
+                }
+            }
+
+            return compensationRequisition;
         }
 
-        public PimsCompensationRequisition Update(long compensationRequisitionId, PimsCompensationRequisition compensationRequisition)
+        public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
 
-            if(compensationRequisitionId != compensationRequisition.CompensationRequisitionId)
-            {
-                throw new BadRequestException("Invalid compensationRequisitionId.");
-            }
+            _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
 
-            _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.Internal_Id}");
+            var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
+            var currentPayee = currentCompensation.PimsAcquisitionPayees.FirstOrDefault();
+            var updatedPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
+            if (currentPayee != null && updatedPayee != null)
+            {
+                if (currentPayee.InterestHolderId == updatedPayee.InterestHolderId &&
+                    currentPayee.AcquisitionOwnerId == updatedPayee.AcquisitionOwnerId &&
+                    currentPayee.OwnerSolicitorId == updatedPayee.OwnerSolicitorId &&
+                    currentPayee.AcquisitionFilePersonId == updatedPayee.AcquisitionFilePersonId &&
+                    currentPayee.OwnerRepresentativeId == updatedPayee.OwnerRepresentativeId)
+                {
+                    compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId = currentPayee.AcquisitionPayeeId;
+                }
+            }
 
             var updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
             _compensationRequisitionRepository.CommitTransaction();

@@ -4,8 +4,8 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -30,8 +30,6 @@ namespace Pims.Dal.Repositories
 
         public IList<PimsCompensationRequisition> GetAllByAcquisitionFileId(long acquisitionFileId)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
-
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqH120s)
                     .ThenInclude(h120 => h120.FinancialActivityCode)
@@ -48,7 +46,6 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
             Context.PimsCompensationRequisitions.Add(compensationRequisition);
 
             return compensationRequisition;
@@ -56,17 +53,16 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
             var entity = Context.PimsCompensationRequisitions
+                .Include(x => x.YearlyFinancial)
+                .Include(x => x.ChartOfAccounts)
+                .Include(x => x.Responsibility)
                 .Include(c => c.PimsCompReqH120s)
-                    .ThenInclude(h120 => h120.FinancialActivityCode)
-                .Include(c => c.PimsAcquisitionPayees)
-                    .ThenInclude(ap => ap.AcquisitionOwner)
-                .Include(c => c.PimsAcquisitionPayees)
-                    .ThenInclude(ap => ap.PimsAcqPayeeCheques)
-                .Include(c => c.Responsibility)
-                .Include(c => c.ChartOfAccounts)
-                .Include(c => c.YearlyFinancial)
+                    .ThenInclude(y => y.FinancialActivityCode)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.AcquisitionOwner)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.PimsAcqPayeeCheques)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -75,11 +71,12 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             var existingCompensationRequisition = Context.PimsCompensationRequisitions
-                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.Internal_Id)) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), false);
+            Context.UpdateGrandchild<PimsCompensationRequisition, long, PimsAcquisitionPayee>(o => o.PimsAcquisitionPayees, oa => oa.PimsAcqPayeeCheques, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsAcquisitionPayees.ToArray(), true);
 
             return compensationRequisition;
         }

@@ -569,6 +569,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.GstNumber).HasComment("GST number of the Payee");
 
+                entity.Property(e => e.IsPaymentInTrust).HasDefaultValueSql("(CONVERT([bit],(0)))");
+
                 entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the owner's cheque related to the requisition.");
 
                 entity.Property(e => e.TaxAmt).HasComment("Taxes related to the owner's cheque related to the requisition.");
@@ -1313,10 +1315,14 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_AQOWSO_FK");
 
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.PimsAcquisitionOwnerSolicitors)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("PIM_ORG_PIM_AQOWSO_FK");
+
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.PimsAcquisitionOwnerSolicitors)
                     .HasForeignKey(d => d.PersonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PERSON_PIM_AQOWSO_FK");
             });
 
@@ -3283,9 +3289,7 @@ namespace Pims.Dal
 
             modelBuilder.Entity<PimsInthldrPropInterest>(entity =>
             {
-                entity.Property(e => e.PimsInthldrPropInterestId)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('NEXT VALUE FOR [PIMS_INTHLDR_PROP_INTEREST_ID_SEQ]')");
+                entity.Property(e => e.PimsInthldrPropInterestId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTHLDR_PROP_INTEREST_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -3339,8 +3343,6 @@ namespace Pims.Dal
                 entity.Property(e => e.InthldrPropInterestHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTHLDR_PROP_INTEREST_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.PimsInthldrPropInterestId).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsLandActType>(entity =>

@@ -10,7 +10,8 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACQUISITION_OWNER_SOLICITOR")]
     [Index(nameof(AcquisitionFileId), Name = "AQOWSO_ACQUISITION_FILE_ID_IDX")]
-    [Index(nameof(AcquisitionFileId), nameof(PersonId), Name = "AQOWSO_ACQUISITION_FILE_PERSON_TUC", IsUnique = true)]
+    [Index(nameof(AcquisitionFileId), nameof(PersonId), nameof(OrganizationId), Name = "AQOWSO_ACQUISITION_FILE_PERSON_TUC", IsUnique = true)]
+    [Index(nameof(OrganizationId), Name = "AQOWSO_ORGANIZATION_ID_IDX")]
     [Index(nameof(PersonId), Name = "AQOWSO_PERSON_ID_IDX")]
     public partial class PimsAcquisitionOwnerSolicitor
     {
@@ -25,7 +26,9 @@ namespace Pims.Dal.Entities
         [Column("ACQUISITION_FILE_ID")]
         public long AcquisitionFileId { get; set; }
         [Column("PERSON_ID")]
-        public long PersonId { get; set; }
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -70,6 +73,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionOwnerSolicitors))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [ForeignKey(nameof(OrganizationId))]
+        [InverseProperty(nameof(PimsOrganization.PimsAcquisitionOwnerSolicitors))]
+        public virtual PimsOrganization Organization { get; set; }
         [ForeignKey(nameof(PersonId))]
         [InverseProperty(nameof(PimsPerson.PimsAcquisitionOwnerSolicitors))]
         public virtual PimsPerson Person { get; set; }

@@ -1,5 +1,6 @@
 import { chain } from 'lodash';
-import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
+import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Api_H120Category } from 'models/api/H120Category';
 import moment from 'moment';
 import { ISystemConstant } from 'store/slices/systemConstants';
@@ -9,6 +10,7 @@ import { Api_GenerateCompensationFinancial } from './GenerateCompensationFinanci
 import { Api_GenerateCompensationFinancialSummary } from './GenerateCompensationFinancialSummary';
 import { Api_GenerateCompensationPayee } from './GenerateCompensationPayee';
 import { Api_GenerateFile } from './GenerateFile';
+
 export class Api_GenerateCompensation {
   client: string;
   file: Api_GenerateFile | null;
@@ -27,7 +29,7 @@ export class Api_GenerateCompensation {
   payees: Api_GenerateCompensationPayee[];
 
   constructor(
-    compensation: Api_Compensation | null,
+    compensation: Api_CompensationRequisition | null,
     generateFile: Api_GenerateFile | null,
     h120Categories: Api_H120Category[],
     finalFileFinancials: Api_CompensationFinancial[],

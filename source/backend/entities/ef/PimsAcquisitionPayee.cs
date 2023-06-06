@@ -12,7 +12,6 @@ namespace Pims.Dal.Entities
     [Index(nameof(AcquisitionFilePersonId), Name = "ACQPAY_ACQUISITION_FILE_PERSON_ID_IDX")]
     [Index(nameof(AcquisitionOwnerId), Name = "ACQPAY_ACQUISITION_OWNER_ID_IDX")]
     [Index(nameof(CompensationRequisitionId), Name = "ACQPAY_COMPENSATION_REQUISITION_ID_IDX")]
-    [Index(nameof(IsDisabled), nameof(AcquisitionFilePersonId), nameof(OwnerSolicitorId), nameof(OwnerRepresentativeId), nameof(InterestHolderId), nameof(AcquisitionOwnerId), nameof(CompensationRequisitionId), Name = "ACQPAY_COMP_REQ_PAYEE_TUC", IsUnique = true)]
     [Index(nameof(InterestHolderId), Name = "ACQPAY_INTEREST_HOLDER_ID_IDX")]
     [Index(nameof(OwnerRepresentativeId), Name = "ACQPAY_OWNER_REPRESENTATIVE_ID_IDX")]
     [Index(nameof(OwnerSolicitorId), Name = "ACQPAY_OWNER_SOLICITOR_ID_IDX")]

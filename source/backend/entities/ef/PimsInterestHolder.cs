@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_INTEREST_HOLDER")]
+    [Index(nameof(AcquisitionFileId), Name = "INTHLD_ACQUISITION_FILE_ID_IDX")]
     [Index(nameof(OrganizationId), Name = "INTHLD_ORGANIZATION_ID_IDX")]
     [Index(nameof(PersonId), Name = "INTHLD_PERSON_ID_IDX")]
-    [Index(nameof(PersonId), nameof(OrganizationId), Name = "INTHLD_PERSON_ORGANIZATION_TUC", IsUnique = true)]
     public partial class PimsInterestHolder
     {
         public PimsInterestHolder()
@@ -23,6 +23,8 @@ namespace Pims.Dal.Entities
         [Key]
         [Column("INTEREST_HOLDER_ID")]
         public long InterestHolderId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
         [Column("PERSON_ID")]
         public long? PersonId { get; set; }
         [Column("ORGANIZATION_ID")]
@@ -67,8 +69,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("ACQUISITION_FILE_ID")]
-        public long AcquisitionFileId { get; set; }
 
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsInterestHolders))]

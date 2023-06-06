@@ -289,7 +289,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
   border-color: transparent;
 }
 
-.c19 {
+.c20 {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -363,22 +363,26 @@ exports[`AcquisitionView component renders as expected 1`] = `
   width: 100%;
 }
 
-.c20 {
+.c21 {
   float: right;
   cursor: pointer;
 }
 
 .c13 {
+  padding-top: 1rem;
+}
+
+.c14 {
   text-align: right;
 }
 
-.c15 {
+.c16 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c14 {
+.c15 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -386,14 +390,14 @@ exports[`AcquisitionView component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c17.required::before {
+.c18.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c16 {
+.c17 {
   font-weight: bold;
 }
 
@@ -457,7 +461,12 @@ exports[`AcquisitionView component renders as expected 1`] = `
   line-height: 2.2rem;
 }
 
-.c18 {
+.c22 {
+  text-align: center;
+  font-style: italic;
+}
+
+.c19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -615,6 +624,15 @@ exports[`AcquisitionView component renders as expected 1`] = `
                 >
                   Checklist
                 </a>
+                <a
+                  aria-selected="false"
+                  class="nav-item nav-link"
+                  data-rb-event-key="stakeholders"
+                  href="#"
+                  role="tab"
+                >
+                  Stakeholders
+                </a>
               </nav>
               <div
                 class="tab-content"
@@ -625,16 +643,16 @@ exports[`AcquisitionView component renders as expected 1`] = `
                   role="tabpanel"
                 >
                   <div
-                    class=""
+                    class="c13"
                   >
                     <div
-                      class="c13 mr-3 my-1"
+                      class="c14 mr-3 my-1"
                     />
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -659,13 +677,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Ministry project:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
                           </div>
@@ -677,13 +695,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Product:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             00048 MISCELLANEOUS CLAIMS
                           </div>
@@ -695,22 +713,22 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Funding:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           />
                         </div>
                       </div>
                     </div>
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -735,13 +753,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Assigned date:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             Jun 27, 2022
                           </div>
@@ -753,7 +771,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Delivery date:
                               <span
@@ -783,7 +801,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             Jul 29, 2022
                           </div>
@@ -795,7 +813,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Acquisition completed date:
                               <span
@@ -825,16 +843,16 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           />
                         </div>
                       </div>
                     </div>
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -859,13 +877,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Acquisition file name:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             Test ACQ File
                           </div>
@@ -877,7 +895,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Historical file number:
                               <span
@@ -907,7 +925,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             legacy file number
                           </div>
@@ -919,13 +937,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Physical file status:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           />
                         </div>
                         <div
@@ -935,13 +953,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Acquisition type:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             Consensual Agreement
                           </div>
@@ -953,13 +971,13 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Ministry region:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             South Coast Region
                           </div>
@@ -967,10 +985,10 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       </div>
                     </div>
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -995,16 +1013,16 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Negotiation agent:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             <a
-                              class="c18"
+                              class="c19"
                               href="/contact/P1"
                               rel="noopener noreferrer"
                               target="_blank"
@@ -1036,16 +1054,16 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="pr-0 text-left col-4"
                           >
                             <label
-                              class="c16"
+                              class="c17"
                             >
                               Negotiation agent:
                             </label>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="c18 text-left col"
                           >
                             <a
-                              class="c18"
+                              class="c19"
                               href="/contact/P3"
                               rel="noopener noreferrer"
                               target="_blank"
@@ -1073,10 +1091,10 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       </div>
                     </div>
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -1095,12 +1113,112 @@ exports[`AcquisitionView component renders as expected 1`] = `
                         class="collapse show"
                       >
                         <div
-                          class="c19"
+                          class="c20"
                         >
                           <div
                             class="spinner-border text-warning"
                             data-testid="filter-backdrop-loading"
                           />
+                        </div>
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-4"
+                          >
+                            <label
+                              class="c17"
+                            >
+                              Owner solicitor:
+                            </label>
+                          </div>
+                          <div
+                            class="c18 text-left col"
+                          >
+                            <a
+                              class="c19"
+                              href="/contact/P1"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <span>
+                                Luke Skywalker
+                              </span>
+                              <svg
+                                class="ml-2"
+                                fill="currentColor"
+                                height="1rem"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1rem"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                />
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-4"
+                          >
+                            <label
+                              class="c17"
+                            >
+                              Owner representative:
+                            </label>
+                          </div>
+                          <div
+                            class="c18 text-left col"
+                          >
+                            <a
+                              class="c19"
+                              href="/contact/P2"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <span>
+                                Han Solo
+                              </span>
+                              <svg
+                                class="ml-2"
+                                fill="currentColor"
+                                height="1rem"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="1rem"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                />
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-4"
+                          >
+                            <label
+                              class="c17"
+                            >
+                              Comment:
+                            </label>
+                          </div>
+                          <div
+                            class="c18 text-left col"
+                          >
+                            test representative comment
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1112,16 +1230,16 @@ exports[`AcquisitionView component renders as expected 1`] = `
                   role="tabpanel"
                 >
                   <div
-                    class=""
+                    class="c13"
                   >
                     <div
-                      class="c13 mr-3 my-1"
+                      class="c14 mr-3 my-1"
                     />
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -1135,7 +1253,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c20"
+                              class="c21"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1163,10 +1281,10 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       />
                     </div>
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -1180,7 +1298,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c20"
+                              class="c21"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1208,10 +1326,10 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       />
                     </div>
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -1225,7 +1343,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c20"
+                              class="c21"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1253,10 +1371,10 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       />
                     </div>
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -1270,7 +1388,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c20"
+                              class="c21"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1298,10 +1416,10 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       />
                     </div>
                     <div
-                      class="c14 form-section"
+                      class="c15 form-section"
                     >
                       <h2
-                        class="c15"
+                        class="c16"
                       >
                         <div
                           class="no-gutters row"
@@ -1315,7 +1433,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             class="col-1"
                           >
                             <svg
-                              class="c20"
+                              class="c21"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -1341,6 +1459,146 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       <div
                         class="collapse show"
                       />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="fade tab-pane"
+                  role="tabpanel"
+                >
+                  <div
+                    class="c13"
+                  >
+                    <div
+                      class="c20"
+                    >
+                      <div
+                        class="spinner-border text-warning"
+                        data-testid="filter-backdrop-loading"
+                      />
+                    </div>
+                    <div
+                      class="c15 form-section"
+                    >
+                      <h2
+                        class="c16"
+                      >
+                        <div
+                          class="no-gutters row"
+                        >
+                          <div
+                            class="col"
+                          >
+                            Interests
+                          </div>
+                          <div
+                            class="col-1"
+                          >
+                            <svg
+                              class="c21"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <title>
+                                collapse-section
+                              </title>
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M7 14l5-5 5 5z"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      </h2>
+                      <div
+                        class="collapse show"
+                      >
+                        <div
+                          class="c14 mr-3 my-1"
+                        />
+                        <div
+                          class="c22"
+                        >
+                          <p>
+                            There are no interest holders associated with this file.
+                          </p>
+                          <p>
+                             To add an interest holder, click the edit button.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="c13"
+                  >
+                    <div
+                      class="c15 form-section"
+                    >
+                      <h2
+                        class="c16"
+                      >
+                        <div
+                          class="no-gutters row"
+                        >
+                          <div
+                            class="col"
+                          >
+                            Non-interest Payees
+                          </div>
+                          <div
+                            class="col-1"
+                          >
+                            <svg
+                              class="c21"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <title>
+                                collapse-section
+                              </title>
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M7 14l5-5 5 5z"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      </h2>
+                      <div
+                        class="collapse show"
+                      >
+                        <div
+                          class="c14 mr-3 my-1"
+                        />
+                        <div
+                          class="c22"
+                        >
+                          <p>
+                            There are no non-interest payees associated with this file.
+                          </p>
+                          <p>
+                             To add a non-interest payee, click the edit button.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

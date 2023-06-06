@@ -5,7 +5,7 @@ import {
   getCompensationRequisitionApi,
   putCompensationRequisitionApi,
 } from 'hooks/pims-api/useApiRequisitionCompensations';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
@@ -14,7 +14,7 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
  */
 export const useCompensationRequisitionRepository = () => {
   const getCompensationRequisition = useApiRequestWrapper<
-    (compensationId: number) => Promise<AxiosResponse<Api_Compensation, any>>
+    (compensationId: number) => Promise<AxiosResponse<Api_CompensationRequisition, any>>
   >({
     requestFunction: useCallback(
       async (compensationId: number) => await getCompensationRequisitionApi(compensationId),
@@ -26,10 +26,13 @@ export const useCompensationRequisitionRepository = () => {
   });
 
   const updateCompensationRequisition = useApiRequestWrapper<
-    (compensation: Api_Compensation) => Promise<AxiosResponse<Api_Compensation, any>>
+    (
+      compensation: Api_CompensationRequisition,
+    ) => Promise<AxiosResponse<Api_CompensationRequisition, any>>
   >({
     requestFunction: useCallback(
-      async (compensation: Api_Compensation) => await putCompensationRequisitionApi(compensation),
+      async (compensation: Api_CompensationRequisition) =>
+        await putCompensationRequisitionApi(compensation),
       [],
     ),
     requestName: 'updateCompensation',

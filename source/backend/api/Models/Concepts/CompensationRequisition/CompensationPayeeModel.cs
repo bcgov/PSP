@@ -3,7 +3,6 @@ namespace Pims.Api.Models.Concepts
 {
     public class CompensationPayeeModel : BaseAppModel
     {
-
         public long AcquisitionPayeeId { get; set; }
 
         public long CompensationRequisitionId { get; set; }
@@ -12,29 +11,26 @@ namespace Pims.Api.Models.Concepts
 
         public long? InterestHolderId { get; set; }
 
-        public AcquisitionFileOwnerModel Owner { get; set; }
+        public long? OwnerRepresentativeId { get; set; }
 
-        public List<AcquisitionFilePayeeChequeModel> PayeeCheques { get; set; }
+        public long? OwnerSolicitorId { get; set; }
 
-        // public long Id { get; set; }
+        public long? MotiSolicitorId { get; set; }
 
-        // public bool? IsPrimaryOwner { get; set; }
+        public bool? IsDisabled { get; set; }
 
-        // public bool? IsOrganization { get; set; }
+        public PersonModel MotiSolicitor { get; set; }
 
-        // public string? LastNameAndCorpName { get; set; }
+        public AcquisitionFileOwnerModel AcquisitionOwner { get; set; }
 
-        // public string? OtherName { get; set; }
+        public CompensationRequisitionModel CompensationRequisition { get; set; }
 
-        // public string? GivenName { get; set; }
+        public InterestHolderModel InterestHolder { get; set; }
 
-        // public string? IncorporationNumber { get; set; }
+        public AcquisitionFileOwnerRepresentativeModel OwnerRepresentative { get; set; }
 
-        // public string? RegistrationNumber { get; set; }
+        public AcquisitionFileOwnerSolicitorModel OwnerSolicitor { get; set; }
 
-        // public string? ContactEmailAddr { get; set; }
-
-        // public string? ContactPhoneNum { get; set; }
-
+        public List<AcquisitionPayeeChequeModel> Cheques { get; set; }
     }
 }

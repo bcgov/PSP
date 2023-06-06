@@ -6,7 +6,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c11.btn {
+  .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c11.btn:hover {
+.c12.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c11.btn:focus {
+.c12.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c11.btn.btn-primary {
+.c12.btn.btn-primary {
   border: none;
 }
 
-.c11.btn.btn-secondary {
+.c12.btn.btn-secondary {
   background: none;
 }
 
-.c11.btn.btn-info {
+.c12.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c11.btn.btn-info:hover,
-.c11.btn.btn-info:active,
-.c11.btn.btn-info:focus {
+.c12.btn.btn-info:hover,
+.c12.btn.btn-info:active,
+.c12.btn.btn-info:focus {
   background: none;
 }
 
-.c11.btn.btn-light {
+.c12.btn.btn-light {
   border: none;
 }
 
-.c11.btn.btn-dark {
+.c12.btn.btn-dark {
   border: none;
 }
 
-.c11.btn.btn-link {
+.c12.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   padding: 0;
 }
 
-.c11.btn.btn-link:hover,
-.c11.btn.btn-link:active,
-.c11.btn.btn-link:focus {
+.c12.btn.btn-link:hover,
+.c12.btn.btn-link:active,
+.c12.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   outline: none;
 }
 
-.c11.btn.btn-link:disabled,
-.c11.btn.btn-link.disabled {
+.c12.btn.btn-link:disabled,
+.c12.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c11.btn:disabled,
-.c11.btn:disabled:hover {
+.c12.btn:disabled,
+.c12.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,19 +128,19 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c11.Button .Button__icon {
+.c12.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c11.Button--icon-only:focus {
+.c12.Button--icon-only:focus {
   outline: none;
 }
 
-.c11.Button--icon-only .Button__icon {
+.c12.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c12 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -159,12 +159,12 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c14 {
+.c15 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c13 {
+.c14 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -211,7 +211,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   position: relative;
 }
 
-.c7 {
+.c8 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -223,26 +223,30 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   min-height: 4.5rem;
 }
 
-.c7 .btn {
+.c8 .btn {
   margin: 0;
 }
 
-.c8 {
+.c9 {
   float: right;
   cursor: pointer;
 }
 
 .c2 {
+  padding-top: 1rem;
+}
+
+.c3 {
   text-align: right;
 }
 
-.c4 {
+.c5 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c3 {
+.c4 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -250,22 +254,22 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c6.required::before {
+.c7.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c5 {
+.c6 {
   font-weight: bold;
 }
 
-.c9 {
+.c10 {
   border-radius: 0.5rem 0.5rem 0rem 0rem;
 }
 
-.c10 {
+.c11 {
   border-left: 0.2rem solid white;
 }
 
@@ -304,16 +308,16 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
         role="tabpanel"
       >
         <div
-          class=""
+          class="c2"
         >
           <div
-            class="c2 mr-3 my-1"
+            class="c3 mr-3 my-1"
           />
           <div
-            class="c3 form-section"
+            class="c4 form-section"
           >
             <h2
-              class="c4"
+              class="c5"
             >
               <div
                 class="no-gutters row"
@@ -338,13 +342,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Ministry project:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   <div>
                     00048 CLAIMS
@@ -354,10 +358,10 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="c3 form-section"
+            class="c4 form-section"
           >
             <h2
-              class="c4"
+              class="c5"
             >
               <div
                 class="no-gutters row"
@@ -382,13 +386,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Road name:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   Test road name
                 </div>
@@ -400,13 +404,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Road alias:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   Test road alias
                 </div>
@@ -414,10 +418,10 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="c3 form-section"
+            class="c4 form-section"
           >
             <h2
-              class="c4"
+              class="c5"
             >
               <div
                 class="no-gutters row"
@@ -442,13 +446,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Research purpose:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 />
               </div>
               <div
@@ -458,13 +462,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Request date:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                    Apr 14, 2022
                 </div>
@@ -476,13 +480,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Source of request:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   Headquarters (HQ)
                 </div>
@@ -494,13 +498,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Requester:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   Dairy Queen Forever! Property Management
                 </div>
@@ -512,23 +516,23 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Description of request:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 />
               </div>
               a request description
             </div>
           </div>
           <div
-            class="c3 form-section"
+            class="c4 form-section"
           >
             <h2
-              class="c4"
+              class="c5"
             >
               <div
                 class="no-gutters row"
@@ -553,13 +557,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Research completed on:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   Mar 30, 2022
                 </div>
@@ -571,23 +575,23 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Result of request:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 />
               </div>
               A research result
             </div>
           </div>
           <div
-            class="c3 form-section"
+            class="c4 form-section"
           >
             <h2
-              class="c4"
+              class="c5"
             >
               <div
                 class="no-gutters row"
@@ -612,13 +616,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Expropriation?:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 >
                   No
                 </div>
@@ -630,13 +634,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c5"
+                    class="c6"
                   >
                     Expropriation notes:
                   </label>
                 </div>
                 <div
-                  class="c6 text-left col"
+                  class="c7 text-left col"
                 />
               </div>
               An expropriation note
@@ -650,10 +654,10 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
         role="tabpanel"
       >
         <div
-          class="c3 form-section"
+          class="c4 form-section"
         >
           <h2
-            class="c4"
+            class="c5"
           >
             <div
               class="no-gutters row"
@@ -662,7 +666,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 class="col"
               >
                 <div
-                  class="c7 no-gutters row"
+                  class="c8 no-gutters row"
                 >
                   <div
                     class="px-2 my-1 col-auto"
@@ -678,7 +682,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c8"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -705,7 +709,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
             class="collapse show"
           >
             <form
-              class="c9 p-3"
+              class="c10 p-3"
               novalidate=""
             >
               <div
@@ -787,13 +791,13 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                   class="col-lg-auto"
                 >
                   <div
-                    class="c10 no-gutters pl-2 row"
+                    class="c11 no-gutters pl-2 row"
                   >
                     <div
                       class="col"
                     >
                       <button
-                        class="c11 Button Button--icon-only primary btn btn-primary"
+                        class="c12 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -822,7 +826,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                       class="col"
                     >
                       <button
-                        class="c11 Button Button--icon-only btn btn-info"
+                        class="c12 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -875,11 +879,11 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                     >
                       Document type
                       <div
-                        class="c12"
+                        class="c13"
                         data-testid="sort-column-documentType"
                       >
                         <svg
-                          class="c13"
+                          class="c14"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -894,7 +898,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -921,11 +925,11 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                     >
                       File name
                       <div
-                        class="c12"
+                        class="c13"
                         data-testid="sort-column-fileName"
                       >
                         <svg
-                          class="c13"
+                          class="c14"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -940,7 +944,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -967,11 +971,11 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                     >
                       Uploaded
                       <div
-                        class="c12"
+                        class="c13"
                         data-testid="sort-column-appCreateTimestamp"
                       >
                         <svg
-                          class="c13"
+                          class="c14"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -986,7 +990,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1013,11 +1017,11 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                     >
                       Status
                       <div
-                        class="c12"
+                        class="c13"
                         data-testid="sort-column-statusTypeCode"
                       >
                         <svg
-                          class="c13"
+                          class="c14"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1032,7 +1036,7 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c14"
+                          class="c15"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"

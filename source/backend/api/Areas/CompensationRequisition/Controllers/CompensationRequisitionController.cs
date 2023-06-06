@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -86,8 +87,13 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
                 DateTime.Now);
             _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
 
+            if (id != compensationRequisition.Id)
+            {
+                throw new BadRequestException("Invalid compensationRequisitionId.");
+            }
+
             var compensationReqEntity = _mapper.Map<Dal.Entities.PimsCompensationRequisition>(compensationRequisition);
-            var compensation = _compensationRequisitionService.Update(id, compensationReqEntity);
+            var compensation = _compensationRequisitionService.Update(compensationReqEntity);
 
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compensation));
         }
