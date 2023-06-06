@@ -6,7 +6,7 @@ import { FormTemplateTypes } from 'features/properties/map/shared/content/models
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from 'hooks/repositories/useH120CategoryRepository';
 import chunk from 'lodash/chunk';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { Api_GenerateCompensation } from 'models/generate/GenerateCompensation';
 import { Api_GenerateFile } from 'models/generate/GenerateFile';
@@ -31,7 +31,7 @@ export const useGenerateH120 = () => {
     return (layerData?.ED_NAME as string) ?? '';
   };
 
-  const generateCompensation = async (compensation: Api_Compensation) => {
+  const generateCompensation = async (compensation: Api_CompensationRequisition) => {
     if (compensation?.id === undefined) {
       throw Error(
         'user must choose a valid compensation requisition in order to generate a document',

@@ -2,7 +2,7 @@ import clsx from 'classnames';
 import * as Styled from 'components/common/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import React from 'react';
 import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
@@ -14,7 +14,7 @@ import UpdateCompensationRequisitionContainer from './update/UpdateCompensationR
 import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequisitionForm';
 
 export interface CompensationRequisitionTrayViewProps {
-  compensation?: Api_Compensation;
+  compensation?: Api_CompensationRequisition;
   acquistionFile: Api_AcquisitionFile;
   clientConstant: string;
   gstConstant: number | undefined;
@@ -67,7 +67,6 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
         <UpdateCompensationRequisitionContainer
           compensation={compensation}
           acquisitionFile={acquistionFile}
-          formikRef={React.createRef()}
           onSuccess={() => {
             setEditMode(false);
             onUpdate();

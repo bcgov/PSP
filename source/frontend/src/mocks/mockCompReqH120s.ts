@@ -1,13 +1,15 @@
-import { Api_CompensationFinancial } from 'models/api/Compensation';
+import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
 
 export const mockCompReqH120s: () => Api_CompensationFinancial[] = () => [
   {
     id: 4,
     compensationId: 2,
     pretaxAmount: 99,
+    isGstRequired: false,
     taxAmount: 1,
     totalAmount: 100,
     isDisabled: false,
+    financialActivityCodeId: 3,
     financialActivityCode: { id: 3 },
     appCreateTimestamp: '2023-05-09T00:16:17.293',
     appLastUpdateTimestamp: '2023-05-09T00:16:17.293',
@@ -19,9 +21,11 @@ export const mockCompReqH120s: () => Api_CompensationFinancial[] = () => [
     id: 5,
     compensationId: 2,
     pretaxAmount: 1,
+    isGstRequired: false,
     taxAmount: 99,
     totalAmount: 100,
     isDisabled: false,
+    financialActivityCodeId: 3,
     financialActivityCode: { id: 3 },
     appCreateTimestamp: '2023-05-09T00:16:17.293',
     appLastUpdateTimestamp: '2023-05-09T00:16:17.293',
@@ -33,9 +37,11 @@ export const mockCompReqH120s: () => Api_CompensationFinancial[] = () => [
     id: 6,
     compensationId: 2,
     pretaxAmount: 999,
+    isGstRequired: false,
     taxAmount: 1,
     totalAmount: 1000,
     isDisabled: false,
+    financialActivityCodeId: 4,
     financialActivityCode: { id: 4 },
     appCreateTimestamp: '2023-05-09T00:16:17.293',
     appLastUpdateTimestamp: '2023-05-09T00:16:17.293',

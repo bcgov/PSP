@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -46,8 +45,15 @@ namespace Pims.Dal.Repositories
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
         {
             var entity = Context.PimsCompensationRequisitions
+                .Include(x => x.YearlyFinancial)
+                .Include(x => x.ChartOfAccounts)
+                .Include(x => x.Responsibility)
                 .Include(c => c.PimsCompReqH120s)
-                .Include(c => c.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.FinancialActivityCode)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.AcquisitionOwner)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.PimsAcqPayeeCheques)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -60,17 +66,57 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
-            Context.UpdateChild<PimsCompensationRequisition, long, PimsAcquisitionPayee, long>(a => a.PimsAcquisitionPayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsAcquisitionPayees.ToArray(), false);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), false);
 
             return compensationRequisition;
         }
 
+        public PimsAcquisitionPayee UpdatePayee(PimsAcquisitionPayee compensationPayee)
+        {
+            var existingCompensationPayee = Context.PimsAcquisitionPayees
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(compensationPayee.AcquisitionPayeeId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingCompensationPayee).CurrentValues.SetValues(compensationPayee);
+
+            return compensationPayee;
+        }
+
+        public PimsAcqPayeeCheque UpdatePayeeCheque(PimsAcqPayeeCheque payeeCheque)
+        {
+            var existingPayeeCheque = Context.PimsAcqPayeeCheques
+                .FirstOrDefault(x => x.AcqPayeeChequeId.Equals(payeeCheque.AcqPayeeChequeId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingPayeeCheque).CurrentValues.SetValues(payeeCheque);
+
+            return existingPayeeCheque;
+        }
+
         public bool TryDelete(long compensationId)
         {
-            var deletedEntity = Context.PimsCompensationRequisitions.FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
+            var deletedEntity = Context.PimsCompensationRequisitions
+                .Include(cr => cr.PimsAcquisitionPayees)
+                    .ThenInclude(ap => ap.PimsAcqPayeeCheques)
+                .AsNoTracking()
+                .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
+
             if (deletedEntity != null)
             {
-                Context.Remove(deletedEntity);
+                // Remove child entries.
+                foreach (var payee in deletedEntity.PimsAcquisitionPayees)
+                {
+                    foreach (var cheque in payee.PimsAcqPayeeCheques)
+                    {
+                        this.Context.PimsAcqPayeeCheques.Remove(new PimsAcqPayeeCheque() { AcqPayeeChequeId = cheque.AcqPayeeChequeId });
+                    }
+
+                    this.Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+
+                    this.Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
+                }
+
+                this.Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+
+                this.Context.PimsCompensationRequisitions.Remove(new PimsCompensationRequisition() { CompensationRequisitionId = deletedEntity.CompensationRequisitionId });
                 return true;
             }
             return false;

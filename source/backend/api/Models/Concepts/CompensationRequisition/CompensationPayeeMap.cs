@@ -23,6 +23,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.InterestHolder, src => src.InterestHolder)
                 .Map(dest => dest.OwnerRepresentative, src => src.OwnerRepresentative)
                 .Map(dest => dest.OwnerSolicitor, src => src.OwnerSolicitor)
+                .Map(dest => dest.Cheques, src => src.PimsAcqPayeeCheques)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<CompensationPayeeModel, Entity.PimsAcquisitionPayee>()
@@ -34,6 +35,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OwnerRepresentativeId, src => src.OwnerRepresentativeId)
                 .Map(dest => dest.OwnerSolicitorId, src => src.OwnerSolicitorId)
                 .Map(dest => dest.AcquisitionFilePersonId, src => src.MotiSolicitorId)
+                .Map(dest => dest.PimsAcqPayeeCheques, src => src.Cheques)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
