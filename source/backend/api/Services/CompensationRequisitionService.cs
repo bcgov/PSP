@@ -14,12 +14,14 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
+        private readonly IAcquisitionPayeeRepository _acquisitionPayeeRepository;
 
-        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository)
+        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository)
         {
             _user = user;
             _logger = logger;
             _compensationRequisitionRepository = compensationRequisitionRepository;
+            _acquisitionPayeeRepository = acquisitionPayeeRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -41,6 +43,27 @@ namespace Pims.Api.Services
             }
 
             return compensationRequisition;
+        }
+
+        public PimsAcquisitionPayee GetPayeeById(long payeeId)
+        {
+            _logger.LogInformation($"Getting Compensation Requisition Payee with id {payeeId}");
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            var compensationPayee = _acquisitionPayeeRepository.GetById(payeeId);
+            var compensationRequisition = _compensationRequisitionRepository.GetById(compensationPayee.CompensationRequisitionId);
+            if (compensationRequisition is not null && compensationPayee is not null)
+            {
+                var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
+                if (payeeCheque is not null)
+                {
+                    payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
+                    payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
+                    payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
+                }
+            }
+
+            return compensationPayee;
         }
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)

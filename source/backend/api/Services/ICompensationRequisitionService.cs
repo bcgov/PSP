@@ -6,6 +6,8 @@ namespace Pims.Api.Services
     {
         PimsCompensationRequisition GetById(long compensationRequisitionId);
 
+        PimsAcquisitionPayee GetPayeeById(long payeeId);
+
         PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition);
 
         bool DeleteCompensation(long compensationId);
