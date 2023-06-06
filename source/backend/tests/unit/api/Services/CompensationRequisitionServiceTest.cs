@@ -50,7 +50,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionView);
             var repo = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            repo.Setup(x => x.GetById(It.IsAny<long>()));
+            repo.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
 
             // Act
             var result = service.GetById(1);
