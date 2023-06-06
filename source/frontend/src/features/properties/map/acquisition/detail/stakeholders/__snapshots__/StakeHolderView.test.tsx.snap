@@ -6,22 +6,26 @@ exports[`StakeHolderView component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2 {
+  .c3 {
   float: right;
   cursor: pointer;
 }
 
-.c3 {
+.c0 {
+  padding-top: 1rem;
+}
+
+.c4 {
   text-align: right;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c0 {
+.c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -30,13 +34,13 @@ exports[`StakeHolderView component renders as expected 1`] = `
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -50,7 +54,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c2"
+              class="c3"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -77,7 +81,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c3 mr-3 my-1"
+          class="c4 mr-3 my-1"
         />
         <div
           class="table"
@@ -262,22 +266,26 @@ exports[`StakeHolderView component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c2 {
+  .c3 {
   float: right;
   cursor: pointer;
 }
 
-.c3 {
+.c0 {
+  padding-top: 1rem;
+}
+
+.c4 {
   text-align: right;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c0 {
+.c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -286,13 +294,13 @@ exports[`StakeHolderView component renders as expected 1`] = `
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -306,7 +314,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
             class="col-1"
           >
             <svg
-              class="c2"
+              class="c3"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -333,7 +341,7 @@ exports[`StakeHolderView component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c3 mr-3 my-1"
+          class="c4 mr-3 my-1"
         />
         <div
           class="table"
