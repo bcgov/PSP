@@ -11,5 +11,7 @@ namespace Pims.Dal.Repositories
         List<PimsAcquisitionChecklistItem> GetAllChecklistItemsByAcquisitionFileId(long acquisitionFileId);
 
         PimsAcquisitionChecklistItem Update(PimsAcquisitionChecklistItem checklistItem);
+
+        PimsAcquisitionChecklistItem Add(PimsAcquisitionChecklistItem checklistItem);
     }
 }

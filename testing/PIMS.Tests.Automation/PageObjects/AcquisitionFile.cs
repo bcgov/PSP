@@ -111,7 +111,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(menuAcquisitionButton).Click();
 
             Wait();
-            webDriver.FindElement(createAcquisitionFileButton).Click();
+            FocusAndClick(createAcquisitionFileButton);
         }
 
         public void NavigateToAddPropertiesAcquisitionFile()
@@ -147,9 +147,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionFileProjectInput).SendKeys(project);
             FocusAndClick(acquisitionFileProject1stOption);
 
-            //Wait();
-            //ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, product);
-            //ChooseRandomSelectOption(acquisitionFileProjectFundingInput, 1);
+            Wait();
+            webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
+            ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, product);
+            ChooseRandomSelectOption(acquisitionFileProjectFundingInput, 1);
 
             if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
             {

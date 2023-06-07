@@ -1,6 +1,6 @@
-﻿Feature: Projects
+﻿@Regression-Projects
+Feature: Projects
 
-@Regression-Projects
 Scenario Outline: Create new Projects
 	Given I create a new Project from row number <RowNumber>
 	When I verify The Project View Form

@@ -6,7 +6,7 @@ import { FeatureCollection } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApiGeocoder } from 'hooks/pims-api/useApiGeocoder';
 import { IProperty } from 'interfaces';
-import { mockParcel } from 'mocks/filterDataMock';
+import { mockParcel } from 'mocks/filterData.mock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';

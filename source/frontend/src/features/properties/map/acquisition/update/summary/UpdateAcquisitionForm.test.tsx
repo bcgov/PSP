@@ -2,9 +2,9 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { IAutocompletePrediction } from 'interfaces';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
-import { mockLookups } from 'mocks/mockLookups';
-import { mockNotesResponse } from 'mocks/mockNoteResponses';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import { mockLookups } from 'mocks/lookups.mock';
+import { mockNotesResponse } from 'mocks/noteResponses.mock';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
@@ -38,7 +38,7 @@ describe('UpdateAcquisitionForm component', () => {
     const ref = createRef<FormikProps<UpdateAcquisitionSummaryFormModel>>();
     const utils = render(
       <UpdateAcquisitionForm
-        ref={ref}
+        formikRef={ref}
         initialValues={props.initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}

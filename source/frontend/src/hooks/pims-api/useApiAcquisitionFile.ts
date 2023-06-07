@@ -6,6 +6,9 @@ import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
+import { Api_Compensation, Api_CompensationFinancial } from 'models/api/Compensation';
+import { Api_Product, Api_Project } from 'models/api/Project';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -26,23 +29,60 @@ export const useApiAcquisitionFile = () => {
         ),
       getAcquisitionFile: (acqFileId: number) =>
         api.get<Api_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
-      postAcquisitionFile: (acqFile: Api_AcquisitionFile) =>
-        api.post<Api_AcquisitionFile>(`/acquisitionfiles`, acqFile),
-      putAcquisitionFile: (acqFile: Api_AcquisitionFile, userOverride = false) =>
-        api.put<Api_AcquisitionFile>(
-          `/acquisitionfiles/${acqFile.id}?userOverride=${userOverride}`,
+      postAcquisitionFile: (
+        acqFile: Api_AcquisitionFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.post<Api_AcquisitionFile>(
+          `/acquisitionfiles?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           acqFile,
         ),
-      putAcquisitionFileProperties: (acqFile: Api_AcquisitionFile) =>
-        api.put<Api_AcquisitionFile>(`/acquisitionfiles/${acqFile?.id}/properties`, acqFile),
+      putAcquisitionFile: (
+        acqFile: Api_AcquisitionFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.put<Api_AcquisitionFile>(
+          `/acquisitionfiles/${acqFile.id}?${userOverrideCodes
+            .map(o => `userOverrideCodes=${o}`)
+            .join('&')}`,
+          acqFile,
+        ),
+      putAcquisitionFileProperties: (
+        acqFile: Api_AcquisitionFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.put<Api_AcquisitionFile>(
+          `/acquisitionfiles/${acqFile?.id}/properties?${userOverrideCodes
+            .map(o => `userOverrideCodes=${o}`)
+            .join('&')}`,
+          acqFile,
+        ),
       getAcquisitionFileProperties: (acqFileId: number) =>
         api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
       getAcquisitionFileOwners: (acqFileId: number) =>
         api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
+      getAcquisitionFileProject: (acqFileId: number) =>
+        api.get<Api_Project>(`/acquisitionfiles/${acqFileId}/project`),
+      getAcquisitionFileProduct: (acqFileId: number) =>
+        api.get<Api_Product>(`/acquisitionfiles/${acqFileId}/product`),
       getAcquisitionFileChecklist: (acqFileId: number) =>
         api.get<Api_AcquisitionFileChecklistItem[]>(`/acquisitionfiles/${acqFileId}/checklist`),
       putAcquisitionFileChecklist: (acqFile: Api_AcquisitionFile) =>
         api.put<Api_AcquisitionFile>(`/acquisitionfiles/${acqFile?.id}/checklist`, acqFile),
+      getFileCompensationRequisitions: (acqFileId: number) =>
+        api.get<Api_Compensation[]>(`/acquisitionfiles/${acqFileId}/compensation-requisitions`),
+      getFileCompReqH120s: (acqFileId: number, finalOnly?: boolean) =>
+        api.get<Api_CompensationFinancial[]>(
+          `/acquisitionfiles/${acqFileId}/comp-req-h120s?finalOnly=${!!finalOnly}`,
+        ),
+      postFileCompensationRequisition: (
+        acqFileId: number,
+        compensationRequisition: Api_Compensation,
+      ) =>
+        api.post<Api_Compensation>(
+          `/acquisitionfiles/${acqFileId}/compensation-requisitions`,
+          compensationRequisition,
+        ),
     }),
     [api],
   );

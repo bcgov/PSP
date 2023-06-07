@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 
 namespace Pims.Api.Services
 {
@@ -10,11 +11,11 @@ namespace Pims.Api.Services
 
         PimsAcquisitionFile GetById(long id);
 
-        PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile);
+        PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);
 
-        PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool userOverride);
+        PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);
 
-        PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile);
+        PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);
 
         IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id);
 
@@ -27,5 +28,9 @@ namespace Pims.Api.Services
         IEnumerable<PimsAgreement> GetAgreements(long id);
 
         IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
+
+        IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId);
+
+        PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition);
     }
 }

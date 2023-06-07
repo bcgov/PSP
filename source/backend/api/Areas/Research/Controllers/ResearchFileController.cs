@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -137,10 +139,10 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchfile" })]
-        public IActionResult AddResearchFile(ResearchFileModel researchFileModel)
+        public IActionResult AddResearchFile(ResearchFileModel researchFileModel, [FromQuery] string[] userOverrideCodes)
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
-            var researchFile = _researchFileService.Add(researchFileEntity);
+            var researchFile = _researchFileService.Add(researchFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
@@ -171,10 +173,10 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchfile" })]
-        public IActionResult UpdateResearchFileProperties([FromBody] ResearchFileModel researchFileModel)
+        public IActionResult UpdateResearchFileProperties([FromBody] ResearchFileModel researchFileModel, [FromQuery] string[] userOverrideCodes)
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
-            var researchFile = _researchFileService.UpdateProperties(researchFileEntity);
+            var researchFile = _researchFileService.UpdateProperties(researchFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }

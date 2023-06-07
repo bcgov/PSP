@@ -305,6 +305,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (propertyResearch.Purpose != "")
             {
                 webDriver.FindElement(researchPropertyPurposeSelect).Click();
+                Wait();
                 ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.Purpose);
             }
             if (propertyResearch.LegalOpinionRequest != "")

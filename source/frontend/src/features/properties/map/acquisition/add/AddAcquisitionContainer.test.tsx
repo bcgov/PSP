@@ -4,8 +4,8 @@ import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
-import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import { mockLookups } from 'mocks/lookups.mock';
 import { Api_User } from 'models/api/User';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, renderAsync, RenderOptions, screen, userEvent } from 'utils/test-utils';
@@ -243,7 +243,7 @@ describe('AddAcquisitionContainer component', () => {
     });
 
     const expectedValues = formValues.toApi();
-    expect(addAcquisitionFile).toBeCalledWith(expectedValues);
+    expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);
     expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
   });
 
@@ -310,7 +310,7 @@ describe('AddAcquisitionContainer component', () => {
     await act(() => userEvent.click(getSaveButton()));
 
     const expectedValues = formValues.toApi();
-    expect(addAcquisitionFile).toBeCalledWith(expectedValues);
+    expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);
     expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
   });
 });

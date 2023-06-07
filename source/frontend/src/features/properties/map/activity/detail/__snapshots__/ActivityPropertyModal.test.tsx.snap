@@ -234,6 +234,7 @@ exports[`ActivityPropertyModal tests Renders as expected 1`] = `
         </div>
         <div
           class="modal-body"
+          style="white-space: pre-line;"
         >
           <p>
             Select the properties from the parent file that this activity relates to:

@@ -4,7 +4,7 @@ import { useOrganizationDetail } from 'features/contacts/hooks/useOrganizationDe
 import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
 import { createMemoryHistory } from 'history';
 import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { Route } from 'react-router-dom';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, waitFor } from 'utils/test-utils';

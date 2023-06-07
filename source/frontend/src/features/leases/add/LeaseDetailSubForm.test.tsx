@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 

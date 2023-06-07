@@ -2,8 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/mockLookups';
-import { mockNoteResponse } from 'mocks/mockNoteResponses';
+import { mockLookups } from 'mocks/lookups.mock';
+import { mockNoteResponse } from 'mocks/noteResponses.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fakeText, render, RenderOptions, userEvent } from 'utils/test-utils';
 
