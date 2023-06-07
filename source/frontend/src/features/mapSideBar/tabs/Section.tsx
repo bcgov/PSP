@@ -26,24 +26,26 @@ export const Section: React.FC<
         <StyledSectionHeader>
           <Row className="no-gutters">
             <Col>{header}</Col>
-            <Col xs="1">
-              {isCollapsable && isCollapsed && (
-                <ArrowDropDownIcon
-                  title={`expand-${title ?? 'section'}`}
-                  onClick={() => {
-                    setIsCollapsed(!isCollapsed);
-                  }}
-                />
-              )}
-              {isCollapsable && !isCollapsed && (
-                <ArrowDropUpIcon
-                  title={`collapse-${title ?? 'section'}`}
-                  onClick={() => {
-                    setIsCollapsed(!isCollapsed);
-                  }}
-                />
-              )}
-            </Col>
+            {isCollapsable && (
+              <Col xs="1">
+                {isCollapsed && (
+                  <ArrowDropDownIcon
+                    title={`expand-${title ?? 'section'}`}
+                    onClick={() => {
+                      setIsCollapsed(!isCollapsed);
+                    }}
+                  />
+                )}
+                {!isCollapsed && (
+                  <ArrowDropUpIcon
+                    title={`collapse-${title ?? 'section'}`}
+                    onClick={() => {
+                      setIsCollapsed(!isCollapsed);
+                    }}
+                  />
+                )}
+              </Col>
+            )}
           </Row>
         </StyledSectionHeader>
       )}

@@ -342,9 +342,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Research File Information
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -537,9 +534,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Project
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -572,9 +566,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Roads
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -652,9 +643,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Research Request
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1014,9 +1002,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Result
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1104,9 +1089,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Expropriation
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

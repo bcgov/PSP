@@ -298,9 +298,6 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                 >
                   Project Details
                 </div>
-                <div
-                  class="col-1"
-                />
               </div>
             </h2>
             <div
@@ -543,9 +540,6 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                 >
                   Associated Codes
                 </div>
-                <div
-                  class="col-1"
-                />
               </div>
             </h2>
             <div
@@ -663,9 +657,6 @@ exports[`AddProjectContainer component renders as expected 1`] = `
                 >
                   Associated products
                 </div>
-                <div
-                  class="col-1"
-                />
               </div>
             </h2>
             <div
