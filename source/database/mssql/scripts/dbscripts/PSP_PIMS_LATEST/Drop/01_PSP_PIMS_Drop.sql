@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 13.0.3                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S55.00.dez                                 */
+/* Project file:          PIMS S56.00.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-06-01 10:34                                */
+/* Created on:            2023-06-07 10:02                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -2469,10 +2469,6 @@ ALTER TABLE [dbo].[PIMS_COMP_REQ_H120] DROP CONSTRAINT [PIM_FINACT_PIM_CRH120_FK
 GO
 
 
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [PIM_ACQPAY_PIM_AQPCHQ_FK]
-GO
-
-
 ALTER TABLE [dbo].[PIMS_H120_CATEGORY] DROP CONSTRAINT [PIM_FINACT_PIM_H120CT_FK]
 GO
 
@@ -3146,92 +3142,6 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_INTHLDR_PROP_INTEREST]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_ACQ_PAYEE_CHEQUE"                                 */
-/* ---------------------------------------------------------------------- */
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_ACQ_PAYEE_CHEQUE_ID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_IS_PAYMENT_IN_TRUST_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_CONCURRENCY_CONTROL_NUMBER_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_APP_CREATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_APP_CREATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_APP_CREATE_USER_DIRECTORY_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_APP_LAST_UPDATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_APP_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_APP_LAST_UPDATE_USER_DIRECTORY_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_DB_CREATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_DB_CREATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_DB_LAST_UPDATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_DB_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE] DROP CONSTRAINT [AQPCHQ_PK]
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_PAYEE_CHEQUE', 'COLUMN', N'PRETAX_AMT'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_PAYEE_CHEQUE', 'COLUMN', N'TAX_AMT'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_PAYEE_CHEQUE', 'COLUMN', N'TOTAL_AMT'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_PAYEE_CHEQUE', 'COLUMN', N'GST_NUMBER'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_PAYEE_CHEQUE', NULL, NULL
-GO
-
-
-DROP TABLE [dbo].[PIMS_ACQ_PAYEE_CHEQUE]
 GO
 
 
