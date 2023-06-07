@@ -1,6 +1,7 @@
 import { SelectOption } from 'components/common/form';
 import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from 'hooks/repositories/useFinancialCodeRepository';
+import { useInterestHolderRepository } from 'hooks/repositories/useInterestHolderRepository';
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
@@ -49,6 +50,13 @@ const UpdateCompensationRequisitionContainer: React.FC<
   } = useAcquisitionProvider();
 
   const {
+    getAcquisitionInterestHolders: {
+      execute: fetchInterestHolders,
+      loading: loadingInterestHolders,
+    },
+  } = useInterestHolderRepository();
+
+  const {
     getFinancialActivityCodeTypes: {
       execute: fetchFinancialActivities,
       loading: loadingFinancialActivities,
@@ -81,44 +89,60 @@ const UpdateCompensationRequisitionContainer: React.FC<
       const acquisitionRepresentativesCall = retrieveAcquisitionFileRepresentatives(
         acquisitionFile.id,
       );
+      const interestHoldersCall = fetchInterestHolders(acquisitionFile.id);
 
       await Promise.all([
         acquisitionOwnersCall,
         acquisitionSolicitorsCall,
         acquisitionRepresentativesCall,
-      ]).then(([acquisitionOwners, acquisitionSolicitors, acquisitionRepresentatives]) => {
-        const options = payeeOptions;
+        interestHoldersCall,
+      ]).then(
+        ([
+          acquisitionOwners,
+          acquisitionSolicitors,
+          acquisitionRepresentatives,
+          interestHolders,
+        ]) => {
+          const options = payeeOptions;
 
-        if (acquisitionOwners !== undefined) {
-          const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
-            PayeeOption.createOwner(x),
-          );
-          options.push(...ownersOptions);
-        }
+          if (acquisitionOwners !== undefined) {
+            const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
+              PayeeOption.createOwner(x),
+            );
+            options.push(...ownersOptions);
+          }
 
-        if (acquisitionSolicitors !== undefined) {
-          const acquisitionSolicitorOptions: PayeeOption[] = acquisitionSolicitors.map(x =>
-            PayeeOption.createOwnerSolicitor(x),
-          );
-          options.push(...acquisitionSolicitorOptions);
-        }
+          if (acquisitionSolicitors !== undefined) {
+            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionSolicitors.map(x =>
+              PayeeOption.createOwnerSolicitor(x),
+            );
+            options.push(...acquisitionSolicitorOptions);
+          }
 
-        if (acquisitionRepresentatives !== undefined) {
-          const acquisitionSolicitorOptions: PayeeOption[] = acquisitionRepresentatives.map(x =>
-            PayeeOption.createOwnerRepresentative(x),
-          );
-          options.push(...acquisitionSolicitorOptions);
-        }
+          if (acquisitionRepresentatives !== undefined) {
+            const acquisitionSolicitorOptions: PayeeOption[] = acquisitionRepresentatives.map(x =>
+              PayeeOption.createOwnerRepresentative(x),
+            );
+            options.push(...acquisitionSolicitorOptions);
+          }
 
-        const teamMemberOptions: PayeeOption[] =
-          acquisitionFile.acquisitionTeam
-            ?.filter((x): x is Api_AcquisitionFilePerson => !!x)
-            .filter(x => x.personProfileTypeCode === 'MOTILAWYER')
-            .map(x => PayeeOption.createTeamMember(x)) || [];
-        options.push(...teamMemberOptions);
+          if (interestHolders !== undefined) {
+            const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
+              PayeeOption.createInterestHolder(x),
+            );
+            options.push(...interestHolderOptions);
+          }
 
-        setPayeeOptions(options);
-      });
+          const teamMemberOptions: PayeeOption[] =
+            acquisitionFile.acquisitionTeam
+              ?.filter((x): x is Api_AcquisitionFilePerson => !!x)
+              .filter(x => x.personProfileTypeCode === 'MOTILAWYER')
+              .map(x => PayeeOption.createTeamMember(x)) || [];
+          options.push(...teamMemberOptions);
+
+          setPayeeOptions(options);
+        },
+      );
     }
   }, [
     payeeOptions,
@@ -127,6 +151,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
     retrieveAcquisitionOwners,
     retrieveAcquisitionFileSolicitors,
     retrieveAcquisitionFileRepresentatives,
+    fetchInterestHolders,
   ]);
 
   const fetchFinancialCodes = useCallback(async () => {
@@ -203,7 +228,8 @@ const UpdateCompensationRequisitionContainer: React.FC<
         loadingFinancialActivities ||
         loadingChartOfAccounts ||
         loadingResponsibilityCodes ||
-        loadingYearlyFinancials
+        loadingYearlyFinancials ||
+        loadingInterestHolders
       }
       initialValues={CompensationRequisitionFormModel.fromApi(compensation)}
       payeeOptions={payeeOptions}
