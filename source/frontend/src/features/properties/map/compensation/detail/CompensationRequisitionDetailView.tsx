@@ -15,6 +15,7 @@ import { FaExternalLinkAlt, FaMoneyCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
+import { formatApiPersonNames } from 'utils/personUtils';
 
 import { DetailAcquisitionFileOwner } from '../../acquisition/detail/models';
 
@@ -73,13 +74,13 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       const ownerDetail = DetailAcquisitionFileOwner.fromApi(compensationPayee.acquisitionOwner!);
       payeeDetail.displayName = ownerDetail.ownerName ?? '';
     } else if (compensationPayee.interestHolderId) {
-      payeeDetail.displayName = '';
+      payeeDetail.displayName = formatApiPersonNames(compensationPayee.interestHolder?.person);
     } else if (compensationPayee.ownerRepresentativeId) {
-      payeeDetail.displayName = '';
+      payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerRepresentative?.person);
     } else if (compensationPayee.ownerSolicitorId) {
-      payeeDetail.displayName = '';
+      payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerSolicitor?.person);
     } else if (compensationPayee.motiSolicitorId) {
-      payeeDetail.displayName = '';
+      payeeDetail.displayName = formatApiPersonNames(compensationPayee.motiSolicitor);
     }
 
     payeeDetail.preTaxAmount = payeeCheque?.pretaxAmout ?? 0;
@@ -87,7 +88,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     payeeDetail.totalAmount = payeeCheque?.totalAmount ?? 0;
 
     var results =
-      compensation.financials?.filter(function (el) {
+      compensation.financials?.filter(el => {
         return el.isGstRequired === true;
       }) || [];
 
