@@ -7,15 +7,20 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import { Api_CompensationPayee } from 'models/api/CompensationPayee';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Api_Product, Api_Project } from 'models/api/Project';
 import { Col, Row } from 'react-bootstrap';
-import { FaMoneyCheck } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaMoneyCheck } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { formatMoney, prettyFormatDate } from 'utils';
 
+import { DetailAcquisitionFileOwner } from '../../acquisition/detail/models';
+
 export interface CompensationRequisitionDetailViewProps {
   compensation: Api_CompensationRequisition;
+  compensationPayee?: Api_CompensationPayee;
   acqFileProject?: Api_Project;
   acqFileProduct?: Api_Product | undefined;
   clientConstant: string;
@@ -25,10 +30,23 @@ export interface CompensationRequisitionDetailViewProps {
   onGenerate: (compensation: Api_CompensationRequisition) => void;
 }
 
+interface PayeeViewDetails {
+  displayName: string;
+  isGstApplicable: boolean;
+  gstNumber: string;
+  preTaxAmount: number;
+  taxAmount: number;
+  totalAmount: number;
+  goodTrust: boolean;
+  contactEnabled: boolean;
+  personId: boolean;
+}
+
 export const CompensationRequisitionDetailView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailViewProps>
 > = ({
   compensation,
+  compensationPayee,
   acqFileProject,
   acqFileProduct,
   clientConstant,
@@ -37,6 +55,48 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   onGenerate,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
+  const payeeCheque = compensationPayee?.cheques ? compensationPayee?.cheques[0] : null;
+
+  const getPayeeDetails = (
+    compensationPayee: Api_CompensationPayee | null | undefined,
+  ): PayeeViewDetails | null => {
+    if (!compensationPayee) {
+      return null;
+    }
+
+    let payeeDetail = {
+      contactEnabled: compensationPayee.acquisitionFilePersonId ? true : false,
+      goodTrust: payeeCheque?.isPaymentInTrust,
+    } as PayeeViewDetails;
+
+    if (compensationPayee.acquisitionOwnerId) {
+      const ownerDetail = DetailAcquisitionFileOwner.fromApi(compensationPayee.acquisitionOwner!);
+      payeeDetail.displayName = ownerDetail.ownerName ?? '';
+    } else if (compensationPayee.interestHolderId) {
+      payeeDetail.displayName = '';
+    } else if (compensationPayee.ownerRepresentativeId) {
+      payeeDetail.displayName = '';
+    } else if (compensationPayee.ownerSolicitorId) {
+      payeeDetail.displayName = '';
+    } else if (compensationPayee.motiSolicitorId) {
+      payeeDetail.displayName = '';
+    }
+
+    payeeDetail.preTaxAmount = payeeCheque?.pretaxAmout ?? 0;
+    payeeDetail.taxAmount = payeeCheque?.taxAmount ?? 0;
+    payeeDetail.totalAmount = payeeCheque?.totalAmount ?? 0;
+
+    var results =
+      compensation.financials?.filter(function (el) {
+        return el.isGstRequired === true;
+      }) || [];
+
+    payeeDetail.isGstApplicable = results.length > 0;
+
+    return payeeDetail;
+  };
+
+  const payeeDetails = getPayeeDetails(compensationPayee);
 
   return (
     <StyledSummarySection>
@@ -71,17 +131,18 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           </Col>
           <Col xs="6">
             <HeaderField label="Compensation amount:" labelWidth="8">
-              {formatMoney(0)}
+              {formatMoney(payeeCheque?.pretaxAmout ?? 0)}
             </HeaderField>
             <HeaderField label="Applicable GST:" labelWidth="8">
-              {formatMoney(0)}
+              {formatMoney(payeeCheque?.taxAmount ?? 0)}
             </HeaderField>
             <HeaderField label="Total cheque amount:" labelWidth="8">
-              {formatMoney(0)}
+              {formatMoney(payeeCheque?.totalAmount ?? 0)}
             </HeaderField>
           </Col>
         </StyledRow>
       </Section>
+
       <Section header="Requisition Details">
         <SectionField label="Status" labelWidth="4">
           {compensation.isDraft ? 'Draft' : 'Final'}
@@ -99,6 +160,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {compensation.specialInstruction}
         </SectionField>
       </Section>
+
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
         <SectionField label="Product" labelWidth="4">
           {acqFileProduct?.code ?? ''}
@@ -115,11 +177,99 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         <SectionField label="Fiscal year" labelWidth="4">
           {compensation.fiscalYear ?? ''}
         </SectionField>
+        <SectionField label="STOB" labelWidth="4">
+          {compensation.yearlyFinancial?.code ?? ''}
+        </SectionField>
+        <SectionField label="Service line" labelWidth="4">
+          {compensation.chartOfAccounts?.code} - {compensation.chartOfAccounts?.description}
+        </SectionField>
+        <SectionField label="Responsiblity centre" labelWidth="4">
+          {compensation.responsibility?.code} - {compensation.responsibility?.description}
+        </SectionField>
       </Section>
+
+      <Section header="Payment" isCollapsable initiallyExpanded>
+        <SectionField label="Payee" labelWidth="4">
+          <StyledPayeeDisplayName>
+            {payeeDetails?.contactEnabled && (
+              <StyledLink
+                target="_blank"
+                rel="noopener noreferrer"
+                to={`/contact/P${payeeDetails.personId}`}
+              >
+                <span>{payeeDetails.displayName}</span>
+                <FaExternalLinkAlt className="ml-2" size="1rem" />
+              </StyledLink>
+            )}
+            {!payeeDetails?.contactEnabled && <label>{payeeDetails?.displayName ?? ''}</label>}
+            {payeeDetails?.goodTrust && <label>, in trust</label>}
+          </StyledPayeeDisplayName>
+        </SectionField>
+        <SectionField label="Amount (before tax)">
+          {formatMoney(payeeDetails?.preTaxAmount ?? 0)}
+        </SectionField>
+        <SectionField label="GST applicable?">
+          {payeeDetails?.isGstApplicable ? 'Yes' : 'No'}
+        </SectionField>
+        {payeeDetails?.isGstApplicable && (
+          <SectionField label="GST amount">
+            {formatMoney(payeeDetails?.taxAmount ?? 0)}
+          </SectionField>
+        )}
+        <SectionField label="Total amount">
+          {formatMoney(payeeDetails?.totalAmount ?? 0)}
+        </SectionField>
+      </Section>
+
+      <Section header="Financial Activities" isCollapsable initiallyExpanded>
+        {compensation.financials.map((item, index) => (
+          <>
+            <StyledSubHeader>
+              <label>Activity {index + 1}</label>
+            </StyledSubHeader>
+            <SectionField label="Code & Description" labelWidth="4">
+              {item.financialActivityCode?.id} - {item.financialActivityCode?.description}
+            </SectionField>
+            <SectionField label="Amount (before tax)" labelWidth="4">
+              {formatMoney(item.pretaxAmount ?? 0)}
+            </SectionField>
+            <SectionField label="GST applicable?" labelWidth="4">
+              {item.isGstRequired ? 'Yes' : 'No'}
+            </SectionField>
+            <SectionField label="GST amount" labelWidth="4">
+              {formatMoney(item.taxAmount ?? 0)}
+            </SectionField>
+            <SectionField label="Total amount" labelWidth="4">
+              {formatMoney(item.totalAmount ?? 0)}
+            </SectionField>
+          </>
+        ))}
+      </Section>
+
       <Section>
-        <SectionField label="Detailed remarks" labelWidth={'12'}>
+        <SectionField label="Detailed remarks" labelWidth="12">
           {compensation.detailedRemarks}
         </SectionField>
+      </Section>
+
+      <Section>
+        <StyledCompensationFooter>
+          <div>
+            <label>
+              Compensation amount: <span>{formatMoney(payeeDetails?.preTaxAmount ?? 0)}</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              Applicable GST: <span>{formatMoney(payeeDetails?.taxAmount ?? 0)}</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              Total cheque amount: <span>{formatMoney(payeeDetails?.totalAmount ?? 0)}</span>
+            </label>
+          </div>
+        </StyledCompensationFooter>
       </Section>
     </StyledSummarySection>
   );
@@ -133,7 +283,55 @@ const StyledRow = styled(Row)`
   font-weight: bold;
 `;
 
+const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+`;
+
 const RightFlexDiv = styled.div`
   display: flex;
   flex-direction: row-reverse;
+`;
+
+const StyledCompensationFooter = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 16px;
+  font-weight: 600;
+  span {
+    margin-left: 1.25rem;
+  }
+`;
+
+const StyledPayeeDisplayName = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+`;
+
+const StyledSubHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 0.1rem ${props => props.theme.css.primaryColor};
+  margin-bottom: 2rem;
+
+  label {
+    color: ${props => props.theme.css.primaryColor};
+    font-family: 'BCSans-Bold';
+    font-size: 1.75rem;
+    width: 100%;
+    text-align: left;
+  }
+
+  button {
+    margin-bottom: 1rem;
+  }
 `;

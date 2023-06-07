@@ -1,5 +1,5 @@
 import {
-  Api_AcquisitionFile,
+  Api_AcquisitionFileOwner,
   Api_AcquisitionFileRepresentative,
   Api_AcquisitionFileSolicitor,
 } from './AcquisitionFile';
@@ -20,7 +20,7 @@ export interface Api_CompensationPayee extends Api_ConcurrentVersion_Null, Api_A
   motiSolicitorId: number | null;
   acquisitionFilePersonId: number | null;
   motiSolicitor: Api_Person | null;
-  acquisitionOwner: Api_AcquisitionFile | null;
+  acquisitionOwner: Api_AcquisitionFileOwner | null;
   compensationRequisition: Api_CompensationRequisition | null;
   interestHolder: Api_InterestHolder | null;
   ownerRepresentative: Api_AcquisitionFileRepresentative | null;

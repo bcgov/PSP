@@ -121,5 +121,34 @@ namespace Pims.Dal.Repositories
             }
             return false;
         }
+
+        public PimsAcquisitionPayee GetPayee(long compensationRequisitionId)
+        {
+            var compensationRequisition = GetById(compensationRequisitionId);
+            var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
+            if (compensationRequisition is not null && compensationPayee is null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            var payeeEntity = Context.PimsAcquisitionPayees
+                 .Include(x => x.AcquisitionFilePerson)
+                 .Include(x => x.AcquisitionOwner)
+                 .Include(x => x.InterestHolder)
+                 .Include(x => x.OwnerRepresentative)
+                 .Include(x => x.PimsAcqPayeeCheques)
+                 .Include(x => x.OwnerSolicitor)
+                 .AsNoTracking()
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(compensationPayee.AcquisitionPayeeId));
+
+            if (payeeEntity.PimsAcqPayeeCheques?.FirstOrDefault() is not null)
+            {
+                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
+                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
+                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
+            }
+
+            return payeeEntity;
+        }
     }
 }

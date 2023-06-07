@@ -9,5 +9,7 @@ namespace Pims.Api.Services
         PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition);
 
         bool DeleteCompensation(long compensationId);
+
+        PimsAcquisitionPayee GetPayee(long compensationRequisitionId);
     }
 }
