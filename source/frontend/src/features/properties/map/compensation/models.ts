@@ -8,6 +8,7 @@ import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
 import { Api_CompensationPayee } from 'models/api/CompensationPayee';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
+import { Api_InterestHolder } from 'models/api/InterestHolder';
 import { Api_PayeeCheque } from 'models/api/PayeeCheque';
 import { isNullOrWhitespace } from 'utils';
 import { booleanToString, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
@@ -287,6 +288,7 @@ enum PayeeType {
   OwnerRepresentative = 'OWNER_REPRESENTATIVE',
   OwnerSolicitor = 'OWNER_SOLICITOR',
   Owner = 'OWNER',
+  InterestHolder = 'INTEREST_HOLDER',
 }
 
 export class PayeeOption {
@@ -308,17 +310,24 @@ export class PayeeOption {
       if (apiModel.acquisitionOwnerId) {
         return PayeeOption.generateKey(apiModel.acquisitionOwnerId, PayeeType.Owner);
       }
+
       if (apiModel.ownerRepresentativeId) {
         return PayeeOption.generateKey(
           apiModel.ownerRepresentativeId,
           PayeeType.OwnerRepresentative,
         );
       }
+
       if (apiModel.motiSolicitorId) {
         return PayeeOption.generateKey(apiModel.motiSolicitorId, PayeeType.AcquisitionTeam);
       }
+
       if (apiModel.ownerSolicitorId) {
         return PayeeOption.generateKey(apiModel.ownerSolicitorId, PayeeType.OwnerSolicitor);
+      }
+
+      if (apiModel.interestHolderId) {
+        return PayeeOption.generateKey(apiModel.interestHolderId, PayeeType.InterestHolder);
       }
     }
     return '';
@@ -372,6 +381,9 @@ export class PayeeOption {
       case PayeeType.Owner:
         payee.acquisitionOwnerId = payeeOption.api_id;
         break;
+      case PayeeType.InterestHolder:
+        payee.interestHolderId = payeeOption.api_id;
+        break;
       default:
         return null;
     }
@@ -423,6 +435,28 @@ export class PayeeOption {
       `${name} (${model.personProfileType?.description})`,
       PayeeOption.generateKey(model.id, PayeeType.AcquisitionTeam),
       PayeeType.AcquisitionTeam,
+    );
+  }
+
+  public static createInterestHolder(model: Api_InterestHolder): PayeeOption {
+    let name = '';
+    if (model.person) {
+      name = formatApiPersonNames(model.person);
+    } else {
+      name = model.organization?.name || '';
+    }
+
+    // The interest holders should always have a property
+    const typeDescription =
+      model.interestHolderProperties.length > 0
+        ? model.interestHolderProperties[0].interestTypeCode?.description
+        : 'ERROR: Missing interest type';
+
+    return new PayeeOption(
+      model.interestHolderId || 0,
+      `${name} (${typeDescription})`,
+      PayeeOption.generateKey(model.interestHolderId, PayeeType.InterestHolder),
+      PayeeType.InterestHolder,
     );
   }
 
