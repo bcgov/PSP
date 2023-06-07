@@ -114,9 +114,6 @@ exports[`Add Improvements container component displays the improvement types in 
             >
               Commercial Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -222,9 +219,6 @@ exports[`Add Improvements container component displays the improvement types in 
             >
               Residential Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -330,9 +324,6 @@ exports[`Add Improvements container component displays the improvement types in 
             >
               Other Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -546,9 +537,6 @@ exports[`Add Improvements container component renders as expected 1`] = `
             >
               Commercial Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -656,9 +644,6 @@ exports[`Add Improvements container component renders as expected 1`] = `
             >
               Residential Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -766,9 +751,6 @@ exports[`Add Improvements container component renders as expected 1`] = `
             >
               Other Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div

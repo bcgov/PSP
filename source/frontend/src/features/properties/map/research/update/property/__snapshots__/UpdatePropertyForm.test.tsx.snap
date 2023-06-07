@@ -52,9 +52,6 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           >
             Property of Interest
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -422,9 +419,6 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           >
             Research Summary
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

@@ -190,9 +190,6 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
         >
           Deposits Received
         </div>
-        <div
-          class="col-1"
-        />
       </div>
     </h2>
     <div

@@ -241,9 +241,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             >
               Requisition details
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -452,9 +449,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             >
               Financial coding
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div

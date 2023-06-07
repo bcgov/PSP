@@ -96,9 +96,6 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           >
             Project
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -172,9 +169,6 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           >
             Schedule
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -296,9 +290,6 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           >
             Acquisition Details
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -432,9 +423,6 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           >
             Acquisition Team
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -538,9 +526,6 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
           >
             Owner Information
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

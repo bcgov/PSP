@@ -74,9 +74,6 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           >
             Property of Interest
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -188,9 +185,6 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           >
             Research Summary
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

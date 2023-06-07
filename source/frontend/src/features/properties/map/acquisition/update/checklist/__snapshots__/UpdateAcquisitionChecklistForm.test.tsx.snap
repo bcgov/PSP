@@ -77,9 +77,6 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
           >
             File Initiation
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -365,9 +362,6 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
           >
             Active File Management
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1229,9 +1223,6 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
           >
             Section 3 - Agreement
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1637,9 +1628,6 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
           >
             Section 6 - Expropriation
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -2045,9 +2033,6 @@ exports[`UpdateAcquisitionChecklist form renders as expected 1`] = `
           >
             Acquisition Completion
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

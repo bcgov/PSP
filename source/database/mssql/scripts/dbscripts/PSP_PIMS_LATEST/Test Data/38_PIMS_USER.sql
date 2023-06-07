@@ -4,7 +4,7 @@ DECLARE @alejandroPersonId bigint;
 
 DECLARE @manuelPersonId bigint;
 
-DECLARE @maheshPersonId bigint;
+DECLARE @eduardoPersonId bigint;
 
 DECLARE @amanPersonId bigint;
 
@@ -51,8 +51,8 @@ VALUES
         'seed_data'
     ),
     (
-        'Babu',
-        'Mahesh',
+        'Herrera',
+        'Eduardo',
         'seed_data',
         'seed_data',
         'seed_data',
@@ -102,13 +102,13 @@ SET
     );
 
 SET
-    @maheshPersonId = (
+    @eduardoPersonId = (
         SELECT
             TOP(1) PERSON_ID
         FROM
             PIMS_PERSON
         WHERE
-            SURNAME = 'Babu' AND FIRST_NAME = 'Mahesh'
+            SURNAME = 'Herrera' AND FIRST_NAME = 'Eduardo'
     );
 
 SET
@@ -128,6 +128,7 @@ INSERT INTO
         [GUID_IDENTIFIER_VALUE],
         [IS_DISABLED],
         [ISSUE_DATE],
+        [USER_TYPE_CODE],
         [APP_CREATE_USERID],
         [APP_CREATE_USER_DIRECTORY],
         [APP_LAST_UPDATE_USERID],
@@ -142,6 +143,7 @@ VALUES
         '7DB28007-0D47-4EF0-BB46-C365A4B95A73',
         0,
         CURRENT_TIMESTAMP,
+        'MINSTAFF',
         'seed_data',
         'seed_data',
         'seed_data',
@@ -155,6 +157,7 @@ VALUES
         '4109E6B4-585C-4678-8A24-1A99B45E3A5D',
         0,
         CURRENT_TIMESTAMP,
+        'MINSTAFF',
         'seed_data',
         'seed_data',
         'seed_data',
@@ -168,6 +171,7 @@ VALUES
         '5D661D1E-14F0-477C-A7FB-31F21E8B4FDA',
         0,
         CURRENT_TIMESTAMP,
+        'MINSTAFF',
         'seed_data',
         'seed_data',
         'seed_data',
@@ -176,11 +180,12 @@ VALUES
         'seed_data'
     ),
     (
-        @maheshPersonId,
-        'mbabu',
-        '672D88FC-61B9-4D6B-824A-83B5186E39C6',
+        @eduardoPersonId,
+        'eherrera',
+        '939A27D0-76CD-49B0-B474-53166ADB73DA',
         0,
         CURRENT_TIMESTAMP,
+        'MINSTAFF',
         'seed_data',
         'seed_data',
         'seed_data',
@@ -194,6 +199,7 @@ VALUES
         'E4240183-82D2-4CB7-BA7E-84E7067CB14A',
         0,
         CURRENT_TIMESTAMP,
+        'MINSTAFF',
         'seed_data',
         'seed_data',
         'seed_data',
@@ -208,7 +214,7 @@ DECLARE @systemAdmin bigint;
 DECLARE @devinUserId bigint;
 DECLARE @alejandroUserId bigint;
 DECLARE @manuelUserId bigint;
-DECLARE @maheshUserId bigint;
+DECLARE @eduardoUserId bigint;
 DECLARE @amanUserId bigint;
 
 SET
@@ -249,13 +255,13 @@ SET
             BUSINESS_IDENTIFIER_VALUE = 'marodrig'
     );
 SET
-    @maheshUserId = (
+    @eduardoUserId = (
         SELECT
             TOP(1) USER_ID
         FROM
             PIMS_USER
         WHERE
-            BUSINESS_IDENTIFIER_VALUE = 'mbabu'
+            BUSINESS_IDENTIFIER_VALUE = 'eherrera'
     );
 SET
     @amanUserId = (
@@ -310,7 +316,7 @@ VALUES
         'seed_data'
     ),
     (
-        @maheshUserId,
+        @eduardoUserId,
         @systemAdmin,
         'seed_data',
         'seed_data',
@@ -322,6 +328,205 @@ VALUES
     (
         @amanUserId,
         @systemAdmin,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    );
+
+DECLARE @southCoast bigint;
+
+DECLARE @southInterior bigint;
+
+DECLARE @northern bigint;
+
+SET
+    @southCoast = (
+        SELECT
+            TOP(1) REGION_CODE
+        FROM
+            PIMS_REGION
+        WHERE
+            REGION_NAME = 'South Coast Region'
+    );
+
+SET
+    @southInterior = (
+        SELECT
+            TOP(1) REGION_CODE
+        FROM
+            PIMS_REGION
+        WHERE
+            REGION_NAME = 'Southern Interior Region'
+    );
+
+SET
+    @northern = (
+        SELECT
+            TOP(1) REGION_CODE
+        FROM
+            PIMS_REGION
+        WHERE
+            REGION_NAME = 'Northern Region'
+    );
+
+INSERT INTO
+    [dbo].[PIMS_REGION_USER] (
+        [USER_ID],
+        [REGION_CODE],
+        [APP_CREATE_USERID],
+        [APP_CREATE_USER_DIRECTORY],
+        [APP_LAST_UPDATE_USERID],
+        [APP_LAST_UPDATE_USER_DIRECTORY],
+        [DB_CREATE_USERID],
+        [DB_LAST_UPDATE_USERID]
+    )
+VALUES
+    (
+        @devinUserId,
+        @southCoast,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @devinUserId,
+        @southInterior,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @devinUserId,
+        @northern,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @alejandroUserId,
+        @southCoast,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @alejandroUserId,
+        @southInterior,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @alejandroUserId,
+        @northern,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @manuelUserId,
+        @southCoast,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @manuelUserId,
+        @southInterior,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @manuelUserId,
+        @northern,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @eduardoUserId,
+        @southCoast,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @eduardoUserId,
+        @southInterior,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @eduardoUserId,
+        @northern,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @amanUserId,
+        @southCoast,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @amanUserId,
+        @southInterior,
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data',
+        'seed_data'
+    ),
+    (
+        @amanUserId,
+        @northern,
         'seed_data',
         'seed_data',
         'seed_data',

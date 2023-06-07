@@ -611,9 +611,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             >
                               Project
                             </div>
-                            <div
-                              class="col-1"
-                            />
                           </div>
                         </h2>
                         <div
@@ -656,9 +653,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             >
                               Roads
                             </div>
-                            <div
-                              class="col-1"
-                            />
                           </div>
                         </h2>
                         <div
@@ -718,9 +712,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             >
                               Research Request
                             </div>
-                            <div
-                              class="col-1"
-                            />
                           </div>
                         </h2>
                         <div
@@ -835,9 +826,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             >
                               Result
                             </div>
-                            <div
-                              class="col-1"
-                            />
                           </div>
                         </h2>
                         <div
@@ -896,9 +884,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
                             >
                               Expropriation
                             </div>
-                            <div
-                              class="col-1"
-                            />
                           </div>
                         </h2>
                         <div
