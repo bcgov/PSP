@@ -95,9 +95,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           >
             Property Address
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -220,9 +217,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           >
             Property Attributes
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -445,9 +439,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           >
             Tenure Status
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -546,9 +537,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           >
             Measurements
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -718,9 +706,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           >
             Notes
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

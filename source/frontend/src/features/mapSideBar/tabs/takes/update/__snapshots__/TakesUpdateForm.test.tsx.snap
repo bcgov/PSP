@@ -597,9 +597,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               >
                 Area
               </div>
-              <div
-                class="col-1"
-              />
             </div>
           </h2>
           <div
@@ -1525,9 +1522,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               >
                 Surplus
               </div>
-              <div
-                class="col-1"
-              />
             </div>
           </h2>
           <div

@@ -258,9 +258,6 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
           >
             Interests
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -644,9 +641,6 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
           >
             Non-interest Payees
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

@@ -743,9 +743,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 >
                   Properties to include in this file:
                 </div>
-                <div
-                  class="col-1"
-                />
               </div>
             </h2>
             <div
@@ -1262,9 +1259,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                     >
                       Selected properties
                     </div>
-                    <div
-                      class="col-1"
-                    />
                   </div>
                 </h2>
                 <div
@@ -1331,9 +1325,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               >
                 Administration
               </div>
-              <div
-                class="col-1"
-              />
             </div>
           </h2>
           <div
@@ -2783,9 +2774,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               >
                 Documentation
               </div>
-              <div
-                class="col-1"
-              />
             </div>
           </h2>
           <div

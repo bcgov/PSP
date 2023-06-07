@@ -330,9 +330,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
             >
               Property Address
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -593,9 +590,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
             >
               Property Attributes
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -1151,9 +1145,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
             >
               Tenure Status
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -1668,9 +1659,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
             >
               First Nations Information
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -1732,9 +1720,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
             >
               Measurements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -2081,9 +2066,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
             >
               Notes
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div

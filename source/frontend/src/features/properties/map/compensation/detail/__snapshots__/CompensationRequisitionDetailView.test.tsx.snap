@@ -346,9 +346,6 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           >
             Requisition Details
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
