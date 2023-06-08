@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
