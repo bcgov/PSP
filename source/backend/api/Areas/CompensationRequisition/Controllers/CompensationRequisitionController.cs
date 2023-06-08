@@ -124,7 +124,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
                 DateTime.Now);
             _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
 
-            var compensationPayee = _compensationRequisitionService.GetPayee(id);
+            var compensationPayee = _compensationRequisitionService.GetPayeeByCompensationId(id);
 
             return new JsonResult(_mapper.Map<CompensationPayeeModel>(compensationPayee));
         }

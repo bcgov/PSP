@@ -45,13 +45,13 @@ namespace Pims.Api.Services
             return compensationRequisition;
         }
 
-        public PimsAcquisitionPayee GetPayeeById(long payeeId)
+        public PimsAcquisitionPayee GetPayeeByCompensationId(long compensationRequisitionId)
         {
-            _logger.LogInformation($"Getting Compensation Requisition Payee with id {payeeId}");
+            _logger.LogInformation($"Getting Compensation Requisition Payee with compensation id {compensationRequisitionId}");
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            var compensationPayee = _acquisitionPayeeRepository.GetById(payeeId);
-            var compensationRequisition = _compensationRequisitionRepository.GetById(compensationPayee.CompensationRequisitionId);
+            var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
+            var compensationPayee = _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
             if (compensationRequisition is not null && compensationPayee is not null)
             {
                 var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
@@ -114,14 +114,6 @@ namespace Pims.Api.Services
             var fileFormToDelete = _compensationRequisitionRepository.TryDelete(compensationId);
             _compensationRequisitionRepository.CommitTransaction();
             return fileFormToDelete;
-        }
-
-        public PimsAcquisitionPayee GetPayee(long compensationRequisitionId)
-        {
-            _logger.LogInformation("Getting Payee for Compensation Requisition with Id ...", compensationRequisitionId);
-            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
-
-            return _compensationRequisitionRepository.GetPayee(compensationRequisitionId);
         }
     }
 }

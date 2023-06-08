@@ -54,9 +54,7 @@ export const useGenerateH120 = () => {
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(
       compensation.acquisitionFileId,
     );
-    const payeePromise = compensation.payees[0].id
-      ? getCompensationRequisitionPayee.execute(compensation.payees[0].id)
-      : Promise.resolve(null);
+    const payeePromise = getCompensationRequisitionPayee.execute(compensation.id);
 
     const [file, properties, h120Categories, compReqH120s, interestHolders, payee] =
       await Promise.all([

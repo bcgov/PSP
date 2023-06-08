@@ -27,18 +27,6 @@ export const useCompensationRequisitionRepository = () => {
     onError: useAxiosErrorHandler('Failed to load Compensation requisition.'),
   });
 
-  const getCompensationRequisitionPayee = useApiRequestWrapper<
-    (payeeId: number) => Promise<AxiosResponse<Api_CompensationPayee, any>>
-  >({
-    requestFunction: useCallback(
-      async (payeeId: number) => await getCompensationRequisitionPayeeApi(payeeId),
-      [],
-    ),
-    requestName: 'getCompensationPayee',
-    onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to load Compensation payee.'),
-  });
-
   const updateCompensationRequisition = useApiRequestWrapper<
     (
       compensation: Api_CompensationRequisition,

@@ -8,11 +8,6 @@ export const getCompensationRequisitionApi = (compensationId: number) =>
     `/compensation-requisitions/${compensationId}`,
   );
 
-export const getCompensationRequisitionPayeeApi = (payeeId: number) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_CompensationPayee>(
-    `/compensation-requisitions/payees/${payeeId}`,
-  );
-
 export const putCompensationRequisitionApi = (compensation: Api_CompensationRequisition) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_CompensationRequisition>(
     `/compensation-requisitions/${compensation.id}`,

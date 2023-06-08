@@ -19,6 +19,6 @@ namespace Pims.Dal.Repositories
 
         bool TryDelete(long compensationId);
 
-        PimsAcquisitionPayee GetPayee(long compensationRequisitionId);
+        PimsAcquisitionPayee GetPayee(long payeeId);
     }
 }
