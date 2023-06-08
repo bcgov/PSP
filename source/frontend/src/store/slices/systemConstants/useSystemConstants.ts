@@ -12,6 +12,7 @@ export enum SystemConstants {
   FYEND = 'FYEND',
   FYSTART = 'FYSTART',
   GST = 'GST',
+  CLIENT = 'CLIENT',
 }
 
 export const useSystemConstants = () => {

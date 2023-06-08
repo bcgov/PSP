@@ -19,12 +19,14 @@ namespace PIMS.Tests.Automation.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Reseach-Files")]
     public partial class ResearchFilesFeature : object, Xunit.IClassFixture<ResearchFilesFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private static string[] featureTags = ((string[])(null));
+        private static string[] featureTags = new string[] {
+                "Reseach-Files"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -83,17 +85,10 @@ namespace PIMS.Tests.Automation.Features
         [Xunit.SkippableTheoryAttribute(DisplayName="Create a new complete Research File")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
         [Xunit.TraitAttribute("Description", "Create a new complete Research File")]
-        [Xunit.TraitAttribute("Category", "Reseach-Files")]
         [Xunit.InlineDataAttribute("1", new string[0])]
         public void CreateANewCompleteResearchFile(string rowNumber, string[] exampleTags)
         {
-            string[] @__tags = new string[] {
-                    "Reseach-Files"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("RowNumber", rowNumber);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new complete Research File", null, tagsOfScenario, argumentsOfScenario, featureTags);
@@ -109,6 +104,9 @@ this.ScenarioInitialize(scenarioInfo);
                 this.ScenarioStart();
 #line 7
  testRunner.Given(string.Format("I create a new complete Research File from row number {0}", rowNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 8
+ testRunner.When("I create Digital Documents for a \"Research File\" row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
  testRunner.And("I create a new Note on the Notes Tab from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -148,7 +146,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I navigate back to the Research File Summary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 19
- testRunner.And("I edit a Note on the Notes Tab from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I edit a Digital Document for a \"Research File\" from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 20
  testRunner.Then("Notes update have been done successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

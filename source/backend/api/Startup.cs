@@ -404,7 +404,9 @@ namespace Pims.Api
             services.AddScoped<IDocumentFileService, DocumentFileService>();
             services.AddScoped<ITakeService, TakeService>();
             services.AddScoped<IFormDocumentService, FormDocumentService>();
-            services.AddScoped<ICompensationService, CompensationService>();
+            services.AddScoped<ICompensationRequisitionService, CompensationRequisitionService>();
+            services.AddScoped<ICompReqH120Service, CompReqH120Service>();
+            services.AddScoped<IH120CategoryService, H120CategoryService>();
         }
 
         /// <summary>

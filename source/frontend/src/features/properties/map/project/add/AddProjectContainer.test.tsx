@@ -4,9 +4,9 @@ import { MapStateContextProvider } from 'components/maps/providers/MapStateConte
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
-import { mockLookups } from 'mocks/mockLookups';
-import { mockProjectPostResponse } from 'mocks/mockProjects';
-import { getUserMock } from 'mocks/userMock';
+import { mockLookups } from 'mocks/lookups.mock';
+import { mockProjectPostResponse } from 'mocks/projects.mock';
+import { getUserMock } from 'mocks/user.mock';
 import { Api_Project } from 'models/api/Project';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';

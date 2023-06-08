@@ -23,8 +23,6 @@ namespace Pims.Dal.Entities
         public long CompReqFinActivity { get; set; }
         [Column("COMPENSATION_REQUISITION_ID")]
         public long CompensationRequisitionId { get; set; }
-        [Column("H120_CATEGORY_ID")]
-        public long? H120CategoryId { get; set; }
         [Column("PRETAX_AMT", TypeName = "money")]
         public decimal? PretaxAmt { get; set; }
         [Column("TAX_AMT", TypeName = "money")]
@@ -71,5 +69,9 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("FINANCIAL_ACTIVITY_CODE_ID")]
+        public long FinancialActivityCodeId { get; set; }
+        [Column("IS_GST_REQUIRED")]
+        public bool? IsGstRequired { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 import { AGREEMENT_TYPES } from 'constants/API';
 import { FormikProps } from 'formik';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
-import { mockLookups } from 'mocks';
-import { mockAgreementsResponse } from 'mocks/mockAgreements';
+import { mockAgreementsResponse } from 'mocks/agreements.mock';
+import { mockLookups } from 'mocks/index.mock';
 import { createRef } from 'react';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions } from 'utils/test-utils';

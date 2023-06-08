@@ -198,8 +198,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OpenMoreOptionsPopUp()
         {
-            Wait();
-            webDriver.FindElement(propertyLeafletEllipsisBttn).Click();
+            WaitUntil(propertyLeafletEllipsisBttn);
+            FocusAndClick(propertyLeafletEllipsisBttn);
         }
 
         public void ChooseCreationOptionFromPin(string option)
@@ -389,6 +389,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     Wait();
                     FocusAndClick(propertyDetailsAnomaliesInput);
+                    Wait();
                     ChooseMultiSelectSpecificOption(propertyDetailsAnomaliesOptions, anomaly);
                 }
             }

@@ -254,7 +254,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
 }
 
 .c12 .nav-item {
-  min-width: 7rem;
+  min-width: 5rem;
   padding: 0.1rem 0.6rem;
 }
 
@@ -1804,7 +1804,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c1.btn {
+  .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1834,49 +1834,49 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c1.btn:hover {
+.c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c1.btn:focus {
+.c2.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c1.btn.btn-primary {
+.c2.btn.btn-primary {
   border: none;
 }
 
-.c1.btn.btn-secondary {
+.c2.btn.btn-secondary {
   background: none;
 }
 
-.c1.btn.btn-info {
+.c2.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c1.btn.btn-info:hover,
-.c1.btn.btn-info:active,
-.c1.btn.btn-info:focus {
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
   background: none;
 }
 
-.c1.btn.btn-light {
+.c2.btn.btn-light {
   border: none;
 }
 
-.c1.btn.btn-dark {
+.c2.btn.btn-dark {
   border: none;
 }
 
-.c1.btn.btn-link {
+.c2.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -1897,9 +1897,9 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c1.btn.btn-link:hover,
-.c1.btn.btn-link:active,
-.c1.btn.btn-link:focus {
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -1908,14 +1908,14 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c1.btn.btn-link:disabled,
-.c1.btn.btn-link.disabled {
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c1.btn:disabled,
-.c1.btn:disabled:hover {
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1926,15 +1926,15 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c1.Button .Button__icon {
+.c2.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c1.Button--icon-only:focus {
+.c2.Button--icon-only:focus {
   outline: none;
 }
 
-.c1.Button--icon-only .Button__icon {
+.c2.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -1947,6 +1947,11 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   z-index: 10;
 }
 
+.c1 {
+  padding-top: 0.7rem;
+  color: red;
+}
+
 <div
     class=""
   >
@@ -1954,10 +1959,17 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
       class="c0 justify-content-end mt-auto no-gutters row"
     >
       <div
+        class="pr-3 col-auto"
+      >
+        <div
+          class="c1"
+        />
+      </div>
+      <div
         class="pr-4 col-auto"
       >
         <button
-          class="c1 Button btn btn-secondary"
+          class="c2 Button btn btn-secondary"
           type="button"
         >
           <div
@@ -1971,7 +1983,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
         class="col-auto"
       >
         <button
-          class="c1 Button btn btn-primary"
+          class="c2 Button btn btn-primary"
           type="button"
         >
           <div

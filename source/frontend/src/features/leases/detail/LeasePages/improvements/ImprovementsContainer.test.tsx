@@ -4,7 +4,7 @@ import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
 import { defaultLease, ILeaseImprovement } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { renderAsync, RenderOptions } from 'utils/test-utils';
@@ -65,7 +65,7 @@ describe('Improvements Container component', () => {
 
     expect(
       getByText(
-        'If this lease/license includes any commercial, residential or other improvements on the property, switch to edit mode to add details to this record.',
+        'There are no commercial, residential, or other improvements indicated with this lease/license.',
       ),
     ).toBeVisible();
   });

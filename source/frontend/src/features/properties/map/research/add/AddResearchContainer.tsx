@@ -1,9 +1,11 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
+import useApiUserOverride from 'hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useEffect, useRef } from 'react';
@@ -46,6 +48,9 @@ export const AddResearchContainer: React.FunctionComponent<
   if (initialForm?.properties.length && initialProperty) {
     initialForm.properties[0].address = initialProperty.address;
   }
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to add Research File');
 
   useEffect(() => {
     if (!!initialForm && !!formikRef.current) {
@@ -54,25 +59,31 @@ export const AddResearchContainer: React.FunctionComponent<
     }
   }, [initialForm]);
 
-  const saveResearchFile = async (researchFile: Api_ResearchFile) => {
-    const response = await addResearchFile(researchFile);
+  const saveResearchFile = async (
+    researchFile: Api_ResearchFile,
+    userOverrideCodes: UserOverrideCode[],
+  ) => {
+    formikRef.current?.setSubmitting(true);
+    try {
+      const response = await addResearchFile(researchFile, userOverrideCodes);
 
-    if (!!response?.fileName) {
-      if (researchFile.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
-        toast.warn(
-          'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
-          { autoClose: 15000 },
-        );
+      if (!!response?.fileName) {
+        if (researchFile.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
+          toast.warn(
+            'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+            { autoClose: 15000 },
+          );
+        }
+        await search();
+        history.replace(`/mapview/sidebar/research/${response.id}`);
+        formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
       }
-      await search();
-      history.replace(`/mapview/sidebar/research/${response.id}`);
-      formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
+    } finally {
+      formikRef.current?.setSubmitting(false);
     }
-    formikRef.current?.setSubmitting(false);
   };
 
   const handleSave = () => {
-    formikRef.current?.setSubmitting(true);
     formikRef.current?.submitForm();
   };
 
@@ -81,32 +92,35 @@ export const AddResearchContainer: React.FunctionComponent<
   };
 
   return (
-    <MapSideBarLayout
-      title="Create Research File"
-      icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
-      footer={
-        <SidebarFooter
-          isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}
-          onSave={handleSave}
-          onCancel={handleCancel}
-        />
-      }
-      showCloseButton
-      onClose={handleCancel}
+    <Formik<ResearchForm>
+      innerRef={formikRef}
+      initialValues={initialForm}
+      onSubmit={async (values: ResearchForm, formikHelpers: FormikHelpers<ResearchForm>) => {
+        const researchFile: Api_ResearchFile = values.toApi();
+        return withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
+          saveResearchFile(researchFile, userOverrideCodes),
+        );
+      }}
+      validationSchema={AddResearchFileYupSchema}
     >
-      <Formik<ResearchForm>
-        innerRef={formikRef}
-        initialValues={initialForm}
-        onSubmit={async (values: ResearchForm) => {
-          const researchFile: Api_ResearchFile = values.toApi();
-          await saveResearchFile(researchFile);
-        }}
-        validationSchema={AddResearchFileYupSchema}
-      >
-        {formikProps => (
+      {formikProps => (
+        <MapSideBarLayout
+          title="Create Research File"
+          icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
+          footer={
+            <SidebarFooter
+              isOkDisabled={formikProps?.isSubmitting || bcaLoading}
+              onSave={handleSave}
+              onCancel={handleCancel}
+            />
+          }
+          showCloseButton
+          onClose={handleCancel}
+        >
           <StyledFormWrapper>
             <AddResearchForm />
 
+            {}
             <Prompt
               when={
                 (formikProps.dirty ||
@@ -118,9 +132,9 @@ export const AddResearchContainer: React.FunctionComponent<
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
           </StyledFormWrapper>
-        )}
-      </Formik>
-    </MapSideBarLayout>
+        </MapSideBarLayout>
+      )}
+    </Formik>
   );
 };
 

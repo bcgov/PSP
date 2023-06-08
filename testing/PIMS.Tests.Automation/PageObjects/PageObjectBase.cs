@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void WaitUntil(By element)
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
             wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 
@@ -203,6 +203,14 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             result.Sort();
             return result;
+        }
+
+        protected string TransformBooleanFormat(bool elementValue)
+        {
+            if (elementValue)
+                { return "Y"; }
+            else
+                { return "N"; }
         }
 
         protected List<string> GetViewFieldListContent(By element)

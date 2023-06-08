@@ -14,10 +14,10 @@ namespace Pims.Api.Constants
         ResearchFiles,
         [EnumMember(Value = "acquisitionfiles")]
         AcquisitionFiles,
-        [EnumMember(Value = "researchfileactivities")]
+        /*[EnumMember(Value = "researchfileactivities")]
         ResearchFileActivities,
         [EnumMember(Value = "acquisitionfileactivities")]
-        AcquisitionFileActivities,
+        AcquisitionFileActivities,*/
         [EnumMember(Value = "leases")]
         Leases,
         [EnumMember(Value = "projects")]

@@ -18,8 +18,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private readonly string acquisitionFileName = "Automated Acquisition File";
 
-        private readonly string acquisitionFileProject = "Super Test Project";
-        private readonly string acquisitionFileProduct = "33-001 Test Product 1";
+        private readonly string acquisitionFileProject = "Highway 1 Widening - 216th Street Interchange";
+        private readonly string acquisitionFileProduct = "12570LANG TOWNSHIP OF LANGLEY";
 
         private readonly string acquisitionFileDeliveryDate = "12/27/2023";
         private readonly string teamMember1 = "Alejandro Sanchez";
@@ -57,36 +57,36 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation = new PropertyInformation(driver.Current);
         }
 
-        [StepDefinition(@"I navigate to create new Acquisition File")]
-        public void NavigateCreateNewAcquisitionFile()
-        {
-            //Login to PIMS
-            loginSteps.Idir(userName);
+        //[StepDefinition(@"I navigate to create new Acquisition File")]
+        //public void NavigateCreateNewAcquisitionFile()
+        //{
+        //    //Login to PIMS
+        //    loginSteps.Idir(userName);
 
-            //Navigate to Create Acquisition File
-            acquisitionFile.NavigateToCreateNewAcquisitionFile();
-        }
+        //    //Navigate to Create Acquisition File
+        //    acquisitionFile.NavigateToCreateNewAcquisitionFile();
+        //}
 
-        [StepDefinition(@"I create and cancel new Acquisition Files")]
-        public void CreateCancelAcquisitionFile()
-        {
-            /* TEST COVERAGE: PSP-4167 */
+        //[StepDefinition(@"I create and cancel new Acquisition Files")]
+        //public void CreateCancelAcquisitionFile()
+        //{
+        //    /* TEST COVERAGE: PSP-4167 */
 
-            //Cancel empty acquisition file
-            acquisitionFile.CancelAcquisitionFile();
+        //    //Cancel empty acquisition file
+        //    acquisitionFile.CancelAcquisitionFile();
 
-            //Verify Form is no longer visible
-            Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
+        //    //Verify Form is no longer visible
+        //    Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
 
-            //Navigate to Create Acquisition File
-            acquisitionFile.NavigateToCreateNewAcquisitionFile();
+        //    //Navigate to Create Acquisition File
+        //    acquisitionFile.NavigateToCreateNewAcquisitionFile();
 
-            //Add basic Information
-            acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileName);
+        //    //Add basic Information
+        //    acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileName);
 
-            //Cancel Creation
-            acquisitionFile.CancelAcquisitionFile();
-        }
+        //    //Cancel Creation
+        //    acquisitionFile.CancelAcquisitionFile();
+        //}
 
         [StepDefinition(@"I create a new Acquisition File")]
         public void CreateAcquisitionFile()
@@ -176,7 +176,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create an Acquisition File from a pin on map")]
         public void CreateAcquisitionFileFromPin()
         {
-            /* TEST COVERAGE: PSP-4601, PSP-1546, PSP-1556, PSP-4704, PSP-4164, PSP-5308 */
+            /* TEST COVERAGE: PSP-1546, PSP-1556, PSP-4164, PSP-4167, PSP-4601, PSP-4704, PSP-5308  */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -196,6 +196,44 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate Acquisition File Details Create Form
             acquisitionFile.VerifyAcquisitionFileCreate();
+
+            //Cancel empty acquisition file
+            acquisitionFile.CancelAcquisitionFile();
+
+            //Verify Form is no longer visible
+            Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(PID4Search);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+
+            //Fill basic Acquisition File information
+            acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileName);
+
+            //Cancel Creation
+            acquisitionFile.CancelAcquisitionFile();
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(PID4Search);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
 
             //Fill basic Acquisition File information
             acquisitionFile.CreateMinimumAcquisitionFile(acquisitionFileName);
@@ -351,11 +389,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
-        [StepDefinition(@"The creation of an Acquisition File is cancelled successfully")]
-        public void CancelSuccessful()
-        {
-            Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
-        }
+        //[StepDefinition(@"The creation of an Acquisition File is cancelled successfully")]
+        //public void CancelSuccessful()
+        //{
+        //    Assert.True(acquisitionFile.IsCreateAcquisitionFileFormVisible() == 0);
+        //}
 
     }
 }

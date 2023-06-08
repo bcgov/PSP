@@ -5,7 +5,7 @@ import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
 import { defaultLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/mockLookups';
+import { mockLookups } from 'mocks/lookups.mock';
 import { defaultApiLease } from 'models/api/Lease';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';

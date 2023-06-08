@@ -2,8 +2,8 @@ import { act, screen, waitFor } from '@testing-library/react';
 import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { SideBarContextProvider } from 'features/properties/map/context/sidebarContext';
-import { mockLookups } from 'mocks/mockLookups';
-import { getMockResearchFile } from 'mocks/mockResearchFile';
+import { mockLookups } from 'mocks/lookups.mock';
+import { getMockResearchFile } from 'mocks/researchFile.mock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 
@@ -37,6 +37,7 @@ describe('UpdateProperties component', () => {
           onSuccess={onSuccess}
           updateFileProperties={updateFileProperties}
           canRemove={props.canRemove ?? jest.fn()}
+          formikRef={{} as any}
         />
       </SideBarContextProvider>,
       {

@@ -98,6 +98,9 @@ namespace Pims.Dal
         public virtual DbSet<PimsDataSourceType> PimsDataSourceTypes { get; set; }
         public virtual DbSet<PimsDistrict> PimsDistricts { get; set; }
         public virtual DbSet<PimsDocument> PimsDocuments { get; set; }
+        public virtual DbSet<PimsDocumentCategorySubtype> PimsDocumentCategorySubtypes { get; set; }
+        public virtual DbSet<PimsDocumentCategoryType> PimsDocumentCategoryTypes { get; set; }
+        public virtual DbSet<PimsDocumentFormatType> PimsDocumentFormatTypes { get; set; }
         public virtual DbSet<PimsDocumentHist> PimsDocumentHists { get; set; }
         public virtual DbSet<PimsDocumentStatusType> PimsDocumentStatusTypes { get; set; }
         public virtual DbSet<PimsDocumentTyp> PimsDocumentTyps { get; set; }
@@ -111,6 +114,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsInsurance> PimsInsurances { get; set; }
         public virtual DbSet<PimsInsuranceHist> PimsInsuranceHists { get; set; }
         public virtual DbSet<PimsInsuranceType> PimsInsuranceTypes { get; set; }
+        public virtual DbSet<PimsLandActType> PimsLandActTypes { get; set; }
         public virtual DbSet<PimsLandSurveyorType> PimsLandSurveyorTypes { get; set; }
         public virtual DbSet<PimsLease> PimsLeases { get; set; }
         public virtual DbSet<PimsLeaseActivityInstance> PimsLeaseActivityInstances { get; set; }
@@ -551,6 +555,10 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsGstRequired)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if GST is required for this transaction.");
 
                 entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the owner's cheque related to the requisition.");
 
@@ -2183,9 +2191,15 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.FinancialActivityCodeId).HasDefaultValueSql("('4000')");
+
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the requisition is inactive.");
+
+                entity.Property(e => e.IsGstRequired)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if GST is required for this transaction.");
 
                 entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the requisition's work activity.");
 
@@ -2199,10 +2213,11 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_CMPREQ_PIM_CRH120_FK");
 
-                entity.HasOne(d => d.H120Category)
+                entity.HasOne(d => d.FinancialActivityCode)
                     .WithMany(p => p.PimsCompReqH120s)
-                    .HasForeignKey(d => d.H120CategoryId)
-                    .HasConstraintName("PIM_H120CT_PIM_CRH120_FK");
+                    .HasForeignKey(d => d.FinancialActivityCodeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_FINACT_PIM_CRH120_FK");
             });
 
             modelBuilder.Entity<PimsCompReqH120Hist>(entity =>
@@ -2213,6 +2228,8 @@ namespace Pims.Dal
                 entity.Property(e => e.CompReqH120HistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_H120_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.FinancialActivityCodeId).HasDefaultValueSql("('4000')");
             });
 
             modelBuilder.Entity<PimsCompensationRequisition>(entity =>
@@ -2273,6 +2290,21 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.AcquisitionFileId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.ChartOfAccounts)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.ChartOfAccountsId)
+                    .HasConstraintName("PIM_CHRTAC_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.Responsibility)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.ResponsibilityId)
+                    .HasConstraintName("PIM_RESPCD_PIM_CMPREQ_FK");
+
+                entity.HasOne(d => d.YearlyFinancial)
+                    .WithMany(p => p.PimsCompensationRequisitions)
+                    .HasForeignKey(d => d.YearlyFinancialId)
+                    .HasConstraintName("PIM_YRFINC_PIM_CMPREQ_FK");
             });
 
             modelBuilder.Entity<PimsCompensationRequisitionHist>(entity =>
@@ -2613,6 +2645,100 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.DocumentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_DOCTYP_PIM_DOCMNT_FK");
+            });
+
+            modelBuilder.Entity<PimsDocumentCategorySubtype>(entity =>
+            {
+                entity.HasKey(e => e.DocumentCategorySubtypeId)
+                    .HasName("DCCTSB_PK");
+
+                entity.Property(e => e.DocumentCategorySubtypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_CATEGORY_SUBTYPE_ID_SEQ])");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code value is still active or is now disabled.");
+
+                entity.HasOne(d => d.DocumentCategoryTypeCodeNavigation)
+                    .WithMany(p => p.PimsDocumentCategorySubtypes)
+                    .HasForeignKey(d => d.DocumentCategoryTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCCAT_PIM_DCCTSB_FK");
+
+                entity.HasOne(d => d.DocumentType)
+                    .WithMany(p => p.PimsDocumentCategorySubtypes)
+                    .HasForeignKey(d => d.DocumentTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCTYP_PIM_DCCTSB_FK");
+            });
+
+            modelBuilder.Entity<PimsDocumentCategoryType>(entity =>
+            {
+                entity.HasKey(e => e.DocumentCategoryTypeCode)
+                    .HasName("DOCCAT_PK");
+
+                entity.HasComment("The volume unit used for measuring Properties.");
+
+                entity.Property(e => e.DocumentCategoryTypeCode).HasComment("The code value category of the document.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Translation of the code value into a description that can be displayed to the user.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code value is still active or is now disabled.");
+            });
+
+            modelBuilder.Entity<PimsDocumentFormatType>(entity =>
+            {
+                entity.HasKey(e => e.DocumentFormatTypeCode)
+                    .HasName("DOCFMT_PK");
+
+                entity.HasComment("Table to contain the acceptable document formats that can be uploaded to the system.");
+
+                entity.Property(e => e.DocumentFormatTypeCode).HasComment("Code value of the acceptable document type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Decription of the acceptable document type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code values or descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date that the document format became acceptable to the system.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date that the document format became unsupported in the system.");
             });
 
             modelBuilder.Entity<PimsDocumentHist>(entity =>
@@ -2979,6 +3105,30 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+            });
+
+            modelBuilder.Entity<PimsLandActType>(entity =>
+            {
+                entity.HasKey(e => e.LandActTypeCode)
+                    .HasName("LNDATY_PK");
+
+                entity.HasComment("Tables that contains the codes and associated descriptions of the site contamination types.");
+
+                entity.Property(e => e.LandActTypeCode).HasComment("Codified version of the Land Act type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the Land Act type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
             });
 
             modelBuilder.Entity<PimsLandSurveyorType>(entity =>
@@ -4994,6 +5144,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.FileNumberSuffix).HasComment("A suffix to distinguish between Property Files with the same number.");
 
+                entity.Property(e => e.GeneralLocation).HasComment("Descriptive location of the property, primarily for H120 activities.");
+
                 entity.Property(e => e.IsOwned)
                     .HasDefaultValueSql("(CONVERT([bit],(1)))")
                     .HasComment("Is the property currently owned?");
@@ -6976,8 +7128,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LandActArea).HasComment("Area of the Section 16 activity.");
 
-                entity.Property(e => e.LandActDescription).HasComment("Description of the land act-related take.");
-
                 entity.Property(e => e.LandActEndDt).HasComment("End date of the Section 16 activity.");
 
                 entity.Property(e => e.LicenseToConstructArea).HasComment("Area of the license to construct.");
@@ -6998,6 +7148,11 @@ namespace Pims.Dal
                     .WithMany(p => p.PimsTakes)
                     .HasForeignKey(d => d.AreaUnitTypeCode)
                     .HasConstraintName("PIM_ARUNIT_PIM_TAKE_FK");
+
+                entity.HasOne(d => d.LandActTypeCodeNavigation)
+                    .WithMany(p => p.PimsTakes)
+                    .HasForeignKey(d => d.LandActTypeCode)
+                    .HasConstraintName("PIM_LNDATY_PIM_TAKE_FK");
 
                 entity.HasOne(d => d.PropertyAcquisitionFile)
                     .WithMany(p => p.PimsTakes)
@@ -7811,6 +7966,10 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_COST_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_DOCUMENT_CATEGORY_SUBTYPE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
