@@ -106,7 +106,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
         handleModalOk={contactManagerProps?.handleModalOk}
         handleModalCancel={contactManagerProps?.handleModalCancel}
         showActiveSelector={contactManagerProps.showActiveSelector}
-        showOnlyIndividuals={contactManagerProps.showOnlyIndividuals}
+        restrictContactType={contactManagerProps.restrictContactType}
       ></ContactManagerModal>
     </>
   );

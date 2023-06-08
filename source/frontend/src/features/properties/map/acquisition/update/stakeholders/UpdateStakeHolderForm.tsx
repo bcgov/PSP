@@ -81,7 +81,6 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                               <ContactInputContainer
                                 field={`interestHolders.${index}.contact`}
                                 View={ContactInputView}
-                                showOnlyIndividuals={false}
                               ></ContactInputContainer>
                             </Col>
                             <Col xs="auto">
@@ -177,13 +176,38 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                       <i>No Non-interest payees to display</i>
                     )}
                     {values.nonInterestPayees.map((interestHolder, index) => (
-                      <>
+                      <React.Fragment
+                        key={
+                          interestHolder?.interestHolderId
+                            ? `non-interest-holder-${interestHolder?.interestHolderId}`
+                            : `non-interest-holder-${index}`
+                        }
+                      >
                         <SectionField label="Payee name">
-                          <ContactInputContainer
-                            field={`nonInterestPayees.${index}.contact`}
-                            View={ContactInputView}
-                          ></ContactInputContainer>
+                          <Row>
+                            <Col>
+                              <ContactInputContainer
+                                field={`nonInterestPayees.${index}.contact`}
+                                View={ContactInputView}
+                              ></ContactInputContainer>
+                            </Col>
+                            <Col xs="auto">
+                              <StyledRemoveLinkButton
+                                title="Remove Interest"
+                                variant="light"
+                                onClick={() => {
+                                  arrayHelpers.remove(index);
+                                }}
+                              >
+                                <FaTrash size="2rem" />
+                              </StyledRemoveLinkButton>
+                            </Col>
+                            {getIn(errors, `nonInterestPayees.${index}.contact`) && (
+                              <DisplayError field={`nonInterestPayees.${index}.contact`} />
+                            )}
+                          </Row>
                         </SectionField>
+
                         <SectionField
                           label="Impacted properties"
                           tooltip="The non-interest payee will show on the Compensation Request form relevant to these properties."
@@ -221,7 +245,10 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                             disabledSelection={false}
                           />
                         </SectionField>
-                      </>
+                        {getIn(errors, `nonInterestPayees.${index}.impactedProperties`) && (
+                          <DisplayError field={`nonInterestPayees.${index}.impactedProperties`} />
+                        )}
+                      </React.Fragment>
                     ))}
                     <hr />
                     <Button

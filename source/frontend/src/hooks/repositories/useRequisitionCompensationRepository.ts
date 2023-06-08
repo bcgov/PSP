@@ -78,8 +78,8 @@ export const useCompensationRequisitionRepository = () => {
     [
       deleteCompensation,
       getCompensationRequisition,
-      getCompensationRequisitionPayee,
       updateCompensationRequisition,
+      getCompensationRequisitionPayee,
     ],
   );
 };

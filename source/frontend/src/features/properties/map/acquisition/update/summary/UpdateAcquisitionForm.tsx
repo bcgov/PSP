@@ -11,6 +11,7 @@ import ContactInputView from 'components/common/form/ContactInput/ContactInputVi
 import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { StyledSectionParagraph } from 'components/common/styles';
 import TooltipIcon from 'components/common/TooltipIcon';
+import { RestrictContactType } from 'components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -268,6 +269,7 @@ const AcquisitionDetailSubForm: React.FC<{
           <ContactInputContainer
             field="ownerRepresentative.contact"
             View={ContactInputView}
+            restrictContactType={RestrictContactType.ONLY_INDIVIDUALS}
           ></ContactInputContainer>
         </SectionField>
         <SectionField label="Comment">

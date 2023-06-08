@@ -66,7 +66,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
-            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), false);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), true);
 
             return compensationRequisition;
         }
@@ -128,31 +128,26 @@ namespace Pims.Dal.Repositories
             return false;
         }
 
-        public PimsAcquisitionPayee GetPayee(long compensationRequisitionId)
+        public PimsAcquisitionPayee GetPayee(long payeeId)
         {
-            var compensationRequisition = GetById(compensationRequisitionId);
-            var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
-            if (compensationRequisition is not null && compensationPayee is null)
-            {
-                throw new KeyNotFoundException();
-            }
 
             var payeeEntity = Context.PimsAcquisitionPayees
-                 .Include(x => x.AcquisitionFilePerson)
-                 .Include(x => x.AcquisitionOwner)
-                 .Include(x => x.InterestHolder)
-                 .Include(x => x.OwnerRepresentative)
-                 .Include(x => x.PimsAcqPayeeCheques)
-                 .Include(x => x.OwnerSolicitor)
-                 .AsNoTracking()
-                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(compensationPayee.AcquisitionPayeeId));
-
-            if (payeeEntity.PimsAcqPayeeCheques?.FirstOrDefault() is not null)
-            {
-                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
-                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
-                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
-            }
+                .Include(ap => ap.AcquisitionFilePerson)
+                    .ThenInclude(afp => afp.Person)
+                .Include(ap => ap.AcquisitionOwner)
+                .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.Person)
+                .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.Organization)
+                .Include(ap => ap.OwnerRepresentative)
+                    .ThenInclude(or => or.Person)
+                .Include(ap => ap.OwnerSolicitor)
+                    .ThenInclude(os => os.Organization)
+                .Include(ap => ap.OwnerSolicitor)
+                    .ThenInclude(os => os.Person)
+                .Include(ap => ap.PimsAcqPayeeCheques)
+                .AsNoTracking()
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(payeeId)) ?? throw new KeyNotFoundException();
 
             return payeeEntity;
         }

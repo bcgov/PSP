@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OwnerSolicitorId, src => src.OwnerSolicitorId)
                 .Map(dest => dest.MotiSolicitorId, src => src.AcquisitionFilePersonId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.MotiSolicitor, src => src.AcquisitionFilePerson)
+                .Map(dest => dest.MotiSolicitor, src => src.AcquisitionFilePerson != null ? src.AcquisitionFilePerson.Person : null)
                 .Map(dest => dest.AcquisitionOwner, src => src.AcquisitionOwner)
                 .Map(dest => dest.CompensationRequisition, src => src.CompensationRequisition)
                 .Map(dest => dest.InterestHolder, src => src.InterestHolder)

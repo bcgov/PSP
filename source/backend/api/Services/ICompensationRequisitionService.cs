@@ -6,10 +6,10 @@ namespace Pims.Api.Services
     {
         PimsCompensationRequisition GetById(long compensationRequisitionId);
 
+        PimsAcquisitionPayee GetPayeeByCompensationId(long compensationRequisitionId);
+
         PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition);
 
         bool DeleteCompensation(long compensationId);
-
-        PimsAcquisitionPayee GetPayee(long compensationRequisitionId);
     }
 }

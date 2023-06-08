@@ -55,8 +55,8 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       loading={loading || loadingPayee}
       compensation={compensation}
       compensationPayee={compensationPayee}
-      acqFileProject={acquisitionFile.project}
-      acqFileProduct={acquisitionFile.product}
+      acqFileProject={acquisitionFile?.project}
+      acqFileProduct={acquisitionFile?.product}
       setEditMode={setEditMode}
       clientConstant={clientConstant}
       gstConstant={gstConstant}

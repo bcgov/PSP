@@ -14,12 +14,14 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
+        private readonly IAcquisitionPayeeRepository _acquisitionPayeeRepository;
 
-        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository)
+        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository)
         {
             _user = user;
             _logger = logger;
             _compensationRequisitionRepository = compensationRequisitionRepository;
+            _acquisitionPayeeRepository = acquisitionPayeeRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -41,6 +43,27 @@ namespace Pims.Api.Services
             }
 
             return compensationRequisition;
+        }
+
+        public PimsAcquisitionPayee GetPayeeByCompensationId(long compensationRequisitionId)
+        {
+            _logger.LogInformation($"Getting Compensation Requisition Payee with compensation id {compensationRequisitionId}");
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
+            var compensationPayee = _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
+            if (compensationRequisition is not null && compensationPayee is not null)
+            {
+                var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
+                if (payeeCheque is not null)
+                {
+                    payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
+                    payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
+                    payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
+                }
+            }
+
+            return compensationPayee;
         }
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
@@ -91,14 +114,6 @@ namespace Pims.Api.Services
             var fileFormToDelete = _compensationRequisitionRepository.TryDelete(compensationId);
             _compensationRequisitionRepository.CommitTransaction();
             return fileFormToDelete;
-        }
-
-        public PimsAcquisitionPayee GetPayee(long compensationRequisitionId)
-        {
-            _logger.LogInformation("Getting Payee for Compensation Requisition with Id ...", compensationRequisitionId);
-            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
-
-            return _compensationRequisitionRepository.GetPayee(compensationRequisitionId);
         }
     }
 }

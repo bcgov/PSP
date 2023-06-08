@@ -1,8 +1,9 @@
 import { getMockApiCompensationList } from 'mocks/compensations.mock';
 import { mockCompReqH120s } from 'mocks/mockCompReqH120s';
 import { getMockH120Categories } from 'mocks/mockH120Categories';
-import { Api_GenerateCompensation } from 'models/generate/GenerateCompensation';
 import moment from 'moment';
+
+import { Api_GenerateCompensation } from '../acquisition/GenerateCompensation';
 
 describe('GenerateCompensation tests', () => {
   it('Can Generate an empty compensation without throwing an error', () => {
