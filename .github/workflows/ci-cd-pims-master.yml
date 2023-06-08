@@ -130,7 +130,7 @@ jobs:
     needs: deploy
     steps:
       - name: check workflow status
-        uses: martialonline/workflow-status@v2
+        uses: martialonline/workflow-status@v4
         id: check
       - name: End notification to Teams Channel
         uses: dragos-cojocari/ms-teams-notification@v1.0.2
