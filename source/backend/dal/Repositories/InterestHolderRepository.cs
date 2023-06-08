@@ -47,7 +47,6 @@ namespace Pims.Dal.Repositories
 
         public List<PimsInterestHolder> UpdateAllForAcquisition(long acquisitionFileId, List<PimsInterestHolder> interestHolders)
         {
-            List<PimsInterestHolder> currentInterestHolders = GetInterestHoldersByAcquisitionFile(acquisitionFileId);
             Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFileId, interestHolders.ToArray());
             interestHolders.ForEach(ih =>
             {
@@ -56,13 +55,6 @@ namespace Pims.Dal.Repositories
                 {
                     Context.UpdateChild<PimsInterestHolder, long, PimsInthldrPropInterest, long>(p => p.PimsInthldrPropInterests, ih.InterestHolderId, ih.PimsInthldrPropInterests.ToArray());
                 }
-            });
-            IEnumerable<PimsInterestHolder> deletedInterestHolders = currentInterestHolders.Where(cih => !interestHolders.Any(ih => ih.InterestHolderId == cih.InterestHolderId));
-            deletedInterestHolders.SelectMany(dih => dih.PimsInthldrPropInterests).ForEach(pihp =>
-            {
-                pihp.InterestHolderInterestTypeCodeNavigation = null;
-                pihp.InterestHolder = null;
-                Context.Remove(pihp);
             });
 
             return GetInterestHoldersByAcquisitionFile(acquisitionFileId);
