@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
+import { useLayerQuery } from './useLayerQuery';
 
 const mockStore = configureMockStore([thunk]);
 const getStore = (values?: any) => mockStore(values);
@@ -74,36 +74,7 @@ describe('useLayerQuery hook tests', () => {
       expect(toastErrorSpy).not.toHaveBeenCalled();
     });
   });
-  describe('findByAdministrative tests', () => {
-    it('Displays a warning when a warehouse request fails', async () => {
-      const { findByAdministrative } = getRenderedHook();
-      mockAxios.onGet().reply(500);
-      try {
-        await findByAdministrative('city');
-      } catch (err) {}
 
-      expect(toastErrorSpy).toHaveBeenCalledTimes(1);
-    });
-    it('retries failed wfs requests', async () => {
-      const { findByAdministrative } = getRenderedHook();
-      mockAxios.onGet().reply(500);
-      try {
-        await findByAdministrative('city');
-      } catch (err) {}
-
-      expect(mockAxios.history.get.length).toBe(3);
-    });
-    it('does not show the data warehouse error if the retry passes', async () => {
-      const { findByAdministrative } = getRenderedHook();
-      mockAxios.onGet().replyOnce(500).onAny().reply(200);
-      try {
-        await findByAdministrative('city');
-      } catch (err) {}
-
-      expect(mockAxios.history.get.length).toBe(2);
-      expect(toastErrorSpy).not.toHaveBeenCalled();
-    });
-  });
   describe('findByPid tests', () => {
     it('Displays a warning when a warehouse request fails', async () => {
       const { findByPid } = getRenderedHook();

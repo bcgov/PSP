@@ -1,11 +1,11 @@
-import { toCqlFilter } from 'components/maps/leaflet/mapUtils';
 import CustomAxios from 'customAxios';
 import { Feature, FeatureCollection, Point } from 'geojson';
 import { useCallback, useContext } from 'react';
 import { TenantContext } from 'tenants';
 import { useAxiosErrorHandler } from 'utils';
 
-import { useApiRequestWrapper } from './useApiRequestWrapper';
+import { useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
+import { toCqlFilter } from './layerUtils';
 
 function buildUrl(inputUrl: string, cqlFilter: Record<string, any>) {
   return `${inputUrl}${toCqlFilter(cqlFilter)}`;

@@ -1,6 +1,7 @@
 import { DistrictCodes, RegionCodes } from 'constants/index';
-import { useMapProperties } from 'features/properties/map/hooks/useMapProperties';
 import { Feature, FeatureCollection, GeoJsonObject, GeoJsonProperties, Geometry } from 'geojson';
+import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
+import { useMapProperties } from 'hooks/layer-api/useMapProperties';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
@@ -13,7 +14,6 @@ import {
   LayerPopupInformation,
   municipalityLayerPopupConfig,
   parcelLayerPopupConfig,
-  useLayerQuery,
 } from '../leaflet/LayerPopup';
 import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
 

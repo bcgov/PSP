@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { useTenant } from 'tenants/useTenant';
 
 import { useGetProperty } from '../features/mapSideBar/tabs/propertyDetails/hooks/useGetProperty';
-import { useFullyAttributedParcelMapLayer } from './pims-api/useFullyAttributedParcelMapLayer';
-import { useGeoServer } from './pims-api/useGeoServer';
+import { useGeoServer } from './layer-api/useGeoServer';
+import { useFullyAttributedParcelMapLayer } from './repositories/useFullyAttributedParcelMapLayer';
 import { useBcAssessmentLayer } from './useBcAssessmentLayer';
 import useDeepCompareCallback from './useDeepCompareCallback';
 import { useLtsa } from './useLtsa';

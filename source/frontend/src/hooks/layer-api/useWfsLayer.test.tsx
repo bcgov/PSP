@@ -7,7 +7,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
-import { IUseWfsLayerOptions, useWfsLayer } from '.';
+import { IUseWfsLayerOptions, useWfsLayer } from './useWfsLayer';
 
 const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);

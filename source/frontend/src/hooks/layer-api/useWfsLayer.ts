@@ -1,10 +1,10 @@
-import { toCqlFilterValue } from 'components/maps/leaflet/mapUtils';
 import { FeatureCollection } from 'geojson';
+import { wfsAxios } from 'hooks/layer-api/wfsAxios';
 import { IApiRequestWrapper, useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
 import isAbsoluteUrl from 'is-absolute-url';
 
-import { wfsAxios } from './wfsAxios';
+import { toCqlFilterValue } from './layerUtils';
 
 export interface IUseWfsLayerOptions {
   name?: string;

@@ -10,7 +10,6 @@ import { DivIcon, LatLngExpression, Marker } from 'leaflet';
 
 import { ICluster, PointFeature } from '../types';
 import {
-  asProperty,
   createClusterMarker,
   createPoints,
   getMarkerIcon,
@@ -93,22 +92,6 @@ describe('mapUtils tests', () => {
           true,
         ),
       ).toEqual(parcelIconSelect);
-    });
-
-    describe('convert feature to property', () => {
-      const property: PointFeature = {
-        type: 'Feature',
-        geometry: { coordinates: [1, 2] } as any,
-        properties: { id: 1, name: 'name' },
-      };
-      it('does the conversion', () => {
-        expect(asProperty(property)).toEqual({
-          id: 1,
-          latitude: 2,
-          longitude: 1,
-          name: 'name',
-        });
-      });
     });
 
     describe('create points function', () => {

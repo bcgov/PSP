@@ -2,7 +2,10 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { IMapLayerResults, useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
+import {
+  IMapLayerResults,
+  useQueryMapLayersByLocation,
+} from 'hooks/repositories/useQueryMapLayersByLocation';
 import { mockLookups } from 'mocks/lookups.mock';
 import { Api_Property } from 'models/api/Property';
 import { createRef } from 'react';

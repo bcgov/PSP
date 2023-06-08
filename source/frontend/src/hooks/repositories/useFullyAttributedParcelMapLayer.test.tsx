@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
-import { useFullyAttributedParcelMapLayer } from '.';
+import { useFullyAttributedParcelMapLayer } from './useFullyAttributedParcelMapLayer';
 
 const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);

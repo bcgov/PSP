@@ -1,9 +1,9 @@
-import { IUserLayerQuery, useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { GeoJsonProperties } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
-import { useTenant } from './../tenants/useTenant';
+import { useTenant } from '../../tenants/useTenant';
+import { IUserLayerQuery, useLayerQuery } from '../layer-api/useLayerQuery';
 
 const initialState: IMapLayerResults = {
   isALR: null,

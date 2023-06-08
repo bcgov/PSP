@@ -1,7 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
 import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import {
@@ -13,6 +12,7 @@ import {
   PropertyTenureTypes,
 } from 'constants/index';
 import { createMemoryHistory } from 'history';
+import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
 import { useApiProperties } from 'hooks/pims-api';
 import { useComposedProperties } from 'hooks/useComposedProperties';
 import { IProperty } from 'interfaces';
@@ -24,7 +24,7 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, cleanup, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 import { mockKeycloak } from 'utils/test-utils';
 
-import { useMapProperties } from './hooks/useMapProperties';
+import { useMapProperties } from '../../../hooks/layer-api/useMapProperties';
 import MapView from './MapView';
 
 const mockAxios = new MockAdapter(axios);

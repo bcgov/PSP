@@ -1,10 +1,11 @@
-import { toCqlFilter } from 'components/maps/leaflet/mapUtils';
 import { IGeoSearchParams } from 'constants/API';
 import CustomAxios from 'customAxios';
 import { FeatureCollection } from 'geojson';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { useCallback, useContext } from 'react';
 import { TenantContext } from 'tenants';
+
+import { toCqlFilter } from './layerUtils';
 
 export const useMapProperties = () => {
   const {

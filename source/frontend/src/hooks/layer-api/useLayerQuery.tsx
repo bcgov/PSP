@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
 import { store } from 'store/store';
 
-import { toCqlFilter } from '../../mapUtils';
+import { toCqlFilter } from './layerUtils';
 
 export interface IUserLayerQuery {
   /**
@@ -41,11 +41,6 @@ export interface IUserLayerQuery {
    */
   findByPlanNumber: (planNumber: string, allBy?: boolean) => Promise<FeatureCollection | undefined>;
   findByPlanNumberLoading: boolean;
-  /**
-   * function to find GeoJSON shape matching the passed administrative area.
-   * @param city
-   */
-  findByAdministrative: (city: string) => Promise<Feature | null>;
 
   /**
    * Function to query spatial layers and return layer metadata for the supplied location (x, y)
@@ -142,27 +137,6 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
       requestName: 'findByPid',
     });
 
-  const findByAdministrative = useCallback(
-    async (city: string): Promise<Feature | null> => {
-      try {
-        const data: any = (
-          await wfsAxios({ authenticated }).get(
-            `${baseUrl}&cql_filter=ADMIN_AREA_NAME='${city}' OR ADMIN_AREA_ABBREVIATION='${city}'&outputformat=json`,
-          )
-        )?.data;
-
-        if (data.totalFeatures === 0) {
-          return null;
-        }
-        return data.features[0];
-      } catch (error) {
-        console.log('Failed to find municipality feature', error);
-        return null;
-      }
-    },
-    [baseUrl, authenticated],
-  );
-
   const { execute: findByPid, loading: findByPidLoading } = useApiRequestWrapper({
     requestFunction: useCallback(
       async (pid: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
@@ -242,14 +216,12 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
       findByPinLoading,
       findByPlanNumber,
       findByPlanNumberLoading,
-      findByAdministrative,
       findMetadataByLocation,
       findOneWhereContainsWrapped,
       findOneWhereContainsLoading,
     }),
     [
       findMetadataByLocation,
-      findByAdministrative,
       findByPid,
       findByPidLoading,
       findByPin,
