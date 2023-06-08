@@ -15,6 +15,11 @@ namespace Pims.Api.Models.Concepts
         public long? PersonId { get; set; }
 
         /// <summary>
+        /// get/set - The Id of the organization associated with an acquisition file as an owner solicitor.
+        /// </summary>
+        public long? OrganizationId { get; set; }
+
+        /// <summary>
         /// get/set - The Id of the acquisition file related to this solicitor.
         /// </summary>
         public long? AcquisitionFileId { get; set; }
@@ -23,6 +28,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The person associated with an acquisition file as an owner solicitor.
         /// </summary>
         public PersonModel Person { get; set; }
+
+        /// <summary>
+        /// get/set - The organization associated with an acquisition file as an owner solicitor.
+        /// </summary>
+        public OrganizationModel Organization { get; set; }
 
         /// <summary>
         /// get/set - The relationship's disabled status flag.

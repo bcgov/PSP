@@ -8,7 +8,7 @@ export function formatFullName(person?: Partial<IEditablePerson>): string {
   return formatNames([person.firstName, person.middleNames, person.surname]);
 }
 
-export function formatApiPersonNames(person?: Api_Person): string {
+export function formatApiPersonNames(person?: Api_Person | null): string {
   return formatNames([person?.firstName, person?.middleNames, person?.surname]);
 }
 

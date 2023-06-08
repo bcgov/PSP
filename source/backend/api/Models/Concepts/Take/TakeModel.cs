@@ -34,7 +34,6 @@ namespace Pims.Api.Models.Concepts
 
         public float? LandActArea { get; set; }
 
-        public string LandActDescription { get; set; }
 
         public DateTime? LandActEndDt { get; set; }
 
@@ -51,6 +50,8 @@ namespace Pims.Api.Models.Concepts
         public string TakeTypeCode { get; set; }
 
         public string TakeStatusTypeCode { get; set; }
+
+        public TypeModel<string> LandActTypeCode { get; set; }
         #endregion
     }
 }

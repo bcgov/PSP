@@ -62,9 +62,6 @@ exports[`Lease Insurance renders as expected 1`] = `
           >
             Required insurance
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -96,9 +93,6 @@ exports[`Lease Insurance renders as expected 1`] = `
             >
               Home Insurance
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div

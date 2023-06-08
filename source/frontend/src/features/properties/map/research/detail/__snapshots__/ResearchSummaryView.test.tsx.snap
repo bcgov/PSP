@@ -7,16 +7,20 @@ exports[`ResearchSummaryView component renders as expected when research file is
   />
   <div />
   .c0 {
+  padding-top: 1rem;
+}
+
+.c1 {
   text-align: right;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -24,28 +28,28 @@ exports[`ResearchSummaryView component renders as expected when research file is
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 mr-3 my-1"
+      class="c1 mr-3 my-1"
     />
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -55,9 +59,6 @@ exports[`ResearchSummaryView component renders as expected when research file is
           >
             Project
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -70,13 +71,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Ministry project:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div>
               00048 CLAIMS
@@ -86,10 +87,10 @@ exports[`ResearchSummaryView component renders as expected when research file is
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -99,9 +100,6 @@ exports[`ResearchSummaryView component renders as expected when research file is
           >
             Roads
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -114,13 +112,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Road name:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Test road name
           </div>
@@ -132,13 +130,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Road alias:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Test road alias
           </div>
@@ -146,10 +144,10 @@ exports[`ResearchSummaryView component renders as expected when research file is
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -159,9 +157,6 @@ exports[`ResearchSummaryView component renders as expected when research file is
           >
             Research Request
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -174,13 +169,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Research purpose:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
         <div
@@ -190,13 +185,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Request date:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
              Apr 14, 2022
           </div>
@@ -208,13 +203,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Source of request:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Headquarters (HQ)
           </div>
@@ -226,13 +221,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Requester:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Dairy Queen Forever! Property Management
           </div>
@@ -244,23 +239,23 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Description of request:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
         a request description
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -270,9 +265,6 @@ exports[`ResearchSummaryView component renders as expected when research file is
           >
             Result
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -285,13 +277,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Research completed on:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Mar 30, 2022
           </div>
@@ -303,23 +295,23 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Result of request:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
         A research result
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -329,9 +321,6 @@ exports[`ResearchSummaryView component renders as expected when research file is
           >
             Expropriation
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -344,13 +333,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Expropriation?:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             No
           </div>
@@ -362,13 +351,13 @@ exports[`ResearchSummaryView component renders as expected when research file is
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Expropriation notes:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
         An expropriation note

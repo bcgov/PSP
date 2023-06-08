@@ -5,4 +5,5 @@ export enum EditFormType {
   PROPERTY_SELECTOR = 'propertySelector',
   TAKES = 'takes',
   AGREEMENTS = 'agreements',
+  STAKEHOLDERS = 'stakeholders',
 }

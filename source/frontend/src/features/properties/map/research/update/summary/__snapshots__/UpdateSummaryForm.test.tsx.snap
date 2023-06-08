@@ -6,7 +6,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
     class="Toastify"
   />
   <div />
-  .c9.btn {
+  .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   cursor: pointer;
 }
 
-.c9.btn:hover {
+.c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c10.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c10.btn.btn-primary {
   border: none;
 }
 
-.c9.btn.btn-secondary {
+.c10.btn.btn-secondary {
   background: none;
 }
 
-.c9.btn.btn-info {
+.c10.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
   background: none;
 }
 
-.c9.btn.btn-light {
+.c10.btn.btn-light {
   border: none;
 }
 
-.c9.btn.btn-dark {
+.c10.btn.btn-dark {
   border: none;
 }
 
-.c9.btn.btn-link {
+.c10.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   padding: 0;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,27 +128,27 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   opacity: 0.65;
 }
 
-.c9.Button .Button__icon {
+.c10.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c10.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c10.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c11.c11.form-control.is-valid {
+.c12.c12.form-control.is-valid {
   background-image: none;
 }
 
-.c11.c11.form-control.is-invalid {
+.c12.c12.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -159,13 +159,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   align-items: baseline;
 }
 
-.c10 .form-label {
+.c11 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c15 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -175,7 +175,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   flex-wrap: nowrap;
 }
 
-.c12 {
+.c13 {
   position: relative;
   border-radius: 0.3rem;
   padding: 0.6rem;
@@ -185,11 +185,11 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   border: solid 0.1rem;
 }
 
-.c12.is-invalid {
+.c13.is-invalid {
   border: solid 0.1rem;
 }
 
-.c13.c13.btn {
+.c14.c14.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 0.4rem;
@@ -198,19 +198,19 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   line-height: unset;
 }
 
-.c13.c13.btn .text {
+.c14.c14.btn .text {
   display: none;
 }
 
-.c13.c13.btn:hover,
-.c13.c13.btn:active,
-.c13.c13.btn:focus {
+.c14.c14.btn:hover,
+.c14.c14.btn:active,
+.c14.c14.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
 }
 
-.c14.form-group {
+.c15.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -218,7 +218,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   margin-bottom: 0;
 }
 
-.c14.form-group .radio-group {
+.c15.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -231,7 +231,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   column-gap: unset;
 }
 
-.c14.form-group .radio-group .form-check {
+.c15.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -246,25 +246,29 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   justify-content: center;
 }
 
-.c14.form-group .radio-group .form-check .form-check-input {
+.c15.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c14.form-group .radio-group .form-check-label {
+.c15.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c14 .form-label {
+.c15 .form-label {
   margin-bottom: unset;
 }
 
-.c1 {
+.c0 {
+  padding-top: 1rem;
+}
+
+.c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c0 {
+.c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -272,18 +276,18 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   border-radius: 0.5rem;
 }
 
-.c3.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
 }
 
-.c4 {
+.c5 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -294,7 +298,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   margin-bottom: 1rem;
 }
 
-.c8 {
+.c9 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -305,30 +309,30 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   line-height: 24px;
 }
 
-.c7 {
+.c8 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c6 {
+.c7 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c5 {
+.c6 {
   cursor: pointer;
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -338,9 +342,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Research File Information
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -353,13 +354,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Status:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="required form-group"
@@ -410,13 +411,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               R-file name:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="input form-group"
@@ -432,16 +433,16 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           </div>
         </div>
         <h2
-          class="c4"
+          class="c5"
         >
           <div
-            class="c5 no-gutters row"
+            class="c6 no-gutters row"
           >
             <div
               class="col"
             >
               <svg
-                class="c6"
+                class="c7"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -460,7 +461,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
               class="col-1"
             >
               <svg
-                class="c7"
+                class="c8"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -481,7 +482,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           </div>
         </h2>
         <div
-          class="c8 collapse"
+          class="c9 collapse"
         >
           <p
             class="mb-4"
@@ -520,10 +521,10 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -533,16 +534,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Project
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
         class="collapse show"
       >
         <button
-          class="c9 Button btn btn-link"
+          class="c10 Button btn btn-link"
           data-testid="add-project"
           type="button"
         >
@@ -555,10 +553,10 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -568,9 +566,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Roads
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -583,13 +578,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Road name:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="input form-group"
@@ -611,13 +606,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Road alias:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="input form-group"
@@ -635,10 +630,10 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -648,9 +643,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Research Request
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -663,13 +655,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Research purpose:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div>
               <div
@@ -735,16 +727,16 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Request date:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
-              class="c10 form-group"
+              class="c11 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -754,7 +746,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 >
                   <input
                     autocomplete="off"
-                    class="c11 form-control date-picker"
+                    class="c12 form-control date-picker"
                     id="datepicker-requestDate"
                     name="requestDate"
                     placeholder="--/--/----"
@@ -773,13 +765,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Source of request:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="required form-group"
@@ -872,13 +864,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Requester:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="input form-group"
@@ -890,11 +882,11 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   class="col"
                 >
                   <div
-                    class="c12"
+                    class="c13"
                   >
                     Dairy Queen Forever! Property Management
                     <button
-                      class="c9 Button c13 btn btn-link"
+                      class="c10 Button c14 btn btn-link"
                       type="button"
                     >
                       <div
@@ -940,7 +932,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c9 Button Button--icon-only px-2 btn btn-primary"
+                    class="c10 Button Button--icon-only px-2 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -973,13 +965,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Description of request:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           />
         </div>
         <div
@@ -997,10 +989,10 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -1010,9 +1002,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Result
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1025,16 +1014,16 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Research completed on:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
-              class="c10 form-group"
+              class="c11 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -1044,7 +1033,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 >
                   <input
                     autocomplete="off"
-                    class="c11 form-control date-picker"
+                    class="c12 form-control date-picker"
                     id="datepicker-researchCompletionDate"
                     name="researchCompletionDate"
                     placeholder="--/--/----"
@@ -1063,13 +1052,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Result of request:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           />
         </div>
         <div
@@ -1087,10 +1076,10 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -1100,9 +1089,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           >
             Expropriation
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -1115,22 +1101,22 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Expropriation?:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
-              class="c14 form-group"
+              class="c15 form-group"
             >
               <div
                 class="radio-group"
               >
                 <div
-                  class="c15"
+                  class="c16"
                 >
                   <div
                     class="form-check"
@@ -1153,7 +1139,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   </label>
                 </div>
                 <div
-                  class="c15"
+                  class="c16"
                 >
                   <div
                     class="form-check"
@@ -1185,13 +1171,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Expropriation notes:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           />
         </div>
         <div

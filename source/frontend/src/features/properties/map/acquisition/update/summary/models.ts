@@ -8,6 +8,7 @@ import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 
 import {
   AcquisitionOwnerFormModel,
+  AcquisitionRepresentativeFormModel,
   AcquisitionSolicitorFormModel,
   AcquisitionTeamFormModel,
   WithAcquisitionOwners,
@@ -40,6 +41,9 @@ export class UpdateAcquisitionSummaryFormModel
   fundingTypeCode?: string;
   fundingTypeOtherDescription: string = '';
   ownerSolicitor: AcquisitionSolicitorFormModel = new AcquisitionSolicitorFormModel(null);
+  ownerRepresentative: AcquisitionRepresentativeFormModel = new AcquisitionRepresentativeFormModel(
+    null,
+  );
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -68,6 +72,9 @@ export class UpdateAcquisitionSummaryFormModel
         .map<Api_AcquisitionFilePerson>(x => x.toApi(this.id || 0)),
       acquisitionFileOwnerSolicitors: this.ownerSolicitor.contact
         ? [this.ownerSolicitor.toApi()]
+        : [],
+      acquisitionFileOwnerRepresentatives: this.ownerRepresentative.contact
+        ? [this.ownerRepresentative.toApi()]
         : [],
     };
   }
@@ -100,6 +107,9 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.ownerSolicitor = model.acquisitionFileOwnerSolicitors?.length
       ? AcquisitionSolicitorFormModel.fromApi(model.acquisitionFileOwnerSolicitors[0])
       : new AcquisitionSolicitorFormModel(null);
+    newForm.ownerRepresentative = model.acquisitionFileOwnerRepresentatives?.length
+      ? AcquisitionRepresentativeFormModel.fromApi(model.acquisitionFileOwnerRepresentatives[0])
+      : new AcquisitionRepresentativeFormModel(null);
 
     return newForm;
   }

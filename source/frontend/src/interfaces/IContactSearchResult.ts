@@ -50,7 +50,7 @@ export function fromContact(baseModel: Api_Contact): IContactSearchResult {
 
 export function fromApiPerson(baseModel: Api_Person): IContactSearchResult {
   var personOrganizations =
-    baseModel.personOrganizations !== undefined ? baseModel.personOrganizations : undefined;
+    baseModel?.personOrganizations !== undefined ? baseModel.personOrganizations : undefined;
 
   var organization =
     personOrganizations !== undefined && personOrganizations.length > 0
@@ -58,14 +58,14 @@ export function fromApiPerson(baseModel: Api_Person): IContactSearchResult {
       : undefined;
 
   return {
-    id: 'P' + baseModel.id,
-    personId: baseModel.id,
+    id: 'P' + baseModel?.id,
+    personId: baseModel?.id,
     organizationId: organization?.id,
-    isDisabled: baseModel.isDisabled,
-    summary: baseModel.firstName + ' ' + baseModel.surname,
-    surname: baseModel.surname,
-    firstName: baseModel.firstName,
-    middleNames: baseModel.middleNames,
+    isDisabled: baseModel?.isDisabled,
+    summary: baseModel?.firstName + ' ' + baseModel?.surname,
+    surname: baseModel?.surname,
+    firstName: baseModel?.firstName,
+    middleNames: baseModel?.middleNames,
     organizationName: organization?.name,
     email: '',
     mailingAddress: '',

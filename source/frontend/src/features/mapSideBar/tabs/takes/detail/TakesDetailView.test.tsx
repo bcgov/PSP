@@ -151,7 +151,7 @@ describe('TakesDetailView component', () => {
     expect(date).toBeVisible();
   });
 
-  it('displays the land act description', async () => {
+  it('displays the land act code', async () => {
     const { findByText } = setup({
       props: {
         loading: false,
@@ -164,9 +164,9 @@ describe('TakesDetailView component', () => {
         ],
       },
     });
-    const description = await findByText('NEW LAND', {
+    const code = await findByText('Section 15', {
       exact: false,
     });
-    expect(description).toBeVisible();
+    expect(code).toBeVisible();
   });
 });

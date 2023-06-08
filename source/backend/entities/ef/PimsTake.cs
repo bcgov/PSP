@@ -36,6 +36,9 @@ namespace Pims.Dal.Entities
         [Column("AREA_UNIT_TYPE_CODE")]
         [StringLength(20)]
         public string AreaUnitTypeCode { get; set; }
+        [Column("LAND_ACT_TYPE_CODE")]
+        [StringLength(20)]
+        public string LandActTypeCode { get; set; }
         [Column("DESCRIPTION")]
         [StringLength(4000)]
         public string Description { get; set; }
@@ -106,9 +109,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("LAND_ACT_TYPE_CODE")]
-        [StringLength(20)]
-        public string LandActTypeCode { get; set; }
 
         [ForeignKey(nameof(AreaUnitTypeCode))]
         [InverseProperty(nameof(PimsAreaUnitType.PimsTakes))]

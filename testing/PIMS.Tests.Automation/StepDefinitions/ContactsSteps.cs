@@ -85,7 +85,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts.NavigateToSearchContact();
 
             //Search for a contact
-            //var contact = organizationContacts.SingleOrDefault(u => u.OrganizationName.Equals("Automation Test Corp II", StringComparison.OrdinalIgnoreCase));
             PopulateOrganizationContact(rowNumber);
             searchContacts.SearchOrganizationContact(organizationContact.OrganizationName);
 
@@ -93,7 +92,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts.SelectFirstResultLink();
 
             //Update an Organization Contact
-            contacts.UpdateContact(organizationContact.Email2, organizationContact.EmailType2, organizationContact.Phone2, organizationContact.PhoneType2);
+            contacts.UpdateOrganizationContact(organizationContact);
 
             //Save Contact
             contacts.SaveContact();
@@ -118,7 +117,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchContacts.SelectFirstResultLink();
 
             //Update an Organization Contact
-            contacts.UpdateContact(individualContact.Email2, individualContact.EmailType2, individualContact.Phone2, individualContact.PhoneType2);
+            contacts.UpdateIndividualContact(individualContact);
 
             //Save Contact
             contacts.SaveContact();
