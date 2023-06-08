@@ -1,4 +1,4 @@
-import { fromApiPerson, IContactSearchResult } from 'interfaces';
+import { fromApiOrganization, fromApiPerson, IContactSearchResult } from 'interfaces';
 import { isEmpty } from 'lodash';
 import {
   Api_AcquisitionFileOwner,
@@ -72,7 +72,7 @@ export class AcquisitionSolicitorFormModel {
       id: this.id ?? null,
       personId: this.contact?.personId ?? null,
       person: null,
-      organizationId: this.contact?.organizationId ?? null,
+      organizationId: !this.contact?.personId ? this.contact?.organizationId ?? null : null,
       organization: null,
       isDisabled: this.isDisabled,
       rowVersion: this.rowVersion ?? undefined,
@@ -82,7 +82,11 @@ export class AcquisitionSolicitorFormModel {
 
   static fromApi(model: Api_AcquisitionFileSolicitor): AcquisitionSolicitorFormModel {
     const newForm = new AcquisitionSolicitorFormModel(
-      model.person !== null ? fromApiPerson(model.person) ?? null : null,
+      model.person !== null
+        ? fromApiPerson(model.person) ?? null
+        : model.organization
+        ? fromApiOrganization(model.organization)
+        : null,
     );
     newForm.id = model.id;
     newForm.isDisabled = model.isDisabled;

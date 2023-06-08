@@ -112,12 +112,16 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
             <StyledLink
               target="_blank"
               rel="noopener noreferrer"
-              to={`/contact/P${acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.personId}`}
+              to={
+                acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.personId
+                  ? `/contact/P${acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.personId}`
+                  : `/contact/O${acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.organizationId}`
+              }
             >
               <span>
-                {formatApiPersonNames(
-                  acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.person ?? undefined,
-                )}
+                {acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.personId
+                  ? formatApiPersonNames(acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.person)
+                  : acquisitionFile?.acquisitionFileOwnerSolicitors[0]?.organization?.name ?? ''}
               </span>
               <FaExternalLinkAlt className="ml-2" size="1rem" />
             </StyledLink>

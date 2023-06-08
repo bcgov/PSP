@@ -3,8 +3,10 @@ import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import {
   deleteCompensationRequisitionApi,
   getCompensationRequisitionApi,
+  getCompensationRequisitionPayeeApi,
   putCompensationRequisitionApi,
 } from 'hooks/pims-api/useApiRequisitionCompensations';
+import { Api_CompensationPayee } from 'models/api/CompensationPayee';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
@@ -54,12 +56,30 @@ export const useCompensationRequisitionRepository = () => {
     ),
   });
 
+  const getCompensationRequisitionPayee = useApiRequestWrapper<
+    (compensationId: number) => Promise<AxiosResponse<Api_CompensationPayee, any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number) => await getCompensationRequisitionPayeeApi(compensationId),
+      [],
+    ),
+    requestName: 'getCompensationPayee',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load Compensation requisition payee.'),
+  });
+
   return useMemo(
     () => ({
       deleteCompensation: deleteCompensation,
       updateCompensationRequisition: updateCompensationRequisition,
       getCompensationRequisition: getCompensationRequisition,
+      getCompensationRequisitionPayee: getCompensationRequisitionPayee,
     }),
-    [deleteCompensation, getCompensationRequisition, updateCompensationRequisition],
+    [
+      deleteCompensation,
+      getCompensationRequisition,
+      updateCompensationRequisition,
+      getCompensationRequisitionPayee,
+    ],
   );
 };

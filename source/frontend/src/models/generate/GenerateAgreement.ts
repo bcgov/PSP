@@ -2,9 +2,9 @@ import { Api_Agreement } from 'models/api/Agreement';
 import moment from 'moment';
 import { formatMoney } from 'utils';
 
-import { Api_GenerateFile } from './GenerateFile';
+import { Api_GenerateAcquisitionFile } from './acquisition/GenerateAcquisitionFile';
 export class Api_GenerateAgreement {
-  file: Api_GenerateFile | null;
+  file: Api_GenerateAcquisitionFile | null;
   current_year: string;
   date: string;
   completion_date: string;
@@ -16,7 +16,7 @@ export class Api_GenerateAgreement {
   survey_plan_number: string;
   no_later_than_days: string;
 
-  constructor(agreement: Api_Agreement | null, generateFile: Api_GenerateFile | null) {
+  constructor(agreement: Api_Agreement | null, generateFile: Api_GenerateAcquisitionFile | null) {
     this.file = generateFile;
     this.current_year = moment().format('YYYY');
     this.date = agreement?.agreementDate

@@ -47,13 +47,6 @@ jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
   },
 }));
 
-const mockGetApi = {
-  error: undefined,
-  response: [],
-  execute: jest.fn(),
-  loading: false,
-};
-
 jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
@@ -74,6 +67,24 @@ jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
     };
   },
 }));
+
+jest.mock('hooks/repositories/useInterestHolderRepository', () => ({
+  useInterestHolderRepository: () => {
+    return {
+      getAcquisitionInterestHolders: {
+        execute: jest.fn(),
+        loading: false,
+      },
+    };
+  },
+}));
+
+const mockGetApi = {
+  error: undefined,
+  response: [],
+  execute: jest.fn(),
+  loading: false,
+};
 
 jest.mock('hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
