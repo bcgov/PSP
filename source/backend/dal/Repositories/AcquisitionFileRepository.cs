@@ -97,6 +97,10 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(x => x.Country)
                 .Include(r => r.PimsAcquisitionOwnerSolicitors)
                     .ThenInclude(rp => rp.Person)
+                .Include(r => r.PimsAcquisitionOwnerSolicitors)
+                    .ThenInclude(rp => rp.Organization)
+                .Include(r => r.PimsAcquisitionOwnerReps)
+                    .ThenInclude(rp => rp.Person)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -137,7 +141,7 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
-            var existingAcqFile = this.Context.PimsAcquisitionFiles
+            var existingAcqFile = Context.PimsAcquisitionFiles
                 .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.Internal_Id) ?? throw new KeyNotFoundException();
 
             // PSP-4413 Changing the MOTI region triggers an update to the ACQ File Number
@@ -153,10 +157,11 @@ namespace Pims.Dal.Repositories
                 acquisitionFile.FileNumber = existingAcqFile.FileNumber;
             }
 
-            this.Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
-            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson, long>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
-            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionOwnerSolicitor, long>(p => p.PimsAcquisitionOwnerSolicitors, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwnerSolicitors.ToArray());
-            this.Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
+            Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson, long>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionOwnerSolicitor, long>(p => p.PimsAcquisitionOwnerSolicitors, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwnerSolicitors.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionOwnerRep, long>(p => p.PimsAcquisitionOwnerReps, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwnerReps.ToArray());
+            Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
 
             return acquisitionFile;
         }

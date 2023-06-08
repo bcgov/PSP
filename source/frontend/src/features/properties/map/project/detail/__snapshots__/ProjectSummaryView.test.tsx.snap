@@ -6,22 +6,26 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c3 {
+  .c4 {
   float: right;
   cursor: pointer;
 }
 
 .c0 {
+  padding-top: 1rem;
+}
+
+.c1 {
   text-align: right;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -29,18 +33,18 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
+.c6.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
+.c5 {
   font-weight: bold;
 }
 
-.c6 {
+.c7 {
   font-weight: bold;
   border-bottom-style: solid;
   border-bottom-color: grey;
@@ -49,16 +53,16 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 mr-3 my-1"
+      class="c1 mr-3 my-1"
     />
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -72,7 +76,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
             class="col-1"
           >
             <svg
-              class="c3"
+              class="c4"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -105,13 +109,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-12"
           >
             <label
-              class="c4"
+              class="c5"
             >
               Project summary:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c6 text-left col"
           >
             Summary of the Project Cool A
           </div>
@@ -119,10 +123,10 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -136,7 +140,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
             class="col-1"
           >
             <svg
-              class="c3"
+              class="c4"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -169,13 +173,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-3"
           >
             <label
-              class="c4"
+              class="c5"
             >
               Cost type:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c6 text-left col"
           />
         </div>
         <div
@@ -185,13 +189,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-3"
           >
             <label
-              class="c4"
+              class="c5"
             >
               Work activity:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c6 text-left col"
           />
         </div>
         <div
@@ -201,25 +205,25 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
             class="pr-0 text-left col-3"
           >
             <label
-              class="c4"
+              class="c5"
             >
               Business function:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c6 text-left col"
           />
         </div>
       </div>
     </div>
     <div
-      class=""
+      class="c0"
     >
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -233,7 +237,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
               class="col-1"
             >
               <svg
-                class="c3"
+                class="c4"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -263,7 +267,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
             class="pb-5"
           >
             <div
-              class="c6"
+              class="c7"
             >
               70 - Product A
             </div>
@@ -274,13 +278,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 class="pr-0 text-left col-2"
               >
                 <label
-                  class="c4"
+                  class="c5"
                 >
                   Start Date:
                 </label>
               </div>
               <div
-                class="c5 text-left col"
+                class="c6 text-left col"
               >
                 Feb 1, 2023
               </div>
@@ -292,13 +296,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 class="pr-0 text-left col-2"
               >
                 <label
-                  class="c4"
+                  class="c5"
                 >
                   Cost estimate:
                 </label>
               </div>
               <div
-                class="c5 text-left col"
+                class="c6 text-left col"
               >
                 $60.00 as of Feb 2, 2023
               </div>
@@ -310,13 +314,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 class="pr-0 text-left col-12"
               >
                 <label
-                  class="c4"
+                  class="c5"
                 >
                   Objectives:
                 </label>
               </div>
               <div
-                class="c5 text-left col"
+                class="c6 text-left col"
               >
                 Objective of Product A
               </div>
@@ -328,13 +332,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 class="pr-0 text-left col-12"
               >
                 <label
-                  class="c4"
+                  class="c5"
                 >
                   Scope:
                 </label>
               </div>
               <div
-                class="c5 text-left col"
+                class="c6 text-left col"
               >
                 Scope of Product A
               </div>
@@ -344,7 +348,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
             class=""
           >
             <div
-              class="c6"
+              class="c7"
             >
               71 - Product B
             </div>
@@ -355,13 +359,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 class="pr-0 text-left col-2"
               >
                 <label
-                  class="c4"
+                  class="c5"
                 >
                   Start Date:
                 </label>
               </div>
               <div
-                class="c5 text-left col"
+                class="c6 text-left col"
               >
                 Feb 3, 2023
               </div>
@@ -373,13 +377,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 class="pr-0 text-left col-2"
               >
                 <label
-                  class="c4"
+                  class="c5"
                 >
                   Cost estimate:
                 </label>
               </div>
               <div
-                class="c5 text-left col"
+                class="c6 text-left col"
               >
                 $61.00 as of Feb 4, 2023
               </div>
@@ -391,13 +395,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 class="pr-0 text-left col-12"
               >
                 <label
-                  class="c4"
+                  class="c5"
                 >
                   Objectives:
                 </label>
               </div>
               <div
-                class="c5 text-left col"
+                class="c6 text-left col"
               >
                 Objective of Product B
               </div>
@@ -409,13 +413,13 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 class="pr-0 text-left col-12"
               >
                 <label
-                  class="c4"
+                  class="c5"
                 >
                   Scope:
                 </label>
               </div>
               <div
-                class="c5 text-left col"
+                class="c6 text-left col"
               >
                 Scope of Product B
               </div>

@@ -2,7 +2,7 @@ import { AreaUnitTypes } from 'constants/areaUnitTypes';
 import { Api_Take } from 'models/api/Take';
 import { convertArea } from 'utils/convertUtils';
 /* eslint-disable no-template-curly-in-string */
-import { stringToNull } from 'utils/formUtils';
+import { stringToNull, toTypeCode } from 'utils/formUtils';
 import * as Yup from 'yup';
 
 export const TakesYupSchema = Yup.object().shape({
@@ -48,7 +48,10 @@ export const TakesYupSchema = Yup.object().shape({
         is: (isLandAct: boolean) => isLandAct,
         then: Yup.string().required('End Date is required'),
       }),
-      landActDescription: Yup.string().max(4000, 'Description must be at most ${max} characters'),
+      landActTypeCode: Yup.string().when('isLandAct', {
+        is: (isLandAct: boolean) => isLandAct,
+        then: Yup.string().required('Land Act is required'),
+      }),
       statutoryRightOfWayArea: Yup.number().when('isStatutoryRightOfWay', {
         is: (isStatutoryRightOfWay: boolean) => isStatutoryRightOfWay,
         then: Yup.number()
@@ -75,7 +78,8 @@ export class TakeModel {
   landActArea: number;
   landActAreaUnitTypeCode: string;
   landActEndDt: string;
-  landActDescription: string;
+  landActDescription: string | null;
+  landActTypeCode: string | null;
   statutoryRightOfWayArea: number;
   statutoryRightOfWayAreaUnitTypeCode: string;
   surplusArea: number;
@@ -114,7 +118,8 @@ export class TakeModel {
     this.propertyAcquisitionFileId = base.propertyAcquisitionFileId;
     this.landActEndDt = base.landActEndDt ?? '';
     this.ltcEndDt = base.ltcEndDt ?? '';
-    this.landActDescription = base.landActDescription ?? '';
+    this.landActDescription = base.landActTypeCode?.description ?? '';
+    this.landActTypeCode = base.landActTypeCode?.id ?? '';
   }
 
   toApi(): Api_Take {
@@ -156,7 +161,7 @@ export class TakeModel {
         ) || null,
       ltcEndDt: stringToNull(this.ltcEndDt),
       landActEndDt: stringToNull(this.landActEndDt),
-      landActDescription: stringToNull(this.landActDescription),
+      landActTypeCode: toTypeCode(this.landActTypeCode),
       isSurplus: this.isSurplus === 'true',
       isNewRightOfWay: this.isNewRightOfWay === 'true',
       isLandAct: this.isLandAct === 'true',

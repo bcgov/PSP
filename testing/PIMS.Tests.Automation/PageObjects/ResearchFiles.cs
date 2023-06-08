@@ -487,14 +487,27 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             ButtonElement("Save");
-
-            sharedModals.SiteMinderModal();
         }
 
-        public void ConfirmChangesResearchFile()
+        public void SaveResearchFileProperties()
         {
-            WaitUntil(researchFileConfirmationModal);
-            webDriver.FindElement(researchFileConfirmationOkButton).Click();
+            Wait(5000);
+            ButtonElement("Save");
+
+            Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
+            Assert.True(sharedModals.ConfirmationModalText1().Equals("You have made changes to the properties in this file."));
+            Assert.True(sharedModals.ConfirmationModalText2().Equals("Do you want to save these changes?"));
+
+            sharedModals.ModalClickOKBttn();
+
+            Wait();
+            if (webDriver.FindElements(researchFileConfirmationModal).Count() > 1)
+            {
+                Assert.True(sharedModals.SecondaryModalHeader().Equals("User Override Required"));
+                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
+                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                sharedModals.SecondaryModalClickOKBttn();
+            }
         }
 
         public void CancelResearchFile()

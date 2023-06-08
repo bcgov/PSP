@@ -1,6 +1,7 @@
+import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
 
@@ -17,12 +18,18 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   React.PropsWithChildren<ICompensationRequisitionTrayContainerProps>
 > = ({ compensationRequisitionId, onClose, View }) => {
   const { getSystemConstant } = useSystemConstants();
-  const { file, setStaleFile } = useContext(SideBarContext);
+  const { file, project, setProject, setProjectLoading, setStaleFile } = useContext(SideBarContext);
 
   const [editMode, setEditMode] = useState(false);
   const [show, setShow] = useState(true);
 
-  const [loadedCompensation, setLoadedCompensation] = useState<Api_Compensation | undefined>();
+  const {
+    getProject: { execute: getProject, loading: loadingProject },
+  } = useProjectProvider();
+
+  const [loadedCompensation, setLoadedCompensation] = useState<
+    Api_CompensationRequisition | undefined
+  >();
 
   const clientConstant = getSystemConstant(SystemConstants.CLIENT);
   const gstConstant = getSystemConstant(SystemConstants.GST);
@@ -43,9 +50,24 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
     }
   }, [compensationRequisitionId, getCompensationRequisition]);
 
+  const fetchProject = useCallback(async () => {
+    if (file?.projectId) {
+      var retrieved = await getProject(file?.projectId);
+      setProject(retrieved);
+    }
+  }, [file?.projectId, getProject, setProject]);
+
   useEffect(() => {
     fetchCompensationReq();
   }, [compensationRequisitionId, getCompensationRequisition, fetchCompensationReq]);
+
+  useEffect(() => setProjectLoading(loadingProject), [loadingProject, setProjectLoading]);
+
+  useEffect(() => {
+    if (!project) {
+      fetchProject();
+    }
+  }, [project, fetchProject]);
 
   return loadedCompensation ? (
     <View

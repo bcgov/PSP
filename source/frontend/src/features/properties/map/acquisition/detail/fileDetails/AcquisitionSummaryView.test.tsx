@@ -59,8 +59,8 @@ describe('AcquisitionSummaryView component', () => {
       { claims: [] },
     );
 
-    const editResearchFile = queryByTitle('Edit acquisition file');
-    expect(editResearchFile).toBeNull();
+    const editButton = queryByTitle('Edit acquisition file');
+    expect(editButton).toBeNull();
   });
 
   it('renders historical file number', () => {
@@ -73,5 +73,28 @@ describe('AcquisitionSummaryView component', () => {
       { claims: [] },
     );
     expect(getByText('legacy file number')).toBeVisible();
+  });
+
+  it('renders owner solicitor information', () => {
+    const { getByText } = setup(
+      {
+        acquisitionFile: mockAcquisitionFileResponse(),
+        onEdit,
+      },
+      { claims: [] },
+    );
+    expect(getByText('Luke Skywalker')).toBeVisible();
+  });
+
+  it('renders owner representative information', () => {
+    const { getByText } = setup(
+      {
+        acquisitionFile: mockAcquisitionFileResponse(),
+        onEdit,
+      },
+      { claims: [] },
+    );
+    expect(getByText('Han Solo')).toBeVisible();
+    expect(getByText('test representative comment')).toBeVisible();
   });
 });

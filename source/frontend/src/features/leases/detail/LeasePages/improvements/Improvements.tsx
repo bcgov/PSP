@@ -1,4 +1,6 @@
+import * as API from 'constants/API';
 import { FieldArray, getIn, useFormikContext } from 'formik';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IFormLease } from 'interfaces';
 import { ILeaseImprovement } from 'interfaces/ILeaseImprovement';
 
@@ -12,6 +14,21 @@ export interface IImprovementsProps {
 export const Improvements: React.FunctionComponent<IImprovementsProps> = props => {
   const { values } = useFormikContext<IFormLease>();
   const improvements: ILeaseImprovement[] = getIn(values, 'improvements') ?? [];
+
+  const { getByType } = useLookupCodeHelpers();
+  const improvementTypeCodes = getByType(API.PROPERTY_IMPROVEMENT_TYPES);
+
+  improvements.sort((improvementOne: ILeaseImprovement, improvementTwo: ILeaseImprovement) => {
+    const findDisplayOrder = (x: ILeaseImprovement): number => {
+      for (let typeCode of improvementTypeCodes) {
+        if (x.propertyImprovementTypeId === typeCode.id) {
+          return typeCode.displayOrder;
+        }
+      }
+      return 0;
+    };
+    return findDisplayOrder(improvementOne) - findDisplayOrder(improvementTwo);
+  });
 
   return (
     <Styled.ImprovementsContainer className="improvements">

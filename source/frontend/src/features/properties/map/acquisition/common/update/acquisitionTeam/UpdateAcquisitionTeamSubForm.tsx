@@ -2,6 +2,7 @@ import { LinkButton, RemoveButton } from 'components/common/buttons';
 import { Select } from 'components/common/form';
 import { ContactInput } from 'components/common/form/ContactInput';
 import { ContactManagerModal } from 'components/contact/ContactManagerModal';
+import { RestrictContactType } from 'components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from 'constants/API';
 import {
   AcquisitionTeamFormModel,
@@ -116,7 +117,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
           setSelectedContact([]);
         }}
         showActiveSelector={true}
-        showOnlyIndividuals={true}
+        restrictContactType={RestrictContactType.ONLY_INDIVIDUALS}
       ></ContactManagerModal>
     </>
   );

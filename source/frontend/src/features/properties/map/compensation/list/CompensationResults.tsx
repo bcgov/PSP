@@ -1,10 +1,10 @@
 import { Table } from 'components/Table';
-import { Api_Compensation } from 'models/api/Compensation';
+import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 
 import { createCompensationTableColumns } from './columns';
 
 export interface ICompensationResultProps {
-  results: Api_Compensation[];
+  results: Api_CompensationRequisition[];
   onShow: (compensationId: number) => void;
   onDelete: (compensationId: number) => void;
 }
@@ -15,7 +15,7 @@ export function CompensationResults(props: ICompensationResultProps) {
   const columns = createCompensationTableColumns(props.onShow, props.onDelete);
 
   return (
-    <Table<Api_Compensation>
+    <Table<Api_CompensationRequisition>
       name="AcquisitionCompensationTable"
       manualSortBy={false}
       lockPageSize={true}

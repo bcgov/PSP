@@ -33,6 +33,7 @@ export const TakesUpdateForm = React.forwardRef<FormikProps<any>, ITakesUpdateFo
         </StyledSummarySection>
       );
     }
+
     return (
       <StyledSummarySection>
         <StyledStickyWrapper>
@@ -107,7 +108,7 @@ export const emptyTake: Api_Take = {
   newRightOfWayArea: null,
   landActArea: null,
   landActEndDt: null,
-  landActDescription: null,
+  landActTypeCode: null,
   statutoryRightOfWayArea: null,
   surplusArea: null,
   propertyAcquisitionFileId: null,

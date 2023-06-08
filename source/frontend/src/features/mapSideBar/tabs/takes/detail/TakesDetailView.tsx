@@ -41,6 +41,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
 
   const { getCodeById } = useLookupCodeHelpers();
   const { hasClaim } = useKeycloakWrapper();
+
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
@@ -131,16 +132,18 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
               </SectionField>
               {take.isLandAct && (
                 <>
+                  <SectionField label="Land Act" labelWidth="3">
+                    {take.landActTypeCode
+                      ? take.landActTypeCode.id + ' ' + take.landActTypeCode.description
+                      : ''}
+                  </SectionField>
+
                   <SectionField label="Area" labelWidth="12">
                     <AreaContainer landArea={take.landActArea ?? undefined} />
                   </SectionField>
 
                   <SectionField label="End date" labelWidth="3" contentWidth="4">
                     {prettyFormatDate(take.landActEndDt ?? undefined)}
-                  </SectionField>
-
-                  <SectionField label="Description" labelWidth="12">
-                    {take.landActDescription}
                   </SectionField>
                 </>
               )}

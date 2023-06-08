@@ -16,6 +16,8 @@ import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
 import { EditFormType } from './EditFormNames';
 import { UpdateAcquisitionChecklistContainer } from './update/checklist/UpdateAcquisitionChecklistContainer';
 import { UpdateAcquisitionChecklistForm } from './update/checklist/UpdateAcquisitionChecklistForm';
+import UpdateStakeHolderContainer from './update/stakeholders/UpdateStakeHolderContainer';
+import UpdateStakeHolderForm from './update/stakeholders/UpdateStakeHolderForm';
 import { UpdateAcquisitionContainer } from './update/summary/UpdateAcquisitionContainer';
 import { UpdateAcquisitionForm } from './update/summary/UpdateAcquisitionForm';
 
@@ -64,6 +66,21 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
                 acquisitionFileId={props.acquisitionFile.id || -1}
                 View={UpdateAgreementsForm}
                 formikRef={formikRef}
+                onSuccess={() =>
+                  props.setContainerState({
+                    isEditing: false,
+                    activeEditForm: undefined,
+                  })
+                }
+              />
+            );
+
+          case EditFormType.STAKEHOLDERS:
+            return (
+              <UpdateStakeHolderContainer
+                View={UpdateStakeHolderForm}
+                formikRef={formikRef}
+                acquisitionFile={props.acquisitionFile}
                 onSuccess={() =>
                   props.setContainerState({
                     isEditing: false,

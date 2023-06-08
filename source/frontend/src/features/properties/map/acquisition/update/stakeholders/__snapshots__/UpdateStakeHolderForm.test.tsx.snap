@@ -1,0 +1,680 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdateStakeHolderForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  border: none;
+}
+
+.c7.btn.btn-secondary {
+  background: none;
+}
+
+.c7.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  background: none;
+}
+
+.c7.btn.btn-light {
+  border: none;
+}
+
+.c7.btn.btn-dark {
+  border: none;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c9.c9.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c9.c9.btn .text {
+  display: none;
+}
+
+.c9.c9.btn:hover,
+.c9.c9.btn:active,
+.c9.c9.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c9.c9.btn:hover .text,
+.c9.c9.btn:active .text,
+.c9.c9.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+.c6 {
+  background-color: none;
+}
+
+.c8.c8.btn {
+  position: absolute;
+  top: calc(50% - 1.4rem);
+  right: 0.4rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c8.c8.btn .text {
+  display: none;
+}
+
+.c8.c8.btn:hover,
+.c8.c8.btn:active,
+.c8.c8.btn:focus {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+}
+
+.c3 {
+  padding: 0 0.4rem;
+}
+
+.c0 {
+  padding-top: 1rem;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c10 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Interests
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <p>
+          Interests will need to be in the 
+          <a
+            class="c3"
+            href="/contact/list"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Contact Manager
+          </a>
+           in order to select them here.
+        </p>
+        <hr />
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Interest holder:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div
+              class="pb-0 row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="c6"
+                      >
+                        Devin Smith
+                        <button
+                          class="c7 Button c8 btn btn-link"
+                          title="remove"
+                          type="button"
+                        >
+                          <div
+                            class="Button__value"
+                          >
+                            <svg
+                              fill="currentColor"
+                              height="2rem"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="2rem"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                              />
+                            </svg>
+                          </div>
+                        </button>
+                      </div>
+                      <div
+                        class="d-none input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-interestHolders.0.contact.id"
+                          name="interestHolders.0.contact.id"
+                          placeholder="Select from Contacts"
+                          title="P5"
+                          value="P5"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 col-auto"
+                    >
+                      <button
+                        class="c7 Button Button--icon-only px-2 btn btn-primary"
+                        title="Select Contact"
+                        type="button"
+                      >
+                        <div
+                          class="Button__icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div />
+              </div>
+              <div
+                class="col-auto"
+              >
+                <button
+                  class="c7 Button c9 btn btn-link"
+                  title="Remove Interest"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Interest type:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-interestHolders.0.interestTypeCode"
+                name="interestHolders.0.interestTypeCode"
+              >
+                <option
+                  value=""
+                >
+                  Select an interest type
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Impacted properties:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div
+              class="table"
+              data-testid="selectableProperties"
+              role="table"
+            >
+              <div
+                class="thead thead-light"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 70px;"
+                >
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: none;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      <div>
+                        <input
+                          data-testid="selectrow-parent"
+                          name=""
+                          style="cursor: pointer;"
+                          title="Click to deselect all."
+                          type="checkbox"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: none;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      Identifier
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tbody"
+                role="rowgroup"
+              >
+                <div
+                  class="tr-wrapper"
+                >
+                  <div
+                    class="tr selected"
+                    role="row"
+                    style="display: flex; flex: 1 0 auto; min-width: 70px;"
+                  >
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
+                    >
+                      <div>
+                        <input
+                          data-testid="selectrow-1"
+                          name=""
+                          style="cursor: pointer;"
+                          title="Toggle Row Selected"
+                          type="checkbox"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
+                    >
+                      <div
+                        class="c10"
+                      >
+                        PID: 023-214-937
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tr-wrapper"
+                >
+                  <div
+                    class="tr selected"
+                    role="row"
+                    style="display: flex; flex: 1 0 auto; min-width: 70px;"
+                  >
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
+                    >
+                      <div>
+                        <input
+                          data-testid="selectrow-2"
+                          name=""
+                          style="cursor: pointer;"
+                          title="Toggle Row Selected"
+                          type="checkbox"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      title=""
+                    >
+                      <div
+                        class="c10"
+                      >
+                        PID: 024-996-777
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <button
+          class="c7 Button btn btn-link"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add an Interest holder
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Non-interest Payees
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <p>
+          These are additional payees for the file who are not interest holders. (ex: construction for fences). Payees will need to be in the 
+          <a
+            class="c3"
+            href="/contact/list"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Contact Manager
+          </a>
+           in order to select them here.
+        </p>
+        <hr />
+        <i>
+          No Non-interest payees to display
+        </i>
+        <hr />
+        <button
+          class="c7 Button btn btn-link"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add a Non-interest payee
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

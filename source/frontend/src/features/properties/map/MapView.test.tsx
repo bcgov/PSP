@@ -3,6 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
+import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import {
   Claims,
   PropertyAreaUnitTypes,
@@ -142,7 +143,9 @@ describe('MapView', () => {
 
   const setup = async (renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />,
+      <PropertyContextProvider>
+        <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
+      </PropertyContextProvider>,
       {
         store,
         history,
@@ -219,7 +222,7 @@ describe('MapView', () => {
 
   afterEach(cleanup);
 
-  xit('Renders the map', async () => {
+  it('Renders the map', async () => {
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
     expect(document.querySelector('.leaflet-container')).toBeVisible();
