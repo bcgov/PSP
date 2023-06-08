@@ -143,7 +143,7 @@ jobs:
         env:
           MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
         if: env.MS_TEAMS_NOTIFY_URL != '' && failure() && steps.scan.outcome == 'failure'
-        uses: jdcargile/ms-teams-notification@v1.3
+        uses: dragos-cojocari/ms-teams-notification@v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_NOTIFY_URL }}

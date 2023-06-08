@@ -38,7 +38,7 @@ jobs:
         uses: martialonline/workflow-status@v2
         id: check
       - name: End notification to Teams Channel
-        uses: jdcargile/ms-teams-notification@v1.3
+        uses: dragos-cojocari/ms-teams-notification@v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
