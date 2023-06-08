@@ -12,6 +12,7 @@ GO
 INSERT INTO PIMS_TENANT_TYPE (TENANT_TYPE_CODE, DESCRIPTION)
 VALUES
   (N'TEN',  N'Tenant'),
+  (N'ASGN', N'Assignee'),
   (N'REP',  N'Representative'),
   (N'PMGR', N'Property manager'),
   (N'UNK',  N'Unknown');

@@ -5,7 +5,7 @@
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-06-07 10:02                                */
+/* Created on:            2023-06-08 11:51                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -3954,6 +3954,10 @@ GO
 /* Drop constraints */
 
 ALTER TABLE [dbo].[PIMS_ACQUISITION_PAYEE] DROP CONSTRAINT [ACQPAY_ACQUISITION_PAYEE_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQUISITION_PAYEE] DROP CONSTRAINT [ACQPAY_IS_PAYMENT_IN_TRUST_DEF]
 GO
 
 
