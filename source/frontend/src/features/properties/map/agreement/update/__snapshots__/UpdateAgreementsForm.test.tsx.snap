@@ -731,7 +731,9 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                     value=""
                   />
                 </div>
-                <label>
+                <label
+                  class="c7"
+                >
                   days.
                 </label>
               </div>
@@ -1191,7 +1193,9 @@ exports[`UpdateAgreementsForm component renders as expected 1`] = `
                     value="20"
                   />
                 </div>
-                <label>
+                <label
+                  class="c7"
+                >
                   days.
                 </label>
               </div>
