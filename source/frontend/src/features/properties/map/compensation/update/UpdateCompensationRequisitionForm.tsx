@@ -8,6 +8,7 @@ import {
   TextArea,
 } from 'components/common/form';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
+import GenericModal from 'components/common/GenericModal';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -59,6 +60,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   const { setModalContent, setDisplayModal } = useModalContext();
   const formikRef = useRef<FormikProps<CompensationRequisitionFormModel>>(null);
   const [activitiesUpdated, setActivitiesUpdated] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState(false);
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     if (!dirty) {
@@ -125,6 +127,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <SectionField label="Status" labelWidth="5">
                     <Select
                       field="status"
+                      placeholder="Select..."
                       options={[
                         {
                           label: 'Draft',
@@ -135,7 +138,14 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                           value: 'final',
                         },
                       ]}
-                      placeholder="Select..."
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        const selectedValue = [].slice
+                          .call(e.target.selectedOptions)
+                          .map((option: HTMLOptionElement & number) => option.value)[0];
+                        if (!!selectedValue && selectedValue === 'final') {
+                          setShowModal(true);
+                        }
+                      }}
                     />
                   </SectionField>
                   <SectionField label="Agreement date" labelWidth="5" contentWidth="4">
@@ -274,6 +284,25 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
                 />
               </StyledFooter>
+
+              <GenericModal
+                display={showModal}
+                title="Confirm status change"
+                message={[
+                  `You have selected to change the status from DRAFT to FINAL.
+
+                We recommend that you only make this change status (draft to final) when printing the final version, as `,
+                  <strong>you will not be able to roll back to draft status </strong>,
+                  `without system administrator privilieges. The compensation requisition cannot be changed again once it is saved as final.`,
+                ]}
+                okButtonText="Proceed"
+                cancelButtonText="Cancel"
+                handleOk={() => setShowModal(false)}
+                handleCancel={() => {
+                  formikProps.setFieldValue('status', 'draft');
+                  setShowModal(false);
+                }}
+              />
             </>
           );
         }}
