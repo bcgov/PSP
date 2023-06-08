@@ -6,7 +6,7 @@ import {
   SelectOption,
   TextArea,
 } from 'components/common/form';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { SectionField, StyledFieldLabel } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
 import React from 'react';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -100,7 +100,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
       >
         <StyledDiv>
           <Input field={withNameSpace(nameSpace, 'noLaterThanDays')} />
-          <label>days.</label>
+          <StyledFieldLabel>days.</StyledFieldLabel>
         </StyledDiv>
       </SectionField>
       <SectionField labelWidth="5" label="Deposit amount">

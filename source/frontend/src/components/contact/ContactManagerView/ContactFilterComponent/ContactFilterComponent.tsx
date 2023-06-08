@@ -17,11 +17,17 @@ export const defaultFilter: IContactFilter = {
   activeContactsOnly: true,
 };
 
+export enum RestrictContactType {
+  ONLY_INDIVIDUALS = 'persons',
+  ONLY_ORGANIZATIONS = 'organizations',
+  ALL = 'all',
+}
+
 export interface IContactFilterComponentProps {
   filter?: IContactFilter;
   setFilter: (filter: IContactFilter) => void;
   showActiveSelector?: boolean;
-  showOnlyIndividuals?: boolean;
+  restrictContactType?: RestrictContactType;
 }
 
 /**
@@ -34,7 +40,7 @@ export const ContactFilterComponent: React.FunctionComponent<
   filter,
   setFilter,
   showActiveSelector,
-  showOnlyIndividuals,
+  restrictContactType,
 }: IContactFilterComponentProps) => {
   const resetFilter = (values: IContactFilter) => {
     setFilter({ ...defaultFilter, searchBy: values.searchBy });
@@ -44,7 +50,10 @@ export const ContactFilterComponent: React.FunctionComponent<
     <Formik
       enableReinitialize
       initialValues={
-        filter ?? { ...defaultFilter, searchBy: showOnlyIndividuals ? 'persons' : 'all' }
+        filter ?? {
+          ...defaultFilter,
+          searchBy: restrictContactType?.toString() ?? RestrictContactType.ALL,
+        }
       }
       onSubmit={(values, { setSubmitting }) => {
         setFilter(values);
@@ -66,49 +75,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                 label="Search by:"
                 field="searchBy"
                 radioGroupClassName="pb-3"
-                radioValues={
-                  showOnlyIndividuals
-                    ? [
-                        {
-                          radioLabel: (
-                            <>
-                              <FaRegUser size={20} />
-                              <span>Individuals</span>
-                            </>
-                          ),
-                          radioValue: 'persons',
-                        },
-                      ]
-                    : [
-                        {
-                          radioLabel: (
-                            <>
-                              <FaRegBuilding size={20} />
-                              <span>Organizations</span>
-                            </>
-                          ),
-                          radioValue: 'organizations',
-                        },
-                        {
-                          radioLabel: (
-                            <>
-                              <FaRegUser size={20} />
-                              <span>Individuals</span>
-                            </>
-                          ),
-                          radioValue: 'persons',
-                        },
-                        {
-                          radioLabel: (
-                            <>
-                              <FaRegBuilding size={20} />+<FaRegUser size={20} />
-                              <span>All</span>
-                            </>
-                          ),
-                          radioValue: 'all',
-                        },
-                      ]
-                }
+                radioValues={getRestrictedRadioValues(restrictContactType)}
               />
             </Col>
             <Col>
@@ -162,6 +129,64 @@ export const ContactFilterComponent: React.FunctionComponent<
       )}
     </Formik>
   );
+};
+
+const getRestrictedRadioValues = (restrictContactType?: RestrictContactType) => {
+  if (restrictContactType === RestrictContactType.ONLY_INDIVIDUALS) {
+    return [
+      {
+        radioLabel: (
+          <>
+            <FaRegUser size={20} />
+            <span>Individuals</span>
+          </>
+        ),
+        radioValue: 'persons',
+      },
+    ];
+  } else if (restrictContactType === RestrictContactType.ONLY_ORGANIZATIONS) {
+    return [
+      {
+        radioLabel: (
+          <>
+            <FaRegUser size={20} />
+            <span>Organizations</span>
+          </>
+        ),
+        radioValue: 'organizations',
+      },
+    ];
+  } else {
+    return [
+      {
+        radioLabel: (
+          <>
+            <FaRegBuilding size={20} />
+            <span>Organizations</span>
+          </>
+        ),
+        radioValue: 'organizations',
+      },
+      {
+        radioLabel: (
+          <>
+            <FaRegUser size={20} />
+            <span>Individuals</span>
+          </>
+        ),
+        radioValue: 'persons',
+      },
+      {
+        radioLabel: (
+          <>
+            <FaRegBuilding size={20} />+<FaRegUser size={20} />
+            <span>All</span>
+          </>
+        ),
+        radioValue: 'all',
+      },
+    ];
+  }
 };
 
 const StyledFilterBoxForm = styled(Form)`
