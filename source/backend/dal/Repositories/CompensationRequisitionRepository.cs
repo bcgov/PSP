@@ -94,6 +94,7 @@ namespace Pims.Dal.Repositories
         public bool TryDelete(long compensationId)
         {
             var deletedEntity = Context.PimsCompensationRequisitions
+                .Include(fa => fa.PimsCompReqH120s)
                 .Include(cr => cr.PimsAcquisitionPayees)
                     .ThenInclude(ap => ap.PimsAcqPayeeCheques)
                 .AsNoTracking()
@@ -106,20 +107,54 @@ namespace Pims.Dal.Repositories
                 {
                     foreach (var cheque in payee.PimsAcqPayeeCheques)
                     {
-                        this.Context.PimsAcqPayeeCheques.Remove(new PimsAcqPayeeCheque() { AcqPayeeChequeId = cheque.AcqPayeeChequeId });
+                        Context.PimsAcqPayeeCheques.Remove(new PimsAcqPayeeCheque() { AcqPayeeChequeId = cheque.AcqPayeeChequeId });
                     }
 
-                    this.Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+                    Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
 
-                    this.Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
+                    Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
                 }
 
-                this.Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+                foreach(var financial in deletedEntity.PimsCompReqH120s)
+                {
+                    Context.PimsCompReqH120s.Remove(new PimsCompReqH120() { CompReqFinActivity = financial.CompReqFinActivity });
+                }
 
-                this.Context.PimsCompensationRequisitions.Remove(new PimsCompensationRequisition() { CompensationRequisitionId = deletedEntity.CompensationRequisitionId });
+                Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+
+                Context.PimsCompensationRequisitions.Remove(new PimsCompensationRequisition() { CompensationRequisitionId = deletedEntity.CompensationRequisitionId });
                 return true;
             }
             return false;
+        }
+
+        public PimsAcquisitionPayee GetPayee(long compensationRequisitionId)
+        {
+            var compensationRequisition = GetById(compensationRequisitionId);
+            var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
+            if (compensationRequisition is not null && compensationPayee is null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            var payeeEntity = Context.PimsAcquisitionPayees
+                 .Include(x => x.AcquisitionFilePerson)
+                 .Include(x => x.AcquisitionOwner)
+                 .Include(x => x.InterestHolder)
+                 .Include(x => x.OwnerRepresentative)
+                 .Include(x => x.PimsAcqPayeeCheques)
+                 .Include(x => x.OwnerSolicitor)
+                 .AsNoTracking()
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(compensationPayee.AcquisitionPayeeId));
+
+            if (payeeEntity.PimsAcqPayeeCheques?.FirstOrDefault() is not null)
+            {
+                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
+                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
+                payeeEntity.PimsAcqPayeeCheques.FirstOrDefault().TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
+            }
+
+            return payeeEntity;
         }
     }
 }

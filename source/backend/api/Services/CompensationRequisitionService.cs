@@ -92,5 +92,13 @@ namespace Pims.Api.Services
             _compensationRequisitionRepository.CommitTransaction();
             return fileFormToDelete;
         }
+
+        public PimsAcquisitionPayee GetPayee(long compensationRequisitionId)
+        {
+            _logger.LogInformation("Getting Payee for Compensation Requisition with Id ...", compensationRequisitionId);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            return _compensationRequisitionRepository.GetPayee(compensationRequisitionId);
+        }
     }
 }

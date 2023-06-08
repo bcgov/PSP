@@ -1,5 +1,8 @@
+import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import { Api_CompensationPayee } from 'models/api/CompensationPayee';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useGenerateH120 } from '../../acquisition/common/GenerateForm/hooks/useGenerateH120';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
@@ -26,15 +29,37 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   loading,
 }) => {
   const onGenerate = useGenerateH120();
+  const [compensationPayee, setCompensationPayee] = useState<Api_CompensationPayee | undefined>();
+  const {
+    getCompensationRequisitionPayee: {
+      execute: getCompensationRequisitionPayee,
+      loading: loadingPayee,
+    },
+  } = useCompensationRequisitionRepository();
+
+  const fetchCompensationPayee = useCallback(async () => {
+    if (!!compensation.id) {
+      const payee = await getCompensationRequisitionPayee(compensation.id);
+      if (payee) {
+        setCompensationPayee(payee);
+      }
+    }
+  }, [compensation, getCompensationRequisitionPayee]);
+
+  useEffect(() => {
+    fetchCompensationPayee();
+  }, [fetchCompensationPayee]);
+
   return compensation ? (
     <View
+      loading={loading || loadingPayee}
       compensation={compensation}
+      compensationPayee={compensationPayee}
       acqFileProject={acquisitionFile.project}
       acqFileProduct={acquisitionFile.product}
       setEditMode={setEditMode}
       clientConstant={clientConstant}
       gstConstant={gstConstant}
-      loading={loading}
       onGenerate={onGenerate}
     ></View>
   ) : null;
