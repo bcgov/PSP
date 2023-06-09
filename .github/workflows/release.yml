@@ -1,4 +1,6 @@
 name: Release
+env:
+  MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
 
 on:
   push:
@@ -52,10 +54,8 @@ jobs:
           INPUT_RELEASEVERSION: ${{ steps.create_release.outputs.release_version }}
           INPUT_RELEASEURL: ${{ steps.create_release.outputs.release_url }}
 
-      # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set
+      # Send notifications only if MS_TEAMS_WEBHOOK_BUILD_CHANNEL secret has been set
       - name: Post notification to MS Teams
-        env:
-          MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
-        if: env.MS_TEAMS_NOTIFY_URL != ''
+        if: env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL != ''
         run: |
-          curl -H 'Content-Type: application/json' ${{ secrets.MS_TEAMS_NOTIFY_URL }} --data @release_notification.json
+          curl -H 'Content-Type: application/json' ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }} --data @release_notification.json
