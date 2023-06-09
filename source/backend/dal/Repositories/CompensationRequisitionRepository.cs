@@ -53,7 +53,6 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.PimsAcquisitionPayees)
                     .ThenInclude(y => y.AcquisitionOwner)
                 .Include(x => x.PimsAcquisitionPayees)
-                    .ThenInclude(y => y.PimsAcqPayeeCheques)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -81,22 +80,11 @@ namespace Pims.Dal.Repositories
             return compensationPayee;
         }
 
-        public PimsAcqPayeeCheque UpdatePayeeCheque(PimsAcqPayeeCheque payeeCheque)
-        {
-            var existingPayeeCheque = Context.PimsAcqPayeeCheques
-                .FirstOrDefault(x => x.AcqPayeeChequeId.Equals(payeeCheque.AcqPayeeChequeId)) ?? throw new KeyNotFoundException();
-
-            Context.Entry(existingPayeeCheque).CurrentValues.SetValues(payeeCheque);
-
-            return existingPayeeCheque;
-        }
-
         public bool TryDelete(long compensationId)
         {
             var deletedEntity = Context.PimsCompensationRequisitions
                 .Include(fa => fa.PimsCompReqH120s)
                 .Include(cr => cr.PimsAcquisitionPayees)
-                    .ThenInclude(ap => ap.PimsAcqPayeeCheques)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
 
@@ -105,17 +93,18 @@ namespace Pims.Dal.Repositories
                 // Remove child entries.
                 foreach (var payee in deletedEntity.PimsAcquisitionPayees)
                 {
-                    foreach (var cheque in payee.PimsAcqPayeeCheques)
+                    // TODO cleanup
+                    /*foreach (var cheque in payee.PimsAcqPayeeCheques)
                     {
                         Context.PimsAcqPayeeCheques.Remove(new PimsAcqPayeeCheque() { AcqPayeeChequeId = cheque.AcqPayeeChequeId });
-                    }
+                    }*/
 
                     Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
 
                     Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
                 }
 
-                foreach(var financial in deletedEntity.PimsCompReqH120s)
+                foreach (var financial in deletedEntity.PimsCompReqH120s)
                 {
                     Context.PimsCompReqH120s.Remove(new PimsCompReqH120() { CompReqFinActivity = financial.CompReqFinActivity });
                 }
@@ -145,7 +134,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(os => os.Organization)
                 .Include(ap => ap.OwnerSolicitor)
                     .ThenInclude(os => os.Person)
-                .Include(ap => ap.PimsAcqPayeeCheques)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(payeeId)) ?? throw new KeyNotFoundException();
 

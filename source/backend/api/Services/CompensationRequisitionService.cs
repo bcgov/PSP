@@ -33,13 +33,14 @@ namespace Pims.Api.Services
             var compensationPayee = compensationRequisition.PimsAcquisitionPayees?.FirstOrDefault();
             if (compensationRequisition is not null && compensationPayee is not null)
             {
-                var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
+                // TODO fix this
+                /*var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
                 if (payeeCheque is not null)
                 {
                     payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
                     payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
                     payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
-                }
+                }*/
             }
 
             return compensationRequisition;
@@ -54,13 +55,14 @@ namespace Pims.Api.Services
             var compensationPayee = _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
             if (compensationRequisition is not null && compensationPayee is not null)
             {
-                var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
+                // TODO fix this
+                /*var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
                 if (payeeCheque is not null)
                 {
                     payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
                     payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
                     payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
-                }
+                }*/
             }
 
             return compensationPayee;
@@ -76,7 +78,7 @@ namespace Pims.Api.Services
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
             var currentPayee = currentCompensation.PimsAcquisitionPayees.FirstOrDefault();
             var updatedPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
-            var payeeCheque = updatedPayee?.PimsAcqPayeeCheques.FirstOrDefault();
+            //var payeeCheque = updatedPayee?.PimsAcqPayeeCheques.FirstOrDefault(); TODO: clean up
 
             if (currentPayee != null && updatedPayee != null)
             {
@@ -94,10 +96,13 @@ namespace Pims.Api.Services
                 }
             }
 
+            // TODO clean up
+            /*
             if (payeeCheque is not null)
             {
                 _compensationRequisitionRepository.UpdatePayeeCheque(payeeCheque);
             }
+            */
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
 
