@@ -17,11 +17,6 @@ namespace Pims.Dal.Entities
     [Index(nameof(OwnerSolicitorId), Name = "ACQPAY_OWNER_SOLICITOR_ID_IDX")]
     public partial class PimsAcquisitionPayee
     {
-        public PimsAcquisitionPayee()
-        {
-            PimsAcqPayeeCheques = new HashSet<PimsAcqPayeeCheque>();
-        }
-
         [Key]
         [Column("ACQUISITION_PAYEE_ID")]
         public long AcquisitionPayeeId { get; set; }
@@ -37,6 +32,11 @@ namespace Pims.Dal.Entities
         public long? OwnerSolicitorId { get; set; }
         [Column("ACQUISITION_FILE_PERSON_ID")]
         public long? AcquisitionFilePersonId { get; set; }
+        [Column("GST_NUMBER")]
+        [StringLength(50)]
+        public string GstNumber { get; set; }
+        [Column("IS_PAYMENT_IN_TRUST")]
+        public bool? IsPaymentInTrust { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -96,7 +96,5 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(OwnerSolicitorId))]
         [InverseProperty(nameof(PimsAcquisitionOwnerSolicitor.PimsAcquisitionPayees))]
         public virtual PimsAcquisitionOwnerSolicitor OwnerSolicitor { get; set; }
-        [InverseProperty(nameof(PimsAcqPayeeCheque.AcquisitionPayee))]
-        public virtual ICollection<PimsAcqPayeeCheque> PimsAcqPayeeCheques { get; set; }
     }
 }

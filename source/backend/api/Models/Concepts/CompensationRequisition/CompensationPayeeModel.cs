@@ -31,7 +31,5 @@ namespace Pims.Api.Models.Concepts
         public AcquisitionFileOwnerRepresentativeModel OwnerRepresentative { get; set; }
 
         public AcquisitionFileOwnerSolicitorModel OwnerSolicitor { get; set; }
-
-        public List<AcquisitionPayeeChequeModel> Cheques { get; set; }
     }
 }
