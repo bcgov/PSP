@@ -8,7 +8,7 @@ import {
   TextArea,
 } from 'components/common/form';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikProps } from 'formik';

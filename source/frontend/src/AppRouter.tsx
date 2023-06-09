@@ -1,4 +1,4 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Claims } from 'constants/claims';
 import { Roles } from 'constants/roles';
@@ -29,7 +29,7 @@ import componentLoader from 'utils/utils';
 import Login from './features/account/Login';
 import AccessDenied from './pages/401/AccessDenied';
 
-const MapView = lazy(() => componentLoader(import('./features/properties/map/MapView'), 2));
+const MapView = lazy(() => componentLoader(import('./features/properties/map/MapContainer'), 2));
 const AccessRequestPage = lazy(() =>
   componentLoader(import('./features/admin/access-request/AccessRequestPage'), 2),
 );

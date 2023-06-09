@@ -1,11 +1,10 @@
+import { ICluster, PointFeature } from 'components/maps/types';
 import { DraftCircleNumber } from 'components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { IProperty } from 'interfaces';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
-
-import { ICluster, PointFeature } from '../types';
 
 // parcel icon (green)
 export const parcelIcon = L.icon({

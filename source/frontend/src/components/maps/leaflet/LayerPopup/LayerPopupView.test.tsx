@@ -5,8 +5,8 @@ import { useMap } from 'react-leaflet';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
-import { ILayerPopupProps } from './LayerPopup';
-import { LayerPopupContainer } from './LayerPopupContainer';
+import { ILayerPopupProps } from './LayerPopupContainer';
+import { LayerPopupView } from './LayerPopupView';
 
 jest.mock('@react-keycloak/web');
 jest.mock('react-leaflet');
@@ -19,11 +19,11 @@ const onViewPropertyInfo = jest.fn();
 const history = createMemoryHistory();
 (useMap as jest.Mock).mockReturnValue({});
 
-describe('LayerPopupContainer component', () => {
+describe('LayerPopupView component', () => {
   const setup = (renderOptions: RenderOptions & ILayerPopupProps) => {
     // render component under test
     const component = render(
-      <LayerPopupContainer
+      <LayerPopupView
         layerPopup={renderOptions.layerPopup}
         onViewPropertyInfo={renderOptions.onViewPropertyInfo}
       />,

@@ -8,7 +8,7 @@ import {
 import { IProperty } from 'interfaces';
 import { DivIcon, LatLngExpression, Marker } from 'leaflet';
 
-import { ICluster, PointFeature } from '../types';
+import { ICluster } from '../../types';
 import {
   createClusterMarker,
   createPoints,
@@ -16,7 +16,7 @@ import {
   parcelIcon,
   parcelIconSelect,
   pointToLayer,
-} from './mapUtils';
+} from './util';
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
     it('converts a feature and latlng expression into a layer', () => {

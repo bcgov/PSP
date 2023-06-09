@@ -1,7 +1,7 @@
 import { Button } from 'components/common/buttons/Button';
 import { Select, SelectOption } from 'components/common/form';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import TooltipIcon from 'components/common/TooltipIcon';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import ValidDocumentExtensions from 'constants/ValidDocumentExtensions';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikProps } from 'formik';

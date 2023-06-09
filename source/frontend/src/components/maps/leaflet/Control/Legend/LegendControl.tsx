@@ -9,7 +9,7 @@ import ClickAwayListener from 'react-click-away-listener';
 import { FiMapPin } from 'react-icons/fi';
 import styled from 'styled-components';
 
-import Control from '../Control/Control';
+import Control from '../Control';
 import { Legend } from './Legend';
 
 const LegendButton = styled(Button as any)`

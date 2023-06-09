@@ -1,6 +1,6 @@
 import { StyledIconButton } from 'components/common/buttons';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { IMapProperty } from 'components/propertySelector/models';
 import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
 import { Api_Property } from 'models/api/Property';

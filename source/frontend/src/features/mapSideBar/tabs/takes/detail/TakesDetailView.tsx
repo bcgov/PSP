@@ -1,7 +1,7 @@
 import YesNoButtons from 'components/common/buttons/YesNoButtons';
 import EditButton from 'components/common/EditButton';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { H2 } from 'components/common/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import AreaContainer from 'components/measurements/AreaContainer';
 import * as API from 'constants/API';
 import { Claims } from 'constants/claims';

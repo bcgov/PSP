@@ -14,7 +14,8 @@ import useActiveFeatureLayer from './useActiveFeatureLayer';
 
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
-jest.mock('components/maps/leaflet/LayerPopup');
+jest.mock('hooks/layer-api/useLayerQuery');
+jest.mock('components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 
 let clearLayers = jest.fn();
 let addData = jest.fn();

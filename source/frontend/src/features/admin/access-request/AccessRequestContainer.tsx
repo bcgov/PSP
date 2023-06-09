@@ -1,4 +1,4 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import { useAccessRequests } from 'hooks/pims-api/useAccessRequests';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';

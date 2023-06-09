@@ -1,6 +1,6 @@
 import { LinkButton } from 'components/common/buttons';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import TooltipIcon from 'components/common/TooltipIcon';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import Claims from 'constants/claims';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';

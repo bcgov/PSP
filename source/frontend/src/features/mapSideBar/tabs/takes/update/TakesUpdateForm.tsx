@@ -1,5 +1,5 @@
 import { Button } from 'components/common/buttons/Button';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { AreaUnitTypes } from 'constants/areaUnitTypes';
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
 import { Api_PropertyFile } from 'models/api/PropertyFile';

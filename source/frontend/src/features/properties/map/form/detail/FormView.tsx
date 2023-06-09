@@ -1,5 +1,5 @@
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { ActivityTrayPage, CloseButton, TrayHeader } from 'components/common/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import * as React from 'react';
 import { MdClose } from 'react-icons/md';

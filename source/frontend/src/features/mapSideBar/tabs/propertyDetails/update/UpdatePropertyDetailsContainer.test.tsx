@@ -202,7 +202,7 @@ const fakeProperty: Api_Property = {
 // Mock API service calls
 jest.mock('../hooks/useGetProperty');
 jest.mock('../hooks/useUpdateProperty');
-jest.mock('hooks/useQueryMapLayersByLocation');
+jest.mock('hooks/repositories/useQueryMapLayersByLocation');
 
 const getProperty = jest.fn(() => ({ ...fakeProperty }));
 (useGetProperty as jest.Mock).mockReturnValue({

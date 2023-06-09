@@ -1,3 +1,4 @@
+import { ICluster, PointFeature } from 'components/maps/types';
 import {
   GeoJSON,
   LatLng,
@@ -11,8 +12,6 @@ import {
 import { cloneDeep } from 'lodash';
 import { AnyProps } from 'supercluster';
 import invariant from 'tiny-invariant';
-
-import { ICluster, PointFeature } from '../types';
 
 export interface SpiderfierOptions {
   /** Increase from 1 to increase the distance away from the center that spiderfied markers are placed. Use if you are using big marker icons (Default: 1). */

@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { pidParser } from 'utils';
 
-import Map from '../../../components/maps/leaflet/Map';
+import MapView from '../../../components/maps/MapView';
 import ActivityRouter from './ActivityRouter';
 import CompensationRequisitionRouter from './CompensationRequisitionRouter';
 import { SideBarContextProvider } from './context/sidebarContext';
@@ -25,12 +25,14 @@ const defaultLatLng = {
   lng: -124.67285156250001,
 };
 
-interface MapViewProps {
+interface MapContainerProps {
   showParcelBoundaries?: boolean;
   onMarkerPopupClosed?: (obj: IProperty) => void;
 }
 
-const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = (props: MapViewProps) => {
+const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = (
+  props: MapContainerProps,
+) => {
   const history = useHistory();
   const [loadedProperties, setLoadedProperties] = useState(false);
   const [mapInstance, setMapInstance] = useState<L.Map | undefined>();
@@ -80,7 +82,7 @@ const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = (props: MapView
             </SideBarContextProvider>
             {!showActionBar && (
               <FilterProvider>
-                <Map
+                <MapView
                   lat={defaultLatLng.lat}
                   lng={defaultLatLng.lng}
                   onViewportChanged={() => {
@@ -114,4 +116,4 @@ const StyleMapView = styled.div`
   }
 `;
 
-export default MapView;
+export default MapContainer;

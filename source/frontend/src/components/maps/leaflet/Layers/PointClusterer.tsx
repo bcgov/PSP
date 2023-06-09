@@ -1,23 +1,23 @@
 import './PointClusterer.scss';
 
+import useSupercluster from 'components/maps/hooks/useSupercluster';
+import { useFilterContext } from 'components/maps/providers/FIlterProvider';
+import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
+import { ICluster, PointFeature } from 'components/maps/types';
 import { MAX_ZOOM } from 'constants/strings';
 import { BBox } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import L, { LatLng } from 'leaflet';
+import L, { LatLng, LatLngLiteral } from 'leaflet';
 import { find } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
 import Supercluster from 'supercluster';
 
-import useSupercluster from '../hooks/useSupercluster';
-import { useFilterContext } from '../providers/FIlterProvider';
-import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
-import { ICluster, PointFeature } from '../types';
-import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
-import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
+import SelectedPropertyMarker from '../Markers/SelectedPropertyMarker';
 import { Spiderfier } from './Spiderfier';
+import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './util';
 
 export type PointClustererProps = {
   points: Array<PointFeature>;
@@ -204,10 +204,10 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       const group: L.FeatureGroup = draftFeatureGroupRef.current;
 
       const validLatLngs = draftPoints.map(p => {
-        const latLng: LatLng = {
+        const latLng: LatLngLiteral = {
           lat: p.geometry?.coordinates[1],
           lng: p.geometry?.coordinates[0],
-        } as LatLng;
+        };
         return latLng;
       });
 
@@ -359,7 +359,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          */}
         {!!selected &&
           selected?.id === currentSelected?.id &&
-          !currentClusterIds.includes(+(selected?.id as number)) && (
+          !currentClusterIds.includes(Number(selected?.id)) && (
             <SelectedPropertyMarker
               {...selected}
               icon={getMarkerIcon({ properties: selected } as any, true)}

@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { FaLayerGroup } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import Control from '../Control/Control';
+import Control from '../Control';
 import LayersTree from './LayersMenu';
 
 const LayersContainer = styled.div`

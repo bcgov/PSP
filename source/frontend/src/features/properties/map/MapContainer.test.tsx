@@ -1,7 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { createPoints } from 'components/maps/leaflet/mapUtils';
+import { createPoints } from 'components/maps/leaflet/Layers/util';
 import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import {
   Claims,
@@ -13,6 +13,7 @@ import {
 } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
+import { useMapProperties } from 'hooks/layer-api/useMapProperties';
 import { useApiProperties } from 'hooks/pims-api';
 import { useComposedProperties } from 'hooks/useComposedProperties';
 import { IProperty } from 'interfaces';
@@ -24,13 +25,13 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, cleanup, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 import { mockKeycloak } from 'utils/test-utils';
 
-import { useMapProperties } from '../../../hooks/layer-api/useMapProperties';
-import MapView from './MapView';
+import MapView from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
-jest.mock('./hooks/useMapProperties');
-jest.mock('components/maps/leaflet/LayerPopup');
+jest.mock('hooks/layer-api/useMapProperties');
+jest.mock('hooks/layer-api/useLayerQuery');
+jest.mock('components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 jest.mock('hooks/useComposedProperties');
 jest.mock('hooks/usePropertyAssociations');
 jest.mock('hooks/pims-api');

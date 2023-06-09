@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { layerData } from 'constants/toasts';
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { LatLngLiteral } from 'leaflet';
 import { useMemo } from 'react';

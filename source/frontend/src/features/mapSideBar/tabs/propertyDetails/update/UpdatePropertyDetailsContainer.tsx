@@ -1,4 +1,4 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import * as API from 'constants/API';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { useQueryMapLayersByLocation } from 'hooks/repositories/useQueryMapLayersByLocation';

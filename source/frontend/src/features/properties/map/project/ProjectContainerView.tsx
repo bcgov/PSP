@@ -1,5 +1,5 @@
 import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { useCallback, useRef } from 'react';

@@ -6,7 +6,7 @@ import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
 
-import Control from '../Control/Control';
+import Control from '../Control';
 
 const ZoomButton = styled(Button)`
   &&.btn {

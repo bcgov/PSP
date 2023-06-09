@@ -11,8 +11,8 @@ import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import Map from './Map';
-import { createPoints } from './mapUtils';
+import { createPoints } from './leaflet/Layers/util';
+import Map from './MapView';
 
 const mockAxios = new MockAdapter(axios);
 

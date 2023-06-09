@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames';
 import { IGeoSearchParams } from 'constants/API';
+import Claims from 'constants/claims';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from 'constants/strings';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
@@ -20,20 +21,25 @@ import { useAppSelector } from 'store/hooks';
 import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import styled from 'styled-components';
 
-import { Claims } from '../../../constants';
-import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
-import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
-import { useFilterContext } from '../providers/FIlterProvider';
-import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
-import { PropertyContext } from '../providers/PropertyContext';
-import { InventoryLayer } from './InventoryLayer';
-import { LayerPopup, LayerPopupInformation } from './LayerPopup';
-import LayersControl from './LayersControl';
-import { LegendControl } from './Legend/LegendControl';
-import LoadingBackdrop from './LoadingBackdrop/LoadingBackdrop';
-import { MapEvents } from './MapEvents/MapEvents';
-import * as Styled from './styles';
-import { ZoomOutButton } from './ZoomOut/ZoomOutButton';
+import LoadingBackdrop from '../common/LoadingBackdrop';
+import useActiveFeatureLayer from './hooks/useActiveFeatureLayer';
+import BasemapToggle, {
+  BaseLayer,
+  BasemapToggleEvent,
+} from './leaflet/Control/BaseMapToggle/BasemapToggle';
+import LayersControl from './leaflet/Control/LayersControl/LayersControl';
+import { LegendControl } from './leaflet/Control/Legend/LegendControl';
+import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
+import {
+  LayerPopupContainer,
+  LayerPopupInformation,
+} from './leaflet/LayerPopup/LayerPopupContainer';
+import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
+import { MapEvents } from './leaflet/MapEvents/MapEvents';
+import * as Styled from './leaflet/styles';
+import { useFilterContext } from './providers/FIlterProvider';
+import { MapStateActionTypes, MapStateContext } from './providers/MapStateContext';
+import { PropertyContext } from './providers/PropertyContext';
 
 export type MapViewportChangeEvent = {
   bounds: LatLngBounds | null;
@@ -96,7 +102,7 @@ const defaultBounds = new LatLngBounds([60.09114547, -119.49609429], [48.7837042
  * Creates a Leaflet map and by default includes a number of preconfigured layers.
  * @param param0
  */
-const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
+const MapView: React.FC<React.PropsWithChildren<MapProps>> = ({
   lat,
   lng,
   zoom: zoomProp,
@@ -278,6 +284,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
                   popupclose={onPopupClose}
                 />
                 {activeBasemap && (
+                  // Draws the map itself
                   <LayerGroup attribution={activeBasemap.attribution}>
                     {activeBasemap.urls?.map((tileUrl, index) => (
                       <TileLayer
@@ -291,12 +298,14 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
                   </LayerGroup>
                 )}
                 {!!layerPopup && (
-                  <LayerPopup
+                  // Draws the popup on top of the map
+                  <LayerPopupContainer
                     ref={popupRef}
                     layerPopup={layerPopup}
                     onViewPropertyInfo={onViewPropertyClick}
                   />
                 )}
+
                 <LegendControl />
                 <ZoomOutButton bounds={defaultBounds} />
                 <LayersControl
@@ -323,7 +332,7 @@ const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
   );
 };
 
-export default Map;
+export default MapView;
 
 const StyledFilterContainer = styled(Container)`
   transition: margin 1s;

@@ -334,6 +334,12 @@ exports[`MapView Renders the map 1`] = `
   align-items: center;
 }
 
+.c13.c13.btn {
+  background-color: #ffffff;
+  width: 4rem;
+  height: 4rem;
+}
+
 .c11 {
   grid-area: map;
 }
@@ -410,12 +416,6 @@ exports[`MapView Renders the map 1`] = `
   grid-template-rows: 0 1fr;
   -webkit-transition: 1s;
   transition: 1s;
-}
-
-.c13.c13.btn {
-  background-color: #ffffff;
-  width: 4rem;
-  height: 4rem;
 }
 
 .c3 {

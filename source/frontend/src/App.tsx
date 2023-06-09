@@ -3,8 +3,8 @@ import 'assets/scss/Stepper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import AppRouter from 'AppRouter';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { ModalContainer } from 'components/common/ModalContainer';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { RoleMismatchModal } from 'components/modals/roleMismatch';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
 import { useUsers } from 'features/admin/users/hooks/useUsers';

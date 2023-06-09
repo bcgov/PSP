@@ -1,4 +1,4 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { UserTypes } from 'constants/index';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_User } from 'models/api/User';

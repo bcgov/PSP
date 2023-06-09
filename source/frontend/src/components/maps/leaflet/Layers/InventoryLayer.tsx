@@ -8,11 +8,11 @@ import { useContext } from 'react';
 import { useMap } from 'react-leaflet';
 import { tilesInBbox } from 'tiles-in-bbox';
 
-import { useMapRefreshEvent } from '../hooks/useMapRefreshEvent';
-import { useMapSearch } from '../hooks/useMapSearch';
-import { useFilterContext } from '../providers/FIlterProvider';
-import { MapStateContext } from '../providers/MapStateContext';
-import { PointFeature } from '../types';
+import { useMapRefreshEvent } from '../../hooks/useMapRefreshEvent';
+import { useMapSearch } from '../../hooks/useMapSearch';
+import { useFilterContext } from '../../providers/FIlterProvider';
+import { MapStateContext } from '../../providers/MapStateContext';
+import { PointFeature } from '../../types';
 import PointClusterer from './PointClusterer';
 
 export type InventoryLayerProps = {

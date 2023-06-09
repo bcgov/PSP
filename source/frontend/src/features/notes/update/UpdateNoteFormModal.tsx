@@ -1,7 +1,7 @@
 import { TextArea } from 'components/common/form';
 import { GenericModal } from 'components/common/GenericModal';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
