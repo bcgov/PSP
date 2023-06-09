@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
@@ -15,13 +16,15 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly IAcquisitionPayeeRepository _acquisitionPayeeRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
-        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository)
+        public CompensationRequisitionService(ClaimsPrincipal user, ILogger<CompensationRequisitionService> logger, ICompensationRequisitionRepository compensationRequisitionRepository, IAcquisitionPayeeRepository acquisitionPayeeRepository, IEntityNoteRepository entityNoteRepository)
         {
             _user = user;
             _logger = logger;
             _compensationRequisitionRepository = compensationRequisitionRepository;
             _acquisitionPayeeRepository = acquisitionPayeeRepository;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -78,6 +81,8 @@ namespace Pims.Api.Services
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
             var currentPayee = currentCompensation.PimsAcquisitionPayees.FirstOrDefault();
             var updatedPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
+            (bool? currentStatus, bool? newStatus) compReqStatusComparable = (currentStatus: currentCompensation.IsDraft, newStatus: compensationRequisition.IsDraft);
+
             //var payeeCheque = updatedPayee?.PimsAcqPayeeCheques.FirstOrDefault(); TODO: clean up
 
             if (currentPayee != null && updatedPayee != null)
@@ -105,7 +110,7 @@ namespace Pims.Api.Services
             */
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
-
+            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, compReqStatusComparable);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
@@ -119,6 +124,45 @@ namespace Pims.Api.Services
             var fileFormToDelete = _compensationRequisitionRepository.TryDelete(compensationId);
             _compensationRequisitionRepository.CommitTransaction();
             return fileFormToDelete;
+        }
+
+        private static string GetCompensationRequisitionStatusText(bool? isDraft)
+        {
+            if (isDraft.HasValue)
+            {
+                return isDraft.Value ? "'Draft'" : "'Final'";
+            }
+            else
+            {
+                return "'No Status'";
+            }
+        }
+
+        private void AddNoteIfStatusChanged(long compensationRequisitionId, long acquisitionFileId, (bool? currentStatus, bool? newStatus) statusComparable)
+        {
+            if (statusComparable.currentStatus.Equals(statusComparable.newStatus))
+            {
+                return;
+            }
+
+            var curentStatusText = GetCompensationRequisitionStatusText(statusComparable.currentStatus);
+            var newStatusText = GetCompensationRequisitionStatusText(statusComparable.newStatus);
+
+            PimsAcquisitionFileNote fileNoteInstance = new()
+            {
+                AcquisitionFileId = acquisitionFileId,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Compensation Requisition with # {compensationRequisitionId}, changed status from {curentStatusText} to {newStatusText}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
         }
     }
 }

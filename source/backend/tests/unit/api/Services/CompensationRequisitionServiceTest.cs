@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Moq;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Services;
@@ -72,7 +73,6 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<NotAuthorizedException>();
         }
 
-
         [Fact]
         public void Update_BadRequest_EntityIsNull()
         {
@@ -87,22 +87,92 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_Success()
+        public void Update_Success_Inserts_StatusChanged_Note()
         {
             // Arrange
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
+
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1 , AcquisitionFileId=1, IsDraft = false });
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId=1, IsDraft = true });
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition { Internal_Id = 1, ConcurrencyControlNumber = 2 });
+            var result = service.Update(new PimsCompensationRequisition() {
+                Internal_Id = 1,
+                AcquisitionFileId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = false }
+            );
 
             // Assert
             result.Should().NotBeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+                && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Once);
         }
 
+        [Fact]
+        public void Update_Success_Skips_StatusChanged_Note()
+        {
+            // Arrange
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
+
+            // Act
+            var result = service.Update(new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = true
+            }
+            );
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+                && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Success_Skips_StatusChanged_Note_FromNoStatus()
+        {
+            // Arrange
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+
+            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });;
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            // Act
+            var result = service.Update(new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = true
+            }
+            );
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+                && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'No Status' to 'Draft'"))), Times.Once);
+        }
 
         private CompensationRequisitionService CreateCompRequisitionServiceWithPermissions(params Permissions[] permissions)
         {
