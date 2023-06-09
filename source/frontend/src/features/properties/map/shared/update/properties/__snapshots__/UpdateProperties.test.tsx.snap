@@ -1,15 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UpdateProperties component renders as expected 1`] = `
-.c21 {
-  min-width: 3rem;
-  min-height: 4.5rem;
-}
-
-.c22 {
-  font-size: 1.2rem;
-}
-
 .c17.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -364,6 +355,15 @@ exports[`UpdateProperties component renders as expected 1`] = `
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.c21 {
+  min-width: 3rem;
+  min-height: 4.5rem;
+}
+
+.c22 {
+  font-size: 1.2rem;
 }
 
 .c2 {

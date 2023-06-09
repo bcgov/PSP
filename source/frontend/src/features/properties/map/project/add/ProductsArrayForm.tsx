@@ -1,6 +1,6 @@
 import { LinkButton, StyledRemoveLinkButton } from 'components/common/buttons';
 import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, FieldArrayRenderProps, FormikProps, useFormikContext } from 'formik';
 import { useProductProvider } from 'hooks/repositories/useProductProvider';

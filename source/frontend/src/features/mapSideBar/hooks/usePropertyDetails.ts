@@ -1,4 +1,4 @@
-import { IUserLayerQuery, useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import { IUserLayerQuery, useLayerQuery } from 'hooks/layer-api/useLayerQuery';
 import useIsMounted from 'hooks/useIsMounted';
 import { LatLngLiteral } from 'leaflet';
 import { Api_Property } from 'models/api/Property';

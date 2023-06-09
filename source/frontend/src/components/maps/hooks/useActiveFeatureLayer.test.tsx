@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createMemoryHistory } from 'history';
+import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
 import { geoJSON } from 'leaflet';
 import { noop } from 'lodash';
 import React from 'react';
@@ -14,7 +14,8 @@ import useActiveFeatureLayer from './useActiveFeatureLayer';
 
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
-jest.mock('components/maps/leaflet/LayerPopup');
+jest.mock('hooks/layer-api/useLayerQuery');
+jest.mock('components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 
 let clearLayers = jest.fn();
 let addData = jest.fn();

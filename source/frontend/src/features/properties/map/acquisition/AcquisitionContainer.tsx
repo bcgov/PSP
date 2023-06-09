@@ -1,5 +1,5 @@
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
 import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';

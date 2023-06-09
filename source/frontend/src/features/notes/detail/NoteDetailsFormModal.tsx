@@ -1,7 +1,7 @@
 import { Button } from 'components/common/buttons';
 import { GenericModal } from 'components/common/GenericModal';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Claims } from 'constants/index';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Note } from 'models/api/Note';

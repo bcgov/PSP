@@ -140,15 +140,6 @@ exports[`ResearchProperties component renders as expected when provided no prope
   margin-right: 0;
 }
 
-.c17 {
-  min-width: 3rem;
-  min-height: 4.5rem;
-}
-
-.c18 {
-  font-size: 1.2rem;
-}
-
 .c21.c21.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -360,6 +351,15 @@ exports[`ResearchProperties component renders as expected when provided no prope
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.c17 {
+  min-width: 3rem;
+  min-height: 4.5rem;
+}
+
+.c18 {
+  font-size: 1.2rem;
 }
 
 <div

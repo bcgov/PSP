@@ -5,7 +5,7 @@ import { FaEllipsisH } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
 
-import { LayerPopupInformation } from '../LayerPopup';
+import { LayerPopupInformation } from '../LayerPopupContainer';
 
 export interface ILayerPopupLinksProps {
   layerPopup: LayerPopupInformation;
