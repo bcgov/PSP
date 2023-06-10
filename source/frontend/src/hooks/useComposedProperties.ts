@@ -1,4 +1,4 @@
-import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
+import ComposedProperty from 'features/mapSideBar/property/ComposedProperty';
 import { useEffect } from 'react';
 import { useTenant } from 'tenants/useTenant';
 

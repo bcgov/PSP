@@ -2,7 +2,7 @@ import { StyledIconButton } from 'components/common/buttons';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { IMapProperty } from 'components/propertySelector/models';
-import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
+import ComposedProperty from 'features/mapSideBar/property/ComposedProperty';
 import { Api_Property } from 'models/api/Property';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { formatApiAddress, pidFormatter } from 'utils';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
 
-import { HeaderField } from './tabs/HeaderField';
+import { HeaderField } from '../tabs/HeaderField';
 
 export interface IMotiInventoryHeaderProps {
   composedProperty: ComposedProperty;
