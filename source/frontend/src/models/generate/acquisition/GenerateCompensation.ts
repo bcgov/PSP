@@ -71,6 +71,6 @@ export class Api_GenerateCompensation {
     this.service_line = compensation?.chartOfAccounts?.description ?? '';
     this.responsibility_center = compensation?.responsibility?.description ?? '';
     this.client = client;
-    this.payee = new Api_GenerateCompensationPayee(payee);
+    this.payee = new Api_GenerateCompensationPayee(payee, compensation?.financials ?? []);
   }
 }

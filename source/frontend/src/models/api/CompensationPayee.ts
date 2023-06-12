@@ -7,12 +7,13 @@ import { Api_AuditFields } from './AuditFields';
 import { Api_CompensationRequisition } from './CompensationRequisition';
 import { Api_ConcurrentVersion_Null } from './ConcurrentVersion';
 import { Api_InterestHolder } from './InterestHolder';
-import { Api_PayeeCheque } from './PayeeCheque';
 import { Api_Person } from './Person';
 
 export interface Api_CompensationPayee extends Api_ConcurrentVersion_Null, Api_AuditFields {
   id: number | null;
   compensationRequisitionId: number | null;
+  isPaymentInTrust: boolean | null;
+  gstNumber: string | null;
   acquisitionOwnerId: number | null;
   interestHolderId: number | null;
   ownerRepresentativeId: number | null;
@@ -25,6 +26,5 @@ export interface Api_CompensationPayee extends Api_ConcurrentVersion_Null, Api_A
   interestHolder: Api_InterestHolder | null;
   ownerRepresentative: Api_AcquisitionFileRepresentative | null;
   ownerSolicitor: Api_AcquisitionFileSolicitor | null;
-  cheques: Api_PayeeCheque[] | null;
   isDisabled: boolean | null;
 }

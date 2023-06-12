@@ -40,7 +40,7 @@ interface PayeeViewDetails {
   totalAmount: number;
   goodTrust: boolean;
   contactEnabled: boolean;
-  personId: boolean;
+  personId: number | null;
 }
 
 export const CompensationRequisitionDetailView: React.FunctionComponent<
@@ -56,8 +56,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   onGenerate,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
-  const payeeCheque = compensationPayee?.cheques ? compensationPayee?.cheques[0] : null;
-
   const getPayeeDetails = (
     compensationPayee: Api_CompensationPayee | null | undefined,
   ): PayeeViewDetails | null => {
@@ -66,26 +64,44 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     }
 
     let payeeDetail = {
-      contactEnabled: compensationPayee.acquisitionFilePersonId ? true : false,
-      goodTrust: payeeCheque?.isPaymentInTrust,
+      contactEnabled: true,
+      goodTrust: compensationPayee?.isPaymentInTrust,
+      personId: null,
     } as PayeeViewDetails;
 
     if (compensationPayee.acquisitionOwnerId) {
       const ownerDetail = DetailAcquisitionFileOwner.fromApi(compensationPayee.acquisitionOwner!);
       payeeDetail.displayName = ownerDetail.ownerName ?? '';
+      payeeDetail.contactEnabled = false;
     } else if (compensationPayee.interestHolderId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.interestHolder?.person);
+      payeeDetail.personId = compensationPayee.interestHolder?.person?.id!;
     } else if (compensationPayee.ownerRepresentativeId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerRepresentative?.person);
+      payeeDetail.personId = compensationPayee.ownerRepresentative?.person?.id!;
     } else if (compensationPayee.ownerSolicitorId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerSolicitor?.person);
+      payeeDetail.personId = compensationPayee.ownerSolicitor?.person?.id!;
     } else if (compensationPayee.motiSolicitorId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.motiSolicitor);
+      payeeDetail.personId = compensationPayee.motiSolicitor?.id!;
     }
 
-    payeeDetail.preTaxAmount = payeeCheque?.pretaxAmout ?? 0;
-    payeeDetail.taxAmount = payeeCheque?.taxAmount ?? 0;
-    payeeDetail.totalAmount = payeeCheque?.totalAmount ?? 0;
+    const payeePretaxAmount = compensation?.financials
+      .map(f => f.pretaxAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
+    const payeeTaxAmount = compensation?.financials
+      .map(f => f.taxAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
+    const payeeTotalAmount = compensation?.financials
+      .map(f => f.totalAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
+    payeeDetail.preTaxAmount = payeePretaxAmount;
+    payeeDetail.taxAmount = payeeTaxAmount;
+    payeeDetail.totalAmount = payeeTotalAmount;
 
     var results =
       compensation.financials?.filter(el => {
@@ -132,13 +148,13 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           </Col>
           <Col xs="6">
             <HeaderField label="Compensation amount:" labelWidth="8">
-              {formatMoney(payeeCheque?.pretaxAmout ?? 0)}
+              {formatMoney(payeeDetails?.preTaxAmount ?? 0)}
             </HeaderField>
             <HeaderField label="Applicable GST:" labelWidth="8">
-              {formatMoney(payeeCheque?.taxAmount ?? 0)}
+              {formatMoney(payeeDetails?.taxAmount ?? 0)}
             </HeaderField>
             <HeaderField label="Total cheque amount:" labelWidth="8">
-              {formatMoney(payeeCheque?.totalAmount ?? 0)}
+              {formatMoney(payeeDetails?.totalAmount ?? 0)}
             </HeaderField>
           </Col>
         </StyledRow>
@@ -182,17 +198,25 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {compensation.yearlyFinancial?.code ?? ''}
         </SectionField>
         <SectionField label="Service line" labelWidth="4">
-          {compensation.chartOfAccounts?.code} - {compensation.chartOfAccounts?.description}
+          {compensation.chartOfAccounts && (
+            <label>
+              {compensation.chartOfAccounts?.code} - {compensation.chartOfAccounts?.description}
+            </label>
+          )}
         </SectionField>
         <SectionField label="Responsiblity centre" labelWidth="4">
-          {compensation.responsibility?.code} - {compensation.responsibility?.description}
+          {compensation.responsibility && (
+            <label>
+              {compensation.responsibility?.code} - {compensation.responsibility?.description}
+            </label>
+          )}
         </SectionField>
       </Section>
 
       <Section header="Payment" isCollapsable initiallyExpanded>
         <SectionField label="Payee" labelWidth="4">
           <StyledPayeeDisplayName>
-            {payeeDetails?.contactEnabled && (
+            {payeeDetails?.contactEnabled && payeeDetails?.personId && (
               <StyledLink
                 target="_blank"
                 rel="noopener noreferrer"

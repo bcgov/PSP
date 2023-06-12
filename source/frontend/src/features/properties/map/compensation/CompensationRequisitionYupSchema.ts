@@ -17,15 +17,11 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
   payees: yup.array().of(
     yup.object().shape({
       acquisitionOwnerId: yup.string(),
-      cheques: yup.array().of(
-        yup.object().shape({
-          pretaxAmount: yup.number(),
-          taxAmount: yup.number(),
-          totalAmount: yup.number(),
-          gstNumber: yup.string().max(50, 'GST # must be at most ${max} characters'),
-          isPaymentInTrust: yup.boolean(),
-        }),
-      ),
+      pretaxAmount: yup.number(),
+      taxAmount: yup.number(),
+      totalAmount: yup.number(),
+      gstNumber: yup.string().max(50, 'GST # must be at most ${max} characters'),
+      isPaymentInTrust: yup.boolean(),
     }),
   ),
   financials: yup.array().of(
