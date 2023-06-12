@@ -1,9 +1,9 @@
 import { FileTypes } from 'constants/fileTypes';
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import TakesUpdateContainer from 'features/mapSideBar/property/tabs/takes/update/TakesUpdateContainer';
+import TakesUpdateForm from 'features/mapSideBar/property/tabs/takes/update/TakesUpdateForm';
 import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames, InventoryTabs } from 'features/mapSideBar/tabs/InventoryTabs';
-import TakesUpdateContainer from 'features/mapSideBar/tabs/takes/update/TakesUpdateContainer';
-import TakesUpdateForm from 'features/mapSideBar/tabs/takes/update/TakesUpdateForm';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';

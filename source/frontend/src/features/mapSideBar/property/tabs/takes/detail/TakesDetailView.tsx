@@ -15,9 +15,9 @@ import styled from 'styled-components';
 import { formatApiDateTime, prettyFormatDate } from 'utils';
 import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
-import { Section } from '../../Section';
-import { SectionField } from '../../SectionField';
-import { StyledEditWrapper, StyledSummarySection } from '../../SectionStyles';
+import { Section } from '../../../../tabs/Section';
+import { SectionField } from '../../../../tabs/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from '../../../../tabs/SectionStyles';
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 export interface ITakesDetailViewProps {

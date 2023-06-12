@@ -9,7 +9,7 @@ import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
-import { StyledSummarySection } from '../../SectionStyles';
+import { StyledSummarySection } from '../../../../tabs/SectionStyles';
 import { TakeModel, TakesYupSchema } from './models';
 import TakeSubForm from './TakeSubForm';
 
