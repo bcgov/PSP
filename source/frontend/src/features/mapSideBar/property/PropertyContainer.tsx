@@ -1,13 +1,13 @@
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
-import BcAssessmentTabView from 'features/mapSideBar/property/tabs/bcAssessment/BcAssessmentTabView';
-import LtsaTabView from 'features/mapSideBar/property/tabs/ltsa/LtsaTabView';
-import PropertyAssociationTabView from 'features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
-import { PropertyDetailsTabView } from 'features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import {
   InventoryTabNames,
   InventoryTabs,
   TabInventoryView,
-} from 'features/mapSideBar/tabs/InventoryTabs';
+} from 'features/mapSideBar/property/InventoryTabs';
+import BcAssessmentTabView from 'features/mapSideBar/property/tabs/bcAssessment/BcAssessmentTabView';
+import LtsaTabView from 'features/mapSideBar/property/tabs/ltsa/LtsaTabView';
+import PropertyAssociationTabView from 'features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
+import { PropertyDetailsTabView } from 'features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import React, { useState } from 'react';
 
 import ComposedProperty from './ComposedProperty';

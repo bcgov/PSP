@@ -1,16 +1,16 @@
 import { FileTypes } from 'constants/fileTypes';
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
+import {
+  IInventoryTabsProps,
+  InventoryTabNames,
+  TabInventoryView,
+} from 'features/mapSideBar/property/InventoryTabs';
 import BcAssessmentTabView from 'features/mapSideBar/property/tabs/bcAssessment/BcAssessmentTabView';
 import LtsaTabView from 'features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from 'features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from 'features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import TakesDetailContainer from 'features/mapSideBar/property/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from 'features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
-import {
-  IInventoryTabsProps,
-  InventoryTabNames,
-  TabInventoryView,
-} from 'features/mapSideBar/tabs/InventoryTabs';
 import { PROPERTY_TYPES, useComposedProperties } from 'hooks/useComposedProperties';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
