@@ -9,9 +9,9 @@ import styled from 'styled-components';
 import { formatBcaAddress } from 'utils';
 import { pidFormatter } from 'utils/propertyUtils';
 
-import { Section } from '../Section';
-import { SectionField } from '../SectionField';
-import { InlineMessage, StyledInlineMessageSection } from '../SectionStyles';
+import { Section } from '../../../tabs/Section';
+import { SectionField } from '../../../tabs/SectionField';
+import { InlineMessage, StyledInlineMessageSection } from '../../../tabs/SectionStyles';
 import AssessedValuesTable from './AssessedValuesTable';
 import SalesTable from './SalesTable';
 

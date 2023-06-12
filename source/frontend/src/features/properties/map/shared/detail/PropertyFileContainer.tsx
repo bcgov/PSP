@@ -1,6 +1,6 @@
 import { FileTypes } from 'constants/fileTypes';
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
-import BcAssessmentTabView from 'features/mapSideBar/tabs/bcAssessment/BcAssessmentTabView';
+import BcAssessmentTabView from 'features/mapSideBar/property/tabs/bcAssessment/BcAssessmentTabView';
 import {
   IInventoryTabsProps,
   InventoryTabNames,
