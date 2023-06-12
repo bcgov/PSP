@@ -67,13 +67,18 @@ namespace Pims.Dal.Repositories
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), true);
 
+            if(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is not null)
+            {
+                UpdatePayee(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault());
+            }
+
             return compensationRequisition;
         }
 
         public PimsAcquisitionPayee UpdatePayee(PimsAcquisitionPayee compensationPayee)
         {
             var existingCompensationPayee = Context.PimsAcquisitionPayees
-                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(compensationPayee.AcquisitionPayeeId)) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(compensationPayee.Internal_Id)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationPayee).CurrentValues.SetValues(compensationPayee);
 
@@ -90,17 +95,8 @@ namespace Pims.Dal.Repositories
 
             if (deletedEntity != null)
             {
-                // Remove child entries.
                 foreach (var payee in deletedEntity.PimsAcquisitionPayees)
                 {
-                    // TODO cleanup
-                    /*foreach (var cheque in payee.PimsAcqPayeeCheques)
-                    {
-                        Context.PimsAcqPayeeCheques.Remove(new PimsAcqPayeeCheque() { AcqPayeeChequeId = cheque.AcqPayeeChequeId });
-                    }*/
-
-                    Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
-
                     Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
                 }
 

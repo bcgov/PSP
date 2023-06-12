@@ -631,9 +631,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
           <div
             class="c7 text-left col"
-          >
-             - 
-          </div>
+          />
         </div>
         <div
           class="pb-2 row"
@@ -649,9 +647,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
           <div
             class="c7 text-left col"
-          >
-             - 
-          </div>
+          />
         </div>
       </div>
     </div>
