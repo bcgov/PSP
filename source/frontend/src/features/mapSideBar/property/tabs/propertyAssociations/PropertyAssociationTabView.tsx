@@ -7,8 +7,8 @@ import {
   MdTopic,
 } from 'react-icons/md';
 
-import { Section } from '../Section';
-import { StyledSummarySection } from '../SectionStyles';
+import { Section } from '../../../tabs/Section';
+import { StyledSummarySection } from '../../../tabs/SectionStyles';
 import AssociationContent from './AssociationContent';
 import AssociationHeader from './AssociationHeader';
 
