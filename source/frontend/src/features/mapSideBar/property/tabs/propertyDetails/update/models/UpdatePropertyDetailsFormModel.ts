@@ -16,7 +16,7 @@ import {
   PropertyAnomalyFormModel,
   PropertyRoadFormModel,
   PropertyTenureFormModel,
-} from './';
+} from '.';
 
 export class AddressFormModel {
   id?: number;

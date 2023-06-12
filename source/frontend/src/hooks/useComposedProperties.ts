@@ -2,7 +2,7 @@ import ComposedProperty from 'features/mapSideBar/property/ComposedProperty';
 import { useEffect } from 'react';
 import { useTenant } from 'tenants/useTenant';
 
-import { useGetProperty } from '../features/mapSideBar/tabs/propertyDetails/hooks/useGetProperty';
+import { useGetProperty } from '../features/mapSideBar/property/tabs/propertyDetails/hooks/useGetProperty';
 import { useGeoServer } from './layer-api/useGeoServer';
 import { useFullyAttributedParcelMapLayer } from './repositories/useFullyAttributedParcelMapLayer';
 import { useBcAssessmentLayer } from './useBcAssessmentLayer';

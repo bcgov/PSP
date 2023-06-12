@@ -8,6 +8,8 @@ import AreaContainer from 'components/measurements/AreaContainer';
 import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
+import { Section } from 'features/mapSideBar/tabs/Section';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps, getIn, useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
@@ -19,8 +21,6 @@ import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 import { stringToBoolean } from 'utils/formUtils';
 
-import { Section } from '../../Section';
-import { SectionField } from '../../SectionField';
 import {
   PropertyAdjacentLandFormModel,
   PropertyAnomalyFormModel,

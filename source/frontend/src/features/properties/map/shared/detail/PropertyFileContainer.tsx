@@ -3,12 +3,12 @@ import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails
 import BcAssessmentTabView from 'features/mapSideBar/property/tabs/bcAssessment/BcAssessmentTabView';
 import LtsaTabView from 'features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from 'features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
+import { PropertyDetailsTabView } from 'features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import {
   IInventoryTabsProps,
   InventoryTabNames,
   TabInventoryView,
 } from 'features/mapSideBar/tabs/InventoryTabs';
-import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import TakesDetailContainer from 'features/mapSideBar/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from 'features/mapSideBar/tabs/takes/detail/TakesDetailView';
 import { PROPERTY_TYPES, useComposedProperties } from 'hooks/useComposedProperties';

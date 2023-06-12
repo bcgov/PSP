@@ -1,7 +1,7 @@
 import { FileTypes } from 'constants/fileTypes';
+import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
 import { InventoryTabNames, InventoryTabs } from 'features/mapSideBar/tabs/InventoryTabs';
-import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import TakesUpdateContainer from 'features/mapSideBar/tabs/takes/update/TakesUpdateContainer';
 import TakesUpdateForm from 'features/mapSideBar/tabs/takes/update/TakesUpdateForm';
 import { FormikProps } from 'formik';
