@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { Section } from '../Section';
+import { Section } from '../../../tabs/Section';
 
 interface PropertyResearchFile {
   id: number;
