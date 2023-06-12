@@ -4,7 +4,7 @@ import { DescriptionOfLand, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionField } from '../SectionField';
+import { SectionField } from '../../../tabs/SectionField';
 import LtsaLegalNotationsSubForm from './LtsaLegalNotationsSubForm';
 
 export interface ILtsaLandSubFormProps {

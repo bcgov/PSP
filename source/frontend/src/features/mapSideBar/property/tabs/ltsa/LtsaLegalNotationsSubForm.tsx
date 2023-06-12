@@ -5,7 +5,7 @@ import { Col, Row } from 'react-bootstrap';
 import { prettyFormatDate } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionField } from '../SectionField';
+import { SectionField } from '../../../tabs/SectionField';
 
 export interface ILtsaLegalNotationsSubFormProps {
   nameSpace?: string;

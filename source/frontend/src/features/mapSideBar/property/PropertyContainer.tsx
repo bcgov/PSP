@@ -1,11 +1,11 @@
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
 import BcAssessmentTabView from 'features/mapSideBar/property/tabs/bcAssessment/BcAssessmentTabView';
+import LtsaTabView from 'features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import {
   InventoryTabNames,
   InventoryTabs,
   TabInventoryView,
 } from 'features/mapSideBar/tabs/InventoryTabs';
-import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from 'features/mapSideBar/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import React, { useState } from 'react';

@@ -5,7 +5,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionField } from '../SectionField';
+import { SectionField } from '../../../tabs/SectionField';
 import LtsaOwnershipInformationTitleOwnerForm from './LtsaOwnershipInformationTitleOwnerForm';
 
 export interface ILtsaOwnershipInformationFormProps {

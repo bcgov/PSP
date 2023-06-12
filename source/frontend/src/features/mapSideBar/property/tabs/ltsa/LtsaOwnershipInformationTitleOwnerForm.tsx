@@ -6,7 +6,7 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionField, StyledFieldLabel } from '../SectionField';
+import { SectionField, StyledFieldLabel } from '../../../tabs/SectionField';
 
 export interface ILtsaOwnershipInformationTitleOwnerFormProps {
   nameSpace?: string;
