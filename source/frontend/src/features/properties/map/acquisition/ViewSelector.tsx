@@ -3,7 +3,7 @@ import { InventoryTabNames, InventoryTabs } from 'features/mapSideBar/property/I
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import TakesUpdateContainer from 'features/mapSideBar/property/tabs/takes/update/TakesUpdateContainer';
 import TakesUpdateForm from 'features/mapSideBar/property/tabs/takes/update/TakesUpdateForm';
-import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
+import { FileTabType } from 'features/properties/map/shared/detail/FileTabs';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';

@@ -1,8 +1,8 @@
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
 import { NoteTypes } from 'constants/noteTypes';
-import { FileTabs, FileTabType, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
 import NoteListView from 'features/notes/list/NoteListView';
+import { FileTabs, FileTabType, TabFileView } from 'features/properties/map/shared/detail/FileTabs';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useState } from 'react';
