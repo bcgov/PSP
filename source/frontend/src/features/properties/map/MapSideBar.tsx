@@ -6,7 +6,7 @@ import { MapStateActionTypes, MapStateContext } from '@/components/maps/provider
 import { Api_Property } from '@/models/api/Property';
 
 import { SideBarContext } from '../../mapSideBar/context/sidebarContext';
-import MapRouter from './MapRouter';
+import MapRouter from '../../mapSideBar/router/MapRouter';
 
 interface IMapSideBarProps {
   showSideBar: boolean;

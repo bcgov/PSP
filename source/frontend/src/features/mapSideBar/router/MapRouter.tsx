@@ -14,15 +14,15 @@ import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventory
 import { Api_Property } from '@/models/api/Property';
 import AppRoute from '@/utils/AppRoute';
 
-import AcquisitionContainer from './acquisition/AcquisitionContainer';
-import AcquisitionView from './acquisition/AcquisitionView';
-import AddAcquisitionContainer from './acquisition/add/AddAcquisitionContainer';
-import LeaseContainer from './lease/LeaseContainer';
-import AddProjectContainer from './project/add/AddProjectContainer';
-import ProjectContainer from './project/ProjectContainer';
-import ProjectContainerView from './project/ProjectContainerView';
-import AddResearchContainer from './research/add/AddResearchContainer';
-import ResearchContainer from './research/ResearchContainer';
+import AcquisitionContainer from '../../properties/map/acquisition/AcquisitionContainer';
+import AcquisitionView from '../../properties/map/acquisition/AcquisitionView';
+import AddAcquisitionContainer from '../../properties/map/acquisition/add/AddAcquisitionContainer';
+import LeaseContainer from '../../properties/map/lease/LeaseContainer';
+import AddProjectContainer from '../../properties/map/project/add/AddProjectContainer';
+import ProjectContainer from '../../properties/map/project/ProjectContainer';
+import ProjectContainerView from '../../properties/map/project/ProjectContainerView';
+import AddResearchContainer from '../../properties/map/research/add/AddResearchContainer';
+import ResearchContainer from '../../properties/map/research/ResearchContainer';
 
 interface IMapRouterProps {
   showSideBar: boolean;

@@ -15,10 +15,10 @@ import { pidParser } from '@/utils';
 
 import MapView from '../../../components/maps/MapView';
 import { SideBarContextProvider } from '../../mapSideBar/context/sidebarContext';
-import ActivityRouter from './ActivityRouter';
-import CompensationRequisitionRouter from './CompensationRequisitionRouter';
+import ActivityRouter from '../../mapSideBar/router/ActivityRouter';
+import CompensationRequisitionRouter from '../../mapSideBar/router/CompensationRequisitionRouter';
+import PopupRouter from '../../mapSideBar/router/PopupRouter';
 import MapSideBar from './MapSideBar';
-import PopupRouter from './PopupRouter';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
 const defaultLatLng = {

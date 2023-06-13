@@ -6,8 +6,8 @@ import Claims from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
 import AppRoute from '@/utils/AppRoute';
 
-import FormContainer from './form/detail/FormContainer';
-import FormView from './form/detail/FormView';
+import FormContainer from '../../properties/map/form/detail/FormContainer';
+import FormView from '../../properties/map/form/detail/FormView';
 
 interface IActivityRouterProps {
   setShowActionBar: (show: boolean) => void;

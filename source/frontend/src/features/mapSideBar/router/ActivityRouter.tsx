@@ -4,8 +4,8 @@ import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import AppRoute from '@/utils/AppRoute';
 
-import { ActivityTray } from './activity/ActivityTray/ActivityTray';
-import { ActivityContainer } from './activity/detail/ActivityContainer';
+import { ActivityTray } from '../../properties/map/activity/ActivityTray/ActivityTray';
+import { ActivityContainer } from '../../properties/map/activity/detail/ActivityContainer';
 
 interface IActivityRouterProps {
   setShowActionBar: (show: boolean) => void;
