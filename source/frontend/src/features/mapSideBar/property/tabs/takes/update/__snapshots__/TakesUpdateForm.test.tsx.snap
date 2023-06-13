@@ -249,24 +249,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   margin-bottom: unset;
 }
 
-.c14 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c16 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c15 {
-  max-width: 9rem;
-}
-
 .c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -290,6 +272,24 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
 
 .c8 {
   font-weight: bold;
+}
+
+.c14 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c16 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c15 {
+  max-width: 9rem;
 }
 
 .c10.form-section {

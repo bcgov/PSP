@@ -237,31 +237,6 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   margin-bottom: unset;
 }
 
-.c8 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c10 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c13 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c9 {
-  max-width: 9rem;
-}
-
 .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -285,6 +260,31 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+}
+
+.c8 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c10 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c13 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c9 {
+  max-width: 9rem;
 }
 
 .c2 {

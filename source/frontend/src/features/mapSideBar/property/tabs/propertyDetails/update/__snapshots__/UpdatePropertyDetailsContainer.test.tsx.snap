@@ -237,31 +237,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   margin-bottom: unset;
 }
 
-.c9 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c11 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c14 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c10 {
-  max-width: 9rem;
-}
-
 .c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -285,6 +260,31 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+}
+
+.c9 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c11 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c14 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c10 {
+  max-width: 9rem;
 }
 
 .c3 {

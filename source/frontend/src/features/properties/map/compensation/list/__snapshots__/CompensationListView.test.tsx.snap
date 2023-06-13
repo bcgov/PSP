@@ -6,23 +6,7 @@ exports[`compensation list view renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2 {
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c2 .btn {
-  margin: 0;
-}
-
-.c1 {
+  .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -45,6 +29,22 @@ exports[`compensation list view renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+}
+
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
 }
 
 <div

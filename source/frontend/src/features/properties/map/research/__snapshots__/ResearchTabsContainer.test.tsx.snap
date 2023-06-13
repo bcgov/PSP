@@ -140,6 +140,33 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c9 {
+  float: right;
+  cursor: pointer;
+}
+
+.c2 {
+  padding-top: 1rem;
+}
+
+.c3 {
+  text-align: right;
+}
+
+.c5 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c4 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c13 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -193,24 +220,6 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   border-color: transparent;
 }
 
-.c0 {
-  height: 100%;
-}
-
-.c0 .nav-tabs {
-  height: 2.4rem;
-}
-
-.c0 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.4rem);
-  overflow-y: auto;
-}
-
-.c0 .tab-content .tab-pane {
-  position: relative;
-}
-
 .c8 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
@@ -227,31 +236,22 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   margin: 0;
 }
 
-.c9 {
-  float: right;
-  cursor: pointer;
+.c0 {
+  height: 100%;
 }
 
-.c2 {
-  padding-top: 1rem;
+.c0 .nav-tabs {
+  height: 2.4rem;
 }
 
-.c3 {
-  text-align: right;
+.c0 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.4rem);
+  overflow-y: auto;
 }
 
-.c5 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c4 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
+.c0 .tab-content .tab-pane {
+  position: relative;
 }
 
 .c7.required::before {

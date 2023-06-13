@@ -210,10 +210,6 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   opacity: unset;
 }
 
-.c3 {
-  padding: 0 0.4rem;
-}
-
 .c0 {
   padding-top: 1rem;
 }
@@ -230,6 +226,10 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c3 {
+  padding: 0 0.4rem;
 }
 
 .c10 {

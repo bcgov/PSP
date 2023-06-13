@@ -6,21 +6,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
     class="Toastify"
   />
   <div />
-  .c8 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c9 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
-.c7 {
+  .c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -73,6 +59,20 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
 
 .c5 {
   font-weight: bold;
+}
+
+.c8 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c9 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
 }
 
 <div
