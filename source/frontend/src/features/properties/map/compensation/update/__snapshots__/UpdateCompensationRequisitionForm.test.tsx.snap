@@ -773,8 +773,8 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   >
                     <input
                       class="form-check-input position-static"
-                      id="input-payees.0.cheques[0].isPaymentInTrust"
-                      name="payees.0.cheques[0].isPaymentInTrust"
+                      id="input-payees.0.isPaymentInTrust"
+                      name="payees.0.isPaymentInTrust"
                       type="checkbox"
                       value="false"
                     />
@@ -827,8 +827,8 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               >
                 <input
                   class="form-control"
-                  id="input-payees.0.cheques[0].gstNumber"
-                  name="payees.0.cheques[0].gstNumber"
+                  id="input-payees.0.gstNumber"
+                  name="payees.0.gstNumber"
                   value=""
                 />
               </div>
@@ -858,9 +858,9 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.cheques[0].pretaxAmount"
+                    id="input-payees.0.pretaxAmount"
                     inputmode="numeric"
-                    name="payees.0.cheques[0].pretaxAmount"
+                    name="payees.0.pretaxAmount"
                     placeholder=""
                     type="text"
                     value=""
@@ -893,9 +893,9 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.cheques[0].taxAmount"
+                    id="input-payees.0.taxAmount"
                     inputmode="numeric"
-                    name="payees.0.cheques[0].taxAmount"
+                    name="payees.0.taxAmount"
                     placeholder=""
                     type="text"
                     value=""
@@ -952,9 +952,9 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payees.0.cheques[0].totalAmount"
+                    id="input-payees.0.totalAmount"
                     inputmode="numeric"
-                    name="payees.0.cheques[0].totalAmount"
+                    name="payees.0.totalAmount"
                     placeholder=""
                     type="text"
                     value=""

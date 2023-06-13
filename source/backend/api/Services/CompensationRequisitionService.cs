@@ -55,62 +55,21 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            var compensationPayee = _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
-            if (compensationRequisition is not null && compensationPayee is not null)
+            if(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
             {
-                // TODO fix this
-                /*var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
-                if (payeeCheque is not null)
-                {
-                    payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
-                    payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
-                    payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
-                }*/
+                throw new KeyNotFoundException();
             }
 
-            return compensationPayee;
+            return _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
         }
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
-
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
 
-            var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
-            var currentPayee = currentCompensation.PimsAcquisitionPayees.FirstOrDefault();
-            var updatedPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
-            (bool? currentStatus, bool? newStatus) compReqStatusComparable = (currentStatus: currentCompensation.IsDraft, newStatus: compensationRequisition.IsDraft);
-
-            //var payeeCheque = updatedPayee?.PimsAcqPayeeCheques.FirstOrDefault(); TODO: clean up
-
-            if (currentPayee != null && updatedPayee != null)
-            {
-                if (currentPayee.InterestHolderId != updatedPayee.InterestHolderId ||
-                    currentPayee.AcquisitionOwnerId != updatedPayee.AcquisitionOwnerId ||
-                    currentPayee.OwnerSolicitorId != updatedPayee.OwnerSolicitorId ||
-                    currentPayee.AcquisitionFilePersonId != updatedPayee.AcquisitionFilePersonId ||
-                    currentPayee.OwnerRepresentativeId != updatedPayee.OwnerRepresentativeId)
-                {
-                    // Given there  is only one payee per compensation, set the existing ids for the compensation requisition payee.
-                    updatedPayee.CompensationRequisitionId = currentPayee.CompensationRequisitionId;
-                    updatedPayee.AcquisitionPayeeId = currentPayee.AcquisitionPayeeId;
-                    updatedPayee.ConcurrencyControlNumber = currentPayee.ConcurrencyControlNumber;
-                    _compensationRequisitionRepository.UpdatePayee(updatedPayee);
-                }
-            }
-
-            // TODO clean up
-            /*
-            if (payeeCheque is not null)
-            {
-                _compensationRequisitionRepository.UpdatePayeeCheque(payeeCheque);
-            }
-            */
-
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
-            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, compReqStatusComparable);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;

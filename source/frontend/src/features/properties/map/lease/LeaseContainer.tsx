@@ -1,6 +1,6 @@
 import { ReactComponent as Fence } from 'assets/images/fence.svg';
 import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Claims } from 'constants/claims';
 import { useLeaseDetail } from 'features/leases';
 import { AddLeaseYupSchema } from 'features/leases/add/AddLeaseYupSchema';

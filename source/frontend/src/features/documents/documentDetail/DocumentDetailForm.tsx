@@ -1,7 +1,7 @@
 import { Button } from 'components/common/buttons/Button';
 import { Select } from 'components/common/form';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import TooltipIcon from 'components/common/TooltipIcon';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import * as API from 'constants/API';
 import Claims from 'constants/claims';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';

@@ -1,5 +1,5 @@
 import EditButton from 'components/common/EditButton';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Claims } from 'constants/index';
 import { StyledNoData } from 'features/documents/commonStyles';
 import { Section } from 'features/mapSideBar/tabs/Section';

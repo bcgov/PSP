@@ -1,6 +1,6 @@
 import { Button } from 'components/common/buttons';
 import { FormSection } from 'components/common/form/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import moment from 'moment';

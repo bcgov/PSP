@@ -1,4 +1,4 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { useLeaseDetail } from 'features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from 'features/leases/hooks/useUpdateLease';

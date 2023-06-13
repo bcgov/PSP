@@ -1,6 +1,6 @@
 import { Input, TextArea } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Form, Formik, getIn } from 'formik';
 import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';

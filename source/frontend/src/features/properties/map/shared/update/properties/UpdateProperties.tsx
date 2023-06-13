@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from 'components/propertySelector/models';
 import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';

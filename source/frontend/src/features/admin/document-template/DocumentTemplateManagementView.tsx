@@ -1,5 +1,5 @@
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { Section } from 'features/mapSideBar/tabs/Section';

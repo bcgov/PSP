@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { H1 } from 'components/common/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FinancialCodeTypes } from 'constants/index';
 import { useFinancialCodeRepository } from 'hooks/repositories/useFinancialCodeRepository';
 import { IApiError } from 'interfaces/IApiError';

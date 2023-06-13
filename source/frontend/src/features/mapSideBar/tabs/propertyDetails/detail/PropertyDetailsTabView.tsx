@@ -1,5 +1,5 @@
 import { EditButton } from 'components/common/EditButton';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import AreaContainer from 'components/measurements/AreaContainer';
 import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';

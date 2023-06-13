@@ -1,6 +1,6 @@
 import GenericModal from 'components/common/GenericModal';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/fileTypes';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';

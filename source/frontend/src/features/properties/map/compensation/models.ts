@@ -9,7 +9,6 @@ import { Api_CompensationPayee } from 'models/api/CompensationPayee';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Api_FinancialCode } from 'models/api/FinancialCode';
 import { Api_InterestHolder } from 'models/api/InterestHolder';
-import { Api_PayeeCheque } from 'models/api/PayeeCheque';
 import { isNullOrWhitespace } from 'utils';
 import { booleanToString, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
 import { formatApiPersonNames } from 'utils/personUtils';
@@ -43,14 +42,18 @@ export class CompensationRequisitionFormModel {
   }
 
   toApi(payeeOptions: PayeeOption[]): Api_CompensationRequisition {
-    const apiPayee: Api_CompensationPayee | null = PayeeOption.toApi(
+    let apiPayee: Api_CompensationPayee | null = PayeeOption.toApi(
+      this.payees[0]._id,
       this.id,
       this.payeeKey,
       payeeOptions,
     );
 
     if (apiPayee) {
-      apiPayee.cheques = this.payees[0].cheques.map(x => x.toApi());
+      apiPayee.id = this.payees[0]._id;
+      apiPayee.gstNumber = this.payees[0].gstNumber;
+      apiPayee.isPaymentInTrust = this.payees[0].isPaymentInTrust;
+      apiPayee.rowVersion = this.payees[0].rowVersion;
     }
 
     return {
@@ -107,9 +110,29 @@ export class CompensationRequisitionFormModel {
     compensation.isDisabled = booleanToString(apiModel.isDisabled);
     compensation.rowVersion = apiModel.rowVersion ?? null;
 
+    const payeePretaxAmount = apiModel?.financials
+      .map(f => f.pretaxAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
+    const payeeTaxAmount = apiModel?.financials
+      .map(f => f.taxAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
+    const payeeTotalAmount = apiModel?.financials
+      .map(f => f.totalAmount ?? 0)
+      .reduce((prev, next) => prev + next, 0);
+
     if (compensation.payees.length === 0) {
-      const defaultPayee = AcquisitionPayeeFormModel.defatulPayee(compensation.id!);
+      let defaultPayee = AcquisitionPayeeFormModel.defatultPayee(compensation.id!);
+      defaultPayee.pretaxAmount = payeePretaxAmount;
+      defaultPayee.taxAmount = payeeTaxAmount;
+      defaultPayee.taxAmount = payeeTotalAmount;
+
       compensation.payees.push(defaultPayee);
+    } else {
+      compensation.payees[0].pretaxAmount = payeePretaxAmount;
+      compensation.payees[0].taxAmount = payeeTaxAmount;
+      compensation.payees[0].totalAmount = payeeTotalAmount;
     }
 
     return compensation;
@@ -175,12 +198,16 @@ export class AcquisitionPayeeFormModel {
   readonly _compensationRequisitionId: number | null;
 
   payeeSelectedOption: string = '';
+  gstNumber: string = '';
+  isPaymentInTrust: boolean = false;
+  pretaxAmount: number = 0;
+  taxAmount: number = 0;
+  totalAmount: number = 0;
   acquisitionOwnerId: string = '';
   interestHolderId: string = '';
   ownerRepresentativeId: string = '';
   ownerSolicitorId: string = '';
   acquisitionFilePersonId: string = '';
-  cheques: AcquisitionPayeeChequeFormModel[] = [];
   rowVersion: number | null = null;
   isDisabled: string = '';
 
@@ -195,21 +222,20 @@ export class AcquisitionPayeeFormModel {
       apiModel.compensationRequisitionId,
     );
 
+    payeeModel.isPaymentInTrust = apiModel.isPaymentInTrust ?? false;
+    payeeModel.gstNumber = apiModel.gstNumber ?? '';
     payeeModel.acquisitionOwnerId = apiModel.acquisitionOwnerId?.toString() ?? '';
     payeeModel.interestHolderId = apiModel.interestHolderId?.toString() ?? '';
     payeeModel.ownerRepresentativeId = apiModel.ownerRepresentativeId?.toString() ?? '';
     payeeModel.ownerSolicitorId = apiModel.ownerSolicitorId?.toString() ?? '';
     payeeModel.acquisitionFilePersonId = apiModel.acquisitionFilePersonId?.toString() ?? '';
-    payeeModel.cheques =
-      apiModel.cheques?.map(x => AcquisitionPayeeChequeFormModel.fromApi(x)) || [];
     payeeModel.rowVersion = apiModel.rowVersion ?? null;
 
     return payeeModel;
   }
 
-  static defatulPayee(compensationRequisitionId: number): AcquisitionPayeeFormModel {
+  static defatultPayee(compensationRequisitionId: number): AcquisitionPayeeFormModel {
     let payeeModel = new AcquisitionPayeeFormModel(null, compensationRequisitionId);
-    payeeModel.cheques = [new AcquisitionPayeeChequeFormModel(null, null)];
 
     return payeeModel;
   }
@@ -219,6 +245,8 @@ export class AcquisitionPayeeFormModel {
       id: this._id,
       compensationRequisitionId: this._compensationRequisitionId ?? null,
       compensationRequisition: null,
+      isPaymentInTrust: stringToBoolean(this.isPaymentInTrust),
+      gstNumber: this.gstNumber,
       acquisitionOwnerId: this.acquisitionOwnerId === '' ? null : +this.acquisitionOwnerId,
       interestHolderId: null,
       interestHolder: null,
@@ -230,54 +258,7 @@ export class AcquisitionPayeeFormModel {
       motiSolicitorId: null,
       acquisitionFilePersonId: null,
       acquisitionOwner: null,
-      cheques: this.cheques.map<Api_PayeeCheque>(x => x.toApi()),
       isDisabled: stringToBoolean(this.isDisabled),
-      rowVersion: this.rowVersion ?? null,
-    };
-  }
-}
-
-export class AcquisitionPayeeChequeFormModel {
-  readonly _id: number | null;
-  readonly _acquisitionPayeeId: number | null;
-
-  constructor(id: number | null = null, acquisitionPayeeId: number | null = null) {
-    this._id = id;
-    this._acquisitionPayeeId = acquisitionPayeeId;
-  }
-
-  pretaxAmount: number = 0;
-  taxAmount: number = 0;
-  totalAmount: number = 0;
-  gstNumber: string = '';
-  isPaymentInTrust: boolean = false;
-  rowVersion: number | null = null;
-
-  static fromApi(apiModel: Api_PayeeCheque): AcquisitionPayeeChequeFormModel {
-    const payeeChequeModel = new AcquisitionPayeeChequeFormModel(
-      apiModel.id,
-      apiModel.acquisitionPayeeId,
-    );
-
-    payeeChequeModel.pretaxAmount = apiModel.pretaxAmout ?? 0;
-    payeeChequeModel.taxAmount = apiModel.taxAmount ?? 0;
-    payeeChequeModel.totalAmount = apiModel.totalAmount ?? 0;
-    payeeChequeModel.gstNumber = apiModel.gstNumber ?? '';
-    payeeChequeModel.isPaymentInTrust = apiModel.isPaymentInTrust ?? false;
-    payeeChequeModel.rowVersion = apiModel.rowVersion ?? null;
-
-    return payeeChequeModel;
-  }
-
-  toApi(): Api_PayeeCheque {
-    return {
-      id: this._id,
-      acquisitionPayeeId: this._acquisitionPayeeId,
-      isPaymentInTrust: this.isPaymentInTrust,
-      gstNumber: this.gstNumber,
-      pretaxAmout: null,
-      taxAmount: null,
-      totalAmount: null,
       rowVersion: this.rowVersion ?? null,
     };
   }
@@ -334,6 +315,7 @@ export class PayeeOption {
   }
 
   public static toApi(
+    id: number | null,
     compensationRequisitionId: number | null,
     value: string,
     options: PayeeOption[],
@@ -349,8 +331,10 @@ export class PayeeOption {
     }
 
     const payee: Api_CompensationPayee = {
-      id: 0,
+      id: id,
       compensationRequisitionId: compensationRequisitionId || 0,
+      isPaymentInTrust: null,
+      gstNumber: null,
       acquisitionOwnerId: null,
       interestHolderId: null,
       ownerRepresentativeId: null,
@@ -364,7 +348,6 @@ export class PayeeOption {
       ownerRepresentative: null,
       ownerSolicitor: null,
       acquisitionFilePersonId: null,
-      cheques: null,
       rowVersion: null,
     };
 

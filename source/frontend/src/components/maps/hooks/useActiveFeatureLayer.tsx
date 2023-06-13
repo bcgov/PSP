@@ -1,6 +1,7 @@
 import { DistrictCodes, RegionCodes } from 'constants/index';
-import { useMapProperties } from 'features/properties/map/hooks/useMapProperties';
 import { Feature, FeatureCollection, GeoJsonObject, GeoJsonProperties, Geometry } from 'geojson';
+import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
+import { useMapProperties } from 'hooks/layer-api/useMapProperties';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
@@ -9,12 +10,12 @@ import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useTenant } from 'tenants';
 
+import { PopupContentConfig } from '../leaflet/LayerPopup/components/LayerPopupContent';
 import {
-  LayerPopupInformation,
   municipalityLayerPopupConfig,
   parcelLayerPopupConfig,
-  useLayerQuery,
-} from '../leaflet/LayerPopup';
+} from '../leaflet/LayerPopup/constants';
+import { LayerPopupInformation } from '../leaflet/LayerPopup/LayerPopupContainer';
 import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
 
 interface IUseActiveParcelMapLayer {
@@ -63,7 +64,7 @@ const useActiveFeatureLayer = ({
       let properties: GeoJsonProperties | undefined = undefined;
       let center: LatLng | undefined;
       let mapBounds: LatLngBounds | undefined;
-      let displayConfig = {};
+      let displayConfig: PopupContentConfig = {};
       let title = 'Location Information';
       let feature: Feature | undefined = undefined;
 
@@ -132,7 +133,7 @@ const useActiveFeatureLayer = ({
         setLayerPopup({
           title,
           data: properties as any,
-          config: displayConfig as any,
+          config: displayConfig,
           latlng: latLng,
           center,
           bounds: mapBounds,

@@ -9,7 +9,7 @@ import {
 } from 'components/common/form';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikProps } from 'formik';
@@ -80,21 +80,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   };
 
   const onFinancialActivitiesUpdated = (values: CompensationRequisitionFormModel) => {
-    const chequePretaxAmount = values?.financials
+    const pretaxAmount = values?.financials
       .map(f => f.pretaxAmount)
       .reduce((prev, next) => prev + next, 0);
 
-    const chequeTaxAmount = values?.financials
+    const taxAmount = values?.financials
       .map(f => f.taxAmount)
       .reduce((prev, next) => prev + next, 0);
 
-    const chequeTotalAmount = values?.financials
+    const totalAmount = values?.financials
       .map(f => f.totalAmount)
       .reduce((prev, next) => prev + next, 0);
 
-    formikRef.current?.setFieldValue(`payees.0.cheques.0.pretaxAmount`, chequePretaxAmount);
-    formikRef.current?.setFieldValue(`payees.0.cheques.0.taxAmount`, chequeTaxAmount);
-    formikRef.current?.setFieldValue(`payees.0.cheques.0.totalAmount`, chequeTotalAmount);
+    formikRef.current?.setFieldValue(`payees.0.pretaxAmount`, pretaxAmount);
+    formikRef.current?.setFieldValue(`payees.0.taxAmount`, taxAmount);
+    formikRef.current?.setFieldValue(`payees.0.totalAmount`, totalAmount);
   };
 
   useEffect(() => {
@@ -222,21 +222,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                     />
                   </SectionField>
                   <SectionField label="Payment in Trust?">
-                    <Check field={withNameSpace('payees.0', 'cheques[0].isPaymentInTrust')} />
+                    <Check field={withNameSpace('payees.0', 'isPaymentInTrust')} />
                   </SectionField>
                   <SectionField label="GST number" tooltip="Include GST # if applicable">
-                    <Input field={withNameSpace('payees.0', 'cheques[0].gstNumber')}></Input>
+                    <Input field={withNameSpace('payees.0', 'gstNumber')}></Input>
                   </SectionField>
                   <SectionField label="Amount (before tax)">
                     <FastCurrencyInput
-                      field={withNameSpace('payees.0', 'cheques[0].pretaxAmount')}
+                      field={withNameSpace('payees.0', 'pretaxAmount')}
                       formikProps={formikProps}
                       disabled
                     />
                   </SectionField>
                   <SectionField label="GST amount">
                     <FastCurrencyInput
-                      field={withNameSpace('payees.0', 'cheques[0].taxAmount')}
+                      field={withNameSpace('payees.0', 'taxAmount')}
                       formikProps={formikProps}
                       disabled
                     />
@@ -246,7 +246,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                     tooltip="Calculated total of all activities in this compensation requisition"
                   >
                     <FastCurrencyInput
-                      field={withNameSpace('payees.0', 'cheques[0].totalAmount')}
+                      field={withNameSpace('payees.0', 'totalAmount')}
                       formikProps={formikProps}
                       disabled
                     />

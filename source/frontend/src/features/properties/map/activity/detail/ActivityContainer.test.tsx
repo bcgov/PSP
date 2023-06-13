@@ -2,7 +2,7 @@ import { waitForElementToBeRemoved } from '@testing-library/react';
 import { screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { FileTypes } from 'constants/fileTypes';
 import { SideBarContextProvider } from 'features/properties/map/context/sidebarContext';
 import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';

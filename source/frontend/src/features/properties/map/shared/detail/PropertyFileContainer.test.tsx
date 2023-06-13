@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { IInventoryTabsProps, InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { noop } from 'lodash';
 import { mockLtsaResponse, mockWfsGetPropertyById } from 'mocks/index.mock';

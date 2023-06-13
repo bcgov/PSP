@@ -1,5 +1,5 @@
 import { Button, StyledRemoveLinkButton } from 'components/common/buttons';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, Form, Formik, FormikProps } from 'formik';
 import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';

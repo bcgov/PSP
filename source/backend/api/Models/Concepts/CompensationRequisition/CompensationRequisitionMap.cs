@@ -44,7 +44,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ExpropVestingDt, src => src.ExpropriationVestingDate)
                 .Map(dest => dest.GenerationDt, src => src.GenerationDate)
                 .Map(dest => dest.SpecialInstruction, src => src.SpecialInstruction)
-                .Map(dest => dest.PimsAcquisitionPayees, src => src.Payees)
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.PimsCompReqH120s, src => src.Financials)

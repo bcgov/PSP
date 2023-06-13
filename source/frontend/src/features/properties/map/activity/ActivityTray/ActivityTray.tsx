@@ -1,6 +1,6 @@
 import clsx from 'classnames';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import * as Styled from 'components/common/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Api_Activity } from 'models/api/Activity';
 import React from 'react';
 import { useState } from 'react';

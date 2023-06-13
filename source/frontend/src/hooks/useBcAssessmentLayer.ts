@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
 import { pidParser } from './../utils/propertyUtils';
-import { useWfsLayer } from './pims-api';
+import { useWfsLayer } from './layer-api/useWfsLayer';
 import { IResponseWrapper, useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
 
 export enum BC_ASSESSMENT_TYPES {

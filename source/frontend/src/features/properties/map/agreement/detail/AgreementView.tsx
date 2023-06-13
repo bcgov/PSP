@@ -1,6 +1,6 @@
 import EditButton from 'components/common/EditButton';
+import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { StyledAddButton } from 'components/common/styles';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
