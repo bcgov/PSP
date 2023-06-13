@@ -6,7 +6,7 @@ import {
   SelectOption,
   TextArea,
 } from 'components/common/form';
-import { SectionField, StyledFieldLabel } from 'features/mapSideBar/tabs/SectionField';
+import { SectionField, StyledFieldLabel } from 'components/common/Section/SectionField';
 import { FormikProps } from 'formik';
 import React from 'react';
 import { ILookupCode } from 'store/slices/lookupCodes';

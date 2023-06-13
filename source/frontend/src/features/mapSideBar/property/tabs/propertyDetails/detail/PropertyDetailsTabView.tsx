@@ -12,14 +12,14 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { booleanToYesNoUnknownString, stringToBoolean } from 'utils/formUtils';
 import { getPrettyLatLng } from 'utils/mapPropertyUtils';
 
-import { Section } from '../../../../tabs/Section';
-import { SectionField } from '../../../../tabs/SectionField';
+import { Section } from '../../../../../../components/common/Section/Section';
+import { SectionField } from '../../../../../../components/common/Section/SectionField';
 import {
   InlineContainer,
   StyledEditWrapper,
   StyledSubtleText,
   StyledSummarySection,
-} from '../../../../tabs/SectionStyles';
+} from '../../../../../../components/common/Section/SectionStyles';
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
 
 export interface IPropertyDetailsTabView {

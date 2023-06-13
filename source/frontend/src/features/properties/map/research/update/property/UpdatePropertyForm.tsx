@@ -1,8 +1,8 @@
 import { Input, Select, SelectOption, TextArea } from 'components/common/form';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
+import { StyledSummarySection } from 'components/common/Section/SectionStyles';
 import * as API from 'constants/API';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import { FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';

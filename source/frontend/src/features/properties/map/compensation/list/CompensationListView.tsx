@@ -1,7 +1,7 @@
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
 import { SectionListHeader } from 'components/common/SectionListHeader';
 import Claims from 'constants/claims';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import * as React from 'react';

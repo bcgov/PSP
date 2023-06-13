@@ -1,8 +1,8 @@
 import EditButton from 'components/common/EditButton';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'components/common/Section/SectionStyles';
 import Claims from 'constants/claims';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';

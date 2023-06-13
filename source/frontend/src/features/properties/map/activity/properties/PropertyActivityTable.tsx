@@ -1,6 +1,6 @@
 import OverflowTip from 'components/common/OverflowTip';
+import { Section } from 'components/common/Section/Section';
 import { ColumnWithProps, Table } from 'components/Table';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { Api_Property } from 'models/api/Property';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';

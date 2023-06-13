@@ -1,8 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import { Button } from 'components/common/buttons';
 import { FastDatePicker, Input } from 'components/common/form';
+import { SectionField } from 'components/common/Section/SectionField';
 import { FinancialCodeTypes } from 'constants/index';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik } from 'formik';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { IApiError } from 'interfaces/IApiError';

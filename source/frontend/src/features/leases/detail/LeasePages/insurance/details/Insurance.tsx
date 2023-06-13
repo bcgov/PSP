@@ -1,4 +1,4 @@
-import { Section } from 'features/mapSideBar/tabs/Section';
+import { Section } from 'components/common/Section/Section';
 import { IInsurance } from 'interfaces';
 import React, { useMemo } from 'react';
 import { ILookupCode } from 'store/slices/lookupCodes';

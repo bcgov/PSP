@@ -1,12 +1,12 @@
 import axios, { AxiosError } from 'axios';
 import GenericModal from 'components/common/GenericModal';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { Section } from 'components/common/Section/Section';
 import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from 'components/propertySelector/models';
 import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { useBcaAddress } from 'features/properties/map/hooks/useBcaAddress';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FieldArray, Formik, FormikProps } from 'formik';

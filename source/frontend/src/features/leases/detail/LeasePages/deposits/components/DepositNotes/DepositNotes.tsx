@@ -1,7 +1,7 @@
 import { TextArea } from 'components/common/form';
+import { Section } from 'components/common/Section/Section';
 import { Claims } from 'constants/index';
 import SaveCancelButtons from 'features/leases/SaveCancelButtons';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { getIn, useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { ILease } from 'interfaces';

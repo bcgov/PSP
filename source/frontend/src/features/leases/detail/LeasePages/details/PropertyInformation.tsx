@@ -1,5 +1,5 @@
 import { Input } from 'components/common/form';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';

@@ -1,5 +1,5 @@
 import { Input } from 'components/common/form';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, FormikProps } from 'formik';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 

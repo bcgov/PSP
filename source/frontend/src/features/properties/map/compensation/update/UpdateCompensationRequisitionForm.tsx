@@ -9,8 +9,8 @@ import {
 } from 'components/common/form';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
 import { Formik, FormikProps } from 'formik';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';

@@ -1,4 +1,4 @@
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { SectionField } from 'components/common/Section/SectionField';
 import { Col, Row } from 'react-bootstrap';
 
 import { ComposedDocument } from '../ComposedDocument';

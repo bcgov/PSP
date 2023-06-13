@@ -1,8 +1,8 @@
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
+import { Section } from 'components/common/Section/Section';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { Api_FormDocumentType } from 'models/api/FormDocument';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';

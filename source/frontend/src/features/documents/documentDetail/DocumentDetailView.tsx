@@ -1,8 +1,8 @@
 import { LinkButton } from 'components/common/buttons';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { SectionField } from 'components/common/Section/SectionField';
 import TooltipIcon from 'components/common/TooltipIcon';
 import Claims from 'constants/claims';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Col, Row } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';

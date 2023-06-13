@@ -1,5 +1,5 @@
+import { SectionField } from 'components/common/Section/SectionField';
 import { Claims } from 'constants/index';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import * as React from 'react';
@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { Section } from '../../../tabs/Section';
+import { Section } from '../../../../../components/common/Section/Section';
 
 interface PropertyResearchFile {
   id: number;

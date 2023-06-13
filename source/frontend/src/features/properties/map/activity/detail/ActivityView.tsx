@@ -1,8 +1,8 @@
+import { Section } from 'components/common/Section/Section';
 import { Claims } from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { NoteTypes } from 'constants/noteTypes';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { NoteListView } from 'features/notes/list/NoteListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';

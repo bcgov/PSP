@@ -4,7 +4,7 @@ import { DuplicateCertificate, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionField } from '../../../tabs/SectionField';
+import { SectionField } from '../../../../../components/common/Section/SectionField';
 export interface ILtsaDuplicateTitleSubForm {
   nameSpace?: string;
 }

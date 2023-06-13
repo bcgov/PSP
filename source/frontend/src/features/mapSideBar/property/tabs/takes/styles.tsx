@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Section } from '../../../tabs/Section';
+import { Section } from '../../../../../components/common/Section/Section';
 
 export const StyledNoTabSection = styled(Section)`
   &.form-section {

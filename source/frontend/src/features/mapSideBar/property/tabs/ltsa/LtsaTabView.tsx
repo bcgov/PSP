@@ -9,9 +9,12 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
-import { Section } from '../../../tabs/Section';
-import { SectionField } from '../../../tabs/SectionField';
-import { InlineMessage, StyledInlineMessageSection } from '../../../tabs/SectionStyles';
+import { Section } from '../../../../../components/common/Section/Section';
+import { SectionField } from '../../../../../components/common/Section/SectionField';
+import {
+  InlineMessage,
+  StyledInlineMessageSection,
+} from '../../../../../components/common/Section/SectionStyles';
 import LtsaChargeSubForm from './LtsaChargeSubForm';
 import LtsaDuplicateTitleSubForm from './LtsaDuplicateTitleSubForm';
 import LtsaLandSubForm from './LtsaLandSubForm';

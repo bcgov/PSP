@@ -1,4 +1,4 @@
-import { Section } from 'features/mapSideBar/tabs/Section';
+import { Section } from 'components/common/Section/Section';
 import styled from 'styled-components';
 
 export const StyledSectionCentered = styled(Section)`

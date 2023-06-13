@@ -1,9 +1,9 @@
 import { FormSection } from 'components/common/form/styles';
+import { Section } from 'components/common/Section/Section';
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import { getApiPersonOrOrgMailingAddress, getDefaultContact } from 'features/contacts/contactUtils';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, Formik, getIn } from 'formik';
 import { defaultFormLease, IAddress, IContactSearchResult } from 'interfaces';
 import ITypeCode from 'interfaces/ITypeCode';

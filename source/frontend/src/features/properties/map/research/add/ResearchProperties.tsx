@@ -1,9 +1,9 @@
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { Section } from 'components/common/Section/Section';
 import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from 'components/propertySelector/models';
 import SelectedPropertyHeaderRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from 'components/propertySelector/selectedPropertyList/SelectedPropertyRow';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 

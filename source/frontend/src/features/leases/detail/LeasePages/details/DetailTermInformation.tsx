@@ -1,5 +1,5 @@
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import { ILeaseTerm } from 'interfaces/ILeaseTerm';

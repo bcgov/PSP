@@ -1,7 +1,7 @@
 import { LinkButton, StyledRemoveLinkButton } from 'components/common/buttons';
 import { FastCurrencyInput, Select, SelectOption } from 'components/common/form';
 import GenericModal from 'components/common/GenericModal';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';

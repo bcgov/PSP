@@ -1,9 +1,9 @@
 import { SelectOption } from 'components/common/form/Select';
 import { ModalContent } from 'components/common/GenericModal';
+import { Section } from 'components/common/Section/Section';
 import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
 import { defaultActivityFilter, IActivityFilter } from 'interfaces/IActivityResults';

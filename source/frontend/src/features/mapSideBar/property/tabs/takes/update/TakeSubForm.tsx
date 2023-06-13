@@ -10,8 +10,8 @@ import * as React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { withNameSpace } from 'utils/formUtils';
 
-import { Section } from '../../../../tabs/Section';
-import { SectionField } from '../../../../tabs/SectionField';
+import { Section } from '../../../../../../components/common/Section/Section';
+import { SectionField } from '../../../../../../components/common/Section/SectionField';
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 interface ITakeSubFormProps {
