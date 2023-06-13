@@ -1,5 +1,5 @@
+import { SectionField } from 'components/common/Section/SectionField';
 import { StyledLink } from 'components/maps/leaflet/LayerPopup/styles';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';

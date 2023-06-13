@@ -1,9 +1,9 @@
 import { Button } from 'components/common/buttons/Button';
 import { Select, SelectOption } from 'components/common/form';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { SectionField } from 'components/common/Section/SectionField';
 import TooltipIcon from 'components/common/TooltipIcon';
 import ValidDocumentExtensions from 'constants/ValidDocumentExtensions';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikProps } from 'formik';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';

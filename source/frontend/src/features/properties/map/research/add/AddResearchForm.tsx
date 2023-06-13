@@ -1,5 +1,5 @@
 import { Input } from 'components/common/form/';
-import { Section } from 'features/mapSideBar/tabs/Section';
+import { Section } from 'components/common/Section/Section';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';

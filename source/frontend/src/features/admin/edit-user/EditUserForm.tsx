@@ -1,9 +1,9 @@
 import { Button } from 'components/common/buttons';
 import { Check, Form, Input, Multiselect } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
+import { SectionField } from 'components/common/Section/SectionField';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik } from 'formik';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import Api_TypeCode from 'models/api/TypeCode';

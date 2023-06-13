@@ -3,12 +3,12 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { NoteTypes } from 'constants/noteTypes';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { LeaseFormModel } from 'features/leases/models';
+import NoteListView from 'features/notes/list/NoteListView';
 import {
   LeaseFileTabNames,
   LeaseFileTabs,
   LeaseTabFileView,
-} from 'features/mapSideBar/tabs/LeaseFileTabs';
-import NoteListView from 'features/notes/list/NoteListView';
+} from 'features/properties/map/lease/detail/LeaseFileTabs';
 import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IFormLease, ILease } from 'interfaces';

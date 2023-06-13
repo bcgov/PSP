@@ -250,6 +250,17 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   margin-bottom: unset;
 }
 
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
 .c18 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -268,17 +279,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-}
-
-.c3.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c2 {
-  font-weight: bold;
 }
 
 .c17 {

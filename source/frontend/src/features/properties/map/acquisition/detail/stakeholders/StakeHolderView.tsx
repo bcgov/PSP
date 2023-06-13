@@ -1,9 +1,9 @@
 import EditButton from 'components/common/EditButton';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { Section } from 'components/common/Section/Section';
+import { StyledEditWrapper, StyledSummarySection } from 'components/common/Section/SectionStyles';
 import { Claims } from 'constants/index';
 import { StyledNoData } from 'features/documents/commonStyles';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
 

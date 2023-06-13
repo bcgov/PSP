@@ -1,10 +1,10 @@
 import EditButton from 'components/common/EditButton';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'components/common/Section/SectionStyles';
 import { StyledAddButton } from 'components/common/styles';
 import Claims from 'constants/claims';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Agreement } from 'models/api/Agreement';
 import * as React from 'react';

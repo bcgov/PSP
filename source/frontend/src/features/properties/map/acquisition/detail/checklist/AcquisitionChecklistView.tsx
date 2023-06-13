@@ -1,10 +1,10 @@
 import { EditButton } from 'components/common/EditButton';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'components/common/Section/SectionStyles';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import * as API from 'constants/API';
 import { Claims } from 'constants/index';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import {

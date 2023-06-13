@@ -1,5 +1,5 @@
+import { Section } from 'components/common/Section/Section';
 import { PropertyInformation } from 'features/leases';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { ILease, IProperty } from 'interfaces';
 import * as React from 'react';

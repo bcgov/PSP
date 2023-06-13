@@ -6,7 +6,7 @@ import {
 import Claims from 'constants/claims';
 import { AddLeaseContainer } from 'features/leases';
 import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
-import MotiInventoryContainer from 'features/mapSideBar/MotiInventoryContainer';
+import MotiInventoryContainer from 'features/mapSideBar/property/MotiInventoryContainer';
 import { Api_Property } from 'models/api/Property';
 import queryString from 'query-string';
 import { memo, useContext, useEffect, useMemo } from 'react';

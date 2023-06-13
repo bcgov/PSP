@@ -1,7 +1,7 @@
+import { Section } from 'components/common/Section/Section';
 import { TableSort } from 'components/Table/TableSort';
 import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IFormFilter } from 'interfaces/IFormResults';

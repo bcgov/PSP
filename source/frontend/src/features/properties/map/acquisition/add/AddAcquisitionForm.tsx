@@ -9,11 +9,11 @@ import {
 import { ContactInputContainer } from 'components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from 'components/common/form/ContactInput/ContactInputView';
 import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
 import { StyledSectionParagraph } from 'components/common/styles';
 import { RestrictContactType } from 'components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from 'constants/API';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';

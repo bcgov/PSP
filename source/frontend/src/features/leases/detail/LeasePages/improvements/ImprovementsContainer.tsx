@@ -1,7 +1,7 @@
 import ProtectedComponent from 'components/common/ProtectedComponent';
+import { Section } from 'components/common/Section/Section';
 import { Claims } from 'constants/claims';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { Formik, FormikProps } from 'formik';
 import { defaultFormLease, IFormLease } from 'interfaces';

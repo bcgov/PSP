@@ -1,6 +1,6 @@
+import { Section } from 'components/common/Section/Section';
 import * as Styled from 'components/common/styles';
 import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import * as React from 'react';
 
 import MapClickMonitor from '../MapClickMonitor';

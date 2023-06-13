@@ -1,7 +1,7 @@
 import { Button } from 'components/common/buttons/Button';
+import { Section } from 'components/common/Section/Section';
 import { Table } from 'components/Table';
 import Claims from 'constants/claims';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 

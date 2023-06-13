@@ -1,9 +1,9 @@
 import GenericModal from 'components/common/GenericModal';
+import { Section } from 'components/common/Section/Section';
 import { SectionListHeader } from 'components/common/SectionListHeader';
 import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { NoteTypes } from 'constants/noteTypes';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { useApiNotes } from 'hooks/pims-api/useApiNotes';
 import useIsMounted from 'hooks/useIsMounted';
 import { useModalManagement } from 'hooks/useModalManagement';

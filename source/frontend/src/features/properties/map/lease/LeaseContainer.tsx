@@ -15,7 +15,7 @@ import Surplus from 'features/leases/detail/LeasePages/surplus/Surplus';
 import TenantContainer from 'features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from 'features/leases/models';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { LeaseFileTabNames } from 'features/mapSideBar/tabs/LeaseFileTabs';
+import { LeaseFileTabNames } from 'features/properties/map/lease/detail/LeaseFileTabs';
 import { FormikProps } from 'formik';
 import { IFormLease } from 'interfaces';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';

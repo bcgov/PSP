@@ -1,7 +1,7 @@
 import { Button } from 'components/common/buttons/Button';
+import { Section } from 'components/common/Section/Section';
 import Table from 'components/Table/Table';
 import { Claims, LeaseTermStatusTypes } from 'constants/index';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { Formik, FormikProps } from 'formik';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';

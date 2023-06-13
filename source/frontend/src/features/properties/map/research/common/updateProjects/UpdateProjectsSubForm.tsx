@@ -1,6 +1,6 @@
 import { LinkButton, RemoveButton } from 'components/common/buttons';
 import { ProjectSelector } from 'components/common/form';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, useFormikContext } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';

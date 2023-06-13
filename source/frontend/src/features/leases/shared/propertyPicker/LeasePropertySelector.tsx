@@ -1,9 +1,9 @@
 import { ModalProps } from 'components/common/GenericModal';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { Section } from 'components/common/Section/Section';
 import MapSelectorContainer from 'components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from 'components/propertySelector/models';
 import { ModalContext } from 'contexts/modalContext';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { useBcaAddress } from 'features/properties/map/hooks/useBcaAddress';
 import { AddressForm } from 'features/properties/map/shared/models';

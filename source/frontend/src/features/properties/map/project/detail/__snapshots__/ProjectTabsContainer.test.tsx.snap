@@ -140,6 +140,25 @@ exports[`Project Tabs component matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c5 {
+  float: right;
+  cursor: pointer;
+}
+
+.c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c9 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -207,25 +226,6 @@ exports[`Project Tabs component matches snapshot 1`] = `
 
 .c4 .btn {
   margin: 0;
-}
-
-.c5 {
-  float: right;
-  cursor: pointer;
-}
-
-.c3 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c2 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
 }
 
 .c6 {
