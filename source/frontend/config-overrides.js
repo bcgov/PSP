@@ -23,7 +23,6 @@ module.exports = {
     config.resolve.fallback = fallback;
     addCompressionPlugin(config);
     config.ignoreWarnings = [/Failed to parse source map/, /autoprefixer/];
-    // Add absolute path.resolve so storybook can handle absolute import (eg. @src/resources/...)
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, 'src'),
