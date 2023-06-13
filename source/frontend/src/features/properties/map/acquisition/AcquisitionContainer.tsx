@@ -5,7 +5,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
-import { FileTabType } from '@/features/properties/map/shared/detail/FileTabs';
+import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';

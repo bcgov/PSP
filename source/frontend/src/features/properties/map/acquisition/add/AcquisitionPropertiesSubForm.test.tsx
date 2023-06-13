@@ -11,7 +11,7 @@ import {
 import { mockDraftProperties } from '@/mocks/mockDraftProperties';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../shared/models';
+import { PropertyForm } from '../../../../mapSideBar/shared/models';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 

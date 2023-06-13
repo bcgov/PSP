@@ -3,7 +3,7 @@ import chunk from 'lodash/chunk';
 import { ConvertToTypes } from '@/constants/convertToTypes';
 import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from '@/features/properties/map/shared/content/models';
+import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';

@@ -4,12 +4,12 @@ import * as Yup from 'yup';
 import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { Section } from '@/components/common/Section/Section';
 import { Claims } from '@/constants/claims';
-import SidebarFooter from '@/features/properties/map/shared/SidebarFooter';
+import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_Activity } from '@/models/api/Activity';
 
-import { IFormContent } from '../../shared/content/models';
+import { IFormContent } from '../../../../mapSideBar/shared/content/models';
 import { Activity, ActivityFile } from './ActivityContainer';
 import { ActivityView } from './ActivityView';
 import { ActivityModel } from './models';

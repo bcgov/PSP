@@ -22,7 +22,7 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { withNameSpace } from '@/utils/formUtils';
 
-import SidebarFooter from '../../shared/SidebarFooter';
+import SidebarFooter from '../../../../mapSideBar/shared/SidebarFooter';
 import { CompensationRequisitionYupSchema } from '../CompensationRequisitionYupSchema';
 import { CompensationRequisitionFormModel, PayeeOption } from '../models';
 import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm';

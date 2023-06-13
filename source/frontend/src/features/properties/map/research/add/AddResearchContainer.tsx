@@ -1,7 +1,6 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
-import { useMemo } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { Prompt, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -16,8 +15,8 @@ import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
-import { PropertyForm } from '../../shared/models';
-import SidebarFooter from '../../shared/SidebarFooter';
+import { PropertyForm } from '../../../../mapSideBar/shared/models';
+import SidebarFooter from '../../../../mapSideBar/shared/SidebarFooter';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';

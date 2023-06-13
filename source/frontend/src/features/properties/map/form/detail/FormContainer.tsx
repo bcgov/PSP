@@ -5,8 +5,8 @@ import { FileTypes } from '@/constants/fileTypes';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 
-import { formContent } from '../../shared/content/formContent';
-import { FormTemplateTypes } from '../../shared/content/models';
+import { formContent } from '../../../../mapSideBar/shared/content/formContent';
+import { FormTemplateTypes } from '../../../../mapSideBar/shared/content/models';
 import { IFormViewProps } from './FormView';
 
 export interface IFormContainerProps {

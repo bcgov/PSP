@@ -9,7 +9,7 @@ import {
   FileTabs,
   FileTabType,
   TabFileView,
-} from '@/features/properties/map/shared/detail/FileTabs';
+} from '@/features/mapSideBar/shared/detail/FileTabs';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 

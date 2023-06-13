@@ -6,8 +6,8 @@ import { Api_Activity, Api_PropertyActivity } from '@/models/api/Activity';
 import { Api_Property } from '@/models/api/Property';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
-import { formContent } from '../../shared/content/formContent';
-import { ActivityTemplateTypes } from '../../shared/content/models';
+import { formContent } from '../../../../mapSideBar/shared/content/formContent';
+import { ActivityTemplateTypes } from '../../../../mapSideBar/shared/content/models';
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import { useActivityRepository } from '../hooks/useActivityRepository';
 import ActivityPropertyModal from './ActivityPropertyModal';

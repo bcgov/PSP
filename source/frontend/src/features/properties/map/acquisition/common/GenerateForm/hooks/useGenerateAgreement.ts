@@ -1,6 +1,6 @@
 import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from '@/features/properties/map/shared/content/models';
+import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { AgreementTypes, Api_Agreement } from '@/models/api/Agreement';

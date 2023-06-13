@@ -11,7 +11,7 @@ import { UpdatePropertyDetailsContainer } from '@/features/mapSideBar/property/t
 import PropertyResearchTabView from '@/features/mapSideBar/property/tabs/propertyResearch/PropertyResearchTabView';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
-import PropertyFileContainer from '../shared/detail/PropertyFileContainer';
+import PropertyFileContainer from '../../../mapSideBar/shared/detail/PropertyFileContainer';
 import { FormKeys } from './FormKeys';
 import ResearchTabsContainer from './ResearchTabsContainer';
 import UpdatePropertyView from './update/property/UpdatePropertyView';

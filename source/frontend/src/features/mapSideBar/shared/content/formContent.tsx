@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Input } from '@/components/common/form';
 import { withNameSpace } from '@/utils/formUtils';
 
-import { ActivityModel } from '../../activity/detail/models';
+import { ActivityModel } from '../../../properties/map/activity/detail/models';
 import { ActivityTemplateTypes, FormTemplateTypes, IFormContent } from './models';
 export const formContent = new Map<ActivityTemplateTypes | FormTemplateTypes, IFormContent>([
   [

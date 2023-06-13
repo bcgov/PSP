@@ -8,8 +8,8 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 
+import { AddressForm, PropertyForm } from '../../../../mapSideBar/shared/models';
 import { useBcaAddress } from '../../hooks/useBcaAddress';
-import { AddressForm, PropertyForm } from '../../shared/models';
 import { AcquisitionForm } from './models';
 
 interface AcquisitionPropertiesProp {

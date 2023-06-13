@@ -5,7 +5,7 @@ import React from 'react';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
-import { FileTabType } from '@/features/properties/map/shared/detail/FileTabs';
+import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';

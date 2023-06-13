@@ -10,7 +10,7 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import { ModalContext } from '@/contexts/modalContext';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
-import { AddressForm } from '@/features/properties/map/shared/models';
+import { AddressForm } from '@/features/mapSideBar/shared/models';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/useDeepCompareMemo';

@@ -1,6 +1,6 @@
 import { IMapProperty } from '@/components/propertySelector/models';
 import { PropertyAreaUnitTypes } from '@/constants/index';
-import { PropertyForm } from '@/features/properties/map/shared/models';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { IAutocompletePrediction } from '@/interfaces';
 import { Api_Lease, Api_LeaseConsultation } from '@/models/api/Lease';
 import { Api_PropertyLease } from '@/models/api/PropertyLease';

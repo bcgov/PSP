@@ -7,7 +7,7 @@ import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 
-import SidebarFooter from '../shared/SidebarFooter';
+import SidebarFooter from '../../../mapSideBar/shared/SidebarFooter';
 import ProjectHeader from './common/ProjectHeader';
 import { IProjectContainerViewProps } from './ProjectContainer';
 import ViewSelector from './ViewSelector';

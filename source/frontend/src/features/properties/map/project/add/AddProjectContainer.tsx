@@ -13,7 +13,7 @@ import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { Api_Project } from '@/models/api/Project';
 import { toDropDownOptions } from '@/utils/financialCodeUtils';
 
-import SidebarFooter from '../../shared/SidebarFooter';
+import SidebarFooter from '../../../../mapSideBar/shared/SidebarFooter';
 import { useAddProjectForm } from '../hooks/useAddProjectFormManagement';
 import { ProjectForm } from '../models';
 import AddProjectForm from './AddProjectForm';

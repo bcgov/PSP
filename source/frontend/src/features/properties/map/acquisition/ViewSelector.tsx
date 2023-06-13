@@ -6,12 +6,12 @@ import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property
 import { UpdatePropertyDetailsContainer } from '@/features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import TakesUpdateContainer from '@/features/mapSideBar/property/tabs/takes/update/TakesUpdateContainer';
 import TakesUpdateForm from '@/features/mapSideBar/property/tabs/takes/update/TakesUpdateForm';
-import { FileTabType } from '@/features/properties/map/shared/detail/FileTabs';
+import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
+import { PropertyFileContainer } from '@/features/mapSideBar/shared/detail/PropertyFileContainer';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
 import { UpdateAgreementsContainer } from '../agreement/update/UpdateAgreementsContainer';
 import { UpdateAgreementsForm } from '../agreement/update/UpdateAgreementsForm';
-import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
 import { EditFormType } from './EditFormNames';

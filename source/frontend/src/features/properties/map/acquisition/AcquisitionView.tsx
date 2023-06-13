@@ -9,8 +9,8 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { Api_File } from '@/models/api/File';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
-import SidebarFooter from '../shared/SidebarFooter';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import SidebarFooter from '../../../mapSideBar/shared/SidebarFooter';
+import UpdateProperties from '../../../mapSideBar/shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';

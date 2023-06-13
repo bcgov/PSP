@@ -6,8 +6,7 @@ import { Api_Property } from '@/models/api/Property';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 import { formatApiAddress, pidParser } from '@/utils';
 import { toTypeCode } from '@/utils/formUtils';
-
-import { formatBcaAddress } from './../../../../utils/propertyUtils';
+import { formatBcaAddress } from '@/utils/propertyUtils';
 
 export class FileForm {
   public id?: number;

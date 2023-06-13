@@ -23,8 +23,8 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { LeaseFileTabNames } from '@/features/mapSideBar/lease/detail/LeaseFileTabs';
 import { IFormLease } from '@/interfaces';
 
-import SidebarFooter from '../../properties/map/shared/SidebarFooter';
 import { SideBarContext } from '../context/sidebarContext';
+import SidebarFooter from '../shared/SidebarFooter';
 import LeaseHeader from './common/LeaseHeader';
 import ViewSelector from './ViewSelector';
 
