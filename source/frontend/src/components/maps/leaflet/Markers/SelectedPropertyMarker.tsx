@@ -1,7 +1,8 @@
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import L from 'leaflet';
 import React, { useEffect, useRef } from 'react';
 import { Marker, MarkerProps } from 'react-leaflet';
+
+import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
 
 /**
  * Wrapper of the React Leaflet marker to auto open the popup for a selected property

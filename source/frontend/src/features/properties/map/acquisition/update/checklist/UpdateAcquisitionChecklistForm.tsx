@@ -1,16 +1,17 @@
 import axios, { AxiosError } from 'axios';
-import { Select } from 'components/common/form';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import { StyledSummarySection } from 'components/common/Section/SectionStyles';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import * as API from 'constants/API';
 import { Formik, FormikProps } from 'formik';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { IApiError } from 'interfaces/IApiError';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
-import { prettyFormatDate } from 'utils';
+
+import { Select } from '@/components/common/form';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import * as API from '@/constants/API';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { prettyFormatDate } from '@/utils';
 
 import { StyledSectionCentered } from '../../detail/checklist/styles';
 import { AcquisitionChecklistFormModel } from './models';

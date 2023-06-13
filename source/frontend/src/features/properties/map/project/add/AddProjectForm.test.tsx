@@ -1,14 +1,15 @@
-import { SelectOption } from 'components/common/form';
-import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
-import { getMockLookUpsByType, mockLookups } from 'mocks/lookups.mock';
-import { mockProjectGetResponse } from 'mocks/projects.mock';
-import { getUserMock } from 'mocks/user.mock';
 import { createRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fakeText, fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { SelectOption } from '@/components/common/form';
+import * as API from '@/constants/API';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
+import { mockProjectGetResponse } from '@/mocks/projects.mock';
+import { getUserMock } from '@/mocks/user.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fakeText, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
@@ -21,7 +22,7 @@ const onSubmit = jest.fn();
 type TestProps = Pick<IAddProjectFormProps, 'initialValues'>;
 jest.mock('@react-keycloak/web');
 
-jest.mock('hooks/repositories/useUserInfoRepository');
+jest.mock('@/hooks/repositories/useUserInfoRepository');
 (useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
   retrieveUserInfo: jest.fn(),
   retrieveUserInfoLoading: true,

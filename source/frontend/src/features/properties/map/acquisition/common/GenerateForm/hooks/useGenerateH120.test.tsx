@@ -1,16 +1,17 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { useH120CategoryRepository } from 'hooks/repositories/useH120CategoryRepository';
-import { useInterestHolderRepository } from 'hooks/repositories/useInterestHolderRepository';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { getMockApiCompensationList } from 'mocks/compensations.mock';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
+import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockApiCompensationList } from '@/mocks/compensations.mock';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
 
 import { useGenerateH120 } from './useGenerateH120';
 
@@ -23,23 +24,23 @@ const getAcquisitionCompReqH120s = jest.fn();
 const getH120sCategoryFn = jest.fn();
 const getInterestHolderFn = jest.fn();
 
-jest.mock('features/documents/hooks/useDocumentGenerationRepository');
+jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
   generateDocumentDownloadWrappedRequest: generateFn,
 }));
 
-jest.mock('hooks/repositories/useH120CategoryRepository');
+jest.mock('@/hooks/repositories/useH120CategoryRepository');
 (useH120CategoryRepository as jest.Mock).mockImplementation(() => ({
   execute: getH120sCategoryFn,
 }));
 
-jest.mock('hooks/repositories/useAcquisitionProvider');
+jest.mock('@/hooks/repositories/useAcquisitionProvider');
 (useAcquisitionProvider as jest.Mock).mockImplementation(() => ({
   getAcquisitionFile: { execute: getAcquisitionFileFn },
   getAcquisitionProperties: { execute: getAcquisitionPropertiesFn },
   getAcquisitionCompReqH120s: { execute: getAcquisitionCompReqH120s },
 }));
-jest.mock('hooks/repositories/useInterestHolderRepository');
+jest.mock('@/hooks/repositories/useInterestHolderRepository');
 (useInterestHolderRepository as jest.Mock).mockImplementation(() => ({
   getAcquisitionInterestHolders: { execute: getInterestHolderFn },
 }));

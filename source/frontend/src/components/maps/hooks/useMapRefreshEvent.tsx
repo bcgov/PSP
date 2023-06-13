@@ -1,4 +1,4 @@
-import useEventListener from 'hooks/useEventListener';
+import useEventListener from '@/hooks/useEventListener';
 
 /**
  * Will execute the passed callback whenever the refreshMap event is fired. Provides a function to dispatch the refreshMap event. Automatically cleans up event listener.

@@ -1,7 +1,8 @@
-import { ReactComponent as MapSvg } from 'assets/images/icon-map.svg';
-import { ReactComponent as TableSvg } from 'assets/images/icon-table.svg';
 import React from 'react';
 import styled from 'styled-components';
+
+import { ReactComponent as MapSvg } from '@/assets/images/icon-map.svg';
+import { ReactComponent as TableSvg } from '@/assets/images/icon-table.svg';
 
 import TooltipWrapper from '../../../components/common/TooltipWrapper';
 

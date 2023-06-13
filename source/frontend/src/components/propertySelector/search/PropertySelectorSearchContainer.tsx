@@ -1,17 +1,18 @@
-import { DistrictCodes, RegionCodes } from 'constants/index';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
-import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
-import { useFullyAttributedParcelMapLayer } from 'hooks/repositories/useFullyAttributedParcelMapLayer';
-import { useGeocoderRepository } from 'hooks/useGeocoderRepository';
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
 import * as React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useTenant } from 'tenants';
-import { featuresToIdentifiedMapProperty } from 'utils/mapPropertyUtils';
+
+import { DistrictCodes, RegionCodes } from '@/constants/index';
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/useFullyAttributedParcelMapLayer';
+import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
+import { useTenant } from '@/tenants';
+import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
 import PropertySearchSelectorFormView from './PropertySearchSelectorFormView';

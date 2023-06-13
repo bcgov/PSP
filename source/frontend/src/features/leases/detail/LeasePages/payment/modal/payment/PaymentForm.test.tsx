@@ -2,12 +2,13 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLeasePayment } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { systemConstantsSlice } from 'store/slices/systemConstants';
-import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+
+import { defaultFormLeasePayment } from '@/interfaces';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { systemConstantsSlice } from '@/store/slices/systemConstants';
+import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { isActualGstEligible as isActualGstEligibleOriginal } from '../../TermPaymentsContainer';
 import PaymentForm, { IPaymentFormProps } from './PaymentForm';

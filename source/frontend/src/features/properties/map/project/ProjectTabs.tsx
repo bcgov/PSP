@@ -1,6 +1,7 @@
-import TabView from 'components/common/TabView';
 import React from 'react';
 import { Tab } from 'react-bootstrap';
+
+import TabView from '@/components/common/TabView';
 
 import { IProjectTabsProps } from './detail/ProjectTabsContainer';
 

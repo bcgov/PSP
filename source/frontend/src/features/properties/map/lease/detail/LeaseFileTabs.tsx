@@ -1,6 +1,7 @@
-import TabView from 'components/common/TabView';
 import React from 'react';
 import { Tab } from 'react-bootstrap';
+
+import TabView from '@/components/common/TabView';
 
 export interface LeaseTabFileView {
   content: React.ReactNode;

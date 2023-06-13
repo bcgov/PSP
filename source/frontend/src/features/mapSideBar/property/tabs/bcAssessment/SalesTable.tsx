@@ -1,8 +1,9 @@
-import { ColumnWithProps, Table } from 'components/Table';
-import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
 import { CellProps } from 'react-table';
-import { formatMoney, stringToFragment } from 'utils';
-import { prettyFormatDate } from 'utils/utils';
+
+import { ColumnWithProps, Table } from '@/components/Table';
+import { IBcAssessmentSummary } from '@/hooks/useBcAssessmentLayer';
+import { formatMoney, stringToFragment } from '@/utils';
+import { prettyFormatDate } from '@/utils/utils';
 
 interface ISalesTableProps {
   salesData?: IBcAssessmentSummary['SALES'];

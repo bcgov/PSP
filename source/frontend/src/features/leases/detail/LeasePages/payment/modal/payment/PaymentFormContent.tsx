@@ -1,11 +1,12 @@
-import { FastCurrencyInput, FastDatePicker, Select } from 'components/common/form';
-import { InlineFlexDiv } from 'components/common/styles';
-import TooltipIcon from 'components/common/TooltipIcon';
-import * as API from 'constants/API';
 import { useFormikContext } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IFormLeasePayment } from 'interfaces';
 import * as React from 'react';
+
+import { FastCurrencyInput, FastDatePicker, Select } from '@/components/common/form';
+import { InlineFlexDiv } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IFormLeasePayment } from '@/interfaces';
 
 import { useCalculateActualGst } from '../../hooks/useCalculateActualGst';
 import * as Styled from '../../styles';

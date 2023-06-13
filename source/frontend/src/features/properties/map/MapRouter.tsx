@@ -1,17 +1,18 @@
+import queryString from 'query-string';
+import { memo, useContext, useEffect, useMemo } from 'react';
+import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
+
 import {
   MapState,
   MapStateActionTypes,
   MapStateContext,
-} from 'components/maps/providers/MapStateContext';
-import Claims from 'constants/claims';
-import { AddLeaseContainer } from 'features/leases';
-import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
-import MotiInventoryContainer from 'features/mapSideBar/property/MotiInventoryContainer';
-import { Api_Property } from 'models/api/Property';
-import queryString from 'query-string';
-import { memo, useContext, useEffect, useMemo } from 'react';
-import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
-import AppRoute from 'utils/AppRoute';
+} from '@/components/maps/providers/MapStateContext';
+import Claims from '@/constants/claims';
+import { AddLeaseContainer } from '@/features/leases';
+import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
+import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventoryContainer';
+import { Api_Property } from '@/models/api/Property';
+import AppRoute from '@/utils/AppRoute';
 
 import AcquisitionContainer from './acquisition/AcquisitionContainer';
 import AcquisitionView from './acquisition/AcquisitionView';

@@ -1,16 +1,17 @@
-import { Button } from 'components/common/buttons/Button';
-import { Select } from 'components/common/form';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { SectionField } from 'components/common/Section/SectionField';
-import TooltipIcon from 'components/common/TooltipIcon';
-import * as API from 'constants/API';
-import Claims from 'constants/claims';
 import { Formik, FormikProps } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { Api_DocumentUpdateRequest } from 'models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { Col, Row } from 'react-bootstrap';
+
+import { Button } from '@/components/common/buttons/Button';
+import { Select } from '@/components/common/form';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import * as API from '@/constants/API';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Api_DocumentUpdateRequest } from '@/models/api/Document';
+import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
 
 import {
   StyledGreySection,

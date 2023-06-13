@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { AxiosResponse } from 'axios';
-import { ITenantConfig, useApiTenants } from 'hooks/pims-api';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -8,11 +7,13 @@ import { Action } from 'redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { ITenantConfig, useApiTenants } from '@/hooks/pims-api';
+
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { useTenants } from '.';
 
 const mockApiGetSettings = jest.fn<Promise<AxiosResponse<ITenantConfig>>, any>();
-jest.mock('hooks/pims-api/useApiTenants');
+jest.mock('@/hooks/pims-api/useApiTenants');
 (useApiTenants as jest.Mock).mockReturnValue({ getSettings: mockApiGetSettings });
 
 jest.mock('react-redux-loading-bar', () => {

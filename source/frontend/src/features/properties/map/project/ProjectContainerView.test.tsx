@@ -1,5 +1,5 @@
-import { mockProjectGetResponse } from 'mocks/projects.mock';
-import { render, RenderOptions } from 'utils/test-utils';
+import { mockProjectGetResponse } from '@/mocks/projects.mock';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IProjectContainerViewProps } from './ProjectContainer';
 import ProjectContainerView from './ProjectContainerView';

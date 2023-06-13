@@ -1,4 +1,4 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
 import {
   AccessRequestStatus,
   OrganizationIdentifierTypes,
@@ -7,12 +7,12 @@ import {
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-} from 'constants/index';
-import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty } from 'interfaces';
-import { BillingInfo, LtsaOrders, OrderParent } from 'interfaces/ltsaModels';
-import { Api_Person } from 'models/api/Person';
-import { Api_User } from 'models/api/User';
-import { ILookupCode } from 'store/slices/lookupCodes';
+} from '@/constants/index';
+import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty } from '@/interfaces';
+import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
+import { Api_Person } from '@/models/api/Person';
+import { Api_User } from '@/models/api/User';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 // TODO: PSP-4410 This needs to be removed as Administrative Areas no longer exist.
 export const mockAdministrativeAreaLookups = [

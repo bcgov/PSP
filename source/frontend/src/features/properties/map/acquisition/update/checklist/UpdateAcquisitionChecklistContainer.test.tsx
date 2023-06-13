@@ -1,19 +1,20 @@
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
+import { createRef } from 'react';
+
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import {
   mockAcquisitionFileChecklistResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/acquisitionFiles.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { createRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, createAxiosError, render, RenderOptions, screen } from 'utils/test-utils';
+} from '@/mocks/acquisitionFiles.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, createAxiosError, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import { UpdateAcquisitionChecklistContainer } from './UpdateAcquisitionChecklistContainer';
 import { IUpdateAcquisitionChecklistFormProps } from './UpdateAcquisitionChecklistForm';
 
 // mock API service calls
-jest.mock('hooks/repositories/useAcquisitionProvider');
+jest.mock('@/hooks/repositories/useAcquisitionProvider');
 
 type Provider = typeof useAcquisitionProvider;
 const mockUpdateAcquisitionChecklist = jest.fn();

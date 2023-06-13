@@ -1,12 +1,13 @@
-import { Button, LinkButton, RemoveButton } from 'components/common/buttons';
-import { Input } from 'components/common/form';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, Formik } from 'formik';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
+
+import { Button, LinkButton, RemoveButton } from '@/components/common/buttons';
+import { Input } from '@/components/common/form';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 
 import { defaultAgreementFormData, IAgreementFormData } from './models';
 

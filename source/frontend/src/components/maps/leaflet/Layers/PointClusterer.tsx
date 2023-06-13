@@ -1,19 +1,20 @@
 import './PointClusterer.scss';
 
-import useSupercluster from 'components/maps/hooks/useSupercluster';
-import { useFilterContext } from 'components/maps/providers/FIlterProvider';
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
-import { ICluster, PointFeature } from 'components/maps/types';
-import { MAX_ZOOM } from 'constants/strings';
 import { BBox } from 'geojson';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IProperty } from 'interfaces';
 import L, { LatLng, LatLngLiteral } from 'leaflet';
 import { find } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
 import Supercluster from 'supercluster';
+
+import useSupercluster from '@/components/maps/hooks/useSupercluster';
+import { useFilterContext } from '@/components/maps/providers/FIlterProvider';
+import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { ICluster, PointFeature } from '@/components/maps/types';
+import { MAX_ZOOM } from '@/constants/strings';
+import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { IProperty } from '@/interfaces';
 
 import SelectedPropertyMarker from '../Markers/SelectedPropertyMarker';
 import { Spiderfier } from './Spiderfier';

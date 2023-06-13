@@ -1,7 +1,7 @@
-import { ENVIRONMENT } from 'constants/environment';
-import { FinancialCodeTypes } from 'constants/index';
-import CustomAxios from 'customAxios';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
+import { ENVIRONMENT } from '@/constants/environment';
+import { FinancialCodeTypes } from '@/constants/index';
+import CustomAxios from '@/customAxios';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
 
 export const getFinancialCodesByType = (codeType: FinancialCodeTypes) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(

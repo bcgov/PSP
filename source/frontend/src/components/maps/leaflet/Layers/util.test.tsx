@@ -1,12 +1,13 @@
+import { DivIcon, LatLngExpression, Marker } from 'leaflet';
+
 import {
   PropertyAreaUnitTypes,
   PropertyClassificationTypes,
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-} from 'constants/index';
-import { IProperty } from 'interfaces';
-import { DivIcon, LatLngExpression, Marker } from 'leaflet';
+} from '@/constants/index';
+import { IProperty } from '@/interfaces';
 
 import { ICluster } from '../../types';
 import {

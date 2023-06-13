@@ -1,6 +1,6 @@
-import { Section } from 'components/common/Section/Section';
-import { Table } from 'components/Table';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
+import { Section } from '@/components/common/Section/Section';
+import { Table } from '@/components/Table';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 
 import { getColumns, ReturnListEntry } from './columns';
 

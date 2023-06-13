@@ -1,8 +1,16 @@
-import { FinancialCodeTypes } from 'constants/index';
-import { mockFinancialCode } from 'mocks/index.mock';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { act, createAxiosError, render, RenderOptions, screen, userEvent } from 'utils/test-utils';
 import * as Yup from 'yup';
+
+import { FinancialCodeTypes } from '@/constants/index';
+import { mockFinancialCode } from '@/mocks/index.mock';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import {
+  act,
+  createAxiosError,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { IAddFinancialCodeFormProps } from './AddFinancialCodeContainer';
 import AddFinancialCodeForm from './AddFinancialCodeForm';

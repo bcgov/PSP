@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useTenant } from 'tenants';
+
+import { useTenant } from '@/tenants';
 
 /**
  * Footer component that applies tenant environmental styling.

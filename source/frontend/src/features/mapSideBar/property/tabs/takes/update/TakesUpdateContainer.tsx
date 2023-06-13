@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
+
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import { useTakesRepository } from '../repositories/useTakesRepository';
 import { TakeModel } from './models';

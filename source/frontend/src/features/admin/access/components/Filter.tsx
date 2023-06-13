@@ -1,15 +1,16 @@
 import './Filter.scss';
 
-import { SearchButton } from 'components/common/buttons';
-import { Button } from 'components/common/buttons/Button';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import { IAccessRequestsFilterData } from 'features/admin/access-request/IAccessRequestsFilterData';
 import * as React from 'react';
 import { Form } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { FaUndo } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import { SearchButton } from '@/components/common/buttons';
+import { Button } from '@/components/common/buttons/Button';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { IAccessRequestsFilterData } from '@/features/admin/access-request/IAccessRequestsFilterData';
 
 interface IProps {
   initialValues?: IAccessRequestsFilterData;

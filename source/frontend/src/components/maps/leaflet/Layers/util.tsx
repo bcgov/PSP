@@ -1,15 +1,16 @@
-import { ICluster, PointFeature } from 'components/maps/types';
-import { DraftCircleNumber } from 'components/propertySelector/selectedPropertyList/DraftCircleNumber';
-import { IProperty } from 'interfaces';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
 
+import { ICluster, PointFeature } from '@/components/maps/types';
+import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
+import { IProperty } from '@/interfaces';
+
 // parcel icon (green)
 export const parcelIcon = L.icon({
-  iconUrl: require('assets/images/pins/land-reg.png') ?? 'assets/images/pins/land-reg.png',
-  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: require('@/assets/images/pins/land-reg.png') ?? 'assets/images/pins/land-reg.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -19,9 +20,9 @@ export const parcelIcon = L.icon({
 // not owned property icon (red)
 export const notOwnedPropertyIcon = L.icon({
   iconUrl:
-    require('assets/images/pins/marker-info-orange.png') ??
+    require('@/assets/images/pins/marker-info-orange.png') ??
     'assets/images/pins/marker-info-orange.png',
-  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -31,9 +32,9 @@ export const notOwnedPropertyIcon = L.icon({
 // not owned property icon (orange)
 export const notOwnedPropertyIconSelect = L.icon({
   iconUrl:
-    require('assets/images/pins/marker-info-orange-highlight.png') ??
+    require('@/assets/images/pins/marker-info-orange-highlight.png') ??
     'assets/images/pins/marker-info-orange-highlight.png',
-  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -42,8 +43,9 @@ export const notOwnedPropertyIconSelect = L.icon({
 
 // property of interest icon (blue) highlighted
 export const propertyOfInterestIcon = L.icon({
-  iconUrl: require('assets/images/pins/land-poi.svg').default ?? 'assets/images/pins/land-poi.svg',
-  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl:
+    require('@/assets/images/pins/land-poi.svg').default ?? 'assets/images/pins/land-poi.svg',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -53,9 +55,9 @@ export const propertyOfInterestIcon = L.icon({
 // property of interest icon (blue) highlighted
 export const propertyOfInterestIconSelect = L.icon({
   iconUrl:
-    require('assets/images/pins/land-poi-selected.svg').default ??
+    require('@/assets/images/pins/land-poi-selected.svg').default ??
     'assets/images/pins/land-poi-selected.svg',
-  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -65,8 +67,8 @@ export const propertyOfInterestIconSelect = L.icon({
 // property with payable lease icon (purple) highlighted
 export const propertyWithLeaseIcon = L.icon({
   iconUrl:
-    require('assets/images/pins/land-lease.svg').default ?? 'assets/images/pins/land-lease.svg',
-  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+    require('@/assets/images/pins/land-lease.svg').default ?? 'assets/images/pins/land-lease.svg',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -76,9 +78,9 @@ export const propertyWithLeaseIcon = L.icon({
 // property with payable lease icon (purple) highlighted
 export const propertyWithLeaseIconSelect = L.icon({
   iconUrl:
-    require('assets/images/pins/land-lease-selected.svg').default ??
+    require('@/assets/images/pins/land-lease-selected.svg').default ??
     'assets/images/pins/land-lease-selected.svg',
-  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -88,9 +90,9 @@ export const propertyWithLeaseIconSelect = L.icon({
 // parcel icon (green) highlighted
 export const parcelIconSelect = L.icon({
   iconUrl:
-    require('assets/images/pins/land-reg-highlight.png') ??
+    require('@/assets/images/pins/land-reg-highlight.png') ??
     'assets/images/pins/land-reg-highlight.png',
-  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],

@@ -1,7 +1,8 @@
-import { mockGeocoderOptions } from 'mocks/index.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { fillInput, render, RenderOptions } from 'utils/test-utils';
+
+import { mockGeocoderOptions } from '@/mocks/index.mock';
+import { fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import LayerFilter, { defaultLayerFilter } from './LayerFilter';
 

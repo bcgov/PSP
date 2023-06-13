@@ -1,17 +1,18 @@
-import { StyledIconButton } from 'components/common/buttons';
-import { Input } from 'components/common/form';
-import { TypeaheadField } from 'components/common/form/Typeahead';
-import { InlineFlexDiv } from 'components/common/styles';
-import { ColumnWithProps } from 'components/Table';
-import { Claims } from 'constants/index';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IProperty } from 'interfaces';
 import { FaExternalLinkAlt, FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
-import { formatNumber, formatStreetAddress, mapLookupCode, stringToFragment } from 'utils';
+
+import { StyledIconButton } from '@/components/common/buttons';
+import { Input } from '@/components/common/form';
+import { TypeaheadField } from '@/components/common/form/Typeahead';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { ColumnWithProps } from '@/components/Table';
+import { Claims } from '@/constants/index';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { IProperty } from '@/interfaces';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { formatNumber, formatStreetAddress, mapLookupCode, stringToFragment } from '@/utils';
 
 export const ColumnDiv = styled.div`
   display: flex;

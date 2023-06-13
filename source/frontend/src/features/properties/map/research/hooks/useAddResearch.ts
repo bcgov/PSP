@@ -1,10 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
+
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 /**
  * hook that adds a research file.

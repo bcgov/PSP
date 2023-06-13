@@ -1,7 +1,7 @@
 import {
   Api_ResearchFileProperty,
   Api_ResearchFilePropertyPurposeType,
-} from 'models/api/ResearchFile';
+} from '@/models/api/ResearchFile';
 
 export class PropertyResearchFilePurposeFormModel {
   public id?: number;

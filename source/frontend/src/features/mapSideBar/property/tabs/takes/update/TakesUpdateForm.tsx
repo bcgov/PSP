@@ -1,14 +1,15 @@
-import { Button } from 'components/common/buttons/Button';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { StyledSummarySection } from 'components/common/Section/SectionStyles';
-import { AreaUnitTypes } from 'constants/areaUnitTypes';
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
-import { Api_Take } from 'models/api/Take';
 import * as React from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
-import { getApiPropertyName } from 'utils/mapPropertyUtils';
+
+import { Button } from '@/components/common/buttons/Button';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { Api_Take } from '@/models/api/Take';
+import { getApiPropertyName } from '@/utils/mapPropertyUtils';
 
 import { TakeModel, TakesYupSchema } from './models';
 import TakeSubForm from './TakeSubForm';

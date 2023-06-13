@@ -1,12 +1,13 @@
-import { Input } from 'components/common/form';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
 import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Input } from '@/components/common/form';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { IFormLease } from '@/interfaces';
+import { prettyFormatDate } from '@/utils';
+import { withNameSpace } from '@/utils/formUtils';
 export interface IDetailAdministrationProps {
   nameSpace?: string;
   disabled?: boolean;

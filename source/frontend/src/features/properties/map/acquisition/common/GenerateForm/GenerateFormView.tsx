@@ -1,8 +1,9 @@
-import { LinkButton } from 'components/common/buttons';
-import { FormDocumentType } from 'constants/formDocumentTypes';
-import { Claims } from 'constants/index';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import styled from 'styled-components';
+
+import { LinkButton } from '@/components/common/buttons';
+import { FormDocumentType } from '@/constants/formDocumentTypes';
+import { Claims } from '@/constants/index';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 
 import { generateDocumentEntries } from './formDocumentEntry';
 

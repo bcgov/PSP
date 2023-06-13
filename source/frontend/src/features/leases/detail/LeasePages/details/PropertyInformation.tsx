@@ -1,11 +1,12 @@
-import { Input } from 'components/common/form';
-import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';
-import { formatNumber, pidFormatter } from 'utils';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Input } from '@/components/common/form';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { IFormLease } from '@/interfaces';
+import { formatNumber, pidFormatter } from '@/utils';
+import { withNameSpace } from '@/utils/formUtils';
 
 import AddressSubForm from '../AddressSubForm';
 

@@ -1,14 +1,15 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import NotesModal, { INotesModalProps } from 'components/common/form/NotesModal';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+
+import NotesModal, { INotesModalProps } from '@/components/common/form/NotesModal';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 const history = createMemoryHistory();
 const storeState = {

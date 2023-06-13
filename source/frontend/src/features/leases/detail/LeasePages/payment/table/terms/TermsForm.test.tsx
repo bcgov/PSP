@@ -1,18 +1,19 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Claims from 'constants/claims';
-import { LeaseTermStatusTypes } from 'constants/leaseStatusTypes';
 import { createMemoryHistory } from 'history';
+import { noop } from 'lodash';
+import React from 'react';
+
+import Claims from '@/constants/claims';
+import { LeaseTermStatusTypes } from '@/constants/leaseStatusTypes';
 import {
   defaultFormLease,
   defaultFormLeaseTerm,
   IContactSearchResult,
   IFormLease,
   IFormLeasePayment,
-} from 'interfaces';
-import { noop } from 'lodash';
-import React from 'react';
-import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from 'utils/test-utils';
+} from '@/interfaces';
+import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { ITermsFormProps, TermsForm } from './TermsForm';
 

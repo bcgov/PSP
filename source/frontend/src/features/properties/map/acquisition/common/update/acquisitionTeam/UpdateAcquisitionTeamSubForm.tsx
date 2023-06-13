@@ -1,20 +1,21 @@
-import { LinkButton, RemoveButton } from 'components/common/buttons';
-import { Select } from 'components/common/form';
-import { ContactInput } from 'components/common/form/ContactInput';
-import { ContactManagerModal } from 'components/contact/ContactManagerModal';
-import { RestrictContactType } from 'components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
-import * as API from 'constants/API';
-import {
-  AcquisitionTeamFormModel,
-  WithAcquisitionTeam,
-} from 'features/properties/map/acquisition/common/models';
-import { AcquisitionFormModal } from 'features/properties/map/acquisition/modals/AcquisitionFormModal';
 import { FieldArray, useFormikContext } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+
+import { LinkButton, RemoveButton } from '@/components/common/buttons';
+import { Select } from '@/components/common/form';
+import { ContactInput } from '@/components/common/form/ContactInput';
+import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
+import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import * as API from '@/constants/API';
+import {
+  AcquisitionTeamFormModel,
+  WithAcquisitionTeam,
+} from '@/features/properties/map/acquisition/common/models';
+import { AcquisitionFormModal } from '@/features/properties/map/acquisition/modals/AcquisitionFormModal';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 
 interface IUpdateAcquisitionTeamSubFormProps {}
 

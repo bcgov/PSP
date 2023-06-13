@@ -1,9 +1,10 @@
-import { IPaginateProperties } from 'constants/API';
-import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
-import { IPagedItems, IProperty } from 'interfaces';
-import { Api_Property, Api_PropertyAssociations } from 'models/api/Property';
 import queryString from 'query-string';
 import React from 'react';
+
+import { IPaginateProperties } from '@/constants/API';
+import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import { IPagedItems, IProperty } from '@/interfaces';
+import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
 
 import { useAxiosApi } from '.';
 

@@ -1,5 +1,5 @@
-import { Api_Property } from 'models/api/Property';
-import { render, RenderOptions, RenderResult, userEvent } from 'utils/test-utils';
+import { Api_Property } from '@/models/api/Property';
+import { render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
 
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
 

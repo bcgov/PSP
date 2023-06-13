@@ -1,9 +1,10 @@
-import { LinkButton } from 'components/common/buttons';
 import noop from 'lodash/noop';
 import React, { useCallback } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
+
+import { LinkButton } from '@/components/common/buttons';
 
 import { LayerPopupInformation } from '../LayerPopupContainer';
 

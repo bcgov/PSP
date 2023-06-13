@@ -1,10 +1,10 @@
-import { IAutocompletePrediction } from 'interfaces';
+import { IAutocompletePrediction } from '@/interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
-} from 'models/api/AcquisitionFile';
-import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
+} from '@/models/api/AcquisitionFile';
+import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
 
 import {
   AcquisitionOwnerFormModel,

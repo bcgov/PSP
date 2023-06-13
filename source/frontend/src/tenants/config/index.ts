@@ -1,4 +1,4 @@
-import { ITenantConfig } from 'tenants/ITenantConfig';
+import { ITenantConfig } from '@/tenants/ITenantConfig';
 
 import { config as MOTI } from './MOTI';
 

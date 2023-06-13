@@ -1,24 +1,25 @@
-import { EditButton } from 'components/common/EditButton';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
+import Multiselect from 'multiselect-react-dropdown';
+import React from 'react';
+import { Col, Form, Row } from 'react-bootstrap';
+
+import { EditButton } from '@/components/common/EditButton';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 import {
   InlineContainer,
   StyledEditWrapper,
   StyledSubtleText,
   StyledSummarySection,
-} from 'components/common/Section/SectionStyles';
-import AreaContainer from 'components/measurements/AreaContainer';
-import VolumeContainer from 'components/measurements/VolumeContainer';
-import * as API from 'constants/API';
-import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import Multiselect from 'multiselect-react-dropdown';
-import React from 'react';
-import { Col, Form, Row } from 'react-bootstrap';
-import { booleanToYesNoUnknownString, stringToBoolean } from 'utils/formUtils';
-import { getPrettyLatLng } from 'utils/mapPropertyUtils';
+} from '@/components/common/Section/SectionStyles';
+import AreaContainer from '@/components/measurements/AreaContainer';
+import VolumeContainer from '@/components/measurements/VolumeContainer';
+import * as API from '@/constants/API';
+import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from '@/constants/index';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
+import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
 

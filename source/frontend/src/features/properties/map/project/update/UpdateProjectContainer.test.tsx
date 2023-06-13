@@ -1,8 +1,9 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import { mockProjectGetResponse, mockProjectPostResponse } from 'mocks/projects.mock';
 import React from 'react';
-import { act, render, RenderOptions, screen, waitFor } from 'utils/test-utils';
+
+import { mockProjectGetResponse, mockProjectPostResponse } from '@/mocks/projects.mock';
+import { act, render, RenderOptions, screen, waitFor } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
 import { IAddProjectFormProps } from '../add/AddProjectForm';
@@ -16,7 +17,7 @@ const mockApi = {
   loading: false,
 };
 
-jest.mock('hooks/repositories/useProjectProvider', () => ({
+jest.mock('@/hooks/repositories/useProjectProvider', () => ({
   useProjectProvider: () => {
     return {
       updateProject: mockApi,

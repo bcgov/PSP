@@ -1,11 +1,12 @@
 import { FormikHelpers, FormikProps } from 'formik';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import useApiUserOverride from 'hooks/useApiUserOverride';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import React from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';

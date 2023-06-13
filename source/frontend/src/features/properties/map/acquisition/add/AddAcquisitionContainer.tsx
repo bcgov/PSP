@@ -1,14 +1,15 @@
-import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
-import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateContext } from 'components/maps/providers/MapStateContext';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
+
+import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';

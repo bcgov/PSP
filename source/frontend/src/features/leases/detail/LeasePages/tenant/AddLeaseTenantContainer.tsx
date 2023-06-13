@@ -1,15 +1,16 @@
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { useUpdateLease } from 'features/leases/hooks/useUpdateLease';
-import { apiLeaseToFormLease, formLeaseToApiLease } from 'features/leases/leaseUtils';
 import { FormikProps } from 'formik';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { defaultFormLease, IContactSearchResult, IFormLease, ILease } from 'interfaces';
 import { filter, find, orderBy, some } from 'lodash';
-import { Api_Person } from 'models/api/Person';
 import * as React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
+
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
+import { apiLeaseToFormLease, formLeaseToApiLease } from '@/features/leases/leaseUtils';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { defaultFormLease, IContactSearchResult, IFormLease, ILease } from '@/interfaces';
+import { Api_Person } from '@/models/api/Person';
 
 import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import {

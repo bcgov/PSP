@@ -1,15 +1,16 @@
 import { GeoJsonProperties } from 'geojson';
 import isEmpty from 'lodash/isEmpty';
-import { Api_Address } from 'models/api/Address';
-import { Api_CodeType } from 'models/api/CodeType';
-import { Api_Property } from 'models/api/Property';
+
+import { Api_Address } from '@/models/api/Address';
+import { Api_CodeType } from '@/models/api/CodeType';
+import { Api_Property } from '@/models/api/Property';
 import {
   booleanToString,
   fromTypeCode,
   stringToBoolean,
   stringToNull,
   toTypeCode,
-} from 'utils/formUtils';
+} from '@/utils/formUtils';
 
 import {
   PropertyAdjacentLandFormModel,

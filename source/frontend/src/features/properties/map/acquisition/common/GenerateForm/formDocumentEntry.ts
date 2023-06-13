@@ -1,4 +1,4 @@
-import { FormDocumentType } from 'constants/formDocumentTypes';
+import { FormDocumentType } from '@/constants/formDocumentTypes';
 
 interface FormDocumentEntry {
   formType: FormDocumentType;

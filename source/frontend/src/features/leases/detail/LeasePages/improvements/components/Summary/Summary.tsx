@@ -1,8 +1,9 @@
-import { Form } from 'components/common/form';
-import * as Styled from 'features/leases/detail/LeasePages/improvements/styles';
 import { getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
 import { Form as BsForm } from 'react-bootstrap';
+
+import { Form } from '@/components/common/form';
+import * as Styled from '@/features/leases/detail/LeasePages/improvements/styles';
+import { IFormLease } from '@/interfaces';
 
 export interface ISummaryProps {
   disabled?: boolean;

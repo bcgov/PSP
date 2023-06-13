@@ -1,5 +1,6 @@
-import CustomAxios from 'customAxios';
 import L from 'leaflet';
+
+import CustomAxios from '@/customAxios';
 
 import { ILayerItem } from './types';
 

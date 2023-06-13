@@ -1,14 +1,15 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
-import { networkSlice } from 'store/slices/network/networkSlice';
-import { cleanup, render, waitForElementToBeRemoved } from 'utils/test-utils';
+
+import * as API from '@/constants/API';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
+import { networkSlice } from '@/store/slices/network/networkSlice';
+import { cleanup, render, waitForElementToBeRemoved } from '@/utils/test-utils';
 
 import * as actionTypes from '../../../constants/actionTypes';
 import AccessRequestPage from './AccessRequestPage';

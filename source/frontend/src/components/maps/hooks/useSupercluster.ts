@@ -1,8 +1,9 @@
 import { dequal } from 'dequal';
 import { BBox, GeoJsonProperties } from 'geojson';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { useRef, useState } from 'react';
 import Supercluster from 'supercluster';
+
+import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
 
 import { ICluster } from '../types';
 

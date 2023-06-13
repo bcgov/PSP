@@ -1,4 +1,4 @@
-import { Api_InterestHolder } from 'models/api/InterestHolder';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
 export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
   {
     interestHolderId: 14,

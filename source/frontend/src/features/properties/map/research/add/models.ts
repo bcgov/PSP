@@ -1,4 +1,4 @@
-import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
 
 import { PropertyForm } from '../../shared/models';
 import { ResearchFileProjectFormModel } from '../common/models';

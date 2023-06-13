@@ -1,7 +1,8 @@
-import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { getMockApiCompensation } from 'mocks/compensations.mock';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import Claims from '@/constants/claims';
+import { getMockApiCompensation } from '@/mocks/compensations.mock';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,

@@ -1,12 +1,13 @@
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { getMockApiInterestHolders } from 'mocks/interestHolders.mock';
-import { mockLookups } from 'mocks/lookups.mock';
-import { Api_InterestHolder } from 'models/api/InterestHolder';
 import { forwardRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import {
   emptyApiInterestHolder,
@@ -34,7 +35,7 @@ const mockUpdateApi = {
   loading: false,
 };
 
-jest.mock('hooks/repositories/useInterestHolderRepository', () => ({
+jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
       getAcquisitionInterestHolders: mockGetApi,

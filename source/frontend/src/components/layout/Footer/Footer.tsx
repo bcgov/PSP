@@ -1,5 +1,6 @@
-import { ApiVersionInfo } from 'components/common/ApiVersionInfo';
 import styled from 'styled-components';
+
+import { ApiVersionInfo } from '@/components/common/ApiVersionInfo';
 
 /**
  * Display common links and the api version in the bottom footer.

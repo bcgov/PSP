@@ -1,9 +1,10 @@
-import { Input } from 'components/common/form';
-import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import { DescriptionOfLand, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Input } from '@/components/common/form';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { DescriptionOfLand, LtsaOrders } from '@/interfaces/ltsaModels';
+import { withNameSpace } from '@/utils/formUtils';
 
 import LtsaLegalNotationsSubForm from './LtsaLegalNotationsSubForm';
 

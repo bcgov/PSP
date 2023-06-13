@@ -1,7 +1,8 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { useModalContext } from 'hooks/useModalContext';
 import { useIdleTimer } from 'react-idle-timer';
-import { useTenant } from 'tenants';
+
+import { useModalContext } from '@/hooks/useModalContext';
+import { useTenant } from '@/tenants';
 
 const usePimsIdleTimer = () => {
   const { keycloak } = useKeycloak();

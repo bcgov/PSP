@@ -1,8 +1,9 @@
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { SectionField } from 'components/common/Section/SectionField';
-import { StyledSectionParagraph } from 'components/common/styles';
 import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledSectionParagraph } from '@/components/common/styles';
 
 import { DetailAcquisitionFileOwner } from '../models';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';

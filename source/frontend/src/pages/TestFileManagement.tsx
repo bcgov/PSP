@@ -1,7 +1,8 @@
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 
 export const TestFileManagement: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   return (

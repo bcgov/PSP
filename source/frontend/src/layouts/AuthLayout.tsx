@@ -1,10 +1,11 @@
-import { SideNavBar } from 'components/layout';
-import { SidebarStateContextProvider } from 'components/layout/SideNavBar/SideNavbarContext';
-import { AuthStateContext } from 'contexts/authStateContext';
-import usePimsIdleTimer from 'hooks/usePimsIdleTimer';
 import React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import styled from 'styled-components';
+
+import { SideNavBar } from '@/components/layout';
+import { SidebarStateContextProvider } from '@/components/layout/SideNavBar/SideNavbarContext';
+import { AuthStateContext } from '@/contexts/authStateContext';
+import usePimsIdleTimer from '@/hooks/usePimsIdleTimer';
 
 import PublicLayout from './PublicLayout';
 

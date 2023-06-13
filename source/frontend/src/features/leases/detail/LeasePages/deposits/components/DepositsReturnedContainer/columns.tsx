@@ -1,17 +1,18 @@
-import { Button } from 'components/common/buttons/Button';
-import { InlineFlexDiv } from 'components/common/styles';
-import { ColumnWithProps, renderDate, renderMoney } from 'components/Table';
-import Claims from 'constants/claims';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Contact } from 'models/api/Contact';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { formatNames } from 'utils/personUtils';
+
+import { Button } from '@/components/common/buttons/Button';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_Contact } from '@/models/api/Contact';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { formatNames } from '@/utils/personUtils';
 
 export class ReturnListEntry {
   public id: number;

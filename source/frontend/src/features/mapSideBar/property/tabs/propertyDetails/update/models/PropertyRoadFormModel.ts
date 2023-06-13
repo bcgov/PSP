@@ -1,5 +1,5 @@
-import { Api_PropertyRoad } from 'models/api/Property';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { Api_PropertyRoad } from '@/models/api/Property';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 export class PropertyRoadFormModel {
   id?: number;

@@ -1,10 +1,11 @@
 import { Formik, FormikProps } from 'formik';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { mockAcquisitionFileResponse, mockLookups } from 'mocks/index.mock';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { createRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   createAxiosError,
@@ -13,14 +14,14 @@ import {
   screen,
   userEvent,
   waitFor,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionContainer } from './UpdateAcquisitionContainer';
 import { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
 
 // mock API service calls
-jest.mock('hooks/repositories/useAcquisitionProvider');
+jest.mock('@/hooks/repositories/useAcquisitionProvider');
 
 type Provider = typeof useAcquisitionProvider;
 const mockUpdateAcquisitionFile = jest.fn();

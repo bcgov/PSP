@@ -3,14 +3,7 @@ import './Table.scss';
 import classnames from 'classnames';
 import classNames from 'classnames';
 import clsx from 'classnames';
-import { Button } from 'components/common/buttons/Button';
-import { SelectedText } from 'components/common/styles';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Form, Formik, FormikProps } from 'formik';
-import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
-import { handleSortChange } from 'hooks/useSearch';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 import React, {
@@ -36,6 +29,14 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
+
+import { Button } from '@/components/common/buttons/Button';
+import { SelectedText } from '@/components/common/styles';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import useDeepCompareCallback from '@/hooks/useDeepCompareCallback';
+import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
+import useDeepCompareMemo from '@/hooks/useDeepCompareMemo';
+import { handleSortChange } from '@/hooks/useSearch';
 
 import { TablePagination } from '.';
 import ColumnSort from './ColumnSort';

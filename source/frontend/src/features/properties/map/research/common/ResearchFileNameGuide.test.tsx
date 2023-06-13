@@ -1,8 +1,9 @@
 import { screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { ResearchFileNameGuide } from './ResearchFileNameGuide';
 

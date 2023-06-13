@@ -1,7 +1,8 @@
 import { render } from '@testing-library/react';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { fillInput } from 'utils/test-utils';
+
+import { fillInput } from '@/utils/test-utils';
 
 import { FastDatePicker } from './FastDatePicker';
 

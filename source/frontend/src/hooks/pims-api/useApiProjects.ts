@@ -1,8 +1,9 @@
-import { IProjectFilter } from 'features/projects';
-import { IPagedItems } from 'interfaces';
-import { Api_Product, Api_Project } from 'models/api/Project';
 import queryString from 'query-string';
 import React from 'react';
+
+import { IProjectFilter } from '@/features/projects';
+import { IPagedItems } from '@/interfaces';
+import { Api_Product, Api_Project } from '@/models/api/Project';
 
 import { IPaginateRequest, useAxiosApi } from '.';
 

@@ -1,22 +1,23 @@
-import YesNoButtons from 'components/common/buttons/YesNoButtons';
-import EditButton from 'components/common/EditButton';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from 'components/common/Section/SectionStyles';
-import { H2 } from 'components/common/styles';
-import AreaContainer from 'components/measurements/AreaContainer';
-import * as API from 'constants/API';
-import { Claims } from 'constants/claims';
-import { TakesStatusTypes } from 'constants/takesStatusTypes';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
-import { Api_Take } from 'models/api/Take';
 import * as React from 'react';
 import styled from 'styled-components';
-import { formatApiDateTime, prettyFormatDate } from 'utils';
-import { getApiPropertyName } from 'utils/mapPropertyUtils';
+
+import YesNoButtons from '@/components/common/buttons/YesNoButtons';
+import EditButton from '@/components/common/EditButton';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { H2 } from '@/components/common/styles';
+import AreaContainer from '@/components/measurements/AreaContainer';
+import * as API from '@/constants/API';
+import { Claims } from '@/constants/claims';
+import { TakesStatusTypes } from '@/constants/takesStatusTypes';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { Api_Take } from '@/models/api/Take';
+import { formatApiDateTime, prettyFormatDate } from '@/utils';
+import { getApiPropertyName } from '@/utils/mapPropertyUtils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 

@@ -1,4 +1,4 @@
-import { pidFormatter } from 'utils';
+import { pidFormatter } from '@/utils';
 
 import { PopupContentConfig } from './components/LayerPopupContent';
 

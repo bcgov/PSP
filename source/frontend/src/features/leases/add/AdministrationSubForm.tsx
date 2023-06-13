@@ -1,13 +1,14 @@
-import { FastDatePicker, Input, Select } from 'components/common/form';
-import { InlineInput } from 'components/common/form/styles';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import * as API from 'constants/API';
 import { FormikProps } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
+
+import { FastDatePicker, Input, Select } from '@/components/common/form';
+import { InlineInput } from '@/components/common/form/styles';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { LeaseFormModel } from '../models';
 import * as Styled from './styles';

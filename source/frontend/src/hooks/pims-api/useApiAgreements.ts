@@ -1,5 +1,6 @@
-import { Api_Agreement } from 'models/api/Agreement';
 import React from 'react';
+
+import { Api_Agreement } from '@/models/api/Agreement';
 
 import { useAxiosApi } from '.';
 

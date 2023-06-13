@@ -1,7 +1,8 @@
-import * as actionTypes from 'constants/actionTypes';
 import React from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { useAppDispatch } from 'store/hooks';
+
+import * as actionTypes from '@/constants/actionTypes';
+import { useAppDispatch } from '@/store/hooks';
 
 import { IGenericNetworkAction } from '../network/interfaces';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';

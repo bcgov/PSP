@@ -1,3 +1,7 @@
+import { FormikProps } from 'formik';
+import React from 'react';
+import styled from 'styled-components';
+
 import {
   FastCurrencyInput,
   FastDatePicker,
@@ -5,14 +9,11 @@ import {
   Select,
   SelectOption,
   TextArea,
-} from 'components/common/form';
-import { SectionField, StyledFieldLabel } from 'components/common/Section/SectionField';
-import { FormikProps } from 'formik';
-import React from 'react';
-import { ILookupCode } from 'store/slices/lookupCodes';
-import styled from 'styled-components';
-import { mapLookupCode } from 'utils';
-import { withNameSpace } from 'utils/formUtils';
+} from '@/components/common/form';
+import { SectionField, StyledFieldLabel } from '@/components/common/Section/SectionField';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { mapLookupCode } from '@/utils';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { StyledSectionSubheader } from '../styles';
 import { AgreementsFormModel } from './models';

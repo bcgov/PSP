@@ -1,6 +1,6 @@
-import Claims from 'constants/claims';
-import { getMockResearchFile } from 'mocks/researchFile.mock';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+import Claims from '@/constants/claims';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ResearchSummaryView, { IResearchSummaryViewProps } from './ResearchSummaryView';
 

@@ -1,10 +1,11 @@
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import { ColumnWithProps, renderDate, Table } from 'components/Table';
 import { orderBy } from 'lodash';
-import { Api_PropertyAssociation } from 'models/api/Property';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import { ColumnWithProps, renderDate, Table } from '@/components/Table';
+import { Api_PropertyAssociation } from '@/models/api/Property';
 
 interface IAssociationInfo {
   id: string;

@@ -1,12 +1,13 @@
-import { RemoveButton } from 'components/common/buttons';
-import { InlineInput } from 'components/common/form/styles';
-import OverflowTip from 'components/common/OverflowTip';
-import { IMapProperty } from 'components/propertySelector/models';
-import DraftCircleNumber from 'components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { withNameSpace } from 'utils/formUtils';
-import { getPropertyName, NameSourceType } from 'utils/mapPropertyUtils';
+
+import { RemoveButton } from '@/components/common/buttons';
+import { InlineInput } from '@/components/common/form/styles';
+import OverflowTip from '@/components/common/OverflowTip';
+import { IMapProperty } from '@/components/propertySelector/models';
+import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
+import { withNameSpace } from '@/utils/formUtils';
+import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
 
 export interface ISelectedPropertyRowProps {
   index: number;

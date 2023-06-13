@@ -1,10 +1,11 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { useApiUsers } from 'hooks/pims-api/useApiUsers';
-import { IApiError } from 'interfaces/IApiError';
-import { Api_User } from 'models/api/User';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-toastify';
+
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_User } from '@/models/api/User';
 
 /**
  * hook that retrieves user information.

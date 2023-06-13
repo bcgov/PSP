@@ -1,5 +1,6 @@
-import { useWfsLayer } from 'hooks/layer-api/useWfsLayer';
 import { useCallback } from 'react';
+
+import { useWfsLayer } from '@/hooks/layer-api/useWfsLayer';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the Fully Attributed ParcelMapBC layer.

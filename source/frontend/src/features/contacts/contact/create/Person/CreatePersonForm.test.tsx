@@ -1,17 +1,18 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { AddressTypes } from 'constants/index';
-import useAddContact from 'features/contacts/hooks/useAddContact';
 import { createMemoryHistory } from 'history';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { AddressTypes } from '@/constants/index';
+import useAddContact from '@/features/contacts/hooks/useAddContact';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import {
   IEditableContactMethod,
   IEditableOrganization,
   IEditablePerson,
   IEditablePersonAddress,
-} from 'interfaces/editable-contact';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+} from '@/interfaces/editable-contact';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CreatePersonForm from './CreatePersonForm';
 
@@ -85,8 +86,8 @@ const mockAddress: IEditablePersonAddress = {
 };
 
 // Mock API service calls
-jest.mock('hooks/pims-api/useApiContacts');
-jest.mock('features/contacts/hooks/useAddContact');
+jest.mock('@/hooks/pims-api/useApiContacts');
+jest.mock('@/features/contacts/hooks/useAddContact');
 
 const getOrganization = jest.fn(() => mockOrganization);
 (useApiContacts as jest.Mock).mockReturnValue({ getOrganization });

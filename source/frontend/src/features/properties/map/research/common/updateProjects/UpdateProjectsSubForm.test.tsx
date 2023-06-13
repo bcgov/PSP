@@ -1,7 +1,8 @@
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { getMockResearchFile } from 'mocks/researchFile.mock';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ResearchFileProjectFormModel } from '../models';
 import { UpdateProjectsSubForm, WithProjectValues } from './UpdateProjectsSubForm';

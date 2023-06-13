@@ -1,4 +1,4 @@
-import { Api_Agreement } from 'models/api/Agreement';
+import { Api_Agreement } from '@/models/api/Agreement';
 
 export const mockAgreementsResponse = (): Api_Agreement[] => [
   {

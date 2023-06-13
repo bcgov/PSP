@@ -1,10 +1,11 @@
-import { IResearchFilter } from 'features/research/interfaces';
-import { IPagedItems } from 'interfaces';
-import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
-import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import queryString from 'query-string';
 import React from 'react';
+
+import { IResearchFilter } from '@/features/research/interfaces';
+import { IPagedItems } from '@/interfaces';
+import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
+import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest, useAxiosApi } from '.';
 

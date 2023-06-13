@@ -1,7 +1,8 @@
-import Claims from 'constants/claims';
 import * as React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
-import AppRoute from 'utils/AppRoute';
+
+import Claims from '@/constants/claims';
+import AppRoute from '@/utils/AppRoute';
 
 import { ActivityTray } from './activity/ActivityTray/ActivityTray';
 import { ActivityContainer } from './activity/detail/ActivityContainer';

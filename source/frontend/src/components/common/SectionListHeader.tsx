@@ -1,11 +1,12 @@
-import { StyledSectionAddButton } from 'components/common/styles';
-import { Claims } from 'constants/index';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { ImFileText2 } from 'react-icons/im';
 import styled from 'styled-components';
+
+import { StyledSectionAddButton } from '@/components/common/styles';
+import { Claims } from '@/constants/index';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 
 export interface ISectionListHeaderProps {
   title: string;

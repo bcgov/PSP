@@ -1,10 +1,11 @@
-import { ReactComponent as EditMapMarker } from 'assets/images/edit-map-marker.svg';
-import { EditButton } from 'components/common/EditButton';
-import { Claims } from 'constants/index';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import { ReactComponent as EditMapMarker } from '@/assets/images/edit-map-marker.svg';
+import { EditButton } from '@/components/common/EditButton';
+import { Claims } from '@/constants/index';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 
 export interface IResearchMenuProps {
   items: string[];

@@ -1,8 +1,9 @@
 import { screen } from '@testing-library/react';
-import { useModalContext } from 'hooks/useModalContext';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import { useModalContext } from '@/hooks/useModalContext';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { ModalContent } from './GenericModal';
 

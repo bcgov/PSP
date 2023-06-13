@@ -1,8 +1,9 @@
-import { useInterestHolderRepository } from 'hooks/repositories/useInterestHolderRepository';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_InterestHolder, Api_InterestHolderProperty } from 'models/api/InterestHolder';
 import * as React from 'react';
 import { useEffect } from 'react';
+
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
 
 import {
   InterestHolderViewForm,

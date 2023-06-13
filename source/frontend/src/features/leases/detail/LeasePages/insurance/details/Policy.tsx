@@ -1,8 +1,9 @@
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import { IInsurance } from 'interfaces';
 import React from 'react';
-import { formatMoney, prettyFormatDate } from 'utils';
+
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { IInsurance } from '@/interfaces';
+import { formatMoney, prettyFormatDate } from '@/utils';
 
 interface PolicyProps {
   insurance: IInsurance;

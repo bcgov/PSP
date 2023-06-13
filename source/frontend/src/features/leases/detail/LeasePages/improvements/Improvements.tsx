@@ -1,8 +1,9 @@
-import * as API from 'constants/API';
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IFormLease } from 'interfaces';
-import { ILeaseImprovement } from 'interfaces/ILeaseImprovement';
+
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IFormLease } from '@/interfaces';
+import { ILeaseImprovement } from '@/interfaces/ILeaseImprovement';
 
 import Improvement from './components/Improvement/Improvement';
 import * as Styled from './styles';

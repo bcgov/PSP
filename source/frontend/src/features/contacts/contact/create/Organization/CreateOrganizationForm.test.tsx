@@ -1,12 +1,13 @@
 import userEvent from '@testing-library/user-event';
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { AddressTypes } from 'constants/index';
-import useAddContact from 'features/contacts/hooks/useAddContact';
 import { createMemoryHistory } from 'history';
-import { IEditableOrganization, IEditableOrganizationAddress } from 'interfaces/editable-contact';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { AddressTypes } from '@/constants/index';
+import useAddContact from '@/features/contacts/hooks/useAddContact';
+import { IEditableOrganization, IEditableOrganizationAddress } from '@/interfaces/editable-contact';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import CreateOrganizationForm from './CreateOrganizationForm';
 
@@ -16,7 +17,7 @@ const storeState = {
 };
 
 // Mock API service calls
-jest.mock('features/contacts/hooks/useAddContact');
+jest.mock('@/features/contacts/hooks/useAddContact');
 
 const addOrganization = jest.fn();
 

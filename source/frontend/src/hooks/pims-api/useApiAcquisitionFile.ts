@@ -1,5 +1,8 @@
-import { IAcquisitionFilter } from 'features/acquisition/list/interfaces';
-import { IPagedItems } from 'interfaces';
+import queryString from 'query-string';
+import React from 'react';
+
+import { IAcquisitionFilter } from '@/features/acquisition/list/interfaces';
+import { IPagedItems } from '@/interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
@@ -7,13 +10,11 @@ import {
   Api_AcquisitionFileProperty,
   Api_AcquisitionFileRepresentative,
   Api_AcquisitionFileSolicitor,
-} from 'models/api/AcquisitionFile';
-import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import { Api_Product, Api_Project } from 'models/api/Project';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
-import queryString from 'query-string';
-import React from 'react';
+} from '@/models/api/AcquisitionFile';
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_Product, Api_Project } from '@/models/api/Project';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest, useAxiosApi } from '.';
 

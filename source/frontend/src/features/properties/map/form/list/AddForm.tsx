@@ -1,7 +1,8 @@
-import { PlusButton } from 'components/common/buttons';
-import { Select, SelectOption } from 'components/common/form';
 import { Formik } from 'formik';
 import { Col, Row } from 'react-bootstrap';
+
+import { PlusButton } from '@/components/common/buttons';
+import { Select, SelectOption } from '@/components/common/form';
 
 export interface IAddFormProps {
   onAddForm: (formTypeCode: string) => void;

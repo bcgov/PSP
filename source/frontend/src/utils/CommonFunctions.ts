@@ -1,4 +1,4 @@
-import { IPaginateRequest } from 'hooks/pims-api';
+import { IPaginateRequest } from '@/hooks/pims-api';
 
 export const PAGINATION_MARGIN_PAGES = 3;
 export const PAGINATION_MAX_PAGES = 9;

@@ -1,10 +1,11 @@
-import { FileTypes } from 'constants/fileTypes';
-import { SideBarContext } from 'features/properties/map/context/sidebarContext';
-import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useContext } from 'react';
+
+import { FileTypes } from '@/constants/fileTypes';
+import { SideBarContext } from '@/features/properties/map/context/sidebarContext';
+import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 
 import { formContent } from '../../shared/content/formContent';
 import { FormTemplateTypes } from '../../shared/content/models';

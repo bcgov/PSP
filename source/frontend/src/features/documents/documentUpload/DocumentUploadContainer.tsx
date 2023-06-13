@@ -1,16 +1,17 @@
-import { SelectOption } from 'components/common/form';
-import * as API from 'constants/API';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { DocumentStatusType } from 'constants/documentStatusType';
-import { DocumentTypeName } from 'constants/documentType';
 import { FormikProps } from 'formik';
-import useIsMounted from 'hooks/useIsMounted';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
-import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
+import { SelectOption } from '@/components/common/form';
+import * as API from '@/constants/API';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { DocumentStatusType } from '@/constants/documentStatusType';
+import { DocumentTypeName } from '@/constants/documentType';
+import useIsMounted from '@/hooks/useIsMounted';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { Api_DocumentType, Api_DocumentUploadRequest } from '@/models/api/Document';
+import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
 
 import { DocumentUploadFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';

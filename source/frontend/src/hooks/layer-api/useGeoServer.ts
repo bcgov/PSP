@@ -1,8 +1,9 @@
-import CustomAxios from 'customAxios';
 import { Feature, FeatureCollection, Point } from 'geojson';
 import { useCallback, useContext } from 'react';
-import { TenantContext } from 'tenants';
-import { useAxiosErrorHandler } from 'utils';
+
+import CustomAxios from '@/customAxios';
+import { TenantContext } from '@/tenants';
+import { useAxiosErrorHandler } from '@/utils';
 
 import { useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
 import { toCqlFilter } from './layerUtils';

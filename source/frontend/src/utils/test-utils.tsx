@@ -6,13 +6,14 @@ import {
   RenderResult,
 } from '@testing-library/react';
 import { AxiosError, AxiosResponse } from 'axios';
-import { FilterProvider } from 'components/maps/providers/FIlterProvider';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { IApiError } from 'interfaces/IApiError';
 import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
 import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom';
+
+import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
+import { IApiError } from '@/interfaces/IApiError';
 
 import TestCommonWrapper from './TestCommonWrapper';
 

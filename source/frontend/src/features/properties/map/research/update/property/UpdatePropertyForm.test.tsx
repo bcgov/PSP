@@ -1,10 +1,11 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
-import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { UpdatePropertyFormModel } from './models';
 import UpdatePropertyForm from './UpdatePropertyForm';

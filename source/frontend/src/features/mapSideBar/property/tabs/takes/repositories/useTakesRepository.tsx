@@ -1,9 +1,10 @@
 import { AxiosResponse } from 'axios';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { useApiTakes } from 'hooks/pims-api/useApiTakes';
-import { Api_Take } from 'models/api/Take';
 import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiTakes } from '@/hooks/pims-api/useApiTakes';
+import { Api_Take } from '@/models/api/Take';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
  * hook that interacts with the Takes API.

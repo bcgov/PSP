@@ -1,10 +1,11 @@
 import { AxiosError } from 'axios';
-import { useApiProperties } from 'hooks/pims-api';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { IApiError } from 'interfaces/IApiError';
-import { Api_Property } from 'models/api/Property';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
+
+import { useApiProperties } from '@/hooks/pims-api';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_Property } from '@/models/api/Property';
 
 /**
  * hook that updates a property from the inventory.

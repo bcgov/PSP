@@ -1,5 +1,5 @@
-import { ILease } from 'interfaces';
-import { Api_Lease } from 'models/api/Lease';
+import { ILease } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
 export const getMockLease: () => ILease = () => ({
   id: 1,
   rowVersion: 2,

@@ -1,16 +1,17 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims } from 'constants/claims';
-import { FileTypes } from 'constants/index';
-import { InventoryTabNames } from 'features/mapSideBar/property/InventoryTabs';
-import { FileTabType } from 'features/properties/map/shared/detail/FileTabs';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { mockLookups } from 'mocks/lookups.mock';
-import { mockNotesResponse } from 'mocks/noteResponses.mock';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { prettyFormatDate } from 'utils';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { FileTypes } from '@/constants/index';
+import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
+import { FileTabType } from '@/features/properties/map/shared/detail/FileTabs';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockNotesResponse } from '@/mocks/noteResponses.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { prettyFormatDate } from '@/utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';

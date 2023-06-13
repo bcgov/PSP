@@ -1,8 +1,9 @@
 import { FormikProps } from 'formik';
-import { useInterestHolderRepository } from 'hooks/repositories/useInterestHolderRepository';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import * as React from 'react';
 import { useEffect } from 'react';
+
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
 import { StakeHolderForm } from './models';
 import { IUpdateStakeHolderFormProps } from './UpdateStakeHolderForm';

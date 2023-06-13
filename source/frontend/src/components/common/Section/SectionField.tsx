@@ -1,7 +1,8 @@
 import cx from 'classnames';
-import TooltipIcon from 'components/common/TooltipIcon';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import TooltipIcon from '@/components/common/TooltipIcon';
 
 interface ISectionFieldProps {
   label: string | null;

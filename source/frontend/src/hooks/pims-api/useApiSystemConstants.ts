@@ -1,5 +1,6 @@
 import React from 'react';
-import { ISystemConstant } from 'store/slices/systemConstants';
+
+import { ISystemConstant } from '@/store/slices/systemConstants';
 
 import { useAxiosApi } from '.';
 

@@ -1,8 +1,9 @@
-import { Input } from 'components/common/form/';
-import { Section } from 'components/common/Section/Section';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { Input } from '@/components/common/form/';
+import { Section } from '@/components/common/Section/Section';
 
 import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
 import { UpdateProjectsSubForm } from '../common/updateProjects/UpdateProjectsSubForm';

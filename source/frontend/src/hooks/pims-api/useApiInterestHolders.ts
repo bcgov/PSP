@@ -1,5 +1,6 @@
-import { Api_InterestHolder } from 'models/api/InterestHolder';
 import React from 'react';
+
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
 
 import { useAxiosApi } from '.';
 

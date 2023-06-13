@@ -1,7 +1,8 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { IApiError } from 'interfaces/IApiError';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
+
+import { IApiError } from '@/interfaces/IApiError';
 
 import { IGeocoderPidsResponse, IGeocoderResponse } from './pims-api/interfaces/IGeocoder';
 import { useApiGeocoder } from './pims-api/useApiGeocoder';

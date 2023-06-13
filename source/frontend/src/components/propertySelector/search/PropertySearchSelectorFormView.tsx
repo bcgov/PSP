@@ -1,9 +1,10 @@
-import { Section } from 'components/common/Section/Section';
-import * as Styled from 'components/common/styles';
-import { Table } from 'components/Table';
-import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 import * as React from 'react';
-import { getPropertyName } from 'utils/mapPropertyUtils';
+
+import { Section } from '@/components/common/Section/Section';
+import * as Styled from '@/components/common/styles';
+import { Table } from '@/components/Table';
+import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { getPropertyName } from '@/utils/mapPropertyUtils';
 
 import { ILayerSearchCriteria, IMapProperty, SearchResultProperty } from '../models';
 import LayerFilter from './LayerFilter';

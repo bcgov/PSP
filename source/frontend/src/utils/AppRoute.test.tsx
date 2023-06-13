@@ -2,7 +2,8 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Router } from 'react-router-dom';
-import { act } from 'utils/test-utils';
+
+import { act } from '@/utils/test-utils';
 
 import AppRoute from './AppRoute';
 

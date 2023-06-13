@@ -1,6 +1,7 @@
-import { Api_FileDownload } from 'models/api/DocumentStorage';
-import { ExternalResult } from 'models/api/ExternalResult';
 import React from 'react';
+
+import { Api_FileDownload } from '@/models/api/DocumentStorage';
+import { ExternalResult } from '@/models/api/ExternalResult';
 
 import { DocumentGenerationRequest } from './../../models/api/DocumentGenerationRequest';
 import { useAxiosApi } from '.';

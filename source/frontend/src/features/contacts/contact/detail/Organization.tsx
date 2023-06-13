@@ -1,9 +1,10 @@
-import { FormSection } from 'components/common/form/styles';
-import { IContactOrganization, IContactPerson } from 'interfaces/IContact';
 import * as React from 'react';
 import { Col } from 'react-bootstrap';
 import { FaCircle, FaRegBuilding } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+
+import { FormSection } from '@/components/common/form/styles';
+import { IContactOrganization, IContactPerson } from '@/interfaces/IContact';
 
 import * as Styled from '../../styles';
 import { toAddressFields } from '../utils/contactUtils';

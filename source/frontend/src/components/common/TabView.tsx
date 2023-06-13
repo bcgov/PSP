@@ -1,7 +1,8 @@
-import * as Styled from 'components/common/styles';
 import * as React from 'react';
 import { TabsProps } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import * as Styled from '@/components/common/styles';
 
 const TabView: React.FunctionComponent<
   React.PropsWithChildren<TabsProps & { className?: string }>

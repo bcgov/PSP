@@ -1,6 +1,6 @@
-import { Api_ResearchFile } from 'models/api/ResearchFile';
-import { prettyFormatDate } from 'utils';
-import { render, RenderOptions } from 'utils/test-utils';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { prettyFormatDate } from '@/utils';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
 

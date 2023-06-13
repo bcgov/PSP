@@ -1,10 +1,11 @@
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { mockProjects } from 'mocks/projects.mock';
 import { createRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockProjects } from '@/mocks/projects.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fakeText, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { AddAcquisitionFileYupSchema } from './AddAcquisitionFileYupSchema';
 import { AddAcquisitionForm, IAddAcquisitionFormProps } from './AddAcquisitionForm';

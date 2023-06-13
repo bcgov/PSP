@@ -1,6 +1,7 @@
-import { Backdrop } from 'components/common/styles';
 import * as React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
+
+import { Backdrop } from '@/components/common/styles';
 
 export interface LoadingBackdropProps {
   show?: boolean;

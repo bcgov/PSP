@@ -1,5 +1,5 @@
-import { FormDocumentType } from 'constants/formDocumentTypes';
-import { getMockApiCompensationList } from 'mocks/compensations.mock';
+import { FormDocumentType } from '@/constants/formDocumentTypes';
+import { getMockApiCompensationList } from '@/mocks/compensations.mock';
 
 import { IGenerateFormViewProps } from './GenerateFormView';
 import { useGenerateH120 } from './hooks/useGenerateH120';

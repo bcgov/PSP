@@ -1,9 +1,10 @@
 import { createMemoryHistory } from 'history';
-import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
-import { getMockApiCompensationList } from 'mocks/compensations.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
+
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { getMockApiCompensationList } from '@/mocks/compensations.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
 import CompensationListContainer, {
@@ -26,12 +27,12 @@ const mockGetApi = {
   execute: jest.fn(),
   loading: false,
 };
-jest.mock('hooks/repositories/useRequisitionCompensationRepository');
+jest.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
 
-jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
+jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionCompensationRequisitions: mockGetApi,
