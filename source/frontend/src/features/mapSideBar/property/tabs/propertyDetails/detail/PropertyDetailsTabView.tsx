@@ -1,5 +1,13 @@
 import { EditButton } from 'components/common/EditButton';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
+import {
+  InlineContainer,
+  StyledEditWrapper,
+  StyledSubtleText,
+  StyledSummarySection,
+} from 'components/common/Section/SectionStyles';
 import AreaContainer from 'components/measurements/AreaContainer';
 import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';
@@ -12,14 +20,6 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { booleanToYesNoUnknownString, stringToBoolean } from 'utils/formUtils';
 import { getPrettyLatLng } from 'utils/mapPropertyUtils';
 
-import { Section } from '../../../../../../components/common/Section/Section';
-import { SectionField } from '../../../../../../components/common/Section/SectionField';
-import {
-  InlineContainer,
-  StyledEditWrapper,
-  StyledSubtleText,
-  StyledSummarySection,
-} from '../../../../../../components/common/Section/SectionStyles';
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
 
 export interface IPropertyDetailsTabView {

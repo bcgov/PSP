@@ -1,3 +1,4 @@
+import { Section } from 'components/common/Section/Section';
 import { SectionField } from 'components/common/Section/SectionField';
 import { Claims } from 'constants/index';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
@@ -6,8 +7,6 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
-
-import { Section } from '../../../../../components/common/Section/Section';
 
 interface PropertyResearchFile {
   id: number;

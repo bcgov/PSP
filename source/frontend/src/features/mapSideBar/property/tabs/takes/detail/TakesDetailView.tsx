@@ -1,6 +1,9 @@
 import YesNoButtons from 'components/common/buttons/YesNoButtons';
 import EditButton from 'components/common/EditButton';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from 'components/common/Section/SectionStyles';
 import { H2 } from 'components/common/styles';
 import AreaContainer from 'components/measurements/AreaContainer';
 import * as API from 'constants/API';
@@ -15,12 +18,6 @@ import styled from 'styled-components';
 import { formatApiDateTime, prettyFormatDate } from 'utils';
 import { getApiPropertyName } from 'utils/mapPropertyUtils';
 
-import { Section } from '../../../../../../components/common/Section/Section';
-import { SectionField } from '../../../../../../components/common/Section/SectionField';
-import {
-  StyledEditWrapper,
-  StyledSummarySection,
-} from '../../../../../../components/common/Section/SectionStyles';
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 export interface ITakesDetailViewProps {

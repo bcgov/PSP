@@ -1,3 +1,5 @@
+import { Section } from 'components/common/Section/Section';
+import { StyledSummarySection } from 'components/common/Section/SectionStyles';
 import { Api_PropertyAssociations } from 'models/api/Property';
 import * as React from 'react';
 import {
@@ -7,8 +9,6 @@ import {
   MdTopic,
 } from 'react-icons/md';
 
-import { Section } from '../../../../../components/common/Section/Section';
-import { StyledSummarySection } from '../../../../../components/common/Section/SectionStyles';
 import AssociationContent from './AssociationContent';
 import AssociationHeader from './AssociationHeader';
 

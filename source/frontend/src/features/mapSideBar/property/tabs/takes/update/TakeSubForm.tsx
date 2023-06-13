@@ -1,6 +1,8 @@
 import { StyledRemoveLinkButton } from 'components/common/buttons';
 import { FastDatePicker, Select, TextArea } from 'components/common/form';
 import { RadioGroup, yesNoRadioGroupValues } from 'components/common/form/RadioGroup';
+import { Section } from 'components/common/Section/Section';
+import { SectionField } from 'components/common/Section/SectionField';
 import AreaContainer from 'components/measurements/AreaContainer';
 import * as API from 'constants/API';
 import { getIn, useFormikContext } from 'formik';
@@ -10,8 +12,6 @@ import * as React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { withNameSpace } from 'utils/formUtils';
 
-import { Section } from '../../../../../../components/common/Section/Section';
-import { SectionField } from '../../../../../../components/common/Section/SectionField';
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 interface ITakeSubFormProps {

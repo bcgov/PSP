@@ -1,11 +1,10 @@
+import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { DescriptionOfLand, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { prettyFormatDate } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
-
-import { SectionField } from '../../../../../components/common/Section/SectionField';
 
 export interface ILtsaLegalNotationsSubFormProps {
   nameSpace?: string;

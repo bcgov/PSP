@@ -1,10 +1,10 @@
 import { Input } from 'components/common/form';
+import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { ChargeOnTitle, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionField } from '../../../../../components/common/Section/SectionField';
 import LtsaChargeOwnerSubForm from './LtsaChargeOwnerSubForm';
 
 export interface ILtsaChargeSubFormProps {

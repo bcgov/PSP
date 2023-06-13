@@ -1,4 +1,5 @@
 import { Input } from 'components/common/form';
+import { SectionField } from 'components/common/Section/SectionField';
 import { getIn, useFormikContext } from 'formik';
 import {
   ChargeOwnershipGroup,
@@ -8,8 +9,6 @@ import {
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { withNameSpace } from 'utils/formUtils';
-
-import { SectionField } from '../../../../../components/common/Section/SectionField';
 export interface ILtsaChargeOwnerSubFormProps {
   nameSpace?: string;
 }

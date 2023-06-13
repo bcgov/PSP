@@ -1,11 +1,11 @@
 import { Input } from 'components/common/form';
+import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { ChargeOwnershipGroup, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionField } from '../../../../../components/common/Section/SectionField';
 import LtsaOwnershipInformationTitleOwnerForm from './LtsaOwnershipInformationTitleOwnerForm';
 
 export interface ILtsaOwnershipInformationFormProps {
