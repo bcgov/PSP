@@ -21,7 +21,7 @@ import {
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../context/sidebarContext';
+import { SideBarContextProvider } from '../../../mapSideBar/context/sidebarContext';
 import { AcquisitionContainer, IAcquisitionContainerProps } from './AcquisitionContainer';
 import { IAcquisitionViewProps } from './AcquisitionView';
 import { EditFormType } from './EditFormNames';

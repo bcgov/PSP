@@ -12,7 +12,7 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
-import { SideBarContext } from '../context/sidebarContext';
+import { SideBarContext } from '../../../mapSideBar/context/sidebarContext';
 import { IAcquisitionViewProps } from './AcquisitionView';
 import { EditFormType } from './EditFormNames';
 

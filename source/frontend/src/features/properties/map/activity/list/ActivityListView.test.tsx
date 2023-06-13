@@ -17,7 +17,7 @@ import {
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../context/sidebarContext';
+import { SideBarContextProvider } from '../../../../mapSideBar/context/sidebarContext';
 import ActivityListView, { IActivityListViewProps } from './ActivityListView';
 
 const mockAxios = new MockAdapter(axios);

@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { FormDocumentType } from '@/constants/formDocumentTypes';
 import { FileTypes } from '@/constants/index';
-import { SideBarContextProvider } from '@/features/properties/map/context/sidebarContext';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';

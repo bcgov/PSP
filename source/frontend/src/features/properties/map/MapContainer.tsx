@@ -14,9 +14,9 @@ import { Api_Property } from '@/models/api/Property';
 import { pidParser } from '@/utils';
 
 import MapView from '../../../components/maps/MapView';
+import { SideBarContextProvider } from '../../mapSideBar/context/sidebarContext';
 import ActivityRouter from './ActivityRouter';
 import CompensationRequisitionRouter from './CompensationRequisitionRouter';
-import { SideBarContextProvider } from './context/sidebarContext';
 import MapSideBar from './MapSideBar';
 import PopupRouter from './PopupRouter';
 

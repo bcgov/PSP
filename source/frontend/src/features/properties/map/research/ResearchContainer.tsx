@@ -16,7 +16,7 @@ import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
-import { SideBarContext } from '../context/sidebarContext';
+import { SideBarContext } from '../../../mapSideBar/context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';
 import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
 import ResearchHeader from './common/ResearchHeader';

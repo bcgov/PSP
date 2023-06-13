@@ -5,7 +5,7 @@ import React from 'react';
 import { mockProjectGetResponse, mockProjectPostResponse } from '@/mocks/projects.mock';
 import { act, render, RenderOptions, screen, waitFor } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../context/sidebarContext';
+import { SideBarContextProvider } from '../../../../mapSideBar/context/sidebarContext';
 import { IAddProjectFormProps } from '../add/AddProjectForm';
 import { ProjectForm } from '../models';
 import UpdateProjectContainer from './UpdateProjectContainer';

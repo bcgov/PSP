@@ -6,7 +6,7 @@ import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../context/sidebarContext';
+import { SideBarContextProvider } from '../../../mapSideBar/context/sidebarContext';
 import ProjectContainer, { IProjectContainerViewProps } from './ProjectContainer';
 
 const mockAxios = new MockAdapter(axios);

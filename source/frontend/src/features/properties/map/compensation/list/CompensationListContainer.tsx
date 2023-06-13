@@ -5,7 +5,7 @@ import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRe
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 
-import { SideBarContext } from '../../context/sidebarContext';
+import { SideBarContext } from '../../../../mapSideBar/context/sidebarContext';
 import { ICompensationListViewProps } from './CompensationListView';
 
 export interface ICompensationListContainerProps {

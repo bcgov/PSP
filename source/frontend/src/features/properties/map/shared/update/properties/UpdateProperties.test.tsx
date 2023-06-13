@@ -2,7 +2,7 @@ import { act, screen, waitFor } from '@testing-library/react';
 import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { SideBarContextProvider } from '@/features/properties/map/context/sidebarContext';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';

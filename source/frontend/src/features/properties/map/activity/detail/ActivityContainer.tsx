@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { SideBarContext, TypedFile } from '@/features/properties/map/context/sidebarContext';
+import { SideBarContext, TypedFile } from '@/features/mapSideBar/context/sidebarContext';
 import { Api_Activity, Api_PropertyActivity } from '@/models/api/Activity';
 import { Api_Property } from '@/models/api/Property';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';

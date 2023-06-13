@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
-import { SideBarContext } from '@/features/properties/map/context/sidebarContext';
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 
 import { useGenerateAgreement } from '../../acquisition/common/GenerateForm/hooks/useGenerateAgreement';

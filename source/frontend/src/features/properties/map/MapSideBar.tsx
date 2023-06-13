@@ -5,7 +5,7 @@ import { Backdrop } from '@/components/common/styles';
 import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
 import { Api_Property } from '@/models/api/Property';
 
-import { SideBarContext } from './context/sidebarContext';
+import { SideBarContext } from '../../mapSideBar/context/sidebarContext';
 import MapRouter from './MapRouter';
 
 interface IMapSideBarProps {

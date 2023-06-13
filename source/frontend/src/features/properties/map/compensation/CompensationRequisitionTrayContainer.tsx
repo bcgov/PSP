@@ -6,7 +6,7 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
-import { SideBarContext } from '../context/sidebarContext';
+import { SideBarContext } from '../../../mapSideBar/context/sidebarContext';
 import { CompensationRequisitionTrayViewProps } from './CompensationRequisitionTrayView';
 
 export interface ICompensationRequisitionTrayContainerProps {

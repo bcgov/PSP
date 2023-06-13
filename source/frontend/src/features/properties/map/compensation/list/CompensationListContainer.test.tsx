@@ -6,7 +6,7 @@ import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../context/sidebarContext';
+import { SideBarContextProvider } from '../../../../mapSideBar/context/sidebarContext';
 import CompensationListContainer, {
   ICompensationListContainerProps,
 } from './CompensationListContainer';
