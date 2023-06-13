@@ -1,11 +1,11 @@
 import EditButton from 'components/common/EditButton';
+import { HeaderField } from 'components/common/HeaderField/HeaderField';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import { Section } from 'components/common/Section/Section';
 import { SectionField } from 'components/common/Section/SectionField';
 import { StyledSummarySection } from 'components/common/Section/SectionStyles';
 import { StyledAddButton } from 'components/common/styles';
 import Claims from 'constants/claims';
-import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_CompensationPayee } from 'models/api/CompensationPayee';
 import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';

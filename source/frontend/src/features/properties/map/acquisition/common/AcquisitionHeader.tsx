@@ -1,5 +1,5 @@
+import { HeaderField } from 'components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';

@@ -1,11 +1,11 @@
-import { InlineFlexDiv } from 'components/common/styles';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import { LeaseHeaderAddresses } from 'features/leases/detail/LeaseHeaderAddresses';
 import {
   HeaderContentCol,
   HeaderField,
   HeaderLabelCol,
-} from 'features/mapSideBar/tabs/HeaderField';
+} from 'components/common/HeaderField/HeaderField';
+import { InlineFlexDiv } from 'components/common/styles';
+import { UserNameTooltip } from 'components/common/UserNameTooltip';
+import { LeaseHeaderAddresses } from 'features/leases/detail/LeaseHeaderAddresses';
 import { ILease } from 'interfaces';
 import moment from 'moment';
 import React from 'react';

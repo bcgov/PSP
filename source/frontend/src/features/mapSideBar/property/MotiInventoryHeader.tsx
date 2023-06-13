@@ -1,4 +1,5 @@
 import { StyledIconButton } from 'components/common/buttons';
+import { HeaderField } from 'components/common/HeaderField/HeaderField';
 import LoadingBackdrop from 'components/common/LoadingBackdrop';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { IMapProperty } from 'components/propertySelector/models';
@@ -10,8 +11,6 @@ import { FaSearchPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 import { formatApiAddress, pidFormatter } from 'utils';
 import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
-
-import { HeaderField } from '../tabs/HeaderField';
 
 export interface IMotiInventoryHeaderProps {
   composedProperty: ComposedProperty;
