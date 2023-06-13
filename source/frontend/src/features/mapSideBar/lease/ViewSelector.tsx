@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 
 import { LeaseFormModel } from '@/features/leases/models';
-import { LeaseFileTabNames } from '@/features/properties/map/lease/detail/LeaseFileTabs';
+import { LeaseFileTabNames } from '@/features/mapSideBar/lease/detail/LeaseFileTabs';
 import { IFormLease, ILease } from '@/interfaces';
 
 import { LeaseTabsContainer } from './detail/LeaseTabsContainer';

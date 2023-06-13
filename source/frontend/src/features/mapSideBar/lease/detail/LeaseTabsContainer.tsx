@@ -11,7 +11,7 @@ import {
   LeaseFileTabNames,
   LeaseFileTabs,
   LeaseTabFileView,
-} from '@/features/properties/map/lease/detail/LeaseFileTabs';
+} from '@/features/mapSideBar/lease/detail/LeaseFileTabs';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IFormLease, ILease } from '@/interfaces';
 
