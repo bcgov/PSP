@@ -1,12 +1,13 @@
-import OverflowTip from 'components/common/OverflowTip';
-import { Section } from 'components/common/Section/Section';
-import { ColumnWithProps, Table } from 'components/Table';
-import { Api_Property } from 'models/api/Property';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
 import { CellProps } from 'react-table';
-import { stringToFragment } from 'utils';
-import { getFilePropertyName } from 'utils/mapPropertyUtils';
+
+import OverflowTip from '@/components/common/OverflowTip';
+import { Section } from '@/components/common/Section/Section';
+import { ColumnWithProps, Table } from '@/components/Table';
+import { Api_Property } from '@/models/api/Property';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { stringToFragment } from '@/utils';
+import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 interface IPropertyActivityFormProps {
   fileProperties: Api_PropertyFile[];

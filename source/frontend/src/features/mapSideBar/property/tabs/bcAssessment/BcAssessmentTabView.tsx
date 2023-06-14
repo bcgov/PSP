@@ -1,16 +1,20 @@
-import { Button } from 'components/common/buttons';
-import { FormSection } from 'components/common/form/styles';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import { InlineMessage, StyledInlineMessageSection } from 'components/common/Section/SectionStyles';
-import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
-import { formatBcaAddress } from 'utils';
-import { pidFormatter } from 'utils/propertyUtils';
+
+import { Button } from '@/components/common/buttons';
+import { FormSection } from '@/components/common/form/styles';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import {
+  InlineMessage,
+  StyledInlineMessageSection,
+} from '@/components/common/Section/SectionStyles';
+import { IBcAssessmentSummary } from '@/hooks/useBcAssessmentLayer';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { formatBcaAddress } from '@/utils';
+import { pidFormatter } from '@/utils/propertyUtils';
 
 import AssessedValuesTable from './AssessedValuesTable';
 import SalesTable from './SalesTable';

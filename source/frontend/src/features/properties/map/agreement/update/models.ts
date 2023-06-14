@@ -1,5 +1,10 @@
-import { Api_Agreement } from 'models/api/Agreement';
-import { booleanToString, stringToBooleanOrNull, stringToNull, toTypeCode } from 'utils/formUtils';
+import { Api_Agreement } from '@/models/api/Agreement';
+import {
+  booleanToString,
+  stringToBooleanOrNull,
+  stringToNull,
+  toTypeCode,
+} from '@/utils/formUtils';
 
 export class SingleAgreementFormModel {
   public agreementId: number = 0;

@@ -1,3 +1,8 @@
+import { Formik, FormikHelpers, FormikProps } from 'formik';
+import React from 'react';
+import { Prompt } from 'react-router-dom';
+import styled from 'styled-components';
+
 import {
   FastDatePicker,
   Input,
@@ -5,24 +10,20 @@ import {
   Select,
   SelectOption,
   TextArea,
-} from 'components/common/form';
-import { ContactInputContainer } from 'components/common/form/ContactInput/ContactInputContainer';
-import ContactInputView from 'components/common/form/ContactInput/ContactInputView';
-import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import { StyledSectionParagraph } from 'components/common/styles';
-import TooltipIcon from 'components/common/TooltipIcon';
-import { RestrictContactType } from 'components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
-import * as API from 'constants/API';
-import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { IAutocompletePrediction } from 'interfaces';
-import { Api_Product } from 'models/api/Project';
-import React from 'react';
-import { Prompt } from 'react-router-dom';
-import styled from 'styled-components';
+} from '@/components/common/form';
+import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
+import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledSectionParagraph } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import * as API from '@/constants/API';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import { IAutocompletePrediction } from '@/interfaces';
+import { Api_Product } from '@/models/api/Project';
 
 import UpdateAcquisitionOwnersSubForm from '../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';

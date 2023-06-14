@@ -1,4 +1,4 @@
-import { OrganizationIdentifierTypes, OrganizationTypes } from 'constants/index';
+import { OrganizationIdentifierTypes, OrganizationTypes } from '@/constants/index';
 
 import { IAddress } from './IAddress';
 

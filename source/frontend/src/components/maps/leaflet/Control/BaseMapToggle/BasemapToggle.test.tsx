@@ -1,4 +1,4 @@
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import BasemapToggle, { BaseLayer, BasemapToggleEvent, BasemapToggleProps } from './BasemapToggle';
 

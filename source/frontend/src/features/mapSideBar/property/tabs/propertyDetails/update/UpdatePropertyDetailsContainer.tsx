@@ -1,13 +1,14 @@
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import * as API from 'constants/API';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { useQueryMapLayersByLocation } from 'hooks/repositories/useQueryMapLayersByLocation';
-import useIsMounted from 'hooks/useIsMounted';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import isNumber from 'lodash/isNumber';
-import { Api_Property } from 'models/api/Property';
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import * as API from '@/constants/API';
+import { useQueryMapLayersByLocation } from '@/hooks/repositories/useQueryMapLayersByLocation';
+import useIsMounted from '@/hooks/useIsMounted';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import { Api_Property } from '@/models/api/Property';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';

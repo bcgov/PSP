@@ -1,21 +1,22 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { tenantsSlice, useTenants } from 'store/slices/tenants';
-import { config } from 'tenants';
-import defaultTenant from 'tenants/config/defaultTenant';
-import { cleanup, mockKeycloak, render } from 'utils/test-utils';
+
+import * as API from '@/constants/API';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { tenantsSlice, useTenants } from '@/store/slices/tenants';
+import { config } from '@/tenants';
+import defaultTenant from '@/tenants/config/defaultTenant';
+import { cleanup, mockKeycloak, render } from '@/utils/test-utils';
 
 import Header from './Header';
 
 jest.mock('@react-keycloak/web');
 
-jest.mock('store/slices/tenants/useTenants');
+jest.mock('@/store/slices/tenants/useTenants');
 (useTenants as any).mockImplementation(() => ({
   getSettings: jest.fn(),
 }));

@@ -1,9 +1,10 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import useIsMounted from 'hooks/useIsMounted';
-import { IApiError } from 'interfaces/IApiError';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { handleAxiosResponse } from 'utils';
+
+import useIsMounted from '@/hooks/useIsMounted';
+import { IApiError } from '@/interfaces/IApiError';
+import { handleAxiosResponse } from '@/utils';
 
 export interface IResponseWrapper<
   FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>,

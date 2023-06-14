@@ -1,8 +1,9 @@
-import { LinkButton } from 'components/common/buttons';
-import { ILeaseProperty } from 'interfaces';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { LinkButton } from '@/components/common/buttons';
+import { ILeaseProperty } from '@/interfaces';
 
 const PropertyRow = styled(Row)`
   border-radius: 0.4rem;

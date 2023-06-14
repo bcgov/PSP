@@ -1,12 +1,13 @@
-import { SelectOption } from 'components/common/form';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { useFinancialCodeRepository } from 'hooks/repositories/useFinancialCodeRepository';
-import { useInterestHolderRepository } from 'hooks/repositories/useInterestHolderRepository';
-import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
-import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { useCallback, useEffect, useState } from 'react';
-import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
+
+import { SelectOption } from '@/components/common/form';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from '@/models/api/AcquisitionFile';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { CompensationRequisitionFormModel, PayeeOption } from '../models';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';

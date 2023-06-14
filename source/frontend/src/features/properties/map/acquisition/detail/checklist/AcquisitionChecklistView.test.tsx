@@ -1,12 +1,12 @@
-import { Claims } from 'constants/index';
-import { useApiUsers } from 'hooks/pims-api/useApiUsers';
+import { Claims } from '@/constants/index';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import {
   mockAcquisitionFileChecklistResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/acquisitionFiles.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+} from '@/mocks/acquisitionFiles.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import {
   AcquisitionChecklistView,
@@ -17,7 +17,7 @@ import {
 jest.mock('@react-keycloak/web');
 
 // mock API service calls
-jest.mock('hooks/pims-api/useApiUsers');
+jest.mock('@/hooks/pims-api/useApiUsers');
 
 (useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
   getUserInfo: jest.fn().mockResolvedValue({}),

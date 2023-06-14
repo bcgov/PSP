@@ -1,8 +1,12 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { createPoints } from 'components/maps/leaflet/Layers/util';
-import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
+import { createMemoryHistory } from 'history';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+import { createPoints } from '@/components/maps/leaflet/Layers/util';
+import { PropertyContextProvider } from '@/components/maps/providers/PropertyContext';
 import {
   Claims,
   PropertyAreaUnitTypes,
@@ -10,32 +14,37 @@ import {
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-} from 'constants/index';
-import { createMemoryHistory } from 'history';
-import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
-import { useMapProperties } from 'hooks/layer-api/useMapProperties';
-import { useApiProperties } from 'hooks/pims-api';
-import { useComposedProperties } from 'hooks/useComposedProperties';
-import { IProperty } from 'interfaces';
-import { Api_Property } from 'models/api/Property';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, cleanup, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
-import { mockKeycloak } from 'utils/test-utils';
+} from '@/constants/index';
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
+import { useApiProperties } from '@/hooks/pims-api';
+import { useComposedProperties } from '@/hooks/useComposedProperties';
+import { IProperty } from '@/interfaces';
+import { Api_Property } from '@/models/api/Property';
+import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import {
+  act,
+  cleanup,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
+import { mockKeycloak } from '@/utils/test-utils';
 
 import MapView from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
-jest.mock('hooks/layer-api/useMapProperties');
-jest.mock('hooks/layer-api/useLayerQuery');
-jest.mock('components/maps/leaflet/LayerPopup/components/LayerPopupContent');
-jest.mock('hooks/useComposedProperties');
-jest.mock('hooks/usePropertyAssociations');
-jest.mock('hooks/pims-api');
-jest.mock('hooks/useLtsa');
+jest.mock('@/hooks/layer-api/useMapProperties');
+jest.mock('@/hooks/layer-api/useLayerQuery');
+jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
+jest.mock('@/hooks/useComposedProperties');
+jest.mock('@/hooks/usePropertyAssociations');
+jest.mock('@/hooks/pims-api');
+jest.mock('@/hooks/useLtsa');
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {

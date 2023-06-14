@@ -1,5 +1,5 @@
-import { Api_PropertyAdjacentLand } from 'models/api/Property';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { Api_PropertyAdjacentLand } from '@/models/api/Property';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 export class PropertyAdjacentLandFormModel {
   id?: number;

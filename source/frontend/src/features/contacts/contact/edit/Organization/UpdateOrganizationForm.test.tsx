@@ -1,13 +1,14 @@
 import userEvent from '@testing-library/user-event';
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { AddressTypes } from 'constants/index';
-import { useOrganizationDetail } from 'features/contacts/hooks/useOrganizationDetail';
-import { useUpdateContact } from 'features/contacts/hooks/useUpdateContact';
 import { createMemoryHistory } from 'history';
-import { IEditableOrganization, IEditableOrganizationAddress } from 'interfaces/editable-contact';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { AddressTypes } from '@/constants/index';
+import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
+import { useUpdateContact } from '@/features/contacts/hooks/useUpdateContact';
+import { IEditableOrganization, IEditableOrganizationAddress } from '@/interfaces/editable-contact';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import UpdateOrganizationForm from './UpdateOrganizationForm';
 
@@ -43,8 +44,8 @@ const mockAddress: IEditableOrganizationAddress = {
 };
 
 // Mock API service calls
-jest.mock('features/contacts/hooks/useOrganizationDetail');
-jest.mock('features/contacts/hooks/useUpdateContact');
+jest.mock('@/features/contacts/hooks/useOrganizationDetail');
+jest.mock('@/features/contacts/hooks/useUpdateContact');
 
 (useOrganizationDetail as jest.MockedFunction<typeof useOrganizationDetail>).mockReturnValue({
   organization: mockOrganization,

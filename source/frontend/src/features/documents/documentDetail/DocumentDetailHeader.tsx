@@ -1,5 +1,6 @@
-import { SectionField } from 'components/common/Section/SectionField';
 import { Col, Row } from 'react-bootstrap';
+
+import { SectionField } from '@/components/common/Section/SectionField';
 
 import { ComposedDocument } from '../ComposedDocument';
 import DownloadDocumentButton from '../DownloadDocumentButton';

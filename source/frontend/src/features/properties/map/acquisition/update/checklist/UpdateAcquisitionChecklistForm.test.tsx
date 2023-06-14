@@ -1,14 +1,15 @@
-import * as API from 'constants/API';
 import { FormikProps } from 'formik';
-import { useApiUsers } from 'hooks/pims-api/useApiUsers';
+import { createRef } from 'react';
+
+import * as API from '@/constants/API';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import {
   mockAcquisitionFileChecklistResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/acquisitionFiles.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { createRef } from 'react';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, createAxiosError, render, RenderOptions } from 'utils/test-utils';
+} from '@/mocks/acquisitionFiles.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
 
 import { AcquisitionChecklistFormModel } from './models';
 import {
@@ -17,7 +18,7 @@ import {
 } from './UpdateAcquisitionChecklistForm';
 
 // mock API service calls
-jest.mock('hooks/pims-api/useApiUsers');
+jest.mock('@/hooks/pims-api/useApiUsers');
 
 (useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
   getUserInfo: jest.fn().mockResolvedValue({}),

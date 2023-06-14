@@ -1,11 +1,4 @@
-import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateContext } from 'components/maps/providers/MapStateContext';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import useApiUserOverride from 'hooks/useApiUserOverride';
-import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useEffect, useRef } from 'react';
@@ -13,7 +6,15 @@ import { MdTopic } from 'react-icons/md';
 import { Prompt, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
+
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';

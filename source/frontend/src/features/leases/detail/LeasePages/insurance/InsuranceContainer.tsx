@@ -1,14 +1,15 @@
-import { CancelConfirmationModal } from 'components/common/CancelConfirmationModal';
-import { INSURANCE_TYPES } from 'constants/API';
-import { Claims } from 'constants/claims';
-import { useLeaseDetail } from 'features/leases';
-import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { getIn } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IInsurance } from 'interfaces';
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+
+import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
+import { INSURANCE_TYPES } from '@/constants/API';
+import { Claims } from '@/constants/claims';
+import { useLeaseDetail } from '@/features/leases';
+import { LeasePageProps } from '@/features/properties/map/lease/LeaseContainer';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IInsurance } from '@/interfaces';
 
 import InsuranceDetailsView from './details/Insurance';
 import InsuranceEditContainer from './edit/EditInsuranceContainer';

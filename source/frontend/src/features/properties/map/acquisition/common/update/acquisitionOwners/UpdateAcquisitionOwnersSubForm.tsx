@@ -1,12 +1,13 @@
-import { LinkButton, RemoveButton } from 'components/common/buttons';
-import { Input } from 'components/common/form';
-import { RadioGroup } from 'components/common/form/RadioGroup';
-import { SectionField } from 'components/common/Section/SectionField';
-import Address from 'features/contacts/contact/create/components/address/Address';
 import { FieldArray, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { LinkButton, RemoveButton } from '@/components/common/buttons';
+import { Input } from '@/components/common/form';
+import { RadioGroup } from '@/components/common/form/RadioGroup';
+import { SectionField } from '@/components/common/Section/SectionField';
+import Address from '@/features/contacts/contact/create/components/address/Address';
 
 import { AcquisitionFormModal } from '../../../modals/AcquisitionFormModal';
 import {

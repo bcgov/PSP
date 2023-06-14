@@ -1,14 +1,15 @@
+import { Formik } from 'formik';
+import { noop } from 'lodash';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
 import {
   IMapStateContext,
   MapStateActionTypes,
   MapStateContextProvider,
-} from 'components/maps/providers/MapStateContext';
-import { Formik } from 'formik';
-import { noop } from 'lodash';
-import { mockDraftProperties } from 'mocks/mockDraftProperties';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+} from '@/components/maps/providers/MapStateContext';
+import { mockDraftProperties } from '@/mocks/mockDraftProperties';
+import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../shared/models';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';

@@ -1,8 +1,9 @@
-import { LinkButton } from 'components/common/buttons';
-import { ProtectedComponent } from 'components/common/ProtectedComponent';
-import { Claims } from 'constants/claims';
 import * as React from 'react';
 import { FaEdit } from 'react-icons/fa';
+
+import { LinkButton } from '@/components/common/buttons';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { Claims } from '@/constants/claims';
 
 interface ILeaseEditButtonProps {
   onEdit?: () => void;

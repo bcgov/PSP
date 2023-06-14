@@ -1,8 +1,9 @@
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { ActivityTrayPage, CloseButton, TrayHeader } from 'components/common/styles';
-import { Api_FormDocumentFile } from 'models/api/FormDocument';
 import * as React from 'react';
 import { MdClose } from 'react-icons/md';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { ActivityTrayPage, CloseButton, TrayHeader } from '@/components/common/styles';
+import { Api_FormDocumentFile } from '@/models/api/FormDocument';
 
 import { IFormContent } from '../../shared/content/models';
 

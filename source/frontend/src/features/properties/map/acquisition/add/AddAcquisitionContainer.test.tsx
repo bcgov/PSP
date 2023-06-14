@@ -1,14 +1,15 @@
-import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { mockLookups } from 'mocks/lookups.mock';
-import { Api_User } from 'models/api/User';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, renderAsync, RenderOptions, screen, userEvent } from 'utils/test-utils';
+
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_User } from '@/models/api/User';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
@@ -34,7 +35,7 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
-jest.mock('hooks/repositories/useUserInfoRepository');
+jest.mock('@/hooks/repositories/useUserInfoRepository');
 (useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
   retrieveUserInfo: jest.fn(),
   retrieveUserInfoLoading: true,
@@ -57,12 +58,12 @@ jest.mock('hooks/repositories/useUserInfoRepository');
 });
 
 // Mock API service calls
-jest.mock('components/maps/hooks/useMapSearch');
+jest.mock('@/components/maps/hooks/useMapSearch');
 (useMapSearch as jest.MockedFunction<typeof useMapSearch>).mockReturnValue({
   search: jest.fn().mockResolvedValue({}),
 } as any);
 
-jest.mock('hooks/repositories/useAcquisitionProvider');
+jest.mock('@/hooks/repositories/useAcquisitionProvider');
 const addAcquisitionFile = jest.fn();
 (useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
   addAcquisitionFile: {

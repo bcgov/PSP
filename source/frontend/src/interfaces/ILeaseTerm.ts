@@ -1,5 +1,5 @@
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { stringToNull } from 'utils/formUtils';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { stringToNull } from '@/utils/formUtils';
 
 import {
   apiLeasePaymentToFormPayment,

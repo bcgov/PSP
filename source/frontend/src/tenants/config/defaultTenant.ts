@@ -1,4 +1,4 @@
-import { ITenantConfig } from 'tenants/ITenantConfig';
+import { ITenantConfig } from '@/tenants/ITenantConfig';
 
 const MUNICIPALITY_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP';

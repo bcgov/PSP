@@ -1,8 +1,9 @@
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { Formik, FormikProps } from 'formik';
-import { defaultFormLeasePayment, IFormLeasePayment } from 'interfaces';
 import * as React from 'react';
 import { useContext } from 'react';
+
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { defaultFormLeasePayment, IFormLeasePayment } from '@/interfaces';
 
 import { isActualGstEligible } from '../../TermPaymentsContainer';
 import PaymentFormContent from './PaymentFormContent';

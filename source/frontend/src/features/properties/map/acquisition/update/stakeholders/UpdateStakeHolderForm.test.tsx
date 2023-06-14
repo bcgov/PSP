@@ -1,9 +1,10 @@
 import { createMemoryHistory } from 'history';
-import { mockAcquisitionFileResponse } from 'mocks/index.mock';
-import { getMockApiInterestHolders } from 'mocks/interestHolders.mock';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { mockAcquisitionFileResponse } from '@/mocks/index.mock';
+import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { StakeHolderForm } from './models';
 import UpdateStakeHolderForm, { IUpdateStakeHolderFormProps } from './UpdateStakeHolderForm';

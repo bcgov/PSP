@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
-import { MAX_SQL_MONEY_SIZE } from 'constants/API';
 import * as Yup from 'yup';
+
+import { MAX_SQL_MONEY_SIZE } from '@/constants/API';
 
 export const UpdateAgreementsYupSchema = Yup.object().shape({
   acquisitionFileId: Yup.string().required('Acquisition file id is required'),

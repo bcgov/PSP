@@ -1,5 +1,6 @@
-import { IApiVersion, useApiHealth } from 'hooks/pims-api';
 import React from 'react';
+
+import { IApiVersion, useApiHealth } from '@/hooks/pims-api';
 
 /**
  * Provides a way to display the API version information.

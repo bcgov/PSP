@@ -1,9 +1,10 @@
-import { FileTypes } from 'constants/fileTypes';
 import { findIndex } from 'lodash';
-import { Api_File } from 'models/api/File';
-import { Api_Project } from 'models/api/Project';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
+
+import { FileTypes } from '@/constants/fileTypes';
+import { Api_File } from '@/models/api/File';
+import { Api_Project } from '@/models/api/Project';
 
 export interface TypedFile extends Api_File {
   fileType: FileTypes;

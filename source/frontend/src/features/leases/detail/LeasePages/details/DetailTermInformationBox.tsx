@@ -1,10 +1,11 @@
 import clsx from 'classnames';
-import { Form } from 'components/common/form';
-import { InlineFlexDiv } from 'components/common/styles';
-import * as Styled from 'features/leases/detail/styles';
 import * as React from 'react';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+
+import { Form } from '@/components/common/form';
+import { InlineFlexDiv } from '@/components/common/styles';
+import * as Styled from '@/features/leases/detail/styles';
+import { prettyFormatDate } from '@/utils';
 
 export interface IDetailTermInformationBoxProps {
   title: string;

@@ -1,9 +1,9 @@
-import { Button } from 'components/common/buttons/Button';
-import { Section } from 'components/common/Section/Section';
-import { Table } from 'components/Table';
-import Claims from 'constants/claims';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
+import { Button } from '@/components/common/buttons/Button';
+import { Section } from '@/components/common/Section/Section';
+import { Table } from '@/components/Table';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
 
 import { DepositListEntry, getColumns } from './columns';
 

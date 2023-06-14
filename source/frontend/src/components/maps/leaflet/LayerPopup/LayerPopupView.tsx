@@ -1,7 +1,8 @@
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import React, { useCallback, useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
+
+import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
 
 import { LayerPopupContent } from './components/LayerPopupContent';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';

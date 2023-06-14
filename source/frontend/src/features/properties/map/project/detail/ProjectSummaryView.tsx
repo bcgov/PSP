@@ -1,10 +1,10 @@
-import EditButton from 'components/common/EditButton';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from 'components/common/Section/SectionStyles';
-import Claims from 'constants/claims';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Project } from 'models/api/Project';
+import EditButton from '@/components/common/EditButton';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_Project } from '@/models/api/Project';
 
 import ProjectProductView from './ProjectProductView';
 

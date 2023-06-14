@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
-import { Api_Project } from 'models/api/Project';
 import React from 'react';
+
+import { Api_Project } from '@/models/api/Project';
 
 import AddProjectForm from './add/AddProjectForm';
 import ProjectTabsContainer from './detail/ProjectTabsContainer';

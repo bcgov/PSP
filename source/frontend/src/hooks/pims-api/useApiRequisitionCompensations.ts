@@ -1,7 +1,7 @@
-import { ENVIRONMENT } from 'constants/environment';
-import CustomAxios from 'customAxios';
-import { Api_CompensationPayee } from 'models/api/CompensationPayee';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
+import { ENVIRONMENT } from '@/constants/environment';
+import CustomAxios from '@/customAxios';
+import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 
 export const getCompensationRequisitionApi = (compensationId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_CompensationRequisition>(

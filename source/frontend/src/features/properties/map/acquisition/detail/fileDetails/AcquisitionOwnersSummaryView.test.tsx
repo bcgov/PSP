@@ -1,9 +1,9 @@
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/acquisitionFiles.mock';
-import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
-import { render, RenderOptions } from 'utils/test-utils';
+} from '@/mocks/acquisitionFiles.mock';
+import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';

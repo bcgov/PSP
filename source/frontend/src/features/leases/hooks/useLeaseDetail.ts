@@ -1,13 +1,14 @@
 import axios, { AxiosError } from 'axios';
-import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { IApiError } from 'interfaces/IApiError';
 import { useContext, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
-import { logError } from 'store/slices/network/networkSlice';
-import { useAxiosErrorHandler } from 'utils';
+
+import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { IApiError } from '@/interfaces/IApiError';
+import { logError } from '@/store/slices/network/networkSlice';
+import { useAxiosErrorHandler } from '@/utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';
 

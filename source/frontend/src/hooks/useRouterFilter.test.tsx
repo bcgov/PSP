@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
 import { createMemoryHistory } from 'history';
 import queryString from 'query-string';
 import React from 'react';
@@ -7,7 +6,9 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import filterSlice from 'store/slices/filter/filterSlice';
+
+import { PropertyClassificationTypes } from '@/constants/propertyClassificationTypes';
+import filterSlice from '@/store/slices/filter/filterSlice';
 
 import { useRouterFilter } from './useRouterFilter';
 

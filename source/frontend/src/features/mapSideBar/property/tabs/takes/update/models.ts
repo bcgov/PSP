@@ -1,9 +1,10 @@
-import { AreaUnitTypes } from 'constants/areaUnitTypes';
-import { Api_Take } from 'models/api/Take';
-import { convertArea } from 'utils/convertUtils';
-/* eslint-disable no-template-curly-in-string */
-import { stringToNull, toTypeCode } from 'utils/formUtils';
 import * as Yup from 'yup';
+
+import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { Api_Take } from '@/models/api/Take';
+import { convertArea } from '@/utils/convertUtils';
+/* eslint-disable no-template-curly-in-string */
+import { stringToNull, toTypeCode } from '@/utils/formUtils';
 
 export const TakesYupSchema = Yup.object().shape({
   takes: Yup.array().of(

@@ -1,20 +1,21 @@
-import { Button } from 'components/common/buttons/Button';
-import { NotesModal } from 'components/common/form/NotesModal';
-import { InlineFlexDiv } from 'components/common/styles';
-import TooltipIcon from 'components/common/TooltipIcon';
-import { ColumnWithProps, renderDate, renderMoney, renderTypeCode } from 'components/Table';
-import { Claims } from 'constants/claims';
 import { getIn } from 'formik';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { IFormLeasePayment, ILeasePayment } from 'interfaces';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdReceipt } from 'react-icons/md';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { stringToFragment } from 'utils';
-import { withNameSpace } from 'utils/formUtils';
-import { formatMoney } from 'utils/numberFormatUtils';
+
+import { Button } from '@/components/common/buttons/Button';
+import { NotesModal } from '@/components/common/form/NotesModal';
+import { InlineFlexDiv } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { ColumnWithProps, renderDate, renderMoney, renderTypeCode } from '@/components/Table';
+import { Claims } from '@/constants/claims';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { IFormLeasePayment, ILeasePayment } from '@/interfaces';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { stringToFragment } from '@/utils';
+import { withNameSpace } from '@/utils/formUtils';
+import { formatMoney } from '@/utils/numberFormatUtils';
 
 const actualsActions = (
   onEdit: (values: IFormLeasePayment) => void,

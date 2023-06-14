@@ -1,5 +1,6 @@
 import React from 'react';
-import { ILookupCode } from 'store/slices/lookupCodes';
+
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import { useAxiosApi } from '.';
 

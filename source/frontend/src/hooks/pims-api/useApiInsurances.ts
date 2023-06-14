@@ -1,6 +1,7 @@
-import { IInsurance } from 'interfaces';
-import { IBatchUpdateReply, IBatchUpdateRequest } from 'interfaces/batchUpdate';
 import React from 'react';
+
+import { IInsurance } from '@/interfaces';
+import { IBatchUpdateReply, IBatchUpdateRequest } from '@/interfaces/batchUpdate';
 
 import { useAxiosApi } from '.';
 

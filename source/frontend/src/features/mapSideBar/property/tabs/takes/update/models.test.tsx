@@ -1,4 +1,4 @@
-import { Api_Take } from 'models/api/Take';
+import { Api_Take } from '@/models/api/Take';
 
 import { TakeModel } from './models';
 import { emptyTake } from './TakesUpdateForm';

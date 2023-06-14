@@ -1,14 +1,15 @@
-import { Button } from 'components/common/buttons/Button';
-import { Select, SelectOption } from 'components/common/form';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { SectionField } from 'components/common/Section/SectionField';
-import TooltipIcon from 'components/common/TooltipIcon';
-import ValidDocumentExtensions from 'constants/ValidDocumentExtensions';
 import { Formik, FormikProps } from 'formik';
-import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+
+import { Button } from '@/components/common/buttons/Button';
+import { Select, SelectOption } from '@/components/common/form';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import ValidDocumentExtensions from '@/constants/ValidDocumentExtensions';
+import { Api_DocumentType, Api_DocumentUploadRequest } from '@/models/api/Document';
+import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
 
 import { StyledGreySection, StyledH2, StyledH3, StyledScrollable } from '../commonStyles';
 import { DocumentUploadFormData } from '../ComposedDocument';

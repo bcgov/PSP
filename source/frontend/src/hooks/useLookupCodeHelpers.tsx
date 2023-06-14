@@ -1,9 +1,10 @@
-import { SelectOption } from 'components/common/form';
-import * as API from 'constants/API';
 import { useCallback } from 'react';
-import { useAppSelector } from 'store/hooks';
-import { ILookupCode } from 'store/slices/lookupCodes';
-import { mapLookupCode } from 'utils';
+
+import { SelectOption } from '@/components/common/form';
+import * as API from '@/constants/API';
+import { useAppSelector } from '@/store/hooks';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { mapLookupCode } from '@/utils';
 
 /**
  * Hook to return an array ILookupCode for specific types.

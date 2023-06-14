@@ -1,12 +1,13 @@
-import { LinkButton, StyledRemoveLinkButton } from 'components/common/buttons';
-import { FastCurrencyInput, Select, SelectOption } from 'components/common/form';
-import GenericModal from 'components/common/GenericModal';
-import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
-import { stringToBoolean } from 'utils/formUtils';
+
+import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
+import { FastCurrencyInput, Select, SelectOption } from '@/components/common/form';
+import GenericModal from '@/components/common/GenericModal';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { stringToBoolean } from '@/utils/formUtils';
 
 import { CompensationRequisitionFormModel, FinancialActivityFormModel } from '../../models';
 

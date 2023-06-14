@@ -1,14 +1,15 @@
-import GenericModal from 'components/common/GenericModal';
-import { Section } from 'components/common/Section/Section';
-import { SectionListHeader } from 'components/common/SectionListHeader';
-import { TableSort } from 'components/Table/TableSort';
-import Claims from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { DocumentTypeName } from 'constants/documentType';
-import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
-import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
 import React, { useEffect, useState } from 'react';
+
+import GenericModal from '@/components/common/GenericModal';
+import { Section } from '@/components/common/Section/Section';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
+import { TableSort } from '@/components/Table/TableSort';
+import Claims from '@/constants/claims';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { DocumentTypeName } from '@/constants/documentType';
+import { defaultDocumentFilter, IDocumentFilter } from '@/interfaces/IDocumentResults';
+import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from '@/models/api/Document';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';

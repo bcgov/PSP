@@ -1,8 +1,9 @@
-import { Claims } from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import DocumentListContainer from 'features/documents/list/DocumentListContainer';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
+
+import { Claims } from '@/constants/claims';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 interface IAcquisitionDocumentsTabProps {
   acquisitionFileId: number;

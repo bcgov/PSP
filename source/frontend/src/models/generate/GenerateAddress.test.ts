@@ -1,4 +1,4 @@
-import { getMockApiAddress } from 'mocks/address.mock';
+import { getMockApiAddress } from '@/mocks/address.mock';
 
 import { Api_GenerateAddress } from './GenerateAddress';
 

@@ -1,10 +1,11 @@
 import clsx from 'classnames';
-import { Button } from 'components/common/buttons/Button';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import L from 'leaflet';
 import React, { useEffect } from 'react';
 import { FaLayerGroup } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 import Control from '../Control';
 import LayersTree from './LayersMenu';

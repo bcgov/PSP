@@ -1,13 +1,13 @@
-import { FormTenant } from 'features/leases/detail/LeasePages/tenant/ViewTenantForm';
-import { IFormLeaseTerm, ILease } from 'interfaces';
-import { Api_LeaseTenant } from 'models/api/LeaseTenant';
+import { FormTenant } from '@/features/leases/detail/LeasePages/tenant/ViewTenantForm';
+import { IFormLeaseTerm, ILease } from '@/interfaces';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 import {
   nullableBooleanToString,
   stringToNull,
   toTypeCode,
   yesNoUnknownToBoolean,
-} from 'utils/formUtils';
-import { formatNames } from 'utils/personUtils';
+} from '@/utils/formUtils';
+import { formatNames } from '@/utils/personUtils';
 
 import { IFormLease } from './../../interfaces/ILease';
 import {

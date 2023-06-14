@@ -1,6 +1,7 @@
-import TabView from 'components/common/TabView';
 import * as React from 'react';
 import { Tab } from 'react-bootstrap';
+
+import TabView from '@/components/common/TabView';
 
 export interface TabFileView {
   content: React.ReactNode;

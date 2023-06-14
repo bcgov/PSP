@@ -1,11 +1,12 @@
 import axios, { AxiosError } from 'axios';
-import { useApiLeaseDeposits } from 'hooks/pims-api/useApiLeaseDeposits';
-import { IApiError } from 'interfaces/IApiError';
-import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
-import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { handleAxiosResponse } from 'utils';
+
+import { useApiLeaseDeposits } from '@/hooks/pims-api/useApiLeaseDeposits';
+import { IApiError } from '@/interfaces/IApiError';
+import { IParentConcurrencyGuard } from '@/interfaces/IParentConcurrencyGuard';
+import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
+import { handleAxiosResponse } from '@/utils';
 
 /**
  * hook providing lease deposits methods

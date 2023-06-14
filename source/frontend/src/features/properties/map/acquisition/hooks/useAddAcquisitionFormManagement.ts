@@ -1,11 +1,12 @@
 import { FormikProps } from 'formik';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import useApiUserOverride from 'hooks/useApiUserOverride';
-import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import { useCallback } from 'react';
+
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddAcquisitionFileYupSchema } from '../add/AddAcquisitionFileYupSchema';
 import { AcquisitionForm } from '../add/models';

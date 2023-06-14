@@ -1,10 +1,11 @@
-import { LinkButton } from 'components/common/buttons';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import TooltipIcon from 'components/common/TooltipIcon';
 import fileDownload from 'js-file-download';
-import { Api_FileDownload } from 'models/api/DocumentStorage';
 import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+
+import { LinkButton } from '@/components/common/buttons';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { Api_FileDownload } from '@/models/api/DocumentStorage';
 
 import { useDocumentProvider } from './hooks/useDocumentProvider';
 

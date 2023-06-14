@@ -1,6 +1,7 @@
-import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import { FormikProps } from 'formik';
 import * as React from 'react';
+
+import { UpdatePropertyDetailsContainer } from '@/features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 
 import ComposedProperty from './ComposedProperty';
 import PropertyContainer from './PropertyContainer';

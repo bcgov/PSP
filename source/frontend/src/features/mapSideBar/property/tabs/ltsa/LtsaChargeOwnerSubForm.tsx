@@ -1,14 +1,15 @@
-import { Input } from 'components/common/form';
-import { SectionField } from 'components/common/Section/SectionField';
 import { getIn, useFormikContext } from 'formik';
+import * as React from 'react';
+import { Col, Row } from 'react-bootstrap';
+
+import { Input } from '@/components/common/form';
+import { SectionField } from '@/components/common/Section/SectionField';
 import {
   ChargeOwnershipGroup,
   ChargeOwnershipGroupChargeOwner,
   LtsaOrders,
-} from 'interfaces/ltsaModels';
-import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { withNameSpace } from 'utils/formUtils';
+} from '@/interfaces/ltsaModels';
+import { withNameSpace } from '@/utils/formUtils';
 export interface ILtsaChargeOwnerSubFormProps {
   nameSpace?: string;
 }

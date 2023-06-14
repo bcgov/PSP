@@ -1,17 +1,18 @@
-import { useAgreementProvider } from 'hooks/repositories/useAgreementProvider';
-import { mockAgreementsResponse } from 'mocks/agreements.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { Api_Agreement } from 'models/api/Agreement';
 import { createRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions } from 'utils/test-utils';
+
+import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
+import { mockAgreementsResponse } from '@/mocks/agreements.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { Api_Agreement } from '@/models/api/Agreement';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { AgreementsFormModel, SingleAgreementFormModel } from './models';
 import { UpdateAgreementsContainer } from './UpdateAgreementsContainer';
 import { IUpdateAgreementsFormProps } from './UpdateAgreementsForm';
 
 // mock API service calls
-jest.mock('hooks/repositories/useAgreementProvider');
+jest.mock('@/hooks/repositories/useAgreementProvider');
 
 type Provider = typeof useAgreementProvider;
 const mockUpdateAgreements = jest.fn();

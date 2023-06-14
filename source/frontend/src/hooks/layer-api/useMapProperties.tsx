@@ -1,9 +1,10 @@
-import { IGeoSearchParams } from 'constants/API';
-import CustomAxios from 'customAxios';
 import { FeatureCollection } from 'geojson';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { useCallback, useContext } from 'react';
-import { TenantContext } from 'tenants';
+
+import { IGeoSearchParams } from '@/constants/API';
+import CustomAxios from '@/customAxios';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { TenantContext } from '@/tenants';
 
 import { toCqlFilter } from './layerUtils';
 

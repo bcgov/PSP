@@ -1,12 +1,12 @@
-import { showFile } from 'features/documents/DownloadDocumentButton';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from 'features/properties/map/shared/content/models';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { AgreementTypes, Api_Agreement } from 'models/api/Agreement';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { Api_GenerateAcquisitionFile } from 'models/generate/acquisition/GenerateAcquisitionFile';
-import { Api_GenerateAgreement } from 'models/generate/GenerateAgreement';
+import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
+import { FormTemplateTypes } from '@/features/properties/map/shared/content/models';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { AgreementTypes, Api_Agreement } from '@/models/api/Agreement';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
+import { Api_GenerateAgreement } from '@/models/generate/GenerateAgreement';
 
 export const useGenerateAgreement = () => {
   const { getPersonConcept } = useApiContacts();

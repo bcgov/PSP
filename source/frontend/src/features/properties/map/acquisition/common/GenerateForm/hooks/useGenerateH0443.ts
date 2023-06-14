@@ -1,14 +1,14 @@
-import { FormDocumentType } from 'constants/formDocumentTypes';
-import { showFile } from 'features/documents/DownloadDocumentButton';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { useProperties } from 'hooks/repositories/useProperties';
-import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { Api_GenerateOwner } from 'models/generate/GenerateOwner';
-import { Api_GeneratePerson } from 'models/generate/GeneratePerson';
-import { Api_GenerateProperty } from 'models/generate/GenerateProperty';
+import { FormDocumentType } from '@/constants/formDocumentTypes';
+import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useProperties } from '@/hooks/repositories/useProperties';
+import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
+import { Api_GeneratePerson } from '@/models/generate/GeneratePerson';
+import { Api_GenerateProperty } from '@/models/generate/GenerateProperty';
 
 export const useGenerateH0443 = () => {
   const { getPersonConcept } = useApiContacts();

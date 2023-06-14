@@ -1,7 +1,8 @@
-import { ColumnWithProps, MoneyCell, Table } from 'components/Table';
-import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
 import { CellProps } from 'react-table';
-import { formatMoney, stringToFragment } from 'utils';
+
+import { ColumnWithProps, MoneyCell, Table } from '@/components/Table';
+import { IBcAssessmentSummary } from '@/hooks/useBcAssessmentLayer';
+import { formatMoney, stringToFragment } from '@/utils';
 
 interface IAssessedValuesTableProps {
   valuesData?: IBcAssessmentSummary['SALES'];

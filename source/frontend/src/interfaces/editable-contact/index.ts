@@ -1,6 +1,6 @@
-import { AddressTypes } from 'constants/addressTypes';
-import { IContactPerson } from 'interfaces/IContact';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { AddressTypes } from '@/constants/addressTypes';
+import { IContactPerson } from '@/interfaces/IContact';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
 import ITypeCode from '../ITypeCode';
 

@@ -1,12 +1,13 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { ProjectStateContext } from 'features/projects/context/ProjectContext';
-import { useApiProjects } from 'hooks/pims-api/useApiProjects';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { IApiError } from 'interfaces/IApiError';
-import { Api_Product, Api_Project } from 'models/api/Project';
 import { useCallback, useContext, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+
+import { ProjectStateContext } from '@/features/projects/context/ProjectContext';
+import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_Product, Api_Project } from '@/models/api/Project';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
  * hook that retrieves Project information.

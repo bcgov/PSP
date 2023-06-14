@@ -1,5 +1,5 @@
-import { IEditablePerson } from 'interfaces/editable-contact';
-import { Api_Person } from 'models/api/Person';
+import { IEditablePerson } from '@/interfaces/editable-contact';
+import { Api_Person } from '@/models/api/Person';
 
 export function formatFullName(person?: Partial<IEditablePerson>): string {
   if (!person) {

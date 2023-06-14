@@ -1,15 +1,16 @@
-import { Button } from 'components/common/buttons';
-import { GenericModal } from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import { Claims } from 'constants/index';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Note } from 'models/api/Note';
 import { Col, Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+
+import { Button } from '@/components/common/buttons';
+import { GenericModal } from '@/components/common/GenericModal';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import { Claims } from '@/constants/index';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_Note } from '@/models/api/Note';
+import { prettyFormatDate } from '@/utils';
 
 export interface INoteDetailsFormModalProps {
   /** Whether to show the notes modal. Default: false */

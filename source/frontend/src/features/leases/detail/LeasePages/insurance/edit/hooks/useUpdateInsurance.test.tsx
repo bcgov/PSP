@@ -1,15 +1,16 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { IInsurance } from 'interfaces';
-import { IBatchUpdateReply, IBatchUpdateRequest } from 'interfaces/batchUpdate';
 import find from 'lodash/find';
-import * as MOCK from 'mocks/data.mock';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { networkSlice } from 'store/slices/network/networkSlice';
+
+import { IInsurance } from '@/interfaces';
+import { IBatchUpdateReply, IBatchUpdateRequest } from '@/interfaces/batchUpdate';
+import * as MOCK from '@/mocks/data.mock';
+import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useUpdateInsurance } from './useUpdateInsurance';
 

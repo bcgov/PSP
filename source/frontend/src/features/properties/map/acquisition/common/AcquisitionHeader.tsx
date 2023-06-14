@@ -1,10 +1,11 @@
-import { HeaderField } from 'components/common/HeaderField/HeaderField';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+
+import { HeaderField } from '@/components/common/HeaderField/HeaderField';
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { prettyFormatDate } from '@/utils';
 
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: Api_AcquisitionFile;

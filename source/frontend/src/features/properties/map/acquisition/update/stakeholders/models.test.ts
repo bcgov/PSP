@@ -1,4 +1,4 @@
-import { Api_InterestHolder } from 'models/api/InterestHolder';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
 
 import {
   emptyApiInterestHolder,

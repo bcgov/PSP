@@ -1,6 +1,6 @@
-import { Roles } from 'constants/index';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { render, RenderOptions } from 'utils/test-utils';
+import { Roles } from '@/constants/index';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { FinancialCodeResults, IFinancialCodeResultsProps } from './FinancialCodeResults';
 

@@ -1,5 +1,6 @@
-import { LtsaOrders, ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
 import React from 'react';
+
+import { LtsaOrders, ParcelInfoOrder, TitleSummary } from '@/interfaces/ltsaModels';
 
 import { useAxiosApi } from '.';
 

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { FormDocumentType } from 'constants/formDocumentTypes';
-import { FileTypes } from 'constants/index';
-import { SideBarContextProvider } from 'features/properties/map/context/sidebarContext';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { mockLookups } from 'mocks/lookups.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { FormDocumentType } from '@/constants/formDocumentTypes';
+import { FileTypes } from '@/constants/index';
+import { SideBarContextProvider } from '@/features/properties/map/context/sidebarContext';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import GenerateFormContainer, { IGenerateFormContainerProps } from './GenerateFormContainer';
 import { IGenerateFormViewProps } from './GenerateFormView';

@@ -1,16 +1,17 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { FileTypes } from 'constants/index';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
+
+import { FileTypes } from '@/constants/index';
+import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/acquisitionFiles.mock';
-import { mockLookups } from 'mocks/lookups.mock';
-import { mockNotesResponse } from 'mocks/noteResponses.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+} from '@/mocks/acquisitionFiles.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockNotesResponse } from '@/mocks/noteResponses.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   render,
@@ -18,7 +19,7 @@ import {
   screen,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { AcquisitionContainer, IAcquisitionContainerProps } from './AcquisitionContainer';
@@ -30,7 +31,7 @@ const generateFn = jest.fn();
 
 // mock auth library
 jest.mock('@react-keycloak/web');
-jest.mock('features/documents/hooks/useDocumentGenerationRepository');
+jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
   generateDocumentDownloadWrappedRequest: generateFn,
 }));

@@ -1,12 +1,13 @@
-import { IGeoSearchParams } from 'constants/API';
 import { BBox } from 'geojson';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { IProperty } from 'interfaces';
 import { LatLngBounds } from 'leaflet';
 import React, { useEffect, useMemo } from 'react';
 import { useContext } from 'react';
 import { useMap } from 'react-leaflet';
 import { tilesInBbox } from 'tiles-in-bbox';
+
+import { IGeoSearchParams } from '@/constants/API';
+import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
+import { IProperty } from '@/interfaces';
 
 import { useMapRefreshEvent } from '../../hooks/useMapRefreshEvent';
 import { useMapSearch } from '../../hooks/useMapSearch';

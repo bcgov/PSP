@@ -1,19 +1,20 @@
-import { Button } from 'components/common/buttons';
-import { Check, Form, Input, Multiselect } from 'components/common/form';
-import { RadioGroup } from 'components/common/form/RadioGroup';
-import { SectionField } from 'components/common/Section/SectionField';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import * as API from 'constants/API';
 import { Formik } from 'formik';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import Api_TypeCode from 'models/api/TypeCode';
-import { Api_User } from 'models/api/User';
 import * as React from 'react';
 import { ButtonToolbar, Row } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
-import { UserUpdateSchema } from 'utils/YupSchema';
+
+import { Button } from '@/components/common/buttons';
+import { Check, Form, Input, Multiselect } from '@/components/common/form';
+import { RadioGroup } from '@/components/common/form/RadioGroup';
+import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import * as API from '@/constants/API';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import Api_TypeCode from '@/models/api/TypeCode';
+import { Api_User } from '@/models/api/User';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { UserUpdateSchema } from '@/utils/YupSchema';
 
 import RolesToolTip from '../access-request/RolesToolTip';
 import { FormUser, userTypeCodeValues } from '../users/models';

@@ -1,7 +1,8 @@
 import { GeoJsonProperties } from 'geojson';
-import { Api_Property } from 'models/api/Property';
-import Api_TypeCode from 'models/api/TypeCode';
-import { booleanToString } from 'utils/formUtils';
+
+import { Api_Property } from '@/models/api/Property';
+import Api_TypeCode from '@/models/api/TypeCode';
+import { booleanToString } from '@/utils/formUtils';
 
 export interface IPropertyDetailsForm
   extends ExtendOverride<

@@ -1,14 +1,15 @@
-import { fromApiOrganization, fromApiPerson, IContactSearchResult } from 'interfaces';
 import { isEmpty } from 'lodash';
+
+import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/interfaces';
 import {
   Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
   Api_AcquisitionFileRepresentative,
   Api_AcquisitionFileSolicitor,
-} from 'models/api/AcquisitionFile';
-import { Api_Address } from 'models/api/Address';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
+} from '@/models/api/AcquisitionFile';
+import { Api_Address } from '@/models/api/Address';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from '@/utils/formUtils';
 
 export interface WithAcquisitionTeam {
   team: AcquisitionTeamFormModel[];

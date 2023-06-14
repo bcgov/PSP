@@ -1,9 +1,10 @@
-import { CancelConfirmationModal } from 'components/common/CancelConfirmationModal';
-import { NoteTypes } from 'constants/index';
 import { FormikProps } from 'formik';
-import { useModalManagement } from 'hooks/useModalManagement';
-import { Api_Note } from 'models/api/Note';
 import { useRef } from 'react';
+
+import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
+import { NoteTypes } from '@/constants/index';
+import { useModalManagement } from '@/hooks/useModalManagement';
+import { Api_Note } from '@/models/api/Note';
 
 import { useUpdateNotesFormManagement } from '../hooks/useUpdateNotesFormManagement';
 import { NoteForm } from '../models';

@@ -1,6 +1,6 @@
-import { Api_Product, Api_Project } from 'models/api/Project';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
+import { Api_Product, Api_Project } from '@/models/api/Project';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
 
 export class ProductForm {
   id: number | null = null;

@@ -1,10 +1,11 @@
-import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { getMockApiPropertyFiles } from 'mocks/properties.mock';
-import { getMockApiTakes } from 'mocks/takes.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, screen, userEvent, within } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
+import { getMockApiTakes } from '@/mocks/takes.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/test-utils';
 
 import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
 

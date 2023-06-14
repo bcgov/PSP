@@ -1,5 +1,6 @@
-import { IResearchFilter } from 'features/research/interfaces';
 import React from 'react';
+
+import { IResearchFilter } from '@/features/research/interfaces';
 
 import { IPaginateRequest, useAxiosApi } from '.';
 import { IGeocoderPidsResponse, IGeocoderResponse } from './interfaces/IGeocoder';

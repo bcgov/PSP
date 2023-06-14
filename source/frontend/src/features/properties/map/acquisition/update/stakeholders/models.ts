@@ -1,9 +1,10 @@
-import { IContactSearchResult } from 'interfaces';
 import { chain, uniqBy } from 'lodash';
-import { Api_InterestHolder, Api_InterestHolderProperty } from 'models/api/InterestHolder';
-import { Api_Organization } from 'models/api/Organization';
-import { Api_Person } from 'models/api/Person';
-import { getFilePropertyName } from 'utils/mapPropertyUtils';
+
+import { IContactSearchResult } from '@/interfaces';
+import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
+import { Api_Organization } from '@/models/api/Organization';
+import { Api_Person } from '@/models/api/Person';
+import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 export class StakeHolderForm {
   public interestHolders: InterestHolderForm[] = [];

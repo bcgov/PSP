@@ -1,5 +1,6 @@
-import { ILease } from 'interfaces';
 import React from 'react';
+
+import { ILease } from '@/interfaces';
 
 import { ILeaseTerm } from './../../interfaces/ILeaseTerm';
 import { useAxiosApi } from '.';

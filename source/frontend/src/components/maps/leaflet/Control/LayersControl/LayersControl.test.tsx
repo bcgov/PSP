@@ -1,8 +1,9 @@
 import L from 'leaflet';
 import { noop } from 'lodash';
 import { useState } from 'react';
-import { act, cleanup, render, waitFor } from 'utils/test-utils';
-import { createMapContainer, deferred, userEvent } from 'utils/test-utils';
+
+import { act, cleanup, render, waitFor } from '@/utils/test-utils';
+import { createMapContainer, deferred, userEvent } from '@/utils/test-utils';
 
 import LayersControl from './LayersControl';
 

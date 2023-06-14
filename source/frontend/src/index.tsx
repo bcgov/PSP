@@ -7,19 +7,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
 
 import { ReactKeycloakProvider } from '@react-keycloak/web';
-import css from 'assets/scss/_variables.module.scss';
-import { AuthStateContextProvider } from 'contexts/authStateContext';
-import { ModalContextProvider } from 'contexts/modalContext';
-import LoginLoading from 'features/account/LoginLoading';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
-import EmptyLayout from 'layouts/EmptyLayout';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { store } from 'store/store';
 import { ThemeProvider } from 'styled-components';
-import { TenantConsumer, TenantProvider } from 'tenants';
-import getKeycloakEventHandler from 'utils/getKeycloakEventHandler';
+
+import css from '@/assets/scss/_variables.module.scss';
+import { AuthStateContextProvider } from '@/contexts/authStateContext';
+import { ModalContextProvider } from '@/contexts/modalContext';
+import LoginLoading from '@/features/account/LoginLoading';
+import EmptyLayout from '@/layouts/EmptyLayout';
+import { store } from '@/store/store';
+import { TenantConsumer, TenantProvider } from '@/tenants';
+import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker.ignore';

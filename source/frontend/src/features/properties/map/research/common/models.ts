@@ -1,5 +1,5 @@
-import { IAutocompletePrediction } from 'interfaces';
-import { Api_ResearchFileProject } from 'models/api/ResearchFile';
+import { IAutocompletePrediction } from '@/interfaces';
+import { Api_ResearchFileProject } from '@/models/api/ResearchFile';
 
 export class ResearchFileProjectFormModel {
   public id: number | undefined;

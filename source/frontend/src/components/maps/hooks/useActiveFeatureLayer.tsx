@@ -1,14 +1,15 @@
-import { DistrictCodes, RegionCodes } from 'constants/index';
 import { Feature, FeatureCollection, GeoJsonObject, GeoJsonProperties, Geometry } from 'geojson';
-import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
-import { useMapProperties } from 'hooks/layer-api/useMapProperties';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
 import { isNumber } from 'lodash';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useTenant } from 'tenants';
+
+import { DistrictCodes, RegionCodes } from '@/constants/index';
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
+import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
+import { IProperty } from '@/interfaces';
+import { useTenant } from '@/tenants';
 
 import { PopupContentConfig } from '../leaflet/LayerPopup/components/LayerPopupContent';
 import {

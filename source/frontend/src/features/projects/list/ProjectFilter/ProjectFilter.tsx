@@ -1,16 +1,17 @@
-import { ResetButton, SearchButton } from 'components/common/buttons';
-import { Input, Select } from 'components/common/form';
-import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
-import { FilterBoxForm } from 'components/common/styles';
-import { PROJECT_STATUS_TYPES } from 'constants/API';
-import { ProjectStatusTypes } from 'constants/projectStatusTypes';
-import { IProjectFilter } from 'features/projects/interfaces';
 import { Formik } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { mapLookupCode } from 'utils';
+
+import { ResetButton, SearchButton } from '@/components/common/buttons';
+import { Input, Select } from '@/components/common/form';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { FilterBoxForm } from '@/components/common/styles';
+import { PROJECT_STATUS_TYPES } from '@/constants/API';
+import { ProjectStatusTypes } from '@/constants/projectStatusTypes';
+import { IProjectFilter } from '@/features/projects/interfaces';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { mapLookupCode } from '@/utils';
 
 export interface IProjectFilterProps {
   filter?: IProjectFilter;

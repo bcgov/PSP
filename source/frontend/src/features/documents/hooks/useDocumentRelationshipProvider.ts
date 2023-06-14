@@ -1,15 +1,16 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { IApiError } from 'interfaces/IApiError';
+import { useCallback } from 'react';
+import { toast } from 'react-toastify';
+
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { IApiError } from '@/interfaces/IApiError';
 import {
   Api_DocumentRelationship,
   Api_DocumentUploadRequest,
   Api_DocumentUploadResponse,
-} from 'models/api/Document';
-import { useCallback } from 'react';
-import { toast } from 'react-toastify';
+} from '@/models/api/Document';
 
 /**
  * hook that retrieves document relationship information.

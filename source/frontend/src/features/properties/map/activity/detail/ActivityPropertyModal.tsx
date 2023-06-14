@@ -1,11 +1,12 @@
-import GenericModal, { ModalSize } from 'components/common/GenericModal';
-import { ModalContext } from 'contexts/modalContext';
 import { dequal } from 'dequal';
-import { getCancelModalProps } from 'hooks/useModalContext';
-import { Api_Activity } from 'models/api/Activity';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import React from 'react';
 import { useContext } from 'react';
+
+import GenericModal, { ModalSize } from '@/components/common/GenericModal';
+import { ModalContext } from '@/contexts/modalContext';
+import { getCancelModalProps } from '@/hooks/useModalContext';
+import { Api_Activity } from '@/models/api/Activity';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import PropertyActivityTable from '../properties/PropertyActivityTable';
 import { ActivityModel } from './models';

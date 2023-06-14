@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
-import { FileTypes } from 'constants/fileTypes';
+import { useCallback, useMemo } from 'react';
+
+import { FileTypes } from '@/constants/fileTypes';
 import {
   deleteActivity,
   getActivity,
@@ -9,11 +11,10 @@ import {
   postFileActivity,
   putActivity,
   putActivityProperties,
-} from 'hooks/pims-api/useApiActivities';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from 'models/api/Activity';
-import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+} from '@/hooks/pims-api/useApiActivities';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from '@/models/api/Activity';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
  * hook that interacts with the Activitys API.

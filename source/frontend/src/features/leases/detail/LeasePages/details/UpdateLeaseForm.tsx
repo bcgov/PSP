@@ -1,15 +1,16 @@
-import { AddLeaseYupSchema } from 'features/leases/add/AddLeaseYupSchema';
-import AdministrationSubForm from 'features/leases/add/AdministrationSubForm';
-import ConsultationSubForm from 'features/leases/add/ConsultationSubForm';
-import LeaseDetailSubForm from 'features/leases/add/LeaseDetailSubForm';
-import ReferenceSubForm from 'features/leases/add/ReferenceSubForm';
-import * as Styled from 'features/leases/add/styles';
-import { getDefaultFormLease, LeaseFormModel } from 'features/leases/models';
-import { LeasePropertySelector } from 'features/leases/shared/propertyPicker/LeasePropertySelector';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
+import AdministrationSubForm from '@/features/leases/add/AdministrationSubForm';
+import ConsultationSubForm from '@/features/leases/add/ConsultationSubForm';
+import LeaseDetailSubForm from '@/features/leases/add/LeaseDetailSubForm';
+import ReferenceSubForm from '@/features/leases/add/ReferenceSubForm';
+import * as Styled from '@/features/leases/add/styles';
+import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
+import { LeasePropertySelector } from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
 
 interface IUpdateLeaseFormProps {
   onSubmit: (lease: LeaseFormModel) => Promise<void>;

@@ -1,12 +1,13 @@
-import { TextArea } from 'components/common/form';
-import { GenericModal } from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+
+import { TextArea } from '@/components/common/form';
+import { GenericModal } from '@/components/common/GenericModal';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import { prettyFormatDate } from '@/utils';
 
 import { NoteForm } from '../models';
 

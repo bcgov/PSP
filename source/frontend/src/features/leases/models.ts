@@ -1,12 +1,12 @@
-import { IMapProperty } from 'components/propertySelector/models';
-import { PropertyAreaUnitTypes } from 'constants/index';
-import { PropertyForm } from 'features/properties/map/shared/models';
-import { IAutocompletePrediction } from 'interfaces';
-import { Api_Lease, Api_LeaseConsultation } from 'models/api/Lease';
-import { Api_PropertyLease } from 'models/api/PropertyLease';
-import { ILookupCode } from 'store/slices/lookupCodes/interfaces/ILookupCode';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { emptyStringtoNullable, fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
+import { IMapProperty } from '@/components/propertySelector/models';
+import { PropertyAreaUnitTypes } from '@/constants/index';
+import { PropertyForm } from '@/features/properties/map/shared/models';
+import { IAutocompletePrediction } from '@/interfaces';
+import { Api_Lease, Api_LeaseConsultation } from '@/models/api/Lease';
+import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { ILookupCode } from '@/store/slices/lookupCodes/interfaces/ILookupCode';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { emptyStringtoNullable, fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
 
 export class LeaseFormModel {
   id?: number;

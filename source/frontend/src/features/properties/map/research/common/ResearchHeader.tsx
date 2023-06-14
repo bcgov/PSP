@@ -1,11 +1,12 @@
-import { HeaderField } from 'components/common/HeaderField/HeaderField';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
-import Api_TypeCode from 'models/api/TypeCode';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+
+import { HeaderField } from '@/components/common/HeaderField/HeaderField';
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import Api_TypeCode from '@/models/api/TypeCode';
+import { prettyFormatDate } from '@/utils';
 
 export interface IResearchHeaderProps {
   researchFile?: Api_ResearchFile;

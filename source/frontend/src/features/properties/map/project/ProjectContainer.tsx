@@ -1,8 +1,9 @@
 import { FormikProps } from 'formik';
-import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
-import { Api_Project } from 'models/api/Project';
 import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import * as Yup from 'yup';
+
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { Api_Project } from '@/models/api/Project';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { ProjectForm } from './models';

@@ -1,7 +1,8 @@
 import orderBy from 'lodash/orderBy';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import moment from 'moment';
 import * as React from 'react';
+
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import { useTakesRepository } from '../repositories/useTakesRepository';
 import { ITakesDetailViewProps } from './TakesDetailView';

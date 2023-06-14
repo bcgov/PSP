@@ -1,11 +1,12 @@
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { getMockApiPropertyFiles } from 'mocks/properties.mock';
-import { getMockApiTakes } from 'mocks/takes.mock';
 import { forwardRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
+import { getMockApiTakes } from '@/mocks/takes.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { TakeModel } from './models';
 import TakesUpdateContainer, { ITakesDetailContainerProps } from './TakesUpdateContainer';

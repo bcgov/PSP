@@ -1,9 +1,10 @@
-import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { getMockApiCompensationList } from 'mocks/compensations.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import Claims from '@/constants/claims';
+import { getMockApiCompensationList } from '@/mocks/compensations.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 

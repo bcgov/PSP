@@ -1,13 +1,14 @@
-import EditButton from 'components/common/EditButton';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from 'components/common/Section/SectionStyles';
-import Claims from 'constants/claims';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { formatApiProjectName, prettyFormatDate } from 'utils';
-import { formatApiPersonNames } from 'utils/personUtils';
+
+import EditButton from '@/components/common/EditButton';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { formatApiProjectName, prettyFormatDate } from '@/utils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 interface DetailResearchFile {
   id?: number;

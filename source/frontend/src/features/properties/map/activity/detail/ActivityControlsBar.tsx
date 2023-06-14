@@ -1,14 +1,15 @@
-import { Button } from 'components/common/buttons';
-import { Select } from 'components/common/form';
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import * as API from 'constants/API';
-import { Claims } from 'constants/claims';
 import { useFormikContext } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
+
+import { Button } from '@/components/common/buttons';
+import { Select } from '@/components/common/form';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
+import { Claims } from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { ActivityModel } from './models';
 

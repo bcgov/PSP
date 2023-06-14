@@ -1,8 +1,9 @@
-import * as CommonStyled from 'components/common/styles';
 import { FormikProps } from 'formik';
-import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import * as React from 'react';
 import { useRef } from 'react';
+
+import * as CommonStyled from '@/components/common/styles';
+import { IFormLeaseTerm } from '@/interfaces/ILeaseTerm';
 
 import { TermForm } from './TermForm';
 

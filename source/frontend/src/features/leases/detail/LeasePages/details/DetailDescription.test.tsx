@@ -1,8 +1,9 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { defaultFormLease, IFormLease } from '@/interfaces';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import DetailDescription, { IDetailDescriptionProps } from './DetailDescription';
 

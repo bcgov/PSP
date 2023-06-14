@@ -1,11 +1,12 @@
-import { FormSection } from 'components/common/form/styles';
-import { ColumnWithProps, Table } from 'components/Table';
-import { PidCell } from 'components/Table/PidCell';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { getIn } from 'formik';
-import { IProperty } from 'interfaces';
 import { useContext } from 'react';
-import { prettyFormatDate, stringToFragment } from 'utils';
+
+import { FormSection } from '@/components/common/form/styles';
+import { ColumnWithProps, Table } from '@/components/Table';
+import { PidCell } from '@/components/Table/PidCell';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { IProperty } from '@/interfaces';
+import { prettyFormatDate, stringToFragment } from '@/utils';
 
 interface IDeclaration {
   id?: number;

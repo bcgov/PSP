@@ -1,8 +1,8 @@
 import {
   emptyApiInterestHolder,
   emptyInterestHolderProperty,
-} from 'features/properties/map/acquisition/update/stakeholders/models';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+} from '@/features/properties/map/acquisition/update/stakeholders/models';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
 

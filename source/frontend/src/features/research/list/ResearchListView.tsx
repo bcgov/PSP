@@ -1,9 +1,3 @@
-import { Button } from 'components/common/buttons/Button';
-import Claims from 'constants/claims';
-import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { useSearch } from 'hooks/useSearch';
-import { IResearchSearchResult, ResearchSearchResultModel } from 'interfaces/IResearchSearchResult';
 import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -11,6 +5,16 @@ import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
+import Claims from '@/constants/claims';
+import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useSearch } from '@/hooks/useSearch';
+import {
+  IResearchSearchResult,
+  ResearchSearchResultModel,
+} from '@/interfaces/IResearchSearchResult';
 
 import { IResearchFilter } from '../interfaces';
 import ResearchFilter, { defaultResearchFilter } from './ResearchFilter/ResearchFilter';

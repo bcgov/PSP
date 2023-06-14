@@ -1,6 +1,7 @@
-import { PropertyTenureTypes } from 'constants/index';
-import { stringToBoolean } from 'utils/formUtils';
 import * as Yup from 'yup';
+
+import { PropertyTenureTypes } from '@/constants/index';
+import { stringToBoolean } from '@/utils/formUtils';
 
 import { PropertyTenureFormModel } from './models';
 

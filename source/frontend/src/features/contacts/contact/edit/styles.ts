@@ -1,11 +1,12 @@
-import { Button } from 'components/common/buttons/Button';
-import { Form as FormBase } from 'components/common/form';
-import { FlexBox } from 'components/common/styles';
 import { Form as FormikForm } from 'formik';
 import styled from 'styled-components';
 
+import { Button } from '@/components/common/buttons/Button';
+import { Form as FormBase } from '@/components/common/form';
+import { FlexBox } from '@/components/common/styles';
+
 // common ui styling
-export * from 'features/contacts/styles';
+export * from '@/features/contacts/styles';
 
 export const H2 = styled.h2`
   font-size: 2rem;

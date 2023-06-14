@@ -1,8 +1,9 @@
-import { useApiProjects } from 'hooks/pims-api/useApiProjects';
-import useIsMounted from 'hooks/useIsMounted';
-import { IAutocompletePrediction } from 'interfaces';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+
+import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
+import useIsMounted from '@/hooks/useIsMounted';
+import { IAutocompletePrediction } from '@/interfaces';
 
 interface IProjectTypeahead {
   handleTypeaheadSearch: (query: string) => Promise<void>;

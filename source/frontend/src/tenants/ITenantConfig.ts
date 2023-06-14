@@ -1,4 +1,4 @@
-import { ILayerItem } from 'components/maps/leaflet/Control/LayersControl/types';
+import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 
 /**
  * Interface for tenant configuration settings.

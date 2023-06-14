@@ -1,9 +1,10 @@
 import { createMemoryHistory } from 'history';
+
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/acquisitionFiles.mock';
-import { render, RenderOptions } from 'utils/test-utils';
+} from '@/mocks/acquisitionFiles.mock';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import AcquisitionOwnersSummaryContainer, {
   IAcquisitionOwnersSummaryViewProps,
@@ -18,7 +19,7 @@ const mockApi = {
 
 const mockAcquisitionFile = mockAcquisitionFileResponse();
 
-jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
+jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionOwners: mockApi,

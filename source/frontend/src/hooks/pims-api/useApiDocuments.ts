@@ -1,4 +1,6 @@
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import React from 'react';
+
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import {
   Api_DocumentRelationship,
   Api_DocumentType,
@@ -6,15 +8,14 @@ import {
   Api_DocumentUpdateResponse,
   Api_DocumentUploadRequest,
   Api_DocumentUploadResponse,
-} from 'models/api/Document';
+} from '@/models/api/Document';
 import {
   Api_FileDownload,
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
   DocumentQueryResult,
-} from 'models/api/DocumentStorage';
-import { ExternalResult } from 'models/api/ExternalResult';
-import React from 'react';
+} from '@/models/api/DocumentStorage';
+import { ExternalResult } from '@/models/api/ExternalResult';
 
 import { Api_Storage_DocumentDetail } from './../../models/api/DocumentStorage';
 import { useAxiosApi } from '.';

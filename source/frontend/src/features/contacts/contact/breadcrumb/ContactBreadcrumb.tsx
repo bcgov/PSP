@@ -1,7 +1,8 @@
-import * as CommonStyled from 'components/common/styles';
 import * as React from 'react';
 import { Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+import * as CommonStyled from '@/components/common/styles';
 
 interface IContactAndLicenseBreadCrumbProps {}
 

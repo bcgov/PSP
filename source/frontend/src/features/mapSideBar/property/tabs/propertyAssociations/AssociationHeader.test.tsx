@@ -1,5 +1,6 @@
 import { createMemoryHistory } from 'history';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import AssociationHeader, { IAssociationHeaderProps } from './AssociationHeader';
 

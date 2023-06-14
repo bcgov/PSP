@@ -1,9 +1,10 @@
-import { IUserLayerQuery, useLayerQuery } from 'hooks/layer-api/useLayerQuery';
-import useIsMounted from 'hooks/useIsMounted';
 import { LatLngLiteral } from 'leaflet';
-import { Api_Property } from 'models/api/Property';
 import { useEffect, useMemo, useState } from 'react';
-import { useTenant } from 'tenants/useTenant';
+
+import { IUserLayerQuery, useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import useIsMounted from '@/hooks/useIsMounted';
+import { Api_Property } from '@/models/api/Property';
+import { useTenant } from '@/tenants/useTenant';
 
 import {
   IPropertyDetailsForm,

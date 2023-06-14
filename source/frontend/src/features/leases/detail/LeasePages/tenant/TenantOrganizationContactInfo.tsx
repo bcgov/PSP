@@ -1,13 +1,14 @@
-import { SectionField } from 'components/common/Section/SectionField';
-import { getPrimaryContact } from 'features/contacts/contactUtils';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
-import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { withNameSpace } from 'utils/formUtils';
-import { formatApiPersonNames } from 'utils/personUtils';
+
+import { SectionField } from '@/components/common/Section/SectionField';
+import { getPrimaryContact } from '@/features/contacts/contactUtils';
+import { IFormLease } from '@/interfaces';
+import { withNameSpace } from '@/utils/formUtils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { FormTenant } from './ViewTenantForm';
 

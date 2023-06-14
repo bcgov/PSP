@@ -1,11 +1,12 @@
 import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims } from 'constants/claims';
-import { mockLookups } from 'mocks/index.mock';
-import { getMockApiPropertyFiles } from 'mocks/properties.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { mockLookups } from '@/mocks/index.mock';
+import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ActivityPropertyModal, { IActivityPropertyModalProps } from './ActivityPropertyModal';
 

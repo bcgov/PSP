@@ -1,10 +1,11 @@
-import { FastCurrencyInput, FastDatePicker, Input, TextArea } from 'components/common/form';
-import { SectionField } from 'components/common/Section/SectionField';
 import { FormikProps } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { withNameSpace } from 'utils/formUtils';
+
+import { FastCurrencyInput, FastDatePicker, Input, TextArea } from '@/components/common/form';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { ProjectForm } from '../models';
 

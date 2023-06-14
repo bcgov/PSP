@@ -1,11 +1,11 @@
-import { IAutocompletePrediction } from 'interfaces';
+import { IAutocompletePrediction } from '@/interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
   Api_AcquisitionFileProperty,
-} from 'models/api/AcquisitionFile';
-import { fromTypeCode, toTypeCode } from 'utils/formUtils';
+} from '@/models/api/AcquisitionFile';
+import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
 import {

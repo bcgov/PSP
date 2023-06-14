@@ -1,9 +1,10 @@
-import { Section } from 'components/common/Section/Section';
-import { SectionField } from 'components/common/Section/SectionField';
-import { StyledSummarySection } from 'components/common/Section/SectionStyles';
-import { Api_Product, Api_Project } from 'models/api/Project';
 import styled from 'styled-components';
-import { formatMoney, prettyFormatDate } from 'utils';
+
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { Api_Product, Api_Project } from '@/models/api/Project';
+import { formatMoney, prettyFormatDate } from '@/utils';
 
 export interface IProjectProductViewProps {
   project?: Api_Project;

@@ -1,19 +1,20 @@
-import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { FileTypes } from 'constants/fileTypes';
-import FileLayout from 'features/mapSideBar/layout/FileLayout';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
-import useApiUserOverride from 'hooks/useApiUserOverride';
-import { Api_File } from 'models/api/File';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
-import { getFilePropertyName } from 'utils/mapPropertyUtils';
+
+import GenericModal from '@/components/common/GenericModal';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { FileTypes } from '@/constants/fileTypes';
+import FileLayout from '@/features/mapSideBar/layout/FileLayout';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { Api_File } from '@/models/api/File';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';

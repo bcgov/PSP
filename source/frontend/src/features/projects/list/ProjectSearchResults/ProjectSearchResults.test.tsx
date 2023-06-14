@@ -1,5 +1,6 @@
 import { render, RenderOptions } from '@testing-library/react';
-import { Api_Project } from 'models/api/Project';
+
+import { Api_Project } from '@/models/api/Project';
 
 import { ProjectSearchResultModel } from './models';
 import { IProjectSearchResultsProps, ProjectSearchResults } from './ProjectSearchResults';

@@ -31,7 +31,7 @@
     "react-click-away-listener": "2.2.2",
     "react-datepicker": "4.8.0",
     "react-dom": "18.2.0",
-    "react-draggable": "4.4.3",
+    "react-draggable": "4.4.5",
     "react-error-boundary": "3.1.4",
     "react-fast-compare": "3.2.0",
     "react-icons": "4.3.1",
@@ -148,6 +148,7 @@
     "resetMocks": false,
     "clearMocks": true,
     "moduleNameMapper": {
+      "@/(.*)$": "<rootDir>/src/$1",
       "\\.(css|less|sass|scss)$": "<rootDir>/src/mocks/style.mock.js"
     },
     "collectCoverageFrom": [

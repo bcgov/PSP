@@ -1,8 +1,9 @@
-import { Backdrop } from 'components/common/styles';
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
-import { Api_Property } from 'models/api/Property';
 import { useContext } from 'react';
 import styled from 'styled-components';
+
+import { Backdrop } from '@/components/common/styles';
+import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { Api_Property } from '@/models/api/Property';
 
 import { SideBarContext } from './context/sidebarContext';
 import MapRouter from './MapRouter';

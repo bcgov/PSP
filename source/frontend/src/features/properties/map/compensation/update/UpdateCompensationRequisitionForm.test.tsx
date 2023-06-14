@@ -1,10 +1,11 @@
 import { FormikProps } from 'formik';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
-import { mockLookups } from 'mocks/lookups.mock';
 import { createRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { CompensationRequisitionFormModel } from '../models';
 import UpdateCompensationRequisitionForm, {

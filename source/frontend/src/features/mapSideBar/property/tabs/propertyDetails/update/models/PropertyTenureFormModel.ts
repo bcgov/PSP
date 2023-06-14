@@ -1,5 +1,5 @@
-import { Api_PropertyTenure } from 'models/api/Property';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { Api_PropertyTenure } from '@/models/api/Property';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 export class PropertyTenureFormModel {
   id?: number;

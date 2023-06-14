@@ -1,4 +1,4 @@
-import { Api_Product } from 'models/api/Project';
+import { Api_Product } from '@/models/api/Project';
 
 export class Api_GenerateProduct {
   number: string;

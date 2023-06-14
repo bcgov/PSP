@@ -1,12 +1,13 @@
 import clsx from 'classnames';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import * as Styled from 'components/common/styles';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import React from 'react';
 import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import * as Styled from '@/components/common/styles';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 
 import { CompensationRequisitionDetailContainer } from './detail/CompensationRequisitionDetailContainer';
 import CompensationRequisitionDetailView from './detail/CompensationRequisitionDetailView';

@@ -1,6 +1,7 @@
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { Api_AcquisitionFileOwner } from 'models/api/AcquisitionFile';
 import { useCallback, useEffect, useState } from 'react';
+
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
 
 export interface IAcquisitionOwnersContainerProps {
   acquisitionFileId: number;

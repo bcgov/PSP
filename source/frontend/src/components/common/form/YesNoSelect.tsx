@@ -2,7 +2,8 @@ import cx from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
-import { nullableBooleanToString, stringToNullableBoolean } from 'utils/formUtils';
+
+import { nullableBooleanToString, stringToNullableBoolean } from '@/utils/formUtils';
 
 import TooltipIcon from '../TooltipIcon';
 import TooltipWrapper from '../TooltipWrapper';

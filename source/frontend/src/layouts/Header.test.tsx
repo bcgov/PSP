@@ -1,11 +1,11 @@
-import { config, ITenantConfig } from 'tenants';
-import defaultTenant from 'tenants/config/defaultTenant';
-import { useTenant } from 'tenants/useTenant';
-import { render } from 'utils/test-utils';
+import { config, ITenantConfig } from '@/tenants';
+import defaultTenant from '@/tenants/config/defaultTenant';
+import { useTenant } from '@/tenants/useTenant';
+import { render } from '@/utils/test-utils';
 
 import { Header } from './Header';
 
-jest.mock('tenants/useTenant');
+jest.mock('@/tenants/useTenant');
 const mockUseTenant = useTenant as jest.Mock<ITenantConfig>;
 
 const testRender = () => render(<Header />);

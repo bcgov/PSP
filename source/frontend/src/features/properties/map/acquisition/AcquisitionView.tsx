@@ -1,12 +1,13 @@
-import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
-import GenericModal from 'components/common/GenericModal';
-import FileLayout from 'features/mapSideBar/layout/FileLayout';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
-import { Api_File } from 'models/api/File';
 import * as React from 'react';
 import styled from 'styled-components';
-import { getFilePropertyName } from 'utils/mapPropertyUtils';
+
+import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
+import GenericModal from '@/components/common/GenericModal';
+import FileLayout from '@/features/mapSideBar/layout/FileLayout';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { Api_File } from '@/models/api/File';
+import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';

@@ -2,15 +2,16 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
+import { createRef } from 'react';
+
 import {
   IMapLayerResults,
   useQueryMapLayersByLocation,
-} from 'hooks/repositories/useQueryMapLayersByLocation';
-import { mockLookups } from 'mocks/lookups.mock';
-import { Api_Property } from 'models/api/Property';
-import { createRef } from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+} from '@/hooks/repositories/useQueryMapLayersByLocation';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_Property } from '@/models/api/Property';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
@@ -202,7 +203,7 @@ const fakeProperty: Api_Property = {
 // Mock API service calls
 jest.mock('../hooks/useGetProperty');
 jest.mock('../hooks/useUpdateProperty');
-jest.mock('hooks/repositories/useQueryMapLayersByLocation');
+jest.mock('@/hooks/repositories/useQueryMapLayersByLocation');
 
 const getProperty = jest.fn(() => ({ ...fakeProperty }));
 (useGetProperty as jest.Mock).mockReturnValue({

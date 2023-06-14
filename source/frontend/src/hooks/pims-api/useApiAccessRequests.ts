@@ -1,7 +1,8 @@
-import { IPaginateAccessRequests } from 'constants/API';
-import { IPagedItems } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
+
+import { IPaginateAccessRequests } from '@/constants/API';
+import { IPagedItems } from '@/interfaces';
 
 import { Api_AccessRequest } from './../../models/api/AccessRequest';
 import { useAxiosApi } from '.';

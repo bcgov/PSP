@@ -1,9 +1,9 @@
-import { rest, server } from 'mocks/msw/server';
-import { mockProjectGetResponse } from 'mocks/projects.mock';
-import { getUserMock } from 'mocks/user.mock';
-import { Api_Project } from 'models/api/Project';
-import { prettyFormatDate } from 'utils';
-import { render, RenderOptions } from 'utils/test-utils';
+import { rest, server } from '@/mocks/msw/server';
+import { mockProjectGetResponse } from '@/mocks/projects.mock';
+import { getUserMock } from '@/mocks/user.mock';
+import { Api_Project } from '@/models/api/Project';
+import { prettyFormatDate } from '@/utils';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import ProjectHeader, { IProjectHeaderProps } from './ProjectHeader';
 

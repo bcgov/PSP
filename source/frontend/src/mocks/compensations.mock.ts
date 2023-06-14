@@ -1,4 +1,4 @@
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 
 export const getMockApiDefaultCompensation = (): Api_CompensationRequisition => ({
   id: 1,

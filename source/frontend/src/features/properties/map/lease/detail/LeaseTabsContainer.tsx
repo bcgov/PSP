@@ -1,18 +1,19 @@
-import { Claims } from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { NoteTypes } from 'constants/noteTypes';
-import DocumentListContainer from 'features/documents/list/DocumentListContainer';
-import { LeaseFormModel } from 'features/leases/models';
-import NoteListView from 'features/notes/list/NoteListView';
+import { FormikProps } from 'formik';
+import React from 'react';
+
+import { Claims } from '@/constants/claims';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { NoteTypes } from '@/constants/noteTypes';
+import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
+import { LeaseFormModel } from '@/features/leases/models';
+import NoteListView from '@/features/notes/list/NoteListView';
 import {
   LeaseFileTabNames,
   LeaseFileTabs,
   LeaseTabFileView,
-} from 'features/properties/map/lease/detail/LeaseFileTabs';
-import { FormikProps } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IFormLease, ILease } from 'interfaces';
-import React from 'react';
+} from '@/features/properties/map/lease/detail/LeaseFileTabs';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { IFormLease, ILease } from '@/interfaces';
 
 import { LeaseContainerState, LeasePageNames, leasePages } from '../LeaseContainer';
 import { LeaseTab } from './LeaseTab';

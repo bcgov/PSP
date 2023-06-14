@@ -3,15 +3,15 @@ import {
   Api_AcquisitionFilePerson,
   Api_AcquisitionFileRepresentative,
   Api_AcquisitionFileSolicitor,
-} from 'models/api/AcquisitionFile';
-import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
-import { Api_CompensationPayee } from 'models/api/CompensationPayee';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { Api_InterestHolder } from 'models/api/InterestHolder';
-import { isNullOrWhitespace } from 'utils';
-import { booleanToString, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
-import { formatApiPersonNames } from 'utils/personUtils';
+} from '@/models/api/AcquisitionFile';
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
+import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { isNullOrWhitespace } from '@/utils';
+import { booleanToString, stringToBoolean, stringToNull, toTypeCode } from '@/utils/formUtils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 export class CompensationRequisitionFormModel {
   id: number | null = null;

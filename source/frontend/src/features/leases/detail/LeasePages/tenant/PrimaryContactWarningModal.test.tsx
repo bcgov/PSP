@@ -1,12 +1,13 @@
 import { screen } from '@testing-library/react';
-import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockApiPerson, mockOrganization } from 'mocks/filterData.mock';
-import { getMockLeaseWithNoTenants } from 'mocks/lease.mock';
 import React from 'react';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { apiLeaseToFormLease } from '@/features/leases/leaseUtils';
+import { defaultFormLease, IFormLease } from '@/interfaces';
+import { mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
+import { getMockLeaseWithNoTenants } from '@/mocks/lease.mock';
+import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import PrimaryContactWarningModal from './PrimaryContactWarningModal';
 

@@ -1,7 +1,8 @@
-import ExpandableTextList from 'components/common/ExpandableTextList';
-import { getAllNames } from 'features/leases/leaseUtils';
-import { ILease } from 'interfaces';
 import React from 'react';
+
+import ExpandableTextList from '@/components/common/ExpandableTextList';
+import { getAllNames } from '@/features/leases/leaseUtils';
+import { ILease } from '@/interfaces';
 
 export interface ILeaseHeaderTenantsProps {
   lease?: ILease;

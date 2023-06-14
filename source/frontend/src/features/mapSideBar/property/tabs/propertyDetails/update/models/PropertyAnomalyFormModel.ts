@@ -1,5 +1,5 @@
-import { Api_PropertyAnomaly } from 'models/api/Property';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { Api_PropertyAnomaly } from '@/models/api/Property';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 export class PropertyAnomalyFormModel {
   id?: number;

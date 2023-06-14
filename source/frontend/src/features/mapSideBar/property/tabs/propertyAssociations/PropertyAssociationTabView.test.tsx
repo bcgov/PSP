@@ -1,6 +1,7 @@
 import { createMemoryHistory } from 'history';
-import { Api_PropertyAssociations } from 'models/api/Property';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { Api_PropertyAssociations } from '@/models/api/Property';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyAssociationTabView, {
   IPropertyAssociationTabViewProps,

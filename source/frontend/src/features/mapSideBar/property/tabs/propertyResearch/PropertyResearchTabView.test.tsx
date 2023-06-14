@@ -1,7 +1,8 @@
-import { Claims } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { Claims } from '@/constants/index';
+import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyResearchTabView, { IPropertyResearchTabViewProps } from './PropertyResearchTabView';
 

@@ -1,7 +1,8 @@
-import { Input } from 'components/common/form';
-import { SectionField } from 'components/common/Section/SectionField';
 import { FieldArray, FormikProps } from 'formik';
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
+
+import { Input } from '@/components/common/form';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { Api_Storage_DocumentTypeMetadataType } from '@/models/api/DocumentStorage';
 
 import { StyledNoData } from './commonStyles';
 import { DocumentUpdateFormData, DocumentUploadFormData } from './ComposedDocument';

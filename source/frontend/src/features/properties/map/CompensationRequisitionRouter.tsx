@@ -1,7 +1,8 @@
-import Claims from 'constants/claims';
 import React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router';
-import AppRoute from 'utils/AppRoute';
+
+import Claims from '@/constants/claims';
+import AppRoute from '@/utils/AppRoute';
 
 import { CompensationRequisitionTrayContainer } from './compensation/CompensationRequisitionTrayContainer';
 import { CompensationRequisitionTrayView } from './compensation/CompensationRequisitionTrayView';
