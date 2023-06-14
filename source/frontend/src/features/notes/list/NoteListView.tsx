@@ -9,8 +9,8 @@ import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
-import useIsMounted from '@/hooks/useIsMounted';
 import { useModalManagement } from '@/hooks/useModalManagement';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { Api_Note } from '@/models/api/Note';
 
 import { AddNotesContainer } from '../add/AddNotesContainer';

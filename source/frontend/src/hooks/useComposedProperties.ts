@@ -3,13 +3,13 @@ import { useEffect } from 'react';
 import ComposedProperty from '@/features/mapSideBar/property/ComposedProperty';
 import { useTenant } from '@/tenants/useTenant';
 
-import { useGetProperty } from '../features/mapSideBar/property/tabs/propertyDetails/hooks/useGetProperty';
 import { useGeoServer } from './layer-api/useGeoServer';
+import { useBcAssessmentLayer } from './repositories/useBcAssessmentLayer';
 import { useFullyAttributedParcelMapLayer } from './repositories/useFullyAttributedParcelMapLayer';
-import { useBcAssessmentLayer } from './useBcAssessmentLayer';
-import useDeepCompareCallback from './useDeepCompareCallback';
+import { usePimsPropertyRepository } from './repositories/usePimsPropertyRepository';
+import { usePropertyAssociations } from './repositories/usePropertyAssociations';
 import { useLtsa } from './useLtsa';
-import { usePropertyAssociations } from './usePropertyAssociations';
+import useDeepCompareCallback from './util/useDeepCompareCallback';
 export enum PROPERTY_TYPES {
   PIMS_API = 'PIMS_API',
   PIMS_GEOSERVER = 'PIMS_GEOSERVER',
@@ -32,7 +32,7 @@ export const useComposedProperties = ({
   pid,
   propertyTypes,
 }: IUseComposedPropertiesProps): ComposedProperty => {
-  const getApiPropertyWrapper = useGetProperty();
+  const { getPropertyWrapper } = usePimsPropertyRepository();
   const { getPropertyWfsWrapper } = useGeoServer();
   const getLtsaWrapper = useLtsa();
   const getPropertyAssociationsWrapper = usePropertyAssociations();
@@ -42,8 +42,8 @@ export const useComposedProperties = ({
     parcelMapFullyAttributed.name,
   );
   const { getSummaryWrapper } = useBcAssessmentLayer(bcAssessment.url, bcAssessment.names);
-  const retrievedPid = getApiPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
-  const retrievedPin = getApiPropertyWrapper?.response?.pin?.toString();
+  const retrievedPid = getPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
+  const retrievedPin = getPropertyWrapper?.response?.pin?.toString();
 
   const typeCheckWrapper = useDeepCompareCallback(
     (callback: () => void, currentType: PROPERTY_TYPES) => {
@@ -53,7 +53,7 @@ export const useComposedProperties = ({
     },
     [propertyTypes],
   );
-  const executeGetApiProperty = getApiPropertyWrapper.execute;
+  const executeGetApiProperty = getPropertyWrapper.execute;
   const executeGetPropertyWfs = getPropertyWfsWrapper.execute;
   const executeGetPropertyAssociations = getPropertyAssociationsWrapper.execute;
 
@@ -103,14 +103,14 @@ export const useComposedProperties = ({
     pid: pid?.toString() ?? retrievedPid,
     pin: retrievedPin,
     ltsaWrapper: getLtsaWrapper,
-    apiWrapper: getApiPropertyWrapper,
+    apiWrapper: getPropertyWrapper,
     propertyAssociationWrapper: getPropertyAssociationsWrapper,
     parcelMapWrapper: getAllFeaturesWrapper,
     geoserverWrapper: getPropertyWfsWrapper,
     bcAssessmentWrapper: getSummaryWrapper,
     composedLoading:
       getLtsaWrapper?.loading ||
-      getApiPropertyWrapper?.loading ||
+      getPropertyWrapper?.loading ||
       getPropertyAssociationsWrapper?.loading ||
       getAllFeaturesWrapper?.loading ||
       getPropertyWfsWrapper?.loading ||

@@ -4,6 +4,7 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import {
   IMapLayerResults,
   useQueryMapLayersByLocation,
@@ -13,7 +14,6 @@ import { Api_Property } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
 import {
   IUpdatePropertyDetailsContainerProps,
@@ -201,20 +201,20 @@ const fakeProperty: Api_Property = {
 };
 
 // Mock API service calls
-jest.mock('../hooks/useGetProperty');
-jest.mock('../hooks/useUpdateProperty');
+jest.mock('@/hooks/repositories/usePimsPropertyRepository');
 jest.mock('@/hooks/repositories/useQueryMapLayersByLocation');
 
 const getProperty = jest.fn(() => ({ ...fakeProperty }));
-(useGetProperty as jest.Mock).mockReturnValue({
-  execute: getProperty,
-  loading: false,
-});
-
 const updateProperty = jest.fn(() => ({ ...fakeProperty }));
-(useUpdateProperty as jest.Mock).mockReturnValue({
-  updateProperty,
-  updatePropertyLoading: false,
+(usePimsPropertyRepository as jest.Mock).mockReturnValue({
+  getPropertyWrapper: {
+    execute: getProperty,
+    loading: false,
+  },
+  updatePropertyWrapper: {
+    execute: updateProperty,
+    updatePropertyLoading: false,
+  },
 });
 
 (useQueryMapLayersByLocation as jest.Mock).mockReturnValue({

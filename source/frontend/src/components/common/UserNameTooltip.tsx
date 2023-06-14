@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
-import useIsMounted from '@/hooks/useIsMounted';
+import useIsMounted from '@/hooks/util/useIsMounted';
 
 import TooltipIcon from './TooltipIcon';
 

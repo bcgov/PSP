@@ -5,12 +5,12 @@ import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as API from '@/constants/API';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { useQueryMapLayersByLocation } from '@/hooks/repositories/useQueryMapLayersByLocation';
-import useIsMounted from '@/hooks/useIsMounted';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { Api_Property } from '@/models/api/Property';
 
-import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
 import { UpdatePropertyDetailsYupSchema } from './validation';
@@ -25,12 +25,11 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
   IUpdatePropertyDetailsContainerProps
 >((props, ref) => {
   const isMounted = useIsMounted();
-  const getPropertyWrapper = useGetProperty();
-  const { updateProperty } = useUpdateProperty();
+
+  const { getPropertyWrapper, updatePropertyWrapper } = usePimsPropertyRepository();
   const { queryAll } = useQueryMapLayersByLocation();
 
   const [initialForm, setForm] = useState<UpdatePropertyDetailsFormModel | undefined>(undefined);
-  const executeGetProperty = getPropertyWrapper.execute;
 
   // Lookup codes
   const { getByType } = useLookupCodeHelpers();
@@ -46,7 +45,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
   useEffect(() => {
     async function fetchProperty() {
       if (!!props.id) {
-        const retrieved = await executeGetProperty(props.id);
+        const retrieved = await getPropertyWrapper.execute(props.id);
         if (retrieved !== undefined && isMounted()) {
           const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
 
@@ -65,7 +64,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
       }
     }
     fetchProperty();
-  }, [isMounted, props.id, queryAll, executeGetProperty]);
+  }, [isMounted, props.id, queryAll, getPropertyWrapper, getPropertyWrapper.execute]);
 
   // save handler - sends updated property information to backend
   const savePropertyInformation = async (
@@ -79,7 +78,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     }
 
     const apiProperty: Api_Property = values.toApi();
-    const response = await updateProperty(apiProperty);
+    const response = await updatePropertyWrapper.execute(apiProperty);
 
     formikHelpers.setSubmitting(false);
 

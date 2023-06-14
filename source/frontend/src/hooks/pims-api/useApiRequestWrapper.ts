@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import useIsMounted from '@/hooks/useIsMounted';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { IApiError } from '@/interfaces/IApiError';
 import { handleAxiosResponse } from '@/utils';
 

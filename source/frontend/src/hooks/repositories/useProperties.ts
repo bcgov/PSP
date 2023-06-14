@@ -9,7 +9,7 @@ import * as API from '@/constants/API';
 import { catchAxiosError } from '@/customAxios';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useGeoServer } from '@/hooks/layer-api/useGeoServer';
-import { useApiProperties } from '@/hooks/pims-api';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IPagedItems, IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';

@@ -1,13 +1,11 @@
 import { IMapProperty } from '@/components/propertySelector/models';
-import { IBcAssessmentSummary } from '@/hooks/useBcAssessmentLayer';
 import { Api_Address } from '@/models/api/Address';
 import { Api_File } from '@/models/api/File';
 import { Api_Property } from '@/models/api/Property';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
-import { formatApiAddress, pidParser } from '@/utils';
+import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
+import { formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
 import { toTypeCode } from '@/utils/formUtils';
-
-import { formatBcaAddress } from './../../../../utils/propertyUtils';
 
 export class FileForm {
   public id?: number;

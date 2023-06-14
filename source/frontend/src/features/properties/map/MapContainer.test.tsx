@@ -17,7 +17,7 @@ import {
 } from '@/constants/index';
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
-import { useApiProperties } from '@/hooks/pims-api';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useComposedProperties } from '@/hooks/useComposedProperties';
 import { IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
@@ -42,8 +42,8 @@ jest.mock('@/hooks/layer-api/useMapProperties');
 jest.mock('@/hooks/layer-api/useLayerQuery');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 jest.mock('@/hooks/useComposedProperties');
-jest.mock('@/hooks/usePropertyAssociations');
-jest.mock('@/hooks/pims-api');
+jest.mock('@/hooks/repositories/usePropertyAssociations');
+jest.mock('@/hooks/pims-api/useApiProperties');
 jest.mock('@/hooks/useLtsa');
 
 // Need to mock this library for unit tests

@@ -1,6 +1,6 @@
 import { ENVIRONMENT } from '@/constants/environment';
 import CustomAxios, { defaultEnvelope, LifecycleToasts } from '@/customAxios';
-import useDeepCompareMemo from '@/hooks/useDeepCompareMemo';
+import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 
 /**
  * Common hook to make requests to the PIMS APi.

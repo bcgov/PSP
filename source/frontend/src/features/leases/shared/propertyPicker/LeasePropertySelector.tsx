@@ -12,8 +12,8 @@ import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { AddressForm } from '@/features/properties/map/shared/models';
 import { useProperties } from '@/hooks/repositories/useProperties';
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
-import useDeepCompareMemo from '@/hooks/useDeepCompareMemo';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { IProperty } from '@/interfaces';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';

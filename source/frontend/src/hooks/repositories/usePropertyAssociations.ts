@@ -2,11 +2,11 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import { useApiProperties } from '@/hooks/pims-api';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_PropertyAssociations } from '@/models/api/Property';
 
-import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
 
 export const usePropertyAssociations = () => {
   const { getPropertyAssociationsApi } = useApiProperties();

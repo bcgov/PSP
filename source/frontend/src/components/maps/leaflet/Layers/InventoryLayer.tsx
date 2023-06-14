@@ -6,7 +6,7 @@ import { useMap } from 'react-leaflet';
 import { tilesInBbox } from 'tiles-in-bbox';
 
 import { IGeoSearchParams } from '@/constants/API';
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { IProperty } from '@/interfaces';
 
 import { useMapRefreshEvent } from '../../hooks/useMapRefreshEvent';

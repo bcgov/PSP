@@ -5,8 +5,8 @@ import { useContext, useEffect } from 'react';
 import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
 import { PointFeature } from '@/components/maps/types';
 import { IMapProperty } from '@/components/propertySelector/models';
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
-import useIsMounted from '@/hooks/useIsMounted';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useIsMounted from '@/hooks/util/useIsMounted';
 
 /**
  * Get a list of draft markers from the current form values.

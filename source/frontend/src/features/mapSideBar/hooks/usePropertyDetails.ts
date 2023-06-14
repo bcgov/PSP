@@ -2,7 +2,7 @@ import { LatLngLiteral } from 'leaflet';
 import { useEffect, useMemo, useState } from 'react';
 
 import { IUserLayerQuery, useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
-import useIsMounted from '@/hooks/useIsMounted';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { Api_Property } from '@/models/api/Property';
 import { useTenant } from '@/tenants/useTenant';
 

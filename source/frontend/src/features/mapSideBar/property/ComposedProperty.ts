@@ -3,9 +3,9 @@ import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 
 import { IWfsGetAllFeaturesOptions } from '@/hooks/layer-api/useWfsLayer';
 import { IResponseWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
-import { IBcAssessmentSummary } from '@/hooks/useBcAssessmentLayer';
 import { LtsaOrders } from '@/interfaces/ltsaModels';
 import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
+import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
 export default interface ComposedProperty {
   pid?: string;
