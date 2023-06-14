@@ -258,7 +258,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                     financialActivityOptions={financialActivityOptions}
                     compensationRequisitionId={initialValues.id!}
                     formikProps={formikProps}
-                    gstConstant={gstConstant}
+                    gstConstantPercentage={gstConstant}
                     activitiesUpdated={() => {
                       setActivitiesUpdated(true);
                     }}

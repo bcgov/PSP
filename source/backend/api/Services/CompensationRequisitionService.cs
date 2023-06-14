@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
@@ -69,7 +70,11 @@ namespace Pims.Api.Services
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
 
+            var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
+            (bool? currentStatus, bool? newStatus) compReqStatusComparable = (currentStatus: currentCompensation.IsDraft, newStatus: compensationRequisition.IsDraft);
+
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
+            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, compReqStatusComparable);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
