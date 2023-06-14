@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import {
   Api_DocumentRelationship,

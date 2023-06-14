@@ -8,7 +8,7 @@ import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
 import { apiLeaseToFormLease, formLeaseToApiLease } from '@/features/leases/leaseUtils';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { defaultFormLease, IContactSearchResult, IFormLease, ILease } from '@/interfaces';
 import { Api_Person } from '@/models/api/Person';
 

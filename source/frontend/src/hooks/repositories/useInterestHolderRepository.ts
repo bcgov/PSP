@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiInterestHolders } from '@/hooks/pims-api/useApiInterestHolders';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { useAxiosErrorHandler } from '@/utils';
 

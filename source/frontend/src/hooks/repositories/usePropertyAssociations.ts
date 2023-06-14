@@ -6,7 +6,7 @@ import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_PropertyAssociations } from '@/models/api/Property';
 
-import { useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 export const usePropertyAssociations = () => {
   const { getPropertyAssociationsApi } = useApiProperties();

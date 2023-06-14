@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
 import { useApiTakes } from '@/hooks/pims-api/useApiTakes';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_Take } from '@/models/api/Take';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 

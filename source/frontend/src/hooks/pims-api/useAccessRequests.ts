@@ -1,5 +1,5 @@
 import * as actionTypes from '@/constants/actionTypes';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 
 import { useApiAccessRequests } from './useApiAccessRequests';
 

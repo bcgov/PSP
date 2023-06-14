@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 

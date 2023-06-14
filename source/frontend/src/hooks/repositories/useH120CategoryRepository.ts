@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_H120Category } from '@/models/api/H120Category';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 

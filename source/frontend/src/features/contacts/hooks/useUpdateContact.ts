@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
 import { IApiError } from '@/interfaces/IApiError';
 

@@ -6,7 +6,7 @@ import { ReactComponent as LotSvg } from '@/assets/images/icon-lot.svg';
 import GenericModal from '@/components/common/GenericModal';
 import PropertyViewSelector from '@/features/mapSideBar/property/PropertyViewSelector';
 import SidebarFooter from '@/features/properties/map/shared/SidebarFooter';
-import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/useComposedProperties';
+import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { Api_Property } from '@/models/api/Property';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
@@ -31,7 +31,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
 
   const formikRef = useRef<FormikProps<any>>(null);
 
-  const composedProperty = useComposedProperties({
+  const composedPropertyState = useComposedProperties({
     id: props.id,
     pid: props?.pid === undefined || isNaN(+props.pid) ? undefined : +props.pid,
     propertyTypes: [
@@ -48,7 +48,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
   }, [props.pid]);
 
   const onSuccess = () => {
-    props.id && composedProperty.apiWrapper?.execute(props.id);
+    props.id && composedPropertyState.apiWrapper?.execute(props.id);
     setIsEditing(false);
   };
 
@@ -82,7 +82,18 @@ export const MotiInventoryContainer: React.FunctionComponent<
   return (
     <MapSideBarLayout
       title="Property Information"
-      header={<MotiInventoryHeader composedProperty={composedProperty} onZoom={props.onZoom} />}
+      header={
+        <MotiInventoryHeader
+          composedProperty={composedPropertyState.composedProperty}
+          onZoom={props.onZoom}
+          isLoading={
+            composedPropertyState.ltsaWrapper?.loading ||
+            composedPropertyState.apiWrapper?.loading ||
+            composedPropertyState.parcelMapWrapper?.loading ||
+            false
+          }
+        />
+      }
       footer={
         isEditing && (
           <SidebarFooter
@@ -98,7 +109,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
     >
       <>
         <PropertyViewSelector
-          composedProperty={composedProperty}
+          composedPropertyState={composedPropertyState}
           isEditMode={isEditing}
           setEditMode={setIsEditing}
           onSuccess={onSuccess}

@@ -5,7 +5,7 @@ import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAss
 import { pidParser } from '@/utils';
 
 import { useWfsLayer } from '../layer-api/useWfsLayer';
-import { IResponseWrapper, useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
+import { IResponseWrapper, useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the BC assessment layer.

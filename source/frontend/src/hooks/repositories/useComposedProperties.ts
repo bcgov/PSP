@@ -1,15 +1,23 @@
-import { useEffect } from 'react';
+import { AxiosResponse } from 'axios';
+import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import { useEffect, useState } from 'react';
 
-import ComposedProperty from '@/features/mapSideBar/property/ComposedProperty';
+import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
+import { LtsaOrders } from '@/interfaces/ltsaModels';
+import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
+import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { useTenant } from '@/tenants/useTenant';
 
-import { useGeoServer } from './layer-api/useGeoServer';
-import { useBcAssessmentLayer } from './repositories/useBcAssessmentLayer';
-import { useFullyAttributedParcelMapLayer } from './repositories/useFullyAttributedParcelMapLayer';
-import { usePimsPropertyRepository } from './repositories/usePimsPropertyRepository';
-import { usePropertyAssociations } from './repositories/usePropertyAssociations';
-import { useLtsa } from './useLtsa';
-import useDeepCompareCallback from './util/useDeepCompareCallback';
+import { useGeoServer } from '../layer-api/useGeoServer';
+import { IWfsGetAllFeaturesOptions } from '../layer-api/useWfsLayer';
+import { useLtsa } from '../useLtsa';
+import { IResponseWrapper } from '../util/useApiRequestWrapper';
+import useDeepCompareCallback from '../util/useDeepCompareCallback';
+import { useBcAssessmentLayer } from './useBcAssessmentLayer';
+import { useFullyAttributedParcelMapLayer } from './useFullyAttributedParcelMapLayer';
+import { usePimsPropertyRepository } from './usePimsPropertyRepository';
+import { usePropertyAssociations } from './usePropertyAssociations';
+
 export enum PROPERTY_TYPES {
   PIMS_API = 'PIMS_API',
   PIMS_GEOSERVER = 'PIMS_GEOSERVER',
@@ -21,6 +29,31 @@ export enum PROPERTY_TYPES {
 
 export const ALL_PROPERTY_TYPES = Object.values(PROPERTY_TYPES);
 
+export default interface ComposedPropertyState {
+  pid?: string;
+  pin?: string;
+  id?: number;
+  ltsaWrapper?: IResponseWrapper<(pid: string) => Promise<AxiosResponse<LtsaOrders, any>>>;
+  apiWrapper?: IResponseWrapper<(id: number) => Promise<AxiosResponse<Api_Property, any>>>;
+  propertyAssociationWrapper?: IResponseWrapper<
+    (id: number) => Promise<AxiosResponse<Api_PropertyAssociations, any>>
+  >;
+  parcelMapWrapper?: IResponseWrapper<
+    (
+      filter?: Record<string, string>,
+      options?: IWfsGetAllFeaturesOptions | undefined,
+    ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>, any>>
+  >;
+  geoserverWrapper?: IResponseWrapper<
+    (id: number) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>, any>>
+  >;
+  bcAssessmentWrapper?: IResponseWrapper<
+    (pid: string) => Promise<AxiosResponse<IBcAssessmentSummary, any>>
+  >;
+  composedLoading: boolean;
+  composedProperty: ComposedProperty;
+}
+
 export interface IUseComposedPropertiesProps {
   id?: number;
   pid?: number;
@@ -31,7 +64,7 @@ export const useComposedProperties = ({
   id,
   pid,
   propertyTypes,
-}: IUseComposedPropertiesProps): ComposedProperty => {
+}: IUseComposedPropertiesProps): ComposedPropertyState => {
   const { getPropertyWrapper } = usePimsPropertyRepository();
   const { getPropertyWfsWrapper } = useGeoServer();
   const getLtsaWrapper = useLtsa();
@@ -44,6 +77,18 @@ export const useComposedProperties = ({
   const { getSummaryWrapper } = useBcAssessmentLayer(bcAssessment.url, bcAssessment.names);
   const retrievedPid = getPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
   const retrievedPin = getPropertyWrapper?.response?.pin?.toString();
+
+  const [composedProperty, setComposedProperty] = useState<ComposedProperty>({
+    pid: undefined,
+    pin: undefined,
+    id: undefined,
+    ltsaOrders: undefined,
+    pimsProperty: undefined,
+    propertyAssociations: undefined,
+    parcelMapFeatureCollection: undefined,
+    geoserverFeatureCollection: undefined,
+    bcAssessmentSummary: undefined,
+  });
 
   const typeCheckWrapper = useDeepCompareCallback(
     (callback: () => void, currentType: PROPERTY_TYPES) => {
@@ -98,10 +143,36 @@ export const useComposedProperties = ({
     executeBcAssessmentSummary,
   ]);
 
+  useEffect(() => {
+    setComposedProperty({
+      id: id,
+      pid: retrievedPid,
+      pin: retrievedPin,
+      ltsaOrders: getLtsaWrapper.response,
+      pimsProperty: getPropertyWrapper.response,
+      propertyAssociations: getPropertyAssociationsWrapper.response,
+      parcelMapFeatureCollection: getAllFeaturesWrapper.response,
+      geoserverFeatureCollection: getPropertyWfsWrapper.response,
+      bcAssessmentSummary: getSummaryWrapper.response,
+    });
+  }, [
+    setComposedProperty,
+    id,
+    retrievedPid,
+    retrievedPin,
+    getLtsaWrapper,
+    getPropertyWrapper,
+    getPropertyAssociationsWrapper,
+    getAllFeaturesWrapper,
+    getPropertyWfsWrapper,
+    getSummaryWrapper,
+  ]);
+
   return {
     id: id,
     pid: pid?.toString() ?? retrievedPid,
     pin: retrievedPin,
+    composedProperty: composedProperty,
     ltsaWrapper: getLtsaWrapper,
     apiWrapper: getPropertyWrapper,
     propertyAssociationWrapper: getPropertyAssociationsWrapper,

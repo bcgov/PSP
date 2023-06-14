@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_Property } from '@/models/api/Property';
 import { useAxiosErrorHandler } from '@/utils';

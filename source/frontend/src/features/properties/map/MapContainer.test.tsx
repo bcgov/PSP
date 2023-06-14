@@ -18,7 +18,7 @@ import {
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { useComposedProperties } from '@/hooks/useComposedProperties';
+import { useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';

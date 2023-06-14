@@ -2,8 +2,8 @@ import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 

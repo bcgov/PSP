@@ -12,7 +12,7 @@ import {
   putActivity,
   putActivityProperties,
 } from '@/hooks/pims-api/useApiActivities';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from '@/models/api/Activity';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 

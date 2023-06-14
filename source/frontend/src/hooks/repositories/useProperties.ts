@@ -14,7 +14,7 @@ import { IPagedItems, IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
-import { useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 const ignoreErrorCodes = [404];
 
