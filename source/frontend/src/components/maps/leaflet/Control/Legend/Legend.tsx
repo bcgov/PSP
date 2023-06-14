@@ -10,15 +10,15 @@ export const Legend = () => {
   const keys = React.useMemo(() => {
     return [
       {
-        pin: require('assets/images/pins/land-reg.png'),
+        pin: require('@/assets/images/pins/land-reg.png'),
         label: 'Parcel',
       },
       {
-        pin: require('assets/images/pins/land-poi.svg').default,
+        pin: require('@/assets/images/pins/land-poi.svg').default,
         label: 'Property of Interest',
       },
       {
-        pin: require('assets/images/pins/land-lease.svg').default,
+        pin: require('@/assets/images/pins/land-lease.svg').default,
         label: 'Payable lease/license',
       },
     ];

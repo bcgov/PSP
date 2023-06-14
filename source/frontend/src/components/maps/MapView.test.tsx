@@ -1,15 +1,16 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims } from 'constants/claims';
 import { FeatureCollection } from 'geojson';
-import { useApiProperties } from 'hooks/pims-api';
-import { useApiGeocoder } from 'hooks/pims-api/useApiGeocoder';
-import { IProperty } from 'interfaces';
-import { mockParcel } from 'mocks/filterData.mock';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { useApiProperties } from '@/hooks/pims-api';
+import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
+import { IProperty } from '@/interfaces';
+import { mockParcel } from '@/mocks/filterData.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { cleanup, deferred, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { createPoints } from './leaflet/Layers/util';
 import Map from './MapView';
@@ -24,7 +25,7 @@ const mockParcels = [
   { id: 2, latitude: 53.917065, longitude: -122.749672 },
 ] as IProperty[];
 
-jest.mock('hooks/pims-api');
+jest.mock('@/hooks/pims-api');
 
 const onViewPropertyClick = jest.fn();
 

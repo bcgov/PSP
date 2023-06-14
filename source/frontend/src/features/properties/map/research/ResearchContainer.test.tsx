@@ -1,12 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
-import { getMockResearchFile } from 'mocks/researchFile.mock';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, waitForElementToBeRemoved } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions, waitForElementToBeRemoved } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';

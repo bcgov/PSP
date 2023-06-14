@@ -1,14 +1,18 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { IInventoryTabsProps, InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { noop } from 'lodash';
-import { mockLtsaResponse, mockWfsGetPropertyById } from 'mocks/index.mock';
-import { mockLookups } from 'mocks/lookups.mock';
-import { getMockResearchFile } from 'mocks/researchFile.mock';
 import { toast } from 'react-toastify';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions } from 'utils/test-utils';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import {
+  IInventoryTabsProps,
+  InventoryTabNames,
+} from '@/features/mapSideBar/property/InventoryTabs';
+import { mockLtsaResponse, mockWfsGetPropertyById } from '@/mocks/index.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyFileContainer, { IPropertyFileContainerProps } from './PropertyFileContainer';
 

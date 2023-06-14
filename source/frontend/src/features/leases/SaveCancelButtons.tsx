@@ -1,8 +1,9 @@
-import { Button } from 'components/common/buttons/Button';
 import { FormikProps } from 'formik';
-import { ILease } from 'interfaces';
 import { isEqual } from 'lodash';
 import * as React from 'react';
+
+import { Button } from '@/components/common/buttons/Button';
+import { ILease } from '@/interfaces';
 
 import * as Styled from './add/styles';
 

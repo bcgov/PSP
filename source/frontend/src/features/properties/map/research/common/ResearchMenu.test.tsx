@@ -1,5 +1,5 @@
-import { Claims } from 'constants/index';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { Claims } from '@/constants/index';
+import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
 

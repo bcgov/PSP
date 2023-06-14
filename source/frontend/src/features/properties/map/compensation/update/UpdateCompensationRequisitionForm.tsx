@@ -1,3 +1,9 @@
+import { Formik, FormikProps } from 'formik';
+import moment from 'moment';
+import { useEffect, useRef, useState } from 'react';
+import { Prompt } from 'react-router-dom';
+import styled from 'styled-components';
+
 import {
   Check,
   FastCurrencyInput,
@@ -6,21 +12,16 @@ import {
   Select,
   SelectOption,
   TextArea,
-} from 'components/common/form';
-import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
-import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { Formik, FormikProps } from 'formik';
-import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import moment from 'moment';
-import { useEffect, useRef, useState } from 'react';
-import { Prompt } from 'react-router-dom';
-import styled from 'styled-components';
-import { withNameSpace } from 'utils/formUtils';
+} from '@/components/common/form';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import GenericModal from '@/components/common/GenericModal';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { withNameSpace } from '@/utils/formUtils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
 import { CompensationRequisitionYupSchema } from '../CompensationRequisitionYupSchema';

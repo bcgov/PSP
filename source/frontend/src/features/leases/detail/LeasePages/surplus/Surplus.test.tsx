@@ -1,10 +1,11 @@
-import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
-import { formLeaseToApiLease } from 'features/leases/leaseUtils';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease, IProperty } from 'interfaces';
-import { mockOrganization, mockPerson, mockProperties } from 'mocks/filterData.mock';
-import { prettyFormatDate } from 'utils';
-import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+
+import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
+import { formLeaseToApiLease } from '@/features/leases/leaseUtils';
+import { defaultFormLease, IFormLease, IProperty } from '@/interfaces';
+import { mockOrganization, mockPerson, mockProperties } from '@/mocks/filterData.mock';
+import { prettyFormatDate } from '@/utils';
+import { render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import Surplus from './Surplus';
 

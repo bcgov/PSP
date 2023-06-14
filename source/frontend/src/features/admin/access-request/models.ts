@@ -1,8 +1,8 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { UserTypes } from 'constants/index';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
-import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { UserTypes } from '@/constants/index';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
+import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
 
 import { Api_AccessRequest } from './../../../models/api/AccessRequest';
 

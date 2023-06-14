@@ -2,11 +2,12 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims } from 'constants/claims';
 import { Formik } from 'formik';
-import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
+
+import { Claims } from '@/constants/claims';
+import { defaultFormLease, IFormLease } from '@/interfaces';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 import {
   fillInput,
   render,
@@ -14,7 +15,7 @@ import {
   RenderResult,
   userEvent,
   waitFor,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import DepositsContainer from './DepositsContainer';
 

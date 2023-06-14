@@ -1,18 +1,19 @@
-import { InlineFlexDiv } from 'components/common/styles';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import { LeaseHeaderAddresses } from 'features/leases/detail/LeaseHeaderAddresses';
-import {
-  HeaderContentCol,
-  HeaderField,
-  HeaderLabelCol,
-} from 'features/mapSideBar/tabs/HeaderField';
-import { ILease } from 'interfaces';
 import moment from 'moment';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+
+import {
+  HeaderContentCol,
+  HeaderField,
+  HeaderLabelCol,
+} from '@/components/common/HeaderField/HeaderField';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
+import { ILease } from '@/interfaces';
+import { prettyFormatDate } from '@/utils';
 
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 

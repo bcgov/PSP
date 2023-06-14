@@ -1,8 +1,9 @@
-import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
 import { useEffect } from 'react';
-import { useTenant } from 'tenants/useTenant';
 
-import { useGetProperty } from '../features/mapSideBar/tabs/propertyDetails/hooks/useGetProperty';
+import ComposedProperty from '@/features/mapSideBar/property/ComposedProperty';
+import { useTenant } from '@/tenants/useTenant';
+
+import { useGetProperty } from '../features/mapSideBar/property/tabs/propertyDetails/hooks/useGetProperty';
 import { useGeoServer } from './layer-api/useGeoServer';
 import { useFullyAttributedParcelMapLayer } from './repositories/useFullyAttributedParcelMapLayer';
 import { useBcAssessmentLayer } from './useBcAssessmentLayer';

@@ -1,9 +1,10 @@
-import { PopupTray } from 'components/common/styles';
-import Claims from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
 import * as React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
-import AppRoute from 'utils/AppRoute';
+
+import { PopupTray } from '@/components/common/styles';
+import Claims from '@/constants/claims';
+import { FileTypes } from '@/constants/fileTypes';
+import AppRoute from '@/utils/AppRoute';
 
 import FormContainer from './form/detail/FormContainer';
 import FormView from './form/detail/FormView';

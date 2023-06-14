@@ -1,15 +1,16 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { mockAgreementsResponse } from 'mocks/agreements.mock';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_Property } from 'models/api/Property';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
+import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { mockAgreementsResponse } from '@/mocks/agreements.mock';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_Property } from '@/models/api/Property';
 
 import { useGenerateAgreement } from './useGenerateAgreement';
 
@@ -18,18 +19,18 @@ const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();
 const getAcquisitionFileProperties = jest.fn<Api_Property[] | undefined, any[]>();
 const getPersonConceptFn = jest.fn();
 
-jest.mock('features/documents/hooks/useDocumentGenerationRepository');
+jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 (useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
   generateDocumentDownloadWrappedRequest: generateFn,
 }));
 
-jest.mock('hooks/repositories/useAcquisitionProvider');
+jest.mock('@/hooks/repositories/useAcquisitionProvider');
 (useAcquisitionProvider as jest.Mock).mockImplementation(() => ({
   getAcquisitionFile: { execute: getAcquisitionFileFn },
   getAcquisitionProperties: { execute: getAcquisitionFileProperties },
 }));
 
-jest.mock('hooks/pims-api/useApiContacts');
+jest.mock('@/hooks/pims-api/useApiContacts');
 (useApiContacts as jest.Mock).mockImplementation(() => ({
   getPersonConcept: getPersonConceptFn,
 }));

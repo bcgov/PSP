@@ -1,11 +1,12 @@
-import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
-import { useFormDocumentRepository } from 'hooks/repositories/useFormDocumentRepository';
 import { filter, sortBy } from 'lodash';
-import { getMockApiFileForms } from 'mocks/form.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
+
+import { FileTypes } from '@/constants/fileTypes';
+import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
+import { getMockApiFileForms } from '@/mocks/form.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
 import { IFormListViewProps } from './FormListView';
@@ -26,7 +27,7 @@ const mockGetApi = {
   execute: jest.fn(),
   loading: false,
 };
-jest.mock('hooks/repositories/useFormDocumentRepository');
+jest.mock('@/hooks/repositories/useFormDocumentRepository');
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');

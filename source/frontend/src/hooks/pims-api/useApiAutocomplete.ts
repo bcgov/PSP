@@ -1,5 +1,6 @@
-import { IAutocompleteResponse } from 'interfaces';
 import React from 'react';
+
+import { IAutocompleteResponse } from '@/interfaces';
 
 import { useAxiosApi } from '.';
 

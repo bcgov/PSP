@@ -1,14 +1,15 @@
-import { IUserLayerQuery, useLayerQuery } from 'hooks/layer-api/useLayerQuery';
-import useIsMounted from 'hooks/useIsMounted';
 import { LatLngLiteral } from 'leaflet';
-import { Api_Property } from 'models/api/Property';
 import { useEffect, useMemo, useState } from 'react';
+
+import { IUserLayerQuery, useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import useIsMounted from '@/hooks/useIsMounted';
+import { Api_Property } from '@/models/api/Property';
+import { useTenant } from '@/tenants/useTenant';
 
 import {
   IPropertyDetailsForm,
   toFormValues,
-} from '../tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
-import { useTenant } from './../../../tenants/useTenant';
+} from '../property/tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 
 export function usePropertyDetails(property?: Api_Property): IPropertyDetailsForm | undefined {
   const isMounted = useIsMounted();

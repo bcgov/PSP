@@ -1,7 +1,7 @@
-import { mockAgreementsResponse } from 'mocks/agreements.mock';
-import { mockLookups } from 'mocks/index.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+import { mockAgreementsResponse } from '@/mocks/agreements.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import AgreementView, { IAgreementViewProps } from './AgreementView';
 

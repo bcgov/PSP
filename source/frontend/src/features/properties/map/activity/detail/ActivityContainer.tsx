@@ -1,11 +1,12 @@
-import { SideBarContext, TypedFile } from 'features/properties/map/context/sidebarContext';
-import { Api_Activity, Api_PropertyActivity } from 'models/api/Activity';
-import { Api_Property } from 'models/api/Property';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useContext, useState } from 'react';
+
+import { SideBarContext, TypedFile } from '@/features/properties/map/context/sidebarContext';
+import { Api_Activity, Api_PropertyActivity } from '@/models/api/Activity';
+import { Api_Property } from '@/models/api/Property';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import { formContent } from '../../shared/content/formContent';
 import { ActivityTemplateTypes } from '../../shared/content/models';

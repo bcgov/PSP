@@ -1,21 +1,22 @@
-import { ConvertToTypes } from 'constants/convertToTypes';
-import { showFile } from 'features/documents/DownloadDocumentButton';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from 'features/properties/map/shared/content/models';
-import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { useH120CategoryRepository } from 'hooks/repositories/useH120CategoryRepository';
-import { useInterestHolderRepository } from 'hooks/repositories/useInterestHolderRepository';
-import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
 import chunk from 'lodash/chunk';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { Api_GenerateAcquisitionFile } from 'models/generate/acquisition/GenerateAcquisitionFile';
-import { Api_GenerateCompensation } from 'models/generate/acquisition/GenerateCompensation';
-import { Api_GenerateH120Property } from 'models/generate/acquisition/GenerateH120Property';
-import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
-import { useTenant } from 'tenants';
-import { getLatLng } from 'utils/mapPropertyUtils';
+
+import { ConvertToTypes } from '@/constants/convertToTypes';
+import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
+import { FormTemplateTypes } from '@/features/properties/map/shared/content/models';
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
+import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
+import { Api_GenerateH120Property } from '@/models/generate/acquisition/GenerateH120Property';
+import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { useTenant } from '@/tenants';
+import { getLatLng } from '@/utils/mapPropertyUtils';
 
 export const useGenerateH120 = () => {
   const { getAcquisitionFile, getAcquisitionProperties, getAcquisitionCompReqH120s } =

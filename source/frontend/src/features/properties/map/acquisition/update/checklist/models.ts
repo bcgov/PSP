@@ -4,10 +4,10 @@ import {
   Api_AcquisitionFileChecklistItemType,
   lastModifiedBy,
   sortByDisplayOrder,
-} from 'models/api/AcquisitionFile';
-import { Api_AuditFields } from 'models/api/AuditFields';
-import { ILookupCode } from 'store/slices/lookupCodes';
-import { fromTypeCode, toTypeCode } from 'utils/formUtils';
+} from '@/models/api/AcquisitionFile';
+import { Api_AuditFields } from '@/models/api/AuditFields';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
 
 export class AcquisitionChecklistFormModel {
   id?: number;

@@ -1,16 +1,17 @@
-import { LinkButton, StyledRemoveIconButton } from 'components/common/buttons';
-import { Button } from 'components/common/buttons/Button';
-import { InlineFlexDiv } from 'components/common/styles';
-import { ColumnWithProps } from 'components/Table';
-import Claims from 'constants/claims';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { Col } from 'react-bootstrap';
 import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { formatMoney, prettyFormatDate, stringToFragment } from 'utils';
+
+import { LinkButton, StyledRemoveIconButton } from '@/components/common/buttons';
+import { Button } from '@/components/common/buttons/Button';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { ColumnWithProps } from '@/components/Table';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
 export function createCompensationTableColumns(
   onShow: (compensationId: number) => void,

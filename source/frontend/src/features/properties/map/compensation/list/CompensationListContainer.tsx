@@ -1,8 +1,9 @@
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
-import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import React, { useCallback, useContext } from 'react';
+
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 
 import { SideBarContext } from '../../context/sidebarContext';
 import { ICompensationListViewProps } from './CompensationListView';

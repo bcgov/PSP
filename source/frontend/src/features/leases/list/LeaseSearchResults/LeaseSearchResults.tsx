@@ -1,7 +1,3 @@
-import TooltipIcon from 'components/common/TooltipIcon';
-import { ColumnWithProps, renderTypeCode, Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import { ILeaseSearchResult } from 'interfaces';
 import moment from 'moment';
 import { useCallback } from 'react';
 import { Tooltip } from 'react-bootstrap';
@@ -9,7 +5,12 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import { ILeaseSearchResult } from '@/interfaces';
+import { prettyFormatDate } from '@/utils';
 
 import LeaseProperties from './LeaseProperties';
 import LeaseTenants from './LeaseTenants';

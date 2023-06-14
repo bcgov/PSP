@@ -1,6 +1,6 @@
-import { ContactInfoField } from 'features/contacts/interfaces';
-import { Dictionary } from 'interfaces/Dictionary';
-import { IContactAddress, IContactMethod } from 'interfaces/IContact';
+import { ContactInfoField } from '@/features/contacts/interfaces';
+import { Dictionary } from '@/interfaces/Dictionary';
+import { IContactAddress, IContactMethod } from '@/interfaces/IContact';
 
 import { AddressTypes } from './../../../../constants/addressTypes';
 

@@ -1,8 +1,9 @@
-import { Input } from 'components/common/form';
 import { useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
-import { withNameSpace } from 'utils/formUtils';
 import * as Yup from 'yup';
+
+import { Input } from '@/components/common/form';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { ActivityModel } from '../../activity/detail/models';
 import { ActivityTemplateTypes, FormTemplateTypes, IFormContent } from './models';

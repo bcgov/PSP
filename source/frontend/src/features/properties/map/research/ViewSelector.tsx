@@ -1,14 +1,15 @@
+import { FormikProps } from 'formik';
+import noop from 'lodash/noop';
+import * as React from 'react';
+
 import {
   InventoryTabNames,
   InventoryTabs,
   TabInventoryView,
-} from 'features/mapSideBar/tabs/InventoryTabs';
-import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
-import PropertyResearchTabView from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
-import { FormikProps } from 'formik';
-import noop from 'lodash/noop';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
-import * as React from 'react';
+} from '@/features/mapSideBar/property/InventoryTabs';
+import { UpdatePropertyDetailsContainer } from '@/features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import PropertyResearchTabView from '@/features/mapSideBar/property/tabs/propertyResearch/PropertyResearchTabView';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
 import PropertyFileContainer from '../shared/detail/PropertyFileContainer';
 import { FormKeys } from './FormKeys';

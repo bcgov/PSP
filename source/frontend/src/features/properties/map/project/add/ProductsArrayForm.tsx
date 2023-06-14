@@ -1,13 +1,14 @@
-import { LinkButton, StyledRemoveLinkButton } from 'components/common/buttons';
-import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, FieldArrayRenderProps, FormikProps, useFormikContext } from 'formik';
-import { useProductProvider } from 'hooks/repositories/useProductProvider';
 import React, { useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
+import GenericModal from '@/components/common/GenericModal';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { useProductProvider } from '@/hooks/repositories/useProductProvider';
 
 import { ProductForm, ProjectForm } from '../models';
 import ProductSubForm from './ProductSubForm';

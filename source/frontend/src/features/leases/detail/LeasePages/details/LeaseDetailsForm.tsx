@@ -1,14 +1,15 @@
+import { Formik } from 'formik';
+import { noop } from 'lodash';
+import * as React from 'react';
+import styled from 'styled-components';
+
 import {
   DetailAdministration,
   DetailTermInformation,
   PropertiesInformation,
-} from 'features/leases';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { Formik } from 'formik';
-import { defaultLease } from 'interfaces';
-import { noop } from 'lodash';
-import * as React from 'react';
-import styled from 'styled-components';
+} from '@/features/leases';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { defaultLease } from '@/interfaces';
 
 import DetailConsultation from './DetailConsultation';
 import DetailDocumentation from './DetailDocumentation';

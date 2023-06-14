@@ -1,11 +1,12 @@
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { AccessRequestStatus } from 'constants/accessStatus';
-import { useAccessRequests } from 'hooks/pims-api/useAccessRequests';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_AccessRequest } from 'models/api/AccessRequest';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { AccessRequestStatus } from '@/constants/accessStatus';
+import { useAccessRequests } from '@/hooks/pims-api/useAccessRequests';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_AccessRequest } from '@/models/api/AccessRequest';
 
 import { AccessRequestForm as AccessRequestFormComponent } from './AccessRequestForm';
 import { FormAccessRequest } from './models';

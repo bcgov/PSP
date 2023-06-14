@@ -1,14 +1,15 @@
-import { PointFeature } from 'components/maps/types';
-import { IGeoSearchParams } from 'constants/API';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { useLayerQuery } from 'hooks/layer-api/useLayerQuery';
-import { useMapProperties } from 'hooks/layer-api/useMapProperties';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { useModalContext } from 'hooks/useModalContext';
 import { geoJSON } from 'leaflet';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
-import { useTenant } from 'tenants';
+
+import { PointFeature } from '@/components/maps/types';
+import { IGeoSearchParams } from '@/constants/API';
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useModalContext } from '@/hooks/useModalContext';
+import { useTenant } from '@/tenants';
 
 import { PropertyContext } from '../providers/PropertyContext';
 

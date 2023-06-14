@@ -1,19 +1,20 @@
-import { ReactComponent as Fence } from 'assets/images/fence.svg';
-import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { MapStateContext } from 'components/maps/providers/MapStateContext';
-import { IMapProperty } from 'components/propertySelector/models';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FormikHelpers, FormikProps } from 'formik';
-import useApiUserOverride from 'hooks/useApiUserOverride';
-import { useInitialMapSelectorProperties } from 'hooks/useInitialMapSelectorProperties';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import * as React from 'react';
 import { useMemo, useState } from 'react';
 import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { mapFeatureToProperty } from 'utils/mapPropertyUtils';
+
+import { ReactComponent as Fence } from '@/assets/images/fence.svg';
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { IMapProperty } from '@/components/propertySelector/models';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import SidebarFooter from '@/features/properties/map/shared/SidebarFooter';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { LeaseFormModel } from '../models';

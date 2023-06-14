@@ -1,16 +1,17 @@
-import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import * as API from 'constants/API';
-import { FinancialCodeTypes } from 'constants/index';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
-import { useFinancialCodeRepository } from 'hooks/repositories/useFinancialCodeRepository';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { Api_Project } from 'models/api/Project';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
-import { toDropDownOptions } from 'utils/financialCodeUtils';
+
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import * as API from '@/constants/API';
+import { FinancialCodeTypes } from '@/constants/index';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { Api_Project } from '@/models/api/Project';
+import { toDropDownOptions } from '@/utils/financialCodeUtils';
 
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddProjectForm } from '../hooks/useAddProjectFormManagement';

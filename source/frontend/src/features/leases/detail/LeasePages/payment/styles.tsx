@@ -1,8 +1,9 @@
-import { Button } from 'components/common/buttons/Button';
-import { InlineFlexDiv } from 'components/common/styles';
-import { Table } from 'components/Table';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
+import { InlineFlexDiv } from '@/components/common/styles';
+import { Table } from '@/components/Table';
 
 export const StyledFormBody = styled.div`
   margin-left: 1rem;

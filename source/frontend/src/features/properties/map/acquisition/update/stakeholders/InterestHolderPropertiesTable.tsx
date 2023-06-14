@@ -1,10 +1,11 @@
-import OverflowTip from 'components/common/OverflowTip';
-import { ColumnWithProps, Table } from 'components/Table';
-import { Api_Property } from 'models/api/Property';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
 import { CellProps } from 'react-table';
-import { getFilePropertyName } from 'utils/mapPropertyUtils';
+
+import OverflowTip from '@/components/common/OverflowTip';
+import { ColumnWithProps, Table } from '@/components/Table';
+import { Api_Property } from '@/models/api/Property';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 interface IInterestHolderPropertiesProps {
   fileProperties: Api_PropertyFile[];

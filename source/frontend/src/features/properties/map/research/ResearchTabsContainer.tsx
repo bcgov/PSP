@@ -1,11 +1,16 @@
-import { Claims } from 'constants/claims';
-import { FileTypes } from 'constants/fileTypes';
-import { NoteTypes } from 'constants/noteTypes';
-import { FileTabs, FileTabType, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
-import NoteListView from 'features/notes/list/NoteListView';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
+
+import { Claims } from '@/constants/claims';
+import { FileTypes } from '@/constants/fileTypes';
+import { NoteTypes } from '@/constants/noteTypes';
+import NoteListView from '@/features/notes/list/NoteListView';
+import {
+  FileTabs,
+  FileTabType,
+  TabFileView,
+} from '@/features/properties/map/shared/detail/FileTabs';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
 import { ActivityListView } from '../activity/list/ActivityListView';
 import ResearchDocumentsTab from './detail/ResearchDocumentsTab';

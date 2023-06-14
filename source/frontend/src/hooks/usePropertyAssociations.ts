@@ -1,9 +1,10 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { useApiProperties } from 'hooks/pims-api';
-import { IApiError } from 'interfaces/IApiError';
-import { Api_PropertyAssociations } from 'models/api/Property';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
+
+import { useApiProperties } from '@/hooks/pims-api';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_PropertyAssociations } from '@/models/api/Property';
 
 import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
 

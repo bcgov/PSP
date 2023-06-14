@@ -1,11 +1,12 @@
 import { act, screen, waitFor } from '@testing-library/react';
 import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { SideBarContextProvider } from 'features/properties/map/context/sidebarContext';
-import { mockLookups } from 'mocks/lookups.mock';
-import { getMockResearchFile } from 'mocks/researchFile.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { SideBarContextProvider } from '@/features/properties/map/context/sidebarContext';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
 

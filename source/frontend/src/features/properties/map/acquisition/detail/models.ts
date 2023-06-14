@@ -2,9 +2,9 @@ import {
   Api_AcquisitionFile,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFilePerson,
-} from 'models/api/AcquisitionFile';
-import { Api_Address } from 'models/api/Address';
-import { formatApiPersonNames } from 'utils/personUtils';
+} from '@/models/api/AcquisitionFile';
+import { Api_Address } from '@/models/api/Address';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { AcquisitionSolicitorFormModel } from '../common/models';
 

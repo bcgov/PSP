@@ -1,6 +1,5 @@
 import 'react-simple-tree-menu/dist/main.css';
 
-import variables from 'assets/scss/_variables.module.scss';
 import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
 import L from 'leaflet';
 import flatten from 'lodash/flatten';
@@ -12,7 +11,9 @@ import { FaAngleDown, FaAngleRight } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import TreeMenu, { TreeMenuItem, TreeNode } from 'react-simple-tree-menu';
 import styled from 'styled-components';
-import { TenantContext } from 'tenants';
+
+import variables from '@/assets/scss/_variables.module.scss';
+import { TenantContext } from '@/tenants';
 
 import { layersTree } from './data';
 import { ILayerItem } from './types';

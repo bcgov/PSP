@@ -1,23 +1,24 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { IApiError } from 'interfaces/IApiError';
+import { useCallback } from 'react';
+import { toast } from 'react-toastify';
+
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { IApiError } from '@/interfaces/IApiError';
 import {
   Api_DocumentType,
   Api_DocumentUpdateRequest,
   Api_DocumentUpdateResponse,
-} from 'models/api/Document';
+} from '@/models/api/Document';
 import {
   Api_FileDownload,
   Api_Storage_DocumentDetail,
   Api_Storage_DocumentMetadata,
   Api_Storage_DocumentTypeMetadataType,
   DocumentQueryResult,
-} from 'models/api/DocumentStorage';
-import { ExternalResult } from 'models/api/ExternalResult';
-import { useCallback } from 'react';
-import { toast } from 'react-toastify';
+} from '@/models/api/DocumentStorage';
+import { ExternalResult } from '@/models/api/ExternalResult';
 
 /**
  * hook that retrieves document information.

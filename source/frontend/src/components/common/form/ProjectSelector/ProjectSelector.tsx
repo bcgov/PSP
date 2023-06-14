@@ -1,7 +1,8 @@
-import { AsyncTypeahead } from 'components/common/form';
-import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
-import { IAutocompletePrediction } from 'interfaces';
 import React from 'react';
+
+import { AsyncTypeahead } from '@/components/common/form';
+import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
+import { IAutocompletePrediction } from '@/interfaces';
 
 export interface IProjectSelectorProps {
   /** The formik field name */

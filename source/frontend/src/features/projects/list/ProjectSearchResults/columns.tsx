@@ -1,7 +1,8 @@
-import { ColumnWithProps } from 'components/Table';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import { prettyFormatDate } from 'utils';
+
+import { ColumnWithProps } from '@/components/Table';
+import { prettyFormatDate } from '@/utils';
 
 import { ProjectSearchResultModel } from './models';
 

@@ -2,10 +2,11 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import merge from 'lodash/merge';
-import { mockFAParcelLayerResponse } from 'mocks/index.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+
+import { mockFAParcelLayerResponse } from '@/mocks/index.mock';
+import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { IUseWfsLayerOptions, useWfsLayer } from './useWfsLayer';
 

@@ -1,7 +1,8 @@
-import { showFile } from 'features/documents/DownloadDocumentButton';
-import { useDocumentGenerationRepository } from 'features/documents/hooks/useDocumentGenerationRepository';
 import * as React from 'react';
 import { toast } from 'react-toastify';
+
+import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 
 import { IAgreementFormProps } from './AgreementForm';
 import { IAgreementFormData } from './models';

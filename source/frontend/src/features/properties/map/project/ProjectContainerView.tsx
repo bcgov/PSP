@@ -1,10 +1,11 @@
-import GenericModal from 'components/common/GenericModal';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { useCallback, useRef } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import GenericModal from '@/components/common/GenericModal';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 
 import SidebarFooter from '../shared/SidebarFooter';
 import ProjectHeader from './common/ProjectHeader';

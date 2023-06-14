@@ -1,15 +1,16 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
-import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
-import { mockLookups } from 'mocks/lookups.mock';
-import { mockProjectPostResponse } from 'mocks/projects.mock';
-import { getUserMock } from 'mocks/user.mock';
-import { Api_Project } from 'models/api/Project';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockProjectPostResponse } from '@/mocks/projects.mock';
+import { getUserMock } from '@/mocks/user.mock';
+import { Api_Project } from '@/models/api/Project';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { ProjectForm } from '../models';
 import AddProjectContainer, { IAddProjectContainerProps } from './AddProjectContainer';
@@ -35,7 +36,7 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
-jest.mock('hooks/repositories/useUserInfoRepository');
+jest.mock('@/hooks/repositories/useUserInfoRepository');
 (useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
   retrieveUserInfo: jest.fn(),
   retrieveUserInfoLoading: true,

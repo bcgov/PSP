@@ -1,6 +1,6 @@
-import * as actionTypes from 'constants/actionTypes';
-import { useApiAccessRequests } from 'hooks/pims-api';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
+import * as actionTypes from '@/constants/actionTypes';
+import { useApiAccessRequests } from '@/hooks/pims-api';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
 
 export const useAccessRequests = () => {
   const {

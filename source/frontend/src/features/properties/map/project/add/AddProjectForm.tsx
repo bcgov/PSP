@@ -1,12 +1,13 @@
-import { Form, Input, Select, SelectOption, TextArea } from 'components/common/form';
-import { UserRegionSelectContainer } from 'components/common/form/UserRegionSelect/UserRegionSelectContainer';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { Form, Input, Select, SelectOption, TextArea } from '@/components/common/form';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 
 import { ProjectForm } from '../models';
 import ProductsArrayForm from './ProductsArrayForm';

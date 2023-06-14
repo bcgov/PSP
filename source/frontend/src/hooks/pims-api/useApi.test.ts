@@ -2,7 +2,8 @@ import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { ENVIRONMENT } from 'constants/environment';
+
+import { ENVIRONMENT } from '@/constants/environment';
 
 import { useAxiosApi } from '.';
 

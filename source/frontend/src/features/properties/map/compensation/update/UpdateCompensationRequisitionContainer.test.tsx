@@ -1,19 +1,19 @@
-import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
-} from 'mocks/acquisitionFiles.mock';
-import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
-import { mockLookups } from 'mocks/lookups.mock';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions } from 'utils/test-utils';
+} from '@/mocks/acquisitionFiles.mock';
+import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { CompensationRequisitionFormModel, PayeeOption } from '../models';
 import UpdateCompensationRequisitionContainer from './UpdateCompensationRequisitionContainer';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
-jest.mock('hooks/repositories/useRequisitionCompensationRepository');
+jest.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 type Provider = typeof useCompensationRequisitionRepository;
 
 const mockUpdateCompensation = jest.fn();
@@ -26,7 +26,7 @@ const mockUpdateCompensation = jest.fn();
   },
 } as unknown as ReturnType<Provider>);
 
-jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
+jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionOwners: {
@@ -47,7 +47,7 @@ jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
   },
 }));
 
-jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
+jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionOwners: {
@@ -68,7 +68,7 @@ jest.mock('hooks/repositories/useAcquisitionProvider', () => ({
   },
 }));
 
-jest.mock('hooks/repositories/useInterestHolderRepository', () => ({
+jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
       getAcquisitionInterestHolders: {
@@ -86,7 +86,7 @@ const mockGetApi = {
   loading: false,
 };
 
-jest.mock('hooks/repositories/useFinancialCodeRepository', () => ({
+jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       getFinancialActivityCodeTypes: mockGetApi,

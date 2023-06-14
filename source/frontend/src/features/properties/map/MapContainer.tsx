@@ -1,16 +1,17 @@
-import DraftSvg from 'assets/images/pins/icon-draft.svg';
 import clsx from 'classnames';
-import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import { MapStateContext } from 'components/maps/providers/MapStateContext';
-import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
-import { MAP_MAX_ZOOM } from 'constants/strings';
-import { IProperty } from 'interfaces';
-import { Api_Property } from 'models/api/Property';
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { pidParser } from 'utils';
+
+import DraftSvg from '@/assets/images/pins/icon-draft.svg';
+import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
+import { MapStateContext } from '@/components/maps/providers/MapStateContext';
+import { PropertyContextProvider } from '@/components/maps/providers/PropertyContext';
+import { MAP_MAX_ZOOM } from '@/constants/strings';
+import { IProperty } from '@/interfaces';
+import { Api_Property } from '@/models/api/Property';
+import { pidParser } from '@/utils';
 
 import MapView from '../../../components/maps/MapView';
 import ActivityRouter from './ActivityRouter';

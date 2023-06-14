@@ -1,23 +1,24 @@
-import { EditButton } from 'components/common/EditButton';
-import { UserNameTooltip } from 'components/common/UserNameTooltip';
-import * as API from 'constants/API';
-import { Claims } from 'constants/index';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
+import React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { FiCheck, FiMinus, FiX } from 'react-icons/fi';
+import styled from 'styled-components';
+
+import { EditButton } from '@/components/common/EditButton';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import * as API from '@/constants/API';
+import { Claims } from '@/constants/index';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import {
   Api_AcquisitionFile,
   isDefaultState,
   lastModifiedBy,
   sortByDisplayOrder,
-} from 'models/api/AcquisitionFile';
-import React from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { FiCheck, FiMinus, FiX } from 'react-icons/fi';
-import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+} from '@/models/api/AcquisitionFile';
+import { prettyFormatDate } from '@/utils';
 
 import { StyledChecklistItemStatus, StyledSectionCentered } from './styles';
 

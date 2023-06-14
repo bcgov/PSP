@@ -1,13 +1,14 @@
 import './LegendControl.scss';
 
-import { Button } from 'components/common/buttons/Button';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import React from 'react';
 import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
 import ClickAwayListener from 'react-click-away-listener';
 import { FiMapPin } from 'react-icons/fi';
 import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 import Control from '../Control';
 import { Legend } from './Legend';

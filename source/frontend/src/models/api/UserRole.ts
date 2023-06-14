@@ -1,4 +1,4 @@
-import { Api_ConcurrentVersion } from 'models/api/ConcurrentVersion';
+import { Api_ConcurrentVersion } from '@/models/api/ConcurrentVersion';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_Role } from './Role';

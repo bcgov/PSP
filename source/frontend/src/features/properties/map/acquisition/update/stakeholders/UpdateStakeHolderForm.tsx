@@ -1,22 +1,22 @@
-import { Button } from 'components/common/buttons';
-import { StyledRemoveLinkButton } from 'components/common/buttons';
-import { DisplayError, Select } from 'components/common/form';
-import { ContactInputContainer } from 'components/common/form/ContactInput/ContactInputContainer';
-import ContactInputView from 'components/common/form/ContactInput/ContactInputView';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { StyledLink } from 'components/maps/leaflet/LayerPopup/styles';
-import * as API from 'constants/API';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
 import { FieldArray, Formik, FormikProps, getIn } from 'formik';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_InterestHolder } from 'models/api/InterestHolder';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
+
+import { Button, StyledRemoveLinkButton } from '@/components/common/buttons';
+import { DisplayError, Select } from '@/components/common/form';
+import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
+import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import * as API from '@/constants/API';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import InterestHolderPropertiesTable from './InterestHolderPropertiesTable';
 import { InterestHolderForm, StakeHolderForm } from './models';

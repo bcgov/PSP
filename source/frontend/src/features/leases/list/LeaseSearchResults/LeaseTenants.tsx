@@ -1,6 +1,7 @@
-import { LinkButton } from 'components/common/buttons';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+
+import { LinkButton } from '@/components/common/buttons';
 
 export interface ILeaseTenantsProps {
   tenantNames: string[];

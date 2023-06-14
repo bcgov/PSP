@@ -1,5 +1,6 @@
 // customize CRA configuration, add compression to js.
 const CompressionPlugin = require('compression-webpack-plugin'); //gzip
+const path = require('path');
 
 const addCompressionPlugin = config => {
   if (process.env.NODE_ENV === 'production') {
@@ -22,6 +23,10 @@ module.exports = {
     config.resolve.fallback = fallback;
     addCompressionPlugin(config);
     config.ignoreWarnings = [/Failed to parse source map/, /autoprefixer/];
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, 'src'),
+    };
     return config;
   },
   // The Jest config to use when running your jest tests

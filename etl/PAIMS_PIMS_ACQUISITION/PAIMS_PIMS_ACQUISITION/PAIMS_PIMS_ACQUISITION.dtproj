@@ -41,10 +41,10 @@
                 <SSIS:Property SSIS:Name="Name">PAIMS_ACQUISITION_TO_PIMS_DATASET</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">1401</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1740</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{D9CEE380-B5C4-4A11-82AA-0BF1EE429B53}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{6CFF151B-15E7-4BD3-86C3-3F64D19851BC}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>

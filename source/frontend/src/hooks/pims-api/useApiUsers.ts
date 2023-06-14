@@ -1,9 +1,10 @@
-import { IPaginateParams } from 'constants/API';
-import * as pimsToasts from 'constants/toasts';
-import { LifecycleToasts } from 'customAxios';
-import { IPagedItems, IUser } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
+
+import { IPaginateParams } from '@/constants/API';
+import * as pimsToasts from '@/constants/toasts';
+import { LifecycleToasts } from '@/customAxios';
+import { IPagedItems, IUser } from '@/interfaces';
 
 import { Api_User } from './../../models/api/User';
 import { useAxiosApi } from '.';

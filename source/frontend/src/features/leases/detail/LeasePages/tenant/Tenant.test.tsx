@@ -1,9 +1,10 @@
-import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
-import { defaultLease, ILease } from 'interfaces';
-import { mockApiPerson, mockOrganization } from 'mocks/filterData.mock';
-import { getMockLease } from 'mocks/lease.mock';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
+import { defaultLease, ILease } from '@/interfaces';
+import { mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
+import { getMockLease } from '@/mocks/lease.mock';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import Tenant, { ITenantProps } from './ViewTenantForm';
 

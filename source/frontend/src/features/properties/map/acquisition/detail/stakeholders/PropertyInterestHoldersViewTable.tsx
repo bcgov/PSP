@@ -1,10 +1,11 @@
-import { StyledLink } from 'components/maps/leaflet/LayerPopup/styles';
-import { ColumnWithProps, Table } from 'components/Table';
-import { Api_InterestHolderProperty } from 'models/api/InterestHolder';
-import { Api_Person } from 'models/api/Person';
 import * as React from 'react';
 import { CellProps } from 'react-table';
-import { formatApiPersonNames } from 'utils/personUtils';
+
+import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { ColumnWithProps, Table } from '@/components/Table';
+import { Api_InterestHolderProperty } from '@/models/api/InterestHolder';
+import { Api_Person } from '@/models/api/Person';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { InterestHolderViewForm, InterestHolderViewRow } from '../../update/stakeholders/models';
 

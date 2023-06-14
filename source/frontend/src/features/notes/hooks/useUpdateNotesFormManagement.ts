@@ -1,8 +1,9 @@
-import { NoteTypes } from 'constants/index';
 import { FormikHelpers } from 'formik';
-import { useNoteRepository } from 'hooks/repositories/useNoteRepository';
-import { Api_Note } from 'models/api/Note';
 import { useCallback } from 'react';
+
+import { NoteTypes } from '@/constants/index';
+import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
+import { Api_Note } from '@/models/api/Note';
 
 import { NoteForm } from '../models';
 import { UpdateNoteYupSchema } from '../update/UpdateNoteYupSchema';

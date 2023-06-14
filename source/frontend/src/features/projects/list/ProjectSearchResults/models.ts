@@ -1,4 +1,4 @@
-import { Api_Project } from 'models/api/Project';
+import { Api_Project } from '@/models/api/Project';
 
 export class ProjectSearchResultModel {
   id: number | null = null;

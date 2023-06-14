@@ -1,10 +1,10 @@
-import Claims from 'constants/claims';
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { NoteTypes } from 'constants/noteTypes';
-import DocumentListContainer from 'features/documents/list/DocumentListContainer';
-import NoteListView from 'features/notes/list/NoteListView';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Project } from 'models/api/Project';
+import Claims from '@/constants/claims';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { NoteTypes } from '@/constants/noteTypes';
+import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
+import NoteListView from '@/features/notes/list/NoteListView';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_Project } from '@/models/api/Project';
 
 import { ProjectContainerState, ProjectPageNames } from '../ProjectContainer';
 import { ProjectTabNames, ProjectTabs, ProjectTabView } from '../ProjectTabs';

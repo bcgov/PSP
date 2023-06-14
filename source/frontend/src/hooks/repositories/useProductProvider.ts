@@ -1,10 +1,11 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { useApiProducts } from 'hooks/pims-api/useApiProducts';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { IApiError } from 'interfaces/IApiError';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-toastify';
+
+import { useApiProducts } from '@/hooks/pims-api/useApiProducts';
+import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
 /**
  * hook that retrieves Product information.

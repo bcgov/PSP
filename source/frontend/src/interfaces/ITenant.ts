@@ -1,4 +1,4 @@
-import { Api_Person } from 'models/api/Person';
+import { Api_Person } from '@/models/api/Person';
 
 import { IOrganization } from '.';
 export interface ITenant {

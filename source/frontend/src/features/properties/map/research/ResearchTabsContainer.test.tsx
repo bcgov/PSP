@@ -1,7 +1,8 @@
-import Claims from 'constants/claims';
-import { getMockResearchFile } from 'mocks/researchFile.mock';
 import { act } from 'react-test-renderer';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+
+import Claims from '@/constants/claims';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import ResearchTabsContainer, { IResearchTabsContainerProps } from './ResearchTabsContainer';
 

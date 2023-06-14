@@ -1,7 +1,8 @@
-import { VolumeUnitTypes } from 'constants/index';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { convertVolume, round } from 'utils';
+
+import { VolumeUnitTypes } from '@/constants/index';
+import { convertVolume, round } from '@/utils';
 
 import { StyledGreenBlue, StyledInput } from './styles';
 

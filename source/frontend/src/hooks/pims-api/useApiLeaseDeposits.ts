@@ -1,7 +1,8 @@
-import { ILease } from 'interfaces';
-import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
-import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import React from 'react';
+
+import { ILease } from '@/interfaces';
+import { IParentConcurrencyGuard } from '@/interfaces/IParentConcurrencyGuard';
+import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
 
 import { useAxiosApi } from '.';
 

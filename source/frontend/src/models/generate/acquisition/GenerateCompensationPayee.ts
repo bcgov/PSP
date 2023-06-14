@@ -1,7 +1,7 @@
-import { Api_CompensationFinancial } from 'models/api/CompensationFinancial';
-import { Api_CompensationPayee } from 'models/api/CompensationPayee';
-import { formatMoney } from 'utils';
-import { formatNames } from 'utils/personUtils';
+import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
+import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
+import { formatMoney } from '@/utils';
+import { formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateCompensationPayee {
   name: string;

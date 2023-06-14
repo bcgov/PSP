@@ -6,7 +6,8 @@ import { FunctionComponent, memo, useEffect } from 'react';
 import { Form, FormControlProps } from 'react-bootstrap';
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import styled from 'styled-components';
-import { formikFieldMemo } from 'utils';
+
+import { formikFieldMemo } from '@/utils';
 
 type RequiredAttributes = {
   /** The field name */

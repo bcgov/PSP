@@ -1,5 +1,6 @@
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
+
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
 import { useAxiosApi } from '.';
 

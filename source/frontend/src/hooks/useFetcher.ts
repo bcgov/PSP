@@ -1,10 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { TableSort } from 'components/Table/TableSort';
-import { IPagedItems } from 'interfaces';
 import isEmpty from 'lodash/isEmpty';
 import { useCallback } from 'react';
-import { generateMultiSortCriteria } from 'utils';
-import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
+
+import { TableSort } from '@/components/Table/TableSort';
+import { IPagedItems } from '@/interfaces';
+import { generateMultiSortCriteria } from '@/utils';
+import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
 import { IPaginateRequest } from './pims-api';
 

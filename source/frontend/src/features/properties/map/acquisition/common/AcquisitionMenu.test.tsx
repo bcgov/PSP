@@ -1,5 +1,5 @@
-import { Claims } from 'constants/index';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import { Claims } from '@/constants/index';
+import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { EditFormType } from '../EditFormNames';
 import AcquisitionMenu, { IAcquisitionMenuProps } from './AcquisitionMenu';

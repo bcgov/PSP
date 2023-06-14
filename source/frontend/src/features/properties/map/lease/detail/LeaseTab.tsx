@@ -1,8 +1,9 @@
-import { LeaseViewPageForm } from 'features/leases';
-import { LeaseFormModel } from 'features/leases/models';
 import { FormikProps } from 'formik';
-import { IFormLease } from 'interfaces';
 import React from 'react';
+
+import { LeaseViewPageForm } from '@/features/leases';
+import { LeaseFormModel } from '@/features/leases/models';
+import { IFormLease } from '@/interfaces';
 
 import { ILeasePage } from '../LeaseContainer';
 

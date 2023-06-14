@@ -1,9 +1,10 @@
-import { IContactFilter } from 'components/contact/ContactManagerView/IContactFilter';
-import { IContactSearchResult, IPagedItems } from 'interfaces';
-import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
-import { IContact } from 'interfaces/IContact';
 import queryString from 'query-string';
 import React from 'react';
+
+import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
+import { IContactSearchResult, IPagedItems } from '@/interfaces';
+import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
+import { IContact } from '@/interfaces/IContact';
 
 import { Api_Person } from './../../models/api/Person';
 import { IPaginateRequest, useAxiosApi } from '.';

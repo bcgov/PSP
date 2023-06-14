@@ -1,7 +1,8 @@
-import { ColumnWithProps } from 'components/Table';
-import { IContactSearchResult } from 'interfaces';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { CellProps } from 'react-table';
+
+import { ColumnWithProps } from '@/components/Table';
+import { IContactSearchResult } from '@/interfaces';
 
 const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
   {

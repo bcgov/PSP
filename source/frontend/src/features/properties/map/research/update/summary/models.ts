@@ -4,8 +4,8 @@ import {
   IContactSearchResult,
   toOrganization,
   toPerson,
-} from 'interfaces';
-import { Api_ResearchFile, Api_ResearchFilePurpose } from 'models/api/ResearchFile';
+} from '@/interfaces';
+import { Api_ResearchFile, Api_ResearchFilePurpose } from '@/models/api/ResearchFile';
 
 import { ResearchFileProjectFormModel } from '../../common/models';
 

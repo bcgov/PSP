@@ -1,5 +1,5 @@
-import { Api_Geometry, Api_Property } from 'models/api/Property';
-import { pidFormatter } from 'utils';
+import { Api_Geometry, Api_Property } from '@/models/api/Property';
+import { pidFormatter } from '@/utils';
 
 import { Api_GenerateAddress } from '../GenerateAddress';
 import { Api_GenerateInterestHolder } from './GenerateInterestHolder';

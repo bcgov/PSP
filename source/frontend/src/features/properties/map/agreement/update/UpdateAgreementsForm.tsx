@@ -1,14 +1,15 @@
-import { Button, StyledRemoveLinkButton } from 'components/common/buttons';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, Form, Formik, FormikProps } from 'formik';
-import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
-import { Api_Agreement } from 'models/api/Agreement';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
+
+import { Button, StyledRemoveLinkButton } from '@/components/common/buttons';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { Api_Agreement } from '@/models/api/Agreement';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import AgreementSubForm from './AgreementSubForm';
 import { AgreementsFormModel, SingleAgreementFormModel } from './models';

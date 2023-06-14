@@ -1,12 +1,13 @@
 import clsx from 'classnames';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import * as Styled from 'components/common/styles';
-import { Api_Activity } from 'models/api/Activity';
 import React from 'react';
 import { useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import * as Styled from '@/components/common/styles';
+import { Api_Activity } from '@/models/api/Activity';
 
 import { IFormContent } from '../../shared/content/models';
 import { ActivityFile } from '../detail/ActivityContainer';

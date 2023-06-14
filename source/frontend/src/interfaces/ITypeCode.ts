@@ -1,4 +1,4 @@
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 export default interface ITypeCode<T> {
   id: T;

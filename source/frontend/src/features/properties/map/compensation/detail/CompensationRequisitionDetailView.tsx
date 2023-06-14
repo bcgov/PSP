@@ -1,21 +1,22 @@
-import EditButton from 'components/common/EditButton';
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { StyledAddButton } from 'components/common/styles';
-import Claims from 'constants/claims';
-import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_CompensationPayee } from 'models/api/CompensationPayee';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
-import { Api_Product, Api_Project } from 'models/api/Project';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt, FaMoneyCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { formatMoney, prettyFormatDate } from 'utils';
-import { formatApiPersonNames } from 'utils/personUtils';
+
+import EditButton from '@/components/common/EditButton';
+import { HeaderField } from '@/components/common/HeaderField/HeaderField';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { StyledAddButton } from '@/components/common/styles';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { Api_Product, Api_Project } from '@/models/api/Project';
+import { formatMoney, prettyFormatDate } from '@/utils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { DetailAcquisitionFileOwner } from '../../acquisition/detail/models';
 

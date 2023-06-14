@@ -1,10 +1,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { getMockActivityResponse } from 'mocks/activities.mock';
-import { getMockResearchFile } from 'mocks/researchFile.mock';
-import { prettyFormatDate } from 'utils';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockActivityResponse } from '@/mocks/activities.mock';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { prettyFormatDate } from '@/utils';
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import ActivityHeader, { IActivityHeaderProps } from './ActivityHeader';
 

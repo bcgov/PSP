@@ -1,17 +1,18 @@
-import { AGREEMENT_TYPES } from 'constants/API';
 import { FormikProps } from 'formik';
-import { useApiUsers } from 'hooks/pims-api/useApiUsers';
-import { mockAgreementsResponse } from 'mocks/agreements.mock';
-import { mockLookups } from 'mocks/index.mock';
 import { createRef } from 'react';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions } from 'utils/test-utils';
+
+import { AGREEMENT_TYPES } from '@/constants/API';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { mockAgreementsResponse } from '@/mocks/agreements.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { AgreementsFormModel } from './models';
 import { IUpdateAgreementsFormProps, UpdateAgreementsForm } from './UpdateAgreementsForm';
 
 // mock API service calls
-jest.mock('hooks/pims-api/useApiUsers');
+jest.mock('@/hooks/pims-api/useApiUsers');
 
 (useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
   getUserInfo: jest.fn().mockResolvedValue({}),

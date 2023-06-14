@@ -1,9 +1,10 @@
-import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockLookups } from 'mocks/lookups.mock';
 import { useMap } from 'react-leaflet';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import Claims from '@/constants/claims';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILayerPopupProps } from './LayerPopupContainer';
 import { LayerPopupView } from './LayerPopupView';

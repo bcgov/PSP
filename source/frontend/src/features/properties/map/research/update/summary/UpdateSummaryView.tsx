@@ -1,8 +1,9 @@
 import { Formik, FormikProps } from 'formik';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
 import { useUpdateResearch } from '../../hooks/useUpdateResearch';
 import { UpdateResearchFileYupSchema } from '../UpdateResearchFileYupSchema';

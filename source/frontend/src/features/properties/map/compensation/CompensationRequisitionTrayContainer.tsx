@@ -1,9 +1,10 @@
-import { useProjectProvider } from 'hooks/repositories/useProjectProvider';
-import { useCompensationRequisitionRepository } from 'hooks/repositories/useRequisitionCompensationRepository';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
+
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { CompensationRequisitionTrayViewProps } from './CompensationRequisitionTrayView';

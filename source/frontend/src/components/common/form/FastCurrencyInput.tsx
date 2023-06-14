@@ -6,7 +6,8 @@ import React, { memo, useEffect } from 'react';
 import { ColProps } from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import NumberFormat from 'react-number-format';
-import { formikFieldMemo, isPositiveNumberOrZero } from 'utils';
+
+import { formikFieldMemo, isPositiveNumberOrZero } from '@/utils';
 
 import TooltipIcon from '../TooltipIcon';
 

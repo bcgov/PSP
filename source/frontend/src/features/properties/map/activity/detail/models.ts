@@ -1,5 +1,5 @@
-import { Api_ActivityTemplate, Api_PropertyActivity } from 'models/api/Activity';
-import Api_TypeCode from 'models/api/TypeCode';
+import { Api_ActivityTemplate, Api_PropertyActivity } from '@/models/api/Activity';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 import { FileTypes } from './../../../../../constants/fileTypes';
 import { Api_Activity } from './../../../../../models/api/Activity';

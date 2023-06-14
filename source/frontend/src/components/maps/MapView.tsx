@@ -1,12 +1,5 @@
 import axios from 'axios';
 import classNames from 'classnames';
-import { IGeoSearchParams } from 'constants/API';
-import Claims from 'constants/claims';
-import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from 'constants/strings';
-import { PropertyFilter } from 'features/properties/filter';
-import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IProperty } from 'interfaces';
 import { LatLngBounds, Map as LeafletMap, Popup as LeafletPopup, PopupEvent } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
@@ -17,9 +10,17 @@ import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
 import VisibilitySensor from 'react-visibility-sensor';
-import { useAppSelector } from 'store/hooks';
-import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import styled from 'styled-components';
+
+import { IGeoSearchParams } from '@/constants/API';
+import Claims from '@/constants/claims';
+import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from '@/constants/strings';
+import { PropertyFilter } from '@/features/properties/filter';
+import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { IProperty } from '@/interfaces';
+import { useAppSelector } from '@/store/hooks';
+import { DEFAULT_MAP_ZOOM, setMapViewZoom } from '@/store/slices/mapViewZoom/mapViewZoomSlice';
 
 import LoadingBackdrop from '../common/LoadingBackdrop';
 import useActiveFeatureLayer from './hooks/useActiveFeatureLayer';

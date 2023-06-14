@@ -1,6 +1,6 @@
-import Claims from 'constants/claims';
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import Claims from '@/constants/claims';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
 

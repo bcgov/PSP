@@ -1,12 +1,13 @@
 import { AxiosResponse } from 'axios';
-import { SortDirection, TableSort } from 'components/Table/TableSort';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useIsMounted from 'hooks/useIsMounted';
-import { IPagedItems } from 'interfaces';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
+
+import { SortDirection, TableSort } from '@/components/Table/TableSort';
+import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
+import useIsMounted from '@/hooks/useIsMounted';
+import { IPagedItems } from '@/interfaces';
 
 import { IPaginateRequest } from './pims-api';
 import { useFetcher } from './useFetcher';

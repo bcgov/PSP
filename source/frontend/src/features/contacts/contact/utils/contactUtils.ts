@@ -1,8 +1,9 @@
-import { CountryCodes } from 'constants/index';
-import { AddressField } from 'features/contacts/interfaces';
 import { validateYupSchema, yupToFormErrors } from 'formik';
-import { IEditableOrganizationForm, IEditablePersonForm } from 'interfaces/editable-contact';
 import isEmpty from 'lodash/isEmpty';
+
+import { CountryCodes } from '@/constants/index';
+import { AddressField } from '@/features/contacts/interfaces';
+import { IEditableOrganizationForm, IEditablePersonForm } from '@/interfaces/editable-contact';
 
 import {
   hasAddress,

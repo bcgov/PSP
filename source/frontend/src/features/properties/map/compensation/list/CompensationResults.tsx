@@ -1,5 +1,5 @@
-import { Table } from 'components/Table';
-import { Api_CompensationRequisition } from 'models/api/CompensationRequisition';
+import { Table } from '@/components/Table';
+import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 
 import { createCompensationTableColumns } from './columns';
 

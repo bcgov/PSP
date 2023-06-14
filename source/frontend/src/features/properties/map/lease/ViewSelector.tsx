@@ -1,8 +1,9 @@
-import { LeaseFormModel } from 'features/leases/models';
-import { LeaseFileTabNames } from 'features/mapSideBar/tabs/LeaseFileTabs';
 import { FormikProps } from 'formik';
-import { IFormLease, ILease } from 'interfaces';
 import * as React from 'react';
+
+import { LeaseFormModel } from '@/features/leases/models';
+import { LeaseFileTabNames } from '@/features/properties/map/lease/detail/LeaseFileTabs';
+import { IFormLease, ILease } from '@/interfaces';
 
 import { LeaseTabsContainer } from './detail/LeaseTabsContainer';
 import { LeaseContainerState, LeasePageNames, leasePages } from './LeaseContainer';

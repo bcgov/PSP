@@ -1,6 +1,6 @@
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_InterestHolder, Api_InterestHolderProperty } from 'models/api/InterestHolder';
-import { Api_Person } from 'models/api/Person';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
+import { Api_Person } from '@/models/api/Person';
 
 import { Api_GenerateOwner } from '../GenerateOwner';
 import { Api_GeneratePerson } from '../GeneratePerson';

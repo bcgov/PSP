@@ -1,13 +1,14 @@
 import { useKeycloak } from '@react-keycloak/web';
-import ModalContainer from 'components/common/ModalContainer';
-import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
-import { ModalContextProvider } from 'contexts/modalContext';
 import { MemoryHistory } from 'history';
-import { IOrganization } from 'interfaces';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
-import { TenantConsumer, TenantProvider } from 'tenants';
+
+import ModalContainer from '@/components/common/ModalContainer';
+import { MapStateContextProvider } from '@/components/maps/providers/MapStateContext';
+import { ModalContextProvider } from '@/contexts/modalContext';
+import { IOrganization } from '@/interfaces';
+import { TenantConsumer, TenantProvider } from '@/tenants';
 
 import TestProviderWrapper from './TestProviderWrapper';
 import TestRouterWrapper from './TestRouterWrapper';

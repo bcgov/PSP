@@ -1,8 +1,16 @@
-import { SelectOption } from 'components/common/form';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { getMockApiDefaultCompensation } from 'mocks/compensations.mock';
-import { act, fillInput, fireEvent, renderAsync, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { SelectOption } from '@/components/common/form';
+import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import {
+  act,
+  fillInput,
+  fireEvent,
+  renderAsync,
+  RenderOptions,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { CompensationRequisitionYupSchema } from '../../CompensationRequisitionYupSchema';
 import { CompensationRequisitionFormModel } from '../../models';

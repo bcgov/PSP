@@ -1,10 +1,11 @@
-import { ProtectedComponent } from 'components/common/ProtectedComponent';
-import { Claims } from 'constants/claims';
-import { UpdateLeaseContainer } from 'features/leases/detail/LeasePages/details/UpdateLeaseContainer';
-import { LeaseFormModel } from 'features/leases/models';
-import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { FormikProps } from 'formik';
 import * as React from 'react';
+
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { Claims } from '@/constants/claims';
+import { UpdateLeaseContainer } from '@/features/leases/detail/LeasePages/details/UpdateLeaseContainer';
+import { LeaseFormModel } from '@/features/leases/models';
+import { LeasePageProps } from '@/features/properties/map/lease/LeaseContainer';
 
 import LeaseDetailsForm from './LeaseDetailsForm';
 

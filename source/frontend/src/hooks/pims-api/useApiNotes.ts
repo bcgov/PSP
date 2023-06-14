@@ -1,6 +1,7 @@
-import { NoteTypes } from 'constants/noteTypes';
-import { Api_EntityNote, Api_Note } from 'models/api/Note';
 import React from 'react';
+
+import { NoteTypes } from '@/constants/noteTypes';
+import { Api_EntityNote, Api_Note } from '@/models/api/Note';
 
 import { useAxiosApi } from './';
 

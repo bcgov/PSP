@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITenantConfig } from 'hooks/pims-api';
+
+import { ITenantConfig } from '@/hooks/pims-api';
 
 import { ITenantsState } from '.';
 

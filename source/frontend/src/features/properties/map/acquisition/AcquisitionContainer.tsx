@@ -1,15 +1,16 @@
-import LoadingBackdrop from 'components/common/LoadingBackdrop';
-import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { FileTypes } from 'constants/index';
-import { FileTabType } from 'features/mapSideBar/tabs/FileTabs';
-import { InventoryTabNames } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
-import { useAcquisitionProvider } from 'hooks/repositories/useAcquisitionProvider';
-import useApiUserOverride from 'hooks/useApiUserOverride';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import { Api_File } from 'models/api/File';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
+
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
+import { FileTypes } from '@/constants/index';
+import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
+import { FileTabType } from '@/features/properties/map/shared/detail/FileTabs';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { Api_File } from '@/models/api/File';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { IAcquisitionViewProps } from './AcquisitionView';
