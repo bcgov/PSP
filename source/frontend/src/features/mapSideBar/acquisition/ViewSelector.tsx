@@ -19,7 +19,6 @@ import { UpdateAcquisitionContainer } from '../../properties/map/acquisition/upd
 import { UpdateAcquisitionForm } from '../../properties/map/acquisition/update/summary/UpdateAcquisitionForm';
 import { UpdateAgreementsContainer } from '../../properties/map/agreement/update/UpdateAgreementsContainer';
 import { UpdateAgreementsForm } from '../../properties/map/agreement/update/UpdateAgreementsForm';
-
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import { EditFormType } from './EditFormNames';
 

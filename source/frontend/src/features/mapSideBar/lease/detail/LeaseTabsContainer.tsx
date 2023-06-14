@@ -6,12 +6,12 @@ import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { LeaseFormModel } from '@/features/leases/models';
-import NoteListView from '@/features/notes/list/NoteListView';
 import {
   LeaseFileTabNames,
   LeaseFileTabs,
   LeaseTabFileView,
 } from '@/features/mapSideBar/lease/detail/LeaseFileTabs';
+import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IFormLease, ILease } from '@/interfaces';
 

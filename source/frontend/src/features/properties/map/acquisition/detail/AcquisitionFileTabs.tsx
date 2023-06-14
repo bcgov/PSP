@@ -4,12 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
 import { NoteTypes } from '@/constants/noteTypes';
+import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListView from '@/features/notes/list/NoteListView';
-import {
-  FileTabs,
-  FileTabType,
-  TabFileView,
-} from '@/features/mapSideBar/shared/detail/FileTabs';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 

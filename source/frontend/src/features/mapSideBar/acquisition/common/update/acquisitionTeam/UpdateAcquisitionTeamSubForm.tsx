@@ -8,11 +8,11 @@ import { ContactInput } from '@/components/common/form/ContactInput';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
+import { AcquisitionFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import {
   AcquisitionTeamFormModel,
   WithAcquisitionTeam,
 } from '@/features/mapSideBar/acquisition/common/models';
-import { AcquisitionFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 
