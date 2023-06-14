@@ -13,7 +13,7 @@ import {
   AcquisitionTeamFormModel,
   WithAcquisitionOwners,
   WithAcquisitionTeam,
-} from '../../common/models';
+} from '../../../../../mapSideBar/acquisition/common/models';
 
 export class UpdateAcquisitionSummaryFormModel
   implements WithAcquisitionTeam, WithAcquisitionOwners

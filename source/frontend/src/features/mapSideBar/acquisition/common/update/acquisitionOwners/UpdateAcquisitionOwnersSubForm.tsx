@@ -9,7 +9,7 @@ import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { SectionField } from '@/components/common/Section/SectionField';
 import Address from '@/features/contacts/contact/create/components/address/Address';
 
-import { AcquisitionFormModal } from '../../../modals/AcquisitionFormModal';
+import { AcquisitionFormModal } from '../../modals/AcquisitionFormModal';
 import {
   AcquisitionOwnerFormModel,
   OwnerAddressFormModel,

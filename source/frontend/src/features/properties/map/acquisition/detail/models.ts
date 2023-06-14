@@ -6,7 +6,7 @@ import {
 import { Api_Address } from '@/models/api/Address';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { AcquisitionSolicitorFormModel } from '../common/models';
+import { AcquisitionSolicitorFormModel } from '../../../../mapSideBar/acquisition/common/models';
 
 export class DetailAcquisitionFile {
   fileName?: string;

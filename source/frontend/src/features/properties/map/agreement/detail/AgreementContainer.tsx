@@ -4,7 +4,7 @@ import { useCallback, useContext, useEffect } from 'react';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 
-import { useGenerateAgreement } from '../../acquisition/common/GenerateForm/hooks/useGenerateAgreement';
+import { useGenerateAgreement } from '../../../../mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateAgreement';
 import { IAgreementViewProps } from './AgreementView';
 
 export interface IAgreementContainerProps {

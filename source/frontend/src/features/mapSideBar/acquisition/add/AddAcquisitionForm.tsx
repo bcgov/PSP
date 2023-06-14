@@ -25,9 +25,9 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { Api_Product } from '@/models/api/Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
+import { AcquisitionFormModal } from '../common/modals/AcquisitionFormModal';
 import UpdateAcquisitionOwnersSubForm from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
-import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 

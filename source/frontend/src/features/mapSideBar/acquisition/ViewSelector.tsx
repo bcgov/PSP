@@ -10,17 +10,18 @@ import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { PropertyFileContainer } from '@/features/mapSideBar/shared/detail/PropertyFileContainer';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
-import { UpdateAgreementsContainer } from '../agreement/update/UpdateAgreementsContainer';
-import { UpdateAgreementsForm } from '../agreement/update/UpdateAgreementsForm';
+import AcquisitionFileTabs from '../../properties/map/acquisition/detail/AcquisitionFileTabs';
+import { UpdateAcquisitionChecklistContainer } from '../../properties/map/acquisition/update/checklist/UpdateAcquisitionChecklistContainer';
+import { UpdateAcquisitionChecklistForm } from '../../properties/map/acquisition/update/checklist/UpdateAcquisitionChecklistForm';
+import UpdateStakeHolderContainer from '../../properties/map/acquisition/update/stakeholders/UpdateStakeHolderContainer';
+import UpdateStakeHolderForm from '../../properties/map/acquisition/update/stakeholders/UpdateStakeHolderForm';
+import { UpdateAcquisitionContainer } from '../../properties/map/acquisition/update/summary/UpdateAcquisitionContainer';
+import { UpdateAcquisitionForm } from '../../properties/map/acquisition/update/summary/UpdateAcquisitionForm';
+import { UpdateAgreementsContainer } from '../../properties/map/agreement/update/UpdateAgreementsContainer';
+import { UpdateAgreementsForm } from '../../properties/map/agreement/update/UpdateAgreementsForm';
+
 import { AcquisitionContainerState } from './AcquisitionContainer';
-import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
 import { EditFormType } from './EditFormNames';
-import { UpdateAcquisitionChecklistContainer } from './update/checklist/UpdateAcquisitionChecklistContainer';
-import { UpdateAcquisitionChecklistForm } from './update/checklist/UpdateAcquisitionChecklistForm';
-import UpdateStakeHolderContainer from './update/stakeholders/UpdateStakeHolderContainer';
-import UpdateStakeHolderForm from './update/stakeholders/UpdateStakeHolderForm';
-import { UpdateAcquisitionContainer } from './update/summary/UpdateAcquisitionContainer';
-import { UpdateAcquisitionForm } from './update/summary/UpdateAcquisitionForm';
 
 export interface IViewSelectorProps {
   acquisitionFile?: Api_AcquisitionFile;

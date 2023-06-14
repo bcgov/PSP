@@ -25,8 +25,8 @@ import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces';
 import { Api_Product } from '@/models/api/Project';
 
-import UpdateAcquisitionOwnersSubForm from '../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
-import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
+import UpdateAcquisitionOwnersSubForm from '../../../../../mapSideBar/acquisition/common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
+import { UpdateAcquisitionTeamSubForm } from '../../../../../mapSideBar/acquisition/common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import StatusToolTip from './StatusToolTip';
 

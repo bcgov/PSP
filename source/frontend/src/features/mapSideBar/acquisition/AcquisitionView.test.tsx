@@ -13,7 +13,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatDate } from '@/utils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../../mapSideBar/context/sidebarContext';
+import { SideBarContextProvider } from '../context/sidebarContext';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
 
 const mockAxios = new MockAdapter(axios);

@@ -1,6 +1,5 @@
 import { FieldArray, useFormikContext } from 'formik';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { LinkButton, RemoveButton } from '@/components/common/buttons';
@@ -12,8 +11,8 @@ import * as API from '@/constants/API';
 import {
   AcquisitionTeamFormModel,
   WithAcquisitionTeam,
-} from '@/features/properties/map/acquisition/common/models';
-import { AcquisitionFormModal } from '@/features/properties/map/acquisition/modals/AcquisitionFormModal';
+} from '@/features/mapSideBar/acquisition/common/models';
+import { AcquisitionFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 

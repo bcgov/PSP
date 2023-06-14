@@ -10,7 +10,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
-import { useGenerateLetter } from '../hooks/useGenerateLetter';
+import { useGenerateLetter } from './useGenerateLetter';
 
 const generateFn = jest.fn();
 const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();

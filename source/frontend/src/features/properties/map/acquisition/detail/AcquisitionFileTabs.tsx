@@ -13,13 +13,13 @@ import {
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
+import { AcquisitionContainerState } from '../../../../mapSideBar/acquisition/AcquisitionContainer';
+import { EditFormType } from '../../../../mapSideBar/acquisition/EditFormNames';
 import { ActivityListView } from '../../activity/list/ActivityListView';
 import AgreementContainer from '../../agreement/detail/AgreementContainer';
 import AgreementView from '../../agreement/detail/AgreementView';
 import CompensationListContainer from '../../compensation/list/CompensationListContainer';
 import CompensationListView from '../../compensation/list/CompensationListView';
-import { AcquisitionContainerState } from '../AcquisitionContainer';
-import { EditFormType } from '../EditFormNames';
 import { AcquisitionChecklistView } from './checklist/AcquisitionChecklistView';
 import AcquisitionDocumentsTab from './documents/AcquisitionDocumentsTab';
 import AcquisitionSummaryView from './fileDetails/AcquisitionSummaryView';

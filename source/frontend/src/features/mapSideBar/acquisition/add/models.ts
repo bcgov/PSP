@@ -7,7 +7,7 @@ import {
 } from '@/models/api/AcquisitionFile';
 import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
 
-import { PropertyForm } from '../../../../mapSideBar/shared/models';
+import { PropertyForm } from '../../shared/models';
 import {
   AcquisitionOwnerFormModel,
   AcquisitionRepresentativeFormModel,

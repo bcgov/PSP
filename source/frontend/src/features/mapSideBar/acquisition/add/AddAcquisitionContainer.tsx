@@ -11,8 +11,8 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
-import { PropertyForm } from '../../../../mapSideBar/shared/models';
-import SidebarFooter from '../../../../mapSideBar/shared/SidebarFooter';
+import { PropertyForm } from '../../shared/models';
+import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormManagement';
 import { AddAcquisitionForm } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
