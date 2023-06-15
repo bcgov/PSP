@@ -15,10 +15,10 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from '@/constants/index';
-import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useComposedProperties } from '@/hooks/repositories/useComposedProperties';
+import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
 import { IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
@@ -39,9 +39,9 @@ import MapView from './MapContainer';
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/layer-api/useMapProperties');
-jest.mock('@/hooks/layer-api/useLayerQuery');
+jest.mock('@/hooks/repositories/useLayerQuery');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
-jest.mock('@/hooks/useComposedProperties');
+jest.mock('@/hooks/repositories/useComposedProperties');
 jest.mock('@/hooks/repositories/usePropertyAssociations');
 jest.mock('@/hooks/pims-api/useApiProperties');
 jest.mock('@/hooks/useLtsa');
@@ -58,11 +58,12 @@ jest.mock('react-visibility-sensor', () => {
 
 const mockStore = configureMockStore([thunk]);
 
-(useComposedProperties as any).mockImplementation(() => ({
+(useComposedProperties as jest.Mock).mockImplementation(() => ({
   composedLoading: false,
   ltsaWrapper: { execute: jest.fn(), loading: false },
   apiWrapper: { execute: jest.fn(), loading: false },
   propertyAssociationWrapper: { execute: jest.fn(), loading: false },
+  composedProperty: {},
 }));
 
 const largeMockParcels = [

@@ -3,7 +3,7 @@ import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
 import { useTenant } from '../../tenants/useTenant';
-import { IUserLayerQuery, useLayerQuery } from '../layer-api/useLayerQuery';
+import { IUserLayerQuery, useLayerQuery } from './useLayerQuery';
 
 const initialState: IMapLayerResults = {
   isALR: null,

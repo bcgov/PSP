@@ -4,9 +4,9 @@ import { LatLngLiteral } from 'leaflet';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
 
-import { toCqlFilter } from './layerUtils';
+import { toCqlFilter } from '../layer-api/layerUtils';
+import { wfsAxios2 } from '../layer-api/wfsAxios';
 import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
-import { wfsAxios2 } from './wfsAxios';
 
 export interface IUserLayerQuery {
   /**
@@ -128,7 +128,7 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
         const formattedPid = pid.replace(/-/g, '');
         return executeWfs({ PID: formattedPid }, allBy, true);
       },
-      [baseAllUrl, baseUrl, authenticated],
+      [executeWfs],
     ),
     requestName: 'findByPid',
   });
@@ -138,7 +138,7 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
       async (pin: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
         return executeWfs({ PIN: pin }, allBy);
       },
-      [baseAllUrl, baseUrl, authenticated],
+      [executeWfs],
     ),
     requestName: 'findByPin',
   });
@@ -148,7 +148,7 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
       async (planNumber: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
         return executeWfs({ PLAN_NUMBER: planNumber }, allBy);
       },
-      [baseAllUrl, baseUrl, authenticated],
+      [executeWfs],
     ),
     requestName: 'planNumber',
   });

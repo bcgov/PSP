@@ -7,9 +7,9 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { DistrictCodes, RegionCodes } from '@/constants/index';
-import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/useFullyAttributedParcelMapLayer';
+import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { useTenant } from '@/tenants';
 import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';

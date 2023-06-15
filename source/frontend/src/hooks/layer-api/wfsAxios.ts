@@ -1,8 +1,9 @@
-import { layerData } from '@/constants/toasts';
-import { store } from '@/store/store';
 import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
+
+import { layerData } from '@/constants/toasts';
+import { store } from '@/store/store';
 
 const MAX_RETRIES = 2;
 

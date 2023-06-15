@@ -9,13 +9,13 @@ import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
 
 import useActiveFeatureLayer from './useActiveFeatureLayer';
 
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
-jest.mock('@/hooks/layer-api/useLayerQuery');
+jest.mock('@/hooks/repositories/useLayerQuery');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 
 let clearLayers = jest.fn();

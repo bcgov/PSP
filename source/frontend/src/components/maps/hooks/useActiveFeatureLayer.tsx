@@ -5,8 +5,8 @@ import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { DistrictCodes, RegionCodes } from '@/constants/index';
-import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
+import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { IProperty } from '@/interfaces';
 import { useTenant } from '@/tenants';

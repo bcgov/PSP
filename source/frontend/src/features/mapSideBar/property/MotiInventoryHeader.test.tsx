@@ -29,7 +29,7 @@ describe('MotiInventoryHeader component', () => {
       <MotiInventoryHeader
         composedProperty={renderOptions.composedProperty}
         onZoom={onZoom}
-        isLoading={false}
+        isLoading={renderOptions.isLoading}
       />,
     );
     return result;

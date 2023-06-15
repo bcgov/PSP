@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 
 import { PointFeature } from '@/components/maps/types';
 import { IGeoSearchParams } from '@/constants/API';
-import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
+import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { useTenant } from '@/tenants';
