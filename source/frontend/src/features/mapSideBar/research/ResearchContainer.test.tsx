@@ -9,7 +9,7 @@ import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitForElementToBeRemoved } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../../mapSideBar/context/sidebarContext';
+import { SideBarContextProvider } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
 
 const history = createMemoryHistory();

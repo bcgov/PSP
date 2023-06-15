@@ -12,7 +12,7 @@ import {
 import { mockDraftProperties } from '@/mocks/mockDraftProperties';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../../../mapSideBar/shared/models';
+import { PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 import ResearchProperties from './ResearchProperties';
 

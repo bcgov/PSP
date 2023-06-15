@@ -15,8 +15,8 @@ import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
-import { PropertyForm } from '../../../../mapSideBar/shared/models';
-import SidebarFooter from '../../../../mapSideBar/shared/SidebarFooter';
+import { PropertyForm } from '../../shared/models';
+import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';

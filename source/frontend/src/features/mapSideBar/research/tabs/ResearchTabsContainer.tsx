@@ -8,10 +8,10 @@ import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
-import { ActivityListView } from '../activity/list/ActivityListView';
-import ResearchDocumentsTab from './detail/ResearchDocumentsTab';
-import ResearchSummaryView from './detail/ResearchSummaryView';
-import { FormKeys } from './FormKeys';
+import { ActivityListView } from '../../../properties/map/activity/list/ActivityListView';
+import { FormKeys } from '../FormKeys';
+import ResearchDocumentsTab from './documents/ResearchDocumentsTab';
+import ResearchSummaryView from './fileDetails/details/ResearchSummaryView';
 
 export interface IResearchTabsContainerProps {
   researchFile?: Api_ResearchFile;

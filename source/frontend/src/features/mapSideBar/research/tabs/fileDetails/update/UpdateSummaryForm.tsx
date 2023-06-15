@@ -15,8 +15,8 @@ import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces';
 
-import { ResearchFileNameGuide } from '../../common/ResearchFileNameGuide';
-import { UpdateProjectsSubForm } from '../../common/updateProjects/UpdateProjectsSubForm';
+import { ResearchFileNameGuide } from '../../../common/ResearchFileNameGuide';
+import { UpdateProjectsSubForm } from '../../../common/updateProjects/UpdateProjectsSubForm';
 import { ResearchFilePurposeFormModel, UpdateResearchSummaryFormModel } from './models';
 
 interface MultiSelectOption {

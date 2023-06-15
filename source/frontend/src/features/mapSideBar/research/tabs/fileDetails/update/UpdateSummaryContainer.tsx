@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
-import { useUpdateResearch } from '../../hooks/useUpdateResearch';
-import { UpdateResearchFileYupSchema } from '../UpdateResearchFileYupSchema';
+import { useUpdateResearch } from '../../../hooks/useUpdateResearch';
 import { UpdateResearchSummaryFormModel } from './models';
+import { UpdateResearchFileYupSchema } from './UpdateResearchFileYupSchema';
 import UpdateResearchForm from './UpdateSummaryForm';
 
 export interface IUpdateResearchViewProps {
@@ -15,7 +15,7 @@ export interface IUpdateResearchViewProps {
   onSuccess: () => void;
 }
 
-export const UpdateResearchView = React.forwardRef<FormikProps<any>, IUpdateResearchViewProps>(
+export const UpdateResearchContainer = React.forwardRef<FormikProps<any>, IUpdateResearchViewProps>(
   (props, formikRef) => {
     const { updateResearchFile } = useUpdateResearch();
 
@@ -57,7 +57,7 @@ export const UpdateResearchView = React.forwardRef<FormikProps<any>, IUpdateRese
   },
 );
 
-export default UpdateResearchView;
+export default UpdateResearchContainer;
 
 const StyledFormWrapper = styled.div`
   display: flex;

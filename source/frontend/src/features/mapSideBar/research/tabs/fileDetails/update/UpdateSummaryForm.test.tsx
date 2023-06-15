@@ -7,8 +7,8 @@ import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions, screen } from '@/utils/test-utils';
 
-import { UpdateResearchFileYupSchema } from '../UpdateResearchFileYupSchema';
 import { UpdateResearchSummaryFormModel } from './models';
+import { UpdateResearchFileYupSchema } from './UpdateResearchFileYupSchema';
 import UpdateSummaryForm from './UpdateSummaryForm';
 
 const testResearchFile: Api_ResearchFile = {

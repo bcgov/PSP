@@ -7,7 +7,7 @@ import {
 } from '@/interfaces';
 import { Api_ResearchFile, Api_ResearchFilePurpose } from '@/models/api/ResearchFile';
 
-import { ResearchFileProjectFormModel } from '../../common/models';
+import { ResearchFileProjectFormModel } from '../../../common/models';
 
 export class ResearchFilePurposeFormModel {
   public id?: string;

@@ -17,12 +17,12 @@ import AppRoute from '@/utils/AppRoute';
 import AddProjectContainer from '../../properties/map/project/add/AddProjectContainer';
 import ProjectContainer from '../../properties/map/project/ProjectContainer';
 import ProjectContainerView from '../../properties/map/project/ProjectContainerView';
-import AddResearchContainer from '../../properties/map/research/add/AddResearchContainer';
-import ResearchContainer from '../../properties/map/research/ResearchContainer';
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
 import AcquisitionView from '../acquisition/AcquisitionView';
 import AddAcquisitionContainer from '../acquisition/add/AddAcquisitionContainer';
 import LeaseContainer from '../lease/LeaseContainer';
+import AddResearchContainer from '../research/add/AddResearchContainer';
+import ResearchContainer from '../research/ResearchContainer';
 
 interface IMapRouterProps {
   showSideBar: boolean;

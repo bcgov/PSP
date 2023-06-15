@@ -8,14 +8,14 @@ import {
   TabInventoryView,
 } from '@/features/mapSideBar/property/InventoryTabs';
 import { UpdatePropertyDetailsContainer } from '@/features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
-import PropertyResearchTabView from '@/features/mapSideBar/property/tabs/propertyResearch/PropertyResearchTabView';
+import PropertyResearchTabView from '@/features/mapSideBar/property/tabs/propertyResearch/detail/PropertyResearchTabView';
+import UpdatePropertyResearchContainer from '@/features/mapSideBar/property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
+import PropertyFileContainer from '@/features/mapSideBar/shared/detail/PropertyFileContainer';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
-import PropertyFileContainer from '../../../mapSideBar/shared/detail/PropertyFileContainer';
 import { FormKeys } from './FormKeys';
-import ResearchTabsContainer from './ResearchTabsContainer';
-import UpdatePropertyView from './update/property/UpdatePropertyView';
-import UpdateSummaryView from './update/summary/UpdateSummaryView';
+import UpdateResearchContainer from './tabs/fileDetails/update/UpdateSummaryContainer';
+import ResearchTabsContainer from './tabs/ResearchTabsContainer';
 
 export interface IViewSelectorProps {
   researchFile?: Api_ResearchFile;
@@ -37,7 +37,7 @@ const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>((pro
   if (props.selectedIndex === 0) {
     if (props.isEditMode && !!props.researchFile) {
       return (
-        <UpdateSummaryView
+        <UpdateResearchContainer
           researchFile={props.researchFile}
           ref={formikRef}
           onSuccess={props.onSuccess}
@@ -69,7 +69,7 @@ const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>((pro
         );
       } else {
         return (
-          <UpdatePropertyView
+          <UpdatePropertyResearchContainer
             researchFileProperty={researchFileProperty}
             onSuccess={props.onSuccess}
             ref={formikRef}
