@@ -669,6 +669,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                                 class="input form-group"
                               >
                                 <input
+                                  autocomplete="off"
                                   class="form-control"
                                   id="input-pid"
                                   name="pid"

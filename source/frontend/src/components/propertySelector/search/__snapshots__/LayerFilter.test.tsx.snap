@@ -245,6 +245,7 @@ exports[`LayerFilter component renders as expected - search by legal description
             >
               <textarea
                 aria-describedby="legalDescription-help-text"
+                autocomplete="off"
                 class="form-control"
                 id="input-legalDescription"
                 name="legalDescription"
@@ -576,6 +577,7 @@ exports[`LayerFilter component renders as expected 1`] = `
               class="input form-group"
             >
               <input
+                autocomplete="off"
                 class="form-control"
                 id="input-address"
                 name="address"
