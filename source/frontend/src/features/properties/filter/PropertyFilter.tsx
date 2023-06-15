@@ -129,6 +129,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     setFieldValue('longitude', val.longitude);
                   }}
                   value={values.address}
+                  autoSetting="off"
                 ></GeocoderAutoComplete>
               )}
               {values.searchBy === 'address' && !useGeocoder && (
