@@ -15,10 +15,10 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from '@/constants/index';
-import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
+import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
@@ -38,7 +38,7 @@ import MapView from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/layer-api/useMapProperties');
+jest.mock('@/hooks/repositories/useMapProperties');
 jest.mock('@/hooks/repositories/useLayerQuery');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 jest.mock('@/hooks/repositories/useComposedProperties');

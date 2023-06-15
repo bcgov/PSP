@@ -6,7 +6,7 @@ import CustomAxios from '@/customAxios';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { TenantContext } from '@/tenants';
 
-import { toCqlFilter } from './layerUtils';
+import { toCqlFilter } from '../layer-api/layerUtils';
 
 export const useMapProperties = () => {
   const {
