@@ -4,8 +4,8 @@ import { matchPath, Switch, useHistory, useLocation } from 'react-router';
 import Claims from '@/constants/claims';
 import AppRoute from '@/utils/AppRoute';
 
-import { CompensationRequisitionTrayContainer } from '../../properties/map/compensation/CompensationRequisitionTrayContainer';
-import { CompensationRequisitionTrayView } from '../../properties/map/compensation/CompensationRequisitionTrayView';
+import { CompensationRequisitionTrayContainer } from '../acquisition/tabs/compensation/CompensationRequisitionTrayContainer';
+import { CompensationRequisitionTrayView } from '../acquisition/tabs/compensation/CompensationRequisitionTrayView';
 
 interface ICompensationRequisitionRouterProps {
   setShowActionBar: (show: boolean) => void;
