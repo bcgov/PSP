@@ -9,16 +9,16 @@ import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
-import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
 
 import useActiveFeatureLayer from './useActiveFeatureLayer';
 
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
-jest.mock('@/hooks/repositories/useLayerQuery');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
+jest.mock('@/hooks/layer-api/useLayerQuery');
 jest.mock('@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer');
 jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
 

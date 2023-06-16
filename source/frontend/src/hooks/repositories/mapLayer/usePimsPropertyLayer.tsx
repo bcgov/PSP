@@ -5,11 +5,10 @@ import { useCallback, useContext, useMemo } from 'react';
 import { IGeoSearchParams } from '@/constants/API';
 import CustomAxios from '@/customAxios';
 import { toCqlFilter } from '@/hooks/layer-api/layerUtils';
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { PIMS_Property_Location_View2 } from '@/models/layers/pimsPropertyLocationView';
 import { TenantContext } from '@/tenants';
-
-import { useLayerQuery } from '../useLayerQuery';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints for the pims property location.

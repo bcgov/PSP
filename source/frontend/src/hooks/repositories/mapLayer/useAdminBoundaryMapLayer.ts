@@ -2,12 +2,11 @@ import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback, useMemo } from 'react';
 
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers/electoralBoundaries';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { useTenant } from '@/tenants';
-
-import { useLayerQuery } from '../useLayerQuery';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on WHSE Admin boundaries layer.

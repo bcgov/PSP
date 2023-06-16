@@ -2,11 +2,10 @@ import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback, useMemo } from 'react';
 
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { WHSE_AgriculturalLandReserve_Feature_Properties } from '@/models/layers/alcAgriculturalReserveLines';
 import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipalities';
 import { useTenant } from '@/tenants';
-
-import { useLayerQuery } from '../useLayerQuery';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the ALC Agricultural Land Reserve Lines layer.

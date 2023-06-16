@@ -18,9 +18,10 @@ import {
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
+import { useIndianReserveBandMapLayer } from '@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer';
+import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import { useComposedProperties } from '@/hooks/repositories/useComposedProperties';
-
 import { IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
@@ -36,19 +37,15 @@ import {
 } from '@/utils/test-utils';
 import { mockKeycloak } from '@/utils/test-utils';
 
-import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
 import MapContainer from './MapContainer';
-import { useIndianReserveBandMapLayer } from '@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
-//jest.mock('@/hooks/repositories/useMapProperties');
-jest.mock('@/hooks/repositories/useLayerQuery');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
-jest.mock('@/hooks/repositories/useComposedProperties');
-jest.mock('@/hooks/repositories/usePropertyAssociations');
 jest.mock('@/hooks/pims-api/useApiProperties');
 jest.mock('@/hooks/useLtsa');
+jest.mock('@/hooks/repositories/useComposedProperties');
+jest.mock('@/hooks/repositories/usePropertyAssociations');
 jest.mock('@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer');
 jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
 jest.mock('@/hooks/repositories/mapLayer/usePimsPropertyLayer');

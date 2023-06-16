@@ -2,11 +2,10 @@ import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback, useMemo } from 'react';
 
+import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useWfsLayer } from '@/hooks/layer-api/useWfsLayer';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { useTenant } from '@/tenants';
-
-import { useLayerQuery } from '../useLayerQuery';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the Fully Attributed ParcelMapBC layer.
