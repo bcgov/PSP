@@ -63,6 +63,9 @@ namespace Pims.Dal.Test.Repositories
             response.Should().HaveCount(1);
         }
 
+        #endregion
+        #region update
+
         [Fact]
         public void Update_Success()
         {
@@ -196,6 +199,38 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             response.Should().HaveCount(1);
             response.FirstOrDefault().PimsInthldrPropInterests.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void Update_DeleteChild()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileEdit);
+
+            var interestHolder = new PimsInterestHolder()
+            {
+                AcquisitionFileId = 1,
+                PersonId = 1,
+                InterestHolderId = 1,
+                PimsInthldrPropInterests = new List<PimsInthldrPropInterest>()
+            };
+            var interestHolderPropertyInterest = new PimsInthldrPropInterest() { PimsInthldrPropInterestId = 1, PropertyAcquisitionFileId = 1, InterestHolderId = 1, InterestHolder = interestHolder, InterestHolderInterestTypeCodeNavigation = new PimsInterestHolderInterestType() { InterestHolderInterestTypeCode = "test" } };
+            interestHolder.PimsInthldrPropInterests.Add(interestHolderPropertyInterest);
+            interestHolder.AcquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            var context = helper.CreatePimsContext(user, true);
+            context.Add(interestHolder);
+            context.SaveChanges();
+            context.ChangeTracker.Clear();
+            var repository = helper.CreateRepository<InterestHolderRepository>(user);
+
+            // Act
+            var response = repository.UpdateAllForAcquisition(1, new List<PimsInterestHolder>());
+            context.SaveChanges();
+
+            // Assert
+            context.PimsInterestHolders.Should().HaveCount(0);
         }
         #endregion
 

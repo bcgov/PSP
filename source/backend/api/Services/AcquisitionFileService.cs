@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
@@ -331,10 +332,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
-            var updatedInterestHolders = _interestHolderRepository.UpdateAllForAcquisition(acquisitionFileId, interestHolders);
+            _interestHolderRepository.UpdateAllForAcquisition(acquisitionFileId, interestHolders);
             _interestHolderRepository.CommitTransaction();
 
-            return updatedInterestHolders;
+            return _interestHolderRepository.GetInterestHoldersByAcquisitionFile(acquisitionFileId);
         }
 
         public IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId)
