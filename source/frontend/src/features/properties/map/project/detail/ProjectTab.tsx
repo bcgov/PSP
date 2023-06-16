@@ -1,4 +1,4 @@
-import { IProjectPage } from '../ProjectContainer';
+import { IProjectPage } from '../../../../mapSideBar/project/ProjectContainer';
 import ProjectPageForm from './ProjectPages/ProjectPageForm';
 
 export interface IProjectTabProps {

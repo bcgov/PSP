@@ -3,7 +3,7 @@ import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IProjectContainerViewProps } from './ProjectContainer';
 import ProjectContainerView from './ProjectContainerView';
-import { ProjectTabNames } from './ProjectTabs';
+import { ProjectTabNames } from './tabs/ProjectTabs';
 
 // mock auth library
 jest.mock('@react-keycloak/web');

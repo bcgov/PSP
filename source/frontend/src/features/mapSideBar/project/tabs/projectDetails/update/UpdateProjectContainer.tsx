@@ -12,9 +12,9 @@ import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { Api_Project } from '@/models/api/Project';
 import { isExpiredCode, toDropDownOptions } from '@/utils/financialCodeUtils';
 
-import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
-import { IAddProjectFormProps } from '../add/AddProjectForm';
-import { ProjectForm } from '../models';
+import { AddProjectYupSchema } from '../../../add/AddProjectFileYupSchema';
+import { IAddProjectFormProps } from '../../../add/AddProjectForm';
+import { ProjectForm } from '../../../models';
 
 export interface IUpdateProjectContainerProps {
   project: Api_Project;

@@ -5,9 +5,9 @@ import * as Yup from 'yup';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { Api_Project } from '@/models/api/Project';
 
-import { SideBarContext } from '../../../mapSideBar/context/sidebarContext';
+import { SideBarContext } from '../context/sidebarContext';
 import { ProjectForm } from './models';
-import { ProjectTabNames } from './ProjectTabs';
+import { ProjectTabNames } from './tabs/ProjectTabs';
 
 export interface IProjectContainerViewProps {
   project?: Api_Project;

@@ -3,7 +3,7 @@ import { Tab } from 'react-bootstrap';
 
 import TabView from '@/components/common/TabView';
 
-import { IProjectTabsProps } from './detail/ProjectTabsContainer';
+import { IProjectTabsProps } from './ProjectTabsContainer';
 
 export interface ProjectTabView {
   content: React.ReactNode;

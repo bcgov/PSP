@@ -14,13 +14,13 @@ import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventory
 import { Api_Property } from '@/models/api/Property';
 import AppRoute from '@/utils/AppRoute';
 
-import AddProjectContainer from '../../properties/map/project/add/AddProjectContainer';
-import ProjectContainer from '../../properties/map/project/ProjectContainer';
-import ProjectContainerView from '../../properties/map/project/ProjectContainerView';
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
 import AcquisitionView from '../acquisition/AcquisitionView';
 import AddAcquisitionContainer from '../acquisition/add/AddAcquisitionContainer';
 import LeaseContainer from '../lease/LeaseContainer';
+import AddProjectContainer from '../project/add/AddProjectContainer';
+import ProjectContainer from '../project/ProjectContainer';
+import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
 

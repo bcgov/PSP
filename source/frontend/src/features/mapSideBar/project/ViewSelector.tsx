@@ -4,10 +4,10 @@ import React from 'react';
 import { Api_Project } from '@/models/api/Project';
 
 import AddProjectForm from './add/AddProjectForm';
-import ProjectTabsContainer from './detail/ProjectTabsContainer';
 import { ProjectContainerState, ProjectPageNames } from './ProjectContainer';
-import { ProjectTabNames } from './ProjectTabs';
-import UpdateProjectContainer from './update/UpdateProjectContainer';
+import UpdateProjectContainer from './tabs/projectDetails/update/UpdateProjectContainer';
+import { ProjectTabNames } from './tabs/ProjectTabs';
+import ProjectTabsContainer from './tabs/ProjectTabsContainer';
 
 export interface IViewSelectorProps {
   project?: Api_Project;

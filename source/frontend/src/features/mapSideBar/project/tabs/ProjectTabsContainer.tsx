@@ -7,8 +7,8 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_Project } from '@/models/api/Project';
 
 import { ProjectContainerState, ProjectPageNames } from '../ProjectContainer';
-import { ProjectTabNames, ProjectTabs, ProjectTabView } from '../ProjectTabs';
-import ProjectSummaryView from './ProjectSummaryView';
+import ProjectSummaryView from './projectDetails/detail/ProjectSummaryView';
+import { ProjectTabNames, ProjectTabs, ProjectTabView } from './ProjectTabs';
 
 export interface IProjectTabsContainerProps {
   project?: Api_Project;
