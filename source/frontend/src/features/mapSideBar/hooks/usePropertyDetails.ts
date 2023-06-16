@@ -1,10 +1,10 @@
-import { LatLngLiteral } from 'leaflet';
 import { useEffect, useMemo, useState } from 'react';
 
-import { IUserLayerQuery, useLayerQuery } from '@/hooks/repositories/useLayerQuery';
+import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
+import { useIndianReserveBandMapLayer } from '@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer';
+import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { Api_Property } from '@/models/api/Property';
-import { useTenant } from '@/tenants/useTenant';
 
 import {
   IPropertyDetailsForm,
@@ -13,18 +13,9 @@ import {
 
 export function usePropertyDetails(property?: Api_Property): IPropertyDetailsForm | undefined {
   const isMounted = useIsMounted();
-  const {
-    motiRegionLayerUrl,
-    hwyDistrictLayerUrl,
-    electoralLayerUrl,
-    alrLayerUrl,
-    reservesLayerUrl,
-  } = useTenant();
-  const motiRegionService = useLayerQuery(motiRegionLayerUrl);
-  const highwaysDistrictService = useLayerQuery(hwyDistrictLayerUrl);
-  const electoralService = useLayerQuery(electoralLayerUrl);
-  const alrService = useLayerQuery(alrLayerUrl);
-  const firstNationsService = useLayerQuery(reservesLayerUrl);
+  const electoralService = useAdminBoundaryMapLayer();
+  const legalAdminService = useLegalAdminBoundariesMapLayer();
+  const firstNationsService = useIndianReserveBandMapLayer();
 
   const [propertyViewForm, setPropertyViewForm] = useState<IPropertyDetailsForm | undefined>(
     undefined,
@@ -51,19 +42,20 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
   useEffect(() => {
     async function fn() {
       // Query BC Geographic Warehouse layers - ONLY if lat, long have been provided!
+
       if (location !== undefined) {
-        const electoralDistrict = await findByLocation(electoralService, location);
-        const alr = await alrService.findOneWhereContains(location, 'GEOMETRY');
-        const firstNations = await findByLocation(firstNationsService, location, 'GEOMETRY');
+        const electoralDistrictFeature = await electoralService.findElectoralDistrict(location);
+        const alrFeature = await legalAdminService.findOneAgriculturalReserve(location, 'GEOMETRY');
+        const firstNationsFeature = await firstNationsService.findOne(location, 'GEOMETRY');
 
         if (isMounted()) {
           const newState: IPropertyDetailsForm = {
             ...toFormValues(property),
-            electoralDistrict,
-            isALR: alr?.features?.length > 0,
+            electoralDistrict: electoralDistrictFeature,
+            isALR: alrFeature !== undefined,
             firstNations: {
-              bandName: firstNations?.BAND_NAME,
-              reserveName: firstNations?.ENGLISH_NAME,
+              bandName: firstNationsFeature?.properties.BAND_NAME || '',
+              reserveName: firstNationsFeature?.properties.ENGLISH_NAME || '',
             },
           };
 
@@ -83,26 +75,7 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
     }
 
     fn();
-  }, [
-    alrService,
-    electoralService,
-    firstNationsService,
-    highwaysDistrictService,
-    isMounted,
-    location,
-    motiRegionService,
-    property,
-  ]);
+  }, [electoralService, legalAdminService, firstNationsService, isMounted, location, property]);
 
   return propertyViewForm;
-}
-
-async function findByLocation(
-  service: IUserLayerQuery,
-  latlng: LatLngLiteral,
-  geometryName: string = 'SHAPE',
-) {
-  const response = await service.findOneWhereContains(latlng, geometryName);
-  const featureProps = response?.features?.[0]?.properties;
-  return featureProps;
 }

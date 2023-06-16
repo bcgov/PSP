@@ -44,7 +44,7 @@ export const AddResearchContainer: React.FunctionComponent<
     return researchForm;
   }, [selectedFileFeature]);
   const { addResearchFile } = useAddResearch();
-  const { search } = useMapSearch();
+  const { searchMany } = useMapSearch();
   const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFileFeature);
   if (initialForm?.properties.length && initialProperty) {
     initialForm.properties[0].address = initialProperty.address;
@@ -75,7 +75,7 @@ export const AddResearchContainer: React.FunctionComponent<
             { autoClose: 15000 },
           );
         }
-        await search();
+        await searchMany();
         history.replace(`/mapview/sidebar/research/${response.id}`);
         formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
       }

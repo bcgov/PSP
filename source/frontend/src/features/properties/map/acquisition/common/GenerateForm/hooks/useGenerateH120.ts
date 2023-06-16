@@ -4,10 +4,10 @@ import { ConvertToTypes } from '@/constants/convertToTypes';
 import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { FormTemplateTypes } from '@/features/properties/map/shared/content/models';
+import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { ExternalResultStatus } from '@/models/api/ExternalResult';
@@ -15,7 +15,6 @@ import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/Gener
 import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
 import { Api_GenerateH120Property } from '@/models/generate/acquisition/GenerateH120Property';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
-import { useTenant } from '@/tenants';
 import { getLatLng } from '@/utils/mapPropertyUtils';
 
 export const useGenerateH120 = () => {
@@ -26,17 +25,16 @@ export const useGenerateH120 = () => {
   const getH120Categories = useH120CategoryRepository();
   const { getCompensationRequisitionPayee } = useCompensationRequisitionRepository();
 
-  const { electoralLayerUrl } = useTenant();
-  const electoralService = useLayerQuery(electoralLayerUrl);
+  const adminBoundaryService = useAdminBoundaryMapLayer();
   const { getSystemConstant } = useSystemConstants();
   const client = getSystemConstant(SystemConstants.CLIENT);
 
   const getElectoralDistrict = async (property: Api_GenerateH120Property) => {
     const latLng = getLatLng(property.location);
     const layerData =
-      latLng !== null ? await electoralService.findMetadataByLocation(latLng) : null;
+      latLng !== null ? await adminBoundaryService.findElectoralDistrict(latLng) : null;
 
-    return (layerData?.ED_NAME as string) ?? '';
+    return layerData?.properties.ED_NAME ?? '';
   };
 
   const generateCompensation = async (compensation: Api_CompensationRequisition) => {

@@ -1,18 +1,21 @@
-import { GeoJsonProperties } from 'geojson';
+import { Feature, Geometry } from 'geojson';
 
 import { Api_Property } from '@/models/api/Property';
 import Api_TypeCode from '@/models/api/TypeCode';
+import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers/electoralBoundaries';
 import { booleanToString } from '@/utils/formUtils';
 
 export interface IPropertyDetailsForm
   extends ExtendOverride<
     Api_Property,
     {
-      electoralDistrict?: GeoJsonProperties;
+      electoralDistrict:
+        | Feature<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>
+        | undefined;
       isALR?: boolean;
       firstNations?: {
-        bandName?: string;
-        reserveName?: string;
+        bandName: string;
+        reserveName: string;
       };
       isVolumetricParcel: string; // radio buttons only support string values, not booleans
       anomalies: (Api_TypeCode<string> | undefined)[];
@@ -35,6 +38,7 @@ export function toFormValues(apiData?: Api_Property): IPropertyDetailsForm {
     adjacentLands: apiData?.adjacentLands?.map(a => a.propertyAdjacentLandTypeCode) ?? [],
     roadTypes: apiData?.roadTypes?.map(a => a.propertyRoadTypeCode) ?? [],
     isVolumetricParcel: booleanToString(apiData?.isVolumetricParcel),
+    electoralDistrict: undefined,
   };
 }
 

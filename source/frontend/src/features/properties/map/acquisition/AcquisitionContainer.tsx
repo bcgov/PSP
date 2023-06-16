@@ -47,7 +47,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
-  const { search } = useMapSearch();
+  const { searchMany } = useMapSearch();
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Acquisition File');
@@ -165,7 +165,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const onSuccess = () => {
     fetchAcquisitionFile();
-    search();
+    searchMany();
     setContainerState({ activeEditForm: undefined, isEditing: false });
   };
 

@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { mockFAParcelLayerResponse } from '@/mocks/index.mock';
 import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
-import { useFullyAttributedParcelMapLayer } from './useFullyAttributedParcelMapLayer';
+import { useFullyAttributedParcelMapLayerOld } from './useFullyAttributedParcelMapLayer_old';
 
 const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);
@@ -17,7 +17,7 @@ const wfsLayer = 'PMBC_PARCEL_POLYGON_FABRIC';
 
 describe('useFullyAttributedParcelMapLayer hook', () => {
   const setup = () => {
-    const { result } = renderHook(() => useFullyAttributedParcelMapLayer(wfsUrl, wfsLayer), {
+    const { result } = renderHook(() => useFullyAttributedParcelMapLayerOld(wfsUrl, wfsLayer), {
       wrapper: (props: React.PropsWithChildren) => (
         <TestCommonWrapper store={mockStore}>{props.children}</TestCommonWrapper>
       ),

@@ -60,7 +60,7 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
 // Mock API service calls
 jest.mock('@/components/maps/hooks/useMapSearch');
 (useMapSearch as jest.MockedFunction<typeof useMapSearch>).mockReturnValue({
-  search: jest.fn().mockResolvedValue({}),
+  searchMany: jest.fn().mockResolvedValue({}),
 } as any);
 
 jest.mock('@/hooks/repositories/useAcquisitionProvider');

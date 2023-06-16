@@ -13,8 +13,8 @@ import { IWfsGetAllFeaturesOptions } from '../layer-api/useWfsLayer';
 import { useLtsa } from '../useLtsa';
 import { IResponseWrapper } from '../util/useApiRequestWrapper';
 import useDeepCompareCallback from '../util/useDeepCompareCallback';
+import { useFullyAttributedParcelMapLayer } from './mapLayer/useFullyAttributedParcelMapLayer';
 import { useBcAssessmentLayer } from './useBcAssessmentLayer';
-import { useFullyAttributedParcelMapLayer } from './useFullyAttributedParcelMapLayer';
 import { usePimsPropertyRepository } from './usePimsPropertyRepository';
 import { usePropertyAssociations } from './usePropertyAssociations';
 
@@ -69,11 +69,8 @@ export const useComposedProperties = ({
   const { getPropertyWfsWrapper } = useGeoServer();
   const getLtsaWrapper = useLtsa();
   const getPropertyAssociationsWrapper = usePropertyAssociations();
-  const { parcelMapFullyAttributed, bcAssessment } = useTenant();
-  const { findByPid, findByPin, getAllFeaturesWrapper } = useFullyAttributedParcelMapLayer(
-    parcelMapFullyAttributed.url,
-    parcelMapFullyAttributed.name,
-  );
+  const { bcAssessment } = useTenant();
+  const { findByPid, findByPin, findByWrapper } = useFullyAttributedParcelMapLayer();
   const { getSummaryWrapper } = useBcAssessmentLayer(bcAssessment.url, bcAssessment.names);
   const retrievedPid = getPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
   const retrievedPin = getPropertyWrapper?.response?.pin?.toString();
@@ -151,7 +148,7 @@ export const useComposedProperties = ({
       ltsaOrders: getLtsaWrapper.response,
       pimsProperty: getPropertyWrapper.response,
       propertyAssociations: getPropertyAssociationsWrapper.response,
-      parcelMapFeatureCollection: getAllFeaturesWrapper.response,
+      parcelMapFeatureCollection: findByWrapper.response,
       geoserverFeatureCollection: getPropertyWfsWrapper.response,
       bcAssessmentSummary: getSummaryWrapper.response,
     });
@@ -163,7 +160,7 @@ export const useComposedProperties = ({
     getLtsaWrapper,
     getPropertyWrapper,
     getPropertyAssociationsWrapper,
-    getAllFeaturesWrapper,
+    findByWrapper,
     getPropertyWfsWrapper,
     getSummaryWrapper,
   ]);
@@ -176,14 +173,14 @@ export const useComposedProperties = ({
     ltsaWrapper: getLtsaWrapper,
     apiWrapper: getPropertyWrapper,
     propertyAssociationWrapper: getPropertyAssociationsWrapper,
-    parcelMapWrapper: getAllFeaturesWrapper,
+    parcelMapWrapper: findByWrapper,
     geoserverWrapper: getPropertyWfsWrapper,
     bcAssessmentWrapper: getSummaryWrapper,
     composedLoading:
       getLtsaWrapper?.loading ||
       getPropertyWrapper?.loading ||
       getPropertyAssociationsWrapper?.loading ||
-      getAllFeaturesWrapper?.loading ||
+      findByWrapper?.loading ||
       getPropertyWfsWrapper?.loading ||
       getSummaryWrapper?.loading,
   };

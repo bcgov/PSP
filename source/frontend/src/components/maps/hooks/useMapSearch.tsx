@@ -5,97 +5,133 @@ import { toast } from 'react-toastify';
 
 import { PointFeature } from '@/components/maps/types';
 import { IGeoSearchParams } from '@/constants/API';
-import { useLayerQuery } from '@/hooks/repositories/useLayerQuery';
-import { useMapProperties } from '@/hooks/repositories/useMapProperties';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
+import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
-import { useTenant } from '@/tenants';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PIMS_Property_Location_View2 } from '@/models/layers/pimsPropertyLocationView';
 
 import { PropertyContext } from '../providers/PropertyContext';
 
 export const useMapSearch = () => {
   const { properties, setProperties, setPropertiesLoading } = useContext(PropertyContext);
-  const {
-    loadProperties: { execute: loadProperties, loading, response },
-  } = useMapProperties();
-  const { parcelsLayerUrl, propertiesUrl } = useTenant();
-  const parcelsService = useLayerQuery(parcelsLayerUrl);
-  const pimsService = useLayerQuery(propertiesUrl, true);
+
+  const fullyAttributedService = useFullyAttributedParcelMapLayer();
+  const pimsPropertyLayerService = usePimsPropertyLayer();
+
   const { setModalContent, setDisplayModal } = useModalContext();
   const keycloak = useKeycloakWrapper();
   const logout = keycloak.obj.logout;
 
-  const search = async (
-    filters?: IGeoSearchParams[],
-  ): Promise<Feature<Geometry, GeoJsonProperties>[]> => {
-    //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
-    let tileData;
+  const searchOne = async (latitude: number, longitude: number) => {
     try {
       setPropertiesLoading(true);
       setProperties([]);
-      const filter = filters?.length && filters.length > 1 ? filters[0] : undefined;
-      if (filter?.latitude && filter.longitude) {
-        const task1 = parcelsService.findOneWhereContains({
-          lat: +filter.latitude,
-          lng: +filter.longitude,
-        });
-        const task2 = pimsService.findOneWhereContains(
-          {
-            lat: +filter.latitude,
-            lng: +filter.longitude,
-          },
-          'GEOMETRY',
-        );
-        const parcel = await task1;
-        const pimsProperties = await task2;
-        //if found in inventory return or else non inventory
-        tileData = pimsProperties.features.length ? pimsProperties : parcel;
+
+      let foundFeature: Feature<Geometry, GeoJsonProperties> | undefined = undefined;
+      const findOneParcelTask = fullyAttributedService.findOne({
+        lat: latitude,
+        lng: longitude,
+      });
+      const findOnePropertyTask = pimsPropertyLayerService.findOne(
+        {
+          lat: latitude,
+          lng: longitude,
+        },
+        'GEOMETRY',
+      );
+      const parcelFeature = await findOneParcelTask;
+      const pimsPropertyFeature = await findOnePropertyTask;
+
+      //if found in inventory return or else non inventory
+      foundFeature = pimsPropertyFeature ? pimsPropertyFeature : parcelFeature;
+
+      if (foundFeature && foundFeature.geometry) {
+        setProperties([propertyResponseToPointFeature(foundFeature)]);
+        toast.info(`Property found`);
       } else {
-        let task1, task2, task3;
-        task1 = loadProperties(filter);
-        if (filter?.PIN) {
-          task2 = parcelsService.findByPin(filter?.PIN);
-        }
-        if (filter?.PID) {
-          task3 = parcelsService.findByPid(filter?.PID);
-        }
+        toast.info('No search results found');
+      }
+    } catch (error) {
+      toast.error((error as Error).message, { autoClose: 7000 });
+    } finally {
+      setPropertiesLoading(false);
+    }
+  };
 
-        const pidPinInventoryData = await task1;
-        const pinNonInventoryData = await task2;
-        const pidNonInventoryData = await task3;
+  const searchMany = async (filter?: IGeoSearchParams) => {
+    //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
+    try {
+      setPropertiesLoading(true);
+      setProperties([]);
 
-        if (pidPinInventoryData?.features === undefined) {
-          setModalContent({
-            title: 'Unable to connect to PIMS Inventory',
-            message:
-              'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',
-            okButtonText: 'Log out',
-            cancelButtonText: 'Continue working',
-            handleOk: () => {
-              logout();
-            },
-            handleCancel: () => {
-              setDisplayModal(false);
-            },
-          });
-          setDisplayModal(true);
-        }
+      let loadPropertiesTask: Promise<
+        FeatureCollection<Geometry, PIMS_Property_Location_View2> | undefined
+      >;
 
-        tileData = pidPinInventoryData?.features?.length
-          ? pidPinInventoryData
-          : ({
-              type: 'FeatureCollection',
-              features: [
-                ...(pinNonInventoryData?.features || []),
-                ...(pidNonInventoryData?.features || []),
-              ],
-              bbox: pinNonInventoryData?.bbox || pidNonInventoryData?.bbox,
-            } as FeatureCollection);
+      let findByPinTask:
+        | Promise<FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined>
+        | undefined = undefined;
+
+      let findByPidTask:
+        | Promise<FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined>
+        | undefined = undefined;
+
+      loadPropertiesTask = pimsPropertyLayerService.loadPropertyLayer.execute(filter);
+      if (filter?.PIN) {
+        findByPinTask = fullyAttributedService.findByPin(filter?.PIN);
+      }
+      if (filter?.PID) {
+        findByPidTask = fullyAttributedService.findByPid(filter?.PID);
       }
 
-      if (tileData) {
-        const validFeatures = tileData.features.filter(feature => !!feature?.geometry);
-        setProperties(propertiesResponseToPointFeature(tileData));
+      const pidPinInventoryData = await loadPropertiesTask;
+      const pinFullyAttributedData = await findByPinTask;
+      const pidFullyAttributedData = await findByPidTask;
+
+      if (pidPinInventoryData?.features === undefined) {
+        setModalContent({
+          title: 'Unable to connect to PIMS Inventory',
+          message:
+            'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',
+          okButtonText: 'Log out',
+          cancelButtonText: 'Continue working',
+          handleOk: () => {
+            logout();
+          },
+          handleCancel: () => {
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      }
+
+      // If the property was found on the pims inventory, use that.
+      if (pidPinInventoryData?.features && pidPinInventoryData?.features?.length > 0) {
+        const validFeatures = pidPinInventoryData.features.filter(feature => !!feature?.geometry);
+        setProperties(propertiesResponseToPointFeature(pidPinInventoryData));
+
+        if (validFeatures.length === 0) {
+          toast.info('No search results found');
+        } else {
+          toast.info(`${validFeatures.length} properties found`);
+        }
+      } else {
+        const attributedFeatures: FeatureCollection<
+          Geometry,
+          PMBC_FullyAttributed_Feature_Properties
+        > = {
+          type: 'FeatureCollection',
+          features: [
+            ...(pinFullyAttributedData?.features || []),
+            ...(pidFullyAttributedData?.features || []),
+          ],
+          bbox: pinFullyAttributedData?.bbox || pidFullyAttributedData?.bbox,
+        };
+
+        const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
+        setProperties(propertiesResponseToPointFeature(attributedFeatures));
 
         if (validFeatures.length === 0) {
           toast.info('No search results found');
@@ -108,13 +144,24 @@ export const useMapSearch = () => {
     } finally {
       setPropertiesLoading(false);
     }
-    return propertiesResponseToPointFeature(tileData);
+  };
+
+  const searchByParams = async (filters: IGeoSearchParams[]) => {
+    const filter = filters?.length && filters.length > 1 ? filters[0] : undefined;
+    // If there is a lat-long parameter then we are looking for only one feature
+    if (filter?.latitude && filter.longitude) {
+      searchOne(Number(filter.latitude), Number(filter.longitude));
+    } else {
+      searchMany(filter);
+    }
   };
 
   return {
-    search,
-    loading,
-    response,
+    searchByParams,
+    searchOne,
+    searchMany,
+    loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
+    loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,
     properties,
   };
 };
@@ -131,7 +178,7 @@ const getLatLng = (feature: any) => {
   return feature.geometry.coordinates;
 };
 
-export const propertiesResponseToPointFeature = (
+const propertiesResponseToPointFeature = (
   response: FeatureCollection<Geometry, GeoJsonProperties> | undefined,
 ): PointFeature[] => {
   const validFeatures = response?.features.filter(feature => !!feature?.geometry) ?? [];
@@ -145,6 +192,21 @@ export const propertiesResponseToPointFeature = (
       },
     };
   });
+
+  return data;
+};
+
+const propertyResponseToPointFeature = (
+  feature: Feature<Geometry, GeoJsonProperties>,
+): PointFeature => {
+  const data: PointFeature = {
+    ...feature,
+    geometry: { type: 'Point', coordinates: getLatLng(feature) },
+    properties: {
+      ...feature.properties,
+      id: feature.properties?.id ?? 0,
+    },
+  };
 
   return data;
 };

@@ -28,7 +28,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { selectedFileFeature } = React.useContext(MapStateContext);
-  const { search } = useMapSearch();
+  const { searchMany } = useMapSearch();
 
   const initialForm = useMemo(() => {
     const acquisitionForm = new AcquisitionForm();
@@ -63,7 +63,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         { autoClose: 15000 },
       );
     }
-    await search();
+    await searchMany();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
     formikRef.current?.resetForm({ values: AcquisitionForm.fromApi(acqFile) });
   };

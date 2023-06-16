@@ -1,5 +1,5 @@
 import { Feature, GeoJsonProperties } from 'geojson';
-import { LatLng, LatLngBounds, Popup as LeafletPopup } from 'leaflet';
+import { LatLng, LatLngBounds, LatLngLiteral, Popup as LeafletPopup } from 'leaflet';
 import React from 'react';
 import { Popup } from 'react-leaflet';
 
@@ -7,7 +7,7 @@ import { PopupContentConfig } from './components/LayerPopupContent';
 import { LayerPopupView } from './LayerPopupView';
 
 export type LayerPopupInformation = {
-  latlng: LatLng;
+  latlng: LatLngLiteral;
   title: string;
   center?: LatLng;
   bounds?: LatLngBounds;

@@ -34,7 +34,7 @@ export const AddLeaseContainer: React.FunctionComponent<
   const { addLease } = useAddLease();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
-  const { search } = useMapSearch();
+  const { searchMany } = useMapSearch();
 
   const initialProperty = useMemo<IMapProperty | null>(() => {
     if (selectedFileFeature) {
@@ -63,7 +63,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           { autoClose: 15000 },
         );
       }
-      await search();
+      await searchMany();
       history.replace(`/mapview/sidebar/lease/${response.id}`);
     }
   };

@@ -7,7 +7,7 @@ import { useWfsLayer } from '@/hooks/layer-api/useWfsLayer';
  * @returns Object containing functions to make requests to the WFS layer.
  * Note: according to https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric/resource/959af382-fb31-4f57-b8ea-e6dcb6ce2e0b
  */
-export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
+export const useFullyAttributedParcelMapLayerOld = (url: string, name: string) => {
   const getAllFeaturesWrapper = useWfsLayer(url, {
     name,
   });
