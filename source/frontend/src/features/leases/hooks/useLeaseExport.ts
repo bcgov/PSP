@@ -8,7 +8,6 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { logRequest, logSuccess } from 'store/slices/network/networkSlice';
-import { prettyFormatDate } from 'utils';
 
 /**
  * hook that allows the user to export the currently filtered lease data.
