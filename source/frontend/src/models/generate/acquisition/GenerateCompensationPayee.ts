@@ -44,9 +44,9 @@ export class Api_GenerateCompensationPayee {
       this.name = '';
     }
 
-    this.pre_tax_amount = payee?.cheques ? formatMoney(payee.cheques[0].pretaxAmout) : '';
-    this.tax_amount = payee?.cheques ? formatMoney(payee.cheques[0].taxAmount) : '';
-    this.total_amount = payee?.cheques ? formatMoney(payee.cheques[0].totalAmount) : '';
-    this.gst_number = payee?.cheques ? payee.cheques[0]?.gstNumber ?? '' : '';
+    this.pre_tax_amount = payee?.cheques?.length ? formatMoney(payee.cheques[0].pretaxAmout) : '';
+    this.tax_amount = payee?.cheques?.length ? formatMoney(payee.cheques[0].taxAmount) : '';
+    this.total_amount = payee?.cheques?.length ? formatMoney(payee.cheques[0].totalAmount) : '';
+    this.gst_number = payee?.cheques?.length ? payee.cheques[0]?.gstNumber ?? '' : '';
   }
 }

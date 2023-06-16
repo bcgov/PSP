@@ -51,19 +51,24 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            var compensationPayee = _acquisitionPayeeRepository.GetById(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault().AcquisitionPayeeId);
-            if (compensationRequisition is not null && compensationPayee is not null)
+            var tempPayee = compensationRequisition.PimsAcquisitionPayees.FirstOrDefault();
+            if (tempPayee != null)
             {
-                var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
-                if (payeeCheque is not null)
+                var compensationPayee = _acquisitionPayeeRepository.GetById(tempPayee.AcquisitionPayeeId);
+                if (compensationRequisition is not null && compensationPayee is not null)
                 {
-                    payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
-                    payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
-                    payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
+                    var payeeCheque = compensationPayee.PimsAcqPayeeCheques.FirstOrDefault();
+                    if (payeeCheque is not null)
+                    {
+                        payeeCheque.PretaxAmt = compensationRequisition.PayeeChequesPreTaxTotalAmount;
+                        payeeCheque.TaxAmt = compensationRequisition.PayeeChequesTaxTotalAmount;
+                        payeeCheque.TotalAmt = compensationRequisition.PayeeChequesTotalAmount;
+                    }
                 }
+                return compensationPayee;
             }
 
-            return compensationPayee;
+            return null;
         }
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
