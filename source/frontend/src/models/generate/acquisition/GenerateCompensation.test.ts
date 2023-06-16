@@ -1,6 +1,7 @@
 import { getMockApiCompensationList } from 'mocks/compensations.mock';
-import { mockCompReqH120s } from 'mocks/mockCompReqH120s';
-import { getMockH120Categories } from 'mocks/mockH120Categories';
+import { getMockAcquisitionPayee } from 'mocks/mockAcquisitionPayee.mock';
+import { mockCompReqH120s } from 'mocks/mockCompReqH120s.mock';
+import { getMockH120Categories } from 'mocks/mockH120Categories.mock';
 import moment from 'moment';
 
 import { Api_GenerateCompensation } from './GenerateCompensation';
@@ -89,5 +90,27 @@ describe('GenerateCompensation tests', () => {
       [],
     );
     expect(compensation.financial_total).toBe('$35.00');
+  });
+
+  it('generates with a payee', () => {
+    const compensation = new Api_GenerateCompensation(
+      getMockApiCompensationList()[1],
+      {} as any,
+      getMockH120Categories(),
+      [],
+      getMockAcquisitionPayee(),
+    );
+    expect(compensation.payee.gst_number).toBe('3262');
+  });
+
+  it('can generate a payee with no cheques', () => {
+    const compensation = new Api_GenerateCompensation(
+      getMockApiCompensationList()[1],
+      {} as any,
+      getMockH120Categories(),
+      [],
+      { ...getMockAcquisitionPayee(), cheques: [] },
+    );
+    expect(compensation.payee.total_amount).toBe('0.00');
   });
 });
