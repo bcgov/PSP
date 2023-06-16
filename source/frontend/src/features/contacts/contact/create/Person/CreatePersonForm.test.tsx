@@ -154,7 +154,7 @@ describe('CreatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(addPerson).toBeCalledWith(expectedFormData, expect.anything(), false);
       expect(history.location.pathname).toBe('/contact/P1');
@@ -183,7 +183,7 @@ describe('CreatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(addPerson).toBeCalledWith(expectedFormData, expect.anything(), false);
       expect(history.location.pathname).toBe('/contact/P1');
