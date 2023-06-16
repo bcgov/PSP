@@ -116,7 +116,7 @@ describe('TermsPaymentsContainer component', () => {
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save term');
-      await act(() => userEvent.click(saveButton));
+      await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.post.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -137,7 +137,7 @@ describe('TermsPaymentsContainer component', () => {
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save term');
-      await act(() => userEvent.click(saveButton));
+      await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.put.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -172,7 +172,7 @@ describe('TermsPaymentsContainer component', () => {
       });
 
       const deleteButton = getAllByTitle('delete term')[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You must delete all renewals before deleting the initial term.');
       expect(warning).toBeVisible();
     });
@@ -189,7 +189,7 @@ describe('TermsPaymentsContainer component', () => {
       });
 
       const deleteButton = getAllByTitle('delete term')[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a term. Do you wish to continue?');
       expect(warning).toBeVisible();
     });
@@ -207,11 +207,11 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onDelete().reply(200, { id: 1 });
 
       const deleteButton = getAllByTitle('delete term')[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a term. Do you wish to continue?');
       expect(warning).toBeVisible();
       const continueButton = getByText('Continue');
-      await act(() => userEvent.click(continueButton));
+      await act(async () => userEvent.click(continueButton));
       expect(mockAxios.history.delete.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -233,7 +233,7 @@ describe('TermsPaymentsContainer component', () => {
 
       await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save payment');
-      await act(() => userEvent.click(saveButton));
+      await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.post.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -254,7 +254,7 @@ describe('TermsPaymentsContainer component', () => {
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save payment');
-      await act(() => userEvent.click(saveButton));
+      await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.put.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -267,7 +267,7 @@ describe('TermsPaymentsContainer component', () => {
       });
 
       const deleteButton = (await findAllByTitle('delete actual'))[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a payment. Do you wish to continue?');
       expect(warning).toBeVisible();
     });
@@ -282,11 +282,11 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onDelete().reply(200, { id: 1 });
 
       const deleteButton = (await findAllByTitle('delete actual'))[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a payment. Do you wish to continue?');
       expect(warning).toBeVisible();
       const continueButton = getByText('Continue');
-      await act(() => userEvent.click(continueButton));
+      await act(async () => userEvent.click(continueButton));
       expect(mockAxios.history.delete.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });

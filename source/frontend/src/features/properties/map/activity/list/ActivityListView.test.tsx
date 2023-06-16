@@ -146,12 +146,12 @@ describe('Activity List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
     const viewButton = getAllByTitle('View Activity')[0];
-    await act(() => userEvent.click(viewButton));
+    await act(async () => userEvent.click(viewButton));
     const deleteButton = getAllByTitle('Delete Activity')[0];
-    await act(() => userEvent.click(deleteButton));
+    await act(async () => userEvent.click(deleteButton));
     expect(await screen.findByText(/You have chosen to delete this activity/)).toBeVisible();
     const continueButton = await screen.findByText('Continue');
-    await act(() => userEvent.click(continueButton));
+    await act(async () => userEvent.click(continueButton));
 
     expect(history.location.pathname).toBe('/');
   });
