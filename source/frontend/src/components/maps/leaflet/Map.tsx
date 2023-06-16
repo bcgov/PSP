@@ -86,7 +86,6 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     STREET_ADDRESS_1: filter.address,
     latitude: filter.latitude,
     longitude: filter.longitude,
-    forceExactMatch: true,
   };
 };
 
