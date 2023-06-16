@@ -10,7 +10,7 @@ import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mo
 import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../features/properties/map/shared/models';
+import { PropertyForm } from '../../features/mapSideBar/shared/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
 

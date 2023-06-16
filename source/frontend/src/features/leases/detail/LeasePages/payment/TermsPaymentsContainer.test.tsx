@@ -8,7 +8,7 @@ import React from 'react';
 
 import { Claims, LeaseTermStatusTypes } from '@/constants/index';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { LeasePageProps } from '@/features/properties/map/lease/LeaseContainer';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { defaultFormLease, defaultFormLeaseTerm, defaultLease, IFormLease } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';

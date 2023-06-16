@@ -14,11 +14,11 @@ import { Api_Property } from '@/models/api/Property';
 import { pidParser } from '@/utils';
 
 import MapView from '../../../components/maps/MapView';
-import ActivityRouter from './ActivityRouter';
-import CompensationRequisitionRouter from './CompensationRequisitionRouter';
-import { SideBarContextProvider } from './context/sidebarContext';
-import MapSideBar from './MapSideBar';
-import PopupRouter from './PopupRouter';
+import { SideBarContextProvider } from '../../mapSideBar/context/sidebarContext';
+import MapSideBar from '../../mapSideBar/MapSideBar';
+import ActivityRouter from '../../mapSideBar/router/ActivityRouter';
+import CompensationRequisitionRouter from '../../mapSideBar/router/CompensationRequisitionRouter';
+import PopupRouter from '../../mapSideBar/router/PopupRouter';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
 const defaultLatLng = {

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { ReactComponent as LotSvg } from '@/assets/images/icon-lot.svg';
 import GenericModal from '@/components/common/GenericModal';
 import PropertyViewSelector from '@/features/mapSideBar/property/PropertyViewSelector';
-import SidebarFooter from '@/features/properties/map/shared/SidebarFooter';
+import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/useComposedProperties';
 import { Api_Property } from '@/models/api/Property';
 

@@ -8,7 +8,7 @@ import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { defaultFormFilter, IFormFilter } from '@/interfaces/IFormResults';
 import { Api_FormDocumentFile } from '@/models/api/FormDocument';
 
-import { SideBarContext } from '../../context/sidebarContext';
+import { SideBarContext } from '../../../../mapSideBar/context/sidebarContext';
 import { IFormListViewProps } from './FormListView';
 
 export interface IFormListViewContainerProps {

@@ -6,7 +6,7 @@ import { Input } from '@/components/common/form';
 import { InlineInput } from '@/components/common/form/styles';
 import OverflowTip from '@/components/common/OverflowTip';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
-import { PropertyForm } from '@/features/properties/map/shared/models';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { withNameSpace } from '@/utils/formUtils';
 import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
 
