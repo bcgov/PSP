@@ -111,6 +111,6 @@ describe('GenerateCompensation tests', () => {
       [],
       { ...getMockAcquisitionPayee(), cheques: [] },
     );
-    expect(compensation.payee.total_amount).toBe('0.00');
+    expect(compensation.payee.total_amount).toBe('');
   });
 });
