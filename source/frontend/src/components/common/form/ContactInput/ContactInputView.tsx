@@ -11,7 +11,7 @@ import {
   ContactManagerModal,
   IContactManagerModalProps,
 } from '@/components/contact/ContactManagerModal';
-import { StyledDiv } from '@/features/properties/map/acquisition/common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
+import { StyledDiv } from '@/features/mapSideBar/acquisition/common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { IContactSearchResult } from '@/interfaces';
 import { formatNames } from '@/utils/personUtils';
 

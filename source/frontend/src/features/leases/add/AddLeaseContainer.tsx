@@ -1,7 +1,6 @@
 import { FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
-import { useMemo, useState } from 'react';
-import { useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -10,7 +9,7 @@ import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
 import { MapStateContext } from '@/components/maps/providers/MapStateContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import SidebarFooter from '@/features/properties/map/shared/SidebarFooter';
+import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';

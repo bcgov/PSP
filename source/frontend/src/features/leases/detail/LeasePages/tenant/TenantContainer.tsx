@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import ProtectedComponent from '@/components/common/ProtectedComponent';
 import { Claims } from '@/constants/claims';
-import { LeasePageProps } from '@/features/properties/map/lease/LeaseContainer';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { IFormLease } from '@/interfaces';
 
 import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';

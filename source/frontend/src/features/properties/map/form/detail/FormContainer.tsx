@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
-import { FileTypes } from '@/constants/fileTypes';
-import { SideBarContext } from '@/features/properties/map/context/sidebarContext';
+import { FileTypes } from '@/constants';
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
+import { formContent } from '@/features/mapSideBar/shared/content/formContent';
+import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 
-import { formContent } from '../../shared/content/formContent';
-import { FormTemplateTypes } from '../../shared/content/models';
 import { IFormViewProps } from './FormView';
 
 export interface IFormContainerProps {

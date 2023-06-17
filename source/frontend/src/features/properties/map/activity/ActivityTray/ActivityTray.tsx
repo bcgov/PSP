@@ -7,9 +7,9 @@ import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as Styled from '@/components/common/styles';
+import { IFormContent } from '@/features/mapSideBar/shared/content/models';
 import { Api_Activity } from '@/models/api/Activity';
 
-import { IFormContent } from '../../shared/content/models';
 import { ActivityFile } from '../detail/ActivityContainer';
 import { ActivityForm } from '../detail/ActivityForm';
 
