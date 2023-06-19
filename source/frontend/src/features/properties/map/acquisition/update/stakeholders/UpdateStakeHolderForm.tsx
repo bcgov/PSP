@@ -9,7 +9,7 @@ import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { StyledSummarySection } from 'features/mapSideBar/tabs/SectionStyles';
-import { FieldArray, Formik, FormikProps, getIn } from 'formik';
+import { FieldArray, Formik, FormikHelpers, FormikProps, getIn } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_InterestHolder } from 'models/api/InterestHolder';
@@ -25,7 +25,10 @@ import { UpdateStakeHolderYupSchema } from './UpdateStakeHolderYupSchema';
 export interface IUpdateStakeHolderFormProps {
   formikRef: React.Ref<FormikProps<StakeHolderForm>>;
   file: Api_AcquisitionFile;
-  onSubmit: (interestHolders: StakeHolderForm) => Promise<Api_InterestHolder[] | undefined>;
+  onSubmit: (
+    interestHolders: StakeHolderForm,
+    formikHelpers: FormikHelpers<StakeHolderForm>,
+  ) => Promise<Api_InterestHolder[] | undefined>;
   interestHolders: StakeHolderForm;
   loading: boolean;
 }
@@ -46,7 +49,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
       initialValues={interestHolders}
       validationSchema={UpdateStakeHolderYupSchema}
       onSubmit={async (values, formikHelpers) => {
-        return onSubmit(values);
+        return onSubmit(values, formikHelpers);
       }}
     >
       {({ values, errors, setFieldValue }) => (

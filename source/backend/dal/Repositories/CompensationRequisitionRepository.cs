@@ -31,6 +31,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqH120s)
+                .Include(x => x.PimsAcquisitionPayees)
                 .AsNoTracking()
                 .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
