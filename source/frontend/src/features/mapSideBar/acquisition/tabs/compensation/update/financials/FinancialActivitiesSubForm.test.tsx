@@ -12,8 +12,8 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
-import { CompensationRequisitionYupSchema } from '../../CompensationRequisitionYupSchema';
-import { CompensationRequisitionFormModel } from '../../models';
+import { CompensationRequisitionYupSchema } from '../CompensationRequisitionYupSchema';
+import { CompensationRequisitionFormModel } from '../models';
 import FinancialActivitiesSubForm, {
   IFinancialActivitiesSubFormProps,
 } from './FinancialActivitiesSubForm';
