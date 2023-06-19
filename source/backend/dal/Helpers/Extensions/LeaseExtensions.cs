@@ -152,10 +152,12 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.TenantName))
             {
-                query = query.Where(l => l.PimsLeaseTenants.Any(tenant => tenant.Person != null && EF.Functions.Like(tenant.Person.Surname + ", " + tenant.Person.FirstName + ", " + tenant.Person.MiddleNames, $"%{filter.TenantName}%"))
-                || l.PimsLeaseTenants.Any(tenant => tenant.Organization != null && EF.Functions.Like(tenant.Organization.OrganizationName, $"%{filter.TenantName}%")));
+                query = query.Where(l => l.PimsLeaseTenants.Any(tenant => tenant.Person != null && EF.Functions.Like(
+                    ((!string.IsNullOrWhiteSpace(tenant.Person.FirstName) ? tenant.Person.FirstName + " " : string.Empty) +
+                    (!string.IsNullOrWhiteSpace(tenant.Person.MiddleNames) ? tenant.Person.MiddleNames + " " : string.Empty) +
+                    (tenant.Person.Surname ?? string.Empty)).Trim(), $"%{filter.TenantName}%"))
+                 || l.PimsLeaseTenants.Any(tenant => tenant.Organization != null && EF.Functions.Like(tenant.Organization.OrganizationName, $"%{filter.TenantName}%")));
             }
-
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
                 var pinOrPidValue = filter.PinOrPid.Replace("-", string.Empty).Trim().TrimStart('0');
