@@ -100,6 +100,7 @@ export const useBcAssessmentLayer = (
       }
       let folioId = legalDescriptionResponse?.features[0]?.properties?.FOLIO_ID;
       let rollNumber = legalDescriptionResponse?.features[0]?.properties?.ROLL_NUMBER;
+      let jurisdictionCode = legalDescriptionResponse?.features[0]?.properties?.JURISDICTION_CODE;
 
       if (!folioId || !rollNumber) {
         throw Error(
@@ -110,24 +111,24 @@ export const useBcAssessmentLayer = (
       const addressPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.ADDRESSES)
           ? getAddresses(
-              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: timeout ?? 10000, forceExactMatch: true },
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
+              { timeout: timeout ?? 10000, useCqlOr: false },
             )
           : Promise.resolve();
 
       const valuesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
           ? getValues(
-              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: timeout ?? 10000, forceExactMatch: true },
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
+              { timeout: timeout ?? 10000, useCqlOr: false },
             )
           : Promise.resolve();
 
       const chargesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
           ? getCharges(
-              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: timeout ?? 10000, forceExactMatch: true },
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
+              { timeout: timeout ?? 10000, useCqlOr: false },
             )
           : Promise.resolve();
 
@@ -135,16 +136,16 @@ export const useBcAssessmentLayer = (
         typesToLoad === undefined ||
         !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.FOLIO_DESCRIPTION)
           ? getFolioDescriptions(
-              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: timeout ?? 10000, forceExactMatch: true },
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
+              { timeout: timeout ?? 10000, useCqlOr: false },
             )
           : Promise.resolve();
 
       const salesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
           ? getSales(
-              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber },
-              { timeout: timeout ?? 10000, forceExactMatch: true },
+              { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
+              { timeout: timeout ?? 10000, useCqlOr: false },
             )
           : Promise.resolve();
 

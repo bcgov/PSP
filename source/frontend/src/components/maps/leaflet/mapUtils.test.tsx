@@ -17,6 +17,7 @@ import {
   parcelIcon,
   parcelIconSelect,
   pointToLayer,
+  toCqlFilterValue,
 } from './mapUtils';
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
@@ -197,6 +198,27 @@ describe('mapUtils tests', () => {
           },
         ]);
       });
+    });
+  });
+  describe('toCqlFilter function', () => {
+    it('by default, joins multiple filters with and and inserts ilike', () => {
+      const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' });
+      expect(cql).toBe("PID ilike '%12345678%' AND PIN ilike '%54321%'");
+    });
+
+    it('will join multiple filters with or if force param specified', () => {
+      const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' }, { useCqlOr: true });
+      expect(cql).toBe("PID ilike '%12345678%' OR PIN ilike '%54321%'");
+    });
+
+    it('if pid is 9 characters will automatically use = instead of ilike', () => {
+      const cql = toCqlFilterValue({ PID: '123456789' });
+      expect(cql).toBe("PID = '123456789'");
+    });
+
+    it('if force exact param is specified will automatically use = instead of ilike', () => {
+      const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' }, { forceExactMatch: true });
+      expect(cql).toBe("PID = '12345678' AND PIN = '54321'");
     });
   });
 });

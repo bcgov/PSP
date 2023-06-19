@@ -45,6 +45,8 @@ type OptionalAttributes = {
   displayErrorTooltips?: boolean;
   /** add inline style to the input component */
   style?: CSSProperties;
+  /** override for the autoComplete attribute */
+  autoSetting?: string;
 };
 
 // only "field" is required for <Input>, the rest are optional
@@ -71,6 +73,7 @@ export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
   tooltip,
   displayErrorTooltips,
   onChange,
+  autoSetting,
   ...rest
 }) => {
   const { handleChange, handleBlur, errors, touched, values, setFieldValue } =
@@ -143,6 +146,7 @@ export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
             handleBlur(e);
           }}
           onChange={pattern ? handleRestrictedChange : handleOnChange}
+          autoComplete={autoSetting}
         />
       </TooltipWrapper>
       {helpText && (

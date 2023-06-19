@@ -17,9 +17,9 @@ export const useMapSearch = () => {
   const {
     loadProperties: { execute: loadProperties, loading, response },
   } = useMapProperties();
-  const { parcelsLayerUrl, propertiesUrl } = useTenant();
+  const { parcelsLayerUrl, boundaryLayerUrl } = useTenant();
   const parcelsService = useLayerQuery(parcelsLayerUrl);
-  const pimsService = useLayerQuery(propertiesUrl, true);
+  const pimsBoundaryService = useLayerQuery(boundaryLayerUrl, true);
   const { setModalContent, setDisplayModal } = useModalContext();
   const keycloak = useKeycloakWrapper();
   const logout = keycloak.obj.logout;
@@ -38,7 +38,7 @@ export const useMapSearch = () => {
           lat: +filter.latitude,
           lng: +filter.longitude,
         });
-        const task2 = pimsService.findOneWhereContains(
+        const task2 = pimsBoundaryService.findOneWhereContains(
           {
             lat: +filter.latitude,
             lng: +filter.longitude,
