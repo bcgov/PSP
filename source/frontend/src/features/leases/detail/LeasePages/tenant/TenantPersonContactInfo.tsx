@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
@@ -8,7 +9,7 @@ import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { IFormLease } from '@/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
 
-import { FormTenant } from './ViewTenantForm';
+import { FormTenant } from './models';
 
 export interface ITenantPersonContactInfoProps {
   nameSpace: string;
@@ -22,7 +23,7 @@ export interface ITenantPersonContactInfoProps {
 export const TenantPersonContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantPersonContactInfoProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<LeaseFormModel>();
   const tenant: FormTenant = getIn(values, nameSpace);
   return (
     <StyledSectionWrapper>

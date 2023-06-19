@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 
@@ -19,7 +20,7 @@ export interface IPropertiesInformationProps {
 export const PropertiesInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertiesInformationProps>
 > = ({ nameSpace, disabled, hideAddress }) => {
-  const { values } = useFormikContext<ILease>();
+  const { values } = useFormikContext<LeaseFormModel>();
   const properties: IProperty[] = getIn(values, withNameSpace(nameSpace, 'properties')) ?? [];
   return properties?.length ? (
     <Section initiallyExpanded={true} isCollapsable={true} header="Property Information">
@@ -29,7 +30,7 @@ export const PropertiesInformation: React.FunctionComponent<
           properties.map((property: IProperty, index) => (
             <PropertyInformation
               {...renderProps}
-              nameSpace={withNameSpace(nameSpace, `properties.${index}`)}
+              nameSpace={withNameSpace(nameSpace, `properties.${index}.property`)}
               disabled={disabled}
               hideAddress={hideAddress}
             />

@@ -88,5 +88,3 @@ export const EndAlignCol = styled(Col)`
   display: flex;
   align-items: flex-end;
 `;
-
-export const LeaseForm = styled(Form)``;

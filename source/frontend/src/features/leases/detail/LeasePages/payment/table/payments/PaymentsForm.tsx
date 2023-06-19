@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import { useMemo } from 'react';
@@ -11,13 +12,14 @@ import { IFormLease } from '@/interfaces';
 import { defaultFormLeasePayment, IFormLeasePayment } from '@/interfaces/ILeasePayment';
 import { withNameSpace } from '@/utils/formUtils';
 
+import { defaultFormLeasePayment, FormLeasePayment } from '../../models';
 import * as PaymentStyles from '../../styles';
 import { getActualsColumns } from './paymentsColumns';
 
 export interface IPaymentsFormProps {
-  onEdit: (values: IFormLeasePayment) => void;
-  onDelete: (values: IFormLeasePayment) => void;
-  onSave: (values: IFormLeasePayment) => void;
+  onEdit: (values: FormLeasePayment) => void;
+  onDelete: (values: FormLeasePayment) => void;
+  onSave: (values: FormLeasePayment) => void;
   nameSpace?: string;
   isExercised?: boolean;
   isGstEligible?: boolean;
@@ -35,10 +37,10 @@ export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaym
   isReceivable,
   termId,
 }) => {
-  const formikProps = useFormikContext<IFormLease>();
+  const formikProps = useFormikContext<LeaseFormModel>();
   const { hasClaim } = useKeycloakWrapper();
   const field = useMemo(() => withNameSpace(nameSpace, 'payments'), [nameSpace]);
-  const payments: IFormLeasePayment[] = getIn(formikProps.values, field);
+  const payments: FormLeasePayment[] = getIn(formikProps.values, field);
   const columns = useMemo(
     () =>
       getActualsColumns({
@@ -70,7 +72,7 @@ export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaym
       <Col md={10}>
         {!!payments?.length && isExercised ? (
           <>
-            <PaymentStyles.StyledPaymentTable<React.FC<TableProps<IFormLeasePayment>>>
+            <PaymentStyles.StyledPaymentTable<React.FC<TableProps<FormLeasePayment>>>
               name="securityDepositsTable"
               columns={columns}
               data={payments ?? []}

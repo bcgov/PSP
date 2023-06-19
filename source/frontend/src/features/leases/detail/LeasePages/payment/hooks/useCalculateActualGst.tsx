@@ -4,12 +4,14 @@ import { useEffect } from 'react';
 import { IFormLeasePayment } from '@/interfaces';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
+import { FormLeasePayment } from '../models';
+
 /**
  * hook that auto fills formik payment fields based on gst calculation of total amount paid.
  * @param isGstEligible do not perform calculation if payment term is not gst eligible.
  */
 export const useCalculateActualGst = (isGstEligible?: boolean) => {
-  const { values, touched, setFieldValue, isSubmitting } = useFormikContext<IFormLeasePayment>();
+  const { values, touched, setFieldValue, isSubmitting } = useFormikContext<FormLeasePayment>();
   const amountTotalTouched = getIn(touched, 'amountTotal');
   const amountTotal = getIn(values, 'amountTotal');
   const { getSystemConstant } = useSystemConstants();

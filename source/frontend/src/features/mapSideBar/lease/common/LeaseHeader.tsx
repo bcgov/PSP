@@ -18,7 +18,7 @@ import { prettyFormatDate } from '@/utils';
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
-  lease?: ILease;
+  lease?: Api_Lease;
 }
 
 export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
@@ -43,14 +43,22 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
           <Row className="no-gutters">
             <Col>
               <HeaderField label="Property:" labelWidth="3" contentWidth="9">
-                <LeaseHeaderAddresses lease={lease} maxCollapsedLength={1} delimiter={<br />} />
+                <LeaseHeaderAddresses
+                  propertyLeases={lease?.properties ?? []}
+                  maxCollapsedLength={1}
+                  delimiter={<br />}
+                />
               </HeaderField>
             </Col>
           </Row>
           <Row className="no-gutters">
             <Col>
               <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
-                <LeaseHeaderTenants lease={lease} maxCollapsedLength={1} delimiter={<br />} />
+                <LeaseHeaderTenants
+                  tenants={lease?.tenants ?? []}
+                  maxCollapsedLength={1}
+                  delimiter={<br />}
+                />
               </HeaderField>
             </Col>
           </Row>

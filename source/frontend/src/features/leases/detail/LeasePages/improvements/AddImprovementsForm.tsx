@@ -1,4 +1,7 @@
-import { Formik, FormikProps } from 'formik';
+import { Input } from 'components/common/form';
+import { Section } from 'features/mapSideBar/tabs/Section';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { FieldArray, Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,25 +9,28 @@ import styled from 'styled-components';
 import { defaultFormLease, IFormLease } from '@/interfaces';
 
 import { AddImprovementsYupSchema } from './AddImprovementsYupSchema';
-import { Improvements } from './Improvements';
+import { sectionTitles } from './components/Improvement/Improvement';
+import { ILeaseImprovementForm, ILeaseImprovementsForm } from './models';
+import * as Styled from './styles';
 export interface IAddImprovementsFormProps {
-  onCancel: () => void;
-  onSubmit: (lease: IFormLease) => Promise<void>;
-  initialValues?: IFormLease;
-  formikRef: React.Ref<FormikProps<IFormLease>>;
+  loading?: boolean;
+  onSubmit: (lease: ILeaseImprovementsForm) => Promise<void>;
+  initialValues?: ILeaseImprovementsForm;
+  formikRef: React.Ref<FormikProps<ILeaseImprovementsForm>>;
 }
 
 export const AddImprovementsForm: React.FunctionComponent<
   React.PropsWithChildren<IAddImprovementsFormProps>
-> = ({ onCancel, onSubmit, initialValues, formikRef, children }) => {
+> = ({ onSubmit, initialValues, formikRef, children, loading }) => {
   return (
     <>
+      <LoadingBackdrop show={loading} parentScreen />
       <Formik
         validationSchema={AddImprovementsYupSchema}
         onSubmit={values => onSubmit(values)}
         innerRef={formikRef}
         enableReinitialize
-        initialValues={{ ...defaultFormLease, ...initialValues }}
+        initialValues={{ ...new ILeaseImprovementsForm(), ...initialValues }}
       >
         {formikProps => (
           <>
@@ -33,7 +39,40 @@ export const AddImprovementsForm: React.FunctionComponent<
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
             <StyledFormBody>
-              <Improvements disabled={false} />
+              <Styled.ImprovementsContainer className="improvements">
+                <FieldArray
+                  name="improvements"
+                  render={renderProps =>
+                    formikProps.values.improvements.map(
+                      (improvement: ILeaseImprovementForm, index) => {
+                        const title =
+                          sectionTitles.get(improvement.propertyImprovementTypeId) ?? 'N/A';
+                        const nameSpace = `improvements.${index}`;
+                        return (
+                          <>
+                            <Section header={title}>
+                              <SectionField label="Unit #" labelWidth="3">
+                                <Input field={withNameSpace(nameSpace, 'address')} />{' '}
+                              </SectionField>
+                              <SectionField label="Building size" labelWidth="3">
+                                <Input field={withNameSpace(nameSpace, 'structureSize')} />
+                              </SectionField>
+                              <SectionField label="Description" labelWidth="3">
+                                <Styled.FormDescriptionBody
+                                  innerClassName="description"
+                                  rows={5}
+                                  field={withNameSpace(nameSpace, 'description')}
+                                  placeholder="Reason for improvement and improvement details"
+                                />
+                              </SectionField>
+                            </Section>
+                          </>
+                        );
+                      },
+                    )
+                  }
+                ></FieldArray>
+              </Styled.ImprovementsContainer>
               {children}
             </StyledFormBody>
           </>

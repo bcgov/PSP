@@ -1,4 +1,4 @@
-import { getIn, useFormikContext } from 'formik';
+import { getIn } from 'formik';
 
 import { Input } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
@@ -9,8 +9,7 @@ import { IFormLease } from '@/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IImprovementProps {
-  disabled?: boolean;
-  nameSpace?: string;
+  improvement: ILeaseImprovementForm;
   improvementTypeCodeId?: string;
 }
 
@@ -25,31 +24,22 @@ export const sectionTitles = new Map<string, string>([
  * @param {IImprovementProps} param0
  */
 export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImprovementProps>> = ({
-  disabled,
-  nameSpace,
+  improvement,
   improvementTypeCodeId,
 }) => {
-  const { values } = useFormikContext<IFormLease>();
-  const typeId =
-    improvementTypeCodeId ?? getIn(values, withNameSpace(nameSpace, 'propertyImprovementTypeId'));
+  const typeId = improvementTypeCodeId ?? getIn(improvement, 'propertyImprovementTypeId');
   const title = sectionTitles.get(typeId) ?? 'N/A';
   return (
     <>
       <Section header={title}>
         <SectionField label="Unit #" labelWidth="3">
-          <Input disabled={disabled} field={withNameSpace(nameSpace, 'address')} />{' '}
+          {improvement.address}
         </SectionField>
         <SectionField label="Building size" labelWidth="3">
-          <Input disabled={disabled} field={withNameSpace(nameSpace, 'structureSize')} />
+          {improvement.structureSize}
         </SectionField>
         <SectionField label="Description" labelWidth="3">
-          <Styled.FormDescriptionBody
-            innerClassName="description"
-            rows={5}
-            disabled={disabled}
-            field={withNameSpace(nameSpace, 'description')}
-            placeholder="Reason for improvement and improvement details"
-          />
+          {improvement.description}
         </SectionField>
       </Section>
     </>

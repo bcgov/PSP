@@ -1,13 +1,16 @@
+using System;
 using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Areas.Lease.Models.Lease;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Leases.Models.Lease;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -28,6 +31,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #region Variables
         private readonly ISecurityDepositService _securityDepositService;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
         #endregion
 
         #region Constructors
@@ -37,15 +41,41 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <param name="securityDepositService"></param>
         /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         ///
-        public SecurityDepositController(ISecurityDepositService securityDepositService, IMapper mapper)
+        public SecurityDepositController(ISecurityDepositService securityDepositService, IMapper mapper, ILogger<SecurityDepositController> logger)
         {
             _securityDepositService = securityDepositService;
             _mapper = mapper;
+            _logger = logger;
         }
         #endregion
 
         #region Endpoints
+
+        /// <summary>
+        /// Gets a list of deposits from the passed lease id.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{leaseId:long}/deposits")]
+        [HasPermission(Permissions.LeaseView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<SecurityDepositModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetDeposits(long leaseId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SecurityDepositController),
+                nameof(GetDeposits),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var updatedLease = _securityDepositService.GetLeaseDeposits(leaseId);
+
+            return new JsonResult(_mapper.Map<IEnumerable<SecurityDepositModel>>(updatedLease));
+        }
 
         /// <summary>
         /// Adds the specified deposit to the lease.
@@ -54,20 +84,29 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPost("{leaseId:long}/deposits")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(SecurityDepositModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> addRequest)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult AddDeposit(long leaseId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositModel addRequest)
         {
-            if (leaseId != addRequest.ParentId)
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SecurityDepositController),
+                nameof(AddDeposit),
+                User.GetUsername(),
+                DateTime.Now);
+
+            if (leaseId != addRequest.LeaseId)
             {
-                throw new BadRequestException($"Concurrency parent id mismatch.");
+                throw new BadRequestException($"Invalid Security Deposit Lease Id");
             }
-            var depositEntity = _mapper.Map<PimsSecurityDeposit>(addRequest.Payload);
+
+            var depositEntity = _mapper.Map<PimsSecurityDeposit>(addRequest);
             depositEntity.LeaseId = leaseId;
 
-            var updatedLease = _securityDepositService.AddLeaseDeposit(addRequest.ParentId, addRequest.ParentRowVersion, depositEntity);
+            var updatedLease = _securityDepositService.AddLeaseDeposit(addRequest.LeaseId, depositEntity);
 
-            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+            return new JsonResult(_mapper.Map<SecurityDepositModel>(updatedLease));
         }
 
         /// <summary>
@@ -77,63 +116,85 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPut("{leaseId:long}/deposits/{depositId:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(SecurityDepositModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateDeposit(long leaseId, long depositId, ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> updateRequest)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDeposit(long leaseId, long depositId, Pims.Api.Models.Concepts.SecurityDepositModel updateRequest)
         {
-            if (leaseId != updateRequest.ParentId)
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SecurityDepositController),
+                nameof(UpdateDeposit),
+                User.GetUsername(),
+                DateTime.Now);
+
+            if (leaseId != updateRequest.LeaseId)
             {
-                throw new BadRequestException($"Concurrency parent id mismatch.");
+                throw new BadRequestException($"Invalid Security Deposit Lease Id");
             }
 
-            if (depositId != updateRequest.Payload.Id)
+            if (depositId != updateRequest.Id)
             {
-                throw new BadRequestException($"Bad payload id.");
+                throw new BadRequestException($"Invalid Security Deposit Id");
             }
-
-            var depositEntity = _mapper.Map<PimsSecurityDeposit>(updateRequest.Payload);
+            var depositEntity = _mapper.Map<PimsSecurityDeposit>(updateRequest);
             depositEntity.LeaseId = leaseId;
 
-            var updatedLease = _securityDepositService.UpdateLeaseDeposit(updateRequest.ParentId, updateRequest.ParentRowVersion, depositEntity);
+            var updatedLease = _securityDepositService.UpdateLeaseDeposit(leaseId, depositEntity);
 
-            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+            return new JsonResult(_mapper.Map<SecurityDepositModel>(updatedLease));
         }
 
         /// <summary>
         /// Delete the specified deposit on the passed lease.
         /// </summary>
-        /// <returns></returns>
-        [HttpDelete("{leaseId:long}/deposits")]
+        [HttpDelete("{leaseId:long}/deposits/{depositId:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(void), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult DeleteDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> deleteRequest)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public void DeleteDeposit(long leaseId, long depositId, [FromBody] Pims.Api.Models.Concepts.SecurityDepositModel deleteRequest)
         {
-            if (leaseId != deleteRequest.ParentId)
-            {
-                throw new BadRequestException($"Concurrency parent id mismatch.");
-            }
-            var depositEntity = _mapper.Map<PimsSecurityDeposit>(deleteRequest.Payload);
-            var updatedLease = _securityDepositService.DeleteLeaseDeposit(deleteRequest.ParentId, deleteRequest.ParentRowVersion, depositEntity);
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SecurityDepositController),
+                nameof(DeleteDeposit),
+                User.GetUsername(),
+                DateTime.Now);
 
-            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+            if (leaseId != deleteRequest.LeaseId)
+            {
+                throw new BadRequestException($"Invalid Security Deposit Lease Id");
+            }
+
+            if (depositId != deleteRequest.Id)
+            {
+                throw new BadRequestException($"Invalid Security Deposit Id");
+            }
+            var depositEntity = _mapper.Map<PimsSecurityDeposit>(deleteRequest);
+            _securityDepositService.DeleteLeaseDeposit(depositEntity);
         }
 
         /// <summary>
         /// update the deposit note on the given lease.
         /// </summary>
-        /// <returns></returns>
         [HttpPut("{leaseId:long}/deposits/note")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(void), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult DeleteDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<DepositNoteModel> depositNoteModel)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public void UpdateDepositNote(long leaseId, [FromBody] DepositNoteModel depositNoteModel)
         {
-            var updatedLease = _securityDepositService.UpdateLeaseDepositNote(depositNoteModel.ParentId, depositNoteModel.ParentRowVersion, depositNoteModel.Payload.Note);
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(SecurityDepositController),
+                nameof(UpdateDepositNote),
+                User.GetUsername(),
+                DateTime.Now);
 
-            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+            _securityDepositService.UpdateLeaseDepositNote(leaseId, depositNoteModel.Note);
         }
         #endregion
     }

@@ -2,18 +2,13 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { act } from 'react-dom/test-utils';
 
 import { Claims, LeaseTermStatusTypes } from '@/constants/index';
-import {
-  defaultFormLease,
-  defaultFormLeasePayment,
-  defaultFormLeaseTerm,
-  IFormLease,
-  IFormLeasePayment,
 } from '@/interfaces';
 import {
   fillInput,
@@ -22,12 +17,13 @@ import {
   RenderOptions,
 } from '@/utils/test-utils';
 
+import { defaultFormLeasePayment, defaultFormLeaseTerm, FormLeasePayment } from '../../models';
 import PaymentsForm, { IPaymentsFormProps } from './PaymentsForm';
 
 jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-export const defaultTestFormLeasePayment: IFormLeasePayment = {
+export const defaultTestFormLeasePayment: FormLeasePayment = {
   ...defaultFormLeasePayment,
   leasePaymentMethodType: { id: 'Cheque' },
   leasePaymentStatusTypeCode: { id: 'Paid' },
@@ -39,8 +35,8 @@ export const defaultTestFormLeasePayment: IFormLeasePayment = {
   id: 1,
 };
 
-const defaultLeaseWithTermsPayments: IFormLease = {
-  ...defaultFormLease,
+const defaultLeaseWithTermsPayments: LeaseFormModel = {
+  ...new LeaseFormModel(),
   terms: [
     {
       ...defaultFormLeaseTerm,
@@ -117,7 +113,7 @@ describe('PaymentsForm component', () => {
 
   it('renders with data as expected', async () => {
     const { component } = await setup({
-      initialValues: { ...defaultFormLease, terms: [defaultFormLeaseTerm] },
+      initialValues: { ...new LeaseFormModel(), terms: [defaultFormLeaseTerm] },
     });
 
     expect(component.asFragment()).toMatchSnapshot();
@@ -239,7 +235,7 @@ describe('PaymentsForm component', () => {
     it('Sums expected payment columns', async () => {
       const { findFooter, findCell, findFooterCell, findFirstRow } = await setup({
         initialValues: {
-          ...defaultFormLease,
+          ...new LeaseFormModel(),
           terms: [
             {
               ...defaultFormLeaseTerm,
@@ -318,6 +314,7 @@ describe('PaymentsForm component', () => {
       userEvent.click(editButton[0]);
       expect(onEdit).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });
+
     it('Allows user to trigger a delete action', async () => {
       const {
         component: { findAllByTitle },

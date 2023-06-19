@@ -22,8 +22,7 @@ export const useApiLeases = () => {
         api.get<IPagedItems<ILeaseSearchResult>>(
           `/leases/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      getLease: (id: number) => api.get<ILease>(`/leases/${id}`),
-      getApiLease: (id: number) => api.get<Api_Lease>(`/leases/concept/${id}`),
+      getApiLease: (id: number) => api.get<Api_Lease>(`/leases/${id}`),
       postLease: (lease: Api_Lease, userOverrideCodes: UserOverrideCode[]) =>
         api.post<Api_Lease>(
           `/leases?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
@@ -32,13 +31,6 @@ export const useApiLeases = () => {
       putApiLease: (lease: Api_Lease, userOverrideCodes: UserOverrideCode[] = []) =>
         api.put<Api_Lease>(
           `/leases/${lease.id}?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
-          lease,
-        ),
-      putLease: (lease: ILease, subRoute: string, userOverrideCodes: UserOverrideCode[] = []) =>
-        api.put<ILease>(
-          `/leases/${lease.id}/${subRoute ?? ''}?${userOverrideCodes
-            .map(o => `userOverrideCodes=${o}`)
-            .join('&')}`,
           lease,
         ),
       exportLeases: (filter: IPaginateLeases, outputFormat: 'csv' | 'excel' = 'excel') =>

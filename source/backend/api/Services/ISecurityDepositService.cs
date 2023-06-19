@@ -1,15 +1,18 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
 {
     public interface ISecurityDepositService
     {
-        PimsLease AddLeaseDeposit(long leaseId, long leaseRowVersion, PimsSecurityDeposit deposit);
+        public IEnumerable<PimsSecurityDeposit> GetLeaseDeposits(long leaseId);
 
-        PimsLease UpdateLeaseDeposit(long leaseId, long leaseRowVersion, PimsSecurityDeposit deposit);
+        PimsSecurityDeposit AddLeaseDeposit(long leaseId, PimsSecurityDeposit deposit);
 
-        PimsLease UpdateLeaseDepositNote(long leaseId, long leaseRowVersion, string note);
+        PimsSecurityDeposit UpdateLeaseDeposit(long leaseId, PimsSecurityDeposit deposit);
 
-        PimsLease DeleteLeaseDeposit(long leaseId, long leaseRowVersion, PimsSecurityDeposit deposit);
+        void UpdateLeaseDepositNote(long leaseId, string note);
+
+        void DeleteLeaseDeposit(PimsSecurityDeposit deposit);
     }
 }

@@ -15,14 +15,14 @@ import { LeaseFileTabNames, LeaseFileTabs, LeaseTabFileView } from './LeaseFileT
 import { LeaseTab } from './LeaseTab';
 
 export interface ILeaseTabsContainerProps {
-  lease?: ILease;
+  lease?: Api_Lease;
   refreshLease: () => void;
-  setLease: (lease: ILease) => void;
+  setLease: (lease: Api_Lease) => void;
   setContainerState: (value: Partial<LeaseContainerState>) => void;
   isEditing: boolean;
   onEdit?: () => {};
   activeTab?: LeaseFileTabNames;
-  formikRef: React.RefObject<FormikProps<LeaseFormModel | IFormLease>>;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
 export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({

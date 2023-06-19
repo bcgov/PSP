@@ -44,7 +44,7 @@ describe('ReceivedDepositForm component', () => {
   beforeEach(() => {
     mockAxios.resetHistory();
     jest.clearAllMocks();
-    initialValues = FormLeaseDeposit.createEmpty();
+    initialValues = FormLeaseDeposit.createEmpty(1);
   });
 
   it('renders as expected', () => {

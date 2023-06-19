@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -23,7 +24,7 @@ export interface IPropertyInformationProps {
 export const PropertyInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled, hideAddress }) => {
-  const formikProps = useFormikContext<IFormLease>();
+  const formikProps = useFormikContext<LeaseFormModel>();
   const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'landArea'));
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
   const legalDescription = getIn(formikProps.values, withNameSpace(nameSpace, 'legalDescription'));

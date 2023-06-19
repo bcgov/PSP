@@ -29,7 +29,19 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsSecurityDeposit> GetAllByLeaseId(long leaseId)
         {
-            return this.Context.PimsSecurityDeposits.AsNoTracking().Where(t => t.LeaseId == leaseId).ToArray();
+            return this.Context.PimsSecurityDeposits
+                .Include(s => s.PimsSecurityDepositHolder)
+                    .ThenInclude(h => h.Person)
+                .Include(s => s.PimsSecurityDepositHolder)
+                    .ThenInclude(h => h.Organization)
+                .Include(s => s.SecurityDepositTypeCodeNavigation)
+                .Include(s => s.PimsSecurityDepositReturns)
+                    .ThenInclude(s => s.PimsSecurityDepositReturnHolder)
+                        .ThenInclude(s => s.Person)
+                .Include(s => s.PimsSecurityDepositReturns)
+                    .ThenInclude(s => s.PimsSecurityDepositReturnHolder)
+                        .ThenInclude(s => s.Organization)
+                    .AsNoTracking().Where(t => t.LeaseId == leaseId).ToArray();
         }
 
         public PimsSecurityDeposit GetById(long id)
@@ -45,14 +57,14 @@ namespace Pims.Dal.Repositories
 
         public PimsSecurityDeposit Add(PimsSecurityDeposit securityDeposit)
         {
-            this.Context.Add(securityDeposit);
-            return securityDeposit;
+            var addedSecurityDeposit = this.Context.Add(securityDeposit);
+            return addedSecurityDeposit.Entity;
         }
 
         public PimsSecurityDeposit Update(PimsSecurityDeposit securityDeposit)
         {
-            this.Context.Update(securityDeposit);
-            return securityDeposit;
+            var updatedSecurityDeposit = this.Context.Update(securityDeposit);
+            return updatedSecurityDeposit.Entity;
         }
 
         public void Delete(long id)

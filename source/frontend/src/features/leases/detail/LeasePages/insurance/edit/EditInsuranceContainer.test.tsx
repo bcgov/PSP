@@ -9,14 +9,14 @@ import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import InsuranceEditContainer, { InsuranceEditContainerProps } from './EditInsuranceContainer';
 
-const mockInsuranceTypeHome: ILookupCode = {
+export const mockInsuranceTypeHome: ILookupCode = {
   id: 'HOME',
   name: 'Home Insurance',
   type: 'PimsInsuranceType',
   isDisabled: false,
   displayOrder: 1,
 };
-const mockInsuranceTypeCar: ILookupCode = {
+export const mockInsuranceTypeCar: ILookupCode = {
   id: 'CAR',
   name: 'Car insurance',
   type: 'PimsInsuranceType',
@@ -24,8 +24,9 @@ const mockInsuranceTypeCar: ILookupCode = {
   displayOrder: 2,
 };
 
-const mockInsuranceHome: IInsurance = {
+const mockInsuranceHome: Api_Insurance = {
   id: 123459,
+  leaseId: 1,
   insuranceType: TypeCodeUtils.createFromLookup(mockInsuranceTypeHome),
   otherInsuranceType: '',
   coverageDescription: '',
@@ -39,8 +40,7 @@ const defaultProps: InsuranceEditContainerProps = {
   leaseId: 1,
   insuranceList: [mockInsuranceHome],
   insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
-  onCancel: () => {},
-  onSuccess: () => {},
+  onSave: () => Promise.resolve(),
   formikRef: {} as any,
 };
 
@@ -52,8 +52,7 @@ describe('Edit Lease Insurance', () => {
       leaseId: defaultProps.leaseId,
       insuranceList: defaultProps.insuranceList,
       insuranceTypes: defaultProps.insuranceTypes,
-      onCancel: () => defaultProps.onCancel,
-      onSuccess: () => defaultProps.onSuccess,
+      onSave: defaultProps.onSave,
       formikRef: defaultProps.formikRef,
     },
   ): RenderResult => {
@@ -64,8 +63,7 @@ describe('Edit Lease Insurance', () => {
           insuranceList={renderOptions.insuranceList}
           insuranceTypes={renderOptions.insuranceTypes}
           leaseId={renderOptions.leaseId}
-          onCancel={renderOptions.onCancel}
-          onSuccess={renderOptions.onSuccess}
+          onSave={renderOptions.onSave}
           formikRef={renderOptions.formikRef}
         />
       </Formik>,
@@ -98,7 +96,7 @@ describe('Edit Lease Insurance', () => {
   });
 
   it('Updates form lists when clicked', async () => {
-    const testInsuranceCar: IInsurance = {
+    const testInsuranceCar: Api_Insurance = {
       ...mockInsuranceHome,
       coverageLimit: 888,
       coverageDescription: 'test description for a test insurance car',

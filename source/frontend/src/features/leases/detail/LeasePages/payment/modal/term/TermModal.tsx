@@ -5,13 +5,14 @@ import { useRef } from 'react';
 import * as CommonStyled from '@/components/common/styles';
 import { IFormLeaseTerm } from '@/interfaces/ILeaseTerm';
 
+import { FormLeaseTerm } from '../../models';
 import { TermForm } from './TermForm';
 
 export interface ITermModalProps {
-  initialValues?: IFormLeaseTerm;
+  initialValues?: FormLeaseTerm;
   displayModal?: boolean;
   onCancel: () => void;
-  onSave: (values: IFormLeaseTerm) => void;
+  onSave: (values: FormLeaseTerm) => void;
 }
 
 /**
@@ -24,7 +25,7 @@ export const TermModal: React.FunctionComponent<React.PropsWithChildren<ITermMod
   onCancel,
   onSave,
 }) => {
-  const formikRef = useRef<FormikProps<IFormLeaseTerm>>(null);
+  const formikRef = useRef<FormikProps<FormLeaseTerm>>(null);
   return (
     <CommonStyled.PrimaryGenericModal
       title="Add a Term"

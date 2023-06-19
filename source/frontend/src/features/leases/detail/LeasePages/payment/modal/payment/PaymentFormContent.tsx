@@ -9,6 +9,7 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IFormLeasePayment } from '@/interfaces';
 
 import { useCalculateActualGst } from '../../hooks/useCalculateActualGst';
+import { FormLeasePayment } from '../../models';
 import * as Styled from '../../styles';
 
 interface IPaymentFormContentProps {
@@ -19,7 +20,7 @@ interface IPaymentFormContentProps {
 const PaymentFormContent: React.FunctionComponent<
   React.PropsWithChildren<IPaymentFormContentProps>
 > = ({ isReceived, isGstEligible }) => {
-  const formikProps = useFormikContext<IFormLeasePayment>();
+  const formikProps = useFormikContext<FormLeasePayment>();
   const lookups = useLookupCodeHelpers();
   useCalculateActualGst(isGstEligible);
   const paymentMethodOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_METHOD_TYPES);

@@ -9,7 +9,7 @@ import * as Styled from './add/styles';
 
 interface ISaveCancelButtonsProps {
   onCancel: () => void;
-  onSaveOverride?: () => Promise<ILease | undefined>;
+  onSaveOverride?: () => Promise<void>;
   formikProps: FormikProps<any>;
   className?: string;
 }

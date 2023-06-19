@@ -12,7 +12,7 @@ import { ILease } from '@/interfaces';
 
 export interface IDepositNotesProps {
   disabled?: boolean;
-  onSave: (notes: string) => Promise<ILease | undefined>;
+  onSave: (notes: string) => Promise<void>;
   onEdit: () => void;
   onCancel: () => void;
 }

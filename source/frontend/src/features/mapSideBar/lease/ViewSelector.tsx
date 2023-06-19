@@ -9,14 +9,14 @@ import { LeaseTabsContainer } from './detail/LeaseTabsContainer';
 import { LeaseContainerState, LeasePageNames, leasePages } from './LeaseContainer';
 
 export interface IViewSelectorProps {
-  lease?: ILease;
+  lease?: Api_Lease;
   isEditing: boolean;
   setContainerState: (value: Partial<LeaseContainerState>) => void;
   refreshLease: () => void;
-  setLease: (lease: ILease) => void;
+  setLease: (lease: Api_Lease) => void;
   activeEditForm?: LeasePageNames;
   activeTab?: LeaseFileTabNames;
-  formikRef: React.RefObject<FormikProps<LeaseFormModel | IFormLease>>;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
 export const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {

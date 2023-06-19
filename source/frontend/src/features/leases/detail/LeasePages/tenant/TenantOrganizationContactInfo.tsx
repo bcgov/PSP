@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
@@ -10,7 +11,7 @@ import { IFormLease } from '@/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { FormTenant } from './ViewTenantForm';
+import { FormTenant } from './models';
 
 export interface ITenantOrganizationContactInfoProps {
   nameSpace: string;
@@ -24,7 +25,7 @@ export interface ITenantOrganizationContactInfoProps {
 export const TenantOrganizationContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantOrganizationContactInfoProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<LeaseFormModel>();
   const tenant: FormTenant = getIn(values, nameSpace);
   let primaryContact = tenant?.initialPrimaryContact;
   if (primaryContact?.id !== tenant?.primaryContactId) {

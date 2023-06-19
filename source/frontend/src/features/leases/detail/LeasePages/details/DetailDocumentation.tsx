@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 
@@ -20,7 +21,7 @@ export interface IDetailDocumentationProps {
 export const DetailDocumentation: React.FunctionComponent<
   React.PropsWithChildren<IDetailDocumentationProps>
 > = ({ nameSpace, disabled }) => {
-  const formikProps = useFormikContext<IFormLease>();
+  const formikProps = useFormikContext<LeaseFormModel>();
   const note = getIn(formikProps.values, withNameSpace(nameSpace, 'note'));
   const documentationReference = getIn(
     formikProps.values,

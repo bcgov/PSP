@@ -2,6 +2,8 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { LeaseStateContext } from 'features/leases/context/LeaseContext';
+import { getDefaultFormLease, LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 
@@ -9,6 +11,7 @@ import { Claims } from '@/constants/claims';
 import { defaultFormLease, IFormLease } from '@/interfaces';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 import {
+  act,
   fillInput,
   render,
   RenderOptions,
@@ -18,41 +21,7 @@ import {
 } from '@/utils/test-utils';
 
 import DepositsContainer from './DepositsContainer';
-
-const mockDeposits: Api_SecurityDeposit[] = [
-  {
-    id: 1,
-    depositType: { id: 'PET' },
-    description: 'Pet deposit collected for one cat and one medium size dog.',
-    amountPaid: 500.0,
-    depositDate: '2021-09-15T00:00:00',
-    rowVersion: 0,
-    depositReturns: [],
-  },
-  {
-    id: 7,
-    depositType: { id: 'SECURITY' },
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\n\r\nInteger nec odio.',
-    amountPaid: 2000.0,
-    depositDate: '2019-03-01T00:00:00',
-    rowVersion: 0,
-    depositReturns: [],
-  },
-];
-
-const mockDepositReturns: Api_SecurityDepositReturn[] = [
-  {
-    id: 1,
-    interestPaid: 1,
-    parentDepositId: 7,
-    terminationDate: '2022-02-01',
-    claimsAgainst: 1234.0,
-    returnAmount: 123.0,
-    returnDate: '2022-02-16',
-    rowVersion: 1,
-  },
-];
+import { FormLeaseDeposit } from './models/FormLeaseDeposit';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -66,12 +35,19 @@ jest.mock('@react-keycloak/web');
   },
 });
 
-const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): RenderResult => {
+const setup = (renderOptions: RenderOptions & { lease?: LeaseFormModel } = {}): RenderResult => {
   // render component under test
   const result = render(
-    <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
-      <DepositsContainer />
-    </Formik>,
+    <LeaseStateContext.Provider
+      value={{
+        lease: LeaseFormModel.toApi(renderOptions.lease ?? { ...getDefaultFormLease(), id: 1 }),
+        setLease: noop,
+      }}
+    >
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
+        <DepositsContainer />
+      </Formik>
+    </LeaseStateContext.Provider>,
     {
       ...renderOptions,
     },
@@ -93,10 +69,9 @@ describe('DepositsContainer', () => {
   it('renders as expected', () => {
     const result = setup({
       lease: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
-        securityDeposits: mockDeposits,
-        securityDepositReturns: mockDepositReturns,
+        securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),
       },
     });
     expect(result.asFragment()).toMatchSnapshot();
@@ -106,19 +81,19 @@ describe('DepositsContainer', () => {
     mockAxios.onPost().reply(200, {});
     const { getByText, getByTestId, container } = setup({
       lease: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
+        id: 1,
         returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
-        securityDeposits: mockDeposits,
-        securityDepositReturns: mockDepositReturns,
+        securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),
       },
       claims: [Claims.LEASE_EDIT],
     });
     const editButton = getByTestId('edit-notes');
-    userEvent.click(editButton);
+    act(() => userEvent.click(editButton));
     await fillInput(container, 'returnNotes', 'test note', 'textarea');
     const saveButton = getByText('Save');
-    userEvent.click(saveButton);
-    await waitFor(() => {
+    act(() => userEvent.click(saveButton));
+    await waitFor(async () => {
       expect(mockAxios.history.put).toHaveLength(1);
     });
   });
@@ -126,19 +101,19 @@ describe('DepositsContainer', () => {
   it('cancels an edited deposit note', async () => {
     const { getByText, getByTestId, container } = await setup({
       lease: {
-        ...defaultFormLease,
-        returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
-        securityDeposits: mockDeposits,
-        securityDepositReturns: mockDepositReturns,
+        ...new LeaseFormModel(),
+        id: 1,
+        returnNotes: '',
+        securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),
       },
       claims: [Claims.LEASE_EDIT],
     });
     const editButton = getByTestId('edit-notes');
-    userEvent.click(editButton);
+    act(() => userEvent.click(editButton));
     const noteField = await fillInput(container, 'returnNotes', 'test note', 'textarea');
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
-    await waitFor(() => {
+    act(() => userEvent.click(cancelButton));
+    await waitFor(async () => {
       expect(noteField.input).toHaveValue('');
     });
   });

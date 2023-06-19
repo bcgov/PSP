@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -12,11 +13,11 @@ const history = createMemoryHistory();
 
 describe('PropertiesInformation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IPropertiesInformationProps & { lease?: IFormLease } = {},
+    renderOptions: RenderOptions & IPropertiesInformationProps & { lease?: LeaseFormModel } = {},
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
         <PropertiesInformation nameSpace={renderOptions.nameSpace} />
       </Formik>,
       {
@@ -30,12 +31,23 @@ describe('PropertiesInformation component', () => {
     };
   };
   it('renders as expected', () => {
-    const { component } = setup({ lease: { ...defaultFormLease, properties: [mockParcel] } });
+    const { component } = setup({
+      lease: {
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+      },
+    });
     expect(component.asFragment()).toMatchSnapshot();
   });
   it('renders one Property Information section per property', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, properties: [mockParcel, mockParcel] },
+      lease: {
+        ...new LeaseFormModel(),
+        properties: [
+          { ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null },
+          { ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null },
+        ],
+      },
     });
     const { getAllByText } = component;
     const propertyHeaders = getAllByText('Property Information');
@@ -45,7 +57,7 @@ describe('PropertiesInformation component', () => {
 
   it('renders no property information section if there are no properties', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, properties: [] },
+      lease: { ...new LeaseFormModel(), properties: [] },
     });
     const { queryByText } = component;
     const propertyHeader = queryByText('Property Information');

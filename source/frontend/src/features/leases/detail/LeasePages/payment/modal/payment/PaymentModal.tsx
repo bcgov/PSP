@@ -5,13 +5,14 @@ import { useRef } from 'react';
 import * as CommonStyled from '@/components/common/styles';
 import { IFormLeasePayment } from '@/interfaces';
 
+import { FormLeasePayment } from '../../models';
 import { PaymentForm } from './PaymentForm';
 
 export interface IPaymentModalProps {
-  initialValues?: IFormLeasePayment;
+  initialValues?: FormLeasePayment;
   displayModal?: boolean;
   onCancel: () => void;
-  onSave: (values: IFormLeasePayment) => void;
+  onSave: (values: FormLeasePayment) => void;
 }
 
 /**
@@ -24,7 +25,7 @@ export const PaymentModal: React.FunctionComponent<React.PropsWithChildren<IPaym
   onCancel,
   onSave,
 }) => {
-  const formikRef = useRef<FormikProps<IFormLeasePayment>>(null);
+  const formikRef = useRef<FormikProps<FormLeasePayment>>(null);
   return (
     <CommonStyled.PrimaryGenericModal
       title="Payment details"

@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { createMemoryHistory } from 'history';
 
 import { IFormLease } from '@/interfaces';
@@ -11,7 +12,9 @@ const history = createMemoryHistory();
 
 describe('LtsaTabView component', () => {
   const setup = (
-    renderOptions: RenderOptions & ILtsaTabViewProps & { lease?: IFormLease } = { loading: false },
+    renderOptions: RenderOptions & ILtsaTabViewProps & { lease?: LeaseFormModel } = {
+      loading: false,
+    },
   ) => {
     // render component under test
     const component = render(

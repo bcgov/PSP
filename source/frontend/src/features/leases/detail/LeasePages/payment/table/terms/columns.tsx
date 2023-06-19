@@ -20,18 +20,20 @@ import { ISystemConstant } from '@/store/slices/systemConstants';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
-function initialOrRenewalTerm({ row: { original, index } }: CellProps<IFormLeaseTerm, unknown>) {
+import { FormLeaseTerm } from '../../models';
+
+function initialOrRenewalTerm({ row: { original, index } }: CellProps<FormLeaseTerm, unknown>) {
   return stringToFragment(index === 0 ? 'Initial term' : `Renewal ${index}`);
 }
 
-function startAndEndDate({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
+function startAndEndDate({ row: { original, index } }: CellProps<FormLeaseTerm, string>) {
   return stringToFragment(
     `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
   );
 }
 
 const renderExpectedTotal = () =>
-  function ({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
+  function ({ row: { original, index } }: CellProps<FormLeaseTerm, string>) {
     return stringToFragment(
       original.paymentAmount !== undefined
         ? formatMoney((original.paymentAmount as number) + ((original?.gstAmount as number) ?? 0))
@@ -39,13 +41,13 @@ const renderExpectedTotal = () =>
     );
   };
 
-function renderGstAmount({ row: { original } }: CellProps<IFormLeaseTerm, NumberFieldValue>) {
+function renderGstAmount({ row: { original } }: CellProps<FormLeaseTerm, NumberFieldValue>) {
   return stringToFragment(
     original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '-',
   );
 }
 
-function renderActualTotal({ row: { original } }: CellProps<IFormLeaseTerm, string>) {
+function renderActualTotal({ row: { original } }: CellProps<FormLeaseTerm, string>) {
   const total = formatMoney(
     (original.payments ?? []).reduce((sum: number, p) => (sum += p.amountTotal as number), 0),
   );
@@ -53,7 +55,7 @@ function renderActualTotal({ row: { original } }: CellProps<IFormLeaseTerm, stri
 }
 
 const renderExpectedTerm = () =>
-  function ({ row: { original } }: CellProps<IFormLeaseTerm, string>) {
+  function ({ row: { original } }: CellProps<FormLeaseTerm, string>) {
     if (!original.startDate || !original.expiryDate || original.paymentAmount === undefined) {
       return stringToFragment('-');
     }
@@ -107,10 +109,10 @@ function calculateExpectedTermAmount(
 }
 
 const termActions = (
-  onEdit: (values: IFormLeaseTerm) => void,
-  onDelete: (values: IFormLeaseTerm) => void,
+  onEdit: (values: FormLeaseTerm) => void,
+  onDelete: (values: FormLeaseTerm) => void,
 ) => {
-  return function ({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
+  return function ({ row: { original, index } }: CellProps<FormLeaseTerm, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>
@@ -144,15 +146,15 @@ const termActions = (
 };
 
 export interface IPaymentColumnProps {
-  onEdit: (values: IFormLeaseTerm) => void;
-  onDelete: (values: IFormLeaseTerm) => void;
+  onEdit: (values: FormLeaseTerm) => void;
+  onDelete: (values: FormLeaseTerm) => void;
   gstConstant?: ISystemConstant;
 }
 
 export const getLeaseTermColumns = ({
   onEdit,
   onDelete,
-}: IPaymentColumnProps): ColumnWithProps<IFormLeaseTerm>[] => {
+}: IPaymentColumnProps): ColumnWithProps<FormLeaseTerm>[] => {
   return [
     {
       Header: '',

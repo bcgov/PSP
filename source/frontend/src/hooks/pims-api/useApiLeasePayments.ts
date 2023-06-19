@@ -1,26 +1,20 @@
-import React from 'react';
-
+import CustomAxios from 'customAxios';
+import { Api_LeasePayment } from 'models/api/LeasePayment';
 import { ILease } from '@/interfaces';
 
-import { ILeasePayment } from './../../interfaces/ILeasePayment';
 import useAxiosApi from './useApi';
 
-/**
- * PIMS API wrapper to centralize all AJAX requests to the lease payment endpoints.
- * @returns Object containing functions to make requests to the PIMS API.
- */
-export const useApiLeasePayments = () => {
-  const api = useAxiosApi();
-
-  return React.useMemo(
-    () => ({
-      deleteLeasePayment: (payment: ILeasePayment) =>
-        api.delete<ILease>(`/leases/${payment.leaseId}/payment`, { data: payment }),
-      putLeasePayment: (payment: ILeasePayment) =>
-        api.put<ILease>(`/leases/${payment.leaseId}/payment/${payment.id}`, payment),
-      postLeasePayment: (payment: ILeasePayment) =>
-        api.post<ILease>(`/leases/${payment.leaseId}/payment`, payment),
-    }),
-    [api],
+export const deleteLeasePayment = (leaseId: number, payment: Api_LeasePayment) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).delete<boolean>(`/leases/${leaseId}/payment`, {
+    data: payment,
+  });
+export const putLeasePayment = (leaseId: number, payment: Api_LeasePayment) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_LeasePayment>(
+    `/leases/${leaseId}/payment/${payment.id}`,
+    payment,
   );
-};
+export const postLeasePayment = (leaseId: number, payment: Api_LeasePayment) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).post<Api_LeasePayment>(
+    `/leases/${leaseId}/payment`,
+    payment,
+  );

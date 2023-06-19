@@ -52,6 +52,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="lookupRepository"></param>
         /// <param name="leaseRepository"></param>
         /// <param name="leaseReportService"></param>
+        /// <param name="leasePaymentService"></param>
         /// <param name="webHostEnvironment"></param>
         /// <param name="mapper"></param>
         public LeaseController(ILookupRepository lookupRepository, ILeaseRepository leaseRepository, ILeaseReportsService leaseReportService, ILeasePaymentService leasePaymentService, IWebHostEnvironment webHostEnvironment, IMapper mapper)

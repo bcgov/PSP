@@ -4,18 +4,18 @@ import * as React from 'react';
 import { GenericModal } from '@/components/common/GenericModal';
 import { IFormLease } from '@/interfaces/ILease';
 
-import { FormTenant } from './ViewTenantForm';
+import { FormTenant } from './models';
 
 export interface IPrimaryContactWarningModalProps {
   saveCallback?: Function;
-  lease: IFormLease | undefined;
+  selectedTenants: FormTenant[];
   onCancel?: Function;
 }
 
 const PrimaryContactWarningModal: React.FunctionComponent<
   React.PropsWithChildren<IPrimaryContactWarningModalProps>
-> = ({ saveCallback, lease, onCancel }) => {
-  const warningOrgs = lease ? getOrgsWithNoPrimaryContact(lease) : [];
+> = ({ saveCallback, selectedTenants, onCancel }) => {
+  const warningOrgs = selectedTenants ? getOrgsWithNoPrimaryContact(selectedTenants) : [];
   const warningOrgNames = warningOrgs.map(org => org.summary);
   return (
     <GenericModal
@@ -37,9 +37,9 @@ const PrimaryContactWarningModal: React.FunctionComponent<
   );
 };
 
-export const getOrgsWithNoPrimaryContact = (lease: IFormLease): FormTenant[] => {
+export const getOrgsWithNoPrimaryContact = (tenants: FormTenant[]): FormTenant[] => {
   return filter(
-    lease.tenants.filter((tenant: FormTenant) => {
+    tenants?.filter((tenant: FormTenant) => {
       return (
         tenant.organizationId &&
         !tenant.personId &&

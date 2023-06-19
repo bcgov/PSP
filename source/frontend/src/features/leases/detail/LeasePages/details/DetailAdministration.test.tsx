@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -12,11 +13,11 @@ const history = createMemoryHistory();
 
 describe('DetailAdministration component', () => {
   const setup = (
-    renderOptions: RenderOptions & IDetailAdministrationProps & { lease?: IFormLease } = {},
+    renderOptions: RenderOptions & IDetailAdministrationProps & { lease?: LeaseFormModel } = {},
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
         <DetailAdministration
           disabled={renderOptions.disabled}
           nameSpace={renderOptions.nameSpace}
@@ -34,7 +35,10 @@ describe('DetailAdministration component', () => {
   };
   it('renders minimally as expected', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, properties: [mockParcel] },
+      lease: {
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+      },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -42,8 +46,8 @@ describe('DetailAdministration component', () => {
   it('renders a complete lease as expected', () => {
     const { component } = setup({
       lease: {
-        ...defaultFormLease,
-        properties: [mockParcel],
+        ...new LeaseFormModel(),
+        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
         amount: 1,
         description: 'a test description',
         programName: 'A program',
@@ -53,8 +57,8 @@ describe('DetailAdministration component', () => {
         motiName: 'test moti name',
         note: 'a test note',
         expiryDate: '2022-01-01',
-        hasDigitalLicense: 'Yes',
-        hasPhysicalLicense: 'No',
+        hasDigitalLicense: true,
+        hasPhysicalLicense: false,
         startDate: '2020-01-01',
       },
     });
@@ -104,7 +108,7 @@ describe('DetailAdministration component', () => {
       component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...defaultFormLease,
+        ...new LeaseFormModel(),
         programName: 'A program',
       },
     });

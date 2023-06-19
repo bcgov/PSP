@@ -1,3 +1,4 @@
+import { Api_PropertyLease } from 'models/api/PropertyLease';
 import * as React from 'react';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
@@ -5,30 +6,33 @@ import { ILease, IProperty } from '@/interfaces';
 import { getPropertyName } from '@/utils/mapPropertyUtils';
 
 export interface ILeaseHeaderAddressesProps {
-  lease?: ILease;
+  propertyLeases?: Api_PropertyLease[];
   delimiter?: React.ReactElement | string;
   maxCollapsedLength?: number;
 }
 
 export const LeaseHeaderAddresses: React.FC<ILeaseHeaderAddressesProps> = ({
-  lease,
+  propertyLeases,
   delimiter = '; ',
   maxCollapsedLength = 2,
 }) => {
   return (
-    <ExpandableTextList<IProperty>
-      items={lease?.properties ?? []}
-      keyFunction={(item: IProperty, index: number) =>
-        `lease-property-${item.id}-address-${item?.address?.id ?? index}`
+    <ExpandableTextList<Api_PropertyLease>
+      items={propertyLeases ?? []}
+      keyFunction={(item: Api_PropertyLease, index: number) =>
+        `lease-property-${item.id}-address-${item?.property?.address?.id ?? index}`
       }
-      renderFunction={(item: IProperty) => <>{getFormattedAddress(item)}</>}
+      renderFunction={(item: Api_PropertyLease) => <>{getFormattedAddress(item?.property)}</>}
       delimiter={delimiter}
       maxCollapsedLength={maxCollapsedLength}
     />
   );
 };
 
-const getFormattedAddress = (property: IProperty) => {
+const getFormattedAddress = (property?: Api_Property) => {
+  if (!property) {
+    return '';
+  }
   const address = property?.address;
   if (!!address?.streetAddress1) {
     return !!address?.municipality
@@ -39,7 +43,7 @@ const getFormattedAddress = (property: IProperty) => {
       ? address.municipality
       : `${
           getPropertyName({
-            pid: property.pid,
+            pid: property.pid?.toString(),
             pin: property.pin?.toString(),
             latitude: property.latitude,
             longitude: property.longitude,

@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { Formik, FormikProps } from 'formik';
 import { find, noop, orderBy } from 'lodash';
 import * as React from 'react';
@@ -14,18 +15,19 @@ import { defaultFormLease, IFormLease, IFormLeasePayment } from '@/interfaces';
 import { defaultFormLeaseTerm, IFormLeaseTerm } from '@/interfaces/ILeaseTerm';
 import { prettyFormatDate } from '@/utils';
 
+import { defaultFormLeaseTerm, FormLeasePayment, FormLeaseTerm } from '../../models';
 import { PaymentsForm } from '../payments/PaymentsForm';
 import { getLeaseTermColumns } from './columns';
 
 export interface ITermsFormProps {
-  onEdit: (values: IFormLeaseTerm) => void;
-  onEditPayment: (values: IFormLeasePayment) => void;
-  onDelete: (values: IFormLeaseTerm) => void;
-  onDeletePayment: (values: IFormLeasePayment) => void;
-  onSavePayment: (values: IFormLeasePayment) => void;
+  onEdit: (values: FormLeaseTerm) => void;
+  onEditPayment: (values: FormLeasePayment) => void;
+  onDelete: (values: FormLeaseTerm) => void;
+  onDeletePayment: (values: FormLeasePayment) => void;
+  onSavePayment: (values: FormLeasePayment) => void;
   isReceivable?: boolean;
-  lease?: IFormLease;
-  formikRef: React.RefObject<FormikProps<IFormLease>>;
+  lease?: LeaseFormModel;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
 export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFormProps>> = ({
@@ -43,7 +45,7 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
     [onEdit, onDelete],
   );
   const { hasClaim } = useKeycloakWrapper();
-  const leaseForm = { ...defaultFormLease, ...lease };
+  const leaseForm = { ...new LeaseFormModel(), ...lease };
 
   //Get the most recent payment for display, if one exists.
   const allPayments = orderBy(
@@ -55,17 +57,18 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
 
   /** This is the payments subtable displayed for each term row. */
   const renderPayments = useDeepCompareMemo(
-    () => (row: IFormLeaseTerm) => {
+    () => (row: FormLeaseTerm) => {
+      const matchingTerm = leaseForm.terms.find(t => t.id === row.id);
       return (
         <PaymentsForm
           onSave={onSavePayment}
           onEdit={onEditPayment}
           onDelete={onDeletePayment}
-          nameSpace={`terms.${leaseForm.terms.indexOf(row)}`}
+          nameSpace={`terms.${matchingTerm ? leaseForm.terms.indexOf(matchingTerm) : 0}`}
           isExercised={row?.statusTypeCode?.id === LeaseTermStatusTypes.EXERCISED}
           isGstEligible={row.isGstEligible}
           isReceivable={isReceivable}
-          termId={row.id}
+          termId={row.id ?? undefined}
         />
       );
     },
@@ -73,7 +76,7 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
   );
 
   return (
-    <Formik<IFormLease>
+    <Formik<LeaseFormModel>
       initialValues={leaseForm}
       enableReinitialize={true}
       innerRef={formikRef}
@@ -87,7 +90,7 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
             </Button>
           )}
           {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
-          <Table<IFormLeaseTerm>
+          <Table<FormLeaseTerm>
             name="leasePaymentsTable"
             columns={columns}
             data={formikProps.values.terms ?? []}
@@ -98,9 +101,9 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
             detailsPanel={{
               render: renderPayments,
               onExpand: noop,
-              checkExpanded: (row: IFormLeaseTerm, state: IFormLeaseTerm[]) =>
+              checkExpanded: (row: FormLeaseTerm, state: FormLeaseTerm[]) =>
                 !!find(state, term => term.id === row.id),
-              getRowId: (row: IFormLeaseTerm) => row.id,
+              getRowId: (row: FormLeaseTerm) => row.id,
               icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
             }}
           />

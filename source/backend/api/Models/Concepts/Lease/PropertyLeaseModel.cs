@@ -4,7 +4,9 @@ namespace Pims.Api.Models.Concepts
     {
         #region Properties
 
-        public long Id { get; set; }
+        public long? Id { get; set; }
+
+        public long? LeaseId { get; set; }
 
         public PropertyModel Property { get; set; }
 

@@ -1,17 +1,18 @@
 import { useCallback, useContext, useState } from 'react';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import {
-  formLeasePaymentToApiPayment,
-  formLeaseTermToApiLeaseTerm,
-  IFormLeasePayment,
-  IFormLeaseTerm,
+import { useLeasePaymentRepository } from 'hooks/repositories/useLeasePaymentRepository';
+import { Api_LeaseTerm } from 'models/api/LeaseTerm';
 } from '@/interfaces';
 
-import { useLeasePayments } from './usePayments';
-import { useLeaseTerms } from './useTerms';
+import { FormLeasePayment, FormLeaseTerm } from '../models';
 
-export const useDeleteTermsPayments = () => {
+export const useDeleteTermsPayments = (
+  deleteLeaseTerm: IResponseWrapper<(term: Api_LeaseTerm) => Promise<AxiosResponse<boolean, any>>>,
+  getLeaseTerms: IResponseWrapper<
+    (leaseId: number) => Promise<AxiosResponse<Api_LeaseTerm[], any>>
+  >,
+) => {
   const [comfirmDeleteModalValues, setConfirmDeleteModalValues] = useState<
     IDeleteConfirmationModal | undefined
   >(undefined);
@@ -19,26 +20,26 @@ export const useDeleteTermsPayments = () => {
     undefined,
   );
 
-  const { removeLeaseTerm } = useLeaseTerms();
-  const { removeLeasePayment } = useLeasePayments();
-  const { setLease, lease } = useContext(LeaseStateContext);
+  const { deleteLeasePayment } = useLeasePaymentRepository();
+
+  const { lease } = useContext(LeaseStateContext);
+  const leaseId = lease?.id;
 
   /**
    * If the deletion is confirmed, send the delete request. Use the response to update the parent lease.
    * @param leaseTerm
    */
   const onDeleteTermConfirmed = useCallback(
-    async (leaseTerm: IFormLeaseTerm) => {
-      const updatedLease = await removeLeaseTerm({
-        ...formLeaseTermToApiLeaseTerm(leaseTerm),
-        leaseId: lease?.id,
-        leaseRowVersion: lease?.rowVersion,
+    async (leaseTerm: FormLeaseTerm) => {
+      const deleted = await deleteLeaseTerm.execute({
+        ...FormLeaseTerm.toApi(leaseTerm),
+        leaseId: lease?.id ?? 0,
       });
-      if (!!updatedLease?.id) {
-        setLease(updatedLease);
+      if (deleted && lease?.id) {
+        getLeaseTerms.execute(lease.id);
       }
     },
-    [lease?.id, lease?.rowVersion, removeLeaseTerm, setLease],
+    [deleteLeaseTerm, lease, getLeaseTerms],
   );
 
   /**
@@ -46,7 +47,7 @@ export const useDeleteTermsPayments = () => {
    * @param leaseTerm
    */
   const isValidForDelete = useCallback(
-    (leaseTerm: IFormLeaseTerm) => {
+    (leaseTerm: FormLeaseTerm) => {
       if (leaseTerm.payments.length) {
         setDeleteModalWarning({ title: 'Delete Term', message: deleteWithPayments });
         return false;
@@ -68,7 +69,7 @@ export const useDeleteTermsPayments = () => {
    * @param leaseTerm
    */
   const onDeleteTerm = useCallback(
-    (leaseTerm: IFormLeaseTerm) => {
+    (leaseTerm: FormLeaseTerm) => {
       if (isValidForDelete(leaseTerm)) {
         setConfirmDeleteModalValues({
           title: 'Delete Term',
@@ -88,17 +89,18 @@ export const useDeleteTermsPayments = () => {
    * @param leaseTerm
    */
   const onDeletePaymentConfirmed = useCallback(
-    async (leasePayment: IFormLeasePayment) => {
-      const updatedLease = await removeLeasePayment({
-        ...formLeasePaymentToApiPayment(leasePayment),
-        leaseId: lease?.id,
-        leaseRowVersion: lease?.rowVersion,
-      });
-      if (!!updatedLease?.id) {
-        setLease(updatedLease);
+    async (leasePayment: FormLeasePayment) => {
+      if (leaseId) {
+        const deleted = await deleteLeasePayment.execute(
+          leaseId,
+          FormLeasePayment.toApi(leasePayment),
+        );
+        if (deleted && leaseId) {
+          getLeaseTerms.execute(leaseId);
+        }
       }
     },
-    [lease?.id, lease?.rowVersion, removeLeasePayment, setLease],
+    [deleteLeasePayment, leaseId, getLeaseTerms],
   );
 
   /**
@@ -106,7 +108,7 @@ export const useDeleteTermsPayments = () => {
    * @param leasePayment
    */
   const onDeletePayment = useCallback(
-    (leasePayment: IFormLeasePayment) => {
+    (leasePayment: FormLeasePayment) => {
       setConfirmDeleteModalValues({
         title: 'Delete Payment',
         message: deletePaymentWarning,

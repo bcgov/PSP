@@ -1,5 +1,6 @@
 import { SelectOption } from '@/components/common/form';
 import Api_TypeCode from '@/models/api/TypeCode';
+import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 /**
  * append the passed name and index to the existing namespace, ideal for nesting forms within formik.
@@ -109,3 +110,17 @@ export const yesNoUnknownOptions: SelectOption[] = [
   { label: 'Yes', value: 'Yes' },
   { label: 'No', value: 'No' },
 ];
+
+export function numberFieldToRequiredNumber(value: NumberFieldValue) {
+  if (value === '') {
+    throw new Error('Number field is required, cannot be empty');
+  }
+  return Number(value);
+}
+
+export function toRequiredTypeCode<T>(value?: Api_TypeCode<T>): Api_TypeCode<T> {
+  if (!value) {
+    throw new Error('TypeCode is required, cannot be empty');
+  }
+  return value;
+}

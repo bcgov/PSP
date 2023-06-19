@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import { noop } from 'lodash';
+import { defaultApiLease } from 'models/api/Lease';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -21,7 +22,11 @@ export const LeaseDetailsForm: React.FunctionComponent<
 > = () => {
   const { lease } = React.useContext(LeaseStateContext);
   return (
-    <Formik initialValues={{ ...defaultLease, ...lease }} enableReinitialize={true} onSubmit={noop}>
+    <Formik
+      initialValues={{ ...defaultApiLease, ...lease }}
+      enableReinitialize={true}
+      onSubmit={noop}
+    >
       <StyledDetails>
         <DetailTermInformation />
         <PropertiesInformation disabled={true} />

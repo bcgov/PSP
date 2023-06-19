@@ -146,7 +146,7 @@ namespace Pims.Dal.Test.Repositories
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
@@ -155,12 +155,12 @@ namespace Pims.Dal.Test.Repositories
             var addTenantOrganization = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId };
             lease.PimsLeaseTenants.Add(addTenantPerson);
             lease.PimsLeaseTenants.Add(addTenantOrganization);
-            var updatedLease = service.UpdateLeaseTenants(1, 2, lease.PimsLeaseTenants);
+            var updatedTenants = repository.Update(1, lease.PimsLeaseTenants);
 
             // Assert
-            Assert.Equal(2, updatedLease.PimsLeaseTenants.Count);
-            updatedLease.PimsLeaseTenants.Should().Contain(addTenantPerson);
-            updatedLease.PimsLeaseTenants.Should().Contain(addTenantOrganization);
+            updatedTenants.Should().HaveCount(1);
+            updatedTenants.Should().Contain(addTenantPerson);
+            updatedTenants.Should().Contain(addTenantOrganization);
         }
 
         [Fact]
@@ -179,16 +179,16 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             var updateTenant = lease.PimsLeaseTenants.FirstOrDefault();
             updateTenant.PersonId = updatePerson.PersonId;
-            var updatedLease = service.UpdateLeaseTenants(1, 2, lease.PimsLeaseTenants);
+            var updatedTenants = repository.Update(1, lease.PimsLeaseTenants);
 
             // Assert
-            Assert.Equal(2, updatedLease.PimsLeaseTenants.Count);
-            updatedLease.PimsLeaseTenants.Should().Contain(updateTenant);
+            updatedTenants.Should().HaveCount(1);
+            updatedTenants.Should().Contain(updateTenant);
         }
         [Fact]
         public void Update_Lease_Tenants_Remove()
@@ -204,16 +204,16 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var service = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             var deleteTenant = lease.PimsLeaseTenants.FirstOrDefault();
             lease.PimsLeaseTenants.Remove(deleteTenant);
             context.ChangeTracker.Clear();
-            var updatedLease = service.UpdateLeaseTenants(1, 2, lease.PimsLeaseTenants);
+            var updatedLeaseTenants = service.Update(1, lease.PimsLeaseTenants);
 
             // Assert
-            updatedLease.PimsLeaseTenants.Should().BeEmpty();
+            updatedLeaseTenants.Should().BeEmpty();
         }
         [Fact]
         public void Update_Lease_Tenants_AddRemove()
@@ -231,7 +231,7 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             var deleteTenant = lease.PimsLeaseTenants.FirstOrDefault();
@@ -239,12 +239,12 @@ namespace Pims.Dal.Test.Repositories
             var addTenant = new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = addPerson.PersonId };
             lease.PimsLeaseTenants.Add(addTenant);
             context.ChangeTracker.Clear();
-            var updatedLease = service.UpdateLeaseTenants(1, 2, lease.PimsLeaseTenants);
+            var updatedLeaseTenants = repository.Update(1, lease.PimsLeaseTenants);
 
             // Assert
-            Assert.Equal(2, updatedLease.PimsLeaseTenants.Count);
-            updatedLease.PimsLeaseTenants.Should().NotContain(deleteTenant);
-            updatedLease.PimsLeaseTenants.Should().Contain(addTenant);
+            updatedLeaseTenants.Should().HaveCount(1);
+            updatedLeaseTenants.Should().NotContain(deleteTenant);
+            updatedLeaseTenants.Should().Contain(addTenant);
         }
 
         [Fact]
@@ -256,12 +256,12 @@ namespace Pims.Dal.Test.Repositories
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.UpdateLeaseTenants(1, 1, new List<Pims.Dal.Entities.PimsLeaseTenant>()));
+                repository.Update(1, new List<Pims.Dal.Entities.PimsLeaseTenant>()));
         }
 
         [Fact]
@@ -271,12 +271,12 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             // Assert
             Assert.Throws<KeyNotFoundException>(() =>
-                service.UpdateLeaseTenants(1, 1, new List<Pims.Dal.Entities.PimsLeaseTenant>()));
+                repository.Update(1, new List<Pims.Dal.Entities.PimsLeaseTenant>()));
         }
 
         [Fact]
@@ -289,14 +289,14 @@ namespace Pims.Dal.Test.Repositories
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<LeaseTenantRepository>(user);
 
             // Act
             lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
 
             // Assert
             Assert.Throws<DbUpdateConcurrencyException>(() =>
-                service.UpdateLeaseTenants(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsLeaseTenants));
+                repository.Update(lease.LeaseId, lease.PimsLeaseTenants));
         }
         #endregion
 
@@ -311,18 +311,18 @@ namespace Pims.Dal.Test.Repositories
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             var propertyOne = EntityHelper.CreateProperty(1);
             helper.CreatePimsContext(user, true).AddRange(propertyOne, lease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
             var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
-            service.UpdatePropertyLeases(1, 2, new List<PimsPropertyLease>() { addProperty });
-            service.CommitTransaction();
-            var updatedLease = service.Get(lease.LeaseId);
+            repository.UpdatePropertyLeases(1, new List<PimsPropertyLease>() { addProperty });
+            repository.CommitTransaction();
+            var updatedPropertyLeases = repository.GetAllByLeaseId(lease.LeaseId);
 
             // Assert
-            Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);
-            updatedLease.PimsPropertyLeases.Should().Contain(addProperty);
+            updatedPropertyLeases.Should().HaveCount(1);
+            updatedPropertyLeases.Should().Contain(addProperty);
         }
 
         [Fact]
@@ -385,7 +385,9 @@ namespace Pims.Dal.Test.Repositories
             var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
-            leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>()));
+
+            var propertyLeaseRepository = helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>()));
 
             // Act
             var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
@@ -394,7 +396,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases), Times.Once);
+            propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.PimsPropertyLeases), Times.Once);
         }
 
         [Fact]
@@ -421,7 +423,9 @@ namespace Pims.Dal.Test.Repositories
             var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
-            leaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>()));
+
+            var propertyLeaseRepository = helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>()));
 
             // Act
             var updateProperty = EntityHelper.CreateProperty(context, 2);
@@ -434,7 +438,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            leaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases), Times.Once);
+            propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.PimsPropertyLeases), Times.Once);
         }
 
         [Fact]
@@ -449,7 +453,7 @@ namespace Pims.Dal.Test.Repositories
             lease.PimsPropertyLeases.Add(new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne });
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease, propertyOne);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -459,7 +463,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             // Assert
             Assert.Throws<InvalidOperationException>(() =>
-                service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases));
+                repository.UpdatePropertyLeases(1, lease.PimsPropertyLeases));
         }
 
         [Fact]
@@ -475,16 +479,16 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
 
             // Act
             var deleteProperty = lease.PimsPropertyLeases.FirstOrDefault();
             lease.PimsPropertyLeases.Remove(deleteProperty);
             context.ChangeTracker.Clear();
-            var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
+            var properties = repository.UpdatePropertyLeases(1, lease.PimsPropertyLeases);
 
             // Assert
-            updatedLease.PimsPropertyLeases.Should().BeEmpty();
+            properties.Should().BeEmpty();
         }
         [Fact]
         public void Update_Lease_Properties_AddRemove()
@@ -497,7 +501,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1);
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(property, lease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -509,14 +513,14 @@ namespace Pims.Dal.Test.Repositories
 
             var addPropertyLease = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = addProperty.PropertyId, Property = addProperty };
             lease.PimsPropertyLeases.Add(addPropertyLease);
-            service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
-            service.CommitTransaction();
-            var updatedLease = service.Get(lease.LeaseId);
+            repository.UpdatePropertyLeases(1, lease.PimsPropertyLeases);
+            repository.CommitTransaction();
+            var updatedProperties = repository.GetAllByLeaseId(lease.LeaseId);
 
             // Assert
-            Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);
-            updatedLease.PimsPropertyLeases.Should().NotContain(deleteProperty);
-            updatedLease.PimsPropertyLeases.Should().Contain(addPropertyLease);
+            updatedProperties.Should().HaveCount(1);
+            updatedProperties.Should().NotContain(deleteProperty);
+            updatedProperties.Should().Contain(addPropertyLease);
         }
 
         [Fact]
@@ -528,12 +532,12 @@ namespace Pims.Dal.Test.Repositories
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
 
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.UpdatePropertyLeases(1, 1, new List<Pims.Dal.Entities.PimsPropertyLease>()));
+                repository.UpdatePropertyLeases(1, new List<Pims.Dal.Entities.PimsPropertyLease>()));
         }
 
         [Fact]
@@ -543,12 +547,12 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
 
             // Act
             // Assert
             Assert.Throws<KeyNotFoundException>(() =>
-                service.UpdatePropertyLeases(1, 1, new List<Pims.Dal.Entities.PimsPropertyLease>()));
+                repository.UpdatePropertyLeases(1, new List<Pims.Dal.Entities.PimsPropertyLease>()));
         }
 
         [Fact]
@@ -561,14 +565,14 @@ namespace Pims.Dal.Test.Repositories
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
 
             // Act
             lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
 
             // Assert
             Assert.Throws<DbUpdateConcurrencyException>(() =>
-                service.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases));
+                repository.UpdatePropertyLeases(lease.LeaseId, lease.PimsPropertyLeases));
         }
         #endregion
 
@@ -582,17 +586,17 @@ namespace Pims.Dal.Test.Repositories
 
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddRange(lease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
             helper.SaveChanges();
 
             // Act
             var addImprovement = new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId };
             lease.PimsPropertyImprovements.Add(addImprovement);
-            var updatedLease = service.UpdateLeaseImprovements(1, 2, lease.PimsPropertyImprovements);
+            var improvements = repository.Update(1, lease.PimsPropertyImprovements);
 
             // Assert
-            Assert.Equal(1, updatedLease.PimsPropertyImprovements.Count);
-            updatedLease.PimsPropertyImprovements.Should().Contain(addImprovement);
+            improvements.Should().HaveCount(1);
+            improvements.Should().Contain(addImprovement);
         }
 
         [Fact]
@@ -606,17 +610,17 @@ namespace Pims.Dal.Test.Repositories
             lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1 });
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
             helper.SaveChanges();
 
             // Act
             var ImprovementToUpdate = lease.PimsPropertyImprovements.FirstOrDefault();
             ImprovementToUpdate.Address = "test update";
-            var updatedLease = service.UpdateLeaseImprovements(1, 2, lease.PimsPropertyImprovements);
+            var updatedImprovements = repository.Update(1, lease.PimsPropertyImprovements);
 
             // Assert
-            Assert.Equal(1, updatedLease.PimsPropertyImprovements.Count);
-            updatedLease.PimsPropertyImprovements.Should().Contain(ImprovementToUpdate);
+            updatedImprovements.Should().HaveCount(1);
+            updatedImprovements.Should().Contain(ImprovementToUpdate);
         }
 
         [Fact]
@@ -631,16 +635,16 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
 
             // Act
             var deleteImprovement = lease.PimsPropertyImprovements.FirstOrDefault();
             lease.PimsPropertyImprovements.Remove(deleteImprovement);
             context.ChangeTracker.Clear();
-            var updatedLease = service.UpdateLeaseImprovements(1, 2, lease.PimsPropertyImprovements);
+            var updatedImprovements = repository.Update(1, lease.PimsPropertyImprovements);
 
             // Assert
-            updatedLease.PimsPropertyImprovements.Should().BeEmpty();
+            updatedImprovements.Should().BeEmpty();
         }
         [Fact]
         public void Update_Lease_Improvements_AddRemove()
@@ -652,7 +656,7 @@ namespace Pims.Dal.Test.Repositories
             var lease = EntityHelper.CreateLease(1);
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -661,12 +665,12 @@ namespace Pims.Dal.Test.Repositories
 
             var addPropertyImprovement = new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId };
             lease.PimsPropertyImprovements.Add(addPropertyImprovement);
-            var updatedLease = service.UpdateLeaseImprovements(1, 2, lease.PimsPropertyImprovements);
+            var updatedImprovements = repository.Update(1, lease.PimsPropertyImprovements);
 
             // Assert
-            Assert.Equal(1, updatedLease.PimsPropertyImprovements.Count);
-            updatedLease.PimsPropertyImprovements.Should().NotContain(deleteProperty);
-            updatedLease.PimsPropertyImprovements.Should().Contain(addPropertyImprovement);
+            updatedImprovements.Should().HaveCount(1);
+            updatedImprovements.Should().NotContain(deleteProperty);
+            updatedImprovements.Should().Contain(addPropertyImprovement);
         }
 
         [Fact]
@@ -678,12 +682,12 @@ namespace Pims.Dal.Test.Repositories
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
 
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.UpdateLeaseImprovements(1, 1, new List<Pims.Dal.Entities.PimsPropertyImprovement>()));
+                repository.Update(1, new List<Pims.Dal.Entities.PimsPropertyImprovement>()));
         }
 
         [Fact]
@@ -693,12 +697,12 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
 
             // Act
             // Assert
             Assert.Throws<KeyNotFoundException>(() =>
-                service.UpdateLeaseImprovements(1, 1, new List<Pims.Dal.Entities.PimsPropertyImprovement>()));
+                repository.Update(1, new List<Pims.Dal.Entities.PimsPropertyImprovement>()));
         }
 
         [Fact]
@@ -711,14 +715,14 @@ namespace Pims.Dal.Test.Repositories
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
 
             // Act
             lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
 
             // Assert
             Assert.Throws<DbUpdateConcurrencyException>(() =>
-                service.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases));
+                repository.Update(lease.LeaseId, lease.GetImprovements()));
         }
         #endregion
 

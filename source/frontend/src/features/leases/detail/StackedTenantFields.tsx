@@ -7,7 +7,7 @@ import { ILease } from '@/interfaces/ILease';
 
 import { getAllNames } from '../leaseUtils';
 export interface IStackedTenantFieldsProps {
-  lease?: ILease;
+  tenants?: Api_LeaseTenant[];
 }
 
 /**
@@ -16,8 +16,8 @@ export interface IStackedTenantFieldsProps {
  */
 export const StackedTenantFields: React.FunctionComponent<
   React.PropsWithChildren<IStackedTenantFieldsProps>
-> = ({ lease }) => {
-  const commaSeparatedNames = getAllNames(lease).join(', ');
+> = ({ tenants }) => {
+  const commaSeparatedNames = getAllNames(tenants ?? []).join(', ');
   return (
     <>
       <StyledStackedDivs>

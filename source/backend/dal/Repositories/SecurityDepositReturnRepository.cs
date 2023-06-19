@@ -43,14 +43,14 @@ namespace Pims.Dal.Repositories
 
         public PimsSecurityDepositReturn Add(PimsSecurityDepositReturn depositReturn)
         {
-            this.Context.Add(depositReturn);
-            return depositReturn;
+            var addedReturn = this.Context.Add(depositReturn);
+            return addedReturn.Entity;
         }
 
         public PimsSecurityDepositReturn Update(PimsSecurityDepositReturn depositReturn)
         {
-            this.Context.Update(depositReturn);
-            return depositReturn;
+            var updatedReturn = this.Context.Update(depositReturn);
+            return updatedReturn.Entity;
         }
 
         public void Delete(long id)

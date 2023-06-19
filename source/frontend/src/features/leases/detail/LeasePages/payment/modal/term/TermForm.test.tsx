@@ -9,6 +9,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
+import { defaultFormLeaseTerm } from '../../models';
 import { ITermFormProps, TermForm } from './TermForm';
 
 const history = createMemoryHistory();

@@ -1,5 +1,5 @@
-import { getIn } from 'formik';
-import { useContext } from 'react';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { usePropertyLeaseRepository } from 'hooks/repositories/usePropertyLeaseRepository';
 
 import { FormSection } from '@/components/common/form/styles';
 import { ColumnWithProps, Table } from '@/components/Table';
@@ -56,20 +56,26 @@ const columns: ColumnWithProps<IDeclaration>[] = [
 
 const Surplus: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { lease } = useContext(LeaseStateContext);
-  const properties: IProperty[] = getIn(lease, 'properties') ?? [];
+  const {
+    getPropertyLeases: { execute: getPropertyLeases, response: properties, loading },
+  } = usePropertyLeaseRepository();
+  useEffect(() => {
+    lease?.id && getPropertyLeases(lease.id);
+  }, [lease, getPropertyLeases]);
 
-  let declarations: IDeclaration[] = properties.map<IDeclaration>(x => {
+  let declarations: IDeclaration[] = (properties ?? []).map<IDeclaration>(x => {
     return {
       id: x.id,
-      identifier: x.pid,
-      comments: x.surplusDeclaration?.comment || '',
-      declarationType: x.surplusDeclaration?.type?.description || 'Unknown',
-      date: x.surplusDeclaration?.date || '',
+      identifier: x?.property?.pid?.toString() ?? '',
+      comments: x?.property?.surplusDeclarationComment || '',
+      declarationType: x?.property?.surplusDeclarationType?.description || 'Unknown',
+      date: x?.property?.surplusDeclarationDate || '',
     };
   });
 
   return (
     <FormSection>
+      <LoadingBackdrop show={loading} parentScreen />
       <p>
         Data shown is from the Surplus Declaration workflow on the property screen and is not
         directly editable on this screen.

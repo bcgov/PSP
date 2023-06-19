@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -15,73 +15,69 @@ namespace Pims.Api.Services
         private readonly ISecurityDepositRepository _securityDepositRepository;
         private readonly ISecurityDepositReturnRepository _securityDepositReturnRepository;
         private readonly ILeaseRepository _leaseRepository;
-        private readonly ILeaseService _leaseService;
         private readonly ClaimsPrincipal _user;
+        private readonly ILogger _logger;
 
-        public SecurityDepositService(ISecurityDepositRepository securityDepositRepository, ISecurityDepositReturnRepository securityDepositReturnRepository, ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
+        public SecurityDepositService(ISecurityDepositRepository securityDepositRepository, ISecurityDepositReturnRepository securityDepositReturnRepository, ILeaseRepository leaseRepository, ClaimsPrincipal user, ILogger<SecurityDepositService> logger)
         {
             _securityDepositRepository = securityDepositRepository;
             _securityDepositReturnRepository = securityDepositReturnRepository;
             _leaseRepository = leaseRepository;
-            _leaseService = leaseService;
             _user = user;
+            _logger = logger;
         }
 
-        public PimsLease AddLeaseDeposit(long leaseId, long leaseRowVersion, PimsSecurityDeposit deposit)
+        public IEnumerable<PimsSecurityDeposit> GetLeaseDeposits(long leaseId)
         {
+            _logger.LogInformation("Getting lease deposits for lease id {id}", leaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            return _securityDepositRepository.GetAllByLeaseId(leaseId);
+        }
+
+        public PimsSecurityDeposit AddLeaseDeposit(long leaseId, PimsSecurityDeposit deposit)
+        {
+            _logger.LogInformation("Adding lease deposit for lease id {id}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
-            ValidateServiceCall(leaseId, leaseRowVersion);
-            _securityDepositRepository.Add(deposit);
+            var securityDeposit = _securityDepositRepository.Add(deposit);
             _securityDepositRepository.CommitTransaction();
 
-            return _leaseRepository.Get(leaseId);
+            return securityDeposit;
         }
 
-        public PimsLease UpdateLeaseDeposit(long leaseId, long leaseRowVersion, PimsSecurityDeposit deposit)
+        public PimsSecurityDeposit UpdateLeaseDeposit(long leaseId, PimsSecurityDeposit deposit)
         {
+            _logger.LogInformation("Updating lease deposit for lease id {leaseid} deposit id {depositId}", leaseId, deposit.SecurityDepositId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            ValidateServiceCall(leaseId, leaseRowVersion);
             var currentHolder = _securityDepositRepository.GetById(deposit.SecurityDepositId).PimsSecurityDepositHolder;
             if (currentHolder != null)
             {
                 deposit.PimsSecurityDepositHolder.SecurityDepositHolderId = currentHolder.SecurityDepositHolderId;
                 deposit.PimsSecurityDepositHolder.ConcurrencyControlNumber = currentHolder.ConcurrencyControlNumber;
             }
-            _securityDepositRepository.Update(deposit);
+            var securityDeposit = _securityDepositRepository.Update(deposit);
             _securityDepositRepository.CommitTransaction();
-            return _leaseRepository.Get(leaseId);
+            return securityDeposit;
         }
 
-        public PimsLease UpdateLeaseDepositNote(long leaseId, long leaseRowVersion, string note)
+        public void UpdateLeaseDepositNote(long leaseId, string note)
         {
+            _logger.LogInformation("Updating lease deposit note for lease id {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            ValidateServiceCall(leaseId, leaseRowVersion);
             var lease = _leaseRepository.Get(leaseId);
             lease.ReturnNotes = note;
             _leaseRepository.Update(lease);
             _leaseRepository.CommitTransaction();
-
-            return _leaseRepository.Get(leaseId);
         }
 
-        public PimsLease DeleteLeaseDeposit(long leaseId, long leaseRowVersion, PimsSecurityDeposit deposit)
+        public void DeleteLeaseDeposit(PimsSecurityDeposit deposit)
         {
+            _logger.LogInformation("Deleting lease deposit for lease id {leaseId}, deposit id {depositId}", deposit.LeaseId, deposit.SecurityDepositId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            ValidateServiceCall(leaseId, leaseRowVersion);
             ValidateDeletionRules(deposit);
 
             _securityDepositRepository.Delete(deposit.SecurityDepositId);
             _securityDepositRepository.CommitTransaction();
-
-            return _leaseRepository.Get(leaseId);
-        }
-
-        private void ValidateServiceCall(long leaseId, long leaseRowVersion)
-        {
-            if (!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
-            {
-                throw new DbUpdateConcurrencyException("Lease version mismatch.");
-            }
         }
 
         private void ValidateDeletionRules(PimsSecurityDeposit deposit)

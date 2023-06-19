@@ -6,7 +6,7 @@ import { IInsurance } from '@/interfaces';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 interface PolicyProps {
-  insurance: IInsurance;
+  insurance: Api_Insurance;
 }
 
 interface PolicyView {
@@ -24,7 +24,7 @@ const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({
     limit: insurance.coverageLimit ? formatMoney(insurance.coverageLimit) : '',
     expiryDate: prettyFormatDate(insurance.expiryDate),
     coverageDescription: insurance.coverageDescription || '',
-    otherInsuranceType: insurance.otherInsuranceType,
+    otherInsuranceType: insurance.otherInsuranceType ?? undefined,
     insuranceType: insurance.insuranceType.description,
   };
   return (

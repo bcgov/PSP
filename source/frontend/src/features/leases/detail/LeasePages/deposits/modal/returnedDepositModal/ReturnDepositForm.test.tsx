@@ -12,20 +12,6 @@ import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import ReturnDepositForm, { IReturnDepositFormProps } from './ReturnDepositForm';
 
-const mockDeposit: Api_SecurityDeposit = {
-  id: 7,
-  description: 'Test deposit 1',
-  amountPaid: 1234.0,
-  depositDate: '2022-02-09',
-  depositType: {
-    id: 'PET',
-    description: 'Pet deposit',
-    isDisabled: false,
-  },
-  depositReturns: [],
-  rowVersion: 1,
-};
-
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const onSave = jest.fn();
@@ -47,7 +33,7 @@ describe('ReturnDepositForm component', () => {
         <ReturnDepositForm
           onSave={onSave}
           formikRef={{ current: { submitForm } } as any}
-          initialValues={FormLeaseDepositReturn.createEmpty(mockDeposit)}
+          initialValues={FormLeaseDepositReturn.createEmpty(getMockDeposits()[0])}
         />
       </Formik>,
       {
@@ -72,7 +58,7 @@ describe('ReturnDepositForm component', () => {
   });
   it('renders with data as expected', async () => {
     const { component } = await setup({
-      initialValues: FormLeaseDepositReturn.createEmpty(mockDeposit),
+      initialValues: FormLeaseDepositReturn.createEmpty(getMockDeposits()[0]),
     });
 
     expect(component.asFragment()).toMatchSnapshot();

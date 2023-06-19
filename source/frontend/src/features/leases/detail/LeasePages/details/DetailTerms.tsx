@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { getIn, useFormikContext } from 'formik';
 import moment from 'moment';
 import * as React from 'react';
@@ -23,10 +24,10 @@ export const DetailTerms: React.FunctionComponent<React.PropsWithChildren<IDetai
   disabled,
   nameSpace,
 }) => {
-  const formikProps = useFormikContext<IFormLease>();
+  const formikProps = useFormikContext<LeaseFormModel>();
   const { values } = formikProps;
   const terms = getIn(values, withNameSpace(nameSpace, 'terms'));
-  const currentTerm = terms.find((term: ILeaseTerm) =>
+  const currentTerm = terms.find((term: Api_LeaseTerm) =>
     moment().isSameOrBefore(moment(term.expiryDate), 'day'),
   );
 
@@ -47,7 +48,7 @@ export const DetailTerms: React.FunctionComponent<React.PropsWithChildren<IDetai
         />
         <InlineInput disabled={disabled} label="Total renewal terms:" field="renewalCount" />
       </Styled.TableHeadFields>
-      <Styled.TermsTable<ILeaseTerm>
+      <Styled.TermsTable<Api_LeaseTerm>
         name="leaseTermsTable"
         data={terms || []}
         columns={leaseTermColumns}

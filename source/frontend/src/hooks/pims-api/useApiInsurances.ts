@@ -1,22 +1,10 @@
-import React from 'react';
+import { Api_Insurance } from 'models/api/Insurance';
 
 import { IInsurance } from '@/interfaces';
 import { IBatchUpdateReply, IBatchUpdateRequest } from '@/interfaces/batchUpdate';
 
 import useAxiosApi from './useApi';
-
-/**
- * PIMS API wrapper to centralize all AJAX requests to the insurance endpoints.
- * @returns Object containing functions to make requests to the PIMS API.
- */
-export const useApiInsurances = () => {
-  const api = useAxiosApi();
-
-  return React.useMemo(
-    () => ({
-      postInsuranceBatch: (leaseId: number, payload: IBatchUpdateRequest<IInsurance>) =>
-        api.post<IBatchUpdateReply<IInsurance>>(`/leases/${leaseId}/insurances?batch`, payload),
-    }),
-    [api],
   );
-};
+
+export const getLeaseInsurances = (leaseId: number) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<[]>(`/leases/${leaseId}/insurances`);

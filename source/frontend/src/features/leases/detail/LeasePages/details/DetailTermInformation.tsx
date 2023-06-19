@@ -22,12 +22,14 @@ export interface IDetailTermInformationProps {
 export const DetailTermInformation: React.FunctionComponent<
   React.PropsWithChildren<IDetailTermInformationProps>
 > = ({ nameSpace }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<Api_Lease>();
   const startDate = getIn(values, withNameSpace(nameSpace, 'startDate'));
   const expiryDate = getIn(values, withNameSpace(nameSpace, 'expiryDate'));
   const terms = getIn(values, withNameSpace(nameSpace, 'terms'));
-  const currentTerm = terms.find((term: ILeaseTerm) =>
-    moment().isSameOrBefore(moment(term.expiryDate), 'day'),
+  const currentTerm = terms.find(
+    (term: Api_LeaseTerm) =>
+      moment().isSameOrBefore(moment(term.expiryDate), 'day') ||
+      (moment().isSameOrAfter(moment(term.startDate), 'day') && term.expiryDate === null),
   );
   const projectName =
     values?.project !== undefined

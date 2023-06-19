@@ -11,7 +11,7 @@ export interface ILeaseTabProps {
   leasePage?: ILeasePage;
   onEdit?: () => void;
   isEditing: boolean;
-  formikRef: React.RefObject<FormikProps<LeaseFormModel | IFormLease>>;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
 export const LeaseTab: React.FC<ILeaseTabProps> = ({ leasePage, onEdit, isEditing, formikRef }) => {

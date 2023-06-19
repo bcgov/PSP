@@ -51,7 +51,7 @@ const initialState: LeaseContainerState = {
 export interface LeasePageProps {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
-  formikRef: React.RefObject<FormikProps<LeaseFormModel | IFormLease>>;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
 export interface ILeasePage {
@@ -131,10 +131,11 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     initialState,
   );
 
-  const formikRef = useRef<FormikProps<LeaseFormModel | IFormLease>>(null);
+  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
-  const { lease, setLease, refresh } = useLeaseDetail(leaseId);
+  const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
+
   const { setFullWidth, setStaleFile, staleFile } = useContext(SideBarContext);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
@@ -157,10 +158,6 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       refreshLease();
     }
   }, [staleFile, refresh, setStaleFile]);
-
-  if (lease === undefined) {
-    return <LoadingBackdrop show={true} parentScreen={true} />;
-  }
 
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
@@ -244,6 +241,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         show
       />
       <StyledFormWrapper>
+        <LoadingBackdrop show={loading} />
         <ViewSelector
           formikRef={formikRef}
           lease={lease}

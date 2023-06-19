@@ -18,7 +18,7 @@ export interface IDetailConsultationProps {
 export const DetailConsultation: React.FunctionComponent<
   React.PropsWithChildren<IDetailConsultationProps>
 > = ({ nameSpace }) => {
-  const { values, setFieldValue } = useFormikContext<IFormLease>();
+  const { values, setFieldValue } = useFormikContext<Api_Lease>();
 
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
@@ -42,7 +42,7 @@ export const DetailConsultation: React.FunctionComponent<
 
       // If there is a consultation with the type, set the status to the existing one
       let existingConsultation = values.consultations.find(
-        consultation => consultation.consultationType?.id === consultationType.id,
+        consultation => consultation.consultationType === consultationType.id,
       );
       if (existingConsultation !== undefined) {
         newConsultation.id = existingConsultation.id;
@@ -67,7 +67,7 @@ export const DetailConsultation: React.FunctionComponent<
     <Section header="Consultation" initiallyExpanded isCollapsable>
       {values.consultations.map((consultation, index) => (
         <SectionField
-          key={`consultations-${consultation.consultationType?.id}`}
+          key={`consultations-${consultation.consultationType}`}
           label={generateLabel(consultation)}
           labelWidth="4"
           contentWidth="8"

@@ -1,3 +1,4 @@
+import { LeaseFormModel } from 'features/leases/models';
 import { getIn, useFormikContext } from 'formik';
 import { Form as BsForm } from 'react-bootstrap';
 
@@ -16,7 +17,7 @@ export interface ISummaryProps {
 export const Summary: React.FunctionComponent<React.PropsWithChildren<ISummaryProps>> = ({
   disabled,
 }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<LeaseFormModel>();
   const isResidential = getIn(values, 'isResidential');
   const isCommercial = getIn(values, 'isCommercialBuilding');
   const isOther = getIn(values, 'isOtherImprovement');

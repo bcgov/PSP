@@ -29,17 +29,17 @@ describe('LeaseHeader component', () => {
   });
 
   it('renders as expected when no data is provided', () => {
-    const testLease = getMockLeaseResponse();
+    const testLease = getMockApiLease();
     const { asFragment } = setup({ lease: testLease });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders as expected when a lease is provided', async () => {
-    const testLease = getMockLeaseResponse();
-    const { getByText } = setup({ lease: testLease });
+    const testLease = getMockApiLease();
+    const { getByText, getAllByText } = setup({ lease: testLease });
 
     expect(getByText(testLease.lFileNo!)).toBeVisible();
-    expect(getByText(prettyFormatDate(testLease.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testLease.appLastUpdateTimestamp))).toBeVisible();
+    expect(getAllByText(prettyFormatDate(testLease.appCreateTimestamp))[0]).toBeVisible();
+    expect(getAllByText(prettyFormatDate(testLease.appLastUpdateTimestamp))[0]).toBeVisible();
   });
 });

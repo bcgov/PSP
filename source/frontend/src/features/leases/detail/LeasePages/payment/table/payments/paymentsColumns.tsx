@@ -17,11 +17,13 @@ import { stringToFragment } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
+import { FormLeasePayment } from '../../models';
+
 const actualsActions = (
-  onEdit: (values: IFormLeasePayment) => void,
-  onDelete: (values: IFormLeasePayment) => void,
+  onEdit: (values: FormLeasePayment) => void,
+  onDelete: (values: FormLeasePayment) => void,
 ) => {
-  return function ({ row: { original, index } }: CellProps<IFormLeasePayment, unknown>) {
+  return function ({ row: { original, index } }: CellProps<FormLeasePayment, unknown>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>
@@ -45,9 +47,9 @@ const actualsActions = (
 };
 
 export interface IPaymentColumnProps {
-  onEdit: (values: IFormLeasePayment) => void;
-  onSave: (values: IFormLeasePayment) => void;
-  onDelete: (values: IFormLeasePayment) => void;
+  onEdit: (values: FormLeasePayment) => void;
+  onSave: (values: FormLeasePayment) => void;
+  onDelete: (values: FormLeasePayment) => void;
   isReceivable?: boolean;
   isGstEligible?: boolean;
   nameSpace?: string;
@@ -60,7 +62,7 @@ export const getActualsColumns = ({
   isReceivable,
   isGstEligible,
   nameSpace,
-}: IPaymentColumnProps): ColumnWithProps<IFormLeasePayment>[] => {
+}: IPaymentColumnProps): ColumnWithProps<FormLeasePayment>[] => {
   return [
     {
       Header: isReceivable ? 'Received date' : 'Sent date',
@@ -68,7 +70,7 @@ export const getActualsColumns = ({
       maxWidth: 70,
       accessor: 'receivedDate',
       Cell: renderDate,
-      Footer: ({ properties }: { properties: ILeasePayment[] }) => (
+      Footer: ({ properties }: { properties: Api_LeasePayment[] }) => (
         <span>
           <MdReceipt /> Payment Summary
         </span>
@@ -80,7 +82,7 @@ export const getActualsColumns = ({
       align: 'left',
       maxWidth: 60,
       Cell: renderTypeCode,
-      Footer: ({ properties }: { properties: ILeasePayment[] }) => (
+      Footer: ({ properties }: { properties: Api_LeasePayment[] }) => (
         <>({properties?.length}) payments</>
       ),
     },
@@ -97,7 +99,7 @@ export const getActualsColumns = ({
       accessor: 'amountPreTax',
       align: 'right',
       Cell: renderMoney,
-      Footer: ({ properties }: { properties: ILeasePayment[] }) =>
+      Footer: ({ properties }: { properties: Api_LeasePayment[] }) =>
         formatMoney(properties.reduce((total, current) => total + current.amountPreTax, 0)),
     },
     {
@@ -113,10 +115,10 @@ export const getActualsColumns = ({
       align: 'right',
       accessor: 'amountGst',
       maxWidth: 35,
-      Cell: ({ value, row }: CellProps<IFormLeasePayment, NumberFieldValue>) => {
+      Cell: ({ value, row }: CellProps<FormLeasePayment, NumberFieldValue>) => {
         return stringToFragment(isGstEligible ? formatMoney(value) : '-');
       },
-      Footer: ({ properties }: { properties: ILeasePayment[] }) =>
+      Footer: ({ properties }: { properties: Api_LeasePayment[] }) =>
         isGstEligible
           ? formatMoney(properties.reduce((total, current) => total + (current?.amountGst ?? 0), 0))
           : '-',
@@ -134,7 +136,7 @@ export const getActualsColumns = ({
       accessor: 'amountTotal',
       align: 'right',
       Cell: renderMoney,
-      Footer: ({ properties }: { properties: ILeasePayment[] }) =>
+      Footer: ({ properties }: { properties: Api_LeasePayment[] }) =>
         formatMoney(properties.reduce((total, current) => total + (current?.amountTotal ?? 0), 0)),
     },
     {
@@ -157,12 +159,12 @@ export const getActualsColumns = ({
       maxWidth: 40,
       accessor: 'note',
       align: 'center',
-      Cell: ({ value, row }: CellProps<IFormLeasePayment, string | undefined>) => {
+      Cell: ({ value, row }: CellProps<FormLeasePayment, string | undefined>) => {
         return (
           <NotesModal
             title="Payment Notes"
             notesLabel="Notes:"
-            onSave={(values: IFormLeasePayment) => {
+            onSave={(values: FormLeasePayment) => {
               const valuesToSave = getIn(values, withNameSpace(nameSpace, `${row.index}`));
               onSave(valuesToSave);
             }}

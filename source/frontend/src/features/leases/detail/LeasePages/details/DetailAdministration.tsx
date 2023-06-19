@@ -20,7 +20,7 @@ export interface IDetailAdministrationProps {
 export const DetailAdministration: React.FunctionComponent<
   React.PropsWithChildren<IDetailAdministrationProps>
 > = ({ nameSpace, disabled }) => {
-  const { values } = useFormikContext<IFormLease>();
+  const { values } = useFormikContext<Api_Lease>();
   const responsibilityDate = getIn(values, withNameSpace(nameSpace, 'responsibilityEffectiveDate'));
   return (
     <>

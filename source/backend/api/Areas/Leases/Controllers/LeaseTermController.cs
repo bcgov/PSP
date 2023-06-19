@@ -1,9 +1,14 @@
+using System;
 using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -24,6 +29,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #region Variables
         private readonly ILeaseTermService _leaseTermService;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
         #endregion
 
         #region Constructors
@@ -33,11 +39,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <param name="leaseTermService"></param>
         /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         ///
-        public LeaseTermController(ILeaseTermService leaseTermService, IMapper mapper)
+        public LeaseTermController(ILeaseTermService leaseTermService, IMapper mapper, ILogger<PropertyImprovementController> logger)
         {
             _leaseTermService = leaseTermService;
             _mapper = mapper;
+            _logger = logger;
         }
         #endregion
 
@@ -47,17 +55,49 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Update the specified term on the passed lease.
         /// </summary>
         /// <returns></returns>
+        [HttpGet("{leaseId:long}/term")]
+        [HasPermission(Permissions.LeaseView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<LeaseTermModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetTerms(long leaseId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseTermController),
+                nameof(GetTerms),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var terms = _leaseTermService.GetTerms(leaseId);
+
+            return new JsonResult(_mapper.Map<IEnumerable<LeaseTermModel>>(terms));
+        }
+
+        /// <summary>
+        /// Update the specified term on the passed lease.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost("{leaseId:long}/term")]
         [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(LeaseTermModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddTerm(long leaseId, [FromBody] Models.Lease.TermModel termModel)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult AddTerm(long leaseId, [FromBody] LeaseTermModel termModel)
         {
-            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _leaseTermService.AddTerm(leaseId, termModel.LeaseRowVersion, termEntity);
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseTermController),
+                nameof(AddTerm),
+                User.GetUsername(),
+                DateTime.Now);
 
-            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
+            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
+            var updatedLease = _leaseTermService.AddTerm(leaseId, termEntity);
+
+            return new JsonResult(_mapper.Map<LeaseTermModel>(updatedLease));
         }
 
         /// <summary>
@@ -67,14 +107,22 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPut("{leaseId:long}/term/{termId:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(LeaseTermModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateTerm(long leaseId, long termId, [FromBody] Models.Lease.TermModel termModel)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateTerm(long leaseId, long termId, [FromBody] LeaseTermModel termModel)
         {
-            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _leaseTermService.UpdateTerm(leaseId, termId, termModel.LeaseRowVersion, termEntity);
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseTermController),
+                nameof(UpdateTerm),
+                User.GetUsername(),
+                DateTime.Now);
 
-            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
+            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
+            var updatedLease = _leaseTermService.UpdateTerm(leaseId, termId, termEntity);
+
+            return new JsonResult(_mapper.Map<LeaseTermModel>(updatedLease));
         }
 
         /// <summary>
@@ -84,14 +132,22 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpDelete("{leaseId:long}/term")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(LeaseTermModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult DeleteTerm(long leaseId, Models.Lease.TermModel termModel)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult DeleteTerm(long leaseId, LeaseTermModel termModel)
         {
-            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _leaseTermService.DeleteTerm(leaseId, termModel.LeaseRowVersion, termEntity);
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseTermController),
+                nameof(DeleteTerm),
+                User.GetUsername(),
+                DateTime.Now);
 
-            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
+            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
+            var updatedLease = _leaseTermService.DeleteTerm(leaseId, termEntity);
+
+            return new JsonResult(_mapper.Map<LeaseTermModel>(updatedLease));
         }
         #endregion
     }

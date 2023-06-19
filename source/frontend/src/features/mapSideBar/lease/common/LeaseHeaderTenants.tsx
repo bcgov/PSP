@@ -5,19 +5,19 @@ import { getAllNames } from '@/features/leases/leaseUtils';
 import { ILease } from '@/interfaces';
 
 export interface ILeaseHeaderTenantsProps {
-  lease?: ILease;
+  tenants?: Api_LeaseTenant[];
   delimiter?: React.ReactElement | string;
   maxCollapsedLength?: number;
 }
 
 export const LeaseHeaderTenants: React.FC<ILeaseHeaderTenantsProps> = ({
-  lease,
+  tenants,
   delimiter = '; ',
   maxCollapsedLength = 2,
 }) => {
   return (
     <ExpandableTextList<string>
-      items={getAllNames(lease) ?? []}
+      items={getAllNames(tenants ?? [])}
       keyFunction={(p: string, index: number) => `lease-tenant-${index}`}
       renderFunction={(p: string) => <>{p}</>}
       delimiter={delimiter}
