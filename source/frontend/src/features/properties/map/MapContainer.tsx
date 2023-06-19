@@ -5,20 +5,19 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
+import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
 import { MapStateContext } from '@/components/maps/providers/MapStateContext';
 import { PropertyContextProvider } from '@/components/maps/providers/PropertyContext';
 import { MAP_MAX_ZOOM } from '@/constants/strings';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
+import MapSideBar from '@/features/mapSideBar/MapSideBar';
+import ActivityRouter from '@/features/mapSideBar/router/ActivityRouter';
+import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
+import PopupRouter from '@/features/mapSideBar/router/PopupRouter';
 import { IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
 import { pidParser } from '@/utils';
-
-import MapView from '../../../components/maps/MapView';
-import { SideBarContextProvider } from '../../mapSideBar/context/sidebarContext';
-import MapSideBar from '../../mapSideBar/MapSideBar';
-import ActivityRouter from '../../mapSideBar/router/ActivityRouter';
-import CompensationRequisitionRouter from '../../mapSideBar/router/CompensationRequisitionRouter';
-import PopupRouter from '../../mapSideBar/router/PopupRouter';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
 const defaultLatLng = {

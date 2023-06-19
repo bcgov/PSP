@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import { CountryCodes } from '@/constants/index';
 import { AddressField } from '@/features/contacts/interfaces';
 import { IEditableOrganizationForm, IEditablePersonForm } from '@/interfaces/editable-contact';
+import { IContactAddress } from '@/interfaces/IContact';
 
 import {
   hasAddress,
@@ -13,7 +14,6 @@ import {
   PersonValidationSchema,
 } from '../create/validation';
 import { sortAddresses } from '../detail/utils';
-import { IContactAddress } from './../../../../interfaces/IContact';
 
 export const onValidateOrganization = (
   values: IEditableOrganizationForm,
