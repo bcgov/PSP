@@ -1042,60 +1042,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_FKExeption_Removed_InterestHolder()
-        {
-            // Arrange
-            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
-
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
-                new PimsInterestHolder() {
-                    InterestHolderId = 100,
-                },
-            };
-
-            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
-
-            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsCompensationRequisition>() {
-                    new PimsCompensationRequisition() {
-                        CompensationRequisitionId = 1,
-                        AcquisitionFileId = acqFile.Internal_Id,
-                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
-                        {
-                            new PimsAcquisitionPayee()
-                            {
-                                Internal_Id = 1,
-                                CompensationRequisitionId = 1,
-                                AcquisitionOwnerId = null,
-                                InterestHolderId = 100,
-                                OwnerRepresentativeId = null,
-                                OwnerSolicitorId = null,
-                                AcquisitionFilePersonId = null
-                            },
-                        },
-                    },
-                });
-
-            var lookupRepository = _helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
-            var userRepository = _helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
-
-            // Act
-            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
-            Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
-
-            // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
-        }
-
-        [Fact]
         public void Update_FKExeption_Removed_OwnerRepresentative()
         {
             // Arrange
@@ -1695,17 +1641,92 @@ namespace Pims.Api.Test.Services
             var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
 
+            acquisitionFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+                new PimsInterestHolder() {
+                    InterestHolderId = 100,
+                },
+            };
+
             acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
             repository.Setup(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>())).Returns(new List<PimsInterestHolder>() { new PimsInterestHolder() });
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsCompensationRequisition>() {
+                    new PimsCompensationRequisition() {
+                        CompensationRequisitionId = 1,
+                        AcquisitionFileId = acquisitionFile.Internal_Id,
+                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
+                        {
+                            new PimsAcquisitionPayee()
+                            {
+                                Internal_Id = 1,
+                                CompensationRequisitionId = 1,
+                                AcquisitionOwnerId = null,
+                                InterestHolderId = null,
+                                OwnerRepresentativeId = null,
+                                OwnerSolicitorId = null,
+                                AcquisitionFilePersonId = null
+                            },
+                        },
+                    },
+                });
+
             // Act
             var result = service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
 
             // Assert
             repository.Verify(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateInterestHolders_FKExeption_Removed_InterestHolder()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+                new PimsInterestHolder() {
+                    InterestHolderId = 100,
+                },
+            };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsCompensationRequisition>() {
+                    new PimsCompensationRequisition() {
+                        CompensationRequisitionId = 1,
+                        AcquisitionFileId = acqFile.Internal_Id,
+                        PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
+                        {
+                            new PimsAcquisitionPayee()
+                            {
+                                Internal_Id = 1,
+                                CompensationRequisitionId = 1,
+                                AcquisitionOwnerId = null,
+                                InterestHolderId = 100,
+                                OwnerRepresentativeId = null,
+                                OwnerSolicitorId = null,
+                                AcquisitionFilePersonId = null
+                            },
+                        },
+                    },
+                });
+
+            // Act
+            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
+            Action act = () => service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
+
+            // Assert
+            act.Should().Throw<ForeignKeyDependencyException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
         #endregion
 

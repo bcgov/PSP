@@ -646,14 +646,6 @@ namespace Pims.Api.Services
                     throw new ForeignKeyDependencyException("Acquisition File Owner Solicitor can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
-                // Check for Interest Holder
-                if (payee.InterestHolderId is not null
-                    && !acquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId))
-                    && currentAquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId)))
-                {
-                    throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
-                }
-
                 // Check for Owner Rep
                 if (payee.OwnerRepresentativeId is not null
                     && !acquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId))
