@@ -7,7 +7,7 @@ import { useContext, useState } from 'react';
 import GenericModal from '@/components/common/GenericModal';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { apiLeaseToFormLease } from '@/features/leases/leaseUtils';
-import { LeasePageProps } from '@/features/properties/map/lease/LeaseContainer';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import {
   defaultLease,
   formLeasePaymentToApiPayment,

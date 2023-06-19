@@ -5,7 +5,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ActivityTrayPage, CloseButton, TrayHeader } from '@/components/common/styles';
 import { Api_FormDocumentFile } from '@/models/api/FormDocument';
 
-import { IFormContent } from '../../shared/content/models';
+import { IFormContent } from '../../../../mapSideBar/shared/content/models';
 
 export interface IFormViewProps {
   loading: boolean;

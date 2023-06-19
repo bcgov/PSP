@@ -1,8 +1,8 @@
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { useEffect, useState } from 'react';
 
+import { AddressForm, PropertyForm } from '@/features/mapSideBar/shared/models';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
-import { AddressForm, PropertyForm } from '@/features/properties/map/shared/models';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 export const useInitialMapSelectorProperties = (

@@ -7,7 +7,7 @@ import ProtectedComponent from '@/components/common/ProtectedComponent';
 import { Section } from '@/components/common/Section/Section';
 import { Claims } from '@/constants/claims';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { LeasePageProps } from '@/features/properties/map/lease/LeaseContainer';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { defaultFormLease, IFormLease } from '@/interfaces';
 
 import { StyledDetails } from '../details/LeaseDetailsForm';

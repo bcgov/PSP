@@ -6,7 +6,7 @@ import { CancelConfirmationModal } from '@/components/common/CancelConfirmationM
 import { INSURANCE_TYPES } from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { useLeaseDetail } from '@/features/leases';
-import { LeasePageProps } from '@/features/properties/map/lease/LeaseContainer';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IInsurance } from '@/interfaces';

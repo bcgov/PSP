@@ -1,12 +1,11 @@
-import { waitForElementToBeRemoved } from '@testing-library/react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { act } from 'react-dom/test-utils';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { FileTypes } from '@/constants/fileTypes';
-import { SideBarContextProvider } from '@/features/properties/map/context/sidebarContext';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockActivityResponse } from '@/mocks/activities.mock';
 import { mockLookups } from '@/mocks/index.mock';

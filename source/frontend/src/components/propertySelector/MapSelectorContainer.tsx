@@ -9,7 +9,7 @@ import {
   MapStateContext,
 } from '@/components/maps/providers/MapStateContext';
 import { IMapProperty } from '@/components/propertySelector/models';
-import { PropertyForm } from '@/features/properties/map/shared/models';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
 
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
