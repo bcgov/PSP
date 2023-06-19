@@ -42,13 +42,18 @@ export function useAxiosErrorHandlerWithConfirmation(
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<IApiError>;
         if (axiosError?.response?.status === 409) {
-          // The API sent a 409 error - indicating user confirmation is needed
+          // The API sent a 409 error - indicating user confirmation is needed OR not
           const userOverrideCode = Object.keys(UserOverrideCode).includes(
             axiosError?.response?.data?.errorCode,
           )
             ? (axiosError?.response?.data?.errorCode as UserOverrideCode)
             : null;
-          needsUserAction(userOverrideCode, axiosError?.response?.data?.error ?? null);
+
+          if (userOverrideCode) {
+            needsUserAction(userOverrideCode, axiosError?.response?.data?.error ?? null);
+          } else {
+            toast.error(axiosError?.response.data.error);
+          }
         } else if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
         } else {

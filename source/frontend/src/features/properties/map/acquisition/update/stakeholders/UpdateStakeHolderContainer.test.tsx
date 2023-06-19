@@ -3,9 +3,9 @@ import { createMemoryHistory } from 'history';
 import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
 import { getMockApiInterestHolders } from 'mocks/interestHolders.mock';
 import { mockLookups } from 'mocks/lookups.mock';
-import { forwardRef } from 'react';
+import { createRef, forwardRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, createAxiosError, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { StakeHolderForm } from './models';
 import UpdateStakeHolderContainer, {
@@ -41,6 +41,8 @@ jest.mock('hooks/repositories/useInterestHolderRepository', () => ({
   },
 }));
 
+const mockUpdateAcquisitionFileHolders = jest.fn();
+
 describe('InterestHolder component', () => {
   // render component under test
 
@@ -55,10 +57,12 @@ describe('InterestHolder component', () => {
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<IUpdateStakeHolderContainerProps> },
   ) => {
+    const formikRef = createRef<FormikProps<StakeHolderForm>>();
+
     const utils = render(
       <UpdateStakeHolderContainer
         {...renderOptions.props}
-        formikRef={{} as any}
+        formikRef={formikRef}
         View={View}
         onSuccess={onSuccess}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
@@ -72,6 +76,7 @@ describe('InterestHolder component', () => {
 
     return {
       ...utils,
+      formikRef,
     };
   };
 
@@ -86,15 +91,16 @@ describe('InterestHolder component', () => {
 
   it('calls onSuccess when onSubmit method is called', async () => {
     setup({});
-    viewProps.onSubmit(StakeHolderForm.fromApi(getMockApiInterestHolders()));
+    const formikHelpers = { setSubmitting: jest.fn() };
+    viewProps.onSubmit(StakeHolderForm.fromApi(getMockApiInterestHolders()), formikHelpers as any);
 
     expect(mockUpdateApi.execute).toHaveBeenCalled();
     await waitFor(async () => expect(onSuccess).toHaveBeenCalled());
   });
 
-  it('returns an empty takes array if no stakeholders are returned from the api', () => {
-    setup({});
-    viewProps.onSubmit(StakeHolderForm.fromApi([]));
+  it('returns an empty takes array if no stakeholders are returned from the api', async () => {
+    const { formikRef } = setup({});
+    await act(async () => formikRef.current?.submitForm());
 
     expect(viewProps.interestHolders.interestHolders).toHaveLength(0);
     expect(viewProps.interestHolders.nonInterestPayees).toHaveLength(0);
