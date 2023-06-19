@@ -5,7 +5,7 @@ import { getMockApiInterestHolders } from 'mocks/interestHolders.mock';
 import { mockLookups } from 'mocks/lookups.mock';
 import { createRef, forwardRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, createAxiosError, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { StakeHolderForm } from './models';
 import UpdateStakeHolderContainer, {
@@ -40,8 +40,6 @@ jest.mock('hooks/repositories/useInterestHolderRepository', () => ({
     };
   },
 }));
-
-const mockUpdateAcquisitionFileHolders = jest.fn();
 
 describe('InterestHolder component', () => {
   // render component under test
