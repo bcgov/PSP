@@ -38,7 +38,9 @@ export const InventoryTabs: React.FunctionComponent<
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {
         const tab = Object.values(InventoryTabNames).find(value => value === eventKey);
-        tab && setActiveTab(tab);
+        if (tab && tab !== activeTab) {
+          setActiveTab(tab);
+        }
       }}
     >
       {tabViews.map((view: TabInventoryView, index: number) => (
