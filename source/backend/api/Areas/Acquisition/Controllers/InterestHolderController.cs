@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -68,6 +69,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(InterestHolderModel), 200)]
+        [ProducesResponseType(typeof(ErrorResponseModel), 409)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateInterestHolderFile([FromRoute] long id, [FromBody] List<InterestHolderModel> interestHolders)
