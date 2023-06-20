@@ -1,6 +1,6 @@
-import { ENVIRONMENT } from 'constants/environment';
-import CustomAxios from 'customAxios';
-import { Api_LeaseTenant } from 'models/api/LeaseTenant';
+import { ENVIRONMENT } from '@/constants';
+import CustomAxios from '@/customAxios';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 
 export const updateLeaseTenants = (leaseId: number, improvements: Api_LeaseTenant[]) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_LeaseTenant[]>(

@@ -1,18 +1,18 @@
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { LeaseFormModel } from 'features/leases/models';
 import { FormikProps } from 'formik';
-import { Api_LeaseTenant } from 'models/api/LeaseTenant';
-import * as React from 'react';
+import { useContext, useEffect } from 'react';
 
 import ProtectedComponent from '@/components/common/ProtectedComponent';
-import { Claims } from '@/constants/claims';
+import { Claims } from '@/constants';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
-import { IFormLease } from '@/interfaces';
+import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 
-import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';
+import AddLeaseTenantContainer from './AddLeaseTenantContainer';
 import AddLeaseTenantForm from './AddLeaseTenantForm';
 import { FormTenant } from './models';
-import { ViewTenantForm } from './ViewTenantForm';
+import ViewTenantForm from './ViewTenantForm';
 
 const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
   isEditing,

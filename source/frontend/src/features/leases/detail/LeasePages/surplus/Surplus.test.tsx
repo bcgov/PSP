@@ -1,11 +1,13 @@
 import { createMemoryHistory } from 'history';
+import noop from 'lodash/noop';
 
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
-import { formLeaseToApiLease } from '@/features/leases/leaseUtils';
-import { defaultFormLease, IFormLease, IProperty } from '@/interfaces';
-import { mockOrganization, mockPerson, mockProperties } from '@/mocks/filterData.mock';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
+import { getMockApiProperty } from '@/mocks/properties.mock';
+import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
+import { Api_Property } from '@/models/api/Property';
 import { prettyFormatDate } from '@/utils';
-import { render, RenderOptions, RenderResult } from '@/utils/test-utils';
+import { render, RenderOptions, RenderResult, waitFor } from '@/utils/test-utils';
 
 import Surplus from './Surplus';
 

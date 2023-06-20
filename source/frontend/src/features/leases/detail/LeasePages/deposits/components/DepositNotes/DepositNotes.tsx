@@ -8,7 +8,6 @@ import { Section } from '@/components/common/Section/Section';
 import { Claims } from '@/constants/index';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ILease } from '@/interfaces';
 
 export interface IDepositNotesProps {
   disabled?: boolean;

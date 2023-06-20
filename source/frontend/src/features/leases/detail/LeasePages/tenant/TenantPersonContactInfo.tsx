@@ -1,12 +1,10 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
-import * as React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
-import { IFormLease } from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { FormTenant } from './models';

@@ -3,7 +3,6 @@ import * as React from 'react';
 import { useRef } from 'react';
 
 import * as CommonStyled from '@/components/common/styles';
-import { IFormLeasePayment } from '@/interfaces';
 
 import { FormLeasePayment } from '../../models';
 import { PaymentForm } from './PaymentForm';

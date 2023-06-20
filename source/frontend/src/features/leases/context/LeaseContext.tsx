@@ -1,9 +1,8 @@
 import { noop } from 'lodash';
-import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
 import { useState } from 'react';
 
-import { ILease } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
 
 export interface ILeaseState {
   lease?: Api_Lease;

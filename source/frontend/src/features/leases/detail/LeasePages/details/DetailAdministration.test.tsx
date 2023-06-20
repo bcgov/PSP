@@ -1,13 +1,11 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
-import { defaultFormLease, IFormLease } from '@/interfaces';
+import { DetailAdministration, IDetailAdministrationProps } from '@/features/leases';
+import { LeaseFormModel } from '@/features/leases/models';
 import { mockParcel } from '@/mocks/filterData.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
-
-import DetailAdministration, { IDetailAdministrationProps } from './DetailAdministration';
 
 const history = createMemoryHistory();
 

@@ -2,13 +2,12 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import find from 'lodash/find';
-import { defaultApiLease } from 'models/api/Lease';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { defaultLease } from '@/interfaces';
 import * as MOCK from '@/mocks/data.mock';
+import { defaultApiLease } from '@/models/api/Lease';
 
 import { useUpdateLease } from './useUpdateLease';
 

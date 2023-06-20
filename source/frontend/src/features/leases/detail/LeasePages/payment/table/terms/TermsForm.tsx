@@ -1,22 +1,19 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { Formik, FormikProps } from 'formik';
 import { find, noop, orderBy } from 'lodash';
-import * as React from 'react';
 import { useMemo } from 'react';
+import { Button } from 'react-bootstrap';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 
-import { Button } from '@/components/common/buttons/Button';
 import { Section } from '@/components/common/Section/Section';
-import Table from '@/components/Table/Table';
-import { Claims, LeaseTermStatusTypes } from '@/constants/index';
+import { Table } from '@/components/Table';
+import { Claims, LeaseTermStatusTypes } from '@/constants';
+import { LeaseFormModel } from '@/features/leases/models';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
-import { defaultFormLease, IFormLease, IFormLeasePayment } from '@/interfaces';
-import { defaultFormLeaseTerm, IFormLeaseTerm } from '@/interfaces/ILeaseTerm';
 import { prettyFormatDate } from '@/utils';
 
 import { defaultFormLeaseTerm, FormLeasePayment, FormLeaseTerm } from '../../models';
-import { PaymentsForm } from '../payments/PaymentsForm';
+import PaymentsForm from '../payments/PaymentsForm';
 import { getLeaseTermColumns } from './columns';
 
 export interface ITermsFormProps {

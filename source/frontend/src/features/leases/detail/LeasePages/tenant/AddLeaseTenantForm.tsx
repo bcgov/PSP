@@ -1,17 +1,16 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { LeaseFormModel } from 'features/leases/models';
 import { Formik, FormikProps } from 'formik';
-import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { Link, Prompt } from 'react-router-dom';
+import { Button, Col, Row } from 'react-bootstrap';
+import { Prompt } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons';
 import { TableSelect } from '@/components/common/form';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { TENANT_TYPES } from '@/constants/API';
+import { LeaseFormModel } from '@/features/leases/models';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { defaultFormLease, IContactSearchResult, IFormLease } from '@/interfaces';
+import { IContactSearchResult } from '@/interfaces';
 import { mapLookupCode } from '@/utils';
 
 import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';

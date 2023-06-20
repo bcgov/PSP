@@ -1,21 +1,13 @@
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { act } from 'react-dom/test-utils';
 
-import { Claims, LeaseTermStatusTypes } from '@/constants/index';
-} from '@/interfaces';
-import {
-  fillInput,
-  getAllByRole as getAllByRoleBase,
-  renderAsync,
-  RenderOptions,
-} from '@/utils/test-utils';
+import { Claims, LeaseTermStatusTypes } from '@/constants';
+import { LeaseFormModel } from '@/features/leases/models';
+import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { getAllByRole as getAllByRoleBase } from '@/utils/test-utils';
 
 import { defaultFormLeasePayment, defaultFormLeaseTerm, FormLeasePayment } from '../../models';
 import PaymentsForm, { IPaymentsFormProps } from './PaymentsForm';

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import OverflowTip from '@/components/common/OverflowTip';
 import { InlineFlexDiv } from '@/components/common/styles';
-import { ILease } from '@/interfaces/ILease';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 
 import { getAllNames } from '../leaseUtils';
 export interface IStackedTenantFieldsProps {

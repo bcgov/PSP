@@ -4,8 +4,8 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import { getMockDeposits } from '@/mocks/deposits.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 

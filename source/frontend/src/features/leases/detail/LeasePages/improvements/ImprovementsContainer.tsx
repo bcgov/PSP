@@ -1,4 +1,3 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
@@ -7,8 +6,9 @@ import ProtectedComponent from '@/components/common/ProtectedComponent';
 import { Section } from '@/components/common/Section/Section';
 import { Claims } from '@/constants/claims';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
-import { defaultFormLease, IFormLease } from '@/interfaces';
+import { usePropertyImprovementRepository } from '@/hooks/repositories/usePropertyImprovementRepository';
 
 import { StyledDetails } from '../details/LeaseDetailsForm';
 import { AddImprovementsContainer } from './AddImprovementsContainer';

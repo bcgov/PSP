@@ -5,17 +5,16 @@ import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
-import { NotesModal } from '@/components/common/form/NotesModal';
+import NotesModal from '@/components/common/form/NotesModal';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney, renderTypeCode } from '@/components/Table';
-import { Claims } from '@/constants/claims';
-import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { IFormLeasePayment, ILeasePayment } from '@/interfaces';
+import { Claims } from '@/constants';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_LeasePayment } from '@/models/api/LeasePayment';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { stringToFragment } from '@/utils';
+import { formatMoney, stringToFragment } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
-import { formatMoney } from '@/utils/numberFormatUtils';
 
 import { FormLeasePayment } from '../../models';
 

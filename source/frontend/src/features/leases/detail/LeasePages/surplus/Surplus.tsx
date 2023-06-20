@@ -1,11 +1,11 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { usePropertyLeaseRepository } from 'hooks/repositories/usePropertyLeaseRepository';
+import { useContext, useEffect } from 'react';
 
 import { FormSection } from '@/components/common/form/styles';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ColumnWithProps, Table } from '@/components/Table';
 import { PidCell } from '@/components/Table/PidCell';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { IProperty } from '@/interfaces';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { prettyFormatDate, stringToFragment } from '@/utils';
 
 interface IDeclaration {

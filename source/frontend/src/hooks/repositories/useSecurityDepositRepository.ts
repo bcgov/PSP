@@ -1,9 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { useApiLeaseDeposits } from 'hooks/pims-api/useApiLeaseDeposits';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+
+import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
+
+import { useApiLeaseDeposits } from '../pims-api/useApiLeaseDeposits';
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 /**
  * hook that interacts with the security deposit API.

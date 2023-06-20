@@ -1,14 +1,17 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
-import { getApiPersonOrOrgMailingAddress, getDefaultContact } from 'features/contacts/contactUtils';
-import { IAddress, IContactSearchResult } from 'interfaces';
-import ITypeCode from 'interfaces/ITypeCode';
-import { Api_Address } from 'models/api/Address';
-import { Api_LeaseTenant } from 'models/api/LeaseTenant';
-import { Api_OrganizationPerson } from 'models/api/Organization';
-import { Api_Person } from 'models/api/Person';
-import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
-import { fromTypeCode, toTypeCode } from 'utils/formUtils';
-import { formatApiPersonNames } from 'utils/personUtils';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
+import {
+  getApiPersonOrOrgMailingAddress,
+  getDefaultContact,
+} from '@/features/contacts/contactUtils';
+import { IAddress, IContactSearchResult } from '@/interfaces';
+import ITypeCode from '@/interfaces/ITypeCode';
+import { Api_Address } from '@/models/api/Address';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
+import { Api_OrganizationPerson } from '@/models/api/Organization';
+import { Api_Person } from '@/models/api/Person';
+import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
+import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 export class FormAddress {
   public readonly country?: string;

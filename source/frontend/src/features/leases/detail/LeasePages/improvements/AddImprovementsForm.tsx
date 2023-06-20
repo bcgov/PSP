@@ -1,17 +1,18 @@
-import { Input } from 'components/common/form';
-import { Section } from 'features/mapSideBar/tabs/Section';
-import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import * as React from 'react';
-import { Prompt } from 'react-router-dom';
+import { Prompt } from 'react-router';
 import styled from 'styled-components';
 
-import { defaultFormLease, IFormLease } from '@/interfaces';
+import { Input } from '@/components/common/form';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { AddImprovementsYupSchema } from './AddImprovementsYupSchema';
 import { sectionTitles } from './components/Improvement/Improvement';
 import { ILeaseImprovementForm, ILeaseImprovementsForm } from './models';
 import * as Styled from './styles';
+
 export interface IAddImprovementsFormProps {
   loading?: boolean;
   onSubmit: (lease: ILeaseImprovementsForm) => Promise<void>;

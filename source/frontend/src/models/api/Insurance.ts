@@ -1,4 +1,4 @@
-import ITypeCode from 'interfaces/ITypeCode';
+import ITypeCode from '@/interfaces/ITypeCode';
 
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 

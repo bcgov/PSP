@@ -1,9 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { getPropertyLeases } from 'hooks/pims-api/useApiPropertyLeases';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_PropertyLease } from 'models/api/PropertyLease';
 import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+
+import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
+
+import { getPropertyLeases } from '../pims-api/useApiPropertyLeases';
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 /**
  * hook that interacts with the insurances API.

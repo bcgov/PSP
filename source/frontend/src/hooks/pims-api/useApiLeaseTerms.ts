@@ -1,8 +1,6 @@
-import CustomAxios from 'customAxios';
-import { Api_LeaseTerm } from 'models/api/LeaseTerm';
-import { ILease } from '@/interfaces';
-
-import useAxiosApi from './useApi';
+import { ENVIRONMENT } from '@/constants';
+import CustomAxios from '@/customAxios';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
 
 export const getLeaseTerms = (leaseId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_LeaseTerm[]>(`/leases/${leaseId}/term`);

@@ -1,8 +1,8 @@
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps, DateCell } from '@/components/Table';
-import { ILeaseTerm } from '@/interfaces/ILeaseTerm';
-import ITypeCode from '@/interfaces/ITypeCode';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import Api_TypeCode from '@/models/api/TypeCode';
 import { stringToFragment } from '@/utils';
 
 export const leaseTermColumns: ColumnWithProps<Api_LeaseTerm>[] = [

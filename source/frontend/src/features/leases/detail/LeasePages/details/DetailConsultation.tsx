@@ -1,12 +1,11 @@
 import { useFormikContext } from 'formik';
-import * as React from 'react';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { IFormLease } from '@/interfaces';
-import { Api_LeaseConsultation } from '@/models/api/Lease';
+import { Api_Lease, Api_LeaseConsultation } from '@/models/api/Lease';
+
 export interface IDetailConsultationProps {
   nameSpace?: string;
 }

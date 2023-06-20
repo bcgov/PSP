@@ -1,4 +1,3 @@
-import { ILease } from '@/interfaces';
 import { Api_Lease } from '@/models/api/Lease';
 
 export const getMockApiLease: () => Api_Lease = () => ({

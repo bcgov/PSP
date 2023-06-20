@@ -1,15 +1,17 @@
 import { AxiosResponse } from 'axios';
+import { useCallback } from 'react';
+
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
+
 import {
   deleteLeaseTerm,
   getLeaseTerms,
   postLeaseTerm,
   putLeaseTerm,
-} from 'hooks/pims-api/useApiLeaseTerms';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
-import { Api_LeaseTerm } from 'models/api/LeaseTerm';
-import { useCallback } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+} from '../pims-api/useApiLeaseTerms';
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
+import useDeepCompareMemo from '../util/useDeepCompareMemo';
 
 /**
  * hook that interacts with the lease term API.

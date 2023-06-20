@@ -12,7 +12,7 @@ import {
 import { InlineFlexDiv } from '@/components/common/styles';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
-import { ILease } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
 import { prettyFormatDate } from '@/utils';
 
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';

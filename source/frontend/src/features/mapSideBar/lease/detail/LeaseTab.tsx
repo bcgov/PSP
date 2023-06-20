@@ -3,7 +3,6 @@ import React from 'react';
 
 import { LeaseViewPageForm } from '@/features/leases';
 import { LeaseFormModel } from '@/features/leases/models';
-import { IFormLease } from '@/interfaces';
 
 import { ILeasePage } from '../LeaseContainer';
 

@@ -3,8 +3,7 @@ import React from 'react';
 
 import { Form } from '@/components/common/form/Form';
 import { FormSectionClear } from '@/components/common/form/styles';
-import { IInsurance } from '@/interfaces';
-import { IBatchUpdateRequest, IEntryModification, UpdateOperation } from '@/interfaces/batchUpdate';
+import { Api_Insurance } from '@/models/api/Insurance';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
 

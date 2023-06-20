@@ -3,7 +3,6 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { Claims } from '@/constants/claims';
-import { defaultFormLease } from '@/interfaces';
 import {
   getMockContactOrganizationWithOnePerson,
   getMockContactPerson,

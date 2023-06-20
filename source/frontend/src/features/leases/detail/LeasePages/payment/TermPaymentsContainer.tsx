@@ -1,18 +1,16 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FormikProps } from 'formik';
 import { find, noop } from 'lodash';
-import * as React from 'react';
-import { useCallback } from 'react';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { apiLeaseToFormLease } from '@/features/leases/leaseUtils';
+import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
-} from '@/interfaces';
-import { formLeaseTermToApiLeaseTerm, IFormLeaseTerm, ILeaseTerm } from '@/interfaces/ILeaseTerm';
+import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
+import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
+import { defaultApiLease } from '@/models/api/Lease';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
-import { defaultApiLease } from 'models/api/Lease';
 
 import { useDeleteTermsPayments } from './hooks/useDeleteTermsPayments';
 import PaymentModal from './modal/payment/PaymentModal';

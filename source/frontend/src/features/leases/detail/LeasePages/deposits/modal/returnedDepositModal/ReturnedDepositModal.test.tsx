@@ -3,8 +3,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
+import { getMockDepositReturns, getMockDeposits } from '@/mocks/deposits.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 

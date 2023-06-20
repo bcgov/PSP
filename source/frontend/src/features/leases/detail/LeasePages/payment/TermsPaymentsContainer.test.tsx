@@ -1,20 +1,28 @@
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
-import { createMemoryHistory } from 'history';
+import createMemoryHistory from 'history/createMemoryHistory';
 import { noop } from 'lodash';
-import { defaultApiLease } from 'models/api/Lease';
 import React from 'react';
 
-import { Claims, LeaseTermStatusTypes } from '@/constants/index';
+import { Claims } from '@/constants';
+import { LeaseTermStatusTypes } from '@/constants/leaseStatusTypes';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
-import { defaultFormLease, defaultFormLeaseTerm, defaultLease, IFormLease } from '@/interfaces';
+import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { defaultApiLease } from '@/models/api/Lease';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
+import {
+  act,
+  fillInput,
+  renderAsync,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm, FormLeaseTerm } from './models';
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsForm.test';

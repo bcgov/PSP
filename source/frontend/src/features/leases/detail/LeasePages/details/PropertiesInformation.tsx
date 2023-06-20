@@ -1,10 +1,10 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 
 import { Section } from '@/components/common/Section/Section';
 import { PropertyInformation } from '@/features/leases';
-import { ILease, IProperty } from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
+import { IProperty } from '@/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IPropertiesInformationProps {

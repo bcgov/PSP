@@ -1,9 +1,8 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 
 import { Claims } from '@/constants/claims';
-import { defaultFormLease, IFormLease } from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DepositNotes, IDepositNotesProps } from './DepositNotes';

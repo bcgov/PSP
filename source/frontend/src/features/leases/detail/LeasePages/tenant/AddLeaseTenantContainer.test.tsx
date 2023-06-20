@@ -1,24 +1,25 @@
-import { act, waitFor } from '@testing-library/react';
+import { RenderOptions, waitFor } from '@testing-library/react';
 import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import React from 'react';
+import { act } from 'react-test-renderer';
 
-import { Claims } from '@/constants/claims';
+import { Claims } from '@/constants';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
-import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
-import { apiLeaseToFormLease } from '@/features/leases/leaseUtils';
+import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { defaultFormLease, defaultLease, IFormLease, ILease } from '@/interfaces';
+import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import {
   getMockContactOrganizationWithMultiplePeople,
   getMockContactOrganizationWithOnePerson,
 } from '@/mocks/contacts.mock';
-import { mockLookups } from '@/mocks/index.mock';
-import { getMockLease } from '@/mocks/lease.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { mockKeycloak, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { mockKeycloak, renderAsync } from '@/utils/test-utils';
 
-import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';
+import AddLeaseTenantContainer from './AddLeaseTenantContainer';
 import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './models';
 import { IPrimaryContactWarningModalProps } from './PrimaryContactWarningModal';

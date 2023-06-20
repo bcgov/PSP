@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 import { Section } from '@/components/common/Section/Section';
-import { IInsurance } from '@/interfaces';
+import { Api_Insurance } from '@/models/api/Insurance';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import Policy from './Policy';

@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { ILease } from '@/interfaces';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 

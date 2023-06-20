@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { IFormLease } from '@/interfaces';
-import { ILeaseTerm } from '@/interfaces/ILeaseTerm';
+import { Api_Lease } from '@/models/api/Lease';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { DetailTermInformationBox } from './DetailTermInformationBox';

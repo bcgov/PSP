@@ -1,6 +1,6 @@
 import { SelectOption } from '@/components/common/form';
 import Api_TypeCode from '@/models/api/TypeCode';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
 /**
  * append the passed name and index to the existing namespace, ideal for nesting forms within formik.

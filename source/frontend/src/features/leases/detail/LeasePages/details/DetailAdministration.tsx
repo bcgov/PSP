@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Input } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { IFormLease } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
 import { prettyFormatDate } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 export interface IDetailAdministrationProps {

@@ -1,6 +1,6 @@
-import { TypeCodeUtils } from 'interfaces';
-import { Api_Insurance } from 'models/api/Insurance';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { TypeCodeUtils } from '@/interfaces';
+import { Api_Insurance } from '@/models/api/Insurance';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 const mockInsuranceTypeHome: ILookupCode = {
   id: 'HOME',

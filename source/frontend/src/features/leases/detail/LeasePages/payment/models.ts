@@ -1,9 +1,9 @@
-import { defaultTypeCode } from 'interfaces';
-import { Api_LeasePayment } from 'models/api/LeasePayment';
-import { Api_LeaseTerm } from 'models/api/LeaseTerm';
-import Api_TypeCode from 'models/api/TypeCode';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { stringToNull, toRequiredTypeCode } from 'utils/formUtils';
+import { defaultTypeCode } from '@/interfaces';
+import { Api_LeasePayment } from '@/models/api/LeasePayment';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import Api_TypeCode from '@/models/api/TypeCode';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { stringToNull, toRequiredTypeCode } from '@/utils/formUtils';
 
 export class FormLeaseTerm {
   id: number | null = null;

@@ -1,4 +1,3 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 
@@ -6,7 +5,7 @@ import { Input } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { IFormLease } from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IDetailDocumentationProps {

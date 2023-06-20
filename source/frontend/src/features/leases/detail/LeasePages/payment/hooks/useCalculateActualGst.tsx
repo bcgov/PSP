@@ -1,7 +1,6 @@
 import { getIn, useFormikContext } from 'formik';
 import { useEffect } from 'react';
 
-import { IFormLeasePayment } from '@/interfaces';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { FormLeasePayment } from '../models';

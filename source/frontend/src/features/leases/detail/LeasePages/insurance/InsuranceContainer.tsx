@@ -1,16 +1,16 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { useInsurancesRepository } from 'hooks/repositories/useInsuranceRepository';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
 
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Claims } from '@/constants';
 import { INSURANCE_TYPES } from '@/constants/API';
-import { Claims } from '@/constants/claims';
-import { useLeaseDetail } from '@/features/leases';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
+import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { IInsurance } from '@/interfaces';
+import { Api_Insurance } from '@/models/api/Insurance';
 
 import InsuranceDetailsView from './details/Insurance';
 import InsuranceEditContainer from './edit/EditInsuranceContainer';

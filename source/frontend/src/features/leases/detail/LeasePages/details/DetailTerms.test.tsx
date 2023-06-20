@@ -1,9 +1,8 @@
-import { getDefaultFormLease, LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { defaultFormLease, defaultFormLeaseTerm, IFormLease } from '@/interfaces';
+import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm } from '../payment/models';

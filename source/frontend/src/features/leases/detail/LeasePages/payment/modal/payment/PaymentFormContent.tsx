@@ -6,7 +6,6 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { IFormLeasePayment } from '@/interfaces';
 
 import { useCalculateActualGst } from '../../hooks/useCalculateActualGst';
 import { FormLeasePayment } from '../../models';

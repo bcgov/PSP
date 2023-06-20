@@ -1,9 +1,10 @@
+import { AxiosResponse } from 'axios';
 import { useCallback, useContext, useState } from 'react';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { useLeasePaymentRepository } from 'hooks/repositories/useLeasePaymentRepository';
-import { Api_LeaseTerm } from 'models/api/LeaseTerm';
-} from '@/interfaces';
+import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
 
 import { FormLeasePayment, FormLeaseTerm } from '../models';
 

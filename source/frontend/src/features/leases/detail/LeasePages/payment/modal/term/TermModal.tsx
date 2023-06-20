@@ -3,7 +3,6 @@ import * as React from 'react';
 import { useRef } from 'react';
 
 import * as CommonStyled from '@/components/common/styles';
-import { IFormLeaseTerm } from '@/interfaces/ILeaseTerm';
 
 import { FormLeaseTerm } from '../../models';
 import { TermForm } from './TermForm';

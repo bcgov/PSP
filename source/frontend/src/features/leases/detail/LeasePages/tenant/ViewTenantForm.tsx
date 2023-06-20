@@ -1,25 +1,11 @@
 import { Formik } from 'formik';
-import * as React from 'react';
 import styled from 'styled-components';
 
 import { FormSection } from '@/components/common/form/styles';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
-import { ContactMethodTypes } from '@/constants/contactMethodType';
-import {
-  getApiPersonOrOrgMailingAddress,
-  getDefaultContact,
-} from '@/features/contacts/contactUtils';
-import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { apiLeaseToFormLease } from '@/features/leases/leaseUtils';
-import { defaultFormLease, IAddress, IContactSearchResult } from '@/interfaces';
-import ITypeCode from '@/interfaces/ITypeCode';
-import { Api_Address } from '@/models/api/Address';
-import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
-import { Api_OrganizationPerson } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
-import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
-import { fromTypeCode, withNameSpace } from '@/utils/formUtils';
-import { formatApiPersonNames } from '@/utils/personUtils';
+import { LeaseFormModel } from '@/features/leases/models';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { FormTenant } from './models';
 import TenantOrganizationContactInfo from './TenantOrganizationContactInfo';

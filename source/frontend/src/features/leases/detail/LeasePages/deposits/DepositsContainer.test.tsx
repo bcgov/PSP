@@ -1,17 +1,16 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { getDefaultFormLease, LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 
-import { Claims } from '@/constants/claims';
-import { defaultFormLease, IFormLease } from '@/interfaces';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { Claims } from '@/constants';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
+import { getMockDeposits } from '@/mocks/deposits.mock';
 import {
   act,
+  cleanup,
   fillInput,
   render,
   RenderOptions,
@@ -20,8 +19,8 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
-import DepositsContainer from './DepositsContainer';
 import { FormLeaseDeposit } from './models/FormLeaseDeposit';
+import { DepositsContainer } from './styles';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');

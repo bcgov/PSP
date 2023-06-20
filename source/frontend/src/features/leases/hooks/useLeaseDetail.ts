@@ -1,12 +1,11 @@
-import { useLeaseTermRepository } from 'hooks/repositories/useLeaseTermRepository';
-import { usePropertyLeaseRepository } from 'hooks/repositories/usePropertyLeaseRepository';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { useCallback, useContext } from 'react';
 
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { IApiError } from '@/interfaces/IApiError';
-import { logError } from '@/store/slices/network/networkSlice';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { useAxiosErrorHandler } from '@/utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';

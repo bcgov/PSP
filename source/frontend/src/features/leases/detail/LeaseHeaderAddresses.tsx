@@ -1,8 +1,8 @@
-import { Api_PropertyLease } from 'models/api/PropertyLease';
 import * as React from 'react';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
-import { ILease, IProperty } from '@/interfaces';
+import { Api_Property } from '@/models/api/Property';
+import { Api_PropertyLease } from '@/models/api/PropertyLease';
 import { getPropertyName } from '@/utils/mapPropertyUtils';
 
 export interface ILeaseHeaderAddressesProps {

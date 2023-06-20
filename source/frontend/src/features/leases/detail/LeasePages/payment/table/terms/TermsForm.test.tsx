@@ -1,17 +1,17 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LeaseFormModel } from 'features/leases/models';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React from 'react';
 
-import Claims from '@/constants/claims';
+import { Claims } from '@/constants';
 import { LeaseTermStatusTypes } from '@/constants/leaseStatusTypes';
-} from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
+import { IContactSearchResult } from '@/interfaces';
 import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm, FormLeasePayment } from '../../models';
-import { ITermsFormProps, TermsForm } from './TermsForm';
+import TermsForm, { ITermsFormProps } from './TermsForm';
 
 jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();

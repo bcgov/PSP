@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
 import moment from 'moment';
 
-import { defaultLease } from '@/interfaces';
+import { defaultApiLease } from '@/models/api/Lease';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { ILeaseStatusSummaryProps, LeaseStatusSummary } from './LeaseStatusSummary';

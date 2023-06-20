@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { prettyFormatDate } from 'utils';
+
+import { prettyFormatDate } from '@/utils';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';

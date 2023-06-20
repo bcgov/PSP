@@ -1,12 +1,12 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { defaultFormLease, IAddress, IFormLease } from '@/interfaces';
+import { IAddress } from '@/interfaces/IAddress';
 import { mockParcel } from '@/mocks/filterData.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
+import { LeaseFormModel } from '../../models';
 import AddressSubForm, { IAddressSubFormProps } from './AddressSubForm';
 
 const history = createMemoryHistory();

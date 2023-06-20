@@ -1,17 +1,15 @@
 import { FormikProps } from 'formik';
-import { IContactSearchResult } from 'interfaces';
 import { filter, find, orderBy, some } from 'lodash';
-import { Api_Lease } from 'models/api/Lease';
-import * as React from 'react';
-import { useContext, useEffect } from 'react';
-import { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
-import { apiLeaseToFormLease, formLeaseToApiLease } from '@/features/leases/leaseUtils';
+import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { defaultFormLease, IContactSearchResult, IFormLease, ILease } from '@/interfaces';
+import { IContactSearchResult } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 import { Api_Person } from '@/models/api/Person';
 
 import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
@@ -49,9 +47,11 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     const tenantFunc = async () => {
       const tenants = await getLeaseTenants(leaseId ?? 0);
       if (tenants !== undefined) {
-        setTenants(tenants.map(t => new FormTenant(t)));
+        setTenants(tenants.map((t: Api_LeaseTenant) => new FormTenant(t)));
         setSelectedContacts(
-          tenants.map(t => FormTenant.toContactSearchResult(new FormTenant(t))) || [],
+          tenants.map((t: Api_LeaseTenant) =>
+            FormTenant.toContactSearchResult(new FormTenant(t)),
+          ) || [],
         );
       }
     };

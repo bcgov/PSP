@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { ILeaseFilter } from '@/features/leases';
-import { ILease, ILeaseSearchResult, IPagedItems } from '@/interfaces';
+import { ILeaseSearchResult, IPagedItems } from '@/interfaces';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 

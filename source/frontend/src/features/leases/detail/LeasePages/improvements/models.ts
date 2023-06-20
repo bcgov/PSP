@@ -1,4 +1,4 @@
-import { Api_PropertyImprovement } from 'models/api/PropertyImprovement';
+import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
 
 export class ILeaseImprovementsForm {
   improvements: ILeaseImprovementForm[] = [];

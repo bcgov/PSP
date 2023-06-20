@@ -1,9 +1,7 @@
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { IFormLease } from '@/interfaces';
-import { ILeaseImprovement } from '@/interfaces/ILeaseImprovement';
+import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
 
 import Improvement from './components/Improvement/Improvement';
 import { ILeaseImprovementForm } from './models';

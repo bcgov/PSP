@@ -2,7 +2,7 @@ import React from 'react';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { getAllNames } from '@/features/leases/leaseUtils';
-import { ILease } from '@/interfaces';
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
 
 export interface ILeaseHeaderTenantsProps {
   tenants?: Api_LeaseTenant[];

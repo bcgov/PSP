@@ -1,4 +1,4 @@
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 
 export const getMockDeposits = (): Api_SecurityDeposit[] => [
   {

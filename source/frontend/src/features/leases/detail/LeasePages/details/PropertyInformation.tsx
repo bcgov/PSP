@@ -1,11 +1,10 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import styled from 'styled-components';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { IFormLease } from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
 import { formatNumber, pidFormatter } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { ILease } from '@/interfaces';
+import { Api_Lease } from '@/models/api/Lease';
 
 export interface ILeaseStatusSummaryProps {
   lease?: Api_Lease;

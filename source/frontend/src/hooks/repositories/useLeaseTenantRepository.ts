@@ -1,9 +1,11 @@
 import { AxiosResponse } from 'axios';
-import { getLeaseTenants, updateLeaseTenants } from 'hooks/pims-api/useApiLeaseTenants';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+
+import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils/axiosUtils';
+
+import { getLeaseTenants, updateLeaseTenants } from '../pims-api/useApiLeaseTenants';
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 /**
  * hook that interacts with the property improvements API.

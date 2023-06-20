@@ -2,12 +2,11 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { defaultApiLease } from 'models/api/Lease';
 import React from 'react';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { defaultLease, ILeaseImprovement } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { defaultApiLease } from '@/models/api/Lease';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { renderAsync, RenderOptions } from '@/utils/test-utils';
 

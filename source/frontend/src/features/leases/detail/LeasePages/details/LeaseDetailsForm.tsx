@@ -1,19 +1,16 @@
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { defaultApiLease } from 'models/api/Lease';
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import {
-  DetailAdministration,
-  DetailTermInformation,
-  PropertiesInformation,
-} from '@/features/leases';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { defaultLease } from '@/interfaces';
+import { defaultApiLease } from '@/models/api/Lease';
 
+import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';
 import DetailDocumentation from './DetailDocumentation';
+import DetailTermInformation from './DetailTermInformation';
+import PropertiesInformation from './PropertiesInformation';
 
 export interface IDetailsProps {}
 

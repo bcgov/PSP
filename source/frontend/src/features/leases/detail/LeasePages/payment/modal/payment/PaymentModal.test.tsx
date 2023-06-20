@@ -4,7 +4,6 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 
-import { defaultFormLeasePayment } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';

@@ -1,19 +1,20 @@
+import { RenderOptions, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { defaultApiLease } from 'models/api/Lease';
-import { Api_PropertyImprovement } from 'models/api/PropertyImprovement';
 import React from 'react';
+import { act } from 'react-test-renderer';
 
-import { IAddLeaseContainerProps } from '@/features/leases';
+import { IAddLeaseContainerProps } from '@/features/leases/add/AddLeaseContainer';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { defaultLease, ILeaseImprovement } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { defaultApiLease } from '@/models/api/Lease';
+import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { fillInput, renderAsync } from '@/utils/test-utils';
 
 import { AddImprovementsContainer } from './AddImprovementsContainer';
 

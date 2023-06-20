@@ -1,12 +1,11 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { createMemoryHistory } from 'history';
 
-import { IFormLease } from '@/interfaces';
+import { LeaseFormModel } from '@/features/leases/models';
 import { LtsaOrders } from '@/interfaces/ltsaModels';
 import { mockLtsaResponse } from '@/mocks/filterData.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import LtsaTabView, { ILtsaTabViewProps } from './LtsaTabView';
+import { ILtsaTabViewProps, LtsaTabView } from './LtsaTabView';
 
 const history = createMemoryHistory();
 

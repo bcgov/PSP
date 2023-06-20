@@ -1,8 +1,9 @@
-import { IInsurance } from '@/interfaces';
-import ITypeCode, { TypeCodeUtils } from '@/interfaces/ITypeCode';
+import { TypeCodeUtils } from '@/interfaces';
+import ITypeCode from '@/interfaces/ITypeCode';
+import { Api_Insurance } from '@/models/api/Insurance';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { numberFieldToRequiredNumber } from 'utils/formUtils';
+import { numberFieldToRequiredNumber } from '@/utils/formUtils';
 
 export interface IUpdateFormInsurance {
   insurances: FormInsurance[];

@@ -4,10 +4,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
 import { LeaseTermStatusTypes } from '@/constants/index';
-import { defaultFormLeaseTerm } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm } from '../../models';
 import TermModal, { ITermModalProps } from './TermModal';

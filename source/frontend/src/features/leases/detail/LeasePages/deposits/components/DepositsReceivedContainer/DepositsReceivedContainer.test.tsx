@@ -1,5 +1,5 @@
 import Claims from '@/constants/claims';
-import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
+import { getMockDeposits } from '@/mocks/deposits.mock';
 import { formatMoney, prettyFormatDate } from '@/utils';
 import { getAllByRole as getAllByRoleBase, render, RenderOptions } from '@/utils/test-utils';
 

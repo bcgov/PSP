@@ -1,9 +1,11 @@
-import { Api_Insurance } from 'models/api/Insurance';
+import { ENVIRONMENT } from '@/constants';
+import CustomAxios from '@/customAxios';
+import { Api_Insurance } from '@/models/api/Insurance';
 
-import { IInsurance } from '@/interfaces';
-import { IBatchUpdateReply, IBatchUpdateRequest } from '@/interfaces/batchUpdate';
-
-import useAxiosApi from './useApi';
+export const updateLeaseInsurances = (leaseId: number, insurances: Api_Insurance[]) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_Insurance[]>(
+    `/leases/${leaseId}/insurances`,
+    insurances,
   );
 
 export const getLeaseInsurances = (leaseId: number) =>

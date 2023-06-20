@@ -3,7 +3,8 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { IInsurance, TypeCodeUtils } from '@/interfaces';
+import { TypeCodeUtils } from '@/interfaces';
+import { Api_Insurance } from '@/models/api/Insurance';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
 

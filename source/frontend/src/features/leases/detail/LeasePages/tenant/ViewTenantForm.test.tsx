@@ -1,9 +1,9 @@
 import { createMemoryHistory } from 'history';
 
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
-import { defaultLease, ILease } from '@/interfaces';
 import { mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
-import { getMockLease } from '@/mocks/lease.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
+import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { FormTenant } from './models';

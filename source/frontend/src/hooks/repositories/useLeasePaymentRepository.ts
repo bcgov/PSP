@@ -1,13 +1,15 @@
 import { AxiosResponse } from 'axios';
+import { useCallback, useMemo } from 'react';
+
+import { Api_LeasePayment } from '@/models/api/LeasePayment';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
+
 import {
   deleteLeasePayment,
   postLeasePayment,
   putLeasePayment,
-} from 'hooks/pims-api/useApiLeasePayments';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_LeasePayment } from 'models/api/LeasePayment';
-import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+} from '../pims-api/useApiLeasePayments';
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 /**
  * hook that interacts with the lease payment API.

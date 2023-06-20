@@ -5,6 +5,7 @@ import { createMemoryHistory } from 'history';
 import { IProperty } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockProperties } from '@/mocks/properties.mock';
+import { Api_Property } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 

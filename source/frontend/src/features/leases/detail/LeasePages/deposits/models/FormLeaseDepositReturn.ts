@@ -1,7 +1,7 @@
 import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { numberFieldToRequiredNumber } from 'utils/formUtils';
+import { numberFieldToRequiredNumber } from '@/utils/formUtils';
 
 export class FormLeaseDepositReturn {
   public id?: number;

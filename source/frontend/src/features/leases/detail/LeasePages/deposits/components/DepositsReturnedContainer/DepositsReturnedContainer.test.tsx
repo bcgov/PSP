@@ -1,6 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { getMockDepositReturns, getMockDeposits } from '@/mocks/deposits.mock';
 import { formatMoney, prettyFormatDate } from '@/utils';
 import { getAllByRole as getAllByRoleBase, render, RenderOptions } from '@/utils/test-utils';
 

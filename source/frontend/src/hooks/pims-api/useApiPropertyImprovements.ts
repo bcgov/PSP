@@ -1,6 +1,6 @@
-import { ENVIRONMENT } from 'constants/environment';
-import CustomAxios from 'customAxios';
-import { Api_PropertyImprovement } from 'models/api/PropertyImprovement';
+import { ENVIRONMENT } from '@/constants';
+import CustomAxios from '@/customAxios';
+import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
 
 export const updatePropertyImprovements = (
   leaseId: number,

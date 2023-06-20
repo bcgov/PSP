@@ -1,8 +1,6 @@
-import CustomAxios from 'customAxios';
-import { Api_LeasePayment } from 'models/api/LeasePayment';
-import { ILease } from '@/interfaces';
-
-import useAxiosApi from './useApi';
+import { ENVIRONMENT } from '@/constants';
+import CustomAxios from '@/customAxios';
+import { Api_LeasePayment } from '@/models/api/LeasePayment';
 
 export const deleteLeasePayment = (leaseId: number, payment: Api_LeasePayment) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).delete<boolean>(`/leases/${leaseId}/payment`, {

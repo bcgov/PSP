@@ -1,21 +1,24 @@
+import { RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { getDefaultFormLease } from 'features/leases/models';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { getMockApiLease } from 'mocks/lease.mock';
-import { UserOverrideCode } from 'models/api/UserOverrideCode';
+import React, { forwardRef } from 'react';
+import { act } from 'react-test-renderer';
 
-import { IAddLeaseContainerProps } from '@/features/leases';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { defaultLease } from '@/interfaces';
+import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
+import { getDefaultFormLease } from '@/features/leases/models';
+import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { defaultApiLease } from '@/models/api/Lease';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { renderAsync, RenderOptions } from '@/utils/test-utils';
+import { renderAsync, screen } from '@/utils/test-utils';
 
-import { UpdateLeaseContainer, UpdateLeaseContainerProps } from './UpdateLeaseContainer';
+import UpdateLeaseContainer, { UpdateLeaseContainerProps } from './UpdateLeaseContainer';
 import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
 
 const history = createMemoryHistory();

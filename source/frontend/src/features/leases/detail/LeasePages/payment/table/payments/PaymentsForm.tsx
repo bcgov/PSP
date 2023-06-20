@@ -1,15 +1,12 @@
-import { LeaseFormModel } from 'features/leases/models';
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdReceipt } from 'react-icons/md';
 
-import { TableProps } from '@/components/Table/Table';
-import { Claims } from '@/constants/claims';
-import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { IFormLease } from '@/interfaces';
-import { defaultFormLeasePayment, IFormLeasePayment } from '@/interfaces/ILeasePayment';
+import { TableProps } from '@/components/Table';
+import { Claims } from '@/constants';
+import { LeaseFormModel } from '@/features/leases/models';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { defaultFormLeasePayment, FormLeasePayment } from '../../models';

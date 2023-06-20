@@ -1,12 +1,10 @@
 import { getIn } from 'formik';
 
-import { Input } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { PropertyImprovementTypes } from '@/constants/propertyImprovementTypes';
-import * as Styled from '@/features/leases/detail/LeasePages/improvements/styles';
-import { IFormLease } from '@/interfaces';
-import { withNameSpace } from '@/utils/formUtils';
+
+import { ILeaseImprovementForm } from '../../models';
 
 export interface IImprovementProps {
   improvement: ILeaseImprovementForm;
