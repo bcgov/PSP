@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { LatLngBounds, Map as LeafletMap } from 'leaflet';
+import { Map as LeafletMap } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
