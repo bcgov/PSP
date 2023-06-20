@@ -1,8 +1,7 @@
+import { AddressTypes } from '@/constants/addressTypes';
 import { ContactInfoField } from '@/features/contacts/interfaces';
 import { Dictionary } from '@/interfaces/Dictionary';
 import { IContactAddress, IContactMethod } from '@/interfaces/IContact';
-
-import { AddressTypes } from './../../../../constants/addressTypes';
 
 // the order of this array corresponds to the expected display order
 const addressSortOrder = [AddressTypes.Mailing, AddressTypes.Residential, AddressTypes.Billing];

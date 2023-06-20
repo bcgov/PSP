@@ -25,7 +25,7 @@ export interface IAddProjectContainerProps {
 const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainerProps>> = props => {
   const { onClose } = props;
   const history = useHistory();
-  const { search } = useMapSearch();
+  const { searchMany } = useMapSearch();
 
   const {
     getFinancialCodesByType: { execute: getFinancialCodes },
@@ -84,7 +84,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
 
   const onSuccess = async (proj: Api_Project) => {
     formikRef.current?.resetForm();
-    await search();
+    await searchMany();
     history.replace(`/mapview/sidebar/project/${proj.id}`);
   };
 

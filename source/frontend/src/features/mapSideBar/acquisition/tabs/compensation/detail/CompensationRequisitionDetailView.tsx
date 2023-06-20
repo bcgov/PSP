@@ -10,7 +10,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { StyledAddButton } from '@/components/common/styles';
-import Claims from '@/constants/claims';
+import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';

@@ -6,7 +6,7 @@ import { useMap } from 'react-leaflet';
 import { tilesInBbox } from 'tiles-in-bbox';
 
 import { IGeoSearchParams } from '@/constants/API';
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { IProperty } from '@/interfaces';
 
 import { useMapRefreshEvent } from '../../hooks/useMapRefreshEvent';
@@ -131,7 +131,7 @@ export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProp
   onMarkerClick,
 }) => {
   const mapInstance = useMap();
-  const { search, properties, loading } = useMapSearch();
+  const { searchByParams, properties, loadingPimsProperties } = useMapSearch();
   const { changed: filterChanged } = useFilterContext();
   const { draftProperties } = useContext(MapStateContext);
 
@@ -150,9 +150,9 @@ export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProp
     fit();
   }, [mapInstance, filter, filterChanged]);
 
-  const params = useMemo((): any => {
+  const searchParams = useMemo((): IGeoSearchParams[] => {
     const tiles = getTiles(defaultBounds, 5);
-    return tiles.map(tile => ({
+    return tiles.map<IGeoSearchParams>(tile => ({
       STREET_ADDRESS_1: filter?.STREET_ADDRESS_1,
       PID: filter?.PID,
       PIN: filter?.PIN,
@@ -162,12 +162,13 @@ export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProp
       longitude: filter?.longitude,
     }));
   }, [filter]);
-  useMapRefreshEvent(() => search(params));
+
+  useMapRefreshEvent(() => searchByParams(searchParams));
   useDeepCompareEffect(() => {
     if (filterChanged || !properties?.length) {
-      search(params);
+      searchByParams(searchParams);
     }
-  }, [params, filterChanged]);
+  }, [searchParams, filterChanged]);
 
   return (
     <PointClusterer
@@ -178,7 +179,7 @@ export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProp
       onMarkerClick={onMarkerClick}
       zoomToBoundsOnClick={true}
       spiderfyOnMaxZoom={true}
-      tilesLoaded={!loading}
+      tilesLoaded={!loadingPimsProperties}
     />
   );
 };

@@ -7,7 +7,7 @@ import { IPagedItems } from '@/interfaces';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
-import { IPaginateRequest } from './pims-api';
+import { IPaginateRequest } from './pims-api/interfaces/IPaginateRequest';
 
 export function useFetcher<ISearchResult extends object, IFilter extends object>(
   fetch: (params: IPaginateRequest<IFilter>) => Promise<AxiosResponse<IPagedItems<ISearchResult>>>,

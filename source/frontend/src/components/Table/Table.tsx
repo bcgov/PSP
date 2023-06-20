@@ -33,10 +33,10 @@ import {
 import { Button } from '@/components/common/buttons/Button';
 import { SelectedText } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import useDeepCompareCallback from '@/hooks/useDeepCompareCallback';
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
-import useDeepCompareMemo from '@/hooks/useDeepCompareMemo';
 import { handleSortChange } from '@/hooks/useSearch';
+import useDeepCompareCallback from '@/hooks/util/useDeepCompareCallback';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 
 import { TablePagination } from '.';
 import ColumnSort from './ColumnSort';

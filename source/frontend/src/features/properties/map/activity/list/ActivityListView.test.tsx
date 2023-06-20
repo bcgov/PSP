@@ -5,6 +5,7 @@ import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockActivitiesResponse } from '@/mocks/activities.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -17,7 +18,6 @@ import {
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../../../mapSideBar/context/sidebarContext';
 import ActivityListView, { IActivityListViewProps } from './ActivityListView';
 
 const mockAxios = new MockAdapter(axios);

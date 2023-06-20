@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { ENVIRONMENT } from '@/constants/environment';
 
-import { useAxiosApi } from '.';
+import useAxiosApi from './useApi';
 
 const mockAxios = new MockAdapter(axios);
 

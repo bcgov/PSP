@@ -5,7 +5,6 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
-import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
@@ -13,6 +12,7 @@ import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { FileTabType } from '../shared/detail/FileTabs';
 import { IAcquisitionViewProps } from './AcquisitionView';
 import { EditFormType } from './EditFormNames';
 
@@ -47,7 +47,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose, View } = props;
   const { setFile, setFileLoading, staleFile, setStaleFile } = useContext(SideBarContext);
-  const { search } = useMapSearch();
+  const { searchMany } = useMapSearch();
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Acquisition File');
@@ -165,7 +165,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const onSuccess = () => {
     fetchAcquisitionFile();
-    search();
+    searchMany();
     setContainerState({ activeEditForm: undefined, isEditing: false });
   };
 

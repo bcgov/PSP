@@ -10,13 +10,17 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
+import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 
 import useActiveFeatureLayer from './useActiveFeatureLayer';
 
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
-jest.mock('@/hooks/layer-api/useLayerQuery');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
+jest.mock('@/hooks/layer-api/useLayerQuery');
+jest.mock('@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer');
+jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
 
 let clearLayers = jest.fn();
 let addData = jest.fn();
@@ -25,6 +29,24 @@ const setLayerPopup = jest.fn();
   addTo: () => ({ clearLayers, addData } as any),
   getBounds: jest.fn(),
 });
+
+const useFullyAttributedParcelMapLayerMock = {
+  findByLegalDescription: jest.fn(),
+  findByPid: jest.fn(),
+  findByPin: jest.fn(),
+  findByPlanNumber: jest.fn(),
+  findByWrapper: jest.fn(),
+  findOne: jest.fn(),
+};
+(useFullyAttributedParcelMapLayer as jest.Mock).mockReturnValue(
+  useFullyAttributedParcelMapLayerMock,
+);
+
+const useAdminBoundaryMapLayerMock = {
+  findRegion: jest.fn(),
+  findDistrict: jest.fn(),
+};
+(useAdminBoundaryMapLayer as jest.Mock).mockReturnValue(useAdminBoundaryMapLayerMock);
 
 const useLayerQueryMock = {
   findOneWhereContains: jest.fn(),
@@ -46,11 +68,18 @@ const getWrapper =
 
 describe('useActiveFeatureLayer hook tests', () => {
   beforeEach(() => {
-    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({
-      REGION_NUMBER: 2,
-      REGION_NAME: 'South Coast',
-      DISTRICT_NUMBER: 2,
-      DISTRICT_NAME: 'Vancouver Island',
+    useAdminBoundaryMapLayerMock.findDistrict.mockResolvedValue({
+      properties: {
+        DISTRICT_NUMBER: 2,
+        DISTRICT_NAME: 'Vancouver Island',
+      },
+    });
+
+    useAdminBoundaryMapLayerMock.findRegion.mockResolvedValue({
+      properties: {
+        REGION_NUMBER: 2,
+        REGION_NAME: 'South Coast',
+      },
     });
   });
   afterEach(() => {
@@ -58,13 +87,16 @@ describe('useActiveFeatureLayer hook tests', () => {
     addData.mockClear();
     useLayerQueryMock.findOneWhereContains.mockClear();
     useLayerQueryMock.findMetadataByLocation.mockClear();
+    useAdminBoundaryMapLayerMock.findDistrict.mockClear();
+    useAdminBoundaryMapLayerMock.findRegion.mockClear();
   });
 
   it('sets the active feature only when there is a selected property', async () => {
-    useLayerQueryMock.findOneWhereContains.mockClear();
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
-      features: [{ geometry: { type: 'Polygon', coordinates: [1, 2] }, properties: [{}] }],
+    useFullyAttributedParcelMapLayerMock.findOne.mockResolvedValueOnce({
+      geometry: { type: 'Polygon', coordinates: [1, 2] },
+      properties: [{}],
     });
+
     renderHook(
       () =>
         useActiveFeatureLayer({
@@ -79,9 +111,11 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     // call to parcelmap BC and to internal pims layer
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    expect(useFullyAttributedParcelMapLayerMock.findOne).toHaveBeenCalledTimes(1);
     // calls to region and district layers
-    expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
+    expect(useAdminBoundaryMapLayerMock.findDistrict).toHaveBeenCalledTimes(1);
+    expect(useAdminBoundaryMapLayerMock.findRegion).toHaveBeenCalledTimes(1);
+
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledWith(
@@ -98,7 +132,7 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('does not set the active parcel when the selected property has no matching parcel data', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValue({});
+    useFullyAttributedParcelMapLayerMock.findOne.mockResolvedValueOnce(undefined);
     renderHook(
       () =>
         useActiveFeatureLayer({
@@ -113,15 +147,21 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     // call to parcelmap BC and to internal pims layer
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    expect(useFullyAttributedParcelMapLayerMock.findOne).toHaveBeenCalledTimes(1);
     // calls to region and district layers
-    expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
+    expect(useAdminBoundaryMapLayerMock.findDistrict).toHaveBeenCalledTimes(1);
+    expect(useAdminBoundaryMapLayerMock.findRegion).toHaveBeenCalledTimes(1);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
     });
   });
 
   it('sets the layer popup with the expected data', async () => {
+    useFullyAttributedParcelMapLayerMock.findOne.mockResolvedValueOnce({
+      geometry: { type: 'Polygon', coordinates: [1, 2] },
+      properties: { PID: '123456789' },
+    });
+
     useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
       features: [{ properties: { pid: '123456789' } }],
     });
@@ -143,7 +183,7 @@ describe('useActiveFeatureLayer hook tests', () => {
     await waitFor(() => {
       expect(setLayerPopup).toHaveBeenCalledWith(
         expect.objectContaining({
-          data: { pid: '123456789' },
+          data: { PID: '123456789' },
           title: 'LTSA ParcelMap data',
         }),
       );

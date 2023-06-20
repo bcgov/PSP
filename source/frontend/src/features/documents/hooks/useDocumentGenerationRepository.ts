@@ -2,13 +2,12 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiDocumentGeneration } from '@/hooks/pims-api/useApiDocumentGeneration';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
+import { DocumentGenerationRequest } from '@/models/api/DocumentGenerationRequest';
 import { Api_FileDownload } from '@/models/api/DocumentStorage';
 import { ExternalResult } from '@/models/api/ExternalResult';
-
-import { useApiDocumentGeneration } from '../../../hooks/pims-api/useApiDocumentGeneration';
-import { DocumentGenerationRequest } from '../../../models/api/DocumentGenerationRequest';
 
 /**
  * repository for document generation

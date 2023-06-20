@@ -3,19 +3,20 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
 import * as API from '@/constants/API';
-import { useApiProperties } from '@/hooks/pims-api';
+import Claims from '@/constants/claims';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IPagedItems, IProperty } from '@/interfaces';
 import { mockParcel } from '@/mocks/filterData.mock';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { cleanup, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
-import { Claims } from '../../../constants';
 import PropertyListView from './PropertyListView';
 
 // Set all module functions to jest.fn
 jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api');
+jest.mock('@/hooks/pims-api/useApiGeocoder');
+jest.mock('@/hooks/pims-api/useApiProperties');
 
 const mockApiGetPropertiesPagedApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
 (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({

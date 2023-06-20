@@ -5,7 +5,8 @@ import { noop } from 'lodash';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fakeText, fillInput, render, RenderOptions, screen } from '@/utils/test-utils';
+import { render, RenderOptions, screen } from '@/utils/test-utils';
+import { fakeText, fillInput } from '@/utils/test-utils';
 
 import { UpdateResearchSummaryFormModel } from './models';
 import { UpdateResearchFileYupSchema } from './UpdateResearchFileYupSchema';

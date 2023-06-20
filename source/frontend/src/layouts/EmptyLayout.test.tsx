@@ -15,7 +15,7 @@ const mockGetVersion = jest.fn(async () => {
   });
 });
 
-jest.mock('@/hooks/pims-api', () => ({
+jest.mock('@/hooks/pims-api/useApiHealth', () => ({
   useApiHealth: () => ({
     getVersion: mockGetVersion,
   }),

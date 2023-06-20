@@ -1,5 +1,6 @@
 import { FieldArray, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { LinkButton, RemoveButton } from '@/components/common/buttons';
@@ -8,13 +9,11 @@ import { ContactInput } from '@/components/common/form/ContactInput';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
-import { AcquisitionFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
-import {
-  AcquisitionTeamFormModel,
-  WithAcquisitionTeam,
-} from '@/features/mapSideBar/acquisition/common/models';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
+
+import { AcquisitionFormModal } from '../../modals/AcquisitionFormModal';
+import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
 
 interface IUpdateAcquisitionTeamSubFormProps {}
 

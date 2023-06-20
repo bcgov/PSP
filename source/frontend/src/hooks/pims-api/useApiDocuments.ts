@@ -18,7 +18,7 @@ import {
 import { ExternalResult } from '@/models/api/ExternalResult';
 
 import { Api_Storage_DocumentDetail } from './../../models/api/DocumentStorage';
-import { useAxiosApi } from '.';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the note endpoints.

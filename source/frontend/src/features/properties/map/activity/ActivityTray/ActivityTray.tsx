@@ -1,14 +1,15 @@
 import clsx from 'classnames';
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as Styled from '@/components/common/styles';
+import { IFormContent } from '@/features/mapSideBar/shared/content/models';
 import { Api_Activity } from '@/models/api/Activity';
 
-import { IFormContent } from '../../../../mapSideBar/shared/content/models';
 import { ActivityFile } from '../detail/ActivityContainer';
 import { ActivityForm } from '../detail/ActivityForm';
 

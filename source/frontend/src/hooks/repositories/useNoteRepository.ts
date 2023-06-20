@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 
 import { NoteTypes } from '@/constants/index';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_EntityNote, Api_Note } from '@/models/api/Note';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 

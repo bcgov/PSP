@@ -7,7 +7,7 @@ import EditButton from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import Claims from '@/constants/claims';
+import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { prettyFormatDate } from '@/utils';

@@ -4,7 +4,8 @@ import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
-import { FastCurrencyInput, Select, SelectOption } from '@/components/common/form';
+import { FastCurrencyInput } from '@/components/common/form';
+import { Select, SelectOption } from '@/components/common/form/Select';
 import GenericModal from '@/components/common/GenericModal';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { stringToBoolean } from '@/utils/formUtils';

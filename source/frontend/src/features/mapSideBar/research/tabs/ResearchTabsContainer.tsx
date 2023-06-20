@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
 import { NoteTypes } from '@/constants/noteTypes';
-import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListView from '@/features/notes/list/NoteListView';
+import ActivityListView from '@/features/properties/map/activity/list/ActivityListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
-import { ActivityListView } from '../../../properties/map/activity/list/ActivityListView';
+import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
 import { FormKeys } from '../FormKeys';
 import ResearchDocumentsTab from './documents/ResearchDocumentsTab';
 import ResearchSummaryView from './fileDetails/details/ResearchSummaryView';

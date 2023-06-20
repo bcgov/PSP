@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
-import useIsMounted from '@/hooks/useIsMounted';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { IAutocompletePrediction } from '@/interfaces';
 
 interface IProjectTypeahead {

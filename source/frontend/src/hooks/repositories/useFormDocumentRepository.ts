@@ -9,7 +9,7 @@ import {
   getFormDocumentTypesApi,
   postFileFormApi,
 } from '@/hooks/pims-api/useApiFormDocument';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 

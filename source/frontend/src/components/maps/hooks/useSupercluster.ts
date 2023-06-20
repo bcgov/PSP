@@ -3,7 +3,7 @@ import { BBox, GeoJsonProperties } from 'geojson';
 import { useRef, useState } from 'react';
 import Supercluster from 'supercluster';
 
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 
 import { ICluster } from '../types';
 

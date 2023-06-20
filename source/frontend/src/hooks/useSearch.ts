@@ -5,11 +5,11 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 
 import { SortDirection, TableSort } from '@/components/Table/TableSort';
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
-import useIsMounted from '@/hooks/useIsMounted';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { IPagedItems } from '@/interfaces';
 
-import { IPaginateRequest } from './pims-api';
+import { IPaginateRequest } from './pims-api/interfaces/IPaginateRequest';
 import { useFetcher } from './useFetcher';
 
 export interface SearchState<IFilter, ISearchResult extends object> {

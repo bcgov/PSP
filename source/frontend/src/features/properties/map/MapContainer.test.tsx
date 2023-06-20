@@ -15,10 +15,13 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from '@/constants/index';
-import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
-import { useMapProperties } from '@/hooks/layer-api/useMapProperties';
-import { useApiProperties } from '@/hooks/pims-api';
-import { useComposedProperties } from '@/hooks/useComposedProperties';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
+import { useIndianReserveBandMapLayer } from '@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer';
+import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
+import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
+import { useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
@@ -34,17 +37,20 @@ import {
 } from '@/utils/test-utils';
 import { mockKeycloak } from '@/utils/test-utils';
 
-import MapView from './MapContainer';
+import MapContainer from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/layer-api/useMapProperties');
-jest.mock('@/hooks/layer-api/useLayerQuery');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
-jest.mock('@/hooks/useComposedProperties');
-jest.mock('@/hooks/usePropertyAssociations');
-jest.mock('@/hooks/pims-api');
+jest.mock('@/hooks/pims-api/useApiProperties');
 jest.mock('@/hooks/useLtsa');
+jest.mock('@/hooks/repositories/useComposedProperties');
+jest.mock('@/hooks/repositories/usePropertyAssociations');
+jest.mock('@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer');
+jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
+jest.mock('@/hooks/repositories/mapLayer/usePimsPropertyLayer');
+jest.mock('@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer');
+jest.mock('@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer');
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -58,11 +64,12 @@ jest.mock('react-visibility-sensor', () => {
 
 const mockStore = configureMockStore([thunk]);
 
-(useComposedProperties as any).mockImplementation(() => ({
+(useComposedProperties as jest.Mock).mockImplementation(() => ({
   composedLoading: false,
   ltsaWrapper: { execute: jest.fn(), loading: false },
   apiWrapper: { execute: jest.fn(), loading: false },
   propertyAssociationWrapper: { execute: jest.fn(), loading: false },
+  composedProperty: {},
 }));
 
 const largeMockParcels = [
@@ -92,11 +99,47 @@ const mockParcels = [
   { id: 3, latitude: 55.917363, longitude: -122.749732, pid: '7773' },
 ] as IProperty[];
 
-const useLayerQueryMock = {
+/*const usePimsPropertyLayerMock = {
+  loadPropertyLayer: jest.fn(),
+  findOne: jest.fn(),
+  findOneLoading: false,
+};
+(usePimsPropertyLayer as jest.Mock).mockReturnValue(usePimsPropertyLayerMock);*/
+
+/*const useLayerQueryMock = {
   findOneWhereContains: jest.fn(),
   findMetadataByLocation: jest.fn(),
 };
-(useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
+(useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);*/
+
+const useFullyAttributedParcelMapLayerMock = {
+  findByLegalDescription: jest.fn(),
+  findByPid: jest.fn(),
+  findByPin: jest.fn(),
+  findByPlanNumber: jest.fn(),
+  findByWrapper: jest.fn(),
+  findOne: jest.fn(),
+};
+(useFullyAttributedParcelMapLayer as jest.Mock).mockReturnValue(
+  useFullyAttributedParcelMapLayerMock,
+);
+
+const useAdminBoundaryMapLayerMock = {
+  findDistrict: jest.fn(),
+  findRegion: jest.fn(),
+};
+(useAdminBoundaryMapLayer as jest.Mock).mockReturnValue(useAdminBoundaryMapLayerMock);
+
+const useLegalAdminBoundariesMapLayerMock = {
+  findOneAgriculturalReserve: jest.fn(),
+  findOneMunicipality: jest.fn(),
+};
+(useLegalAdminBoundariesMapLayer as jest.Mock).mockReturnValue(useLegalAdminBoundariesMapLayerMock);
+
+const useIndianReserveBandMapLayerMock = {
+  findOne: jest.fn(),
+};
+(useIndianReserveBandMapLayer as jest.Mock).mockReturnValue(useIndianReserveBandMapLayerMock);
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
@@ -147,14 +190,14 @@ const store = mockStore({
 
 let history = createMemoryHistory();
 
-describe('MapView', () => {
+describe('MapContainer', () => {
   const onMarkerClick = jest.fn();
   const onMarkerPopupClosed = jest.fn();
 
   const setup = async (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <PropertyContextProvider>
-        <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
+        <MapContainer showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
       </PropertyContextProvider>,
       {
         store,
@@ -168,7 +211,7 @@ describe('MapView', () => {
   };
 
   beforeEach(() => {
-    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({});
+    //useLayerQueryMock.findMetadataByLocation.mockResolvedValue({});
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
@@ -177,8 +220,10 @@ describe('MapView', () => {
         },
       },
     });
-    (useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
-      loadProperties: {
+    (
+      usePimsPropertyLayer as unknown as jest.Mock<Partial<typeof usePimsPropertyLayer>>
+    ).mockReturnValue({
+      loadPropertyLayer: {
         execute: jest.fn().mockResolvedValue({
           features: createPoints(mockParcels),
           type: 'FeatureCollection',
@@ -256,8 +301,10 @@ describe('MapView', () => {
   });
 
   it('the map can zoom in until no clusters are visible', async () => {
-    (useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
-      loadProperties: {
+    (
+      usePimsPropertyLayer as unknown as jest.Mock<Partial<typeof usePimsPropertyLayer>>
+    ).mockReturnValue({
+      loadPropertyLayer: {
         execute: jest.fn().mockResolvedValue({
           features: createPoints(smallMockParcels),
           type: 'FeatureCollection',
@@ -284,8 +331,10 @@ describe('MapView', () => {
   });
 
   it('the map can handle features with invalid geometry', async () => {
-    (useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
-      loadProperties: {
+    (
+      usePimsPropertyLayer as unknown as jest.Mock<Partial<typeof usePimsPropertyLayer>>
+    ).mockReturnValue({
+      loadPropertyLayer: {
         execute: jest.fn().mockResolvedValue({
           features: createPoints(smallMockParcels).map(feature => ({
             ...feature,
@@ -337,14 +386,10 @@ describe('MapView', () => {
   });
 
   it('the map can be clicked', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValue({
-      features: [
-        {
-          type: 'Feature',
-          geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
-          properties: {},
-        },
-      ],
+    useFullyAttributedParcelMapLayerMock.findOne.mockResolvedValue({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
+      properties: {},
     });
 
     const { container } = await setup();
@@ -353,7 +398,7 @@ describe('MapView', () => {
     expect(map).toBeVisible();
     await act(() => userEvent.click(map!));
 
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenLastCalledWith({
+    expect(useFullyAttributedParcelMapLayerMock.findOne).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
       lng: -124.67285156250001,
     });
@@ -365,8 +410,10 @@ describe('MapView', () => {
         return {} as IProperty;
       },
     });
-    (useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
-      loadProperties: {
+    (
+      usePimsPropertyLayer as unknown as jest.Mock<Partial<typeof usePimsPropertyLayer>>
+    ).mockReturnValue({
+      loadPropertyLayer: {
         execute: jest.fn().mockResolvedValue({
           features: createPoints(largeMockParcels),
           type: 'FeatureCollection',

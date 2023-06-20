@@ -2,11 +2,11 @@ import React from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import * as actionTypes from '@/constants/actionTypes';
+import { useApiLookupCodes } from '@/hooks/pims-api/useApiLookupCodes';
 import { useAppDispatch } from '@/store/hooks';
 
 import { IGenericNetworkAction } from '../network/interfaces';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
-import { useApiLookupCodes } from './../../../hooks/pims-api/useApiLookupCodes';
 import { ILookupCode, storeLookupCodes } from '.';
 
 export const useLookupCodes = () => {

@@ -12,8 +12,8 @@ import { useFilterContext } from '@/components/maps/providers/FIlterProvider';
 import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
 import { ICluster, PointFeature } from '@/components/maps/types';
 import { MAX_ZOOM } from '@/constants/strings';
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { IProperty } from '@/interfaces';
 
 import SelectedPropertyMarker from '../Markers/SelectedPropertyMarker';

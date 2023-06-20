@@ -2,8 +2,8 @@ import { FeatureCollection } from 'geojson';
 import isAbsoluteUrl from 'is-absolute-url';
 
 import { wfsAxios } from '@/hooks/layer-api/wfsAxios';
-import { IApiRequestWrapper, useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
-import useDeepCompareCallback from '@/hooks/useDeepCompareCallback';
+import { IApiRequestWrapper, useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import useDeepCompareCallback from '@/hooks/util/useDeepCompareCallback';
 
 import { toCqlFilterValue } from './layerUtils';
 

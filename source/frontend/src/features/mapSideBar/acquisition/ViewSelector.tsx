@@ -1,15 +1,15 @@
 import { FormikProps } from 'formik';
 import React from 'react';
 
-import { FileTypes } from '@/constants/fileTypes';
-import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property/InventoryTabs';
-import { UpdatePropertyDetailsContainer } from '@/features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
-import TakesUpdateContainer from '@/features/mapSideBar/property/tabs/takes/update/TakesUpdateContainer';
-import TakesUpdateForm from '@/features/mapSideBar/property/tabs/takes/update/TakesUpdateForm';
-import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { PropertyFileContainer } from '@/features/mapSideBar/shared/detail/PropertyFileContainer';
+import { FileTypes } from '@/constants';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
+import { InventoryTabNames, InventoryTabs } from '../property/InventoryTabs';
+import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import TakesUpdateContainer from '../property/tabs/takes/update/TakesUpdateContainer';
+import TakesUpdateForm from '../property/tabs/takes/update/TakesUpdateForm';
+import { FileTabType } from '../shared/detail/FileTabs';
+import PropertyFileContainer from '../shared/detail/PropertyFileContainer';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import { EditFormType } from './EditFormNames';
 import AcquisitionFileTabs from './tabs/AcquisitionFileTabs';
@@ -17,8 +17,8 @@ import { UpdateAgreementsContainer } from './tabs/agreement/update/UpdateAgreeme
 import { UpdateAgreementsForm } from './tabs/agreement/update/UpdateAgreementsForm';
 import { UpdateAcquisitionChecklistContainer } from './tabs/checklist/update/UpdateAcquisitionChecklistContainer';
 import { UpdateAcquisitionChecklistForm } from './tabs/checklist/update/UpdateAcquisitionChecklistForm';
-import { UpdateAcquisitionContainer } from './tabs/fileDetails/update/UpdateAcquisitionContainer';
-import { UpdateAcquisitionForm } from './tabs/fileDetails/update/UpdateAcquisitionForm';
+import UpdateAcquisitionContainer from './tabs/fileDetails/update/UpdateAcquisitionContainer';
+import UpdateAcquisitionForm from './tabs/fileDetails/update/UpdateAcquisitionForm';
 import UpdateStakeHolderContainer from './tabs/stakeholders/update/UpdateStakeHolderContainer';
 import UpdateStakeHolderForm from './tabs/stakeholders/update/UpdateStakeHolderForm';
 

@@ -6,7 +6,7 @@ import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { IPagedItems, IProperty } from '@/interfaces';
 import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
 
-import { useAxiosApi } from '.';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the property endpoints.

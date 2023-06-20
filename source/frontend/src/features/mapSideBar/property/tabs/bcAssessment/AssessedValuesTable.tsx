@@ -1,7 +1,7 @@
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps, MoneyCell, Table } from '@/components/Table';
-import { IBcAssessmentSummary } from '@/hooks/useBcAssessmentLayer';
+import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { formatMoney, stringToFragment } from '@/utils';
 
 interface IAssessedValuesTableProps {

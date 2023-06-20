@@ -8,11 +8,11 @@ import {
   TabInventoryView,
 } from '@/features/mapSideBar/property/InventoryTabs';
 import { UpdatePropertyDetailsContainer } from '@/features/mapSideBar/property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
-import PropertyResearchTabView from '@/features/mapSideBar/property/tabs/propertyResearch/detail/PropertyResearchTabView';
-import UpdatePropertyResearchContainer from '@/features/mapSideBar/property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
-import PropertyFileContainer from '@/features/mapSideBar/shared/detail/PropertyFileContainer';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 
+import { PropertyResearchTabView } from '../property/tabs/propertyResearch/detail/PropertyResearchTabView';
+import { UpdatePropertyResearchContainer } from '../property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
+import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 import { FormKeys } from './FormKeys';
 import UpdateResearchContainer from './tabs/fileDetails/update/UpdateSummaryContainer';
 import ResearchTabsContainer from './tabs/ResearchTabsContainer';

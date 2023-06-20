@@ -3,9 +3,8 @@ import { MdClose } from 'react-icons/md';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ActivityTrayPage, CloseButton, TrayHeader } from '@/components/common/styles';
+import { IFormContent } from '@/features/mapSideBar/shared/content/models';
 import { Api_FormDocumentFile } from '@/models/api/FormDocument';
-
-import { IFormContent } from '../../../../mapSideBar/shared/content/models';
 
 export interface IFormViewProps {
   loading: boolean;

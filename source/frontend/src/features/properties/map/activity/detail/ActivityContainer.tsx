@@ -2,12 +2,12 @@ import * as React from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SideBarContext, TypedFile } from '@/features/mapSideBar/context/sidebarContext';
+import { formContent } from '@/features/mapSideBar/shared/content/formContent';
+import { ActivityTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { Api_Activity, Api_PropertyActivity } from '@/models/api/Activity';
 import { Api_Property } from '@/models/api/Property';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
-import { formContent } from '../../../../mapSideBar/shared/content/formContent';
-import { ActivityTemplateTypes } from '../../../../mapSideBar/shared/content/models';
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import { useActivityRepository } from '../hooks/useActivityRepository';
 import ActivityPropertyModal from './ActivityPropertyModal';

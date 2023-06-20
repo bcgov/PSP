@@ -7,7 +7,8 @@ import { Action } from 'redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { ITenantConfig, useApiTenants } from '@/hooks/pims-api';
+import ITenantConfig from '@/hooks/pims-api/interfaces/ITenantConfig';
+import { useApiTenants } from '@/hooks/pims-api/useApiTenants';
 
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { useTenants } from '.';

@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
 
-import {
-  BC_ASSESSMENT_TYPES,
-  IBcAssessmentSummary,
-  useBcAssessmentLayer,
-} from '@/hooks/useBcAssessmentLayer';
+import { useBcAssessmentLayer } from '@/hooks/repositories/useBcAssessmentLayer';
+import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { useTenant } from '@/tenants';
 
 /**

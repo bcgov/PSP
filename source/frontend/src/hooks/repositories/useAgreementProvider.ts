@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiAgreements } from '@/hooks/pims-api/useApiAgreements';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_Agreement } from '@/models/api/Agreement';
 import { useAxiosErrorHandler } from '@/utils';
 

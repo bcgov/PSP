@@ -14,7 +14,7 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
-import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/useComposedProperties';
+import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 export interface IPropertyFileContainerProps {

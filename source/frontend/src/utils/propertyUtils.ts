@@ -1,6 +1,6 @@
-import { IBcAssessmentSummary } from '@/hooks/useBcAssessmentLayer';
 import { IAddress } from '@/interfaces';
 import { Api_Address } from '@/models/api/Address';
+import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
 /**
  * The pidFormatter is used to format the specified PID value
