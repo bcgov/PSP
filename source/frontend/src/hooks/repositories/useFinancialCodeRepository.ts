@@ -13,7 +13,7 @@ import {
   postFinancialCode,
   putFinancialCode,
 } from '@/hooks/pims-api/useApiFinancialCodes';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_FinancialCode } from '@/models/api/FinancialCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 

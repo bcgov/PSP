@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { IPagedItems } from '@/interfaces';
 import { mockApiAccessRequest } from '@/mocks/filterData.mock';
 
-import { useApiAccessRequests } from '.';
+import { useApiAccessRequests } from './useApiAccessRequests';
 
 const mockAxios = new MockAdapter(axios);
 

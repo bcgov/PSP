@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "3.2.0-56.10",
+  "version": "3.2.0-56.13",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -93,6 +93,7 @@
     "compression-webpack-plugin": "7.1.1",
     "cross-env": "7.0.3",
     "customize-cra": "1.0.0",
+    "dependency-cruiser": "^13.0.3",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-simple-import-sort": "7.0.0",

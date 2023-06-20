@@ -1,12 +1,12 @@
 import { createMemoryHistory } from 'history';
 
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { getMockApiCompensationList } from '@/mocks/compensations.mock';
-import { mockLookups } from '@/mocks/index.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../../../context/sidebarContext';
 import CompensationListContainer, {
   ICompensationListContainerProps,
 } from './CompensationListContainer';

@@ -3,7 +3,7 @@ import React from 'react';
 import { IInsurance } from '@/interfaces';
 import { IBatchUpdateReply, IBatchUpdateRequest } from '@/interfaces/batchUpdate';
 
-import { useAxiosApi } from '.';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the insurance endpoints.

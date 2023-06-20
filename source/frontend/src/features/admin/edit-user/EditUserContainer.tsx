@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { UserTypes } from '@/constants/index';
-import useIsMounted from '@/hooks/useIsMounted';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { Api_User } from '@/models/api/User';
 
 import { useUsers } from '../users/hooks/useUsers';

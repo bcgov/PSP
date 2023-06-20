@@ -17,8 +17,8 @@ import AreaContainer from '@/components/measurements/AreaContainer';
 import VolumeContainer from '@/components/measurements/VolumeContainer';
 import * as API from '@/constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from '@/constants/index';
-import useDeepCompareEffect from '@/hooks/useDeepCompareEffect';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { prettyFormatDate } from '@/utils';
 import { stringToBoolean } from '@/utils/formUtils';
 

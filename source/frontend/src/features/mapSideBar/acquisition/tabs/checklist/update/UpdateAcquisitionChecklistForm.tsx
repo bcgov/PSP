@@ -8,7 +8,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import * as API from '@/constants/API';
-import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { prettyFormatDate } from '@/utils';

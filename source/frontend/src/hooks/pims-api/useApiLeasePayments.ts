@@ -3,7 +3,7 @@ import React from 'react';
 import { ILease } from '@/interfaces';
 
 import { ILeasePayment } from './../../interfaces/ILeasePayment';
-import { useAxiosApi } from '.';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lease payment endpoints.

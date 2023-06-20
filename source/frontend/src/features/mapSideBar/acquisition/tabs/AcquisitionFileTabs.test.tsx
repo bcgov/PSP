@@ -1,10 +1,10 @@
 import { act } from 'react-test-renderer';
 
 import Claims from '@/constants/claims';
-import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
+import { FileTabType } from '../../shared/detail/FileTabs';
 import AcquisitionFileTabs, { IAcquisitionFileTabsProps } from './AcquisitionFileTabs';
 
 // mock auth library

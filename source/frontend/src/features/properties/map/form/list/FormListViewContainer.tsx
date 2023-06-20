@@ -3,12 +3,12 @@ import React, { useCallback, useContext } from 'react';
 
 import { TableSort } from '@/components/Table/TableSort';
 import { FileTypes } from '@/constants/fileTypes';
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { defaultFormFilter, IFormFilter } from '@/interfaces/IFormResults';
 import { Api_FormDocumentFile } from '@/models/api/FormDocument';
 
-import { SideBarContext } from '../../../../mapSideBar/context/sidebarContext';
 import { IFormListViewProps } from './FormListView';
 
 export interface IFormListViewContainerProps {

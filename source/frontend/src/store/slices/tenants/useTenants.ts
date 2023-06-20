@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import React from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
-import { useApiTenants } from '@/hooks/pims-api';
+import { useApiTenants } from '@/hooks/pims-api/useApiTenants';
 import { IApiError } from '@/interfaces/IApiError';
 import { useAppDispatch } from '@/store/hooks';
 

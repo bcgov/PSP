@@ -20,12 +20,12 @@ import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from '@/features/leases/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import { LeaseFileTabNames } from '@/features/mapSideBar/lease/detail/LeaseFileTabs';
 import { IFormLease } from '@/interfaces';
 
 import { SideBarContext } from '../context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';
 import LeaseHeader from './common/LeaseHeader';
+import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import ViewSelector from './ViewSelector';
 
 export interface ILeaseContainerProps {

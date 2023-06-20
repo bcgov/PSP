@@ -7,7 +7,8 @@ import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
 import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
-import { IPaginateRequest, useAxiosApi } from '.';
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the research file endpoints.

@@ -7,8 +7,8 @@ import MapSelectorContainer from '@/components/propertySelector/MapSelectorConta
 import { IMapProperty } from '@/components/propertySelector/models';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 
-import { useBcaAddress } from '../../../properties/map/hooks/useBcaAddress';
 import { AddressForm, PropertyForm } from '../../shared/models';
 import { AcquisitionForm } from './models';
 

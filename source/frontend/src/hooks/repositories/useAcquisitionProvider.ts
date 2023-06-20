@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,

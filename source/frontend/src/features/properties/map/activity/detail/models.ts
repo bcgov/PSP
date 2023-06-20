@@ -1,8 +1,6 @@
-import { Api_ActivityTemplate, Api_PropertyActivity } from '@/models/api/Activity';
+import { FileTypes } from '@/constants';
+import { Api_Activity, Api_ActivityTemplate, Api_PropertyActivity } from '@/models/api/Activity';
 import Api_TypeCode from '@/models/api/TypeCode';
-
-import { FileTypes } from './../../../../../constants/fileTypes';
-import { Api_Activity } from './../../../../../models/api/Activity';
 
 export class ActivityModel {
   id?: number;

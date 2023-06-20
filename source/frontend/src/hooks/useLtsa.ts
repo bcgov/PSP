@@ -5,7 +5,7 @@ import { LtsaOrders } from '@/interfaces/ltsaModels';
 import { pidFormatter } from '@/utils';
 
 import { useApiLtsa } from './pims-api/useApiLtsa';
-import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from './util/useApiRequestWrapper';
 
 /**
  * hook retrieves data from ltsa

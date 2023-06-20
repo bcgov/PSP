@@ -6,7 +6,7 @@ import { IApiError } from '@/interfaces/IApiError';
 
 import { IGeocoderPidsResponse, IGeocoderResponse } from './pims-api/interfaces/IGeocoder';
 import { useApiGeocoder } from './pims-api/useApiGeocoder';
-import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from './util/useApiRequestWrapper';
 
 export const useGeocoderRepository = () => {
   const { getSitePidsApi, searchAddressApi, getNearestToPointApi } = useApiGeocoder();

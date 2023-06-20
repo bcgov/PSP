@@ -5,7 +5,6 @@ import React from 'react';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
-import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
@@ -14,6 +13,7 @@ import { prettyFormatDate } from '@/utils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../context/sidebarContext';
+import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
 
 const mockAxios = new MockAdapter(axios);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 
-import { useAxiosApi } from '.';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the interest holder endpoints.

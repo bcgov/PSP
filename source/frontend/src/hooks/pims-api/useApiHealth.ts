@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { IApiHealth, IApiVersion, IHealthLive, IHealthReady, useAxiosApi } from '.';
+import { IApiHealth } from './interfaces/IApiHealth';
+import IApiVersion from './interfaces/IApiVersion';
+import IHealthLive from './interfaces/IHealthLive';
+import IHealthReady from './interfaces/IHealthReady';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the health endpoints.

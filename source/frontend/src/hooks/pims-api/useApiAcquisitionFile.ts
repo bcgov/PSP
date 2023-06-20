@@ -16,7 +16,8 @@ import { Api_CompensationRequisition } from '@/models/api/CompensationRequisitio
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
-import { IPaginateRequest, useAxiosApi } from '.';
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the acquisition file endpoints.

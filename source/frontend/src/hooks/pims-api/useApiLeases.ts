@@ -6,7 +6,8 @@ import { ILease, ILeaseSearchResult, IPagedItems } from '@/interfaces';
 import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
-import { IPaginateRequest, useAxiosApi } from '.';
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lease endpoints.

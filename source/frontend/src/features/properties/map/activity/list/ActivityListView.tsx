@@ -8,12 +8,12 @@ import { Section } from '@/components/common/Section/Section';
 import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { defaultActivityFilter, IActivityFilter } from '@/interfaces/IActivityResults';
 import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from '@/models/api/Activity';
 
-import { SideBarContext } from '../../../../mapSideBar/context/sidebarContext';
 import { useActivityRepository } from '../hooks/useActivityRepository';
 import { ActivityFilterForm } from './ActivityFilter/ActivityFilterForm';
 import { ActivityResults } from './ActivityResults/ActivityResults';

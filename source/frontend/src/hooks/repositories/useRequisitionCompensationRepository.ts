@@ -1,13 +1,13 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
 import {
   deleteCompensationRequisitionApi,
   getCompensationRequisitionApi,
   getCompensationRequisitionPayeeApi,
   putCompensationRequisitionApi,
 } from '@/hooks/pims-api/useApiRequisitionCompensations';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_CompensationPayee } from '@/models/api/CompensationPayee';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';

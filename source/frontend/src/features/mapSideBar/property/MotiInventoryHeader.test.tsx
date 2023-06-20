@@ -1,12 +1,19 @@
 import { Api_Property } from '@/models/api/Property';
 import { render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
 
+import { ComposedProperty } from './ComposedProperty';
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
 
-const defaultComposedProperty = {
-  composedLoading: false,
-  apiPropertyLoading: false,
-  propertyAssociationsLoading: false,
+const defaultComposedProperty: ComposedProperty = {
+  pid: undefined,
+  pin: undefined,
+  id: undefined,
+  ltsaOrders: undefined,
+  pimsProperty: undefined,
+  propertyAssociations: undefined,
+  parcelMapFeatureCollection: undefined,
+  geoserverFeatureCollection: undefined,
+  bcAssessmentSummary: undefined,
 };
 
 const onZoom = jest.fn();
@@ -14,11 +21,16 @@ describe('MotiInventoryHeader component', () => {
   const setup = (
     renderOptions: RenderOptions & IMotiInventoryHeaderProps = {
       composedProperty: defaultComposedProperty,
+      isLoading: false,
     },
   ): RenderResult => {
     // render component under test
     const result = render(
-      <MotiInventoryHeader composedProperty={renderOptions.composedProperty} onZoom={onZoom} />,
+      <MotiInventoryHeader
+        composedProperty={renderOptions.composedProperty}
+        onZoom={onZoom}
+        isLoading={renderOptions.isLoading}
+      />,
     );
     return result;
   };
@@ -34,7 +46,8 @@ describe('MotiInventoryHeader component', () => {
 
   it('renders a spinner when the data is loading', () => {
     const { getByTestId } = setup({
-      composedProperty: { ...defaultComposedProperty, apiWrapper: { loading: true } as any },
+      composedProperty: { ...defaultComposedProperty },
+      isLoading: true,
     });
 
     const spinner = getByTestId('filter-backdrop-loading');
@@ -48,6 +61,7 @@ describe('MotiInventoryHeader component', () => {
         ...defaultComposedProperty,
         pid: testPid,
       },
+      isLoading: false,
     });
     // PID is shown
     expect(result.getByText(testPid)).toBeVisible();
@@ -60,8 +74,9 @@ describe('MotiInventoryHeader component', () => {
     const result = setup({
       composedProperty: {
         ...defaultComposedProperty,
-        apiWrapper: { response: testProperty, loading: false } as any,
+        pimsProperty: testProperty,
       },
+      isLoading: false,
     });
     // PID is shown
     expect(result.getByText(testProperty?.propertyType?.description as string)).toBeVisible();
@@ -73,8 +88,9 @@ describe('MotiInventoryHeader component', () => {
     const { getByTitle } = setup({
       composedProperty: {
         ...defaultComposedProperty,
-        apiWrapper: { response: testProperty, loading: false } as any,
+        pimsProperty: testProperty,
       },
+      isLoading: false,
     });
     const zoomButton = getByTitle('Zoom Map');
     userEvent.click(zoomButton);
@@ -85,8 +101,9 @@ describe('MotiInventoryHeader component', () => {
     const { getByTitle } = setup({
       composedProperty: {
         ...defaultComposedProperty,
-        apiWrapper: { response: undefined, loading: false } as any,
+        pimsProperty: undefined,
       },
+      isLoading: false,
     });
 
     const zoomButton = getByTitle('Zoom Map');

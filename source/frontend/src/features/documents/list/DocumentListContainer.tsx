@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
-import useIsMounted from '@/hooks/useIsMounted';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { Api_DocumentRelationship } from '@/models/api/Document';
 
 import { DocumentRow } from '../ComposedDocument';

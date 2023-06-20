@@ -5,7 +5,7 @@ import CustomAxios from '@/customAxios';
 import { TenantContext } from '@/tenants';
 import { useAxiosErrorHandler } from '@/utils';
 
-import { useApiRequestWrapper } from '../pims-api/useApiRequestWrapper';
+import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 import { toCqlFilter } from './layerUtils';
 
 function buildUrl(inputUrl: string, cqlFilter: Record<string, any>) {

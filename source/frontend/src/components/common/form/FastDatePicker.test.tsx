@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 
@@ -31,10 +31,14 @@ describe('fast date picker', () => {
       { oldDateWarning: true },
       { initialValues: { test: '' }, values: { test: '' } },
     );
-    await fillInput(container, 'test', '12/29/2020', 'datepicker');
+    await act(async () => {
+      await fillInput(container, 'test', '12/29/2020', 'datepicker');
+    });
   });
   it('handles identical starting values and current value', async () => {
     const { container } = testRender({ oldDateWarning: true }, { values: { test: '2020-12-31' } });
-    await fillInput(container, 'test', '12/31/2020', 'datepicker');
+    await act(async () => {
+      await fillInput(container, 'test', '12/31/2020', 'datepicker');
+    });
   });
 });

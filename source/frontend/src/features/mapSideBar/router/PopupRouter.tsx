@@ -2,8 +2,7 @@ import * as React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 
 import { PopupTray } from '@/components/common/styles';
-import Claims from '@/constants/claims';
-import { FileTypes } from '@/constants/fileTypes';
+import { Claims, FileTypes } from '@/constants';
 import AppRoute from '@/utils/AppRoute';
 
 import FormContainer from '../../properties/map/form/detail/FormContainer';

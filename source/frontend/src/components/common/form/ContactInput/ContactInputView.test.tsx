@@ -97,7 +97,7 @@ describe('ContactInputView component', () => {
       onClear: clear,
     });
     const icon = getByTitle('Select Contact');
-    act(() => userEvent.click(icon));
+    await act(async () => userEvent.click(icon));
     expect(setShowContactManager).toHaveBeenCalled();
   });
 
@@ -109,7 +109,7 @@ describe('ContactInputView component', () => {
       onClear: clear,
     });
     const icon = getByTitle('remove');
-    act(() => userEvent.click(icon));
+    await act(async () => userEvent.click(icon));
     expect(clear).toHaveBeenCalled();
   });
 

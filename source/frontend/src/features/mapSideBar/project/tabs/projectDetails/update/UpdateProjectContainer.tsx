@@ -3,8 +3,8 @@ import { FormikHelpers, FormikProps } from 'formik';
 import React, { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { FinancialCodeTypes } from '@/constants';
 import * as API from '@/constants/API';
-import { FinancialCodeTypes } from '@/constants/index';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';

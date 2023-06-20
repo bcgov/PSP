@@ -11,8 +11,8 @@ import {
   InlineMessage,
   StyledInlineMessageSection,
 } from '@/components/common/Section/SectionStyles';
-import { IBcAssessmentSummary } from '@/hooks/useBcAssessmentLayer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { formatBcaAddress } from '@/utils';
 import { pidFormatter } from '@/utils/propertyUtils';
 

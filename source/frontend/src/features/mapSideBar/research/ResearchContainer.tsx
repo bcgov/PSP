@@ -55,7 +55,7 @@ export const ResearchContainer: React.FunctionComponent<
   const formikRef = useRef<FormikProps<any>>(null);
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
-  const { search } = useMapSearch();
+  const { searchMany } = useMapSearch();
 
   const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
@@ -145,7 +145,7 @@ export const ResearchContainer: React.FunctionComponent<
     fetchResearchFile();
     setIsEditing(false);
     setEditKey(FormKeys.none);
-    search();
+    searchMany();
   };
 
   const showPropertiesSelector = () => {

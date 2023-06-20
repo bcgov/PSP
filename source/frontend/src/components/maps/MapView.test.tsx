@@ -5,8 +5,8 @@ import { FeatureCollection } from 'geojson';
 import React from 'react';
 
 import { Claims } from '@/constants/claims';
-import { useApiProperties } from '@/hooks/pims-api';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IProperty } from '@/interfaces';
 import { mockParcel } from '@/mocks/filterData.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -25,7 +25,8 @@ const mockParcels = [
   { id: 2, latitude: 53.917065, longitude: -122.749672 },
 ] as IProperty[];
 
-jest.mock('@/hooks/pims-api');
+jest.mock('@/hooks/pims-api/useApiGeocoder');
+jest.mock('@/hooks/pims-api/useApiProperties');
 
 const onViewPropertyClick = jest.fn();
 

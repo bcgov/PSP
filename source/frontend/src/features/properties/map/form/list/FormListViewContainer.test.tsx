@@ -2,13 +2,13 @@ import { createMemoryHistory } from 'history';
 import { filter, sortBy } from 'lodash';
 
 import { FileTypes } from '@/constants/fileTypes';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 import { getMockApiFileForms } from '@/mocks/form.mock';
-import { mockLookups } from '@/mocks/index.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '../../../../mapSideBar/context/sidebarContext';
 import { IFormListViewProps } from './FormListView';
 import FormListViewContainer, { IFormListViewContainerProps } from './FormListViewContainer';
 

@@ -18,12 +18,12 @@ import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { withNameSpace } from '@/utils/formUtils';
 
-import SidebarFooter from '../../../../shared/SidebarFooter';
 import { CompensationRequisitionYupSchema } from './CompensationRequisitionYupSchema';
 import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm';
 import { CompensationRequisitionFormModel, PayeeOption } from './models';

@@ -10,11 +10,10 @@ import BcAssessmentTabView from '@/features/mapSideBar/property/tabs/bcAssessmen
 import LtsaTabView from '@/features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
-
-import ComposedProperty from './ComposedProperty';
+import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 
 export interface IPropertyContainerProps {
-  composedProperty: ComposedProperty;
+  composedPropertyState: ComposedPropertyState;
   setEditMode: (isEditing: boolean) => void;
 }
 
@@ -23,20 +22,20 @@ export interface IPropertyContainerProps {
  */
 export const PropertyContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyContainerProps>
-> = ({ composedProperty, setEditMode }) => {
-  const showPropertyInfoTab = composedProperty?.id !== undefined;
+> = ({ composedPropertyState, setEditMode }) => {
+  const showPropertyInfoTab = composedPropertyState?.id !== undefined;
 
   const tabViews: TabInventoryView[] = [];
 
   tabViews.push({
     content: (
       <LtsaTabView
-        ltsaData={composedProperty.ltsaWrapper?.response}
-        ltsaRequestedOn={composedProperty.ltsaWrapper?.requestedOn}
-        loading={composedProperty.ltsaWrapper?.loading ?? false}
+        ltsaData={composedPropertyState.ltsaWrapper?.response}
+        ltsaRequestedOn={composedPropertyState.ltsaWrapper?.requestedOn}
+        loading={composedPropertyState.ltsaWrapper?.loading ?? false}
         pid={
-          composedProperty?.pid?.toString() ??
-          composedProperty?.apiWrapper?.response?.pid?.toString()
+          composedPropertyState?.pid?.toString() ??
+          composedPropertyState?.apiWrapper?.response?.pid?.toString()
         }
       />
     ),
@@ -47,12 +46,12 @@ export const PropertyContainer: React.FunctionComponent<
   tabViews.push({
     content: (
       <BcAssessmentTabView
-        summaryData={composedProperty.bcAssessmentWrapper?.response}
-        requestedOn={composedProperty.bcAssessmentWrapper?.requestedOn}
-        loading={composedProperty.bcAssessmentWrapper?.loading ?? false}
+        summaryData={composedPropertyState.bcAssessmentWrapper?.response}
+        requestedOn={composedPropertyState.bcAssessmentWrapper?.requestedOn}
+        loading={composedPropertyState.bcAssessmentWrapper?.loading ?? false}
         pid={
-          composedProperty?.pid?.toString() ??
-          composedProperty?.apiWrapper?.response?.pid?.toString()
+          composedPropertyState?.pid?.toString() ??
+          composedPropertyState?.apiWrapper?.response?.pid?.toString()
         }
       />
     ),
@@ -63,7 +62,7 @@ export const PropertyContainer: React.FunctionComponent<
   var defaultTab = InventoryTabNames.title;
 
   // TODO: PSP-4406 this should have a loading flag
-  const propertyViewForm = usePropertyDetails(composedProperty.apiWrapper?.response);
+  const propertyViewForm = usePropertyDetails(composedPropertyState.apiWrapper?.response);
 
   if (showPropertyInfoTab) {
     // After API property object has been received, we query relevant map layers to find
@@ -73,7 +72,7 @@ export const PropertyContainer: React.FunctionComponent<
       content: (
         <PropertyDetailsTabView
           property={propertyViewForm}
-          loading={composedProperty.apiWrapper?.loading ?? false}
+          loading={composedPropertyState.apiWrapper?.loading ?? false}
           setEditMode={setEditMode}
         />
       ),
@@ -83,12 +82,12 @@ export const PropertyContainer: React.FunctionComponent<
     defaultTab = InventoryTabNames.property;
   }
 
-  if (composedProperty.propertyAssociationWrapper?.response?.id !== undefined) {
+  if (composedPropertyState.propertyAssociationWrapper?.response?.id !== undefined) {
     tabViews.push({
       content: (
         <PropertyAssociationTabView
-          isLoading={composedProperty.propertyAssociationWrapper?.loading}
-          associations={composedProperty.propertyAssociationWrapper?.response}
+          isLoading={composedPropertyState.propertyAssociationWrapper?.loading}
+          associations={composedPropertyState.propertyAssociationWrapper?.response}
         />
       ),
       key: InventoryTabNames.pims,
@@ -100,7 +99,7 @@ export const PropertyContainer: React.FunctionComponent<
 
   return (
     <InventoryTabs
-      loading={composedProperty.composedLoading}
+      loading={composedPropertyState.composedLoading}
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab}

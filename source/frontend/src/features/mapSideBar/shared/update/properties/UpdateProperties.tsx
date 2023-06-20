@@ -12,12 +12,12 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
+import SidebarFooter from '../../SidebarFooter';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 export interface IUpdatePropertiesProps {

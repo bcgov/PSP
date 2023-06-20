@@ -2,8 +2,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
-import { useApiRequestWrapper } from '@/hooks/pims-api/useApiRequestWrapper';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { Api_User } from '@/models/api/User';
 
