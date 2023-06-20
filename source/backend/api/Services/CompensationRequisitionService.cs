@@ -99,9 +99,14 @@ namespace Pims.Api.Services
                 }
             }
 
-            if (payeeCheque is not null)
+            if (payeeCheque is not null && payeeCheque.AcqPayeeChequeId > 0)
             {
                 _compensationRequisitionRepository.UpdatePayeeCheque(payeeCheque);
+            }
+            else
+            {
+                payeeCheque.AcquisitionPayeeId = updatedPayee.AcquisitionPayeeId;
+                _compensationRequisitionRepository.AddPayeeCheque(payeeCheque);
             }
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);

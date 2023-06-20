@@ -9,7 +9,7 @@ namespace Pims.Api.Models.Concepts
         {
             config.NewConfig<Entity.PimsAcquisitionPayee, CompensationPayeeModel>()
                 .PreserveReference(true)
-                .Map(dest => dest.AcquisitionPayeeId, src => src.AcquisitionPayeeId)
+                .Map(dest => dest.Id, src => src.AcquisitionPayeeId)
                 .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
                 .Map(dest => dest.AcquisitionOwnerId, src => src.AcquisitionOwnerId)
                 .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
@@ -28,7 +28,7 @@ namespace Pims.Api.Models.Concepts
 
             config.NewConfig<CompensationPayeeModel, Entity.PimsAcquisitionPayee>()
                 .PreserveReference(true)
-                .Map(dest => dest.AcquisitionPayeeId, src => src.AcquisitionPayeeId)
+                .Map(dest => dest.AcquisitionPayeeId, src => src.Id)
                 .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
                 .Map(dest => dest.AcquisitionOwnerId, src => src.AcquisitionOwnerId)
                 .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)

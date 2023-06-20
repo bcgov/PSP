@@ -44,6 +44,7 @@ export class CompensationRequisitionFormModel {
 
   toApi(payeeOptions: PayeeOption[]): Api_CompensationRequisition {
     const apiPayee: Api_CompensationPayee | null = PayeeOption.toApi(
+      this.payees[0]._id,
       this.id,
       this.payeeKey,
       payeeOptions,
@@ -342,6 +343,7 @@ export class PayeeOption {
   }
 
   public static toApi(
+    id: number | null,
     compensationRequisitionId: number | null,
     value: string,
     options: PayeeOption[],
@@ -357,7 +359,7 @@ export class PayeeOption {
     }
 
     const payee: Api_CompensationPayee = {
-      id: 0,
+      id: id,
       compensationRequisitionId: compensationRequisitionId || 0,
       acquisitionOwnerId: null,
       interestHolderId: null,

@@ -82,6 +82,13 @@ namespace Pims.Dal.Repositories
             return compensationPayee;
         }
 
+        public PimsAcqPayeeCheque AddPayeeCheque(PimsAcqPayeeCheque payeeCheque)
+        {
+            Context.PimsAcqPayeeCheques.Add(payeeCheque);
+
+            return payeeCheque;
+        }
+
         public PimsAcqPayeeCheque UpdatePayeeCheque(PimsAcqPayeeCheque payeeCheque)
         {
             var existingPayeeCheque = Context.PimsAcqPayeeCheques

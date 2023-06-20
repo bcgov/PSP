@@ -4,7 +4,7 @@ namespace Pims.Api.Models.Concepts
 {
     public class CompensationPayeeModel : BaseAppModel
     {
-        public long AcquisitionPayeeId { get; set; }
+        public long Id { get; set; }
 
         public long CompensationRequisitionId { get; set; }
 
