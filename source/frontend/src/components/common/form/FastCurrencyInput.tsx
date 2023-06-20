@@ -99,7 +99,8 @@ const CurrencyInput = ({
   }
 
   const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
+    const regex = rest.allowNegative ? /[^0-9.-]/g : /[^0-9.]/g;
+    const cleanValue = e.target.value.replace(regex, '');
     setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
     if (typeof onChange === 'function') {
       onChange(e);
@@ -146,6 +147,7 @@ const CurrencyInput = ({
           prefix={'$'}
           thousandSeparator
           placeholder={placeholder || ''}
+          allowNegative={rest.allowNegative}
         />
         {!label && !!tooltip && <TooltipIcon toolTipId="currency" toolTip={tooltip} />}
 

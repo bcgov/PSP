@@ -33,7 +33,12 @@ export class StakeHolderForm {
           gih => gih.interestHolderProperties[0].interestTypeCode?.id === ihp.interestTypeCode?.id,
         );
         const ihpParent = apiModel.find(ih => ih.interestHolderId === ihp.interestHolderId);
-        if (!matchingInterestHolder && ihpParent) {
+        if (
+          !!ihpParent &&
+          (!matchingInterestHolder ||
+            ihpParent?.personId !== matchingInterestHolder?.personId ||
+            ihpParent?.organizationId !== matchingInterestHolder?.organizationId)
+        ) {
           groupedInterestHolders.push({
             ...ihpParent,
             interestHolderProperties: [ihp],

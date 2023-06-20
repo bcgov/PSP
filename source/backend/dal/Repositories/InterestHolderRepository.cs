@@ -47,7 +47,13 @@ namespace Pims.Dal.Repositories
 
         public List<PimsInterestHolder> UpdateAllForAcquisition(long acquisitionFileId, List<PimsInterestHolder> interestHolders)
         {
+            // TODO: remove when cascade implemented.
+            var existingInterestHolders = GetInterestHoldersByAcquisitionFile(acquisitionFileId);
+            var deletedInterestHolders = existingInterestHolders.Where(existingInterestHolder => !interestHolders.Any(interestHolder => interestHolder.InterestHolderId == existingInterestHolder.InterestHolderId));
+            deletedInterestHolders.SelectMany(deletedInterestHolder => deletedInterestHolder.PimsInthldrPropInterests).ForEach(deletedPropertyInterest => Context.Remove(deletedPropertyInterest));
+
             Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFileId, interestHolders.ToArray());
+
             interestHolders.ForEach(ih =>
             {
                 // ignore interest holders with no id, as those are new and do not require updates, the will be inserted by the parent's updateChild.
