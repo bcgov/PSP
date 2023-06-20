@@ -93,16 +93,36 @@ namespace Pims.Api.Test.Services
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1 });
+            repository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition {
+                    Internal_Id = 1,
+                    PimsAcquisitionPayees = new List<PimsAcquisitionPayee>
+                    {
+                        new PimsAcquisitionPayee() { CompensationRequisitionId = 1, }
+                    }
+                });
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition { Internal_Id = 1, ConcurrencyControlNumber = 2 });
+            var result = service.Update(
+                new PimsCompensationRequisition {
+                    Internal_Id = 1,
+                    ConcurrencyControlNumber = 2,
+                    PimsAcquisitionPayees = new List<PimsAcquisitionPayee> {
+                        new PimsAcquisitionPayee() {
+                            AcquisitionPayeeId = 1,
+                            CompensationRequisitionId = 1,
+                            PimsAcqPayeeCheques = new List<PimsAcqPayeeCheque>
+                            {
+                                new PimsAcqPayeeCheque() { }
+                            }
+                        },
+                    }
+                });
 
             // Assert
             result.Should().NotBeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
-
 
         private CompensationRequisitionService CreateCompRequisitionServiceWithPermissions(params Permissions[] permissions)
         {
