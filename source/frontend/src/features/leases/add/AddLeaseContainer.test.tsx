@@ -6,7 +6,6 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Lease } from '@/models/api/Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions, screen, waitFor } from '@/utils/test-utils';

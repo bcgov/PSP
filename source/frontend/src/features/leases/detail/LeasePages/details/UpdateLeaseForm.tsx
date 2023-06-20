@@ -8,7 +8,6 @@ import AdministrationSubForm from '@/features/leases/add/AdministrationSubForm';
 import ConsultationSubForm from '@/features/leases/add/ConsultationSubForm';
 import LeaseDetailSubForm from '@/features/leases/add/LeaseDetailSubForm';
 import ReferenceSubForm from '@/features/leases/add/ReferenceSubForm';
-import * as Styled from '@/features/leases/add/styles';
 import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { LeasePropertySelector } from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
 
