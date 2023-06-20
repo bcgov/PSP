@@ -50,7 +50,7 @@ export class CompensationRequisitionFormModel {
     );
 
     if (apiPayee) {
-      apiPayee.cheques = this.payees[0].cheques.map(x => x.toApi());
+      apiPayee.cheques = this.payees[0].cheques.map(x => AcquisitionPayeeChequeFormModel.toApi(x));
     }
 
     return {
@@ -230,7 +230,7 @@ export class AcquisitionPayeeFormModel {
       motiSolicitorId: null,
       acquisitionFilePersonId: null,
       acquisitionOwner: null,
-      cheques: this.cheques.map<Api_PayeeCheque>(x => x.toApi()),
+      cheques: this.cheques.map<Api_PayeeCheque>(x => AcquisitionPayeeChequeFormModel.toApi(x)),
       isDisabled: stringToBoolean(this.isDisabled),
       rowVersion: this.rowVersion ?? null,
     };
@@ -269,16 +269,16 @@ export class AcquisitionPayeeChequeFormModel {
     return payeeChequeModel;
   }
 
-  toApi(): Api_PayeeCheque {
+  static toApi(model: AcquisitionPayeeChequeFormModel): Api_PayeeCheque {
     return {
-      id: this._id,
-      acquisitionPayeeId: this._acquisitionPayeeId,
-      isPaymentInTrust: this.isPaymentInTrust,
-      gstNumber: this.gstNumber,
+      id: model._id,
+      acquisitionPayeeId: model._acquisitionPayeeId,
+      isPaymentInTrust: model.isPaymentInTrust,
+      gstNumber: model.gstNumber,
       pretaxAmout: null,
       taxAmount: null,
       totalAmount: null,
-      rowVersion: this.rowVersion ?? null,
+      rowVersion: model.rowVersion ?? null,
     };
   }
 }

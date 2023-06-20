@@ -222,6 +222,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   </SectionField>
                   <SectionField label="Amount (before tax)">
                     <FastCurrencyInput
+                      allowNegative
                       field={withNameSpace('payees.0', 'cheques[0].pretaxAmount')}
                       formikProps={formikProps}
                       disabled
@@ -229,6 +230,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   </SectionField>
                   <SectionField label="GST amount">
                     <FastCurrencyInput
+                      allowNegative
                       field={withNameSpace('payees.0', 'cheques[0].taxAmount')}
                       formikProps={formikProps}
                       disabled
@@ -239,6 +241,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                     tooltip="Calculated total of all activities in this compensation requisition"
                   >
                     <FastCurrencyInput
+                      allowNegative
                       field={withNameSpace('payees.0', 'cheques[0].totalAmount')}
                       formikProps={formikProps}
                       disabled
