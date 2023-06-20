@@ -334,7 +334,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
-			ValidateInterestHoldersDependency(acquisitionFileId, interestHolders);
+            ValidateInterestHoldersDependency(acquisitionFileId, interestHolders);
             _interestHolderRepository.UpdateAllForAcquisition(acquisitionFileId, interestHolders);
             _interestHolderRepository.CommitTransaction();
 
