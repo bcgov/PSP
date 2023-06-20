@@ -75,13 +75,13 @@ describe('ProjectSelector component', () => {
   it('makes request for matching projects', async () => {
     const { getInput } = setup(testForm);
 
-    await act(() => userEvent.type(getInput()!, 'test'));
+    act(() => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
   });
 
   it('shows matching projects based on user input', async () => {
     const { getInput, findItems } = setup(testForm);
-    await act(() => userEvent.type(getInput()!, 'test'));
+    act(() => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
 
     const items = await findItems();
@@ -91,13 +91,13 @@ describe('ProjectSelector component', () => {
 
   it('calls onChange callback when a project is selected', async () => {
     const { getInput, findItems } = setup(testForm);
-    await act(() => userEvent.type(getInput()!, 'test'));
+    act(() => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
 
     const items = await findItems();
     expect(items).toHaveLength(1);
-    items[0].focus();
-    await act(() => userEvent.keyboard('{Enter}'));
+    act(() => items[0].focus());
+    await act(async () => userEvent.keyboard('{Enter}'));
     expect(onChange).toHaveBeenCalled();
   });
 });
