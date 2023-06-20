@@ -50,7 +50,7 @@ export class CompensationRequisitionFormModel {
     );
 
     if (apiPayee) {
-      apiPayee.cheques = this.payees[0].cheques.map(x => x.toApi());
+      apiPayee.cheques = this.payees[0].cheques.map(x => AcquisitionPayeeChequeFormModel.toApi(x));
     }
 
     return {
@@ -230,7 +230,7 @@ export class AcquisitionPayeeFormModel {
       motiSolicitorId: null,
       acquisitionFilePersonId: null,
       acquisitionOwner: null,
-      cheques: this.cheques.map<Api_PayeeCheque>(x => x.toApi()),
+      cheques: this.cheques.map<Api_PayeeCheque>(x => AcquisitionPayeeChequeFormModel.toApi(x)),
       isDisabled: stringToBoolean(this.isDisabled),
       rowVersion: this.rowVersion ?? null,
     };
@@ -269,16 +269,16 @@ export class AcquisitionPayeeChequeFormModel {
     return payeeChequeModel;
   }
 
-  toApi(): Api_PayeeCheque {
+  static toApi(model: AcquisitionPayeeChequeFormModel): Api_PayeeCheque {
     return {
-      id: this._id,
-      acquisitionPayeeId: this._acquisitionPayeeId,
-      isPaymentInTrust: this.isPaymentInTrust,
-      gstNumber: this.gstNumber,
+      id: model._id,
+      acquisitionPayeeId: model._acquisitionPayeeId,
+      isPaymentInTrust: model.isPaymentInTrust,
+      gstNumber: model.gstNumber,
       pretaxAmout: null,
       taxAmount: null,
       totalAmount: null,
-      rowVersion: this.rowVersion ?? null,
+      rowVersion: model.rowVersion ?? null,
     };
   }
 }
@@ -294,12 +294,20 @@ enum PayeeType {
 export class PayeeOption {
   public readonly api_id: number;
   public readonly text: string;
+  public readonly fullText: string;
   public readonly value: string;
   public readonly payeeType: PayeeType;
 
-  private constructor(api_id: number, text: string, value: string, payeeType: PayeeType) {
+  private constructor(
+    api_id: number,
+    name: string,
+    key: string,
+    value: string,
+    payeeType: PayeeType,
+  ) {
     this.api_id = api_id;
-    this.text = text;
+    this.fullText = `${name}(${key})`;
+    this.text = `${truncateName(name)}(${key})`;
     this.value = value;
     this.payeeType = payeeType;
   }
@@ -397,7 +405,8 @@ export class PayeeOption {
       : [model.givenName, model.lastNameAndCorpName, model.otherName].filter(x => !!x).join(' ');
     return new PayeeOption(
       model.id || 0,
-      `${name} (Owner)`,
+      name,
+      'Owner',
       PayeeOption.generateKey(model.id, PayeeType.Owner),
       PayeeType.Owner,
     );
@@ -412,7 +421,8 @@ export class PayeeOption {
     }
     return new PayeeOption(
       model.id || 0,
-      `${name} (Owner's Solicitor)`,
+      name,
+      `Owner's Solicitor`,
       PayeeOption.generateKey(model.id, PayeeType.OwnerSolicitor),
       PayeeType.OwnerSolicitor,
     );
@@ -422,7 +432,8 @@ export class PayeeOption {
     let name = formatApiPersonNames(model.person);
     return new PayeeOption(
       model.id || 0,
-      `${name} (Owner's Representative)`,
+      name,
+      `Owner's Representative`,
       PayeeOption.generateKey(model.id, PayeeType.OwnerRepresentative),
       PayeeType.OwnerRepresentative,
     );
@@ -432,7 +443,8 @@ export class PayeeOption {
     let name = formatApiPersonNames(model.person);
     return new PayeeOption(
       model.id || 0,
-      `${name} (${model.personProfileType?.description})`,
+      name,
+      `${model.personProfileType?.description}`,
       PayeeOption.generateKey(model.id, PayeeType.AcquisitionTeam),
       PayeeType.AcquisitionTeam,
     );
@@ -454,7 +466,8 @@ export class PayeeOption {
 
     return new PayeeOption(
       model.interestHolderId || 0,
-      `${name} (${typeDescription})`,
+      name,
+      `${typeDescription}`,
       PayeeOption.generateKey(model.interestHolderId, PayeeType.InterestHolder),
       PayeeType.InterestHolder,
     );
@@ -462,5 +475,13 @@ export class PayeeOption {
 
   private static generateKey(modelId: number | null | undefined, payeeType: PayeeType) {
     return `${payeeType}-${modelId}`;
+  }
+}
+
+function truncateName(name: string): string {
+  if (name.length > 50) {
+    return name.slice(0, 50) + '...';
+  } else {
+    return name;
   }
 }

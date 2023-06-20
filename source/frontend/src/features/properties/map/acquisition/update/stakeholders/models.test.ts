@@ -36,6 +36,29 @@ describe('Interest Holder model tests', () => {
     expect(stakeholderModel.interestHolders).toHaveLength(2);
   });
 
+  it('StakeHolderForm does not combine multiple stakeholders even if they have the same type', () => {
+    const apiInterestHolders: Api_InterestHolder[] = [
+      {
+        ...emptyApiInterestHolder,
+        interestHolderId: 1,
+        personId: 2,
+        interestHolderProperties: [
+          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'ip' }, interestHolderId: 1 },
+        ],
+      },
+      {
+        ...emptyApiInterestHolder,
+        interestHolderId: 2,
+        personId: 1,
+        interestHolderProperties: [
+          { ...emptyInterestHolderProperty, interestTypeCode: { id: 'ip' }, interestHolderId: 2 },
+        ],
+      },
+    ];
+    const stakeholderModel = StakeHolderForm.fromApi(apiInterestHolders);
+    expect(stakeholderModel.interestHolders).toHaveLength(2);
+  });
+
   it('StakeHolderForm splits multiple InterestHolders into interests and non-interests', () => {
     const apiInterestHolders: Api_InterestHolder[] = [
       {

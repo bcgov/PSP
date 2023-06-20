@@ -78,7 +78,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     } else if (compensationPayee.ownerRepresentativeId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerRepresentative?.person);
     } else if (compensationPayee.ownerSolicitorId) {
-      payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerSolicitor?.person);
+      payeeDetail.displayName = compensationPayee.ownerSolicitor?.person
+        ? formatApiPersonNames(compensationPayee.ownerSolicitor?.person)
+        : compensationPayee.ownerSolicitor?.organization?.name ?? '';
     } else if (compensationPayee.motiSolicitorId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.motiSolicitor);
     }
