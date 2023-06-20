@@ -11,9 +11,6 @@ namespace Pims.Dal.Repositories
     public interface IPropertyRepository : IRepository<PimsProperty>
     {
         int Count();
-
-        IEnumerable<PimsProperty> GetAllByFilter(PropertyFilter filter);
-
         Paged<PimsProperty> GetPage(PropertyFilter filter);
 
         PimsProperty GetById(long id);
