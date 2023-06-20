@@ -205,8 +205,11 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <SectionField label="Payee" labelWidth="4" required>
                     <Select
                       field="payeeKey"
+                      title={
+                        payeeOptions.find(p => p.value === formikProps.values.payeeKey)?.fullText
+                      }
                       options={payeeOptions.map<SelectOption>(x => {
-                        return { label: x.text, value: x.value };
+                        return { label: x.text, value: x.value, title: x.fullText };
                       })}
                       placeholder="Select..."
                     />
