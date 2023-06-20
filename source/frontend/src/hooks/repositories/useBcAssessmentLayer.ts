@@ -10,7 +10,6 @@ import { IResponseWrapper, useApiRequestWrapper } from '../util/useApiRequestWra
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the BC assessment layer.
  * @returns Object containing functions to make requests to the WFS layer.
- * Note: according to https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric/resource/959af382-fb31-4f57-b8ea-e6dcb6ce2e0b
  */
 export const useBcAssessmentLayer = (
   url: string,
