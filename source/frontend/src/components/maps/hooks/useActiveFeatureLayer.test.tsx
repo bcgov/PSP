@@ -45,12 +45,17 @@ const useFullyAttributedParcelMapLayerMock = {
 const useAdminBoundaryMapLayerMock = {
   findRegion: jest.fn(),
   findDistrict: jest.fn(),
+  findElectoralDistrict: jest.fn(),
 };
 (useAdminBoundaryMapLayer as jest.Mock).mockReturnValue(useAdminBoundaryMapLayerMock);
 
 const useLayerQueryMock = {
   findOneWhereContains: jest.fn(),
+  findByPid: jest.fn(),
+  findByPin: jest.fn(),
+  findByPlanNumber: jest.fn(),
   findMetadataByLocation: jest.fn(),
+  findOneWhereContainsWrapped: { execute: jest.fn() },
 };
 (useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
 
@@ -85,7 +90,7 @@ describe('useActiveFeatureLayer hook tests', () => {
   afterEach(() => {
     clearLayers.mockClear();
     addData.mockClear();
-    useLayerQueryMock.findOneWhereContains.mockClear();
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockClear();
     useLayerQueryMock.findMetadataByLocation.mockClear();
     useAdminBoundaryMapLayerMock.findDistrict.mockClear();
     useAdminBoundaryMapLayerMock.findRegion.mockClear();
@@ -162,10 +167,10 @@ describe('useActiveFeatureLayer hook tests', () => {
       properties: { PID: '123456789' },
     });
 
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [{ properties: { pid: '123456789' } }],
     });
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [{ properties: { PROPERTY_ID: 200 } }],
     });
     renderHook(
@@ -191,10 +196,10 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('sets the layer popup with the expected municipality data', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [],
     });
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [{ properties: { PROPERTY_ID: 200 } }],
     });
     //this will return data for the municipality layer.
@@ -221,10 +226,10 @@ describe('useActiveFeatureLayer hook tests', () => {
   });
 
   it('sets the layer popup with no data', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [],
     });
-    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+    useLayerQueryMock.findOneWhereContainsWrapped.execute.mockResolvedValueOnce({
       features: [],
     });
     renderHook(

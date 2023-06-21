@@ -216,6 +216,84 @@ exports[`MapContainer Renders the map 1`] = `
   border-bottom-left-radius: 0;
 }
 
+.c11 {
+  grid-area: map;
+}
+
+.c11 .leaflet-div-icon {
+  background: none;
+  border: none;
+}
+
+.c11 .leaflet-div-icon img {
+  width: inherit;
+  height: inherit;
+  -webkit-filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+  filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+}
+
+.c11 .leaflet-container {
+  height: 100%;
+  margin: auto;
+  font-size: 1.2rem;
+}
+
+.c11 .leaflet-container .leaflet-control-attribution {
+  font-size: 1.1rem;
+}
+
+.c11 .leaflet-container .leaflet-popup-content-wrapper {
+  border-radius: 0;
+}
+
+.c11 .leaflet-container .leaflet-popup-content {
+  margin: 0rem;
+}
+
+.c11 .leaflet-container .leaflet-control-container .leaflet-top {
+  z-index: 500;
+}
+
+.c11 .leaflet-control-layers.leaflet-control-layers-expanded {
+  border-radius: 0rem;
+}
+
+.c11 .leaflet-control-layers .leaflet-control-layers-overlays {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 1rem;
+  width: 15rem;
+}
+
+.c11 .leaflet-control-layers .leaflet-control-layers-overlays label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas: 'filter filter' 'map map';
+  -webkit-transition: margin 1s,width 1s;
+  transition: margin 1s,width 1s;
+  position: relative;
+}
+
+.c2.sidebar {
+  grid-template-rows: 0 1fr;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
 .c18 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -338,84 +416,6 @@ exports[`MapContainer Renders the map 1`] = `
   background-color: #ffffff;
   width: 4rem;
   height: 4rem;
-}
-
-.c11 {
-  grid-area: map;
-}
-
-.c11 .leaflet-div-icon {
-  background: none;
-  border: none;
-}
-
-.c11 .leaflet-div-icon img {
-  width: inherit;
-  height: inherit;
-  -webkit-filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
-  filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
-}
-
-.c11 .leaflet-container {
-  height: 100%;
-  margin: auto;
-  font-size: 1.2rem;
-}
-
-.c11 .leaflet-container .leaflet-control-attribution {
-  font-size: 1.1rem;
-}
-
-.c11 .leaflet-container .leaflet-popup-content-wrapper {
-  border-radius: 0;
-}
-
-.c11 .leaflet-container .leaflet-popup-content {
-  margin: 0rem;
-}
-
-.c11 .leaflet-container .leaflet-control-container .leaflet-top {
-  z-index: 500;
-}
-
-.c11 .leaflet-control-layers.leaflet-control-layers-expanded {
-  border-radius: 0rem;
-}
-
-.c11 .leaflet-control-layers .leaflet-control-layers-overlays {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  padding: 1rem;
-  width: 15rem;
-}
-
-.c11 .leaflet-control-layers .leaflet-control-layers-overlays label {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c2 {
-  width: 100%;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: min-content 1fr;
-  grid-template-areas: 'filter filter' 'map map';
-  -webkit-transition: margin 1s,width 1s;
-  transition: margin 1s,width 1s;
-  position: relative;
-}
-
-.c2.sidebar {
-  grid-template-rows: 0 1fr;
-  -webkit-transition: 1s;
-  transition: 1s;
 }
 
 .c3 {

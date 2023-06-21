@@ -20,7 +20,9 @@ export const usePimsPropertyLayer = () => {
     tenant: { propertiesUrl },
   } = useContext(TenantContext);
 
-  const { findOneWhereContainsWrapped, findOneWhereContainsLoading } = useLayerQuery(propertiesUrl);
+  const { findOneWhereContainsWrapped } = useLayerQuery(propertiesUrl);
+  const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
+  const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
 
   const loadPropertyLayer = useApiRequestWrapper({
     requestFunction: useCallback(
@@ -46,7 +48,7 @@ export const usePimsPropertyLayer = () => {
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
-      const featureCollection = await findOneWhereContainsWrapped(
+      const featureCollection = await findOneWhereContainsWrappedExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -62,15 +64,15 @@ export const usePimsPropertyLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [findOneWhereContainsWrapped],
+    [findOneWhereContainsWrappedExecute],
   );
 
   return useMemo(
     () => ({
       loadPropertyLayer,
       findOne,
-      findOneLoading: findOneWhereContainsLoading,
+      findOneLoading: findOneWhereContainsWrappedLoading,
     }),
-    [loadPropertyLayer, findOne, findOneWhereContainsLoading],
+    [loadPropertyLayer, findOne, findOneWhereContainsWrappedLoading],
   );
 };

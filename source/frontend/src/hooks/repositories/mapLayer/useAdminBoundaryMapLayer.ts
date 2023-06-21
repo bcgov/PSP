@@ -17,18 +17,27 @@ import { useTenant } from '@/tenants';
  */
 export const useAdminBoundaryMapLayer = () => {
   const tenant = useTenant();
-  const {
-    findOneWhereContainsWrapped: findOneWhereContainsRegion,
-    findOneWhereContainsLoading: regionSearchLoading,
-  } = useLayerQuery(tenant.motiRegionLayerUrl);
-  const {
-    findOneWhereContainsWrapped: findOneWhereContainsDistrict,
-    findOneWhereContainsLoading: districtSearchLoading,
-  } = useLayerQuery(tenant.hwyDistrictLayerUrl);
+  const { findOneWhereContainsWrapped: findOneWhereContainsRegionWrapped } = useLayerQuery(
+    tenant.motiRegionLayerUrl,
+  );
+  const findOneWhereContainsRegionExecute = findOneWhereContainsRegionWrapped.execute;
+  const findOneWhereContainsRegionLoading = findOneWhereContainsRegionWrapped.loading;
+
+  const { findOneWhereContainsWrapped: findOneWhereContainsDistrictWrapped } = useLayerQuery(
+    tenant.hwyDistrictLayerUrl,
+  );
+  const findOneWhereContainsDistrictExecute = findOneWhereContainsDistrictWrapped.execute;
+  const findOneWhereContainsDistrictLoading = findOneWhereContainsDistrictWrapped.loading;
+
+  const { findOneWhereContainsWrapped: findOneWhereContainsWrappedElectoral } = useLayerQuery(
+    tenant.electoralLayerUrl,
+  );
+  const findOneWhereContainsElectoralExecute = findOneWhereContainsWrappedElectoral.execute;
+  const findOneWhereContainsElectoralLoading = findOneWhereContainsWrappedElectoral.loading;
 
   const findRegion = useCallback(
     async (latlng: LatLngLiteral, geometryName: string = 'SHAPE', spatialReferenceId = 4326) => {
-      const featureCollection = await findOneWhereContainsRegion(
+      const featureCollection = await findOneWhereContainsRegionExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -43,12 +52,12 @@ export const useAdminBoundaryMapLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [findOneWhereContainsRegion],
+    [findOneWhereContainsRegionExecute],
   );
 
   const findDistrict = useCallback(
     async (latlng: LatLngLiteral, geometryName: string = 'SHAPE', spatialReferenceId = 4326) => {
-      const featureCollection = await findOneWhereContainsDistrict(
+      const featureCollection = await findOneWhereContainsDistrictExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -63,15 +72,16 @@ export const useAdminBoundaryMapLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [findOneWhereContainsDistrict],
+    [findOneWhereContainsDistrictExecute],
   );
-
-  const { findOneWhereContains: electoralApi, findOneWhereContainsLoading: electoralLoading } =
-    useLayerQuery(tenant.electoralLayerUrl);
 
   const findElectoralDistrict = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
-      const featureCollection = await electoralApi(latlng, geometryName, spatialReferenceId);
+      const featureCollection = await findOneWhereContainsElectoralExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       const forceCasted = featureCollection as
@@ -81,7 +91,7 @@ export const useAdminBoundaryMapLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [electoralApi],
+    [findOneWhereContainsElectoralExecute],
   );
 
   return useMemo(
@@ -89,17 +99,17 @@ export const useAdminBoundaryMapLayer = () => {
       findRegion,
       findDistrict,
       findElectoralDistrict,
-      findRegionLoading: regionSearchLoading,
-      findDistrictLoading: districtSearchLoading,
-      findElectoralDistrictLoading: electoralLoading,
+      findRegionLoading: findOneWhereContainsRegionLoading,
+      findDistrictLoading: findOneWhereContainsDistrictLoading,
+      findElectoralDistrictLoading: findOneWhereContainsElectoralLoading,
     }),
     [
       findRegion,
       findDistrict,
       findElectoralDistrict,
-      regionSearchLoading,
-      districtSearchLoading,
-      electoralLoading,
+      findOneWhereContainsRegionLoading,
+      findOneWhereContainsDistrictLoading,
+      findOneWhereContainsElectoralLoading,
     ],
   );
 };

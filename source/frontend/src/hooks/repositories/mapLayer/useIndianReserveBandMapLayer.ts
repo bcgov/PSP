@@ -14,11 +14,13 @@ import { useTenant } from '@/tenants';
 export const useIndianReserveBandMapLayer = () => {
   const { reservesLayerUrl } = useTenant();
 
-  const { findOneWhereContains, findOneWhereContainsLoading } = useLayerQuery(reservesLayerUrl);
+  const { findOneWhereContainsWrapped } = useLayerQuery(reservesLayerUrl);
+  const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
+  const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
 
   const findOne = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
-      const featureCollection = await findOneWhereContains(
+      const featureCollection = await findOneWhereContainsWrappedExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -32,14 +34,14 @@ export const useIndianReserveBandMapLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [findOneWhereContains],
+    [findOneWhereContainsWrappedExecute],
   );
 
   return useMemo(
     () => ({
       findOne,
-      findOneLoading: findOneWhereContainsLoading,
+      findOneLoading: findOneWhereContainsWrappedLoading,
     }),
-    [findOne, findOneWhereContainsLoading],
+    [findOne, findOneWhereContainsWrappedLoading],
   );
 };
