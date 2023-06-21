@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
@@ -11,7 +11,6 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
-import { EditFormType } from '../EditFormNames';
 import AgreementContainer from './agreement/detail/AgreementContainer';
 import AgreementView from './agreement/detail/AgreementView';
 import { AcquisitionChecklistView } from './checklist/detail/AcquisitionChecklistView';
@@ -25,32 +24,32 @@ import StakeHolderView from './stakeholders/detail/StakeHolderView';
 export interface IAcquisitionFileTabsProps {
   acquisitionFile?: Api_AcquisitionFile;
   defaultTab: FileTabType;
+  setIsEditing: (value: boolean) => void;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
 export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   acquisitionFile,
   defaultTab,
+  setIsEditing,
   setContainerState,
 }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
-  const [activeTab, setActiveTab] = useState<FileTabType>(defaultTab);
 
   const history = useHistory();
+  const { tab } = useParams<{ tab?: string }>();
+  const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
+
+  const setActiveTab = (tab: FileTabType) => {
+    if (activeTab !== tab) {
+      history.push(`${tab}`);
+    }
+  };
 
   tabViews.push({
     content: (
-      <AcquisitionSummaryView
-        acquisitionFile={acquisitionFile}
-        onEdit={() =>
-          setContainerState({
-            isEditing: true,
-            activeEditForm: EditFormType.ACQUISITION_SUMMARY,
-            defaultFileTab: FileTabType.FILE_DETAILS,
-          })
-        }
-      />
+      <AcquisitionSummaryView acquisitionFile={acquisitionFile} onEdit={() => setIsEditing(true)} />
     ),
     key: FileTabType.FILE_DETAILS,
     name: 'File details',
@@ -60,13 +59,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     content: (
       <AcquisitionChecklistView
         acquisitionFile={acquisitionFile}
-        onEdit={() =>
-          setContainerState({
-            isEditing: true,
-            activeEditForm: EditFormType.ACQUISITION_CHECKLIST,
-            defaultFileTab: FileTabType.CHECKLIST,
-          })
-        }
+        onEdit={() => setIsEditing(true)}
       />
     ),
     key: FileTabType.CHECKLIST,
@@ -108,13 +101,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
         <AgreementContainer
           acquisitionFileId={acquisitionFile.id}
           View={AgreementView}
-          onEdit={() =>
-            setContainerState({
-              isEditing: true,
-              activeEditForm: EditFormType.AGREEMENTS,
-              defaultFileTab: FileTabType.AGREEMENTS,
-            })
-          }
+          onEdit={() => setIsEditing(true)}
         ></AgreementContainer>
       ),
       key: FileTabType.AGREEMENTS,
@@ -127,13 +114,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       content: (
         <StakeHolderContainer
           View={StakeHolderView}
-          onEdit={() =>
-            setContainerState({
-              isEditing: true,
-              activeEditForm: EditFormType.STAKEHOLDERS,
-              defaultFileTab: FileTabType.STAKEHOLDERS,
-            })
-          }
+          onEdit={() => setIsEditing(true)}
           acquisitionFile={acquisitionFile}
         ></StakeHolderContainer>
       ),

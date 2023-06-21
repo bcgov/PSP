@@ -1,11 +1,13 @@
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapSearch } from '@/components/maps/hooks/useMapSearch';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_File } from '@/models/api/File';
@@ -63,6 +65,20 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const formikRef = useRef<FormikProps<any>>(null);
 
+  const history = useHistory();
+  const match = useRouteMatch();
+  const query = useQuery();
+  const isEditing = query.get('edit') === 'true';
+
+  const setIsEditing = (value: boolean) => {
+    if (value) {
+      query.set('edit', value.toString());
+    } else {
+      query.delete('edit');
+    }
+    history.push({ search: query.toString() });
+  };
+
   /**
    See here that we are using `newState: Partial<AcquisitionContainerState>` in our reducer
    so we can provide only the properties that are updated on our state
@@ -115,22 +131,31 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
+  const navigateToMenuRoute = (selectedIndex: number) => {
+    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
+    history.push(`${match.url}${route}`);
+  };
+
   const onMenuChange = (selectedIndex: number) => {
-    if (containerState.isEditing) {
+    if (isEditing) {
       if (formikRef?.current?.dirty) {
         if (
           window.confirm('You have made changes on this form. Do you wish to leave without saving?')
         ) {
           handleCancelClick();
-          setContainerState({ selectedMenuIndex: selectedIndex });
+          navigateToMenuRoute(selectedIndex);
         }
       } else {
         handleCancelClick();
-        setContainerState({ selectedMenuIndex: selectedIndex });
+        navigateToMenuRoute(selectedIndex);
       }
     } else {
-      setContainerState({ selectedMenuIndex: selectedIndex });
+      navigateToMenuRoute(selectedIndex);
     }
+  };
+
+  const onShowPropertySelector = () => {
+    history.replace(`${match.url}/property/selector`);
   };
 
   const handleSaveClick = () => {
@@ -156,17 +181,14 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
-    setContainerState({
-      showConfirmModal: false,
-      isEditing: false,
-      activeEditForm: undefined,
-    });
+    setContainerState({ showConfirmModal: false });
+    setIsEditing(false);
   };
 
   const onSuccess = () => {
     fetchAcquisitionFile();
     searchMany();
-    setContainerState({ activeEditForm: undefined, isEditing: false });
+    setIsEditing(false);
   };
 
   const canRemove = async (propertyId: number) => {
@@ -183,7 +205,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
       return updateAcquisitionProperties
         .execute({ ...file, productId: null, projectId: null }, userOverrideCodes)
-        .then(() => onSuccess());
+        .then(response => {
+          onSuccess();
+          return response;
+        });
     });
   };
 
@@ -198,12 +223,15 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   return (
     <View
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
       containerState={containerState}
       setContainerState={setContainerState}
       onClose={close}
       onCancel={handleCancelClick}
       onSave={handleSaveClick}
       onMenuChange={onMenuChange}
+      onShowPropertySelector={onShowPropertySelector}
       onCancelConfirm={handleCancelConfirm}
       onUpdateProperties={onUpdateProperties}
       onSuccess={onSuccess}

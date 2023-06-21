@@ -1,5 +1,6 @@
 import { FormikProps } from 'formik';
-import * as React from 'react';
+import React from 'react';
+import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
@@ -12,20 +13,24 @@ import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
+import { AcquisitionRouter } from './AcquisitionRouter';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
 import { EditFormType } from './EditFormNames';
-import ViewSelector from './ViewSelector';
+import { FilePropertyRouter } from './FilePropertyRouter';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
   onSave: () => void;
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
+  onShowPropertySelector: () => void;
   onSuccess: () => void;
   onCancelConfirm: () => void;
   onUpdateProperties: (file: Api_File) => Promise<Api_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
+  isEditing: boolean;
+  setIsEditing: (value: boolean) => void;
   containerState: AcquisitionContainerState;
   setContainerState: React.Dispatch<Partial<AcquisitionContainerState>>;
   formikRef: React.RefObject<FormikProps<any>>;
@@ -36,16 +41,32 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onSave,
   onCancel,
   onMenuChange,
+  onShowPropertySelector,
   onSuccess,
   onCancelConfirm,
   onUpdateProperties,
   canRemove,
+  isEditing,
+  setIsEditing,
   containerState,
   setContainerState,
   formikRef,
 }) => {
+  // match for the current route
+  const history = useHistory();
+  const match = useRouteMatch();
+
+  const closePropertySelector = () => {
+    setIsEditing(false);
+    history.push(`${match.url}`);
+  };
+
+  // match for property menu routes - eg /property/1/ltsa
+  const propertiesMatch = useRouteMatch<{ menuIndex: string }>(`${match.path}/property/:menuIndex`);
+  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
+
   const formTitle =
-    containerState.isEditing && containerState.activeEditForm
+    isEditing && containerState.activeEditForm
       ? getEditTitle(containerState.activeEditForm)
       : 'Acquisition File';
 
@@ -53,95 +74,110 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
     containerState.acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
-  if (
-    containerState.activeEditForm === EditFormType.PROPERTY_SELECTOR &&
-    containerState.acquisitionFile
-  ) {
-    return (
-      <UpdateProperties
-        file={containerState.acquisitionFile}
-        setIsShowingPropertySelector={() =>
-          setContainerState({ activeEditForm: undefined, isEditing: false })
-        }
-        onSuccess={onSuccess}
-        updateFileProperties={onUpdateProperties}
-        canRemove={canRemove}
-        formikRef={formikRef}
-      />
-    );
-  }
-
   return (
-    <MapSideBarLayout
-      showCloseButton
-      onClose={onClose}
-      title={formTitle}
-      icon={
-        <RealEstateAgent
-          title="Acquisition file Icon"
-          width="2.6rem"
-          height="2.6rem"
-          fill="currentColor"
-          className="mr-2"
-        />
-      }
-      header={<AcquisitionHeader acquisitionFile={containerState.acquisitionFile} />}
-      footer={
-        containerState.isEditing && (
-          <SidebarFooter
-            isOkDisabled={formikRef?.current?.isSubmitting}
-            onSave={onSave}
-            onCancel={onCancel}
+    <Switch>
+      <Route path={`${match.url}/property/selector`}>
+        {containerState.acquisitionFile && (
+          <UpdateProperties
+            file={containerState.acquisitionFile}
+            setIsShowingPropertySelector={closePropertySelector}
+            onSuccess={onSuccess}
+            updateFileProperties={onUpdateProperties}
+            canRemove={canRemove}
+            formikRef={formikRef}
           />
-        )
-      }
-    >
-      <FileLayout
-        leftComponent={
-          <>
-            <AcquisitionMenu
-              acquisitionFileId={containerState.acquisitionFile?.id || 0}
-              items={menuItems}
-              selectedIndex={containerState.selectedMenuIndex}
-              onChange={onMenuChange}
-              setContainerState={setContainerState}
+        )}
+      </Route>
+      <Route>
+        <MapSideBarLayout
+          showCloseButton
+          onClose={onClose}
+          title={formTitle}
+          icon={
+            <RealEstateAgent
+              title="Acquisition file Icon"
+              width="2.6rem"
+              height="2.6rem"
+              fill="currentColor"
+              className="mr-2"
             />
-          </>
-        }
-        bodyComponent={
-          <StyledFormWrapper>
-            <ViewSelector
-              ref={formikRef}
-              acquisitionFile={containerState.acquisitionFile}
-              isEditing={containerState.isEditing}
-              activeEditForm={containerState.activeEditForm}
-              selectedMenuIndex={containerState.selectedMenuIndex}
-              defaultFileTab={containerState.defaultFileTab}
-              defaultPropertyTab={containerState.defaultPropertyTab}
-              setContainerState={setContainerState}
-              onSuccess={onSuccess}
-            />
+          }
+          header={<AcquisitionHeader acquisitionFile={containerState.acquisitionFile} />}
+          footer={
+            isEditing && (
+              <SidebarFooter
+                isOkDisabled={formikRef?.current?.isSubmitting}
+                onSave={onSave}
+                onCancel={onCancel}
+              />
+            )
+          }
+        >
+          <FileLayout
+            leftComponent={
+              <>
+                <AcquisitionMenu
+                  acquisitionFileId={containerState.acquisitionFile?.id || 0}
+                  items={menuItems}
+                  selectedIndex={selectedMenuIndex}
+                  onChange={onMenuChange}
+                  onShowPropertySelector={onShowPropertySelector}
+                />
+              </>
+            }
+            bodyComponent={
+              <StyledFormWrapper>
+                <AcquisitionRouter
+                  formikRef={formikRef}
+                  acquisitionFile={containerState.acquisitionFile}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  activeEditForm={containerState.activeEditForm}
+                  defaultFileTab={containerState.defaultFileTab}
+                  defaultPropertyTab={containerState.defaultPropertyTab}
+                  setContainerState={setContainerState}
+                  onSuccess={onSuccess}
+                />
+                <Route
+                  path={`${match.path}/property/:menuIndex`}
+                  render={({ match }) => (
+                    <FilePropertyRouter
+                      formikRef={formikRef}
+                      selectedMenuIndex={Number(match.params.menuIndex)}
+                      acquisitionFile={containerState.acquisitionFile}
+                      isEditing={isEditing}
+                      setIsEditing={setIsEditing}
+                      activeEditForm={containerState.activeEditForm}
+                      defaultFileTab={containerState.defaultFileTab}
+                      defaultPropertyTab={containerState.defaultPropertyTab}
+                      setContainerState={setContainerState}
+                      onSuccess={onSuccess}
+                    />
+                  )}
+                />
 
-            <GenericModal
-              display={containerState.showConfirmModal}
-              title={'Confirm changes'}
-              message={
-                <>
-                  <div>If you cancel now, this form will not be saved.</div>
-                  <br />
-                  <strong>Are you sure you want to Cancel?</strong>
-                </>
-              }
-              handleOk={onCancelConfirm}
-              handleCancel={() => setContainerState({ showConfirmModal: false })}
-              okButtonText="Ok"
-              cancelButtonText="Resume editing"
-              show
-            />
-          </StyledFormWrapper>
-        }
-      ></FileLayout>
-    </MapSideBarLayout>
+                <GenericModal
+                  display={containerState.showConfirmModal}
+                  title={'Confirm changes'}
+                  message={
+                    <>
+                      <div>If you cancel now, this form will not be saved.</div>
+                      <br />
+                      <strong>Are you sure you want to Cancel?</strong>
+                    </>
+                  }
+                  handleOk={onCancelConfirm}
+                  handleCancel={() => setContainerState({ showConfirmModal: false })}
+                  okButtonText="Ok"
+                  cancelButtonText="Resume editing"
+                  show
+                />
+              </StyledFormWrapper>
+            }
+          ></FileLayout>
+        </MapSideBarLayout>
+      </Route>
+    </Switch>
   );
 };
 
