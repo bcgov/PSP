@@ -651,7 +651,7 @@ namespace Pims.Api.Services
                     && !acquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId))
                     && currentAquisitionFile.PimsAcquisitionOwnerReps.Any(x => x.Internal_Id.Equals(payee.OwnerRepresentativeId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner Reperesentative can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new ForeignKeyDependencyException("Acquisition File Owner Representative can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
                 // Check for File Person
@@ -659,7 +659,7 @@ namespace Pims.Api.Services
                     && !acquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(payee.AcquisitionFilePersonId))
                     && currentAquisitionFile.PimsAcquisitionFilePeople.Any(x => x.Internal_Id.Equals(payee.AcquisitionFilePersonId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner Reperesentative can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
                 }
             }
         }
