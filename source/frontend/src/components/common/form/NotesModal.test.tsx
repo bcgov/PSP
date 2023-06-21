@@ -4,12 +4,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import React from 'react';
 
 import NotesModal, { INotesModalProps } from '@/components/common/form/NotesModal';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -51,7 +50,9 @@ describe('NotesModal component', () => {
     const {
       component: { getByTitle, findByTestId },
     } = await setup({ initialValues: { note: 'test note' } });
-    userEvent.click(getByTitle('notes'));
+    act(() => {
+      userEvent.click(getByTitle('notes'));
+    });
     const noteField = await findByTestId('note-field');
     expect(noteField).toHaveValue('test note');
   });
@@ -60,14 +61,23 @@ describe('NotesModal component', () => {
     const {
       component: { getByTitle, getByText, findByTestId },
     } = await setup({});
-    userEvent.click(getByTitle('notes'));
+    act(() => {
+      userEvent.click(getByTitle('notes'));
+    });
 
     const noteField = await findByTestId('note-field');
-    userEvent.type(noteField, 'test note');
+    act(() => {
+      userEvent.type(noteField, 'test note');
+    });
     const saveButton = getByText('Save');
-    userEvent.click(saveButton);
+    act(() => {
+      userEvent.click(saveButton);
+    });
 
-    userEvent.click(getByTitle('notes'));
+    await act(async () => {
+      userEvent.click(getByTitle('notes'));
+    });
+
     expect(noteField).toHaveValue('test note');
   });
 
@@ -75,16 +85,26 @@ describe('NotesModal component', () => {
     const {
       component: { getByTitle, getByText, findByTestId },
     } = await setup({ initialValues: { note: '' } });
-    userEvent.click(getByTitle('notes'));
+    act(() => {
+      userEvent.click(getByTitle('notes'));
+    });
     let noteField = await findByTestId('note-field');
-    userEvent.type(noteField, 'test note');
+    act(() => {
+      userEvent.type(noteField, 'test note');
+    });
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    act(() => {
+      userEvent.click(cancelButton);
+    });
 
-    userEvent.click(getByTitle('notes'));
+    act(() => {
+      userEvent.click(getByTitle('notes'));
+    });
     noteField = await findByTestId('note-field');
-    await waitFor(() => {
-      expect(noteField).toHaveValue('');
+    await act(async () => {
+      await waitFor(() => {
+        expect(noteField).toHaveValue('');
+      });
     });
   });
 });
