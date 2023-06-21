@@ -18,9 +18,9 @@ export interface IInventoryTabsProps {
 }
 
 export enum InventoryTabNames {
-  property = 'property',
-  title = 'title',
-  value = 'value',
+  property = 'details',
+  title = 'ltsa',
+  value = 'bcassessment',
   research = 'research',
   pims = 'pims',
   takes = 'takes',
