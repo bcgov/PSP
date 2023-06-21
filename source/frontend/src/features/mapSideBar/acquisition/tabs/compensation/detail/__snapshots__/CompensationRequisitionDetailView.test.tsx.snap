@@ -190,7 +190,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   flex-direction: row-reverse;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -210,7 +210,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   font-weight: 600;
 }
 
-.c10 span {
+.c11 span {
   margin-left: 1.25rem;
 }
 
@@ -230,6 +230,37 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   height: 100%;
   overflow-y: auto;
   padding-bottom: 1rem;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: solid 0.1rem;
+  margin-bottom: 2rem;
+}
+
+.c10 label {
+  font-family: 'BCSans-Bold';
+  font-size: 1.75rem;
+  width: 100%;
+  text-align: left;
+}
+
+.c10 button {
+  margin-bottom: 1rem;
 }
 
 <div
@@ -473,7 +504,9 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
           <div
             class="c7 text-left col"
-          />
+          >
+            SPECIAL INSTRUCTION
+          </div>
         </div>
       </div>
     </div>
@@ -599,7 +632,9 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
           <div
             class="c7 text-left col"
-          />
+          >
+            2023/2024
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -816,7 +851,202 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
       </h2>
       <div
         class="collapse show"
-      />
+      >
+        <div
+          class="c10"
+        >
+          <label>
+            Activity 1
+          </label>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Code & Description:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            2 - Market
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Amount (before tax):
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $10,000.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              GST applicable?:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              GST amount:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $500.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Total amount:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $10,500.00
+          </div>
+        </div>
+        <div
+          class="c10"
+        >
+          <label>
+            Activity 2
+          </label>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Code & Description:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            9 - Owners Entitlements
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Amount (before tax):
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $20,000.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              GST applicable?:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              GST amount:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $1,000.00
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Total amount:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+          >
+            $21,000.00
+          </div>
+        </div>
+      </div>
     </div>
     <div
       class="c3 form-section"
@@ -838,7 +1068,9 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
           <div
             class="c7 text-left col"
-          />
+          >
+            DETAILED REMARKS
+          </div>
         </div>
       </div>
     </div>
@@ -849,7 +1081,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c10"
+          class="c11"
         >
           <div>
             <label>

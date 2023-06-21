@@ -16,7 +16,7 @@ export interface IFinancialActivitiesSubFormProps {
   formikProps: FormikProps<CompensationRequisitionFormModel>;
   compensationRequisitionId: number;
   financialActivityOptions: SelectOption[];
-  gstConstant: number;
+  gstConstantPercentage: number;
   activitiesUpdated: () => void;
 }
 
@@ -26,7 +26,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
   formikProps,
   compensationRequisitionId,
   financialActivityOptions,
-  gstConstant,
+  gstConstantPercentage,
   activitiesUpdated,
 }) => {
   const { values, setFieldValue } = useFormikContext<CompensationRequisitionFormModel>();
@@ -60,7 +60,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
     let taxAmount = 0;
 
     if (gstRequired) {
-      taxAmount = pretaxAmount * gstConstant;
+      taxAmount = pretaxAmount * gstConstantPercentage;
       totalAmount = taxAmount + pretaxAmount;
     } else {
       totalAmount = pretaxAmount;
@@ -80,12 +80,16 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
         return (
           <>
             {values.financials.map((financial, index) => (
-              <div key={`financial-act-${financial._id}`}>
+              <div
+                key={`financial-act-${financial._id}`}
+                data-testid={`finacialActivity[${index}]`}
+              >
                 <>
                   <StyledSubHeader>
                     <label>Activity {index + 1}</label>
                     <StyledRemoveLinkButton
                       title="Delete financial activity"
+                      data-testid={`activity[${index}].delete-button`}
                       variant="light"
                       onClick={() => {
                         setRowToDelete(index);

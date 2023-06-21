@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TakesUpdateForm component renders as expected 1`] = `
+exports[`Compensation Requisition UpdateForm component renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -1103,6 +1103,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
         </div>
       </div>
     </div>
+    <div />
   </div>
 </DocumentFragment>
 `;
