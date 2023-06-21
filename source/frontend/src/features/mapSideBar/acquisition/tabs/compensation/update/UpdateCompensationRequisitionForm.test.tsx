@@ -8,7 +8,6 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fakeText,
-  fillInput,
   fireEvent,
   render,
   RenderOptions,
