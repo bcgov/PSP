@@ -13,9 +13,12 @@ import {
 
 export function usePropertyDetails(property?: Api_Property): IPropertyDetailsForm | undefined {
   const isMounted = useIsMounted();
-  const electoralService = useAdminBoundaryMapLayer();
-  const legalAdminService = useLegalAdminBoundariesMapLayer();
-  const firstNationsService = useIndianReserveBandMapLayer();
+  const electoralService_ = useAdminBoundaryMapLayer();
+  const findElectoralDistrict = electoralService_.findElectoralDistrict;
+  const legalAdminService_ = useLegalAdminBoundariesMapLayer();
+  const findOneAgriculturalReserve = legalAdminService_.findOneAgriculturalReserve;
+  const firstNationsService_ = useIndianReserveBandMapLayer();
+  const findFirstNation = firstNationsService_.findOne;
 
   const [propertyViewForm, setPropertyViewForm] = useState<IPropertyDetailsForm | undefined>(
     undefined,
@@ -44,9 +47,9 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
       // Query BC Geographic Warehouse layers - ONLY if lat, long have been provided!
 
       if (location !== undefined) {
-        const electoralDistrictFeature = await electoralService.findElectoralDistrict(location);
-        const alrFeature = await legalAdminService.findOneAgriculturalReserve(location, 'GEOMETRY');
-        const firstNationsFeature = await firstNationsService.findOne(location, 'GEOMETRY');
+        const electoralDistrictFeature = await findElectoralDistrict(location);
+        const alrFeature = await findOneAgriculturalReserve(location, 'GEOMETRY');
+        const firstNationsFeature = await findFirstNation(location, 'GEOMETRY');
 
         if (isMounted()) {
           const newState: IPropertyDetailsForm = {
@@ -75,7 +78,14 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
     }
 
     fn();
-  }, [electoralService, legalAdminService, firstNationsService, isMounted, location, property]);
+  }, [
+    findElectoralDistrict,
+    findOneAgriculturalReserve,
+    findFirstNation,
+    isMounted,
+    location,
+    property,
+  ]);
 
   return propertyViewForm;
 }

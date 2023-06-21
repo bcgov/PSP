@@ -20,8 +20,9 @@ export const useFullyAttributedParcelMapLayer = () => {
     name: parcelMapFullyAttributed.name,
   });
 
-  const { findOneWhereContainsWrapped, findOneWhereContainsLoading } =
-    useLayerQuery(parcelsLayerUrl);
+  const { findOneWhereContainsWrapped } = useLayerQuery(parcelsLayerUrl);
+  const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
+  const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
 
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 
@@ -80,7 +81,7 @@ export const useFullyAttributedParcelMapLayer = () => {
 
   const findOne = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
-      const featureCollection = await findOneWhereContainsWrapped(
+      const featureCollection = await findOneWhereContainsWrappedExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -94,7 +95,7 @@ export const useFullyAttributedParcelMapLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [findOneWhereContainsWrapped],
+    [findOneWhereContainsWrappedExecute],
   );
 
   return useMemo(
@@ -106,7 +107,7 @@ export const useFullyAttributedParcelMapLayer = () => {
       findByLoading: getAllFeaturesLoading,
       findByWrapper: getAllFeaturesWrapper,
       findOne,
-      findOneLoading: findOneWhereContainsLoading,
+      findOneLoading: findOneWhereContainsWrappedLoading,
     }),
     [
       findByLegalDescription,
@@ -116,7 +117,7 @@ export const useFullyAttributedParcelMapLayer = () => {
       getAllFeaturesLoading,
       getAllFeaturesWrapper,
       findOne,
-      findOneWhereContainsLoading,
+      findOneWhereContainsWrappedLoading,
     ],
   );
 };

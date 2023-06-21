@@ -27,6 +27,8 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
   const isMounted = useIsMounted();
 
   const { getPropertyWrapper, updatePropertyWrapper } = usePimsPropertyRepository();
+  const executeGetProperty = getPropertyWrapper.execute;
+
   const { queryAll } = useQueryMapLayersByLocation();
 
   const [initialForm, setForm] = useState<UpdatePropertyDetailsFormModel | undefined>(undefined);
@@ -45,7 +47,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
   useEffect(() => {
     async function fetchProperty() {
       if (!!props.id) {
-        const retrieved = await getPropertyWrapper.execute(props.id);
+        const retrieved = await executeGetProperty(props.id);
         if (retrieved !== undefined && isMounted()) {
           const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
 
@@ -64,7 +66,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
       }
     }
     fetchProperty();
-  }, [isMounted, props.id, queryAll, getPropertyWrapper, getPropertyWrapper.execute]);
+  }, [isMounted, props.id, queryAll, executeGetProperty]);
 
   // save handler - sends updated property information to backend
   const savePropertyInformation = async (

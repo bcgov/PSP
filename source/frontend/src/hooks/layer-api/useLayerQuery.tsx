@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 
 import { toCqlFilter } from '../layer-api/layerUtils';
 import { wfsAxios2 } from '../layer-api/wfsAxios';
-import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
+import { IResponseWrapper, useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
 export interface IUserLayerQuery {
   /**
@@ -51,12 +51,13 @@ export interface IUserLayerQuery {
     spatialReferenceId?: number,
   ) => Promise<Record<string, any>>;
 
-  findOneWhereContainsWrapped: (
-    latlng: LatLngLiteral,
-    geometryName?: string | undefined,
-    spatialReferenceId?: number | undefined,
-  ) => Promise<FeatureCollection<Geometry, GeoJsonProperties> | undefined>;
-  findOneWhereContainsLoading: boolean;
+  findOneWhereContainsWrapped: IResponseWrapper<
+    (
+      latlng: LatLngLiteral,
+      geometryName?: string,
+      spatialReferenceId?: number,
+    ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
+  >;
 }
 
 /**
@@ -102,29 +103,29 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
     [baseAllUrl, baseUrl, authenticated],
   );
 
-  const { execute: findOneWhereContainsWrapped, loading: findOneWhereContainsLoading } =
-    useApiRequestWrapper({
-      requestFunction: useCallback(
-        async (
-          latlng: LatLngLiteral,
-          geometryName: string = 'SHAPE',
-          spatialReferenceId: number = 4326,
-        ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
-          const data = await wfsAxios2({ authenticated }).get<
-            FeatureCollection<Geometry, GeoJsonProperties>
-          >(
-            `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
-          );
-          return data;
-        },
-        [baseUrl, authenticated],
-      ),
-      requestName: 'findByPid',
-    });
+  const findOneWhereContainsWrapped = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (
+        latlng: LatLngLiteral,
+        geometryName: string = 'SHAPE',
+        spatialReferenceId: number = 4326,
+      ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
+        const data = await wfsAxios2({ authenticated }).get<
+          FeatureCollection<Geometry, GeoJsonProperties>
+        >(
+          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
+        );
+        return data;
+      },
+      [baseUrl, authenticated],
+    ),
+    requestName: `findOneWhereContainsWrapped-${baseUrl}`,
+  });
 
   const { execute: findByPid, loading: findByPidLoading } = useApiRequestWrapper({
     requestFunction: useCallback(
       async (pid: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
+        //Do not make a request if we our currently cached response matches the requested pid.
         const formattedPid = pid.replace(/-/g, '');
         return executeWfs({ PID: formattedPid }, allBy, true);
       },
@@ -184,7 +185,6 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
       findByPlanNumberLoading,
       findMetadataByLocation,
       findOneWhereContainsWrapped,
-      findOneWhereContainsLoading,
     }),
     [
       findMetadataByLocation,
@@ -196,7 +196,6 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
       findByPlanNumberLoading,
       findOneWhereContains,
       findOneWhereContainsWrapped,
-      findOneWhereContainsLoading,
     ],
   );
 };

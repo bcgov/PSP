@@ -15,17 +15,22 @@ import { useTenant } from '@/tenants';
 export const useLegalAdminBoundariesMapLayer = () => {
   const { alrLayerUrl, municipalLayerUrl } = useTenant();
 
-  const { findOneWhereContains: findOneAlR, findOneWhereContainsLoading: findOneAlRLoading } =
-    useLayerQuery(alrLayerUrl);
+  const { findOneWhereContainsWrapped: findOneAlrWrapped_ } = useLayerQuery(alrLayerUrl);
+  const findOneAlrWrappedExecute = findOneAlrWrapped_.execute;
+  const findOneAlrWrappedLoading = findOneAlrWrapped_.loading;
 
-  const {
-    findOneWhereContains: findOneMunicipal,
-    findOneWhereContainsLoading: findOneMunicipalLoading,
-  } = useLayerQuery(municipalLayerUrl);
+  const { findOneWhereContainsWrapped: findOneMunicipalWrapped_ } =
+    useLayerQuery(municipalLayerUrl);
+  const findOneMunicipalWrappedExecute = findOneMunicipalWrapped_.execute;
+  const findOneMunicipalWrappedLoading = findOneMunicipalWrapped_.loading;
 
   const findOneAgriculturalReserve = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
-      const featureCollection = await findOneAlR(latlng, geometryName, spatialReferenceId);
+      const featureCollection = await findOneAlrWrappedExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       const forceCasted = featureCollection as
@@ -35,12 +40,16 @@ export const useLegalAdminBoundariesMapLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [findOneAlR],
+    [findOneAlrWrappedExecute],
   );
 
   const findOneMunicipality = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
-      const featureCollection = await findOneMunicipal(latlng, geometryName, spatialReferenceId);
+      const featureCollection = await findOneMunicipalWrappedExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
       const forceCasted = featureCollection as
@@ -50,16 +59,21 @@ export const useLegalAdminBoundariesMapLayer = () => {
         ? forceCasted.features[0]
         : undefined;
     },
-    [findOneMunicipal],
+    [findOneMunicipalWrappedExecute],
   );
 
   return useMemo(
     () => ({
       findOneAgriculturalReserve,
-      findOneAgriculturalReserveLoading: findOneAlRLoading,
+      findOneAgriculturalReserveLoading: findOneAlrWrappedLoading,
       findOneMunicipality,
-      findOneMunicipalLoading,
+      findOneMunicipalLoading: findOneMunicipalWrappedLoading,
     }),
-    [findOneAgriculturalReserve, findOneAlRLoading, findOneMunicipality, findOneMunicipalLoading],
+    [
+      findOneAgriculturalReserve,
+      findOneAlrWrappedLoading,
+      findOneMunicipality,
+      findOneMunicipalWrappedLoading,
+    ],
   );
 };

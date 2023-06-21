@@ -1,6 +1,6 @@
 import { GeoJsonProperties } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useAdminBoundaryMapLayer } from './mapLayer/useAdminBoundaryMapLayer';
 import { useIndianReserveBandMapLayer } from './mapLayer/useIndianReserveBandMapLayer';
@@ -26,10 +26,17 @@ export interface IMapLayerResults {
  * A generic hook that will query various DataBC map layers by the supplied location (lat, lng) and return layer metadata for that location.
  * @returns An object with information + metadata returned by the map layers queried by this hook
  */
-export function useQueryMapLayersByLocation() {
-  const adminBoundaryLayerService = useAdminBoundaryMapLayer();
-  const adminBoundaryService = useLegalAdminBoundariesMapLayer();
-  const firstNationsService = useIndianReserveBandMapLayer();
+export const useQueryMapLayersByLocation = () => {
+  const adminBoundaryLayerService_ = useAdminBoundaryMapLayer();
+  const findRegion = adminBoundaryLayerService_.findRegion;
+  const findDistrict = adminBoundaryLayerService_.findDistrict;
+  const findElectoralDistrict = adminBoundaryLayerService_.findElectoralDistrict;
+
+  const adminBoundaryService_ = useLegalAdminBoundariesMapLayer();
+  const findOneAgriculturalReserve = adminBoundaryService_.findOneAgriculturalReserve;
+
+  const firstNationsService_ = useIndianReserveBandMapLayer();
+  const findOnefirstNation = firstNationsService_.findOne;
 
   const queryAllCallback = useCallback(
     async function (location: LatLngLiteral | null): Promise<IMapLayerResults> {
@@ -40,25 +47,11 @@ export function useQueryMapLayersByLocation() {
 
       try {
         // We are using spatial reference = 3005 (BC Albers) here because that's how the backend is returning spatial location
-        const alrFeature = await adminBoundaryService.findOneAgriculturalReserve(
-          location,
-          'GEOMETRY',
-          3005,
-        );
-        const motiRegionFeature = await adminBoundaryLayerService.findRegion(
-          location,
-          'GEOMETRY',
-          3005,
-        );
-        const highwaysDistrictFeature = await adminBoundaryLayerService.findDistrict(
-          location,
-          'GEOMETRY',
-          3005,
-        );
-        const electoralDistrictFeature = await adminBoundaryLayerService.findElectoralDistrict(
-          location,
-        );
-        const firstNationsFeature = await firstNationsService.findOne(location, 'GEOMETRY', 3005);
+        const alrFeature = await findOneAgriculturalReserve(location, 'GEOMETRY', 3005);
+        const motiRegionFeature = await findRegion(location, 'GEOMETRY', 3005);
+        const highwaysDistrictFeature = await findDistrict(location, 'GEOMETRY', 3005);
+        const electoralDistrictFeature = await findElectoralDistrict(location);
+        const firstNationsFeature = await findOnefirstNation(location, 'GEOMETRY', 3005);
 
         return {
           isALR: alrFeature !== undefined,
@@ -71,10 +64,19 @@ export function useQueryMapLayersByLocation() {
         return initialState;
       }
     },
-    [adminBoundaryLayerService, adminBoundaryService, firstNationsService],
+    [
+      findRegion,
+      findDistrict,
+      findElectoralDistrict,
+      findOneAgriculturalReserve,
+      findOnefirstNation,
+    ],
   );
 
-  return {
-    queryAll: queryAllCallback,
-  };
-}
+  return useMemo(
+    () => ({
+      queryAll: queryAllCallback,
+    }),
+    [queryAllCallback],
+  );
+};
