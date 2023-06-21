@@ -10,18 +10,19 @@ import AcquisitionFileTabs, { IAcquisitionFileTabsProps } from './AcquisitionFil
 // mock auth library
 jest.mock('@react-keycloak/web');
 
-const setContainerState = jest.fn();
 const setIsEditing = jest.fn();
 
 describe('AcquisitionFileTabs component', () => {
   // render component under test
-  const setup = (props: IAcquisitionFileTabsProps, renderOptions: RenderOptions = {}) => {
+  const setup = (
+    props: Omit<IAcquisitionFileTabsProps, 'setIsEditing'>,
+    renderOptions: RenderOptions = {},
+  ) => {
     const utils = render(
       <AcquisitionFileTabs
         acquisitionFile={props.acquisitionFile}
         defaultTab={props.defaultTab}
         setIsEditing={setIsEditing}
-        setContainerState={setContainerState}
       />,
       {
         useMockAuthentication: true,
@@ -41,8 +42,6 @@ describe('AcquisitionFileTabs component', () => {
       {
         acquisitionFile: mockAcquisitionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
-        setContainerState,
-        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -54,8 +53,6 @@ describe('AcquisitionFileTabs component', () => {
       {
         acquisitionFile: mockAcquisitionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
-        setContainerState,
-        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
@@ -69,8 +66,6 @@ describe('AcquisitionFileTabs component', () => {
       {
         acquisitionFile: mockAcquisitionFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
-        setContainerState,
-        setIsEditing,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
