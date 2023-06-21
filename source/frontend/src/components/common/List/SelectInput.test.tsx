@@ -9,9 +9,7 @@ import { SelectInput } from './SelectInput';
 jest.mock('formik');
 
 (useFormikContext as jest.Mock).mockReturnValue({
-  values: {
-    includeAllProperties: false,
-  },
+  values: {},
   setFieldValue: jest.fn(),
 });
 describe('SelectInput tests', () => {

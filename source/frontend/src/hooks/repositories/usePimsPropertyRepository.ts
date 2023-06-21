@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
@@ -39,5 +39,8 @@ export const usePimsPropertyRepository = () => {
     }, []),
   });
 
-  return { getPropertyWrapper, updatePropertyWrapper };
+  return useMemo(
+    () => ({ getPropertyWrapper, updatePropertyWrapper }),
+    [getPropertyWrapper, updatePropertyWrapper],
+  );
 };

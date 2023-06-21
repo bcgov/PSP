@@ -1,7 +1,5 @@
 import clsx from 'classnames';
 import React, { useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
@@ -17,7 +15,6 @@ import CompensationRequisitionRouter from '@/features/mapSideBar/router/Compensa
 import PopupRouter from '@/features/mapSideBar/router/PopupRouter';
 import { IProperty } from '@/interfaces';
 import { Api_Property } from '@/models/api/Property';
-import { pidParser } from '@/utils';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
 const defaultLatLng = {
@@ -33,23 +30,9 @@ interface MapContainerProps {
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = (
   props: MapContainerProps,
 ) => {
-  const history = useHistory();
-  const [loadedProperties, setLoadedProperties] = useState(false);
   const [mapInstance, setMapInstance] = useState<L.Map | undefined>();
   const [showSideBar, setShowSideBar] = useState(false);
   const [showActionBar, setShowActionBar] = useState(false);
-
-  const onPropertyViewClicked = (pid?: string | null, id?: number) => {
-    if (id !== undefined) {
-      history.push(`/mapview/sidebar/property/${id}?pid=${pid}`);
-    } else if (pid !== undefined && pid !== null) {
-      const parsedPid = pidParser(pid);
-      history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
-    } else {
-      console.warn('Invalid marker when trying to see property information');
-      toast.warn('A map parcel must have a PID in order to view detailed information');
-    }
-  };
 
   const onZoom = useCallback(
     (apiProperty?: Api_Property) =>
@@ -85,14 +68,8 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = (
                 <MapView
                   lat={defaultLatLng.lat}
                   lng={defaultLatLng.lng}
-                  onViewportChanged={() => {
-                    if (!loadedProperties) {
-                      setLoadedProperties(true);
-                    }
-                  }}
                   showParcelBoundaries={props.showParcelBoundaries ?? true}
                   zoom={6}
-                  onViewPropertyClick={onPropertyViewClicked}
                   showSideBar={showSideBar}
                   whenCreated={setMapInstance}
                 />

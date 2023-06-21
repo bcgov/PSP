@@ -40,12 +40,8 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
     isLoadingNearestToPoint,
   } = useGeocoderRepository();
 
-  const {
-    findDistrict: findOneWhereContainsDistrict,
-    findDistrictLoading: districtSearchLoading,
-    findRegion: findOneWhereContainsRegion,
-    findRegionLoading: regionSearchLoading,
-  } = useAdminBoundaryMapLayer();
+  const { findDistrict, findDistrictLoading, findRegion, findRegionLoading } =
+    useAdminBoundaryMapLayer();
 
   const {
     findByPid,
@@ -80,7 +76,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
       // match the region and district for all found properties
       if (result?.features?.length !== undefined && result?.features?.length <= 15) {
         var matchTask = foundProperties.map(p =>
-          matchRegionAndDistrict(p, findOneWhereContainsRegion, findOneWhereContainsDistrict),
+          matchRegionAndDistrict(p, findRegion, findDistrict),
         );
 
         var getAddressTasks = foundProperties.map(p => getPropertyAddress(p, getNearestToPoint));
@@ -102,8 +98,8 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
     findByPlanNumber,
     getNearestToPoint,
     layerSearch,
-    findOneWhereContainsRegion,
-    findOneWhereContainsDistrict,
+    findRegion,
+    findDistrict,
   ]);
 
   const handleOnAddressSelect = async (selectedItem: IGeocoderResponse) => {
@@ -138,9 +134,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
 
       // match the region and district for all found properties
       await Promise.all(
-        propertyResults.map(p =>
-          matchRegionAndDistrict(p, findOneWhereContainsRegion, findOneWhereContainsDistrict),
-        ),
+        propertyResults.map(p => matchRegionAndDistrict(p, findRegion, findDistrict)),
       );
 
       setSearchResults([...propertyResults]);
@@ -185,8 +179,8 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
           isLoadingSearchAddress ||
           isLoadingNearestToPoint ||
           isLoadingSitePids ||
-          regionSearchLoading ||
-          districtSearchLoading
+          findRegionLoading ||
+          findDistrictLoading
         }
         onSelectedProperties={setSelectedProperties}
         addressResults={addressResults}

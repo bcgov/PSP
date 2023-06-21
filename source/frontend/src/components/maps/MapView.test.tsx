@@ -28,8 +28,6 @@ const mockParcels = [
 jest.mock('@/hooks/pims-api/useApiGeocoder');
 jest.mock('@/hooks/pims-api/useApiProperties');
 
-const onViewPropertyClick = jest.fn();
-
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
   propertyDetail: {
@@ -93,7 +91,6 @@ function Template(props: Omit<TestProps, 'renderOptions'>) {
   const { done, setMap, zoom = 6, ...rest } = props;
   return (
     <Map
-      onViewPropertyClick={onViewPropertyClick}
       showSideBar={false}
       lat={48.43}
       lng={-123.37}

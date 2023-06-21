@@ -49,7 +49,6 @@ const defaultFilter = {
   maxLotSize: '8',
   parcelId: '9',
   rentableArea: '',
-  includeAllProperties: '',
   maxAssessedValue: '',
   maxMarketValue: '',
   maxNetBookValue: '',
