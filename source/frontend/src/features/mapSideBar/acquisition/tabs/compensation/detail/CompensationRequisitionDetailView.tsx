@@ -26,7 +26,6 @@ export interface CompensationRequisitionDetailViewProps {
   acqFileProject?: Api_Project;
   acqFileProduct?: Api_Product | undefined;
   clientConstant: string;
-  gstConstant: number | undefined;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
   onGenerate: (compensation: Api_CompensationRequisition) => void;
@@ -116,18 +115,28 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
   const payeeDetails = getPayeeDetails(compensationPayee);
 
+  const editButtonBlock = (
+    <EditButton
+      title="Edit compensation requisition"
+      onClick={() => {
+        setEditMode(true);
+      }}
+    />
+  );
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <RightFlexDiv>
-        {setEditMode !== undefined && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) && (
-          <EditButton
-            title="Edit compensation requisition"
-            onClick={() => {
-              setEditMode(true);
-            }}
-          />
-        )}
+        {setEditMode !== undefined &&
+          compensation.isDraft &&
+          hasClaim(Claims.COMPENSATION_REQUISITION_EDIT) &&
+          editButtonBlock}
+
+        {setEditMode !== undefined &&
+          !compensation.isDraft &&
+          hasClaim(Claims.ADMIN_USERS) &&
+          editButtonBlock}
+
         <StyledAddButton
           onClick={() => {
             onGenerate(compensation);
@@ -140,21 +149,33 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       <Section>
         <StyledRow className="no-gutters">
           <Col xs="6">
-            <HeaderField label="Client:" labelWidth="8" valueTestId={'compensation-client'}>
+            <HeaderField label="Client:" labelWidth="8" valueTestId="compensation-client">
               {clientConstant}
             </HeaderField>
-            <HeaderField label="Requisition number:" labelWidth="8">
+            <HeaderField
+              label="Requisition number:"
+              labelWidth="8"
+              valueTestId="compensation-number"
+            >
               {compensation.isDraft ? 'Draft' : compensation.id}
             </HeaderField>
           </Col>
           <Col xs="6">
-            <HeaderField label="Compensation amount:" labelWidth="8">
+            <HeaderField
+              label="Compensation amount:"
+              labelWidth="8"
+              valueTestId="header-pretax-amount"
+            >
               {formatMoney(payeeDetails?.preTaxAmount ?? 0)}
             </HeaderField>
-            <HeaderField label="Applicable GST:" labelWidth="8">
+            <HeaderField label="Applicable GST:" labelWidth="8" valueTestId="header-tax-amount">
               {formatMoney(payeeDetails?.taxAmount ?? 0)}
             </HeaderField>
-            <HeaderField label="Total cheque amount:" labelWidth="8">
+            <HeaderField
+              label="Total cheque amount:"
+              labelWidth="8"
+              valueTestId="header-total-amount"
+            >
               {formatMoney(payeeDetails?.totalAmount ?? 0)}
             </HeaderField>
           </Col>
@@ -162,7 +183,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Requisition Details">
-        <SectionField label="Status" labelWidth="4">
+        <SectionField label="Status" labelWidth="4" data-testid={'compensation-status'}>
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
         <SectionField label="Agreement date" labelWidth="4">
