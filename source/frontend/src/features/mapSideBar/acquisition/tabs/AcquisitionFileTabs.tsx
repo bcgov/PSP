@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/fileTypes';
@@ -34,6 +34,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
 
+  const location = useLocation();
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
@@ -135,12 +136,11 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   const onSetActiveTab = (tab: FileTabType) => {
     let previousTab = activeTab;
-    setActiveTab(tab);
-
     if (previousTab === FileTabType.COMPENSATIONS) {
-      const backUrl = history.location.pathname.split('compensation-requisition')[0];
+      const backUrl = location.pathname.split('/compensation-requisition')[0];
       history.push(backUrl);
     }
+    setActiveTab(tab);
   };
 
   return (
