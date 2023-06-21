@@ -367,8 +367,11 @@ namespace Pims.Api.Services
             /*var newCheque = new PimsAcqPayeeCheque();
             newPayee.PimsAcqPayeeCheques = new List<PimsAcqPayeeCheque>() { newCheque };*/
 
+            compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
             compensationRequisition.PimsAcquisitionPayees = new List<PimsAcquisitionPayee>() { newPayee };
+
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
+
             _compensationRequisitionRepository.CommitTransaction();
 
             return newCompensationRequisition;
