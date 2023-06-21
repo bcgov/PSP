@@ -155,7 +155,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   };
 
   const onShowPropertySelector = () => {
-    history.replace(`${match.url}/property/selector`);
+    history.push(`${match.url}/property/selector`);
   };
 
   const handleSaveClick = () => {

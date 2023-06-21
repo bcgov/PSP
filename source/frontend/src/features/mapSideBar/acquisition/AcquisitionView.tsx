@@ -1,6 +1,14 @@
 import { FormikProps } from 'formik';
 import React from 'react';
-import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import {
+  match,
+  matchPath,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useRouteMatch,
+} from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
@@ -10,13 +18,14 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { Api_File } from '@/models/api/File';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
+import { InventoryTabNames } from '../property/InventoryTabs';
+import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import { AcquisitionRouter } from './AcquisitionRouter';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
-import { EditFormType } from './EditFormNames';
 import { FilePropertyRouter } from './FilePropertyRouter';
 
 export interface IAcquisitionViewProps {
@@ -53,26 +62,35 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   formikRef,
 }) => {
   // match for the current route
+  const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
+
+  // match for property menu routes - eg /property/1/ltsa
+  const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
+  const propertySelectorMatch = matchPath<Record<string, string>>(
+    location.pathname,
+    `${match.path}/property/selector`,
+  );
+  const propertiesMatch = matchPath<Record<string, string>>(
+    location.pathname,
+    `${match.path}/property/:menuIndex/:tab`,
+  );
+
+  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
+
+  const formTitle = isEditing
+    ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
+    : 'Acquisition File';
+
+  const menuItems =
+    containerState.acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
+  menuItems.unshift('File Summary');
 
   const closePropertySelector = () => {
     setIsEditing(false);
     history.push(`${match.url}`);
   };
-
-  // match for property menu routes - eg /property/1/ltsa
-  const propertiesMatch = useRouteMatch<{ menuIndex: string }>(`${match.path}/property/:menuIndex`);
-  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
-
-  const formTitle =
-    isEditing && containerState.activeEditForm
-      ? getEditTitle(containerState.activeEditForm)
-      : 'Acquisition File';
-
-  const menuItems =
-    containerState.acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
-  menuItems.unshift('File Summary');
 
   return (
     <Switch>
@@ -179,25 +197,41 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   );
 };
 
-const getEditTitle = (editFormName: EditFormType) => {
-  switch (editFormName) {
-    case EditFormType.ACQUISITION_SUMMARY:
-      return 'Update Acquisition File';
-    case EditFormType.PROPERTY_DETAILS:
-      return 'Update Property File Data';
-    case EditFormType.TAKES:
-      return 'Update Takes';
-    case EditFormType.ACQUISITION_CHECKLIST:
-      return 'Update Checklist';
-    case EditFormType.PROPERTY_SELECTOR:
-      return 'Updating Acquisition Properties';
-    case EditFormType.AGREEMENTS:
-      return 'Updating Agreements';
-    case EditFormType.STAKEHOLDERS:
-      return 'Updating Stakeholders';
-    default:
-      throw Error('Cannot edit this type of form');
+// Set header title based on current tab route
+const getEditTitle = (
+  fileMatch: match<Record<string, string>> | null,
+  propertySelectorMatch: match<Record<string, string>> | null,
+  propertiesMatch: match<Record<string, string>> | null,
+) => {
+  if (fileMatch !== null) {
+    const fileTab = fileMatch.params.tab;
+    switch (fileTab) {
+      case FileTabType.FILE_DETAILS:
+        return 'Update Acquisition File';
+      case FileTabType.CHECKLIST:
+        return 'Update Checklist';
+      case FileTabType.AGREEMENTS:
+        return 'Update Agreements';
+      case FileTabType.STAKEHOLDERS:
+        return 'Update Stakeholders';
+    }
   }
+
+  if (propertySelectorMatch !== null) {
+    return 'Update Acquisition Properties';
+  }
+
+  if (propertiesMatch !== null) {
+    const propertyTab = propertiesMatch.params.tab;
+    switch (propertyTab) {
+      case InventoryTabNames.property:
+        return 'Update Property File Data';
+      case InventoryTabNames.takes:
+        return 'Update Takes';
+    }
+  }
+
+  return 'Acquisition File';
 };
 
 const StyledFormWrapper = styled.div`
