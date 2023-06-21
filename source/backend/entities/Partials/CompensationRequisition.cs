@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Pims.Dal.Entities
 {
@@ -9,5 +10,14 @@ namespace Pims.Dal.Entities
     {
         [NotMapped]
         public override long Internal_Id { get => this.CompensationRequisitionId; set => this.CompensationRequisitionId = value; }
+
+        [NotMapped]
+        public decimal PayeeChequesPreTaxTotalAmount => (decimal)PimsCompReqH120s.Sum(x => x.PretaxAmt);
+
+        [NotMapped]
+        public decimal PayeeChequesTaxTotalAmount => (decimal)PimsCompReqH120s.Sum(x => x.TaxAmt);
+
+        [NotMapped]
+        public decimal PayeeChequesTotalAmount => (decimal)PimsCompReqH120s.Sum(x => x.TotalAmt);
     }
 }

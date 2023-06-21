@@ -6,13 +6,17 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
     class="Toastify"
   />
   <div />
-  .c1 {
+  .c0 {
+  padding-top: 1rem;
+}
+
+.c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c0 {
+.c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -20,25 +24,25 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
   border-radius: 0.5rem;
 }
 
-.c3.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -48,9 +52,6 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           >
             Property of Interest
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -63,13 +64,13 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Descriptive name:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="input form-group"
@@ -91,13 +92,13 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Purpose:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div>
               <div
@@ -286,13 +287,13 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Legal opinion req'd?:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -334,13 +335,13 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Legal opinion obtained?:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="form-group"
@@ -382,13 +383,13 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Document reference:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           >
             <div
               class="input form-group"
@@ -405,10 +406,10 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -418,9 +419,6 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           >
             Research Summary
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div
@@ -433,13 +431,13 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             class="pr-0 text-left col-4"
           >
             <label
-              class="c2"
+              class="c3"
             >
               Summary notes:
             </label>
           </div>
           <div
-            class="c3 text-left col"
+            class="c4 text-left col"
           />
         </div>
         <div

@@ -253,9 +253,6 @@ exports[`ActivityPropertyModal tests Renders as expected 1`] = `
                 >
                   Properties (0)
                 </div>
-                <div
-                  class="col-1"
-                />
               </div>
             </h2>
             <div

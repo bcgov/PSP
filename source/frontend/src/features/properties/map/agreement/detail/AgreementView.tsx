@@ -29,6 +29,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   onGenerate,
 }) => {
   const keycloak = useKeycloakWrapper();
+  const H0074Type = 'H0074';
 
   return (
     <StyledSummarySection>
@@ -82,9 +83,11 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <SectionField labelWidth="5" label="Agreement date">
             {prettyFormatDate(agreement.agreementDate)}
           </SectionField>
-          <SectionField labelWidth="5" label="Commencement date">
-            {prettyFormatDate(agreement.commencementDate)}
-          </SectionField>
+          {agreement.agreementType?.id === H0074Type && (
+            <SectionField labelWidth="5" label="Commencement date">
+              {prettyFormatDate(agreement.commencementDate)}
+            </SectionField>
+          )}
           <SectionField labelWidth="5" label="Completion date">
             {prettyFormatDate(agreement.completionDate)}
           </SectionField>
@@ -96,7 +99,11 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <SectionField labelWidth="5" label="Purchase price">
             {formatMoney(agreement.purchasePrice)}
           </SectionField>
-          <SectionField labelWidth="5" label="Deposit due no later than">
+          <SectionField
+            labelWidth="5"
+            label="Deposit due no later than"
+            tooltip="Generally, if applicable, this is number of days from the execution of the agreement."
+          >
             {agreement.noLaterThanDays ? (
               <span>
                 {agreement.noLaterThanDays} <strong>days</strong>

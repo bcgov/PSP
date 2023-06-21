@@ -8,6 +8,26 @@ export const getFinancialCodesByType = (codeType: FinancialCodeTypes) =>
     `/financial-codes/${codeType}`,
   );
 
+export const getFinancialActivitiesCodes = () =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/financial-activities`,
+  );
+
+export const getChartOfAccountsCodes = () =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/chart-accounts`,
+  );
+
+export const getResponsibilityCodes = () =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/responsibilities`,
+  );
+
+export const getYearlyFinancialCodes = () =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(
+    `/financial-codes/yearly-financials`,
+  );
+
 export const getFinancialCodes = () =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FinancialCode[]>(`/admin/financial-codes`);
 

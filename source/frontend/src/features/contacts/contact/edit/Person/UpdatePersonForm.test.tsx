@@ -166,7 +166,7 @@ describe('UpdatePersonForm', () => {
     it('should save the form with minimal data', async () => {
       const { getSaveButton } = setup();
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updatePerson).toBeCalledWith(mockPerson);
     });
@@ -204,7 +204,7 @@ describe('UpdatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updatePerson).toBeCalledWith(newValues);
     });
@@ -253,7 +253,7 @@ describe('UpdatePersonForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updatePerson).toBeCalledWith(newValues);
     });

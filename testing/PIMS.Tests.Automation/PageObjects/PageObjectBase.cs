@@ -84,20 +84,6 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
-        protected void ChooseRandomRadioButton(By parentName)
-        {
-            Random random = new Random();
-            var js = (IJavaScriptExecutor)webDriver;
-
-            var childrenElements = webDriver.FindElements(parentName);
-            int index = random.Next(0, childrenElements.Count);
-            var selectedRadioBttn = childrenElements[index];
-
-            js.ExecuteScript("arguments[0].scrollIntoView();", selectedRadioBttn);
-            Wait();
-            selectedRadioBttn.Click();
-        }
-
         protected void ChooseSpecificRadioButton(By parentName, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;

@@ -386,9 +386,6 @@ exports[`ActivityForm test Renders as expected 1`] = `
           >
             Details
           </div>
-          <div
-            class="col-1"
-          />
         </div>
       </h2>
       <div

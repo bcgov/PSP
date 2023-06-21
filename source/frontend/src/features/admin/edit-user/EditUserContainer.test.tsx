@@ -74,10 +74,10 @@ describe('EditUserContainer component', () => {
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
 
     const textarea = container.querySelector(`textarea[name="note"]`) as HTMLElement;
-    await act(() => userEvent.type(textarea, 'test note'));
+    await act(async () => userEvent.type(textarea, 'test note'));
 
     const saveButton = getByText('Save');
-    await act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(mockAxios.history.put[0].url).toBe(
       '/keycloak/users/e81274eb-a007-4f2e-ada3-2817efcdb0a6',

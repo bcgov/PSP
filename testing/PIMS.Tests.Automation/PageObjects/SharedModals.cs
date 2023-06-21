@@ -12,6 +12,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By generalModalOkBttn = By.CssSelector("button[title='ok-modal']");
         private By generalModalCancelBttn = By.CssSelector("button[title='cancel-modal']");
 
+        private By secondaryModal = By.XPath("//div[@role='dialog'][2]/div[@class='modal-dialog']");
+        private By secondaryModalHeader = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-header']/div");
+        private By secondaryModalContent = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-body']");
+        private By secondaryModalOkBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/button[@title='ok-modal']");
+        private By secondaryModalCancelBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/button[@title='cancel-modal']");
+
         private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
         private By generalConfirmationModalBody1 = By.CssSelector("div[class='modal-body'] div");
         private By generalConfirmationModalBody2 = By.CssSelector("div[class='modal-body'] strong");
@@ -35,6 +41,24 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntil(generalModal);
             webDriver.FindElement(generalModalOkBttn).Click();
+        }
+
+        public string SecondaryModalHeader()
+        {
+            WaitUntil(secondaryModal);
+            return (webDriver.FindElement(secondaryModalHeader).Text);
+        }
+
+        public string SecondaryModalContent()
+        {
+            WaitUntil(secondaryModal);
+            return (webDriver.FindElement(secondaryModalContent).Text);
+        }
+
+        public void SecondaryModalClickOKBttn()
+        {
+            WaitUntil(secondaryModal);
+            webDriver.FindElement(secondaryModalOkBttn).Click();
         }
 
         public string ToastifyText()

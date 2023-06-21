@@ -55,7 +55,7 @@ describe('ContactInputContainer component', () => {
 
   it('shows the contact manager if setShowContactManager called', async () => {
     setup();
-    await act(() => viewProps.setShowContactManager(true));
+    await act(async () => viewProps.setShowContactManager(true));
     expect(viewProps.contactManagerProps.display).toBe(true);
   });
 
@@ -81,7 +81,7 @@ describe('ContactInputContainer component', () => {
 
   it('cancel sets field to undefined', async () => {
     setup({ field: 'test' });
-    await act(() => viewProps.onClear());
+    await act(async () => viewProps.onClear());
     expect(testFormikProps.values.test).toBe(null);
   });
 });

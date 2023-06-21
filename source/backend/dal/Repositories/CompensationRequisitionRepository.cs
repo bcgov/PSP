@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -30,17 +29,15 @@ namespace Pims.Dal.Repositories
 
         public IList<PimsCompensationRequisition> GetAllByAcquisitionFileId(long acquisitionFileId)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
-
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqH120s)
+                .Include(x => x.PimsAcquisitionPayees)
                 .AsNoTracking()
                 .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
 
         public PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
             Context.PimsCompensationRequisitions.Add(compensationRequisition);
 
             return compensationRequisition;
@@ -48,9 +45,16 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
             var entity = Context.PimsCompensationRequisitions
+                .Include(x => x.YearlyFinancial)
+                .Include(x => x.ChartOfAccounts)
+                .Include(x => x.Responsibility)
                 .Include(c => c.PimsCompReqH120s)
+                    .ThenInclude(y => y.FinancialActivityCode)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.AcquisitionOwner)
+                .Include(x => x.PimsAcquisitionPayees)
+                    .ThenInclude(y => y.PimsAcqPayeeCheques)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -59,24 +63,101 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
-            User.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             var existingCompensationRequisition = Context.PimsCompensationRequisitions
-                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.Internal_Id)) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqH120, long>(a => a.PimsCompReqH120s, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqH120s.ToArray(), true);
 
             return compensationRequisition;
         }
 
+        public PimsAcquisitionPayee UpdatePayee(PimsAcquisitionPayee compensationPayee)
+        {
+            var existingCompensationPayee = Context.PimsAcquisitionPayees
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(compensationPayee.AcquisitionPayeeId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingCompensationPayee).CurrentValues.SetValues(compensationPayee);
+
+            return compensationPayee;
+        }
+
+        public PimsAcqPayeeCheque AddPayeeCheque(PimsAcqPayeeCheque payeeCheque)
+        {
+            Context.PimsAcqPayeeCheques.Add(payeeCheque);
+
+            return payeeCheque;
+        }
+
+        public PimsAcqPayeeCheque UpdatePayeeCheque(PimsAcqPayeeCheque payeeCheque)
+        {
+            var existingPayeeCheque = Context.PimsAcqPayeeCheques
+                .FirstOrDefault(x => x.AcqPayeeChequeId.Equals(payeeCheque.AcqPayeeChequeId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingPayeeCheque).CurrentValues.SetValues(payeeCheque);
+
+            return existingPayeeCheque;
+        }
+
         public bool TryDelete(long compensationId)
         {
-            var deletedEntity = Context.PimsCompensationRequisitions.FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
+            var deletedEntity = Context.PimsCompensationRequisitions
+                .Include(fa => fa.PimsCompReqH120s)
+                .Include(cr => cr.PimsAcquisitionPayees)
+                    .ThenInclude(ap => ap.PimsAcqPayeeCheques)
+                .AsNoTracking()
+                .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
+
             if (deletedEntity != null)
             {
-                Context.Remove(deletedEntity);
+                // Remove child entries.
+                foreach (var payee in deletedEntity.PimsAcquisitionPayees)
+                {
+                    foreach (var cheque in payee.PimsAcqPayeeCheques)
+                    {
+                        Context.PimsAcqPayeeCheques.Remove(new PimsAcqPayeeCheque() { AcqPayeeChequeId = cheque.AcqPayeeChequeId });
+                    }
+
+                    Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+
+                    Context.PimsAcquisitionPayees.Remove(new PimsAcquisitionPayee() { AcquisitionPayeeId = payee.AcquisitionPayeeId });
+                }
+
+                foreach(var financial in deletedEntity.PimsCompReqH120s)
+                {
+                    Context.PimsCompReqH120s.Remove(new PimsCompReqH120() { CompReqFinActivity = financial.CompReqFinActivity });
+                }
+
+                Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+
+                Context.PimsCompensationRequisitions.Remove(new PimsCompensationRequisition() { CompensationRequisitionId = deletedEntity.CompensationRequisitionId });
                 return true;
             }
             return false;
+        }
+
+        public PimsAcquisitionPayee GetPayee(long payeeId)
+        {
+
+            var payeeEntity = Context.PimsAcquisitionPayees
+                .Include(ap => ap.AcquisitionFilePerson)
+                    .ThenInclude(afp => afp.Person)
+                .Include(ap => ap.AcquisitionOwner)
+                .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.Person)
+                .Include(ap => ap.InterestHolder)
+                    .ThenInclude(ih => ih.Organization)
+                .Include(ap => ap.OwnerRepresentative)
+                    .ThenInclude(or => or.Person)
+                .Include(ap => ap.OwnerSolicitor)
+                    .ThenInclude(os => os.Organization)
+                .Include(ap => ap.OwnerSolicitor)
+                    .ThenInclude(os => os.Person)
+                .Include(ap => ap.PimsAcqPayeeCheques)
+                .AsNoTracking()
+                .FirstOrDefault(x => x.AcquisitionPayeeId.Equals(payeeId)) ?? throw new KeyNotFoundException();
+
+            return payeeEntity;
         }
     }
 }

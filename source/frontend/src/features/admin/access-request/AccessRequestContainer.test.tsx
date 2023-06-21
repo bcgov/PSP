@@ -85,10 +85,10 @@ describe('AccessRequestContainer component', () => {
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
 
     const textarea = container.querySelector(`textarea[name="note"]`) as HTMLElement;
-    await act(() => userEvent.type(textarea, 'test note'));
+    await act(async () => userEvent.type(textarea, 'test note'));
 
     const saveButton = getByText('Update');
-    await act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(mockAxios.history.put[0].url).toBe('/access/requests/8');
     expect({

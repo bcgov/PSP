@@ -5,7 +5,7 @@ import {
 } from 'components/maps/providers/MapStateContext';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { mockDraftProperties } from 'mocks/mockDraftProperties';
+import { mockDraftProperties } from 'mocks/mockDraftProperties.mock';
 import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';

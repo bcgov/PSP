@@ -27,7 +27,7 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
       const formattedPid = pid.replace(/-/g, '');
       const data = await getAllFeatures(
         { PID: formattedPid },
-        { forceSimplePid: true, forceExactMatch: forceExactMatch, timeout: 30000 },
+        { forceExactMatch: forceExactMatch, timeout: 30000 },
       );
       return data;
     },
