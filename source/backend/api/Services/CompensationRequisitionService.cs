@@ -99,7 +99,12 @@ namespace Pims.Api.Services
                 }
             }
 
-            if (payeeCheque is not null && payeeCheque.AcqPayeeChequeId > 0)
+            if(payeeCheque is null)
+            {
+                PimsAcqPayeeCheque newCheque = new PimsAcqPayeeCheque() { AcquisitionPayeeId = updatedPayee.AcquisitionPayeeId };
+                _compensationRequisitionRepository.AddPayeeCheque(newCheque);
+            }
+            else if (payeeCheque is not null && payeeCheque.AcqPayeeChequeId > 0)
             {
                 _compensationRequisitionRepository.UpdatePayeeCheque(payeeCheque);
             }
