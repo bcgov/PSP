@@ -138,7 +138,8 @@ const onCancel = jest.fn();
 
 describe('UpdateCompensationRequisition Container component', () => {
   const setup = async (
-    renderOptions: RenderOptions & { props?: Partial<UpdateCompensationRequisitionContainerProps> } ) => {
+    renderOptions: RenderOptions & { props?: Partial<UpdateCompensationRequisitionContainerProps> },
+  ) => {
     const component = render(
       <UpdateCompensationRequisitionContainer
         compensation={renderOptions?.props?.compensation ?? getMockApiCompensation()}
