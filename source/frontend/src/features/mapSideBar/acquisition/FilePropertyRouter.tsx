@@ -11,7 +11,6 @@ import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails
 import { TakesUpdateContainer } from '../property/tabs/takes/update/TakesUpdateContainer';
 import { TakesUpdateForm } from '../property/tabs/takes/update/TakesUpdateForm';
 import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
-import { AcquisitionContainerState } from './AcquisitionContainer';
 import { EditFormType } from './EditFormNames';
 
 export interface IFilePropertyRouterProps {
@@ -23,7 +22,6 @@ export interface IFilePropertyRouterProps {
   selectedMenuIndex: number;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
-  setContainerState: (value: Partial<AcquisitionContainerState>) => void;
   onSuccess: () => void;
 }
 

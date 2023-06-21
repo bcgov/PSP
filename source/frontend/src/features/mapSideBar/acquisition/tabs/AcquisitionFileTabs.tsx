@@ -10,7 +10,6 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
-import { AcquisitionContainerState } from '../AcquisitionContainer';
 import AgreementContainer from './agreement/detail/AgreementContainer';
 import AgreementView from './agreement/detail/AgreementView';
 import { AcquisitionChecklistView } from './checklist/detail/AcquisitionChecklistView';
@@ -25,14 +24,12 @@ export interface IAcquisitionFileTabsProps {
   acquisitionFile?: Api_AcquisitionFile;
   defaultTab: FileTabType;
   setIsEditing: (value: boolean) => void;
-  setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
 export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   acquisitionFile,
   defaultTab,
   setIsEditing,
-  setContainerState,
 }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
@@ -139,7 +136,6 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   const onSetActiveTab = (tab: FileTabType) => {
     let previousTab = activeTab;
     setActiveTab(tab);
-    setContainerState({ defaultFileTab: tab });
 
     if (previousTab === FileTabType.COMPENSATIONS) {
       const backUrl = history.location.pathname.split('compensation-requisition')[0];

@@ -135,7 +135,6 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                   activeEditForm={containerState.activeEditForm}
                   defaultFileTab={containerState.defaultFileTab}
                   defaultPropertyTab={containerState.defaultPropertyTab}
-                  setContainerState={setContainerState}
                   onSuccess={onSuccess}
                 />
                 <Route
@@ -150,7 +149,6 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                       activeEditForm={containerState.activeEditForm}
                       defaultFileTab={containerState.defaultFileTab}
                       defaultPropertyTab={containerState.defaultPropertyTab}
-                      setContainerState={setContainerState}
                       onSuccess={onSuccess}
                     />
                   )}

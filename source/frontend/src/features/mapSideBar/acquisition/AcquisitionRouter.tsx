@@ -6,7 +6,6 @@ import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs'
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
-import { AcquisitionContainerState } from './AcquisitionContainer';
 import { EditFormType } from './EditFormNames';
 import { AcquisitionFileTabs } from './tabs/AcquisitionFileTabs';
 import { UpdateAgreementsContainer } from './tabs/agreement/update/UpdateAgreementsContainer';
@@ -26,7 +25,6 @@ export interface IAcquisitionRouterProps {
   activeEditForm?: EditFormType;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
-  setContainerState: (value: Partial<AcquisitionContainerState>) => void;
   onSuccess: () => void;
 }
 
@@ -88,7 +86,6 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             acquisitionFile={props.acquisitionFile}
             defaultTab={props.defaultFileTab}
             setIsEditing={props.setIsEditing}
-            setContainerState={props.setContainerState}
           />
         </Route>
         <Redirect from={`${path}`} to={`${url}/${FileTabType.FILE_DETAILS}`} />
