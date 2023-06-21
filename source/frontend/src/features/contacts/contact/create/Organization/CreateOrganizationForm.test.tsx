@@ -81,7 +81,7 @@ describe('CreateOrganizationForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(addOrganization).toBeCalledWith(expectedFormData, expect.anything(), false);
       expect(history.location.pathname).toBe('/contact/O1');
@@ -105,7 +105,7 @@ describe('CreateOrganizationForm', () => {
       });
 
       // wait for re-render upon changing country to OTHER
-      await act(() => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
+      await act(async () => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
 
       await act(async () => {
         await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
@@ -113,7 +113,7 @@ describe('CreateOrganizationForm', () => {
       });
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       const formDataWithAddress: IEditableOrganization = {
         ...expectedFormData,

@@ -134,6 +134,7 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
                     label: 'Legal Description',
                   },
                 ]}
+                autoSetting="off"
               />
               {isSearchByAddress && renderAddressSuggestions()}
             </Col>

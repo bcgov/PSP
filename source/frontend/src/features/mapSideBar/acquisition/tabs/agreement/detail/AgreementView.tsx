@@ -30,6 +30,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   onGenerate,
 }) => {
   const keycloak = useKeycloakWrapper();
+  const H0074Type = 'H0074';
 
   return (
     <StyledSummarySection>
@@ -83,9 +84,11 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <SectionField labelWidth="5" label="Agreement date">
             {prettyFormatDate(agreement.agreementDate)}
           </SectionField>
-          <SectionField labelWidth="5" label="Commencement date">
-            {prettyFormatDate(agreement.commencementDate)}
-          </SectionField>
+          {agreement.agreementType?.id === H0074Type && (
+            <SectionField labelWidth="5" label="Commencement date">
+              {prettyFormatDate(agreement.commencementDate)}
+            </SectionField>
+          )}
           <SectionField labelWidth="5" label="Completion date">
             {prettyFormatDate(agreement.completionDate)}
           </SectionField>

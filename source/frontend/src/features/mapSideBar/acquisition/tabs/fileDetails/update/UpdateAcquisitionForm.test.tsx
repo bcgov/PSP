@@ -235,7 +235,7 @@ describe('UpdateAcquisitionForm component', () => {
       initialValues,
     });
 
-    await act(() => userEvent.selectOptions(getFileStatusDropdown(), 'DRAFT'));
+    await act(async () => userEvent.selectOptions(getFileStatusDropdown(), 'DRAFT'));
     expect(getFileCompletionDatePicker()).toBeDisabled();
 
     // submit form to trigger validation check
@@ -248,7 +248,7 @@ describe('UpdateAcquisitionForm component', () => {
   it('should require a file completion date when status is set to COMPLETED', async () => {
     const { getFormikRef, getFileStatusDropdown, findByText } = setup({ initialValues });
 
-    await act(() => userEvent.selectOptions(getFileStatusDropdown(), 'COMPLT'));
+    await act(async () => userEvent.selectOptions(getFileStatusDropdown(), 'COMPLT'));
 
     // submit form to trigger validation check
     await waitFor(() => getFormikRef().current?.submitForm());

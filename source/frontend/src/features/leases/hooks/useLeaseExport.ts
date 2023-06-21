@@ -1,5 +1,6 @@
 import axios from 'axios';
 import fileDownload from 'js-file-download';
+import moment from 'moment';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -72,7 +73,12 @@ export const useLeaseExport = () => {
         dispatch(logSuccess({ name: requestId, status }));
         dispatch(hideLoading());
         // trigger file download in client browser
-        fileDownload(data, `pims-lease-payments-${fiscalYearStart}-${fiscalYearStart + 1}.xlsx`);
+        fileDownload(
+          data,
+          `LeaseLicense_Payment details-${fiscalYearStart}-${fiscalYearStart + 1}_${moment().format(
+            'DD-MM-yyyy_hh-mm-ss',
+          )}.xlsx`,
+        );
       } catch (axiosError) {
         if (axios.isAxiosError(axiosError)) {
           catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);

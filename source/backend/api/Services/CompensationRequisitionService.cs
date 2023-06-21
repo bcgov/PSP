@@ -56,7 +56,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             var compensationRequisition = _compensationRequisitionRepository.GetById(compensationRequisitionId);
-            if(compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
+            if (compensationRequisition.PimsAcquisitionPayees.FirstOrDefault() is null)
             {
                 throw new KeyNotFoundException();
             }

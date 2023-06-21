@@ -16,12 +16,15 @@ export interface IUseWfsLayerOptions {
   withCredentials?: boolean;
 }
 
-export interface IWfsGetAllFeaturesOptions {
+export interface IWfsGetAllFeaturesOptions extends IWfsCqlFlags {
   maxCount?: number;
   timeout?: number;
-  forceSimplePid?: boolean;
-  forceExactMatch?: boolean;
   onLayerError?: () => void;
+}
+
+export interface IWfsCqlFlags {
+  forceExactMatch?: boolean; // set to true to prevent cql from being generated with ILIKE.
+  useCqlOr?: boolean; // if set to true will join all cql parameters with OR, otherwise will join with AND.
 }
 
 /**
@@ -44,11 +47,10 @@ export const useWfsLayer = (
         if (options?.maxCount !== undefined) {
           urlObj.searchParams.set('count', options.maxCount.toString());
         }
-        const cqlFilter = toCqlFilterValue(
-          filter,
-          options?.forceSimplePid,
-          options?.forceExactMatch,
-        );
+        const cqlFilter = toCqlFilterValue(filter, {
+          useCqlOr: options?.useCqlOr,
+          forceExactMatch: options?.forceExactMatch,
+        });
         if (cqlFilter) {
           urlObj.searchParams.set('cql_filter', cqlFilter);
         }

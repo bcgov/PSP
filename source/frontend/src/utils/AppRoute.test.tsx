@@ -16,7 +16,7 @@ describe('App Route', () => {
     document.body.appendChild(container);
     const root = createRoot(container);
 
-    await act(() => {
+    await act(async () => {
       root.render(
         <Router history={history}>
           <AppRoute customComponent={() => <p>Title Test Page</p>} title={title} />

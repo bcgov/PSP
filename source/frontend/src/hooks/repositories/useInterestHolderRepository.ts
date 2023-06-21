@@ -6,6 +6,8 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { useAxiosErrorHandler } from '@/utils';
 
+const ignoreErrorCodes = [409];
+
 /**
  * hook that interacts with the InterestHolde API.
  */
@@ -35,7 +37,8 @@ export const useInterestHolderRepository = () => {
       [postAcquisitionholderApi],
     ),
     requestName: 'updateAcquisitionInterestHolder',
-    onError: useAxiosErrorHandler('Failed to update Acquisition File InterestHolder'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
   });
 
   return useMemo(

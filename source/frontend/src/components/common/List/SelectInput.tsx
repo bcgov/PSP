@@ -20,6 +20,7 @@ interface ISelectInputProps<SelectTypes> {
     label: string;
     placeholder: string;
   }[];
+  autoSetting?: string;
   /** Callback to notify when the selected option in the drop-down changes */
   onSelectItemChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

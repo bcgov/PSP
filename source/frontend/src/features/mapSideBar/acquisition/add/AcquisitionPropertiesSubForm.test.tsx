@@ -8,7 +8,7 @@ import {
   MapStateActionTypes,
   MapStateContextProvider,
 } from '@/components/maps/providers/MapStateContext';
-import { mockDraftProperties } from '@/mocks/mockDraftProperties';
+import { mockDraftProperties } from '@/mocks/mockDraftProperties.mock';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../shared/models';

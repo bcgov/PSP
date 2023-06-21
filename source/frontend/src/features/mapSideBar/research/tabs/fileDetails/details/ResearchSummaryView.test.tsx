@@ -61,7 +61,7 @@ describe('ResearchSummaryView component', () => {
       claims: [Claims.RESEARCH_EDIT],
     });
     const editResearchFile = getByTitle('Edit research file');
-    await act(() => userEvent.click(editResearchFile));
+    await act(async () => userEvent.click(editResearchFile));
     expect(setEditMode).toHaveBeenCalledWith(true);
   });
 });

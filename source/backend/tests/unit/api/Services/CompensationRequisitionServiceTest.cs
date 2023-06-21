@@ -93,18 +93,27 @@ namespace Pims.Api.Test.Services
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
-                .Returns(new PimsCompensationRequisition { Internal_Id = 1 , AcquisitionFileId=1, IsDraft = false });
             repository.Setup(x => x.GetById(It.IsAny<long>()))
-                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId=1, IsDraft = true });
+                .Returns(new PimsCompensationRequisition {
+                    Internal_Id = 1,
+                    PimsAcquisitionPayees = new List<PimsAcquisitionPayee>
+                    {
+                        new PimsAcquisitionPayee() { CompensationRequisitionId = 1, }
+                    }
+                });
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition() {
-                Internal_Id = 1,
-                AcquisitionFileId = 1,
-                ConcurrencyControlNumber = 2,
-                IsDraft = false }
-            );
+            var result = service.Update(
+                new PimsCompensationRequisition {
+                    Internal_Id = 1,
+                    ConcurrencyControlNumber = 2,
+                    PimsAcquisitionPayees = new List<PimsAcquisitionPayee> {
+                        new PimsAcquisitionPayee() {
+                            AcquisitionPayeeId = 1,
+                            CompensationRequisitionId = 1,
+                        },
+                    }
+                });
 
             // Assert
             result.Should().NotBeNull();
@@ -172,7 +181,6 @@ namespace Pims.Api.Test.Services
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'No Status' to 'Draft'"))), Times.Once);
         }
-
         private CompensationRequisitionService CreateCompRequisitionServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);

@@ -60,7 +60,7 @@ describe('Update lease container component', () => {
     await fillInput(container, 'purposeType.id', 'COMMBLDG', 'select');
 
     mockAxios.onPut().reply(200, {});
-    await act(() => userEvent.click(getByText('Save')));
+    await act(async () => userEvent.click(getByText('Save')));
 
     expect(mockAxios.history.put[0].data).toEqual(expectedFormData);
   });
@@ -74,7 +74,7 @@ describe('Update lease container component', () => {
     await fillInput(container, 'purposeType.id', 'COMMBLDG', 'select');
 
     mockAxios.onPut().reply(409, { error: 'test message' });
-    await act(() => userEvent.click(getByText('Save')));
+    await act(async () => userEvent.click(getByText('Save')));
     expect(await findByText('test message')).toBeVisible();
   });*/
 
@@ -87,7 +87,7 @@ describe('Update lease container component', () => {
     await fillInput(container, 'purposeType.id', 'COMMBLDG', 'select');
 
     mockAxios.onPut().reply(409, { error: 'test message' });
-    await act(() => userEvent.click(getByText('Save')));
+    await act(async () => userEvent.click(getByText('Save')));
     await act(async () => userEvent.click(await findByText('Save Anyways')));
 
     expect(mockAxios.history.put[1].data).toEqual(expectedFormData);

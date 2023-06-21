@@ -75,13 +75,13 @@ describe('ProjectSelector component', () => {
   it('makes request for matching projects', async () => {
     const { getInput } = setup(testForm);
 
-    act(() => userEvent.type(getInput()!, 'test'));
+    await act(async () => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
   });
 
   it('shows matching projects based on user input', async () => {
     const { getInput, findItems } = setup(testForm);
-    act(() => userEvent.type(getInput()!, 'test'));
+    await act(async () => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
 
     const items = await findItems();
@@ -91,7 +91,7 @@ describe('ProjectSelector component', () => {
 
   it('calls onChange callback when a project is selected', async () => {
     const { getInput, findItems } = setup(testForm);
-    act(() => userEvent.type(getInput()!, 'test'));
+    await act(async () => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
 
     const items = await findItems();
