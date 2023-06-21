@@ -294,7 +294,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
                 We recommend that you only make this change status (draft to final) when printing the final version, as `,
                   <strong>you will not be able to roll back to draft status </strong>,
-                  `without system administrator privilieges. The compensation requisition cannot be changed again once it is saved as final.`,
+                  `without system administrator privileges. The compensation requisition cannot be changed again once it is saved as final.`,
                 ]}
                 okButtonText="Proceed"
                 cancelButtonText="Cancel"

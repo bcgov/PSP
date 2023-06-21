@@ -156,12 +156,12 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   it('should return status to Draft when confirmation modal cancel', async () => {
-    const { container, findByText, getByTitle, getStatusDropDown } = await setup({
+    const { findByText, getByTitle, getStatusDropDown } = await setup({
       props: { initialValues: defaultCompensation },
     });
 
     await act(async () => {
-      await fillInput(container, 'status', 'final', 'select');
+      fireEvent.change(getStatusDropDown(), { target: { value: 'final' } });
     });
 
     expect(
