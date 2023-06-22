@@ -1,5 +1,5 @@
-import { SelectOption } from 'components/common/form';
-import { FinancialCodeTypes } from 'constants/financialCodeTypes';
+import { SelectOption } from '@/components/common/form';
+import { FinancialCodeTypes } from '@/constants/financialCodeTypes';
 
 export function formatFinancialCodeType(value: FinancialCodeTypes): string {
   switch (value) {

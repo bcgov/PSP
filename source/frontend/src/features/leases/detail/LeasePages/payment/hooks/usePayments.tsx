@@ -1,12 +1,13 @@
 import axios, { AxiosError } from 'axios';
-import { useApiLeasePayments } from 'hooks/pims-api/useApiLeasePayments';
-import { IApiError } from 'interfaces/IApiError';
-import { ILeasePayment } from 'interfaces/ILeasePayment';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
-import { handleAxiosResponse } from 'utils';
+
+import { useApiLeasePayments } from '@/hooks/pims-api/useApiLeasePayments';
+import { IApiError } from '@/interfaces/IApiError';
+import { ILeasePayment } from '@/interfaces/ILeasePayment';
+import { handleAxiosResponse } from '@/utils';
 
 /**
  * hook providing lease payment modification methods

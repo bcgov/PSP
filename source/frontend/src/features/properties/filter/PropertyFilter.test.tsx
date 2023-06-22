@@ -1,14 +1,15 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
-import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import filterSlice from 'store/slices/filter/filterSlice';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, cleanup, fireEvent, render, waitFor } from 'utils/test-utils';
-import { fillInput } from 'utils/test-utils';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+
+import * as API from '@/constants/API';
+import filterSlice from '@/store/slices/filter/filterSlice';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, cleanup, fireEvent, render, waitFor } from '@/utils/test-utils';
+import { fillInput } from '@/utils/test-utils';
+import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { PropertyFilter } from '.';
 import { IPropertyFilter } from './IPropertyFilter';
@@ -120,7 +121,7 @@ describe('MapFilterBar', () => {
     // Enter values on the form fields, then click the Search button
     await waitFor(() => fillInput(container, 'address', 'Victoria'));
 
-    await act(() => {
+    await act(async () => {
       fireEvent.click(submit!);
     });
 

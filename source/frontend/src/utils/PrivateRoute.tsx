@@ -1,6 +1,7 @@
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import React from 'react';
 import { Redirect, Route, RouteComponentProps, RouteProps, useLocation } from 'react-router-dom';
+
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 interface BaseProtectedAppRoute extends RouteProps {
   role?: string | string[];

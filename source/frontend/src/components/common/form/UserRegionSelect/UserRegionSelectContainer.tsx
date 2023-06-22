@@ -1,9 +1,10 @@
-import * as API from 'constants/API';
-import { useUserInfoRepository } from 'hooks/repositories/useUserInfoRepository';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
 import { useEffect } from 'react';
+
+import * as API from '@/constants/API';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { Select, SelectProps } from '../Select';
 

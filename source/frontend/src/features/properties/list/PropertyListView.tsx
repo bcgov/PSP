@@ -1,25 +1,26 @@
 import './PropertyListView.scss';
 
-import { StyledIconButton } from 'components/common/buttons';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import { Table } from 'components/Table';
-import { TableSort } from 'components/Table/TableSort';
-import * as API from 'constants/API';
 import { Form, Formik, FormikProps } from 'formik';
-import { useApiProperties } from 'hooks/pims-api';
-import { useProperties } from 'hooks/repositories/useProperties';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { useRouterFilter } from 'hooks/useRouterFilter';
-import { IProperty } from 'interfaces';
 import isEmpty from 'lodash/isEmpty';
 import noop from 'lodash/noop';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
 import styled from 'styled-components';
-import { generateMultiSortCriteria } from 'utils';
-import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
+
+import { StyledIconButton } from '@/components/common/buttons';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { Table } from '@/components/Table';
+import { TableSort } from '@/components/Table/TableSort';
+import * as API from '@/constants/API';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useProperties } from '@/hooks/repositories/useProperties';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useRouterFilter } from '@/hooks/useRouterFilter';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { IProperty } from '@/interfaces';
+import { generateMultiSortCriteria } from '@/utils';
+import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
 import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';

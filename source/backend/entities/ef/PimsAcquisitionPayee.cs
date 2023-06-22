@@ -12,17 +12,11 @@ namespace Pims.Dal.Entities
     [Index(nameof(AcquisitionFilePersonId), Name = "ACQPAY_ACQUISITION_FILE_PERSON_ID_IDX")]
     [Index(nameof(AcquisitionOwnerId), Name = "ACQPAY_ACQUISITION_OWNER_ID_IDX")]
     [Index(nameof(CompensationRequisitionId), Name = "ACQPAY_COMPENSATION_REQUISITION_ID_IDX")]
-    [Index(nameof(IsDisabled), nameof(AcquisitionFilePersonId), nameof(OwnerSolicitorId), nameof(OwnerRepresentativeId), nameof(InterestHolderId), nameof(AcquisitionOwnerId), nameof(CompensationRequisitionId), Name = "ACQPAY_COMP_REQ_PAYEE_TUC", IsUnique = true)]
     [Index(nameof(InterestHolderId), Name = "ACQPAY_INTEREST_HOLDER_ID_IDX")]
     [Index(nameof(OwnerRepresentativeId), Name = "ACQPAY_OWNER_REPRESENTATIVE_ID_IDX")]
     [Index(nameof(OwnerSolicitorId), Name = "ACQPAY_OWNER_SOLICITOR_ID_IDX")]
     public partial class PimsAcquisitionPayee
     {
-        public PimsAcquisitionPayee()
-        {
-            PimsAcqPayeeCheques = new HashSet<PimsAcqPayeeCheque>();
-        }
-
         [Key]
         [Column("ACQUISITION_PAYEE_ID")]
         public long AcquisitionPayeeId { get; set; }
@@ -38,6 +32,11 @@ namespace Pims.Dal.Entities
         public long? OwnerSolicitorId { get; set; }
         [Column("ACQUISITION_FILE_PERSON_ID")]
         public long? AcquisitionFilePersonId { get; set; }
+        [Column("GST_NUMBER")]
+        [StringLength(50)]
+        public string GstNumber { get; set; }
+        [Column("IS_PAYMENT_IN_TRUST")]
+        public bool? IsPaymentInTrust { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -97,7 +96,5 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(OwnerSolicitorId))]
         [InverseProperty(nameof(PimsAcquisitionOwnerSolicitor.PimsAcquisitionPayees))]
         public virtual PimsAcquisitionOwnerSolicitor OwnerSolicitor { get; set; }
-        [InverseProperty(nameof(PimsAcqPayeeCheque.AcquisitionPayee))]
-        public virtual ICollection<PimsAcqPayeeCheque> PimsAcqPayeeCheques { get; set; }
     }
 }

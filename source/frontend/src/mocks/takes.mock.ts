@@ -1,4 +1,4 @@
-import { Api_Take } from 'models/api/Take';
+import { Api_Take } from '@/models/api/Take';
 export const getMockApiTakes = (): Api_Take[] => [
   {
     id: 4,
@@ -26,7 +26,7 @@ export const getMockApiTakes = (): Api_Take[] => [
     areaUnitTypeCode: 'M2',
     ltcEndDt: '2020-01-01',
     landActEndDt: '2020-01-01',
-    landActDescription: 'NEW LAND',
+    landActTypeCode: { id: 'Section 15', description: 'Reserve' },
     rowVersion: 2,
   },
 ];

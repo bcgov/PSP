@@ -1,5 +1,5 @@
-import { VolumeUnitTypes } from 'constants/index';
-import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { VolumeUnitTypes } from '@/constants/index';
+import { fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { IVolumeFormProps, VolumeForm } from './VolumeForm';
 

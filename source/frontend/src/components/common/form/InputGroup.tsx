@@ -42,6 +42,7 @@ type OptionalAttributes = {
   options?: string[];
   /** autocomplete flag to determine whether to use typeahed or not */
   autoComplete?: boolean;
+  autoSetting?: string;
 };
 
 // only "field" is required for <Input>, the rest are optional

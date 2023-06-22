@@ -1,9 +1,10 @@
-import ProtectedComponent from 'components/common/ProtectedComponent';
-import { Claims } from 'constants/claims';
-import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { FormikProps } from 'formik';
-import { IFormLease } from 'interfaces';
 import * as React from 'react';
+
+import ProtectedComponent from '@/components/common/ProtectedComponent';
+import { Claims } from '@/constants/claims';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
+import { IFormLease } from '@/interfaces';
 
 import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';
 import AddLeaseTenantForm from './AddLeaseTenantForm';

@@ -83,7 +83,7 @@ jobs:
       OPENSHIFT_NAMESPACE: 3cd915-tools
       output-filename: nodejs14.txt
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         id: artifact
         uses: actions/download-artifact@master
@@ -96,10 +96,10 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})" 
+          body="$(cat ${{env.output-filename}})"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
+          body="${body//$'\r'/'%0D'}"
           echo "::set-output name=body::$body"
           fi
       - name: Find Comment
@@ -212,7 +212,7 @@ jobs:
       tag: ${{secrets.NGINX_BASE_TAG}}
       output-filename: nginx-base.txt
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         id: artifact
         uses: actions/download-artifact@master
@@ -226,11 +226,11 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})" 
+          body="$(cat ${{env.output-filename}})"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
-          echo "::set-output name=body::$body" 
+          body="${body//$'\r'/'%0D'}"
+          echo "::set-output name=body::$body"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -345,7 +345,7 @@ jobs:
       tag: latest
       output-filename: pims-app.txt
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         id: artifact
         uses: actions/download-artifact@master
@@ -359,11 +359,11 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})" 
+          body="$(cat ${{env.output-filename}})"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
-          echo "::set-output name=body::$body" 
+          body="${body//$'\r'/'%0D'}"
+          echo "::set-output name=body::$body"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -475,7 +475,7 @@ jobs:
       tag: "5.0"
       output-filename: dotnet-aspnet.txt
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         id: artifact
         uses: actions/download-artifact@master
@@ -489,11 +489,11 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})" 
+          body="$(cat ${{env.output-filename}})"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
-          echo "::set-output name=body::$body" 
+          body="${body//$'\r'/'%0D'}"
+          echo "::set-output name=body::$body"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -530,7 +530,7 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report     
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
             ``` echo "${{ steps.get-comment-body.outputs.body }}"```
           edit-mode: replace
           reactions: confused
@@ -605,7 +605,7 @@ jobs:
       tag: "5.0"
       output-filename: dotnet-sdk.txt
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         id: artifact
         uses: actions/download-artifact@master
@@ -619,11 +619,11 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})" 
+          body="$(cat ${{env.output-filename}})"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
-          echo "::set-output name=body::$body" 
+          body="${body//$'\r'/'%0D'}"
+          echo "::set-output name=body::$body"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -660,7 +660,7 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report     
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
             ``` echo "${{ steps.get-comment-body.outputs.body }}"```
           edit-mode: replace
           reactions: confused
@@ -736,7 +736,7 @@ jobs:
       tag: latest
       output-filename: pims-api.txt
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         id: artifact
         uses: actions/download-artifact@master
@@ -750,11 +750,11 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})" 
+          body="$(cat ${{env.output-filename}})"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
-          echo "::set-output name=body::$body" 
+          body="${body//$'\r'/'%0D'}"
+          echo "::set-output name=body::$body"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -868,7 +868,7 @@ jobs:
       tag: latest
       output-filename: pims-logging.txt
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         id: artifact
         uses: actions/download-artifact@master
@@ -881,10 +881,10 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})" 
+          body="$(cat ${{env.output-filename}})"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
+          body="${body//$'\r'/'%0D'}"
           echo "::set-output name=body::$body"
           fi
       - name: Find Comment
@@ -999,7 +999,7 @@ jobs:
       tag: latest
       output-filename: jenkins-agent-dotnet.txt
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         id: artifact
         uses: actions/download-artifact@master
@@ -1012,10 +1012,10 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})" 
+          body="$(cat ${{env.output-filename}})"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
+          body="${body//$'\r'/'%0D'}"
           echo "::set-output name=body::$body"
           fi
       - name: Find Comment

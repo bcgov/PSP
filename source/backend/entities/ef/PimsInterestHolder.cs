@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_INTEREST_HOLDER")]
+    [Index(nameof(AcquisitionFileId), Name = "INTHLD_ACQUISITION_FILE_ID_IDX")]
     [Index(nameof(OrganizationId), Name = "INTHLD_ORGANIZATION_ID_IDX")]
     [Index(nameof(PersonId), Name = "INTHLD_PERSON_ID_IDX")]
-    [Index(nameof(PersonId), nameof(OrganizationId), Name = "INTHLD_PERSON_ORGANIZATION_TUC", IsUnique = true)]
     public partial class PimsInterestHolder
     {
         public PimsInterestHolder()

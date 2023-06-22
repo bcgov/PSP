@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PropertyResearchTabView component renders as expected when provided valid data object 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c0 {
+  text-align: right;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="c0 mr-3 my-1"
+    >
+      <button
+        class="btn btn-link"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="2rem"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 576 512"
+          width="2rem"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Property of Interest
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Descriptive name:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            The Research Property name
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Purpose:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Type A, Type B
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Legal opinion req'd?:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Legal opinion obtained?:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Document reference:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            A document reference
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Research Summary
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Summary notes:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        Research summary notes
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,9 +1,10 @@
-import { ColumnWithProps, renderTypeCode } from 'components/Table';
-import { Claims } from 'constants/claims';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import { stringToFragment } from 'utils';
+
+import { ColumnWithProps, renderTypeCode } from '@/components/Table';
+import { Claims } from '@/constants/claims';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { stringToFragment } from '@/utils';
 
 import AcquisitionProperties from './AcquisitionProperties';
 import { AcquisitionSearchResultModel } from './models';

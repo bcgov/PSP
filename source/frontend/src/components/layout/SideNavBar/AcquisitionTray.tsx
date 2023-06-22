@@ -1,6 +1,7 @@
-import { Claims } from 'constants/claims';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Link } from 'react-router-dom';
+
+import { Claims } from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
 import * as Styled from './styles';

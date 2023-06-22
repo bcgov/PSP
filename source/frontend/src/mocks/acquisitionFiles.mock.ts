@@ -2,7 +2,7 @@ import {
   Api_AcquisitionFile,
   Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
-} from 'models/api/AcquisitionFile';
+} from '@/models/api/AcquisitionFile';
 
 export const mockAcquisitionFileResponse = (
   id = 1,
@@ -244,6 +244,41 @@ export const mockAcquisitionFileResponse = (
       appLastUpdateTimestamp: '2023-02-08T18:11:12.303',
       appLastUpdateUserid: 'dbo',
       appCreateUserid: 'dbo',
+    },
+  ],
+  acquisitionFileOwnerSolicitors: [
+    {
+      id: 1,
+      acquisitionFileId: 1,
+      personId: 1,
+      person: {
+        id: 1,
+        firstName: 'Luke',
+        surname: 'Skywalker',
+      },
+      organizationId: 1,
+      organization: {
+        id: 1,
+        name: 'Millenium Inc',
+        alias: 'M Inc',
+        incorporationNumber: '1234',
+        comment: '',
+      },
+      isDisabled: false,
+    },
+  ],
+  acquisitionFileOwnerRepresentatives: [
+    {
+      id: 1,
+      acquisitionFileId: 1,
+      personId: 2,
+      person: {
+        id: 2,
+        firstName: 'Han',
+        surname: 'Solo',
+      },
+      comment: 'test representative comment',
+      isDisabled: false,
     },
   ],
   acquisitionFileChecklist: [],

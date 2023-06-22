@@ -1,4 +1,4 @@
-import { IAddress } from 'interfaces';
+import { IAddress } from '@/interfaces';
 
 export interface IPerson {
   id?: number;

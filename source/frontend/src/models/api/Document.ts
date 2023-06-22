@@ -1,4 +1,4 @@
-import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';

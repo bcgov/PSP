@@ -1,6 +1,6 @@
-import { Api_AcquisitionFile, Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
-import { Api_Project } from 'models/api/Project';
-import Api_TypeCode from 'models/api/TypeCode';
+import { Api_AcquisitionFile, Api_AcquisitionFileProperty } from '@/models/api/AcquisitionFile';
+import { Api_Project } from '@/models/api/Project';
+import Api_TypeCode from '@/models/api/TypeCode';
 
 export class AcquisitionSearchResultModel {
   id?: number;

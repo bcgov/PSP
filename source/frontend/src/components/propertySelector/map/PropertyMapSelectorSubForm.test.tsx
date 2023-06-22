@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { render, RenderOptions } from 'utils/test-utils';
+
+import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IMapProperty } from '../models';
 import PropertyMapSelectorSubForm, {

@@ -1,8 +1,9 @@
 import clsx from 'classnames';
-import { AdminTools, LeaseAndLicenses, ResearchTray } from 'components/layout';
-import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import { ReactElement, useContext, useEffect, useState } from 'react';
 import ReactVisibilitySensor from 'react-visibility-sensor';
+
+import { AdminTools, LeaseAndLicenses, ResearchTray } from '@/components/layout';
+import { MapStateActionTypes, MapStateContext } from '@/components/maps/providers/MapStateContext';
 
 import { AcquisitionTray } from './AcquisitionTray';
 import { ContactTray } from './ContactTray';

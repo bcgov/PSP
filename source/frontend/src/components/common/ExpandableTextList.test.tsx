@@ -1,12 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import { IProperty } from 'interfaces';
 import noop from 'lodash/noop';
-import { mockLookups } from 'mocks/lookups.mock';
-import { getMockProperties } from 'mocks/properties.mock';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { IProperty } from '@/interfaces';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockProperties } from '@/mocks/properties.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ExpandableTextList, { IExpandableTextListProps } from './ExpandableTextList';
 

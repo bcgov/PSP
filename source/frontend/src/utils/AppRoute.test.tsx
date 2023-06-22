@@ -2,7 +2,8 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Router } from 'react-router-dom';
-import { act } from 'utils/test-utils';
+
+import { act } from '@/utils/test-utils';
 
 import AppRoute from './AppRoute';
 
@@ -15,7 +16,7 @@ describe('App Route', () => {
     document.body.appendChild(container);
     const root = createRoot(container);
 
-    await act(() => {
+    await act(async () => {
       root.render(
         <Router history={history}>
           <AppRoute customComponent={() => <p>Title Test Page</p>} title={title} />

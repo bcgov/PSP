@@ -1,14 +1,15 @@
 import './LayerFilter.scss';
 
-import { ResetButton, SearchButton } from 'components/common/buttons';
-import { Form } from 'components/common/form';
-import { SelectInput } from 'components/common/List/SelectInput';
-import { IResearchFilterProps } from 'features/research/list/ResearchFilter/ResearchFilter';
 import { Formik, FormikProps } from 'formik';
-import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 import React, { useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { ResetButton, SearchButton } from '@/components/common/buttons';
+import { Form } from '@/components/common/form';
+import { SelectInput } from '@/components/common/List/SelectInput';
+import { IResearchFilterProps } from '@/features/research/list/ResearchFilter/ResearchFilter';
+import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 
 import { ILayerSearchCriteria } from '../models';
 
@@ -133,6 +134,7 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
                     label: 'Legal Description',
                   },
                 ]}
+                autoSetting="off"
               />
               {isSearchByAddress && renderAddressSuggestions()}
             </Col>

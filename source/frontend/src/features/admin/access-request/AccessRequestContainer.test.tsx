@@ -1,10 +1,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { getMockAccessRequest } from 'mocks/accessRequest.mock';
-import { mockLookups } from 'mocks/lookups.mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { getMockAccessRequest } from '@/mocks/accessRequest.mock';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   render,
@@ -12,7 +13,7 @@ import {
   userEvent,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import AccessRequestContainer, { IAccessRequestContainerProps } from './AccessRequestContainer';
 import { FormAccessRequest } from './models';
@@ -85,10 +86,10 @@ describe('AccessRequestContainer component', () => {
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
 
     const textarea = container.querySelector(`textarea[name="note"]`) as HTMLElement;
-    await act(() => userEvent.type(textarea, 'test note'));
+    await act(async () => userEvent.type(textarea, 'test note'));
 
     const saveButton = getByText('Update');
-    await act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(mockAxios.history.put[0].url).toBe('/access/requests/8');
     expect({

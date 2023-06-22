@@ -1,4 +1,4 @@
-import { Api_FormDocumentFile, Api_FormDocumentType } from 'models/api/FormDocument';
+import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
 export const getMockApiFormDocumentType = (): Api_FormDocumentType => ({
   formTypeCode: 'H120',
   documentId: null,

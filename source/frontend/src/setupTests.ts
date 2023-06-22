@@ -5,7 +5,7 @@
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
 
-import { server } from 'mocks/msw/server';
+import { server } from '@/mocks/msw/server';
 
 var localStorageMock = (function () {
   var store: any = {};

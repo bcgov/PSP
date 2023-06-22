@@ -1,4 +1,4 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
+import { ContactMethodTypes } from '@/constants/contactMethodType';
 
 export const getMockOrganization = () => ({
   id: 2,

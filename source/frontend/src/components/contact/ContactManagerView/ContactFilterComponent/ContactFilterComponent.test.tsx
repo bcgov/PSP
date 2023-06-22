@@ -1,5 +1,6 @@
 import userEvent from '@testing-library/user-event';
-import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
+
+import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import {
   ContactFilterComponent,

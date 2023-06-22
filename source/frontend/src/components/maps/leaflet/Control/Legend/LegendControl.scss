@@ -1,0 +1,23 @@
+@import '@/assets/scss/styles.scss';
+
+.legendTooltip {
+  .arrow::before {
+    border-right-color: white !important;
+    box-shadow: 0.2rem grey;
+  }
+
+  .tooltip-inner {
+    background-color: white;
+    color: black;
+    box-shadow: 0 0.4rem 0.8rem 0 rgba(0, 0, 0, 0.2);
+    padding: 0rem;
+    text-align: left;
+    .row {
+      .label {
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

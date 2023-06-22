@@ -1,7 +1,8 @@
-import { Check } from 'components/common/form';
 import { getIn, useFormikContext } from 'formik';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import * as React from 'react';
+
+import { Check } from '@/components/common/form';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 
 interface IActiveFilterCheckProps<T> {
   setFilter: (filter: T) => void;

@@ -1,7 +1,8 @@
-import { Button } from 'components/common/buttons/Button';
-import { InlineForm, InlineInput } from 'components/common/form/styles';
-import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
 import styled from 'styled-components';
+
+import { Button } from '@/components/common/buttons/Button';
+import { InlineForm, InlineInput } from '@/components/common/form/styles';
+import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 
 export const ListPage = styled.div`
   display: flex;

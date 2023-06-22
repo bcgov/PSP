@@ -1,7 +1,8 @@
-import { ILease } from 'interfaces';
 import { noop } from 'lodash';
 import * as React from 'react';
 import { useState } from 'react';
+
+import { ILease } from '@/interfaces';
 
 export interface ILeaseState {
   lease?: ILease;

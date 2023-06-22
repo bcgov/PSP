@@ -1,5 +1,428 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Add Improvements container component displays the improvement types in order 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c3 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+.c6 {
+  font-family: 'BCSans';
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  gap: 2.5rem;
+}
+
+.c1 .formgrid .textarea:not(.notes) {
+  grid-column: span 2;
+  border-left: 0;
+}
+
+.c0 {
+  margin-left: 1rem;
+}
+
+.c0 .form-group {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group input {
+  border-left: 1;
+  width: 70%;
+}
+
+.c0 .form-group textarea {
+  width: 85%;
+  resize: none;
+}
+
+.c0 .improvements .formgrid {
+  row-gap: 0.5rem;
+  grid-template-columns: [controls] 1fr;
+}
+
+.c0 .improvements .formgrid > .form-label {
+  grid-column: controls;
+  font-family: 'BcSans-Bold';
+}
+
+.c0 .improvements .formgrid > .input {
+  border-left: 0;
+}
+
+.c0 .improvements .formgrid .form-control {
+  font-family: 'BcSans';
+}
+
+.c0 .improvements .formgrid h5 {
+  padding-top: 0;
+}
+
+<form
+    class="c0"
+  >
+    <div
+      class="c1 improvements"
+    >
+      <div
+        class="c2 form-section"
+      >
+        <h2
+          class="c3"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Commercial Improvements
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Unit #:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.0.address"
+                  name="improvements.0.address"
+                  title="test address 1"
+                  value="test address 1"
+                />
+              </div>
+               
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Building size:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.0.structureSize"
+                  name="improvements.0.structureSize"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Description:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="c6 textarea input form-group"
+              >
+                <textarea
+                  class="description form-control"
+                  id="input-improvements.0.description"
+                  name="improvements.0.description"
+                  placeholder="Reason for improvement and improvement details"
+                  rows="5"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c2 form-section"
+      >
+        <h2
+          class="c3"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Residential Improvements
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Unit #:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.1.address"
+                  name="improvements.1.address"
+                  title="test address 3"
+                  value="test address 3"
+                />
+              </div>
+               
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Building size:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.1.structureSize"
+                  name="improvements.1.structureSize"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Description:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="c6 textarea input form-group"
+              >
+                <textarea
+                  class="description form-control"
+                  id="input-improvements.1.description"
+                  name="improvements.1.description"
+                  placeholder="Reason for improvement and improvement details"
+                  rows="5"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c2 form-section"
+      >
+        <h2
+          class="c3"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Other Improvements
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Unit #:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.2.address"
+                  name="improvements.2.address"
+                  title="test address 2"
+                  value="test address 2"
+                />
+              </div>
+               
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Building size:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-improvements.2.structureSize"
+                  name="improvements.2.structureSize"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Description:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="c6 textarea input form-group"
+              >
+                <textarea
+                  class="description form-control"
+                  id="input-improvements.2.description"
+                  name="improvements.2.description"
+                  placeholder="Reason for improvement and improvement details"
+                  rows="5"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button>
+      Save
+    </button>
+  </form>
+</DocumentFragment>
+`;
+
 exports[`Add Improvements container component renders as expected 1`] = `
 <DocumentFragment>
   <div
@@ -114,9 +537,6 @@ exports[`Add Improvements container component renders as expected 1`] = `
             >
               Commercial Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -224,9 +644,6 @@ exports[`Add Improvements container component renders as expected 1`] = `
             >
               Residential Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div
@@ -334,9 +751,6 @@ exports[`Add Improvements container component renders as expected 1`] = `
             >
               Other Improvements
             </div>
-            <div
-              class="col-1"
-            />
           </div>
         </h2>
         <div

@@ -1,10 +1,11 @@
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { FaQuestionCircle } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import HelpModal from '../components/HelpModal';
 

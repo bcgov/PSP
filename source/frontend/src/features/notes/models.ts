@@ -1,4 +1,4 @@
-import { Api_Note } from 'models/api/Note';
+import { Api_Note } from '@/models/api/Note';
 
 export class NoteForm {
   id?: number;
