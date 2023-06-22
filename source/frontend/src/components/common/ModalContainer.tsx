@@ -1,6 +1,7 @@
-import { ModalContext } from 'contexts/modalContext';
 import * as React from 'react';
 import { useContext } from 'react';
+
+import { ModalContext } from '@/contexts/modalContext';
 
 import GenericModal from './GenericModal';
 

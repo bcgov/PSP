@@ -5,7 +5,7 @@
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-05-30 13:44                                */
+/* Created on:            2023-06-01 10:34                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -2441,6 +2441,10 @@ ALTER TABLE [dbo].[PIMS_ACQUISITION_OWNER_SOLICITOR] DROP CONSTRAINT [PIM_PERSON
 GO
 
 
+ALTER TABLE [dbo].[PIMS_ACQUISITION_OWNER_SOLICITOR] DROP CONSTRAINT [PIM_ORG_PIM_AQOWSO_FK]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_COMPENSATION_REQUISITION] DROP CONSTRAINT [PIM_ACQNFL_PIM_CMPREQ_FK]
 GO
 
@@ -4099,10 +4103,6 @@ ALTER TABLE [dbo].[PIMS_ACQUISITION_PAYEE] DROP CONSTRAINT [ACQPAY_COMP_REQ_PAYE
 GO
 
 
-ALTER TABLE [dbo].[PIMS_ACQUISITION_PAYEE] DROP CONSTRAINT [ACQPAY_COMP_REQ_PAYEE_TUC]
-GO
-
-
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_PAYEE', 'COLUMN', N'IS_DISABLED'
 GO
 
@@ -5659,10 +5659,6 @@ ALTER TABLE [dbo].[PIMS_INTEREST_HOLDER] DROP CONSTRAINT [INTHLD_PERSON_ORGANIZA
 GO
 
 
-ALTER TABLE [dbo].[PIMS_INTEREST_HOLDER] DROP CONSTRAINT [INTHLD_PERSON_ORGANIZATION_TUC]
-GO
-
-
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_INTEREST_HOLDER', 'COLUMN', N'IS_DISABLED'
 GO
 
@@ -5938,6 +5934,10 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACQUISITION_OWNER_SOLICITOR] DROP CONSTRAINT [AQOWSO_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQUISITION_OWNER_SOLICITOR] DROP CONSTRAINT [AQOWSO_%column%_TCC]
 GO
 
 

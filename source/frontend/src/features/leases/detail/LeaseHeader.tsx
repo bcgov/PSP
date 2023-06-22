@@ -1,8 +1,9 @@
-import { ILease } from 'interfaces';
 import moment from 'moment';
 import * as React from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { prettyFormatDate } from 'utils';
+
+import { ILease } from '@/interfaces';
+import { prettyFormatDate } from '@/utils';
 
 import LeaseHeaderAddresses from './LeaseHeaderAddresses';
 import LeaseStatusSummary from './LeaseStatusSummary';

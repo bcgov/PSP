@@ -27,8 +27,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsAcqChklstItemType> PimsAcqChklstItemTypes { get; set; }
         public virtual DbSet<PimsAcqChklstSectionType> PimsAcqChklstSectionTypes { get; set; }
         public virtual DbSet<PimsAcqFlPersonProfileType> PimsAcqFlPersonProfileTypes { get; set; }
-        public virtual DbSet<PimsAcqPayeeCheque> PimsAcqPayeeCheques { get; set; }
-        public virtual DbSet<PimsAcqPayeeChequeHist> PimsAcqPayeeChequeHists { get; set; }
         public virtual DbSet<PimsAcqPhysFileStatusType> PimsAcqPhysFileStatusTypes { get; set; }
         public virtual DbSet<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
         public virtual DbSet<PimsAcquisitionActivityInstanceHist> PimsAcquisitionActivityInstanceHists { get; set; }
@@ -534,64 +532,6 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code value is inactive.");
-            });
-
-            modelBuilder.Entity<PimsAcqPayeeCheque>(entity =>
-            {
-                entity.HasKey(e => e.AcqPayeeChequeId)
-                    .HasName("AQPCHQ_PK");
-
-                entity.HasComment("Table associating cheques for an acquisition file owner with a compenstion requisition.");
-
-                entity.Property(e => e.AcqPayeeChequeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_PAYEE_CHEQUE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.GstNumber).HasComment("GST number of the Payee");
-
-                entity.Property(e => e.IsPaymentInTrust).HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the owner's cheque related to the requisition.");
-
-                entity.Property(e => e.TaxAmt).HasComment("Taxes related to the owner's cheque related to the requisition.");
-
-                entity.Property(e => e.TotalAmt).HasComment("Total value of the owner's cheque related to the requisition.");
-
-                entity.HasOne(d => d.AcquisitionPayee)
-                    .WithMany(p => p.PimsAcqPayeeCheques)
-                    .HasForeignKey(d => d.AcquisitionPayeeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ACQPAY_PIM_AQPCHQ_FK");
-            });
-
-            modelBuilder.Entity<PimsAcqPayeeChequeHist>(entity =>
-            {
-                entity.HasKey(e => e.AcqPayeeChequeHistId)
-                    .HasName("PIMS_AQPCHQ_H_PK");
-
-                entity.Property(e => e.AcqPayeeChequeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_PAYEE_CHEQUE_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsAcqPhysFileStatusType>(entity =>
@@ -1315,10 +1255,14 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_AQOWSO_FK");
 
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.PimsAcquisitionOwnerSolicitors)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("PIM_ORG_PIM_AQOWSO_FK");
+
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.PimsAcquisitionOwnerSolicitors)
                     .HasForeignKey(d => d.PersonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PERSON_PIM_AQOWSO_FK");
             });
 
@@ -1366,6 +1310,8 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the acquisition payee is inactive.");
+
+                entity.Property(e => e.IsPaymentInTrust).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.AcquisitionFilePerson)
                     .WithMany(p => p.PimsAcquisitionPayees)
@@ -7938,10 +7884,6 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_ACCESS_REQUEST_ORGANIZATION_ID_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("PIMS_ACQ_PAYEE_CHEQUE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

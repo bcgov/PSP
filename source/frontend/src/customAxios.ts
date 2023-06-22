@@ -3,9 +3,10 @@ import axios, { AxiosError } from 'axios';
 import { isEmpty } from 'lodash';
 import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
-import { logError } from 'store/slices/network/networkSlice';
-import { store } from 'store/store';
+
+import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
+import { logError } from '@/store/slices/network/networkSlice';
+import { store } from '@/store/store';
 
 export const defaultEnvelope = (x: any) => ({ data: { records: x } });
 

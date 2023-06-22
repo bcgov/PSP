@@ -1,0 +1,456 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdatePropertyForm component renders as expected when provided no research file 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0 {
+  padding-top: 1rem;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Property of Interest
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Descriptive name:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-propertyName"
+                name="propertyName"
+                title="Corner of Nakya PL "
+                value="Corner of Nakya PL "
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Purpose:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div>
+              <div
+                class="multiselect-container multiSelectContainer  "
+                id="purpose-selector"
+                style="width: auto; color: black; padding-bottom: 12px;"
+              >
+                <div
+                  class="search-wrapper searchWrapper "
+                  style="background: white; border: 1px solid #606060;"
+                >
+                  <span
+                    class="chip  false false"
+                    style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  >
+                    District Other
+                    <i
+                      class="custom-close"
+                    >
+                      <svg
+                        class="ml-3"
+                        fill="currentColor"
+                        height="18px"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 352 512"
+                        width="18px"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                  <span
+                    class="chip  false false"
+                    style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  >
+                    Form 12
+                    <i
+                      class="custom-close"
+                    >
+                      <svg
+                        class="ml-3"
+                        fill="currentColor"
+                        height="18px"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 352 512"
+                        width="18px"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                  <input
+                    autocomplete="off"
+                    class="searchBox "
+                    id="purpose-selector_input"
+                    name="search_name_input"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="optionListContainer displayNone"
+                >
+                  <ul
+                    class="optionContainer"
+                  >
+                    <li
+                      class="option  highlightOption highlight  "
+                    >
+                      Acquisition
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Classification
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Disposition
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      FN/Treaty
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      FOI
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Highway
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Inquiry
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Issue
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Legal
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      License/Lease
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Land Issue
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Land Exchange
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      MoTI Owned
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Other
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Road Closure
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Registered Interest
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Research
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      TAC
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Unknown
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Unregistered Interest
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Legal opinion req'd?:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-isLegalOpinionRequired"
+                name="isLegalOpinionRequired"
+              >
+                <option
+                  class="option"
+                  data-testid="select-option-unknown"
+                  value="unknown"
+                >
+                  Unknown
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-yes"
+                  value="yes"
+                >
+                  Yes
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-no"
+                  value="no"
+                >
+                  No
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Legal opinion obtained?:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-isLegalOpinionObtained"
+                name="isLegalOpinionObtained"
+              >
+                <option
+                  class="option"
+                  data-testid="select-option-unknown"
+                  value="unknown"
+                >
+                  Unknown
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-yes"
+                  value="yes"
+                >
+                  Yes
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-no"
+                  value="no"
+                >
+                  No
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Document reference:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-documentReference"
+                name="documentReference"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Research Summary
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Summary notes:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="textarea input form-group"
+        >
+          <textarea
+            class="form-control"
+            id="input-researchSummary"
+            name="researchSummary"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

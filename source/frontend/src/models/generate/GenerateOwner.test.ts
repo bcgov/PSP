@@ -1,4 +1,4 @@
-import { mockAcquisitionFileResponse } from 'mocks/acquisitionFiles.mock';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 
 import { Api_GenerateOwner } from './GenerateOwner';
 

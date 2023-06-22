@@ -1,9 +1,10 @@
-import { H1 } from 'components/common/styles';
 import React from 'react';
 import { Alert } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
+
+import { H1 } from '@/components/common/styles';
 
 import { AccessRequestContainer } from './AccessRequestContainer';
 

@@ -1,4 +1,4 @@
-import { Api_FinancialCode } from 'models/api/FinancialCode';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
 
 export const mockFinancialCode: () => Api_FinancialCode = () => ({
   id: 3,

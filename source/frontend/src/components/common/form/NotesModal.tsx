@@ -1,12 +1,13 @@
-import { StyledIconButton } from 'components/common/buttons';
-import { TextArea } from 'components/common/form';
-import GenericModal from 'components/common/GenericModal';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
-import { withNameSpace } from 'utils/formUtils';
+
+import { StyledIconButton } from '@/components/common/buttons';
+import { TextArea } from '@/components/common/form';
+import GenericModal from '@/components/common/GenericModal';
+import { withNameSpace } from '@/utils/formUtils';
 
 export interface INotesModalProps {
   notesLabel: React.ReactNode;

@@ -1,7 +1,8 @@
-import * as CommonStyled from 'components/common/styles';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { useRef } from 'react';
+
+import * as CommonStyled from '@/components/common/styles';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import { ReceivedDepositForm } from './ReceivedDepositForm';

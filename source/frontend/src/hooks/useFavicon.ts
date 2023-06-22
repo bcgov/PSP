@@ -1,4 +1,4 @@
-import { useTenant } from 'tenants';
+import { useTenant } from '@/tenants';
 
 /**
  * Provides a way to apply the correct favicon based on the current tenant.

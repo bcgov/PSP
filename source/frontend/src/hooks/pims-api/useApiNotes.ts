@@ -1,8 +1,9 @@
-import { NoteTypes } from 'constants/noteTypes';
-import { Api_EntityNote, Api_Note } from 'models/api/Note';
 import React from 'react';
 
-import { useAxiosApi } from './';
+import { NoteTypes } from '@/constants/noteTypes';
+import { Api_EntityNote, Api_Note } from '@/models/api/Note';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the note endpoints.

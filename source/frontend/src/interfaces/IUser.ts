@@ -1,5 +1,6 @@
-import Api_TypeCode from 'models/api/TypeCode';
 import { Moment } from 'moment';
+
+import Api_TypeCode from '@/models/api/TypeCode';
 
 import { IRole } from './IRole';
 

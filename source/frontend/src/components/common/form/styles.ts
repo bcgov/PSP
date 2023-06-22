@@ -1,6 +1,7 @@
-import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 
 import { FastCurrencyInput, Form, Input, Select } from '.';
 import { FastDatePicker } from './FastDatePicker';

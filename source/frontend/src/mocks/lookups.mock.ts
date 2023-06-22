@@ -1,5 +1,5 @@
-import { SelectOption } from 'components/common/form';
-import { mapLookupCode } from 'utils/mapLookupCode';
+import { SelectOption } from '@/components/common/form';
+import { mapLookupCode } from '@/utils/mapLookupCode';
 
 import { ILookupCode } from '../store/slices/lookupCodes/interfaces/ILookupCode';
 export const mockLookups: ILookupCode[] = [

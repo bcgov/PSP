@@ -1,16 +1,17 @@
-import { StyledRemoveLinkButton } from 'components/common/buttons';
-import { Button } from 'components/common/buttons/Button';
-import TooltipIcon from 'components/common/TooltipIcon';
-import { ColumnWithProps, renderTypeCode } from 'components/Table';
-import { Claims } from 'constants/index';
-import { DocumentRow } from 'features/documents/ComposedDocument';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
 import { Col, Row } from 'react-bootstrap';
 import { FaEye, FaTrash, FaUserAlt } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { prettyFormatDate, stringToFragment } from 'utils';
+
+import { StyledRemoveLinkButton } from '@/components/common/buttons';
+import { Button } from '@/components/common/buttons/Button';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { ColumnWithProps, renderTypeCode } from '@/components/Table';
+import { Claims } from '@/constants/index';
+import { DocumentRow } from '@/features/documents/ComposedDocument';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { Api_DocumentRelationship, Api_DocumentType } from '@/models/api/Document';
+import { prettyFormatDate, stringToFragment } from '@/utils';
 
 export interface IDocumentColumnProps {
   onViewDetails: (values: Api_DocumentRelationship) => void;

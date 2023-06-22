@@ -1,17 +1,18 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims, LeaseTermStatusTypes } from 'constants/index';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
-import { LeasePageProps } from 'features/properties/map/lease/LeaseContainer';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, defaultFormLeaseTerm, defaultLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+
+import { Claims, LeaseTermStatusTypes } from '@/constants/index';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
+import { defaultFormLease, defaultFormLeaseTerm, defaultLease, IFormLease } from '@/interfaces';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsForm.test';
 import TermPaymentsContainer from './TermPaymentsContainer';
@@ -116,7 +117,7 @@ describe('TermsPaymentsContainer component', () => {
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save term');
-      await act(() => userEvent.click(saveButton));
+      await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.post.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -137,7 +138,7 @@ describe('TermsPaymentsContainer component', () => {
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save term');
-      await act(() => userEvent.click(saveButton));
+      await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.put.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -172,7 +173,7 @@ describe('TermsPaymentsContainer component', () => {
       });
 
       const deleteButton = getAllByTitle('delete term')[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You must delete all renewals before deleting the initial term.');
       expect(warning).toBeVisible();
     });
@@ -189,7 +190,7 @@ describe('TermsPaymentsContainer component', () => {
       });
 
       const deleteButton = getAllByTitle('delete term')[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a term. Do you wish to continue?');
       expect(warning).toBeVisible();
     });
@@ -207,11 +208,11 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onDelete().reply(200, { id: 1 });
 
       const deleteButton = getAllByTitle('delete term')[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a term. Do you wish to continue?');
       expect(warning).toBeVisible();
       const continueButton = getByText('Continue');
-      await act(() => userEvent.click(continueButton));
+      await act(async () => userEvent.click(continueButton));
       expect(mockAxios.history.delete.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -233,7 +234,7 @@ describe('TermsPaymentsContainer component', () => {
 
       await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save payment');
-      await act(() => userEvent.click(saveButton));
+      await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.post.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -254,7 +255,7 @@ describe('TermsPaymentsContainer component', () => {
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Save payment');
-      await act(() => userEvent.click(saveButton));
+      await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.put.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });
@@ -267,7 +268,7 @@ describe('TermsPaymentsContainer component', () => {
       });
 
       const deleteButton = (await findAllByTitle('delete actual'))[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a payment. Do you wish to continue?');
       expect(warning).toBeVisible();
     });
@@ -282,11 +283,11 @@ describe('TermsPaymentsContainer component', () => {
       mockAxios.onDelete().reply(200, { id: 1 });
 
       const deleteButton = (await findAllByTitle('delete actual'))[0];
-      await act(() => userEvent.click(deleteButton));
+      await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a payment. Do you wish to continue?');
       expect(warning).toBeVisible();
       const continueButton = getByText('Continue');
-      await act(() => userEvent.click(continueButton));
+      await act(async () => userEvent.click(continueButton));
       expect(mockAxios.history.delete.length).toBe(1);
       expect(setLease).toHaveBeenCalled();
     });

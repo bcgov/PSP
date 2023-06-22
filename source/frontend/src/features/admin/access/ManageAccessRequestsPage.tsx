@@ -1,10 +1,11 @@
-import { Table } from 'components/Table';
-import { useApiAccessRequests } from 'hooks/pims-api';
-import { useSearch } from 'hooks/useSearch';
-import { Api_AccessRequest } from 'models/api/AccessRequest';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+
+import { Table } from '@/components/Table';
+import { useApiAccessRequests } from '@/hooks/pims-api/useApiAccessRequests';
+import { useSearch } from '@/hooks/useSearch';
+import { Api_AccessRequest } from '@/models/api/AccessRequest';
 
 import { IAccessRequestsFilterData } from '../access-request/IAccessRequestsFilterData';
 import { FormAccessRequest } from '../access-request/models';

@@ -1,16 +1,17 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { IAddLeaseContainerProps } from 'features/leases';
-import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultLease, ILeaseImprovement } from 'interfaces';
 import { noop } from 'lodash';
-import { mockLookups } from 'mocks/lookups.mock';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+
+import { IAddLeaseContainerProps } from '@/features/leases';
+import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { defaultLease, ILeaseImprovement } from '@/interfaces';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { AddImprovementsContainer } from './AddImprovementsContainer';
 
@@ -133,6 +134,19 @@ describe('Add Improvements container component', () => {
     await waitFor(() => {
       expect(JSON.parse(mockAxios.history.put[0].data).improvements).toHaveLength(2);
     });
+  });
+
+  it('displays the improvement types in order', async () => {
+    const { component } = await setup({
+      improvements: [
+        { propertyImprovementTypeId: 'COMMBLDG', address: 'test address 1' },
+        { propertyImprovementTypeId: 'OTHER', address: 'test address 2' },
+        { propertyImprovementTypeId: 'RTA', address: 'test address 3' },
+      ],
+    });
+
+    //Snapshot shows the correct order
+    expect(component.asFragment()).toMatchSnapshot();
   });
 });
 

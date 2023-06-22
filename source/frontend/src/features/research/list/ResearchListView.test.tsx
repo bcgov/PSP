@@ -1,10 +1,11 @@
 import userEvent from '@testing-library/user-event';
-import { Claims } from 'constants/index';
-import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
-import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
-import { mockLookups } from 'mocks/lookups.mock';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { Claims } from '@/constants/index';
+import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
+import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fillInput,
@@ -12,7 +13,7 @@ import {
   RenderOptions,
   waitFor,
   waitForElementToBeRemoved,
-} from 'utils/test-utils';
+} from '@/utils/test-utils';
 
 import { ResearchListView } from './ResearchListView';
 
@@ -21,7 +22,7 @@ const storeState = {
 };
 
 jest.mock('@react-keycloak/web');
-jest.mock('hooks/pims-api/useApiResearchFile');
+jest.mock('@/hooks/pims-api/useApiResearchFile');
 const getResearchFiles = jest.fn();
 (useApiResearchFile as jest.Mock).mockReturnValue({
   getResearchFiles,

@@ -21,6 +21,10 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionOwner> GetOwners(long id);
 
+        IEnumerable<PimsAcquisitionOwnerRep> GetOwnerRepresentatives(long id);
+
+        IEnumerable<PimsAcquisitionOwnerSolicitor> GetOwnerSolicitors(long id);
+
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 
         PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);
@@ -28,6 +32,10 @@ namespace Pims.Api.Services
         IEnumerable<PimsAgreement> GetAgreements(long id);
 
         IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
+
+        IEnumerable<PimsInterestHolder> GetInterestHolders(long id);
+
+        IEnumerable<PimsInterestHolder> UpdateInterestHolders(long acquisitionFileId, List<PimsInterestHolder> interestHolders);
 
         IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId);
 

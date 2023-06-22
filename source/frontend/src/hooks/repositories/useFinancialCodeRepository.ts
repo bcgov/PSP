@@ -1,16 +1,21 @@
 import { AxiosResponse } from 'axios';
-import { FinancialCodeTypes } from 'constants/index';
+import { useCallback, useMemo } from 'react';
+
+import { FinancialCodeTypes } from '@/constants/index';
 import {
+  getChartOfAccountsCodes,
+  getFinancialActivitiesCodes,
   getFinancialCode,
   getFinancialCodes,
   getFinancialCodesByType,
+  getResponsibilityCodes,
+  getYearlyFinancialCodes,
   postFinancialCode,
   putFinancialCode,
-} from 'hooks/pims-api/useApiFinancialCodes';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { Api_FinancialCode } from 'models/api/FinancialCode';
-import { useCallback, useMemo } from 'react';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
+} from '@/hooks/pims-api/useApiFinancialCodes';
+import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 const ignoreErrorCodes = [409];
 
@@ -37,6 +42,42 @@ export const useFinancialCodeRepository = () => {
     requestName: 'GetFinancialCodesByType',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to load financial codes. Refresh the page to try again.'),
+  });
+
+  const getFinancialActivityCodesApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+  >({
+    requestFunction: useCallback(async () => await getFinancialActivitiesCodes(), []),
+    requestName: 'GetFinancialActivityCodes',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load financial activity codes.'),
+  });
+
+  const getChartOfAccountsCodesApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+  >({
+    requestFunction: useCallback(async () => await getChartOfAccountsCodes(), []),
+    requestName: 'GetChartOfAccountsCodes',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load chart of account codes.'),
+  });
+
+  const getResponsibilityCodesApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+  >({
+    requestFunction: useCallback(async () => await getResponsibilityCodes(), []),
+    requestName: 'GetResponsiblityCodes',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load responsibility codes.'),
+  });
+
+  const getYearlyFinancialsCodesApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+  >({
+    requestFunction: useCallback(async () => await getYearlyFinancialCodes(), []),
+    requestName: 'GetYearlyFinancialCodes',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load Yearly financial codes.'),
   });
 
   const getFinancialCodeByIdApi = useApiRequestWrapper<
@@ -83,6 +124,10 @@ export const useFinancialCodeRepository = () => {
     () => ({
       getFinancialCodes: getAllFinancialCodesApi,
       getFinancialCodesByType: getFinancialCodesByTypeApi,
+      getFinancialActivityCodeTypes: getFinancialActivityCodesApi,
+      getChartOfAccountsCodeTypes: getChartOfAccountsCodesApi,
+      getResponsibilityCodeTypes: getResponsibilityCodesApi,
+      getYearlyFinancialsCodeTypes: getYearlyFinancialsCodesApi,
       getFinancialCode: getFinancialCodeByIdApi,
       addFinancialCode: addFinancialCodeApi,
       updateFinancialCode: updateFinancialCodeApi,
@@ -90,6 +135,10 @@ export const useFinancialCodeRepository = () => {
     [
       getAllFinancialCodesApi,
       getFinancialCodesByTypeApi,
+      getFinancialActivityCodesApi,
+      getChartOfAccountsCodesApi,
+      getResponsibilityCodesApi,
+      getYearlyFinancialsCodesApi,
       getFinancialCodeByIdApi,
       addFinancialCodeApi,
       updateFinancialCodeApi,

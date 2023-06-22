@@ -1,6 +1,7 @@
-import { Api_FinancialCode } from 'models/api/FinancialCode';
 import moment from 'moment';
-import { stringToNull } from 'utils/formUtils';
+
+import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { stringToNull } from '@/utils/formUtils';
 
 export class FinancialCodeForm {
   id?: number;

@@ -1,12 +1,16 @@
 import { act, screen } from '@testing-library/react';
-import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease } from 'interfaces';
-import { getMockContactOrganizationWithOnePerson, getMockContactPerson } from 'mocks/contacts.mock';
-import { mockLookups } from 'mocks/index.mock';
 import React from 'react';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { mockKeycloak, renderAsync, RenderOptions, userEvent } from 'utils/test-utils';
+
+import { Claims } from '@/constants/claims';
+import { defaultFormLease } from '@/interfaces';
+import {
+  getMockContactOrganizationWithOnePerson,
+  getMockContactPerson,
+} from '@/mocks/contacts.mock';
+import { mockLookups } from '@/mocks/index.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './ViewTenantForm';

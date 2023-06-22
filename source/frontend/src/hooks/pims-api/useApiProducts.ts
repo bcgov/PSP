@@ -1,7 +1,8 @@
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 
-import { useAxiosApi } from '.';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+
+import useAxiosApi from './useApi';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the Product endpoints.

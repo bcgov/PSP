@@ -1,9 +1,10 @@
-import { PropertyInformation } from 'features/leases';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import { ILease, IProperty } from 'interfaces';
 import * as React from 'react';
-import { withNameSpace } from 'utils/formUtils';
+
+import { Section } from '@/components/common/Section/Section';
+import { PropertyInformation } from '@/features/leases';
+import { ILease, IProperty } from '@/interfaces';
+import { withNameSpace } from '@/utils/formUtils';
 
 export interface IPropertiesInformationProps {
   nameSpace?: string;

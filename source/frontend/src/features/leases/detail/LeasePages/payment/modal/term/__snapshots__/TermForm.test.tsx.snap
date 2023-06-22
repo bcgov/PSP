@@ -317,7 +317,7 @@ exports[`TermForm component renders as expected 1`] = `
             for="input-isGstEligible"
             title=""
           >
-            N
+            Y
           </label>
         </div>
         <div
@@ -336,7 +336,7 @@ exports[`TermForm component renders as expected 1`] = `
             for="input-isGstEligible-2"
             title=""
           >
-            Y
+            N
           </label>
         </div>
       </div>
@@ -692,7 +692,7 @@ exports[`TermForm component renders with data as expected 1`] = `
             for="input-isGstEligible"
             title=""
           >
-            N
+            Y
           </label>
         </div>
         <div
@@ -711,7 +711,7 @@ exports[`TermForm component renders with data as expected 1`] = `
             for="input-isGstEligible-2"
             title=""
           >
-            Y
+            N
           </label>
         </div>
       </div>

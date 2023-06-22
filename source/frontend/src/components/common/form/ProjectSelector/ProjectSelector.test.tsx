@@ -1,11 +1,12 @@
 import { Formik } from 'formik';
-import { useProjectTypeahead } from 'hooks/useProjectTypeahead';
 import noop from 'lodash/noop';
-import { act, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
+
+import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
+import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
 import { ProjectSelector } from './ProjectSelector';
 
-jest.mock('hooks/useProjectTypeahead');
+jest.mock('@/hooks/useProjectTypeahead');
 const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
   typeof useProjectTypeahead
 >;
@@ -74,13 +75,13 @@ describe('ProjectSelector component', () => {
   it('makes request for matching projects', async () => {
     const { getInput } = setup(testForm);
 
-    await act(() => userEvent.type(getInput()!, 'test'));
+    await act(async () => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
   });
 
   it('shows matching projects based on user input', async () => {
     const { getInput, findItems } = setup(testForm);
-    await act(() => userEvent.type(getInput()!, 'test'));
+    await act(async () => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
 
     const items = await findItems();
@@ -90,13 +91,13 @@ describe('ProjectSelector component', () => {
 
   it('calls onChange callback when a project is selected', async () => {
     const { getInput, findItems } = setup(testForm);
-    await act(() => userEvent.type(getInput()!, 'test'));
+    await act(async () => userEvent.type(getInput()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
 
     const items = await findItems();
     expect(items).toHaveLength(1);
-    items[0].focus();
-    await act(() => userEvent.keyboard('{Enter}'));
+    act(() => items[0].focus());
+    await act(async () => userEvent.keyboard('{Enter}'));
     expect(onChange).toHaveBeenCalled();
   });
 });

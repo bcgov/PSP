@@ -1,6 +1,6 @@
-import { fromContact, IContactSearchResult, toContact } from 'interfaces';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
 export class FormLeaseDepositReturn {
   public id?: number;
