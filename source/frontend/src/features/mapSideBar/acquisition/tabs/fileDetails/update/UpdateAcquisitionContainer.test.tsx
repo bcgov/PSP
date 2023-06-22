@@ -141,6 +141,21 @@ describe('UpdateAcquisition container', () => {
     expect(popup).toBeVisible();
   });
 
+  it(`triggers popup when deleting a selected payee`, async () => {
+    mockUpdateAcquisitionFile.mockRejectedValue(
+      createAxiosError(409, 'Acquisition File Owner Reperesentative can not be removed', {
+        errorCode: null,
+      }),
+    );
+    const { formikRef, findByText } = setup();
+
+    expect(formikRef.current).not.toBeNull();
+    await act(async () => formikRef.current?.submitForm());
+
+    const popup = await findByText(/Acquisition File Owner Reperesentative can not be removed/i);
+    expect(popup).toBeVisible();
+  });
+
   it(`saves the form when clicking 'Continue Save' in the region popup`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(409, 'The Ministry region has been changed', {

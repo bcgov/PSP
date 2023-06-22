@@ -31,11 +31,10 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
       pretaxAmount: yup
         .number()
         .transform(value => (isNaN(value) || value === null || value === undefined ? 0 : value))
-        .required('Amount is required')
-        .moreThan(0, 'Amount must be greater than 0'),
+        .required('Amount is required'),
       taxAmount: yup.number().when('isGstRequired', {
         is: 'true',
-        then: yup.number().moreThan(0, 'Amount must be greater than 0'),
+        then: yup.number(),
         otherwise: yup.number(),
       }),
     }),

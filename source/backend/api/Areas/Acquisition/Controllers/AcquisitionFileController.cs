@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.CompensationRequisition.Controllers;
+using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -116,6 +117,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
+        [ProducesResponseType(typeof(ErrorResponseModel), 409)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, [FromQuery] string[] userOverrideCodes)
         {

@@ -263,7 +263,7 @@ describe('UpdatePropertyDetailsContainer component', () => {
   it('saves the form with minimal data', async () => {
     const { findByTitle, formikRef } = setup();
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
-    await act(() => formikRef.current?.submitForm() as Promise<void>);
+    await act(async () => formikRef.current?.submitForm() as Promise<void>);
 
     const expectedValues = expect.objectContaining<Api_Property>({
       address: expect.objectContaining({

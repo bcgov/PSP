@@ -91,25 +91,40 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var noteRepository = _helper.GetService<Mock<IEntityNoteRepository>>();
-            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var compensationRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
-            repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
-                .Returns(new PimsCompensationRequisition { Internal_Id = 1 , AcquisitionFileId=1, IsDraft = false });
-            repository.Setup(x => x.GetById(It.IsAny<long>()))
-                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId=1, IsDraft = true });
+            var listPayeeStub = new List<PimsAcquisitionPayee>
+                    {
+                        new PimsAcquisitionPayee() { CompensationRequisitionId = 1, }
+                    };
+            var currentCompensationStub = new PimsCompensationRequisition
+            {
+                Internal_Id = 1,
+                AcquisitionFileId = 7,
+                ConcurrencyControlNumber = 2,
+                IsDraft = true,
+                PimsAcquisitionPayees = listPayeeStub,
+            };
+
+            compensationRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(currentCompensationStub);
+
+            compensationRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>())).Returns(currentCompensationStub);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition() {
-                Internal_Id = 1,
-                AcquisitionFileId = 1,
-                ConcurrencyControlNumber = 2,
-                IsDraft = false }
-            );
+            var result = service.Update(
+                new PimsCompensationRequisition
+                {
+                    Internal_Id = 1,
+                    AcquisitionFileId = 7,
+                    ConcurrencyControlNumber = 2,
+                    IsDraft = false,
+                    PimsAcquisitionPayees = listPayeeStub
+                });
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+            compensationRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 7
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Once);
         }
 
@@ -152,7 +167,7 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
-                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });;
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
             repository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
@@ -172,7 +187,6 @@ namespace Pims.Api.Test.Services
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'No Status' to 'Draft'"))), Times.Once);
         }
-
         private CompensationRequisitionService CreateCompRequisitionServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);

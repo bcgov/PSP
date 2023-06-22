@@ -1,8 +1,11 @@
-import { FormikProps } from 'formik';
+import axios, { AxiosError } from 'axios';
+import { FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { IApiError } from '@/interfaces/IApiError';
 import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
 import { StakeHolderForm } from './models';
@@ -36,16 +39,37 @@ export const UpdateStakeHolderContainer: React.FunctionComponent<
     updateAcquisitionInterestHolders: { execute: updateInterestHolders },
   } = useInterestHolderRepository();
 
-  const saveInterestHolders = async (interestHolders: StakeHolderForm) => {
-    if (acquisitionFile?.id) {
-      const result = await updateInterestHolders(
-        acquisitionFile?.id,
-        StakeHolderForm.toApi(interestHolders),
-      );
-      if (result !== undefined) {
-        onSuccess();
+  const saveInterestHolders = async (
+    interestHolders: StakeHolderForm,
+    formikHelpers: FormikHelpers<StakeHolderForm>,
+  ) => {
+    try {
+      if (acquisitionFile?.id) {
+        const result = await updateInterestHolders(
+          acquisitionFile?.id,
+          StakeHolderForm.toApi(interestHolders),
+        );
+        if (result !== undefined) {
+          onSuccess();
+        }
+        return result;
       }
-      return result;
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 409) {
+          toast.error(axiosError?.response.data.error);
+          formikHelpers.resetForm();
+        } else {
+          if (axiosError.response?.status === 400) {
+            toast.error(axiosError.response.data.error);
+          } else {
+            toast.error('Unable to save. Please try again.');
+          }
+        }
+      }
+    } finally {
+      formikHelpers.setSubmitting(false);
     }
   };
 

@@ -17,11 +17,11 @@ export const useMapProperties = () => {
     (params?: IGeoSearchParams) => {
       const geoserver_params = {
         STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
-        PID: params?.PID,
+        PID_PADDED: params?.PID,
         PIN: params?.PIN,
       };
       const url = `${propertiesUrl}${
-        geoserver_params ? toCqlFilter(geoserver_params, false, params?.forceExactMatch) : ''
+        geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
       }`;
       return CustomAxios().get<FeatureCollection>(url);
     },

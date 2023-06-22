@@ -275,12 +275,20 @@ enum PayeeType {
 export class PayeeOption {
   public readonly api_id: number;
   public readonly text: string;
+  public readonly fullText: string;
   public readonly value: string;
   public readonly payeeType: PayeeType;
 
-  private constructor(api_id: number, text: string, value: string, payeeType: PayeeType) {
+  private constructor(
+    api_id: number,
+    name: string,
+    key: string,
+    value: string,
+    payeeType: PayeeType,
+  ) {
     this.api_id = api_id;
-    this.text = text;
+    this.fullText = `${name}(${key})`;
+    this.text = `${truncateName(name)}(${key})`;
     this.value = value;
     this.payeeType = payeeType;
   }
@@ -388,7 +396,8 @@ export class PayeeOption {
       : [model.givenName, model.lastNameAndCorpName, model.otherName].filter(x => !!x).join(' ');
     return new PayeeOption(
       model.id || 0,
-      `${this.truncateName(name)}(Owner)`,
+      name,
+      'Owner',
       PayeeOption.generateKey(model.id, PayeeType.Owner),
       PayeeType.Owner,
     );
@@ -403,7 +412,8 @@ export class PayeeOption {
     }
     return new PayeeOption(
       model.id || 0,
-      `${this.truncateName(name)}(Owner's Solicitor)`,
+      name,
+      `Owner's Solicitor`,
       PayeeOption.generateKey(model.id, PayeeType.OwnerSolicitor),
       PayeeType.OwnerSolicitor,
     );
@@ -413,7 +423,8 @@ export class PayeeOption {
     let name = formatApiPersonNames(model.person);
     return new PayeeOption(
       model.id || 0,
-      `${this.truncateName(name)}(Owner's Representative)`,
+      name,
+      `Owner's Representative`,
       PayeeOption.generateKey(model.id, PayeeType.OwnerRepresentative),
       PayeeType.OwnerRepresentative,
     );
@@ -423,7 +434,8 @@ export class PayeeOption {
     let name = formatApiPersonNames(model.person);
     return new PayeeOption(
       model.id || 0,
-      `${this.truncateName(name)}(${model.personProfileType?.description})`,
+      name,
+      `${model.personProfileType?.description}`,
       PayeeOption.generateKey(model.id, PayeeType.AcquisitionTeam),
       PayeeType.AcquisitionTeam,
     );
@@ -445,7 +457,8 @@ export class PayeeOption {
 
     return new PayeeOption(
       model.interestHolderId || 0,
-      `${this.truncateName(name)}(${typeDescription})`,
+      name,
+      `${typeDescription}`,
       PayeeOption.generateKey(model.interestHolderId, PayeeType.InterestHolder),
       PayeeType.InterestHolder,
     );
@@ -453,5 +466,13 @@ export class PayeeOption {
 
   private static generateKey(modelId: number | null | undefined, payeeType: PayeeType) {
     return `${payeeType}-${modelId}`;
+  }
+}
+
+function truncateName(name: string): string {
+  if (name.length > 50) {
+    return name.slice(0, 50) + '...';
+  } else {
+    return name;
   }
 }

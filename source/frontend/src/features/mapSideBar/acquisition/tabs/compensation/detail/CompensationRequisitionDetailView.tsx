@@ -75,13 +75,17 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       payeeDetail.displayName = ownerDetail.ownerName ?? '';
       payeeDetail.contactEnabled = false;
     } else if (compensationPayee.interestHolderId) {
-      payeeDetail.displayName = formatApiPersonNames(compensationPayee.interestHolder?.person);
+      payeeDetail.displayName = compensationPayee.interestHolder?.person
+        ? formatApiPersonNames(compensationPayee.interestHolder?.person)
+        : compensationPayee.interestHolder?.organization?.name ?? '';
       payeeDetail.personId = compensationPayee.interestHolder?.person?.id!;
     } else if (compensationPayee.ownerRepresentativeId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerRepresentative?.person);
       payeeDetail.personId = compensationPayee.ownerRepresentative?.person?.id!;
     } else if (compensationPayee.ownerSolicitorId) {
-      payeeDetail.displayName = formatApiPersonNames(compensationPayee.ownerSolicitor?.person);
+      payeeDetail.displayName = compensationPayee.ownerSolicitor?.person
+        ? formatApiPersonNames(compensationPayee.ownerSolicitor?.person)
+        : compensationPayee.ownerSolicitor?.organization?.name ?? '';
       payeeDetail.personId = compensationPayee.ownerSolicitor?.person?.id!;
     } else if (compensationPayee.motiSolicitorId) {
       payeeDetail.displayName = formatApiPersonNames(compensationPayee.motiSolicitor);

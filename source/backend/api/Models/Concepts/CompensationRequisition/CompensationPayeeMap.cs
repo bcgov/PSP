@@ -8,6 +8,7 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsAcquisitionPayee, CompensationPayeeModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.AcquisitionPayeeId)
                 .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
@@ -27,6 +28,7 @@ namespace Pims.Api.Models.Concepts
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<CompensationPayeeModel, Entity.PimsAcquisitionPayee>()
+                .PreserveReference(true)
                 .Map(dest => dest.AcquisitionPayeeId, src => src.Id)
                 .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)

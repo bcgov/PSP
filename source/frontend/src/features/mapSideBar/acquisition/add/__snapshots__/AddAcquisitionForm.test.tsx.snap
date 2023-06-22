@@ -966,6 +966,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                                   class="input form-group"
                                 >
                                   <input
+                                    autocomplete="off"
                                     class="form-control"
                                     id="input-pid"
                                     name="pid"

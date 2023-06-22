@@ -139,7 +139,7 @@ describe('ActivityPropertyModal tests', () => {
     const { getByText } = setup();
 
     const cancelButton = getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
 
     expect(screen.queryByText('Unsaved Changes')).toBeNull();
   });
@@ -148,7 +148,7 @@ describe('ActivityPropertyModal tests', () => {
     const { getByText } = setup({ props: { selectedFileProperties: getMockApiPropertyFiles() } });
 
     const cancelButton = getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
 
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
   });
@@ -157,9 +157,9 @@ describe('ActivityPropertyModal tests', () => {
     const { getByText } = setup({ props: { selectedFileProperties: getMockApiPropertyFiles() } });
 
     const cancelButton = getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
     const confirmButton = screen.getByText('Confirm');
-    await act(() => userEvent.click(confirmButton));
+    await act(async () => userEvent.click(confirmButton));
 
     expect(setDisplay).toHaveBeenLastCalledWith(false);
     expect(setSelectedFileProperties).toHaveBeenLastCalledWith([]);
@@ -169,9 +169,9 @@ describe('ActivityPropertyModal tests', () => {
     const { getByText } = setup({ props: { selectedFileProperties: getMockApiPropertyFiles() } });
 
     const cancelButton = getByText('Cancel');
-    await act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
     const noButton = screen.getByText('No');
-    await act(() => userEvent.click(noButton));
+    await act(async () => userEvent.click(noButton));
 
     expect(screen.queryByText('Unsaved Changes')).toBeNull();
     expect(screen.getByText('Related properties')).toBeVisible();
@@ -185,7 +185,7 @@ describe('ActivityPropertyModal tests', () => {
     });
 
     const saveButton = getByText('Save');
-    await act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(onSave).toHaveBeenCalledWith({
       actInstPropFiles: [

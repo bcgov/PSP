@@ -87,7 +87,7 @@ describe('UpdateOrganizationForm', () => {
     it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup({ id: 1 });
       const cancel = getCancelButton();
-      await act(() => userEvent.click(cancel));
+      await act(async () => userEvent.click(cancel));
       expect(history.location.pathname).toBe('/contact/O1');
     });
   });
@@ -96,7 +96,7 @@ describe('UpdateOrganizationForm', () => {
     it('should update the organization with minimal data', async () => {
       const { getSaveButton } = setup({ id: 1 });
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
       expect(updateOrganization).toBeCalledWith(mockOrganization);
     });
 
@@ -128,7 +128,7 @@ describe('UpdateOrganizationForm', () => {
       );
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updateOrganization).toBeCalledWith(newValues);
     });
@@ -153,7 +153,7 @@ describe('UpdateOrganizationForm', () => {
       await fillInput(container, 'mailingAddress.postal', mockAddress.postal);
 
       const save = getSaveButton();
-      await act(() => userEvent.click(save));
+      await act(async () => userEvent.click(save));
 
       expect(updateOrganization).toBeCalledWith(newValues);
     });

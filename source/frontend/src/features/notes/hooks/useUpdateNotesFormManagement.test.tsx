@@ -82,7 +82,7 @@ describe('useUpdateNotesFormManagement hook', () => {
       resetForm: jest.fn(),
     };
 
-    await act(() => handleSubmit(formValues, formikHelpers as any));
+    await act(async () => handleSubmit(formValues, formikHelpers as any));
 
     expect(formikHelpers.setSubmitting).toBeCalledWith(false);
     expect(formikHelpers.resetForm).toBeCalled();

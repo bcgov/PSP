@@ -83,7 +83,7 @@ export class AcquisitionSolicitorFormModel {
 
   static fromApi(model: Api_AcquisitionFileSolicitor): AcquisitionSolicitorFormModel {
     const newForm = new AcquisitionSolicitorFormModel(
-      model.person !== null
+      model.person !== null && model.person !== undefined
         ? fromApiPerson(model.person) ?? null
         : model.organization
         ? fromApiOrganization(model.organization)

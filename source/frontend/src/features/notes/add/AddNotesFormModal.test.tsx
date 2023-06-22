@@ -83,7 +83,7 @@ describe('AddNotesFormModal component', () => {
     // note cannot exceed 4000 characters
     const textarea = await findByLabelText(/Type a note/i);
     userEvent.paste(textarea, fakeText(4001));
-    await act(() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.click(getSaveButton()));
 
     expect(validationSchema).toBeCalled();
     expect(await findByText(/Notes must be at most 4000 characters/i)).toBeVisible();
@@ -92,7 +92,7 @@ describe('AddNotesFormModal component', () => {
   it('should cancel form when Cancel button is clicked', async () => {
     const { getCancelButton } = setup({ initialValues });
 
-    await act(() => userEvent.click(getCancelButton()));
+    await act(async () => userEvent.click(getCancelButton()));
 
     expect(handleCancelClick).toBeCalled();
     expect(validationSchema).not.toBeCalled();
@@ -109,7 +109,7 @@ describe('AddNotesFormModal component', () => {
     initialValues.note.note = 'foo bar baz';
     const { getSaveButton } = setup({ initialValues });
 
-    await act(() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.click(getSaveButton()));
 
     expect(validationSchema).toBeCalled();
     expect(handleSubmit).toBeCalledWith(initialValues, expect.anything());

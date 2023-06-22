@@ -111,6 +111,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
 
                   <SectionField label={'Amount (before tax)'} required>
                     <FastCurrencyInput
+                      allowNegative
                       formikProps={formikProps}
                       field={`financials[${index}].pretaxAmount`}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,6 +142,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                   {financial.isGstRequired === 'true' && (
                     <SectionField label="GST amount">
                       <FastCurrencyInput
+                        allowNegative
                         formikProps={formikProps}
                         field={`financials[${index}].taxAmount`}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,6 +154,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
 
                   <SectionField label="Total amount">
                     <FastCurrencyInput
+                      allowNegative
                       formikProps={formikProps}
                       field={`financials[${index}].totalAmount`}
                       disabled
@@ -198,7 +201,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
 export default FinancialActivitiesSubForm;
 
 const getCurrencyCleanValue = (stringValue: string): number => {
-  return Number(stringValue.replace(/[^0-9.]/g, ''));
+  return Number(stringValue.replace(/[^0-9.-]/g, ''));
 };
 
 const StyledSpacer = styled.div`

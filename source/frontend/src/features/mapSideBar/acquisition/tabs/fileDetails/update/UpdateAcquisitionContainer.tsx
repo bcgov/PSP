@@ -19,7 +19,7 @@ export interface IUpdateAcquisitionContainerProps {
 }
 
 export const UpdateAcquisitionContainer = React.forwardRef<
-  FormikProps<any>,
+  FormikProps<UpdateAcquisitionSummaryFormModel>,
   IUpdateAcquisitionContainerProps
 >((props, formikRef) => {
   const { acquisitionFile, onSuccess, View } = props;

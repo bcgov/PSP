@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useReducer, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
@@ -136,6 +136,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { lease, setLease, refresh } = useLeaseDetail(leaseId);
   const { setFullWidth, setStaleFile, staleFile } = useContext(SideBarContext);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   const activeTab = containerState.activeTab;
   useEffect(() => {
@@ -173,6 +174,15 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   };
 
   const handleSaveClick = () => {
+    const isFormValid = formikRef?.current?.isValid;
+
+    if (!isFormValid) {
+      setErrorMessage('Please check the required fields.');
+    }
+
+    if (isFormValid) {
+      setErrorMessage(undefined);
+    }
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
@@ -212,6 +222,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
             isOkDisabled={formikRef?.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
+            errorMessage={errorMessage}
           />
         )
       }

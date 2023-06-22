@@ -208,7 +208,7 @@ describe('NoteContainer component', () => {
       userEvent.type(textarea, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
 
       mockAxios.onPut().reply(200, mockNoteResponse(1));
-      await act(() => userEvent.click(getSaveButton()));
+      await act(async () => userEvent.click(getSaveButton()));
 
       expect(closeModal).toBeCalled();
       expect(onSuccess).toBeCalled();

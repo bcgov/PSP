@@ -33,7 +33,7 @@ export const usePimsPropertyLayer = () => {
           PIN: params?.PIN,
         };
         const url = `${propertiesUrl}${
-          geoserver_params ? toCqlFilter(geoserver_params, false, params?.forceExactMatch) : ''
+          geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
         }`;
         return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View2>>(url);
       },

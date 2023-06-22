@@ -167,7 +167,7 @@ describe('AddProjectForm component', () => {
     });
 
     // submit form to trigger validation check
-    await act(() => getFormikRef().current?.submitForm());
+    await act(async () => getFormikRef().current?.submitForm());
 
     expect(validationSchema).toBeCalled();
     expect(await findByText(/Project name must be at most 200 characters/i)).toBeVisible();
@@ -180,11 +180,11 @@ describe('AddProjectForm component', () => {
       initialValues,
     });
 
-    await act(() => userEvent.selectOptions(getRegionDropdown(), '1'));
-    await act(() => userEvent.paste(getNameTextbox(), `TRANS-CANADA HWY - 10`));
+    await act(async () => userEvent.selectOptions(getRegionDropdown(), '1'));
+    await act(async () => userEvent.paste(getNameTextbox(), `TRANS-CANADA HWY - 10`));
 
     // submit form to trigger validation check
-    await act(() => getFormikRef().current?.submitForm());
+    await act(async () => getFormikRef().current?.submitForm());
 
     expect(onSubmit).toHaveBeenCalled();
   });
@@ -195,7 +195,7 @@ describe('AddProjectForm component', () => {
     });
 
     const addProductButton = getByText('+ Add another product');
-    await act(() => {
+    await act(async () => {
       userEvent.click(addProductButton);
     });
 
