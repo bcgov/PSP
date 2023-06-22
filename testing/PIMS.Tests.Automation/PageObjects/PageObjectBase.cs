@@ -13,7 +13,7 @@ namespace PIMS.Tests.Automation.PageObjects
             this.webDriver = webDriver;
         }
 
-        public virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
+        public virtual void Wait(int milliseconds = 4000) => Thread.Sleep(milliseconds);
 
         public void WaitUntil(By element)
         {
